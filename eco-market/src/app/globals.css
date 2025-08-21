@@ -1,10 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -20,6 +15,74 @@
 }
 
 body {
-
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%, 0% 0%, 0% 0%, 0% 0%;
+  }
+  25% {
+    background-position: 25% 75%, 100% 100%, 25% 25%, 75% 75%;
+  }
+  50% {
+    background-position: 100% 50%, 50% 50%, 100% 100%, 50% 50%;
+  }
+  75% {
+    background-position: 75% 25%, 25% 25%, 75% 75%, 25% 25%;
+  }
+}
+
+/* Enhanced Floating Animations */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  33% { transform: translateY(-15px) translateX(10px); }
+  66% { transform: translateY(-5px) translateX(-5px); }
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  25% { transform: translateY(-10px) scale(1.1); }
+  50% { transform: translateY(-20px) scale(0.9); }
+  75% { transform: translateY(-10px) scale(1.05); }
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 6s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 4s ease-in-out infinite;
+}
+
+/* Enhanced Glassmorphism */
+.glass-enhanced {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
