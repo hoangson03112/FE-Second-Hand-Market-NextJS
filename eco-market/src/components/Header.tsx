@@ -1,8 +1,16 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
 import Link from "next/link";
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
+import useCategories from "@/hooks/useCategories";
+import useMounted from "@/hooks/useMounted";
 type User = {
   name?: string;
   avatarUrl?: string;
@@ -12,54 +20,8 @@ type HeaderProps = {
   user?: User | null;
   cartCount?: number;
   notificationsCount?: number;
-  onSearch?: (q: string) => void;
   onLogout?: () => void;
 };
-
-const categories = [
-  {
-    name: "Đồ điện tử",
-    href: "/c/do-dien-tu",
-    subCategories: [
-      { name: "Điện thoại", href: "/c/dien-thoai" },
-      { name: "Máy tính, Laptop", href: "/c/may-tinh" },
-      { name: "Máy ảnh, Máy quay", href: "/c/may-anh" },
-      { name: "Phụ kiện", href: "/c/phu-kien-dien-tu" },
-    ],
-  },
-  {
-    name: "Xe cộ",
-    href: "/c/xe-co",
-    subCategories: [
-      { name: "Ô tô", href: "/c/o-to" },
-      { name: "Xe máy", href: "/c/xe-may" },
-      { name: "Xe đạp", href: "/c/xe-dap" },
-      { name: "Phụ tùng xe", href: "/c/phu-tung-xe" },
-    ],
-  },
-  {
-    name: "Nội thất, Gia dụng",
-    href: "/c/noi-that",
-    subCategories: [
-      { name: "Bàn ghế", href: "/c/ban-ghe" },
-      { name: "Tủ, Kệ", href: "/c/tu-ke" },
-      { name: "Đồ dùng nhà bếp", href: "/c/do-dung-bep" },
-      { name: "Thiết bị gia dụng", href: "/c/thiet-bi-gia-dung" },
-    ],
-  },
-  {
-    name: "Thời trang",
-    href: "/c/thoi-trang",
-    subCategories: [
-      { name: "Quần áo", href: "/c/quan-ao" },
-      { name: "Túi xách", href: "/c/tui-xach" },
-      { name: "Giày dép", href: "/c/giay-dep" },
-      { name: "Đồng hồ", href: "/c/dong-ho" },
-    ],
-  },
-  { name: "Mẹ & Bé", href: "/c/me-va-be", subCategories: [] },
-  { name: "Sách, Đồ dùng học tập", href: "/c/sach", subCategories: [] },
-];
 
 const IconBadge: React.FC<{ count: number }> = ({ count }) => {
   if (count === 0) return null;
@@ -77,18 +39,48 @@ export default function Header({
   user = null,
   cartCount = 0,
   notificationsCount = 0,
-  onSearch,
   onLogout,
 }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [showAllCategories, setShowAllCategories] = useState(false);
+
+  const mounted = useMounted();
+  const router = useRouter();
 
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const categoriesRef = useRef<HTMLDivElement>(null);
+
+  const { categories, isLoading } = useCategories();
+  console.log(categories);
+  const { visibleCategories } = useMemo(
+    () => ({
+      visibleCategories: categories.slice(0, 6),
+    }),
+    [categories]
+  );
+
+  const handleMouseEnterCategory = useCallback((categoryId: string) => {
+    setActiveCategory(categoryId);
+  }, []);
+
+  const handleMouseLeaveCategory = useCallback(() => {
+    setActiveCategory(null);
+  }, []);
+
+  const handleShowAllCategories = useCallback(() => {
+    setShowAllCategories(true);
+  }, []);
+
+  const handleHideAllCategories = useCallback(() => {
+    setShowAllCategories(false);
+  }, []);
 
   useEffect(() => {
+    if (!mounted) return;
+
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -96,15 +88,22 @@ export default function Header({
       ) {
         setDropdownOpen(false);
       }
+      if (
+        categoriesRef.current &&
+        !categoriesRef.current.contains(event.target as Node)
+      ) {
+        setShowAllCategories(false);
+        setActiveCategory(null);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [mounted]);
 
   const submitSearch = (e?: React.FormEvent) => {
     e?.preventDefault();
-    if (onSearch && query.trim()) {
-      onSearch(query.trim());
+    if (query.trim()) {
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
     }
   };
 
@@ -116,24 +115,21 @@ export default function Header({
   };
 
   return (
-    <header className="bg-white/95 backdrop-blur-xl border-b border-white/20 sticky top-0 z-50 shadow-xl shadow-black/5">
+    <header className="bg-white/90 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 shadow-sm">
       {/* Top Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-28">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center group">
-              <div className="relative">
-                <Image
-                  src="https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png"
-                  alt="Eco Market Logo"
-                  width={150}
-                  height={150}
-                  className="h-24 w-auto transition-transform duration-300 group-hover:scale-105"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-              </div>
+            <Link href="/" className="flex items-center">
+              <Image
+                src="https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png"
+                alt="Eco Market Logo"
+                width={150}
+                height={150}
+                className="h-24 w-auto"
+                priority
+              />
             </Link>
           </div>
 
@@ -144,10 +140,10 @@ export default function Header({
               onSubmit={submitSearch}
               role="search"
             >
-              <div className="relative group">
+              <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <svg
-                    className="h-6 w-6 text-slate-400 group-focus-within:text-slate-600 transition-colors duration-300"
+                    className="h-6 w-6 text-gray-400"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -162,7 +158,7 @@ export default function Header({
                 <input
                   id="search"
                   name="search"
-                  className="block w-full bg-slate-50/80 backdrop-blur-sm border border-slate-200/50 rounded-full py-3 pl-12 pr-4 text-base placeholder-slate-500 focus:outline-none focus:text-slate-900 focus:placeholder-slate-400 focus:ring-2 focus:ring-slate-500 focus:border-slate-500 focus:bg-white/90 transition-all duration-300 shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10"
+                  className="block w-full bg-gray-100 border border-transparent rounded-full py-3 pl-12 pr-4 text-base placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   placeholder="Tìm kiếm sản phẩm..."
                   type="search"
                   value={query}
@@ -176,18 +172,17 @@ export default function Header({
           <div className="hidden md:flex items-center justify-end gap-3">
             <Link
               href="/sell"
-              className="group relative inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-semibold rounded-full text-white bg-gradient-to-r from-slate-900 to-slate-800 hover:from-slate-800 hover:to-slate-700 transition-all duration-300 shadow-lg shadow-slate-900/20 hover:shadow-xl hover:shadow-slate-900/30 hover:scale-105 overflow-hidden"
+              className="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-base font-medium rounded-full text-white bg-emerald-600 hover:bg-emerald-700 transition-colors"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-              <span className="relative z-10">Đăng bán</span>
+              Đăng bán
             </Link>
             <Link
               href="/notifications"
-              className="relative p-3 rounded-full text-slate-500 hover:bg-slate-100/80 hover:text-slate-700 transition-all duration-300 group hover:scale-110 backdrop-blur-sm shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10"
+              className="relative p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
               aria-label="Thông báo"
             >
               <svg
-                className="h-6 w-6 group-hover:scale-110 transition-transform duration-300"
+                className="h-7 w-7"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -199,15 +194,15 @@ export default function Header({
                   d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
                 />
               </svg>
-              <IconBadge count={notificationsCount} />
+              {mounted && <IconBadge count={notificationsCount} />}
             </Link>
             <Link
               href="/cart"
-              className="relative p-3 rounded-full text-slate-500 hover:bg-slate-100/80 hover:text-slate-700 transition-all duration-300 group hover:scale-110 backdrop-blur-sm shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10"
+              className="relative p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
               aria-label="Giỏ hàng"
             >
               <svg
-                className="h-6 w-6 group-hover:scale-110 transition-transform duration-300"
+                className="h-7 w-7"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -219,31 +214,28 @@ export default function Header({
                   d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.343 1.087-.835l1.823-6.84a1.125 1.125 0 00-1.087-1.415H4.5"
                 />
               </svg>
-              <IconBadge count={cartCount} />
+              {mounted && <IconBadge count={cartCount} />}
             </Link>
 
-            <div className="w-px h-8 bg-slate-300/50 mx-3"></div>
+            <div className="w-px h-8 bg-gray-200 mx-2"></div>
 
-            {user ? (
+            {mounted && user ? (
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 group transition-all duration-300 hover:scale-110"
+                  className="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
                 >
-                  <div className="relative">
-                    <Image
-                      className="h-10 w-10 rounded-full object-cover ring-2 ring-white/50 group-hover:ring-slate-300 transition-all duration-300"
-                      src={user.avatarUrl || "/default-avatar.png"}
-                      alt="User avatar"
-                      width={40}
-                      height={40}
-                    />
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
+                  <Image
+                    className="h-10 w-10 rounded-full object-cover"
+                    src={user.avatarUrl || "/default-avatar.png"}
+                    alt="User avatar"
+                    width={40}
+                    height={40}
+                  />
                 </button>
                 {dropdownOpen && (
                   <div
-                    className="origin-top-right absolute right-0 mt-3 w-52 rounded-xl shadow-2xl py-2 bg-white/95 backdrop-blur-xl ring-1 ring-slate-200/50 focus:outline-none transition ease-out duration-200 transform opacity-100 scale-100"
+                    className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none transition ease-out duration-100 transform opacity-100 scale-100"
                     role="menu"
                   >
                     <div className="px-4 py-3">
@@ -279,13 +271,15 @@ export default function Header({
                   </div>
                 )}
               </div>
-            ) : (
+            ) : mounted && !user ? (
               <Link
                 href="/login"
-                className="group inline-flex items-center justify-center px-5 py-2.5 border-2 border-slate-300 text-sm font-semibold rounded-full text-slate-700 bg-white/80 backdrop-blur-sm hover:bg-slate-50/90 hover:border-slate-400 transition-all duration-300 shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-black/10 hover:scale-105"
+                className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50 transition-colors"
               >
-                <span className="relative z-10">Đăng nhập</span>
+                Đăng nhập
               </Link>
+            ) : (
+              <div className="w-24 h-10 bg-gray-200 animate-pulse rounded-full"></div>
             )}
           </div>
 
@@ -332,76 +326,184 @@ export default function Header({
       </div>
 
       {/* Category Bar - Desktop */}
-      <nav className="hidden md:block bg-white/90 backdrop-blur-lg border-t border-slate-200/50">
+      <nav
+        className="hidden md:block bg-white border-t border-gray-200"
+        ref={categoriesRef}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center items-center gap-x-8 h-12">
-            {categories.map((category) => (
+          <div className="flex items-center justify-center gap-x-6 h-12 relative">
+            {/* "Tất cả danh mục" Button - Đặt đầu tiên */}
+            <div
+              className="relative"
+              onMouseEnter={handleShowAllCategories}
+              onMouseLeave={handleHideAllCategories}
+            >
+              <div className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-emerald-600 transition-colors py-3 px-3 rounded-md hover:bg-gray-50 cursor-pointer">
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h7"
+                  />
+                </svg>
+                Tất cả danh mục
+                <svg
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    showAllCategories ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </div>
+
+              {/* All Categories Mega Menu */}
+              {showAllCategories && (
+                <div className="absolute left-0 top-full pt-2 w-screen max-w-4xl z-50">
+                  <div className="rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 border">
+                    <div className="p-6">
+                      <div className="mb-4">
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          Tất cả danh mục
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          Khám phá tất cả sản phẩm
+                        </p>
+                      </div>
+                      <div className="grid grid-cols-3 gap-6 max-h-96 overflow-y-auto">
+                        {categories.map((category) => (
+                          <div key={category._id} className="space-y-2">
+                            <Link
+                              href={`/categories/${category._id}`}
+                              className="block text-sm font-semibold text-gray-900 hover:text-emerald-600 transition-colors"
+                            >
+                              {category.name}
+                            </Link>
+                            {category.subCategories &&
+                              category.subCategories.length > 0 && (
+                                <div className="space-y-1 pl-2">
+                                  {category.subCategories
+                                    .slice(0, 5)
+                                    .map((sub) => (
+                                      <Link
+                                        key={sub._id}
+                                        href={`/categories/${category._id}/sub/${sub._id}`}
+                                        className="block text-xs text-gray-600 hover:text-emerald-600 transition-colors"
+                                      >
+                                        {sub.name}
+                                      </Link>
+                                    ))}
+                                </div>
+                              )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Separator */}
+            <div className="w-px h-6 bg-gray-300"></div>
+
+            {/* Visible Categories */}
+            {visibleCategories.map((category) => (
               <div
-                key={category.name}
+                key={category._id}
                 className="relative flex"
                 onMouseEnter={() =>
+                  category.subCategories &&
                   category.subCategories.length > 0 &&
-                  setActiveCategory(category.name)
+                  handleMouseEnterCategory(category._id)
                 }
-                onMouseLeave={() => setActiveCategory(null)}
+                onMouseLeave={handleMouseLeaveCategory}
               >
                 <Link
-                  href={category.href}
-                  className="flex items-center gap-1 text-sm font-semibold text-slate-700 hover:text-slate-900 transition-all duration-300 py-3 group relative overflow-hidden rounded-lg px-3 hover:bg-slate-50/80"
+                  href={`/categories/${category._id}`}
+                  className="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-emerald-600 transition-colors py-3 whitespace-nowrap"
                 >
                   {category.name}
-                  {category.subCategories.length > 0 && (
-                    <svg
-                      className={`w-4 h-4 transition-transform duration-200 ${
-                        activeCategory === category.name ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  )}
+                  {category.subCategories &&
+                    category.subCategories.length > 0 && (
+                      <svg
+                        className={`w-4 h-4 transition-transform duration-200 ${
+                          activeCategory === category._id ? "rotate-180" : ""
+                        }`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    )}
                 </Link>
-                {activeCategory === category.name &&
+
+                {/* Subcategories Dropdown */}
+                {activeCategory === category._id &&
+                  category.subCategories &&
                   category.subCategories.length > 0 && (
-                    <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-60">
-                      <div className="rounded-xl shadow-2xl bg-white/95 backdrop-blur-xl ring-1 ring-slate-200/50 z-20">
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-64 z-50">
+                      <div className="rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 border">
                         <div
-                          className="py-1"
+                          className="py-2"
                           role="menu"
                           aria-orientation="vertical"
                         >
-                          {category.subCategories.map((sub) => (
-                            <Link
-                              key={sub.name}
-                              href={sub.href}
-                              className="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50/80 hover:text-slate-900 transition-all duration-300 rounded-lg mx-2 group"
-                              role="menuitem"
-                            >
-                              <span className="group-hover:translate-x-1 transition-transform duration-300 inline-block">
+                          <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase border-b">
+                            {category.name}
+                          </div>
+                          <div className="max-h-80 overflow-y-auto">
+                            {category.subCategories.map((sub) => (
+                              <Link
+                                key={sub._id}
+                                href={`/categories/${category._id}/sub/${sub._id}`}
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                                role="menuitem"
+                              >
                                 {sub.name}
-                              </span>
-                            </Link>
-                          ))}
+                              </Link>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>
                   )}
               </div>
             ))}
+
+            {/* Loading state */}
+            {isLoading && (
+              <div className="flex items-center gap-2 text-sm text-gray-500">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-emerald-600"></div>
+                Đang tải danh mục...
+              </div>
+            )}
           </div>
         </div>
       </nav>
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden" id="mobile-menu" ref={mobileMenuRef}>
+        <div className="md:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <form className="p-2" onSubmit={submitSearch}>
               <input
@@ -447,13 +549,18 @@ export default function Header({
             </p>
             {categories.map((cat) => (
               <Link
-                key={cat.name}
-                href={cat.href}
+                key={cat._id}
+                href={`/categories/${cat._id}`}
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
               >
                 {cat.name}
               </Link>
             ))}
+            {isLoading && (
+              <div className="px-3 py-2 text-sm text-gray-500">
+                Đang tải danh mục...
+              </div>
+            )}
           </div>
         </div>
       )}

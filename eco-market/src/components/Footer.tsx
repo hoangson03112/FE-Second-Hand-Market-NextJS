@@ -1,4 +1,3 @@
-
 import React from "react";
 import Link from "next/link";
 
@@ -7,9 +6,7 @@ const FooterSection: React.FC<{ title: string; children: React.ReactNode }> = ({
   children,
 }) => (
   <div>
-    <h3 className="text-xs font-bold uppercase text-gray-600 mb-4">
-      {title}
-    </h3>
+    <h3 className="text-xs font-bold uppercase text-gray-600 mb-4">{title}</h3>
     <ul className="space-y-2">{children}</ul>
   </div>
 );

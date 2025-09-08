@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import useMounted from "@/hooks/useMounted";
 // Using simple icons since Heroicons might not be installed
 const ChevronUpIcon = ({ className }: { className: string }) => (
   <svg
@@ -177,10 +178,10 @@ const statsData = [
 
 const Home = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useMounted();
 
   useEffect(() => {
-    setIsMounted(true);
+    if (!isMounted) return;
 
     const handleScroll = () => {
       if (window.scrollY > 300) {
@@ -190,14 +191,18 @@ const Home = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [isMounted]);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const featuresData = [
