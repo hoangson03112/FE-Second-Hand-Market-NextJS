@@ -1,0 +1,105 @@
+@theme {
+  --text-h1: clamp(43px, 6.3vw, 114px);
+  --text-h2: clamp(28px, 3.4vw, 65px);
+  --text-h3: clamp(20px, 2.1vw, 40px);
+  --text-h4: clamp(18px, 2.6vw, 36px);
+  --text-h5: clamp(18px, 1.8vw, 30px);
+  --text-h6: clamp(16px, 1.4vw, 24px);
+
+  --text-body-xs: clamp(12px, 0.85vw, 14px);
+  --text-body-xs-2: clamp(14px, 1vw, 16px);
+  --text-body-sm: clamp(15px, 1.2vw, 18px);
+  --text-body-md: clamp(16px, 1.3vw, 24px);
+  --text-body-lg: clamp(15px, 2vw, 24px);
+
+  --text-typography-md: clamp(12px, 1.4vw, 24px);
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+}
+
+@utility text-h1-* {
+  font-size: var(--text-h1);
+  font-weight: --value(--font-weight- *);
+}
+@utility text-h2-* {
+  font-size: var(--text-h2);
+  font-weight: --value(--font-weight- *);
+}
+@utility text-h3-* {
+  font-size: var(--text-h3);
+  font-weight: --value(--font-weight- *);
+}
+@utility text-h4-* {
+  font-size: var(--text-h4);
+  font-weight: --value(--font-weight- *);
+}
+@utility text-h5-* {
+  font-size: var(--text-h5);
+  font-weight: --value(--font-weight- *);
+}
+@utility text-h6-* {
+  font-size: var(--text-h6);
+  font-weight: --value(--font-weight- *);
+}
+
+@utility text-body-xs-* {
+  font-size: var(--text-body-xs);
+  font-weight: --value(--font-weight- *);
+}
+@utility text-body-sm-* {
+  font-size: var(--text-body-sm);
+  font-weight: --value(--font-weight- *);
+}
+@utility text-body-md-* {
+  font-size: var(--text-body-md);
+  font-weight: --value(--font-weight- *);
+}
+@utility text-body-lg-* {
+  font-size: var(--text-body-lg);
+  font-weight: --value(--font-weight- *);
+}
+@utility text-typography-md-* {
+  font-size: var(--text-typography-md);
+  font-weight: --value(--font-weight- *);
+}
+
+/* Breakpoint-specific overrides for 1440px and 1920px */
+@media (min-width: 1440px) {
+  :root {
+    --text-h1: clamp(43px, 6vw, 100px);
+    --text-h2: clamp(28px, 3.2vw, 58px);
+    --text-h3: clamp(20px, 2vw, 36px);
+    --text-h4: clamp(16px, 2.4vw, 32px);
+    --text-h5: clamp(14px, 1.6vw, 24px);
+    --text-h6: clamp(16px, 1.2vw, 20px);
+
+    --text-body-xs: clamp(12px, 0.85vw, 14px);
+    --text-body-xs-2: clamp(14px, 1vw, 16px);
+    --text-body-sm: clamp(15px, 1vw, 16px);
+    --text-body-md: clamp(16px, 1.1vw, 20px);
+    --text-body-lg: clamp(15px, 1.8vw, 22px);
+
+    --text-typography-md: clamp(12px, 1.2vw, 20px);
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --text-h1: clamp(43px, 6.3vw, 114px);
+    --text-h2: clamp(28px, 3.4vw, 65px);
+    --text-h3: clamp(20px, 2.1vw, 40px);
+    --text-h4: clamp(16px, 2.6vw, 36px);
+    --text-h5: clamp(14px, 1.8vw, 30px);
+    --text-h6: clamp(16px, 1.4vw, 24px);
+
+    --text-body-xs: clamp(12px, 0.85vw, 14px);
+    --text-body-xs-2: clamp(14px, 1vw, 16px);
+    --text-body-sm: clamp(15px, 1.2vw, 18px);
+    --text-body-md: clamp(16px, 1.3vw, 24px);
+    --text-body-lg: clamp(15px, 2vw, 24px);
+    --text-typography-md: clamp(12px, 1.4vw, 24px);
+  }
+}

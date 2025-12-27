@@ -1,26 +1,1655 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: white;
+  --foreground: black;
+
+  /* Màu cam chủ đạo (muted orange) */
+  --orange-50: #fff7ed;
+  --orange-100: #ffedd5;
+  --orange-200: #fed7aa;
+  --orange-300: #fdba74;
+  --orange-400: #fb923c;
+  --orange-500: #f97316;
+  --orange-600: #ea580c;
+  --orange-700: #c2410c;
+  --orange-800: #9a3412;
+  --orange-900: #7c2d12;
+  --orange-950: #431407;
+
+  /* Màu xanh blue chủ đạo (muted blue) */
+  --blue-50: #eff6ff;
+  --blue-100: #dbeafe;
+  --blue-200: #bfdbfe;
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+  --blue-800: #1e40af;
+  --blue-900: #1e3a8a;
+  --blue-950: #172554;
+
+  /* Màu neutral */
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  --neutral-950: #0a0a0a;
+
+  /* Màu semantic */
+  --success: #10b981;
+  --success-light: #d1fae5;
+  --success-dark: #047857;
+  --error: #ef4444;
+  --error-light: #fee2e2;
+  --error-dark: #b91c1c;
+  --warning: #f59e0b;
+  --warning-light: #fef3c7;
+  --warning-dark: #d97706;
+  --info: #3b82f6;
+  --info-light: #dbeafe;
+  --info-dark: #1e40af;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --font-gilroy: var(--font-gilroy);
+  --font-testsohnebreit: var(--font-testsohnebreit);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  /* Breakpoints */
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  --breakpoint-3xl: 1920px;
+  --breakpoint-4xl: 2560px;
+
+  /* Orange Colors */
+  --color-orange-50: var(--orange-50);
+  --color-orange-100: var(--orange-100);
+  --color-orange-200: var(--orange-200);
+  --color-orange-300: var(--orange-300);
+  --color-orange-400: var(--orange-400);
+  --color-orange-500: var(--orange-500);
+  --color-orange-600: var(--orange-600);
+  --color-orange-700: var(--orange-700);
+  --color-orange-800: var(--orange-800);
+  --color-orange-900: var(--orange-900);
+  --color-orange-950: var(--orange-950);
+
+  /* Blue Colors */
+  --color-blue-50: var(--blue-50);
+  --color-blue-100: var(--blue-100);
+  --color-blue-200: var(--blue-200);
+  --color-blue-300: var(--blue-300);
+  --color-blue-400: var(--blue-400);
+  --color-blue-500: var(--blue-500);
+  --color-blue-600: var(--blue-600);
+  --color-blue-700: var(--blue-700);
+  --color-blue-800: var(--blue-800);
+  --color-blue-900: var(--blue-900);
+  --color-blue-950: var(--blue-950);
+
+  /* Neutral Colors */
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-600: var(--neutral-600);
+  --color-neutral-700: var(--neutral-700);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-900: var(--neutral-900);
+  --color-neutral-950: var(--neutral-950);
+
+  /* Semantic Colors */
+  --color-success: var(--success);
+  --color-success-light: var(--success-light);
+  --color-success-dark: var(--success-dark);
+  --color-error: var(--error);
+  --color-error-light: var(--error-light);
+  --color-error-dark: var(--error-dark);
+  --color-warning: var(--warning);
+  --color-warning-light: var(--warning-light);
+  --color-warning-dark: var(--warning-dark);
+  --color-info: var(--info);
+  --color-info-light: var(--info-light);
+  --color-info-dark: var(--info-dark);
+
+  /* Primary & Secondary (sử dụng màu cam và blue nhẹ) */
+  --color-primary: var(--orange-400);
+  --color-primary-light: var(--orange-300);
+  --color-primary-dark: var(--orange-600);
+  --color-secondary: var(--blue-400);
+  --color-secondary-light: var(--blue-300);
+  --color-secondary-dark: var(--blue-600);
+
+  /* Border Colors */
+  --color-border: var(--neutral-200);
+  --color-border-light: var(--neutral-100);
+  --color-border-dark: var(--neutral-300);
+  --color-border-primary: var(--orange-300);
+  --color-border-secondary: var(--blue-300);
+
+  /* Text Colors */
+  --color-text-primary: var(--neutral-900);
+  --color-text-secondary: var(--neutral-600);
+  --color-text-tertiary: var(--neutral-400);
+  --color-text-inverse: var(--neutral-50);
+  --color-text-primary-color: var(--orange-600);
+  --color-text-secondary-color: var(--blue-600);
+
+  /* Background Colors */
+  --color-bg-primary: var(--background);
+  --color-bg-secondary: var(--neutral-50);
+  --color-bg-tertiary: var(--neutral-100);
+  --color-bg-primary-tint: var(--orange-50);
+  --color-bg-secondary-tint: var(--blue-50);
+  --color-bg-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Shadow Colors */
+  --color-shadow-sm: rgba(0, 0, 0, 0.05);
+  --color-shadow-md: rgba(0, 0, 0, 0.1);
+  --color-shadow-lg: rgba(0, 0, 0, 0.15);
+  --color-shadow-xl: rgba(0, 0, 0, 0.2);
+  --color-shadow-primary: rgba(249, 115, 22, 0.2);
+  --color-shadow-secondary: rgba(59, 130, 246, 0.2);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-gilroy);
+}
+
+.mask-diagonal {
+  -webkit-mask-image: linear-gradient(to bottom right,
+      black 90%,
+      transparent 100%);
+  mask-image: linear-gradient(to bottom right, black 90%, transparent 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari and Opera */
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR STYLES
+   ============================================ */
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral-100);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+      var(--orange-400) 0%,
+      var(--blue-400) 100%);
+  border-radius: 10px;
+  border: 2px solid var(--neutral-100);
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg,
+      var(--orange-500) 0%,
+      var(--blue-500) 100%);
+  border: 2px solid var(--neutral-50);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg,
+      var(--orange-600) 0%,
+      var(--blue-600) 100%);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--orange-400) var(--neutral-100);
+}
+
+/* Smooth scrollbar for all elements */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for specific containers */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--neutral-50);
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg,
+      var(--orange-200) 0%,
+      var(--blue-200) 100%);
+  border-radius: 8px;
+  border: 1px solid var(--neutral-100);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg,
+      var(--orange-400) 0%,
+      var(--blue-400) 100%);
+}
+
+[data-lenis-prevent] {
+  scroll-behavior: auto !important;
+}
+
+.scroll-smooth-native {
+  scroll-behavior: smooth;
+}
+
+/* Smooth dropdown */
+.dropdown-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  /* transform: translateY(8px); */
+  transition: max-height 0.5s ease, opacity 0.2s ease, transform 0.5s ease;
+}
+
+.group:hover .dropdown-wrapper {
+  max-height: 800px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   UTILITY CLASSES - Background Colors
+   ============================================ */
+
+/* Primary Background (Orange) */
+.bg-primary {
+  background-color: var(--orange-400);
+}
+
+.bg-primary-light {
+  background-color: var(--orange-300);
+}
+
+.bg-primary-dark {
+  background-color: var(--orange-600);
+}
+
+.bg-primary-tint {
+  background-color: var(--orange-50);
+}
+
+/* Secondary Background (Blue) */
+.bg-secondary {
+  background-color: var(--blue-400);
+}
+
+.bg-secondary-light {
+  background-color: var(--blue-300);
+}
+
+.bg-secondary-dark {
+  background-color: var(--blue-600);
+}
+
+.bg-secondary-tint {
+  background-color: var(--blue-50);
+}
+
+/* Neutral Backgrounds */
+.bg-neutral {
+  background-color: var(--neutral-100);
+}
+
+.bg-neutral-light {
+  background-color: var(--neutral-50);
+}
+
+.bg-neutral-dark {
+  background-color: var(--neutral-200);
+}
+
+/* Semantic Backgrounds */
+.bg-success {
+  background-color: var(--success);
+}
+
+.bg-success-light {
+  background-color: var(--success-light);
+}
+
+.bg-error {
+  background-color: var(--error);
+}
+
+.bg-error-light {
+  background-color: var(--error-light);
+}
+
+.bg-warning {
+  background-color: var(--warning);
+}
+
+.bg-warning-light {
+  background-color: var(--warning-light);
+}
+
+.bg-info {
+  background-color: var(--info);
+}
+
+.bg-info-light {
+  background-color: var(--info-light);
+}
+
+/* ============================================
+   UTILITY CLASSES - Text Colors
+   ============================================ */
+
+.text-primary {
+  color: var(--neutral-900);
+}
+
+.text-secondary {
+  color: var(--neutral-600);
+}
+
+.text-tertiary {
+  color: var(--neutral-400);
+}
+
+.text-inverse {
+  color: var(--neutral-50);
+}
+
+/* Primary Text (Orange) */
+.text-primary-color {
+  color: var(--orange-600);
+}
+
+.text-primary-color-light {
+  color: var(--orange-400);
+}
+
+.text-primary-color-dark {
+  color: var(--orange-700);
+}
+
+/* Secondary Text (Blue) */
+.text-secondary-color {
+  color: var(--blue-600);
+}
+
+.text-secondary-color-light {
+  color: var(--blue-400);
+}
+
+.text-secondary-color-dark {
+  color: var(--blue-700);
+}
+
+/* Semantic Text Colors */
+.text-success {
+  color: var(--success);
+}
+
+.text-error {
+  color: var(--error);
+}
+
+.text-warning {
+  color: var(--warning);
+}
+
+.text-info {
+  color: var(--info);
+}
+
+/* ============================================
+   UTILITY CLASSES - Border Colors
+   ============================================ */
+
+.border-default {
+  border-color: var(--neutral-200);
+}
+
+.border-light {
+  border-color: var(--neutral-100);
+}
+
+.border-dark {
+  border-color: var(--neutral-300);
+}
+
+.border-primary {
+  border-color: var(--orange-300);
+}
+
+.border-primary-dark {
+  border-color: var(--orange-500);
+}
+
+.border-secondary {
+  border-color: var(--blue-300);
+}
+
+.border-secondary-dark {
+  border-color: var(--blue-500);
+}
+
+.border-success {
+  border-color: var(--success);
+}
+
+.border-error {
+  border-color: var(--error);
+}
+
+.border-warning {
+  border-color: var(--warning);
+}
+
+.border-info {
+  border-color: var(--info);
+}
+
+/* ============================================
+   UTILITY CLASSES - Hover States
+   ============================================ */
+
+.hover-bg-primary:hover {
+  background-color: var(--orange-500);
+}
+
+.hover-bg-secondary:hover {
+  background-color: var(--blue-500);
+}
+
+.hover-bg-neutral:hover {
+  background-color: var(--neutral-200);
+}
+
+.hover-text-primary:hover {
+  color: var(--orange-600);
+}
+
+.hover-text-secondary:hover {
+  color: var(--blue-600);
+}
+
+.hover-border-primary:hover {
+  border-color: var(--orange-500);
+}
+
+.hover-border-secondary:hover {
+  border-color: var(--blue-500);
+}
+
+/* ============================================
+   UTILITY CLASSES - Focus States
+   ============================================ */
+
+.focus-ring-primary:focus {
+  outline: 2px solid var(--orange-400);
+  outline-offset: 2px;
+}
+
+.focus-ring-secondary:focus {
+  outline: 2px solid var(--blue-400);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   UTILITY CLASSES - Gradients
+   ============================================ */
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, var(--orange-400), var(--orange-600));
+}
+
+.bg-gradient-secondary {
+  background: linear-gradient(135deg, var(--blue-400), var(--blue-600));
+}
+
+.bg-gradient-primary-secondary {
+  background: linear-gradient(135deg, var(--orange-400), var(--blue-400));
+}
+
+.bg-gradient-secondary-primary {
+  background: linear-gradient(135deg, var(--blue-400), var(--orange-400));
+}
+
+/* ============================================
+   UTILITY CLASSES - Shadows
+   ============================================ */
+
+.shadow-primary {
+  box-shadow: 0 4px 6px -1px var(--color-shadow-primary),
+    0 2px 4px -1px var(--color-shadow-primary);
+}
+
+.shadow-secondary {
+  box-shadow: 0 4px 6px -1px var(--color-shadow-secondary),
+    0 2px 4px -1px var(--color-shadow-secondary);
+}
+
+.shadow-primary-lg {
+  box-shadow: 0 10px 15px -3px var(--color-shadow-primary),
+    0 4px 6px -2px var(--color-shadow-primary);
+}
+
+.shadow-secondary-lg {
+  box-shadow: 0 10px 15px -3px var(--color-shadow-secondary),
+    0 4px 6px -2px var(--color-shadow-secondary);
+}
+
+/* ============================================
+   UTILITY CLASSES - Transitions
+   ============================================ */
+
+.transition-colors {
+  transition-property: color, background-color, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* ============================================
+   UTILITY CLASSES - Overlay
+   ============================================ */
+
+.bg-overlay {
+  background-color: var(--color-bg-overlay);
+}
+
+.bg-overlay-light {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.bg-overlay-dark {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* ============================================
+   UTILITY CLASSES - Buttons
+   ============================================ */
+
+.btn:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Button Sizes */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  min-height: 2rem;
+}
+
+.btn-md {
+  padding: 0.625rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  min-height: 2.5rem;
+}
+
+.btn-lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  min-height: 3rem;
+}
+
+.btn-xl {
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  min-height: 3.5rem;
+}
+
+/* Button Variants - Primary (Orange) */
+.btn-primary {
+  background-color: var(--orange-600);
+  color: white;
+  border-color: var(--orange-600);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--orange-700);
+  border-color: var(--orange-700);
+}
+
+.btn-primary:active:not(:disabled) {
+  background-color: var(--orange-800);
+  border-color: var(--orange-800);
+  transform: scale(0.98);
+}
+
+.btn-primary:focus {
+  outline: 2px solid var(--orange-400);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--color-shadow-primary);
+}
+
+/* Button Variants - Secondary (Blue) */
+.btn-secondary {
+  background-color: var(--blue-400);
+  color: white;
+  border-color: var(--blue-400);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--blue-500);
+  border-color: var(--blue-500);
+}
+
+.btn-secondary:active:not(:disabled) {
+  background-color: var(--blue-600);
+  border-color: var(--blue-600);
+  transform: scale(0.98);
+}
+
+.btn-secondary:focus {
+  outline: 2px solid var(--blue-400);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--color-shadow-secondary);
+}
+
+/* Button Variants - Outline Primary */
+.btn-outline-primary {
+  background-color: transparent;
+  color: var(--orange-600);
+  border-color: var(--orange-300);
+}
+
+.btn-outline-primary:hover:not(:disabled) {
+  background-color: var(--orange-50);
+  border-color: var(--orange-400);
+  color: var(--orange-700);
+}
+
+.btn-outline-primary:active:not(:disabled) {
+  background-color: var(--orange-100);
+  border-color: var(--orange-500);
+  transform: scale(0.98);
+}
+
+.btn-outline-primary:focus {
+  outline: 2px solid var(--orange-400);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--color-shadow-primary);
+}
+
+/* Button Variants - Outline Secondary */
+.btn-outline-secondary {
+  background-color: transparent;
+  color: var(--blue-600);
+  border-color: var(--blue-300);
+}
+
+.btn-outline-secondary:hover:not(:disabled) {
+  background-color: var(--blue-50);
+  border-color: var(--blue-400);
+  color: var(--blue-700);
+}
+
+.btn-outline-secondary:active:not(:disabled) {
+  background-color: var(--blue-100);
+  border-color: var(--blue-500);
+  transform: scale(0.98);
+}
+
+.btn-outline-secondary:focus {
+  outline: 2px solid var(--blue-400);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--color-shadow-secondary);
+}
+
+/* Button Variants - Ghost Primary */
+.btn-ghost-primary {
+  background-color: transparent;
+  color: var(--orange-600);
+  border-color: transparent;
+}
+
+.btn-ghost-primary:hover:not(:disabled) {
+  background-color: var(--orange-50);
+  color: var(--orange-700);
+}
+
+.btn-ghost-primary:active:not(:disabled) {
+  background-color: var(--orange-100);
+  transform: scale(0.98);
+}
+
+/* Button Variants - Ghost Secondary */
+.btn-ghost-secondary {
+  background-color: transparent;
+  color: var(--blue-600);
+  border-color: transparent;
+}
+
+.btn-ghost-secondary:hover:not(:disabled) {
+  background-color: var(--blue-50);
+  color: var(--blue-700);
+}
+
+.btn-ghost-secondary:active:not(:disabled) {
+  background-color: var(--blue-100);
+  transform: scale(0.98);
+}
+
+/* Button Variants - Neutral/Default */
+.btn-neutral {
+  background-color: var(--neutral-100);
+  color: var(--neutral-900);
+  border-color: var(--neutral-200);
+}
+
+.btn-neutral:hover:not(:disabled) {
+  background-color: var(--neutral-200);
+  border-color: var(--neutral-300);
+}
+
+.btn-neutral:active:not(:disabled) {
+  background-color: var(--neutral-300);
+  transform: scale(0.98);
+}
+
+.btn-neutral:focus {
+  outline: 2px solid var(--neutral-400);
+  outline-offset: 2px;
+}
+
+/* Button Variants - Link */
+.btn-link {
+  background-color: transparent;
+  color: var(--orange-600);
+  border-color: transparent;
+  text-decoration: underline;
+  padding: 0.25rem 0.5rem;
+}
+
+.btn-link:hover:not(:disabled) {
+  color: var(--orange-700);
+  text-decoration: none;
+}
+
+.btn-link-secondary {
+  background-color: transparent;
+  color: var(--blue-600);
+  border-color: transparent;
+  text-decoration: underline;
+  padding: 0.25rem 0.5rem;
+}
+
+.btn-link-secondary:hover:not(:disabled) {
+  color: var(--blue-700);
+  text-decoration: none;
+}
+
+/* Button Variants - Success, Error, Warning, Info */
+.btn-success {
+  background-color: var(--success);
+  color: white;
+  border-color: var(--success);
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: var(--success-dark);
+  border-color: var(--success-dark);
+}
+
+.btn-error {
+  background-color: var(--error);
+  color: white;
+  border-color: var(--error);
+}
+
+.btn-error:hover:not(:disabled) {
+  background-color: var(--error-dark);
+  border-color: var(--error-dark);
+}
+
+.btn-warning {
+  background-color: var(--warning);
+  color: white;
+  border-color: var(--warning);
+}
+
+.btn-warning:hover:not(:disabled) {
+  background-color: var(--warning-dark);
+  border-color: var(--warning-dark);
+}
+
+.btn-info {
+  background-color: var(--info);
+  color: white;
+  border-color: var(--info);
+}
+
+.btn-info:hover:not(:disabled) {
+  background-color: var(--info-dark);
+  border-color: var(--info-dark);
+}
+
+/* Button Full Width */
+.btn-full {
+  width: 100%;
+}
+
+/* Button Rounded Variants */
+.btn-rounded {
+  border-radius: 9999px;
+}
+
+.btn-square {
+  border-radius: 0.25rem;
+}
+
+/* Button with Icon */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-icon-only {
+  padding: 0.5rem;
+  aspect-ratio: 1;
+}
+
+/* Button Loading State */
+.btn-loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn-loading::after {
+  content: "";
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  top: 50%;
+  left: 50%;
+  margin-left: -0.5rem;
+  margin-top: -0.5rem;
+  border: 2px solid currentColor;
+  border-radius: 9999px;
+  border-right-color: transparent;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   ANIMATIONS - Enhanced for Home Page
+   ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes floatSlow {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rotateIn {
+  from {
+    opacity: 0;
+    transform: rotate(-10deg) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  70% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Animation Utility Classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.6s ease-out forwards;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 0.6s ease-out forwards;
+}
+
+.animate-fade-in-right {
+  animation: fadeInRight 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(to right,
+      var(--neutral-200) 0%,
+      var(--neutral-100) 50%,
+      var(--neutral-200) 100%);
+  background-size: 1000px 100%;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+.animate-slide-in-bottom {
+  animation: slideInFromBottom 0.8s ease-out forwards;
+}
+
+.animate-slide-in-top {
+  animation: slideInFromTop 0.8s ease-out forwards;
+}
+
+.animate-rotate-in {
+  animation: rotateIn 0.6s ease-out forwards;
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.8s ease-out forwards;
+}
+
+/* Stagger Animation Delays */
+.animation-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+.animation-delay-700 {
+  animation-delay: 700ms;
+}
+
+.animation-delay-800 {
+  animation-delay: 800ms;
+}
+
+/* Hover Effects */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px var(--color-shadow-primary);
+}
+
+/* Glassmorphism Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   ANIMATED BACKGROUNDS
+   ============================================ */
+
+/* Animated Gradient Background */
+.bg-animated-gradient {
+  background: linear-gradient(-45deg,
+      var(--orange-50),
+      var(--blue-50),
+      var(--orange-100),
+      var(--blue-100),
+      var(--orange-50));
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+.bg-animated-gradient-primary {
+  background: linear-gradient(-45deg,
+      var(--orange-400),
+      var(--orange-500),
+      var(--orange-600),
+      var(--orange-500),
+      var(--orange-400));
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite;
+}
+
+.bg-animated-gradient-secondary {
+  background: linear-gradient(-45deg,
+      var(--blue-400),
+      var(--blue-500),
+      var(--blue-600),
+      var(--blue-500),
+      var(--blue-400));
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite;
+}
+
+.bg-animated-gradient-mixed {
+  background: linear-gradient(-45deg,
+      var(--orange-400),
+      var(--blue-400),
+      var(--orange-500),
+      var(--blue-500),
+      var(--orange-400));
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+}
+
+/* Mesh Gradient Animation */
+.bg-mesh-gradient {
+  background:
+    radial-gradient(at 0% 0%, var(--orange-200) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, var(--blue-200) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, var(--orange-300) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, var(--blue-300) 0px, transparent 50%);
+  background-size: 200% 200%;
+  animation: meshMove 20s ease infinite;
+}
+
+@keyframes meshMove {
+  0% {
+    background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
+  }
+
+  25% {
+    background-position: 50% 50%, 50% 0%, 100% 50%, 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 100%, 0% 100%, 0% 0%, 100% 0%;
+  }
+
+  75% {
+    background-position: 50% 50%, 50% 100%, 0% 50%, 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%;
+  }
+}
+
+/* Animated Particles Background */
+.bg-particles {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-particles::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 20% 50%, var(--orange-300) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, var(--blue-300) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, var(--orange-200) 0%, transparent 50%),
+    radial-gradient(circle at 90% 40%, var(--blue-200) 0%, transparent 50%);
+  background-size: 200% 200%;
+  animation: particlesMove 25s ease infinite;
+  opacity: 0.6;
+}
+
+@keyframes particlesMove {
+
+  0%,
+  100% {
+    background-position: 0% 0%, 100% 100%, 50% 50%, 100% 0%;
+    transform: scale(1);
+  }
+
+  25% {
+    background-position: 100% 0%, 0% 100%, 0% 0%, 50% 50%;
+    transform: scale(1.1);
+  }
+
+  50% {
+    background-position: 100% 100%, 0% 0%, 100% 0%, 0% 50%;
+    transform: scale(1);
+  }
+
+  75% {
+    background-position: 0% 100%, 100% 0%, 50% 50%, 0% 0%;
+    transform: scale(1.1);
+  }
+}
+
+/* Wave Animation */
+.bg-wave {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-wave::before,
+.bg-wave::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 70%);
+  animation: waveMove 8s linear infinite;
+}
+
+.bg-wave::before {
+  top: -50%;
+  left: -50%;
+  animation-delay: 0s;
+}
+
+.bg-wave::after {
+  top: -50%;
+  left: -50%;
+  animation-delay: 4s;
+  opacity: 0.5;
+}
+
+@keyframes waveMove {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Shimmer Background */
+.bg-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-shimmer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent);
+  animation: shimmerMove 3s infinite;
+}
+
+@keyframes shimmerMove {
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+/* Animated Grid Background */
+.bg-animated-grid {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+
+  100% {
+    background-position: 50px 50px, 50px 50px;
+  }
+}
+
+/* Floating Orbs Background */
+.bg-floating-orbs {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-floating-orbs::before,
+.bg-floating-orbs::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.3;
+  animation: floatOrb 20s ease-in-out infinite;
+}
+
+.bg-floating-orbs::before {
+  width: 300px;
+  height: 300px;
+  background: var(--orange-400);
+  top: -150px;
+  left: -150px;
+  animation-delay: 0s;
+}
+
+.bg-floating-orbs::after {
+  width: 400px;
+  height: 400px;
+  background: var(--blue-400);
+  bottom: -200px;
+  right: -200px;
+  animation-delay: 10s;
+}
+
+@keyframes floatOrb {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  25% {
+    transform: translate(50px, -50px) scale(1.1);
+  }
+
+  50% {
+    transform: translate(-30px, 30px) scale(0.9);
+  }
+
+  75% {
+    transform: translate(30px, 50px) scale(1.05);
+  }
+}
+
+/* Animated Dots Background */
+.bg-animated-dots {
+  background-image: radial-gradient(circle, var(--orange-300) 1px, transparent 1px);
+  background-size: 30px 30px;
+  animation: dotsMove 20s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes dotsMove {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 30px 30px;
+  }
+}
+
+/* Additional Animations for AnimatedBackground */
+@keyframes meshMove {
+
+  0%,
+  100% {
+    background-position: 0% 0%, 100% 100%, 50% 50%, 0% 0%;
+  }
+
+  33% {
+    background-position: 30% 30%, 70% 70%, 30% 70%, 30% 30%;
+  }
+
+  66% {
+    background-position: 70% 70%, 30% 30%, 70% 30%, 70% 70%;
+  }
+}
+
+@keyframes floatOrb {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.25;
+  }
+
+  33% {
+    transform: translate(30px, -30px) scale(1.05);
+    opacity: 0.3;
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+    opacity: 0.2;
+  }
+}
+
+@keyframes rotateShape {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes particleFloat {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translate(50px, -50px) scale(1.5);
+    opacity: 1;
+  }
+}
+
+@keyframes pulseCircle {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(2);
+    opacity: 0.9;
+  }
+}
+
+@keyframes waveMove {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-40px) scale(1.05);
+  }
 }
