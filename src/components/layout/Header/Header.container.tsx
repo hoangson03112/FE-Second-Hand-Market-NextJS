@@ -12,6 +12,7 @@ export default function HeaderContainer() {
     visibleCategories,
     activeCategory,
     showAllCategories,
+    isAuthenticated,
     handleMouseEnterCategory,
     handleMouseLeaveCategory,
     handleShowAllCategories,
@@ -26,11 +27,12 @@ export default function HeaderContainer() {
 
   return (
     <HeaderView
-      visibleCategories={visibleCategories}
-      categories={categories}
+      visibleCategories={visibleCategories || []}
+      categories={categories || []}
       isLoading={isLoading}
       activeCategory={activeCategory}
       showAllCategories={showAllCategories}
+      isAuthenticated={isAuthenticated}
       onMouseEnterCategory={handleMouseEnterCategory}
       onMouseLeaveCategory={handleMouseLeaveCategory}
       onShowAll={handleShowAllCategories}

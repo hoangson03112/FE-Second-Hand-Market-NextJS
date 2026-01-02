@@ -11,14 +11,14 @@ import ProductList from "@/components/feature/categories/ProductList";
 
 type CategoryPageProps = {
   params: Promise<{
-    id: string;
+    slug: string;
   }>;
 };
 
 export default function CategoryPage({ params }: CategoryPageProps) {
-  const { id } = use(params);
+  const { slug } = use(params);
   const [filters, setFilters] = useState<IProductFilters>({
-    category: id,
+    categorySlug: slug,
     sortBy: "newest",
     limit: 20,
     page: 1,
@@ -26,11 +26,11 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
   // Fetch category info
   const { data: categoryData } = useQuery({
-    queryKey: ["category", id],
+    queryKey: ["category", slug],
     queryFn: async () => {
       const response = await CategoryService.getAll();
-      return response.data.data.find(
-        (cat: { _id: string }) => cat._id === id
+      return response.data.find(
+        (cat: { slug: string }) => cat.slug === slug
       );
     },
   });
@@ -40,7 +40,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     data: productsData,
     isLoading,
     error,
-  } = useProductsByCategory(id, {
+  } = useProductsByCategory(slug, {
     sortBy: filters.sortBy,
     minPrice: filters.minPrice,
     maxPrice: filters.maxPrice,
@@ -48,8 +48,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     limit: filters.limit,
     page: filters.page,
   });
-  console.log(productsData);
-  
+
   const breadcrumbs = categoryData
     ? [
         {
@@ -58,7 +57,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         },
         {
           label: categoryData.name,
-          href: `/categories/${id}`,
+          href: `/categories/${slug}`,
         },
       ]
     : undefined;
@@ -70,7 +69,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
       <FilterBar
         filters={filters}
         onFilterChange={setFilters}
-        totalProducts={productsData?.total}
+        totalProducts={productsData?.length}
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -89,6 +88,15 @@ export default function CategoryPage({ params }: CategoryPageProps) {
             products={productsData || []}
             isLoading={isLoading}
             emptyMessage="Không có sản phẩm nào trong danh mục này"
+            pagination={{
+              currentPage: productsData?.page || 1,
+              totalPages: productsData?.totalPages || 1,
+              total: productsData?.total || 0,
+              limit: productsData?.limit || 20,
+            }}
+            onPageChange={(page) => {
+              setFilters((prev) => ({ ...prev, page }));
+            }}
           />
         )}
       </div>

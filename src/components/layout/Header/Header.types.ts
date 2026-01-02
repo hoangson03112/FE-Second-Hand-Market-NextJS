@@ -7,6 +7,7 @@ export type HeaderViewProps = {
   isLoading: boolean;
   activeCategory: string | null;
   showAllCategories: boolean;
+  isAuthenticated: boolean;
   onMouseEnterCategory: (id: string) => void;
   onMouseLeaveCategory: () => void;
   onShowAll: () => void;

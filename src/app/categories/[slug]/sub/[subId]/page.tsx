@@ -11,15 +11,15 @@ import ProductList from "@/components/feature/categories/ProductList";
 
 type SubCategoryPageProps = {
   params: Promise<{
-    id: string;
+    slug: string;
     subId: string;
   }>;
 };
 
 export default function SubCategoryPage({ params }: SubCategoryPageProps) {
-  const { id, subId } = use(params);
+  const { slug, subId } = use(params);
   const [filters, setFilters] = useState<IProductFilters>({
-    category: id,
+    category: slug,
     subCategory: subId,
     sortBy: "newest",
     limit: 20,
@@ -28,15 +28,15 @@ export default function SubCategoryPage({ params }: SubCategoryPageProps) {
 
   // Fetch category and subcategory info
   const { data: categoryData } = useQuery({
-    queryKey: ["category", id],
+    queryKey: ["category", slug],
     queryFn: async () => {
       const response = await CategoryService.getAll();
       const category = response.data.data.find(
-        (cat: { _id: string; subCategories?: Array<{ _id: string }> }) =>
-          cat._id === id
+        (cat: { slug: string; subCategories?: Array<{ slug: string }> }) =>
+          cat.slug === slug
       );
       const subCategory = category?.subCategories?.find(
-        (sub: { _id: string }) => sub._id === subId
+        (sub: { slug: string }) => sub.slug === subId
       );
       return { category, subCategory };
     },
@@ -47,7 +47,7 @@ export default function SubCategoryPage({ params }: SubCategoryPageProps) {
     data: productsData,
     isLoading,
     error,
-  } = useProductsBySubCategory(id, subId, {
+  } = useProductsBySubCategory(slug, subId, {
     sortBy: filters.sortBy,
     minPrice: filters.minPrice,
     maxPrice: filters.maxPrice,
@@ -64,13 +64,13 @@ export default function SubCategoryPage({ params }: SubCategoryPageProps) {
         },
         {
           label: categoryData.category.name,
-          href: `/categories/${id}`,
+          href: `/categories/${slug}`,
         },
         ...(categoryData.subCategory
           ? [
               {
                 label: categoryData.subCategory.name,
-                href: `/categories/${id}/sub/${subId}`,
+                href: `/categories/${slug}/sub/${subId}`,
               },
             ]
           : []),

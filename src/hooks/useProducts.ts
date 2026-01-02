@@ -14,29 +14,33 @@ export function useProducts(filters?: IProductFilters) {
 }
 
 export function useProductsByCategory(
-  categoryId: string,
-  filters?: Omit<IProductFilters, "category">
+  categorySlug: string,
+  filters?: IProductFilters
 ) {
   return useQuery({
-    queryKey: queryKeys.products.byCategory(categoryId, filters),
+    queryKey: queryKeys.products.byCategory(categorySlug, filters),
     queryFn: async () => {
-      const data = await ProductService.getByCategory(categoryId, filters);
+      const data = await ProductService.getByCategory(categorySlug, filters);
       return data;
     },
   });
 }
 
 export function useProductsBySubCategory(
-  categoryId: string,
-  subCategoryId: string,
-  filters?: Omit<IProductFilters, "category" | "subCategory">
+  categorySlug: string,
+  subCategorySlug: string,
+  filters?: IProductFilters
 ) {
   return useQuery({
-    queryKey: queryKeys.products.bySubCategory(categoryId, subCategoryId, filters),
+    queryKey: queryKeys.products.bySubCategory(
+      categorySlug,
+      subCategorySlug,
+      filters
+    ),
     queryFn: async () => {
       const data = await ProductService.getBySubCategory(
-        categoryId,
-        subCategoryId,
+        categorySlug,
+        subCategorySlug,
         filters
       );
       return data;
@@ -44,3 +48,17 @@ export function useProductsBySubCategory(
   });
 }
 
+export function useProduct(id: string) {
+  return useQuery({
+    queryKey: queryKeys.products.detail(id),
+    queryFn: async () => {
+      if (!id) throw new Error("Product ID is required");
+
+      const data = await ProductService.getById(id);
+      console.log(data);
+
+      return data;
+    },
+    enabled: !!id,
+  });
+}

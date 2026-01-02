@@ -3,6 +3,7 @@ import { ICategory, ISubCategory } from "./category";
 export interface IProduct {
   _id: string;
   name: string;
+  slug: string;
   price: number;
   avatar: IImage;
   stock: number;
@@ -37,12 +38,16 @@ export interface IAccount {
 }
 export interface ISeller {
   _id: string;
-  accountId: string;
-  businessAddress: string;
+  fullName: string;
+  avatar: string | null;
   province: string;
-  district: string;
-  ward: string;
-  account: IAccount;
+  from_district_id: string;
+  from_ward_code: string;
+  createdAt: string;
+  businessAddress: string;
+  phoneNumber: string;
+  totalReviews: number;
+  avgRating: number;
 }
 
 export interface IImage {
@@ -55,8 +60,8 @@ export interface IImage {
 }
 
 export interface IProductFilters {
-  category?: string;
-  subCategory?: string;
+  categorySlug?: string;
+  subCategorySlug?: string;
   minPrice?: number;
   maxPrice?: number;
   condition?: string;
@@ -64,4 +69,13 @@ export interface IProductFilters {
   search?: string;
   page?: number;
   limit?: number;
+}
+
+export interface IProductListResponse {
+  success: boolean;
+  data: IProduct[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }

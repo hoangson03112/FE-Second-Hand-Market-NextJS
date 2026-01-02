@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@layer base {
+  html {
+    font-family: -apple-system, BlinkMacSystemFont,
+      "SF Pro Text", "SF Pro Display",
+      "Helvetica Neue", Arial, sans-serif !important;
+  }
+}
+
 :root {
   --background: white;
   --foreground: black;
@@ -62,7 +70,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  --font-gilroy: var(--font-gilroy);
+  --font-sans: var(--font-sans);
   --font-testsohnebreit: var(--font-testsohnebreit);
 }
 
@@ -176,7 +184,6 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-gilroy);
 }
 
 .mask-diagonal {
@@ -200,47 +207,92 @@ body {
   /* Chrome, Safari and Opera */
 }
 
+/* Scrollbar Hide Utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.delay-1000 {
+  animation-delay: 1s;
+}
+
 /* ============================================
-   CUSTOM SCROLLBAR STYLES
+   CUSTOM SCROLLBAR STYLES - Elegant & Slim
    ============================================ */
 
 /* Webkit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--neutral-100);
+  background: transparent;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg,
-      var(--orange-400) 0%,
-      var(--blue-400) 100%);
+      rgba(251, 146, 60, 0.4) 0%,
+      rgba(96, 165, 250, 0.4) 100%);
   border-radius: 10px;
-  border: 2px solid var(--neutral-100);
-  transition: all 0.3s ease;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg,
-      var(--orange-500) 0%,
-      var(--blue-500) 100%);
-  border: 2px solid var(--neutral-50);
+      rgba(251, 146, 60, 0.6) 0%,
+      rgba(96, 165, 250, 0.6) 100%);
+  width: 8px;
 }
 
 ::-webkit-scrollbar-thumb:active {
   background: linear-gradient(180deg,
-      var(--orange-600) 0%,
-      var(--blue-600) 100%);
+      rgba(251, 146, 60, 0.8) 0%,
+      rgba(96, 165, 250, 0.8) 100%);
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--orange-400) var(--neutral-100);
+  scrollbar-color: rgba(251, 146, 60, 0.4) transparent;
 }
 
 /* Smooth scrollbar for all elements */

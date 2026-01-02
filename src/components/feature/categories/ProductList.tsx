@@ -4,17 +4,29 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { IProduct } from "@/types/product";
 import ProductCard from "./ProductCard";
+import Pagination from "@/components/ui/Pagination";
+
+interface PaginationInfo {
+  currentPage: number;
+  totalPages: number;
+  total: number;
+  limit: number;
+}
 
 interface ProductListProps {
   products: IProduct[];
   isLoading?: boolean;
   emptyMessage?: string;
+  pagination?: PaginationInfo;
+  onPageChange?: (page: number) => void;
 }
 
 export default function ProductList({
   products,
   isLoading = false,
   emptyMessage = "Không tìm thấy sản phẩm nào",
+  pagination,
+  onPageChange,
 }: ProductListProps) {
   if (isLoading) {
     return (
@@ -40,6 +52,7 @@ export default function ProductList({
     );
   }
 
+  
   if (products.length === 0) {
     return (
       <div className="text-center py-20">
@@ -55,14 +68,25 @@ export default function ProductList({
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {products.map((product, index) => (
-        <ProductCard
-          key={product._id}
-          product={product}
-        />
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {products.map((product) => (
+          <ProductCard
+            key={product._id}
+            product={product}
+          />
+        ))}
+      </div>
+      {pagination && pagination.totalPages > 1 && onPageChange && (
+        <div className="mt-8 flex justify-center">
+          <Pagination
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            onPageChange={onPageChange}
+          />
+        </div>
+      )}
+    </>
   );
 }
 

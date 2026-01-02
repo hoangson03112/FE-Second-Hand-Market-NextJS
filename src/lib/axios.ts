@@ -3,9 +3,9 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import Cookies from "js-cookie";
 import { captureException } from "@/infrastructure/monitoring/sentry";
 import { logger } from "@/infrastructure/monitoring/logger";
+import { useUserStore } from "@/store/useUserStore";
 
 /**
  * Centralized Axios Client
@@ -28,7 +28,8 @@ const axiosClient = axios.create({
 // Request Interceptor
 axiosClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = Cookies.get("accessToken");
+    // Lấy accessToken từ Zustand store
+    const token = useUserStore.getState().accessToken;
 
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -84,9 +85,9 @@ axiosClient.interceptors.response.use(
       switch (status) {
         case 401:
           console.error("Phiên làm việc hết hạn");
-          // Handle logout: Remove cookie and redirect to login
+          // Handle logout: Clear accessToken from store
           if (typeof window !== "undefined") {
-            Cookies.remove("accessToken");
+            useUserStore.getState().clearAuth();
             // window.location.href = "/login";
           }
           break;

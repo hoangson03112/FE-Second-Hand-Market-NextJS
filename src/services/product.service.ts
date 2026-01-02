@@ -1,12 +1,14 @@
 import axiosClient from "@/lib/axios";
-import { IProductFilters, IProductResponse } from "@/types/product";
+import { IProductFilters } from "@/types/product";
 
 export const ProductService = {
-  getAll: async (filters?: IProductFilters): Promise<IProductResponse> => {
+  getAll: async (filters?: IProductFilters) => {
     const params = new URLSearchParams();
 
-    if (filters?.category) params.append("category", filters.category);
-    if (filters?.subCategory) params.append("subCategory", filters.subCategory);
+    if (filters?.categorySlug)
+      params.append("categorySlug", filters.categorySlug);
+    if (filters?.subCategorySlug)
+      params.append("subCategorySlug", filters.subCategorySlug);
     if (filters?.minPrice)
       params.append("minPrice", filters.minPrice.toString());
     if (filters?.maxPrice)
@@ -17,7 +19,9 @@ export const ProductService = {
     if (filters?.page) params.append("page", filters.page.toString());
     if (filters?.limit) params.append("limit", filters.limit.toString());
 
-    const response = await axiosClient.get(`/products?${params.toString()}`);
+    const response = await axiosClient.get(
+      `/products/categories?${params.toString()}`
+    );
     return response.data;
   },
 
@@ -26,22 +30,19 @@ export const ProductService = {
     return response.data;
   },
 
-  getByCategory: async (
-    categoryId: string,
-    filters?: Omit<IProductFilters, "category">
-  ) => {
-    return ProductService.getAll({ ...filters, category: categoryId });
+  getByCategory: async (categorySlug: string, filters?: IProductFilters) => {
+    return ProductService.getAll({ ...filters, categorySlug });
   },
 
   getBySubCategory: async (
-    categoryId: string,
-    subCategoryId: string,
-    filters?: Omit<IProductFilters, "category" | "subCategory">
+    categorySlug: string,
+    subCategorySlug: string,
+    filters?: IProductFilters
   ) => {
     return ProductService.getAll({
       ...filters,
-      category: categoryId,
-      subCategory: subCategoryId,
+      categorySlug,
+      subCategorySlug,
     });
   },
 };

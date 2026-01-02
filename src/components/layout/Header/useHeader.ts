@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import useCategories from "@/hooks/useCategories";
 import { useCategoryStore } from "@/store/useCategoryStore";
+import { useUserStore } from "@/store/useUserStore";
 
 export function useHeader() {
   // Fetch categories (chỉ fetch một lần, sau đó dùng từ store)
@@ -12,6 +13,7 @@ export function useHeader() {
 
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [showAllCategories, setShowAllCategories] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Sử dụng visibleCategories từ store hoặc tính toán từ categories
   const visibleCategories = useMemo(
@@ -35,6 +37,14 @@ export function useHeader() {
     setShowAllCategories(false);
   }, []);
 
+  // Lấy accessToken từ store
+  const accessToken = useUserStore((state) => state.accessToken);
+
+  useEffect(() => {
+    // Check authentication status từ store
+    setIsAuthenticated(!!accessToken);
+  }, [accessToken]);
+
   useEffect(() => {
     const onDocClick = () => {
       // placeholder for outside click behaviour; view may pass refs if needed
@@ -49,6 +59,7 @@ export function useHeader() {
     visibleCategories,
     activeCategory,
     showAllCategories,
+    isAuthenticated,
     handleMouseEnterCategory,
     handleMouseLeaveCategory,
     handleShowAllCategories,

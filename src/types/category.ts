@@ -1,6 +1,7 @@
 export interface ICategory {
   _id: string;
   name: string;
+  slug: string;
   subCategories: ISubCategory[];
 }
 export interface ICategoryResponse {
@@ -9,4 +10,5 @@ export interface ICategoryResponse {
 export interface ISubCategory {
   _id: string;
   name: string;
+  slug: string;
 }

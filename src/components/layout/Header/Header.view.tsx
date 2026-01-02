@@ -1,9 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import type { HeaderViewProps } from "./Header.types";
 import { ICategory, ISubCategory } from "@/types/category";
+import { useUserStore } from "@/store/useUserStore";
+import { AuthService } from "@/services/auth.service";
+import { Search, ShoppingCart,Bell, ChevronUp, ChevronDown } from "lucide-react";
 
 export default function HeaderView(props: HeaderViewProps) {
   const {
@@ -12,6 +16,7 @@ export default function HeaderView(props: HeaderViewProps) {
     isLoading,
     activeCategory,
     showAllCategories,
+    isAuthenticated,
     onMouseEnterCategory,
     onMouseLeaveCategory,
     onShowAll,
@@ -19,11 +24,58 @@ export default function HeaderView(props: HeaderViewProps) {
     onSearch,
   } = props;
 
+  const router = useRouter();
   const [query, setQuery] = useState("");
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const { account, clearAuth } = useUserStore();
 
   const submitSearch = (e?: React.FormEvent) => {
     e?.preventDefault();
     if (query.trim()) onSearch(query.trim());
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowUserDropdown(false);
+      }
+    };
+
+    if (showUserDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showUserDropdown]);
+
+  const handleLogout = async () => {
+    try {
+      await AuthService.logout();
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      clearAuth();
+      setShowUserDropdown(false);
+      router.push("/");
+      router.refresh();
+    }
+  };
+
+  const getInitials = (name?: string) => {
+    if (!name) return "U";
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
   };
 
   return (
@@ -53,18 +105,7 @@ export default function HeaderView(props: HeaderViewProps) {
               >
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <svg
-                      className="h-6 w-6 text-tertiary"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                  <Search className="w-6 h-6 text-tertiary" />
                   </div>
                   <input
                     id="search"
@@ -80,50 +121,142 @@ export default function HeaderView(props: HeaderViewProps) {
             </div>
 
             <div className="hidden md:flex items-center justify-end gap-3">
-              <Link
-                href="/sell"
-                className="inline-flex items-center justify-center px-5 py-2.5  text-base font-medium rounded-full text-white btn-primary  hover-bg-primary-dark transition-colors"
-              >
-                Đăng bán
-              </Link>
-              <Link
-                href="/notifications"
-                className="relative p-2 rounded-full text-tertiary hover-bg-neutral hover-text-secondary transition-colors"
-                aria-label="Thông báo"
-              >
-                <svg
-                  className="h-7 w-7"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              {!isAuthenticated ? (
+                <Link
+                  href="/login"
+                  className="inline-flex items-center justify-center px-5 py-2.5 text-base font-medium rounded-full text-white btn-primary hover-bg-primary-dark transition-colors"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-                  />
-                </svg>
-              </Link>
-              <Link
-                href="/cart"
-                className="relative p-2 rounded-full text-tertiary hover-bg-neutral hover-text-secondary transition-colors"
-                aria-label="Giỏ hàng"
-              >
-                <svg
-                  className="h-7 w-7"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c.51 0 .962-.343 1.087-.835l1.823-6.84a1.125 1.125 0 00-1.087-1.415H4.5"
-                  />
-                </svg>
-              </Link>
+                  Đăng nhập
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/sell"
+                    className="inline-flex items-center justify-center px-5 py-2.5  text-base font-medium rounded-full text-white btn-primary  hover-bg-primary-dark transition-colors"
+                  >
+                    Đăng bán
+                  </Link>
+                  <Link
+                    href="/notifications"
+                    className="relative p-2 rounded-full text-tertiary hover-bg-neutral hover-text-secondary transition-colors"
+                    aria-label="Thông báo"
+                  >
+                      <Bell className="w-6 h-6 text-tertiary hover:text-primary"  />
+                  </Link>
+                  <Link
+                    href="/cart"
+                    className="relative p-2 rounded-full text-tertiary hover-bg-neutral hover-text-secondary transition-colors"
+                    aria-label="Giỏ hàng"
+                  >
+                    <ShoppingCart className="w-6 h-6 text-tertiary hover:text-primary" />
+                  </Link>
+                  
+                  {/* User Dropdown */}
+                  <div className="relative" ref={dropdownRef}>
+                    <button
+                      onClick={() => setShowUserDropdown(!showUserDropdown)}
+                      className="cursor-pointer flex items-center gap-2 p-1.5 rounded-full hover-bg-neutral transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      aria-label="User menu"
+                    >
+                      {account?.avatar ? (
+                        <Image
+                          src={account.avatar}
+                          alt={account.fullName || "UnKnow"}
+                          width={36}
+                          height={36}
+                          className="rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white font-semibold text-sm">
+                          {getInitials(account?.fullName)}
+                        </div>
+                      )}
+                      {showUserDropdown ? (<ChevronUp className="w-6 h-6 text-tertiary hover:text-primary" />) :(<ChevronDown className="w-6 h-6 text-tertiary hover:text-primary" />)}
+       
+                    </button>
+
+                    {showUserDropdown && (
+                      <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50">
+                        <div className="px-4 py-3 border-b border-gray-200">
+                          <p className="text-sm font-semibold text-secondary">
+                            {account?.fullName || "Người dùng"}
+                          </p>
+                          <p className="text-xs text-tertiary truncate">
+                            {account?.email}
+                          </p>
+                        </div>
+                        <div className="py-1">
+                          <Link
+                            href="/profile"
+                            onClick={() => setShowUserDropdown(false)}
+                            className="block px-4 py-2 text-sm text-secondary hover-bg-neutral transition-colors"
+                          >
+                            <div className="flex items-center gap-2">
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                />
+                              </svg>
+                              Thông tin tài khoản
+                            </div>
+                          </Link>
+                          <Link
+                            href="/orders"
+                            onClick={() => setShowUserDropdown(false)}
+                            className="block px-4 py-2 text-sm text-secondary hover-bg-neutral transition-colors"
+                          >
+                            <div className="flex items-center gap-2">
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                                />
+                              </svg>
+                              Đơn hàng của tôi
+                            </div>
+                          </Link>
+                          <button
+                            onClick={handleLogout}
+                            className="w-full text-left px-4 py-2 text-sm text-red-600 hover-bg-red-50 transition-colors"
+                          >
+                            <div className="flex items-center gap-2">
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                                />
+                              </svg>
+                              Đăng xuất
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -186,7 +319,7 @@ export default function HeaderView(props: HeaderViewProps) {
                           {categories.map((category: ICategory) => (
                             <div key={category._id} className="space-y-2">
                               <Link
-                                href={`/categories/${category._id}`}
+                                href={`/categories/${category.slug}`}
                                 className="block text-sm font-semibold text-primary hover-text-primary transition-colors"
                               >
                                 {category.name}
@@ -199,7 +332,7 @@ export default function HeaderView(props: HeaderViewProps) {
                                       .map((sub: ISubCategory) => (
                                         <Link
                                           key={sub._id}
-                                          href={`/categories/${category._id}/sub/${sub._id}`}
+                                          href={`/categories/${category.slug}/sub/${sub.slug}`}
                                           className="block text-xs text-secondary hover-text-primary transition-colors"
                                         >
                                           {sub.name}
@@ -230,7 +363,7 @@ export default function HeaderView(props: HeaderViewProps) {
                     onMouseLeave={onMouseLeaveCategory}
                   >
                     <Link
-                      href={`/categories/${category._id}`}
+                      href={`/categories/${category.slug}`}
                       className="flex items-center gap-1 text-sm font-medium text-secondary hover-text-primary transition-colors py-3 whitespace-nowrap"
                     >
                       {category.name}
@@ -274,7 +407,7 @@ export default function HeaderView(props: HeaderViewProps) {
                                   (sub: ISubCategory) => (
                                     <Link
                                       key={sub._id}
-                                      href={`/categories/${category._id}/sub/${sub._id}`}
+                                      href={`/categories/${category.slug}/sub/${sub.slug}`}
                                       className="block px-4 py-2 text-sm text-secondary hover:bg-primary-tint hover-text-primary transition-colors"
                                       role="menuitem"
                                     >
