@@ -1,62 +1,92 @@
 /**
- * Sentry Error Tracking Configuration
+ * Sentry Error Tracking
  * 
- * Install: npm install @sentry/nextjs
- * Setup: npx @sentry/wizard@latest -i nextjs
+ * Integration with Sentry for error tracking and monitoring
+ * Falls back gracefully if Sentry is not configured
  */
 
-// Uncomment when Sentry is installed
-/*
-import * as Sentry from "@sentry/nextjs";
+interface ErrorContext {
+  [key: string]: unknown;
+}
 
-Sentry.init({
-  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-  
-  // Adjust this value in production, or use tracesSampler for greater control
-  tracesSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
-  
-  // Setting this option to true will print useful information to the console while you're setting up Sentry.
-  debug: process.env.NODE_ENV === "development",
-  
-  // Replay can be used to record user sessions
-  replaysSessionSampleRate: 0.1,
-  replaysOnErrorSampleRate: 1.0,
-  
-  // Filter out sensitive data
-  beforeSend(event, hint) {
-    // Remove sensitive information
-    if (event.request) {
-      delete event.request.cookies;
-      delete event.request.headers?.authorization;
+/**
+ * Capture an exception to Sentry
+ * @param error - The error to capture
+ * @param context - Additional context about the error
+ */
+export function captureException(error: Error, context?: ErrorContext): void {
+  // Check if Sentry is available
+  if (typeof window !== "undefined" && (window as any).Sentry) {
+    try {
+      (window as any).Sentry.captureException(error, {
+        contexts: {
+          custom: context || {},
+        },
+      });
+    } catch (sentryError) {
+      console.error("Failed to capture exception to Sentry:", sentryError);
     }
-    return event;
-  },
-  
-  // Ignore certain errors
-  ignoreErrors: [
-    // Browser extensions
-    "top.GLOBALS",
-    "originalCreateNotification",
-    "canvas.contentDocument",
-    "MyApp_RemoveAllHighlights",
-    "atomicFindClose",
-    // Network errors
-    "NetworkError",
-    "Failed to fetch",
-    "Network request failed",
-  ],
-});
-*/
+  } else {
+    // Fallback: log to console in development
+    if (process.env.NODE_ENV === "development") {
+      console.error("Sentry not configured. Error:", error, "Context:", context);
+    }
+  }
+}
 
-export const captureException = (error: Error, context?: Record<string, unknown>) => {
-  // Uncomment when Sentry is installed
-  // Sentry.captureException(error, { extra: context });
-  console.error("Error captured:", error, context);
-};
+/**
+ * Capture a message to Sentry
+ * @param message - The message to capture
+ * @param level - The severity level (default: 'info')
+ * @param context - Additional context
+ */
+export function captureMessage(
+  message: string,
+  level: "debug" | "info" | "warning" | "error" | "fatal" = "info",
+  context?: ErrorContext
+): void {
+  if (typeof window !== "undefined" && (window as any).Sentry) {
+    try {
+      (window as any).Sentry.captureMessage(message, {
+        level,
+        contexts: {
+          custom: context || {},
+        },
+      });
+    } catch (sentryError) {
+      console.error("Failed to capture message to Sentry:", sentryError);
+    }
+  } else {
+    if (process.env.NODE_ENV === "development") {
+      console.log(`[Sentry ${level}]:`, message, context || "");
+    }
+  }
+}
 
-export const captureMessage = (message: string, level: "info" | "warning" | "error" = "info") => {
-  // Uncomment when Sentry is installed
-  // Sentry.captureMessage(message, level);
-  console.log(`[${level.toUpperCase()}]`, message);
-};
+/**
+ * Set user context for Sentry
+ * @param user - User information
+ */
+export function setUserContext(user: { id?: string; email?: string; username?: string }): void {
+  if (typeof window !== "undefined" && (window as any).Sentry) {
+    try {
+      (window as any).Sentry.setUser(user);
+    } catch (sentryError) {
+      console.error("Failed to set user context in Sentry:", sentryError);
+    }
+  }
+}
+
+/**
+ * Clear user context from Sentry
+ */
+export function clearUserContext(): void {
+  if (typeof window !== "undefined" && (window as any).Sentry) {
+    try {
+      (window as any).Sentry.setUser(null);
+    } catch (sentryError) {
+      console.error("Failed to clear user context in Sentry:", sentryError);
+    }
+  }
+}
 

@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { AuthService } from "@/services/auth.service";
-import { useUserStore } from "@/store/useUserStore";
+import { useTokenStore } from "@/store/useTokenStore";
+import { queryKeys } from "@/lib/query-client";
 import type { LoginRequest } from "@/types/auth";
 
 export function useLogin() {
   const router = useRouter();
-  const { setAccount, setAccessToken } = useUserStore();
+  const queryClient = useQueryClient();
+  const { setAccessToken } = useTokenStore();
   const [formData, setFormData] = useState<LoginRequest>({
     username: "",
     password: "",
@@ -31,20 +34,10 @@ export function useLogin() {
       const response = await AuthService.login(formData);
 
       if (response.status === "success" && response.token) {
-        // Lưu accessToken vào Zustand store
-        // refreshToken đã được backend set vào HttpOnly cookie tự động
         setAccessToken(response.token);
-
-        // Call API để lấy thông tin account
-        try {
-          const accountResponse = await AuthService.getAccountInfo();
-          if (accountResponse.status === "success" && accountResponse.account) {
-            setAccount(accountResponse.account);
-          }
-        } catch (accountError) {
-          console.error("Error fetching account info:", accountError);
-          // Không block flow nếu lỗi lấy account info
-        }
+        
+        // Invalidate user query to refetch account info
+        queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });
 
         router.push("/");
         router.refresh();

@@ -5,7 +5,7 @@ import axios, {
 } from "axios";
 import { captureException } from "@/infrastructure/monitoring/sentry";
 import { logger } from "@/infrastructure/monitoring/logger";
-import { useUserStore } from "@/store/useUserStore";
+import { useTokenStore } from "@/store/useTokenStore";
 
 /**
  * Centralized Axios Client
@@ -29,7 +29,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // Lấy accessToken từ Zustand store
-    const token = useUserStore.getState().accessToken;
+    const token = useTokenStore.getState().accessToken;
 
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -87,7 +87,7 @@ axiosClient.interceptors.response.use(
           console.error("Phiên làm việc hết hạn");
           // Handle logout: Clear accessToken from store
           if (typeof window !== "undefined") {
-            useUserStore.getState().clearAuth();
+            useTokenStore.getState().clearAuth();
             // window.location.href = "/login";
           }
           break;

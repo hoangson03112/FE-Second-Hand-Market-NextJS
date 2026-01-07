@@ -75,17 +75,17 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-gradient-to-br from-orange-50 via-neutral-50 to-blue-50 border-t border-default overflow-hidden">
+    <footer className="relative bg-gradient-to-br from-cream-50 via-neutral-50 to-taupe-50 border-t border-default overflow-hidden">
       {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-400 via-blue-400 to-orange-400" />
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-taupe-400 via-blush-400 to-taupe-400" />
       
       {/* Pattern overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.1)_1px,transparent_0)] [background-size:24px_24px] opacity-30" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(141,119,86,0.1)_1px,transparent_0)] [background-size:24px_24px] opacity-30" />
       
       {/* Floating decorative elements */}
-      <div className="absolute top-20 right-10 w-40 h-40 rounded-full bg-orange-200/50 blur-3xl animate-float-slow" />
-      <div className="absolute bottom-20 left-10 w-48 h-48 rounded-full bg-blue-200/50 blur-3xl animate-float" />
-      <div className="absolute top-1/2 right-1/4 w-64 h-64 rounded-full bg-gradient-to-r from-orange-100/40 to-blue-100/40 blur-3xl" />
+      <div className="absolute top-20 right-10 w-40 h-40 rounded-full bg-taupe-200/50 blur-3xl animate-float-slow" />
+      <div className="absolute bottom-20 left-10 w-48 h-48 rounded-full bg-blush-200/50 blur-3xl animate-float" />
+      <div className="absolute top-1/2 right-1/4 w-64 h-64 rounded-full bg-gradient-to-r from-taupe-100/40 to-blush-100/40 blur-3xl" />
       
       {/* Subtle shine effect */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-transparent pointer-events-none" />

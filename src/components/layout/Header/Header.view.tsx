@@ -5,7 +5,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { HeaderViewProps } from "./Header.types";
 import { ICategory, ISubCategory } from "@/types/category";
-import { useUserStore } from "@/store/useUserStore";
+import { useTokenStore } from "@/store/useTokenStore";
+import { useUser } from "@/hooks/useUser";
 import { AuthService } from "@/services/auth.service";
 import { Search, ShoppingCart,Bell, ChevronUp, ChevronDown } from "lucide-react";
 
@@ -28,7 +29,8 @@ export default function HeaderView(props: HeaderViewProps) {
   const [query, setQuery] = useState("");
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { account, clearAuth } = useUserStore();
+  const { clearAuth } = useTokenStore();
+  const { data: account } = useUser();
 
   const submitSearch = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -79,8 +81,8 @@ export default function HeaderView(props: HeaderViewProps) {
   };
 
   return (
-    <header className="relative bg-gradient-to-br from-orange-50 via-neutral-50 to-blue-50 backdrop-blur-md border-b border-default sticky top-0 z-50 shadow-md">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(251,146,60,0.15)_1px,transparent_0)] [background-size:20px_20px] opacity-40" />
+    <header className="relative bg-gradient-to-br from-cream-50 via-neutral-50 to-taupe-50 backdrop-blur-md border-b border-default sticky top-0 z-50 shadow-md">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(141,119,86,0.15)_1px,transparent_0)] [background-size:20px_20px] opacity-40" />
       <div className="relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-28">
@@ -110,7 +112,7 @@ export default function HeaderView(props: HeaderViewProps) {
                   <input
                     id="search"
                     name="search"
-                    className="block w-full bg-neutral border border-transparent rounded-full py-3 pl-12 pr-4 text-base text-tertiary placeholder:text-tertiary focus:outline-none focus:text-primary focus:placeholder:text-tertiary focus-ring-primary"
+                    className="block w-full bg-neutral border border-primary rounded-full py-3 pl-12 pr-4 text-base text-tertiary placeholder:text-tertiary focus:outline-none focus:text-primary focus:placeholder:text-tertiary focus-ring-primary"
                     placeholder="Tìm kiếm sản phẩm..."
                     type="search"
                     value={query}
@@ -262,7 +264,7 @@ export default function HeaderView(props: HeaderViewProps) {
         </div>
       </div>
 
-      <nav className="max-w-7xl mx-auto  hidden md:block relative bg-gradient-to-r from-orange-50/60 via-neutral-50/80 to-blue-50/60 border-default backdrop-blur-sm">
+      <nav className="max-w-7xl mx-auto  hidden md:block relative bg-gradient-to-r from-cream-50/60 via-neutral-50/80 to-taupe-50/60 border-default backdrop-blur-sm">
         <div className="relative z-10">
           <div className="max-w-7xl mx-auto ">
             <div className="flex items-center gap-5 h-12 relative">

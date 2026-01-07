@@ -17,16 +17,12 @@ interface HeroSectionProps {
 
 export default function HeroSection({ stats }: HeroSectionProps) {
   return (
-    <section className="relative min-h-[70vh] overflow-hidden rounded-b-[32px] shadow-lg bg-gradient-to-br from-orange-50 via-white to-blue-50">
+    <section className="relative min-h-[70vh] overflow-hidden rounded-b-[32px] shadow-lg bg-gradient-to-br from-cream-50 via-white to-taupe-50">
       {/* Background Slider */}
       <AnimatedBackground />
       
       {/* Subtle overlay for depth */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-white/20" />
 
-      {/* Floating Elements */}
-      <div className="absolute top-20 right-10 w-32 h-32 rounded-full border-2 border-primary/20 opacity-40 animate-float-slow z-30" />
-      <div className="absolute bottom-32 left-12 w-20 h-20 rounded-lg border-2 border-secondary/20 opacity-30 rotate-45 animate-float z-30" />
 
       {/* Content */}
       <div className="relative z-30 container mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -52,7 +48,7 @@ export default function HeroSection({ stats }: HeroSectionProps) {
           >
             Chợ Đồ Cũ
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-blue-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-taupe-600 to-blush-600">
               Thông Minh
             </span>
           </h1>
@@ -84,7 +80,7 @@ export default function HeroSection({ stats }: HeroSectionProps) {
             </Link>
             <Link
               href="/sell"
-              className="btn btn-outline-primary btn-lg btn-rounded hover-lift"
+              className="btn btn-secondary btn-lg btn-rounded hover-lift font-medium"
             >
               Đăng tin bán
             </Link>

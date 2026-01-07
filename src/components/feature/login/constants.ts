@@ -39,6 +39,6 @@ export const loginFeatures = [
     ),
     title: "Bảo mật tuyệt đối",
     description: "Dữ liệu được mã hóa và bảo vệ an toàn",
-    gradient: "bg-gradient-to-br from-blue-500 to-blue-600",
+    gradient: "bg-gradient-to-br from-taupe-500 to-taupe-600",
   },
 ];

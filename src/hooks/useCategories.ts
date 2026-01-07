@@ -1,43 +1,32 @@
+/**
+ * Categories Hook (Server State)
+ * 
+ * Fetches categories from API using TanStack Query
+ * This is SERVER STATE because it's data from API
+ */
 import { CategoryService } from "@/services/category.service";
 import { useQuery } from "@tanstack/react-query";
-import { useCategoryStore } from "@/store/useCategoryStore";
-import { useEffect } from "react";
 import { queryKeys } from "@/lib/query-client";
+import { serverStateConfig } from "@/lib/state";
+import type { ICategory } from "@/types/category";
 
 export function useCategories() {
-  const { setCategories, setIsLoading, categories, isLoading } =
-    useCategoryStore();
-
-  const query = useQuery({
+  return useQuery<ICategory[]>({
     queryKey: queryKeys.categories.all,
     queryFn: async () => {
       const data = await CategoryService.getAll();
       return data.data;
     },
-    // Chỉ fetch nếu chưa có data trong store
-    enabled: !categories,
-    // Cache lâu hơn vì categories ít thay đổi
-    staleTime: 10 * 60 * 1000, // 10 minutes
-    gcTime: 30 * 60 * 1000, // 30 minutes
+    // Use config for static data (categories rarely change)
+    staleTime: serverStateConfig.staleTime.static,
+    gcTime: serverStateConfig.gcTime.static,
   });
+}
 
-  // Sync data với Zustand store
-  useEffect(() => {
-    if (query.data) {
-      setCategories(query.data);
-    }
-  }, [query.data, setCategories]);
+export function useVisibleCategories(limit: number = 8) {
+  const { data: categories } = useCategories();
 
-  useEffect(() => {
-    setIsLoading(query.isLoading);
-  }, [query.isLoading, setIsLoading]);
-
-  // Trả về data từ store nếu có, nếu không thì từ query
-  return {
-    ...query,
-    data: categories || query.data,
-    isLoading: isLoading || query.isLoading,
-  };
+  return categories?.slice(0, limit);
 }
 
 export default useCategories;

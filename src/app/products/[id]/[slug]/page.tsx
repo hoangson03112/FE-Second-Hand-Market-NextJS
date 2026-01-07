@@ -2,8 +2,7 @@
 
 import Product from '@/components/feature/product/Product'
 import { useParams } from 'next/navigation';
-import React, { use } from 'react'
-  import {  useRouter } from "next/navigation";
+import React from 'react'
 
 
 

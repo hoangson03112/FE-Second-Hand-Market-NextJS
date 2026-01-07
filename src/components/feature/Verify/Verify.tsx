@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { AuthService } from "@/services/auth.service";
-import { useUserStore } from "@/store/useUserStore";
+import { useTokenStore } from "@/store/useTokenStore";
+import { queryKeys } from "@/lib/query-client";
 
 export default function Verify() {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const queryClient = useQueryClient();
     const accountID = searchParams.get("accountID");
-    const { setAccount, setAccessToken } = useUserStore();
+    const { setAccessToken } = useTokenStore();
   
     const [code, setCode] = useState("");
     const [error, setError] = useState("");
@@ -49,16 +52,8 @@ export default function Verify() {
           // refreshToken đã được backend set vào HttpOnly cookie tự động
           setAccessToken(response.token);
 
-          // Call API để lấy thông tin account
-          try {
-            const accountResponse = await AuthService.getAccountInfo();
-            if (accountResponse.status === "success" && accountResponse.account) {
-              setAccount(accountResponse.account);
-            }
-          } catch (accountError) {
-            console.error("Error fetching account info:", accountError);
-            // Không block flow nếu lỗi lấy account info
-          }
+          // Invalidate user query to refetch account info
+          queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });
 
           router.push("/");
           router.refresh();
@@ -96,7 +91,7 @@ export default function Verify() {
     }
   
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-neutral-50 to-blue-50 p-4 lg:p-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cream-50 via-neutral-50 to-taupe-50 p-4 lg:p-8">
     <div className="w-full max-w-md">
       <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8 lg:p-10">
         <div className="text-center mb-8">

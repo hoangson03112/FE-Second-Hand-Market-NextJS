@@ -24,7 +24,7 @@ export default function CategoryHeader({
     : "Khám phá sản phẩm";
 
   return (
-    <div className="bg-gradient-to-br from-orange-50 via-white to-blue-50 py-12 border-b border-default">
+    <div className="bg-gradient-to-br from-cream-50 via-white to-taupe-50 py-12 border-b border-default">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumbs */}
         {breadcrumbs && breadcrumbs.length > 0 && (

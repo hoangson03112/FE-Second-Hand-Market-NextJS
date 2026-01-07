@@ -19,7 +19,7 @@ export const registerFeatures = [
     ),
     title: "Cộng đồng lớn",
     description: "Kết nối với hàng nghìn người dùng",
-    gradient: "bg-gradient-to-br from-blue-500 to-blue-600",
+    gradient: "bg-gradient-to-br from-taupe-500 to-taupe-600",
   },
   {
     icon: React.createElement(

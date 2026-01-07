@@ -30,7 +30,7 @@ export interface IAttribute {
 }
 export interface IEstimatedWeight {
   value: number;
-  confidence: number; // 0 → 1
+  confidence: number; 
 }
 export interface IAccount {
   _id: string;
@@ -48,6 +48,7 @@ export interface ISeller {
   phoneNumber: string;
   totalReviews: number;
   avgRating: number;
+  totalProducts:number
 }
 
 export interface IImage {

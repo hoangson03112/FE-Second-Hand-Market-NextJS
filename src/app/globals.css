@@ -1,57 +1,134 @@
 @import "tailwindcss";
 
+
+@custom-variant dark (&:is(.dark *));
+
 @layer base {
   html {
     font-family: -apple-system, BlinkMacSystemFont,
       "SF Pro Text", "SF Pro Display",
       "Helvetica Neue", Arial, sans-serif !important;
   }
+
 }
 
 :root {
-  --background: white;
-  --foreground: black;
+  /* Premium color palette: Cream/Ivory + Warm taupe + Deep charcoal + Blush accent */
+  --background: oklch(0.975 0.005 70);
+  --foreground: oklch(0.15 0.03 270);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.03 270);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.03 270);
+  --primary: oklch(0.5 0.08 35);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.88 0.05 65);
+  --secondary-foreground: oklch(0.15 0.03 270);
+  --muted: oklch(0.94 0.02 60);
+  --muted-foreground: oklch(0.55 0.02 260);
+  --accent: oklch(0.68 0.1 10);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.92 0.01 70);
+  --input: oklch(0.97 0.005 70);
+  --ring: oklch(0.5 0.08 35);
+  --chart-1: oklch(0.5 0.08 35);
+  --chart-2: oklch(0.68 0.1 10);
+  --chart-3: oklch(0.7 0.08 80);
+  --chart-4: oklch(0.5 0.06 200);
+  --chart-5: oklch(0.65 0.1 120);
+  --radius: 0.5rem;
+  --sidebar: oklch(0.975 0.005 70);
+  --sidebar-foreground: oklch(0.15 0.03 270);
+  --sidebar-primary: oklch(0.5 0.08 35);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.88 0.05 65);
+  --sidebar-accent-foreground: oklch(0.15 0.03 270);
+  --sidebar-border: oklch(0.92 0.01 70);
+  --sidebar-ring: oklch(0.5 0.08 35);
 
-  /* Màu cam chủ đạo (muted orange) */
-  --orange-50: #fff7ed;
-  --orange-100: #ffedd5;
-  --orange-200: #fed7aa;
-  --orange-300: #fdba74;
-  --orange-400: #fb923c;
-  --orange-500: #f97316;
-  --orange-600: #ea580c;
-  --orange-700: #c2410c;
-  --orange-800: #9a3412;
-  --orange-900: #7c2d12;
-  --orange-950: #431407;
+  /* Convert oklch to approximate hex values for compatibility */
+  /* Cream/Ivory palette */
+  --cream-50: #fefcf9;
+  --cream-100: #fdf9f3;
+  --cream-200: #faf3e6;
+  --cream-300: #f6e9d1;
 
-  /* Màu xanh blue chủ đạo (muted blue) */
-  --blue-50: #eff6ff;
-  --blue-100: #dbeafe;
-  --blue-200: #bfdbfe;
-  --blue-300: #93c5fd;
-  --blue-400: #60a5fa;
-  --blue-500: #3b82f6;
-  --blue-600: #2563eb;
-  --blue-700: #1d4ed8;
-  --blue-800: #1e40af;
-  --blue-900: #1e3a8a;
-  --blue-950: #172554;
+  /* Warm taupe (primary) */
+  --taupe-50: #f7f5f2;
+  --taupe-100: #ede8e0;
+  --taupe-200: #d9d0c2;
+  --taupe-300: #c2b5a0;
+  --taupe-400: #a8957a;
+  --taupe-500: #8d7756;
+  --taupe-600: #736045;
+  --taupe-700: #5a4b35;
+  --taupe-800: #403528;
+  --taupe-900: #2a221b;
 
-  /* Màu neutral */
-  --neutral-50: #fafafa;
-  --neutral-100: #f5f5f5;
-  --neutral-200: #e5e5e5;
-  --neutral-300: #d4d4d4;
-  --neutral-400: #a3a3a3;
-  --neutral-500: #737373;
-  --neutral-600: #525252;
-  --neutral-700: #404040;
-  --neutral-800: #262626;
-  --neutral-900: #171717;
-  --neutral-950: #0a0a0a;
+  /* Deep charcoal (foreground) */
+  --charcoal-50: #f5f5f6;
+  --charcoal-100: #e5e5e8;
+  --charcoal-200: #ccccd1;
+  --charcoal-300: #a8a8b0;
+  --charcoal-400: #7d7d89;
+  --charcoal-500: #62626f;
+  --charcoal-600: #4f4f5a;
+  --charcoal-700: #3f3f48;
+  --charcoal-800: #2a2a30;
+  --charcoal-900: #1a1a1e;
 
-  /* Màu semantic */
+  /* Blush accent */
+  --blush-50: #fef6f5;
+  --blush-100: #fdece9;
+  --blush-200: #fbd9d3;
+  --blush-300: #f7bbb1;
+  --blush-400: #f19587;
+  --blush-500: #e97463;
+  --blush-600: #d65a47;
+  --blush-700: #b34836;
+  --blush-800: #953e2e;
+  --blush-900: #7d3628;
+
+  /* Legacy color mappings for backward compatibility */
+  --orange-50: var(--blush-50);
+  --orange-100: var(--blush-100);
+  --orange-200: var(--blush-200);
+  --orange-300: var(--blush-300);
+  --orange-400: var(--blush-400);
+  --orange-500: var(--blush-500);
+  --orange-600: var(--blush-600);
+  --orange-700: var(--blush-700);
+  --orange-800: var(--blush-800);
+  --orange-900: var(--blush-900);
+  --orange-950: var(--blush-900);
+
+  --blue-50: var(--cream-50);
+  --blue-100: var(--cream-100);
+  --blue-200: var(--cream-200);
+  --blue-300: var(--cream-300);
+  --blue-400: var(--taupe-300);
+  --blue-500: var(--taupe-500);
+  --blue-600: var(--taupe-600);
+  --blue-700: var(--taupe-700);
+  --blue-800: var(--taupe-800);
+  --blue-900: var(--taupe-900);
+  --blue-950: var(--taupe-900);
+
+  --neutral-50: var(--cream-50);
+  --neutral-100: var(--cream-100);
+  --neutral-200: var(--charcoal-100);
+  --neutral-300: var(--charcoal-200);
+  --neutral-400: var(--charcoal-400);
+  --neutral-500: var(--charcoal-500);
+  --neutral-600: var(--charcoal-600);
+  --neutral-700: var(--charcoal-700);
+  --neutral-800: var(--charcoal-800);
+  --neutral-900: var(--charcoal-900);
+  --neutral-950: var(--charcoal-900);
+
+  /* Semantic colors */
   --success: #10b981;
   --success-light: #d1fae5;
   --success-dark: #047857;
@@ -61,17 +138,84 @@
   --warning: #f59e0b;
   --warning-light: #fef3c7;
   --warning-dark: #d97706;
-  --info: #3b82f6;
-  --info-light: #dbeafe;
-  --info-dark: #1e40af;
+  --info: var(--taupe-500);
+  --info-light: var(--taupe-100);
+  --info-dark: var(--taupe-700);
+}
+
+.dark {
+  --background: oklch(0.12 0.02 250);
+  --foreground: oklch(0.95 0.01 70);
+  --card: oklch(0.18 0.02 250);
+  --card-foreground: oklch(0.95 0.01 70);
+  --popover: oklch(0.18 0.02 250);
+  --popover-foreground: oklch(0.95 0.01 70);
+
+  --primary: oklch(0.72 0.08 35);
+  --primary-foreground: oklch(0.12 0.02 250);
+  --secondary: oklch(0.3 0.02 260);
+  --secondary-foreground: oklch(0.95 0.01 70);
+  --muted: oklch(0.28 0.02 250);
+  --muted-foreground: oklch(0.75 0.02 70);
+  --accent: oklch(0.8 0.1 10);
+  --accent-foreground: oklch(0.12 0.02 250);
+  --destructive: oklch(0.6 0.2 20);
+  --destructive-foreground: oklch(0.95 0.01 70);
+  --border: oklch(0.28 0.02 250);
+  --input: oklch(0.22 0.02 250);
+  --ring: oklch(0.72 0.08 35);
+  --chart-1: oklch(0.72 0.08 35);
+  --chart-2: oklch(0.8 0.1 10);
+  --chart-3: oklch(0.8 0.08 80);
+  --chart-4: oklch(0.7 0.06 200);
+  --chart-5: oklch(0.75 0.1 120);
+  --sidebar: oklch(0.18 0.02 250);
+  --sidebar-foreground: oklch(0.95 0.01 70);
+  --sidebar-primary: oklch(0.72 0.08 35);
+  --sidebar-primary-foreground: oklch(0.12 0.02 250);
+  --sidebar-accent: oklch(0.3 0.02 260);
+  --sidebar-accent-foreground: oklch(0.95 0.01 70);
+  --sidebar-border: oklch(0.28 0.02 250);
+  --sidebar-ring: oklch(0.72 0.08 35);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-
-  --font-sans: var(--font-sans);
-  --font-testsohnebreit: var(--font-testsohnebreit);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 @theme {
@@ -110,6 +254,36 @@
   --color-blue-900: var(--blue-900);
   --color-blue-950: var(--blue-950);
 
+  /* Cream Colors */
+  --color-cream-50: var(--cream-50);
+  --color-cream-100: var(--cream-100);
+  --color-cream-200: var(--cream-200);
+  --color-cream-300: var(--cream-300);
+
+  /* Taupe Colors */
+  --color-taupe-50: var(--taupe-50);
+  --color-taupe-100: var(--taupe-100);
+  --color-taupe-200: var(--taupe-200);
+  --color-taupe-300: var(--taupe-300);
+  --color-taupe-400: var(--taupe-400);
+  --color-taupe-500: var(--taupe-500);
+  --color-taupe-600: var(--taupe-600);
+  --color-taupe-700: var(--taupe-700);
+  --color-taupe-800: var(--taupe-800);
+  --color-taupe-900: var(--taupe-900);
+
+  /* Blush Colors */
+  --color-blush-50: var(--blush-50);
+  --color-blush-100: var(--blush-100);
+  --color-blush-200: var(--blush-200);
+  --color-blush-300: var(--blush-300);
+  --color-blush-400: var(--blush-400);
+  --color-blush-500: var(--blush-500);
+  --color-blush-600: var(--blush-600);
+  --color-blush-700: var(--blush-700);
+  --color-blush-800: var(--blush-800);
+  --color-blush-900: var(--blush-900);
+
   /* Neutral Colors */
   --color-neutral-50: var(--neutral-50);
   --color-neutral-100: var(--neutral-100);
@@ -137,35 +311,35 @@
   --color-info-light: var(--info-light);
   --color-info-dark: var(--info-dark);
 
-  /* Primary & Secondary (sử dụng màu cam và blue nhẹ) */
-  --color-primary: var(--orange-400);
-  --color-primary-light: var(--orange-300);
-  --color-primary-dark: var(--orange-600);
-  --color-secondary: var(--blue-400);
-  --color-secondary-light: var(--blue-300);
-  --color-secondary-dark: var(--blue-600);
+  /* Primary & Secondary (sử dụng warm taupe và blush accent) */
+  --color-primary: var(--taupe-500);
+  --color-primary-light: var(--taupe-400);
+  --color-primary-dark: var(--taupe-600);
+  --color-secondary: var(--blush-500);
+  --color-secondary-light: var(--blush-400);
+  --color-secondary-dark: var(--blush-600);
 
   /* Border Colors */
   --color-border: var(--neutral-200);
   --color-border-light: var(--neutral-100);
   --color-border-dark: var(--neutral-300);
-  --color-border-primary: var(--orange-300);
-  --color-border-secondary: var(--blue-300);
+  --color-border-primary: var(--taupe-300);
+  --color-border-secondary: var(--blush-300);
 
   /* Text Colors */
   --color-text-primary: var(--neutral-900);
   --color-text-secondary: var(--neutral-600);
   --color-text-tertiary: var(--neutral-400);
   --color-text-inverse: var(--neutral-50);
-  --color-text-primary-color: var(--orange-600);
-  --color-text-secondary-color: var(--blue-600);
+  --color-text-primary-color: var(--taupe-500);
+  --color-text-secondary-color: var(--blush-600);
 
   /* Background Colors */
   --color-bg-primary: var(--background);
   --color-bg-secondary: var(--neutral-50);
   --color-bg-tertiary: var(--neutral-100);
-  --color-bg-primary-tint: var(--orange-50);
-  --color-bg-secondary-tint: var(--blue-50);
+  --color-bg-primary-tint: var(--taupe-50);
+  --color-bg-secondary-tint: var(--blush-50);
   --color-bg-overlay: rgba(0, 0, 0, 0.5);
 
   /* Shadow Colors */
@@ -173,8 +347,8 @@
   --color-shadow-md: rgba(0, 0, 0, 0.1);
   --color-shadow-lg: rgba(0, 0, 0, 0.15);
   --color-shadow-xl: rgba(0, 0, 0, 0.2);
-  --color-shadow-primary: rgba(249, 115, 22, 0.2);
-  --color-shadow-secondary: rgba(59, 130, 246, 0.2);
+  --color-shadow-primary: rgba(141, 119, 86, 0.2);
+  --color-shadow-secondary: rgba(233, 116, 99, 0.2);
 }
 
 html {
@@ -352,38 +526,38 @@ html {
    UTILITY CLASSES - Background Colors
    ============================================ */
 
-/* Primary Background (Orange) */
+/* Primary Background (Warm Taupe) */
 .bg-primary {
-  background-color: var(--orange-400);
+  background-color: var(--taupe-500);
 }
 
 .bg-primary-light {
-  background-color: var(--orange-300);
+  background-color: var(--taupe-400);
 }
 
 .bg-primary-dark {
-  background-color: var(--orange-600);
+  background-color: var(--taupe-600);
 }
 
 .bg-primary-tint {
-  background-color: var(--orange-50);
+  background-color: var(--taupe-50);
 }
 
-/* Secondary Background (Blue) */
+/* Secondary Background (Blush) */
 .bg-secondary {
-  background-color: var(--blue-400);
+  background-color: var(--blush-500);
 }
 
 .bg-secondary-light {
-  background-color: var(--blue-300);
+  background-color: var(--blush-400);
 }
 
 .bg-secondary-dark {
-  background-color: var(--blue-600);
+  background-color: var(--blush-600);
 }
 
 .bg-secondary-tint {
-  background-color: var(--blue-50);
+  background-color: var(--blush-50);
 }
 
 /* Neutral Backgrounds */
@@ -432,9 +606,7 @@ html {
   background-color: var(--info-light);
 }
 
-/* ============================================
-   UTILITY CLASSES - Text Colors
-   ============================================ */
+
 
 .text-primary {
   color: var(--neutral-900);
@@ -452,30 +624,30 @@ html {
   color: var(--neutral-50);
 }
 
-/* Primary Text (Orange) */
+/* Primary Text (Warm Taupe) */
 .text-primary-color {
-  color: var(--orange-600);
+  color: var(--taupe-600);
 }
 
 .text-primary-color-light {
-  color: var(--orange-400);
+  color: var(--taupe-400);
 }
 
 .text-primary-color-dark {
-  color: var(--orange-700);
+  color: var(--taupe-700);
 }
 
-/* Secondary Text (Blue) */
+/* Secondary Text (Blush) */
 .text-secondary-color {
-  color: var(--blue-600);
+  color: var(--blush-600);
 }
 
 .text-secondary-color-light {
-  color: var(--blue-400);
+  color: var(--blush-400);
 }
 
 .text-secondary-color-dark {
-  color: var(--blue-700);
+  color: var(--blush-700);
 }
 
 /* Semantic Text Colors */
@@ -512,19 +684,19 @@ html {
 }
 
 .border-primary {
-  border-color: var(--orange-300);
+  border-color: var(--taupe-300);
 }
 
 .border-primary-dark {
-  border-color: var(--orange-500);
+  border-color: var(--taupe-500);
 }
 
 .border-secondary {
-  border-color: var(--blue-300);
+  border-color: var(--blush-300);
 }
 
 .border-secondary-dark {
-  border-color: var(--blue-500);
+  border-color: var(--blush-500);
 }
 
 .border-success {
@@ -548,11 +720,11 @@ html {
    ============================================ */
 
 .hover-bg-primary:hover {
-  background-color: var(--orange-500);
+  background-color: var(--taupe-500);
 }
 
 .hover-bg-secondary:hover {
-  background-color: var(--blue-500);
+  background-color: var(--blush-500);
 }
 
 .hover-bg-neutral:hover {
@@ -560,19 +732,19 @@ html {
 }
 
 .hover-text-primary:hover {
-  color: var(--orange-600);
+  color: var(--taupe-600);
 }
 
 .hover-text-secondary:hover {
-  color: var(--blue-600);
+  color: var(--blush-600);
 }
 
 .hover-border-primary:hover {
-  border-color: var(--orange-500);
+  border-color: var(--taupe-500);
 }
 
 .hover-border-secondary:hover {
-  border-color: var(--blue-500);
+  border-color: var(--blush-500);
 }
 
 /* ============================================
@@ -580,12 +752,12 @@ html {
    ============================================ */
 
 .focus-ring-primary:focus {
-  outline: 2px solid var(--orange-400);
+  outline: 2px solid var(--taupe-400);
   outline-offset: 2px;
 }
 
 .focus-ring-secondary:focus {
-  outline: 2px solid var(--blue-400);
+  outline: 2px solid var(--blush-400);
   outline-offset: 2px;
 }
 
@@ -594,19 +766,19 @@ html {
    ============================================ */
 
 .bg-gradient-primary {
-  background: linear-gradient(135deg, var(--orange-400), var(--orange-600));
+  background: linear-gradient(135deg, var(--taupe-400), var(--taupe-600));
 }
 
 .bg-gradient-secondary {
-  background: linear-gradient(135deg, var(--blue-400), var(--blue-600));
+  background: linear-gradient(135deg, var(--blush-400), var(--blush-600));
 }
 
 .bg-gradient-primary-secondary {
-  background: linear-gradient(135deg, var(--orange-400), var(--blue-400));
+  background: linear-gradient(135deg, var(--taupe-400), var(--blush-400));
 }
 
 .bg-gradient-secondary-primary {
-  background: linear-gradient(135deg, var(--blue-400), var(--orange-400));
+  background: linear-gradient(135deg, var(--blush-400), var(--taupe-400));
 }
 
 /* ============================================
@@ -672,6 +844,7 @@ html {
 .btn:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
+  cursor: pointer;
 }
 
 .btn:disabled {
@@ -709,153 +882,282 @@ html {
   min-height: 3.5rem;
 }
 
-/* Button Variants - Primary (Orange) */
+/* Button Variants - Primary (gradient from primary to accent) */
 .btn-primary {
-  background-color: var(--orange-600);
+  background-image: linear-gradient(to right, var(--primary), var(--accent));
   color: white;
-  border-color: var(--orange-600);
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: var(--orange-700);
-  border-color: var(--orange-700);
+  background-image: linear-gradient(to right, var(--accent), var(--primary));
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.btn-primary:hover:not(:disabled)::before {
+  left: 100%;
 }
 
 .btn-primary:active:not(:disabled) {
-  background-color: var(--orange-800);
-  border-color: var(--orange-800);
-  transform: scale(0.98);
+  background-image: linear-gradient(to right, var(--primary), var(--accent));
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary:focus {
-  outline: 2px solid var(--orange-400);
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
-  box-shadow: 0 0 0 3px var(--color-shadow-primary);
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Button Variants - Secondary (Blue) */
+/* Button Variants - Secondary (complementary to primary, works with cream background) */
 .btn-secondary {
-  background-color: var(--blue-400);
-  color: white;
-  border-color: var(--blue-400);
+  background-color: white;
+  color: var(--taupe-700);
+  border: 2px solid var(--taupe-300);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-image: linear-gradient(to right, var(--taupe-200), var(--taupe-300));
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: var(--blue-500);
-  border-color: var(--blue-500);
+  background-color: var(--taupe-300);
+  color: var(--taupe-800);
+  border-color: var(--taupe-400);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-secondary:hover:not(:disabled)::before {
+  width: 100%;
 }
 
 .btn-secondary:active:not(:disabled) {
-  background-color: var(--blue-600);
-  border-color: var(--blue-600);
-  transform: scale(0.98);
+  background-color: var(--taupe-400);
+  color: white;
+  border-color: var(--taupe-500);
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
 .btn-secondary:focus {
-  outline: 2px solid var(--blue-400);
+  outline: 2px solid var(--taupe-400);
   outline-offset: 2px;
-  box-shadow: 0 0 0 3px var(--color-shadow-secondary);
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 /* Button Variants - Outline Primary */
 .btn-outline-primary {
   background-color: transparent;
-  color: var(--orange-600);
-  border-color: var(--orange-300);
+  color: var(--taupe-600);
+  border-color: var(--taupe-300);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-outline-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-image: linear-gradient(to right, var(--primary), var(--accent));
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
 }
 
 .btn-outline-primary:hover:not(:disabled) {
-  background-color: var(--orange-50);
-  border-color: var(--orange-400);
-  color: var(--orange-700);
+  background-color: transparent;
+  border-color: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline-primary:hover:not(:disabled)::before {
+  width: 100%;
 }
 
 .btn-outline-primary:active:not(:disabled) {
-  background-color: var(--orange-100);
-  border-color: var(--orange-500);
-  transform: scale(0.98);
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn-outline-primary:focus {
-  outline: 2px solid var(--orange-400);
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
-  box-shadow: 0 0 0 3px var(--color-shadow-primary);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
 /* Button Variants - Outline Secondary */
 .btn-outline-secondary {
   background-color: transparent;
-  color: var(--blue-600);
-  border-color: var(--blue-300);
+  color: var(--blush-600);
+  border-color: var(--blush-300);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-outline-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-image: linear-gradient(to right, var(--primary), var(--accent));
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
 }
 
 .btn-outline-secondary:hover:not(:disabled) {
-  background-color: var(--blue-50);
-  border-color: var(--blue-400);
-  color: var(--blue-700);
+  background-color: transparent;
+  border-color: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline-secondary:hover:not(:disabled)::before {
+  width: 100%;
 }
 
 .btn-outline-secondary:active:not(:disabled) {
-  background-color: var(--blue-100);
-  border-color: var(--blue-500);
-  transform: scale(0.98);
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn-outline-secondary:focus {
-  outline: 2px solid var(--blue-400);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
-  box-shadow: 0 0 0 3px var(--color-shadow-secondary);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
 /* Button Variants - Ghost Primary */
 .btn-ghost-primary {
   background-color: transparent;
-  color: var(--orange-600);
+  color: var(--taupe-600);
   border-color: transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.btn-ghost-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-image: linear-gradient(to right, var(--primary), var(--accent));
+  opacity: 0.1;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
 }
 
 .btn-ghost-primary:hover:not(:disabled) {
-  background-color: var(--orange-50);
-  color: var(--orange-700);
+  background-color: transparent;
+  color: var(--taupe-700);
+  transform: translateY(-2px);
+}
+
+.btn-ghost-primary:hover:not(:disabled)::before {
+  width: 100%;
+  opacity: 0.15;
 }
 
 .btn-ghost-primary:active:not(:disabled) {
-  background-color: var(--orange-100);
-  transform: scale(0.98);
+  transform: translateY(0) scale(0.98);
 }
 
 /* Button Variants - Ghost Secondary */
 .btn-ghost-secondary {
   background-color: transparent;
-  color: var(--blue-600);
+  color: var(--blush-600);
   border-color: transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.btn-ghost-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-image: linear-gradient(to right, var(--primary), var(--accent));
+  opacity: 0.1;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
 }
 
 .btn-ghost-secondary:hover:not(:disabled) {
-  background-color: var(--blue-50);
-  color: var(--blue-700);
+  background-color: transparent;
+  color: var(--blush-700);
+  transform: translateY(-2px);
+}
+
+.btn-ghost-secondary:hover:not(:disabled)::before {
+  width: 100%;
+  opacity: 0.15;
 }
 
 .btn-ghost-secondary:active:not(:disabled) {
-  background-color: var(--blue-100);
-  transform: scale(0.98);
+  transform: translateY(0) scale(0.98);
 }
 
 /* Button Variants - Neutral/Default */
 .btn-neutral {
-  background-color: var(--neutral-100);
+  background-color: var(--neutral-700);
   color: var(--neutral-900);
   border-color: var(--neutral-200);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-neutral:hover:not(:disabled) {
   background-color: var(--neutral-200);
   border-color: var(--neutral-300);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .btn-neutral:active:not(:disabled) {
   background-color: var(--neutral-300);
-  transform: scale(0.98);
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn-neutral:focus {
@@ -866,73 +1168,177 @@ html {
 /* Button Variants - Link */
 .btn-link {
   background-color: transparent;
-  color: var(--orange-600);
+  color: var(--taupe-600);
   border-color: transparent;
   text-decoration: underline;
   padding: 0.25rem 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-link:hover:not(:disabled) {
-  color: var(--orange-700);
+  color: var(--taupe-700);
   text-decoration: none;
+  transform: translateY(-1px);
 }
 
 .btn-link-secondary {
   background-color: transparent;
-  color: var(--blue-600);
+  color: var(--blush-600);
   border-color: transparent;
   text-decoration: underline;
   padding: 0.25rem 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-link-secondary:hover:not(:disabled) {
-  color: var(--blue-700);
+  color: var(--blush-700);
   text-decoration: none;
+  transform: translateY(-1px);
 }
 
 /* Button Variants - Success, Error, Warning, Info */
 .btn-success {
-  background-color: var(--success);
+  background-image: linear-gradient(to right, var(--primary), var(--accent));
   color: white;
-  border-color: var(--success);
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-success::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
 }
 
 .btn-success:hover:not(:disabled) {
-  background-color: var(--success-dark);
-  border-color: var(--success-dark);
+  background-image: linear-gradient(to right, var(--accent), var(--primary));
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.btn-success:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.btn-success:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-error {
-  background-color: var(--error);
+  background-image: linear-gradient(to right, var(--primary), var(--accent));
   color: white;
-  border-color: var(--error);
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-error::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
 }
 
 .btn-error:hover:not(:disabled) {
-  background-color: var(--error-dark);
-  border-color: var(--error-dark);
+  background-image: linear-gradient(to right, var(--accent), var(--primary));
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.btn-error:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.btn-error:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-warning {
-  background-color: var(--warning);
+  background-image: linear-gradient(to right, var(--primary), var(--accent));
   color: white;
-  border-color: var(--warning);
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-warning::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
 }
 
 .btn-warning:hover:not(:disabled) {
-  background-color: var(--warning-dark);
-  border-color: var(--warning-dark);
+  background-image: linear-gradient(to right, var(--accent), var(--primary));
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.btn-warning:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.btn-warning:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-info {
-  background-color: var(--info);
+  background-image: linear-gradient(to right, var(--primary), var(--accent));
   color: white;
-  border-color: var(--info);
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
 }
 
 .btn-info:hover:not(:disabled) {
-  background-color: var(--info-dark);
-  border-color: var(--info-dark);
+  background-image: linear-gradient(to right, var(--accent), var(--primary));
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.btn-info:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.btn-info:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Button Full Width */
@@ -1335,44 +1741,44 @@ html {
 /* Animated Gradient Background */
 .bg-animated-gradient {
   background: linear-gradient(-45deg,
-      var(--orange-50),
-      var(--blue-50),
-      var(--orange-100),
-      var(--blue-100),
-      var(--orange-50));
+      var(--cream-50),
+      var(--taupe-50),
+      var(--cream-100),
+      var(--taupe-100),
+      var(--cream-50));
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
 }
 
 .bg-animated-gradient-primary {
   background: linear-gradient(-45deg,
-      var(--orange-400),
-      var(--orange-500),
-      var(--orange-600),
-      var(--orange-500),
-      var(--orange-400));
+      var(--taupe-400),
+      var(--taupe-500),
+      var(--taupe-600),
+      var(--taupe-500),
+      var(--taupe-400));
   background-size: 400% 400%;
   animation: gradientShift 10s ease infinite;
 }
 
 .bg-animated-gradient-secondary {
   background: linear-gradient(-45deg,
-      var(--blue-400),
-      var(--blue-500),
-      var(--blue-600),
-      var(--blue-500),
-      var(--blue-400));
+      var(--blush-400),
+      var(--blush-500),
+      var(--blush-600),
+      var(--blush-500),
+      var(--blush-400));
   background-size: 400% 400%;
   animation: gradientShift 10s ease infinite;
 }
 
 .bg-animated-gradient-mixed {
   background: linear-gradient(-45deg,
-      var(--orange-400),
-      var(--blue-400),
-      var(--orange-500),
-      var(--blue-500),
-      var(--orange-400));
+      var(--taupe-400),
+      var(--blush-400),
+      var(--taupe-500),
+      var(--blush-500),
+      var(--taupe-400));
   background-size: 400% 400%;
   animation: gradientShift 12s ease infinite;
 }
@@ -1380,10 +1786,10 @@ html {
 /* Mesh Gradient Animation */
 .bg-mesh-gradient {
   background:
-    radial-gradient(at 0% 0%, var(--orange-200) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, var(--blue-200) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, var(--orange-300) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, var(--blue-300) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, var(--taupe-200) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, var(--blush-200) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, var(--taupe-300) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, var(--blush-300) 0px, transparent 50%);
   background-size: 200% 200%;
   animation: meshMove 20s ease infinite;
 }
@@ -1424,10 +1830,10 @@ html {
   width: 100%;
   height: 100%;
   background-image:
-    radial-gradient(circle at 20% 50%, var(--orange-300) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, var(--blue-300) 0%, transparent 50%),
-    radial-gradient(circle at 40% 20%, var(--orange-200) 0%, transparent 50%),
-    radial-gradient(circle at 90% 40%, var(--blue-200) 0%, transparent 50%);
+    radial-gradient(circle at 20% 50%, var(--taupe-300) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, var(--blush-300) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, var(--taupe-200) 0%, transparent 50%),
+    radial-gradient(circle at 90% 40%, var(--blush-200) 0%, transparent 50%);
   background-size: 200% 200%;
   animation: particlesMove 25s ease infinite;
   opacity: 0.6;
@@ -1567,7 +1973,7 @@ html {
 .bg-floating-orbs::before {
   width: 300px;
   height: 300px;
-  background: var(--orange-400);
+  background: var(--taupe-400);
   top: -150px;
   left: -150px;
   animation-delay: 0s;
@@ -1576,7 +1982,7 @@ html {
 .bg-floating-orbs::after {
   width: 400px;
   height: 400px;
-  background: var(--blue-400);
+  background: var(--blush-400);
   bottom: -200px;
   right: -200px;
   animation-delay: 10s;
@@ -1604,7 +2010,7 @@ html {
 
 /* Animated Dots Background */
 .bg-animated-dots {
-  background-image: radial-gradient(circle, var(--orange-300) 1px, transparent 1px);
+  background-image: radial-gradient(circle, var(--taupe-300) 1px, transparent 1px);
   background-size: 30px 30px;
   animation: dotsMove 20s linear infinite;
   opacity: 0.3;
