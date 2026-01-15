@@ -1,11 +1,3 @@
-/**
- * Token Store (Client State)
- * 
- * Manages authentication token using Zustand
- * This is CLIENT STATE because it's auth token, not server data
- * 
- * Note: User account information should be fetched using useUser() hook (server state)
- */
 import { createClientStore } from "@/lib/state";
 
 interface TokenState {
@@ -22,11 +14,6 @@ export const useTokenStore = createClientStore<TokenState>(
   }),
   {
     name: "token-store",
-    persist: true, // Persist accessToken to localStorage
+    persist: true,
   }
 );
-
-
-
-
-

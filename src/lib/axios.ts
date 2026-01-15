@@ -6,16 +6,8 @@ import axios, {
 import { captureException } from "@/infrastructure/monitoring/sentry";
 import { logger } from "@/infrastructure/monitoring/logger";
 import { useTokenStore } from "@/store/useTokenStore";
+import { AuthService } from "@/services/auth.service";
 
-/**
- * Centralized Axios Client
- * 
- * Features:
- * - Automatic token injection
- * - Error handling
- * - Request/Response logging
- * - Error tracking integration
- */
 const axiosClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 10000,
@@ -28,7 +20,6 @@ const axiosClient = axios.create({
 // Request Interceptor
 axiosClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // Lấy accessToken từ Zustand store
     const token = useTokenStore.getState().accessToken;
 
     if (token && config.headers) {
@@ -37,7 +28,10 @@ axiosClient.interceptors.request.use(
 
     // Log request in development
     if (process.env.NODE_ENV === "development") {
-      logger.apiRequest(config.method?.toUpperCase() || "GET", config.url || "");
+      logger.apiRequest(
+        config.method?.toUpperCase() || "GET",
+        config.url || ""
+      );
     }
 
     return config;
@@ -47,6 +41,33 @@ axiosClient.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+// Track if we're currently refreshing to avoid multiple refresh calls
+let isRefreshing = false;
+let failedQueue: Array<{
+  resolve: (value?: unknown) => void;
+  reject: (reason?: unknown) => void;
+  config: InternalAxiosRequestConfig;
+}> = [];
+
+const processQueue = (
+  error: AxiosError | null,
+  token: string | null = null
+) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      // Update token in request header before retrying
+      if (token && prom.config.headers) {
+        prom.config.headers.Authorization = `Bearer ${token}`;
+      }
+      prom.resolve(token);
+    }
+  });
+
+  failedQueue = [];
+};
 
 // Response Interceptor
 axiosClient.interceptors.response.use(
@@ -63,7 +84,11 @@ axiosClient.interceptors.response.use(
     // Return data directly for easier usage in services
     return response.data;
   },
-  (error: AxiosError) => {
+  async (error: AxiosError) => {
+    const originalRequest = error.config as InternalAxiosRequestConfig & {
+      _retry?: boolean;
+    };
+
     if (error.response) {
       const status = error.response.status;
       const url = error.config?.url || "";
@@ -82,15 +107,73 @@ axiosClient.interceptors.response.use(
         url,
       });
 
-      switch (status) {
-        case 401:
-          console.error("Phiên làm việc hết hạn");
-          // Handle logout: Clear accessToken from store
+      // Handle 401 - Access Token Expired
+      if (status === 401 && !originalRequest._retry) {
+        const skipRefreshUrls = [
+          "/auth/login",
+          "/auth/register",
+          "/auth/refresh",
+        ];
+        const shouldSkipRefresh = skipRefreshUrls.some((skipUrl) =>
+          url.includes(skipUrl)
+        );
+
+        if (shouldSkipRefresh) {
+          return Promise.reject(error);
+        }
+
+        // If already refreshing, queue this request
+        if (isRefreshing) {
+          return new Promise((resolve, reject) => {
+            failedQueue.push({ resolve, reject, config: originalRequest });
+          })
+            .then(() => {
+              // originalRequest header has been updated in processQueue
+              return axiosClient(originalRequest);
+            })
+            .catch((err) => {
+              return Promise.reject(err);
+            });
+        }
+
+        originalRequest._retry = true;
+        isRefreshing = true;
+
+        try {
+          const response = await AuthService.refresh();
+
+          const accessToken = response?.token;
+
+          if (accessToken) {
+            useTokenStore.getState().setAccessToken(accessToken);
+
+            if (originalRequest.headers) {
+              originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+            }
+
+            processQueue(null, accessToken);
+
+            // Retry the original request with new token
+            return axiosClient(originalRequest);
+          }
+        } catch (refreshError) {
+          processQueue(refreshError as AxiosError, null);
+
+          // Refresh token expired or invalid - Logout user
+          console.error("Phiên làm việc hết hạn. Vui lòng đăng nhập lại.");
           if (typeof window !== "undefined") {
             useTokenStore.getState().clearAuth();
-            // window.location.href = "/login";
+            window.location.href = "/login";
           }
-          break;
+
+          return Promise.reject(refreshError);
+        } finally {
+          isRefreshing = false;
+        }
+      }
+
+      // Handle other errors
+      switch (status) {
         case 403:
           console.error("Bạn không có quyền truy cập");
           break;
@@ -112,4 +195,3 @@ axiosClient.interceptors.response.use(
 );
 
 export default axiosClient;
-

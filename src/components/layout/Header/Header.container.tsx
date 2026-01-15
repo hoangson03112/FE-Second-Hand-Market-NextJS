@@ -7,12 +7,12 @@ import HeaderView from "./Header.view";
 export default function HeaderContainer() {
   const router = useRouter();
   const {
+    account,
     categories,
     isLoading,
     visibleCategories,
     activeCategory,
     showAllCategories,
-    isAuthenticated,
     handleMouseEnterCategory,
     handleMouseLeaveCategory,
     handleShowAllCategories,
@@ -27,12 +27,12 @@ export default function HeaderContainer() {
 
   return (
     <HeaderView
+      account={account}
       visibleCategories={visibleCategories || []}
       categories={categories || []}
       isLoading={isLoading}
       activeCategory={activeCategory}
       showAllCategories={showAllCategories}
-      isAuthenticated={isAuthenticated}
       onMouseEnterCategory={handleMouseEnterCategory}
       onMouseLeaveCategory={handleMouseLeaveCategory}
       onShowAll={handleShowAllCategories}

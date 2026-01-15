@@ -1,14 +1,11 @@
 "use client";
 
-import { Heart } from "lucide-react";
 
 interface ProductActionButtonsProps {
-  isFavorite: boolean;
   actionLoading: boolean;
   isOutOfStock: boolean;
   onBuyNow: () => void;
   onAddToCart: () => void;
-  onToggleFavorite: () => void;
 }
 
 export default function ProductActionButtons({

@@ -1,6 +1,6 @@
 /**
  * User Hook (Server State)
- * 
+ *
  * Fetches current user account information from API
  * This is SERVER STATE because it's data from API
  */
@@ -37,4 +37,3 @@ export function useUser() {
     gcTime: serverStateConfig.gcTime.dynamic, // 10 minutes
   });
 }
-

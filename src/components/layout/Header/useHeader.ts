@@ -1,18 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import useCategories from "@/hooks/useCategories";
-import { useTokenStore } from "@/store/useTokenStore";
+import { useUser } from "@/hooks/useUser";
 
 export function useHeader() {
-  // Fetch categories using TanStack Query (server state)
   const { data: categories, isLoading } = useCategories();
-
+  const { data: account } = useUser();
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [showAllCategories, setShowAllCategories] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Tính toán visibleCategories từ data
   const visibleCategories = useMemo(
-    () => categories?.slice(0, 8),
+    () => categories?.slice(0, 7),
     [categories]
   );
 
@@ -32,28 +29,13 @@ export function useHeader() {
     setShowAllCategories(false);
   }, []);
 
-  // Lấy accessToken từ store
-  const accessToken = useTokenStore((state) => state.accessToken);
-
-  useEffect(() => {
-    // Check authentication status từ store
-    setIsAuthenticated(!!accessToken);
-  }, [accessToken]);
-
-  useEffect(() => {
-    const onDocClick = () => {
-    };
-    document.addEventListener("mousedown", onDocClick);
-    return () => document.removeEventListener("mousedown", onDocClick);
-  }, []);
-
   return {
+    account,
     categories,
     isLoading,
     visibleCategories,
     activeCategory,
     showAllCategories,
-    isAuthenticated,
     handleMouseEnterCategory,
     handleMouseLeaveCategory,
     handleShowAllCategories,

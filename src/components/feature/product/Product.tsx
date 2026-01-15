@@ -18,6 +18,7 @@ import ProductDescription from "./ProductDescription";
 import QuantitySelector from "./QuantitySelector";
 import ProductActionButtons from "./ProductActionButtons";
 import ProductGuarantees from "./ProductGuarantees";
+import { AccountInfo } from "@/types/auth";
 
 interface ProductProps {
   id: string;
@@ -31,12 +32,10 @@ export default function Product({ id }: ProductProps) {
 
   const {
     actionLoading,
-    isFavorite,
     handlePurchaseNow,
     handleAddToCart,
     handleContactSeller,
-    handleToggleFavorite,
-  } = useProductActions({ product, account, quantity });
+  } = useProductActions({ product, account: account as AccountInfo, quantity });
 
   const handleQuantityChange = useCallback(
     (newQuantity: number) => {
@@ -130,12 +129,10 @@ export default function Product({ id }: ProductProps) {
             />
 
             <ProductActionButtons
-              isFavorite={isFavorite}
               actionLoading={actionLoading}
               isOutOfStock={!product.stock || product.stock <= 0}
               onBuyNow={handlePurchaseNow}
               onAddToCart={handleAddToCart}
-              onToggleFavorite={handleToggleFavorite}
             />
 
 <ProductGuarantees />

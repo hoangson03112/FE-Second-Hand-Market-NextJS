@@ -44,6 +44,30 @@ export default function ShippingForm({ onSubmit, defaultValues }: ShippingFormPr
     onSubmit(formData);
   };
 
+  // Auto-submit on change (for better UX)
+  const handleChangeAndSubmit = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const newData = {
+      ...formData,
+      [e.target.name]: e.target.value,
+    };
+    setFormData(newData);
+    
+    // Check if all required fields are filled
+    if (
+      newData.fullName &&
+      newData.phone &&
+      newData.email &&
+      newData.address &&
+      newData.city &&
+      newData.district &&
+      newData.ward
+    ) {
+      onSubmit(newData);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
@@ -59,7 +83,7 @@ export default function ShippingForm({ onSubmit, defaultValues }: ShippingFormPr
                 type="text"
                 name="fullName"
                 value={formData.fullName}
-                onChange={handleChange}
+                onChange={handleChangeAndSubmit}
                 required
                 className="w-full px-4 py-2.5 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
                 placeholder="Nguyễn Văn A"
@@ -74,7 +98,7 @@ export default function ShippingForm({ onSubmit, defaultValues }: ShippingFormPr
                 type="tel"
                 name="phone"
                 value={formData.phone}
-                onChange={handleChange}
+                onChange={handleChangeAndSubmit}
                 required
                 className="w-full px-4 py-2.5 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
                 placeholder="0912345678"
@@ -90,7 +114,7 @@ export default function ShippingForm({ onSubmit, defaultValues }: ShippingFormPr
               type="email"
               name="email"
               value={formData.email}
-              onChange={handleChange}
+              onChange={handleChangeAndSubmit}
               required
               className="w-full px-4 py-2.5 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
               placeholder="email@example.com"
@@ -105,7 +129,7 @@ export default function ShippingForm({ onSubmit, defaultValues }: ShippingFormPr
               type="text"
               name="address"
               value={formData.address}
-              onChange={handleChange}
+              onChange={handleChangeAndSubmit}
               required
               className="w-full px-4 py-2.5 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
               placeholder="Số nhà, tên đường"
@@ -120,7 +144,7 @@ export default function ShippingForm({ onSubmit, defaultValues }: ShippingFormPr
               <select
                 name="city"
                 value={formData.city}
-                onChange={handleChange}
+                onChange={handleChangeAndSubmit}
                 required
                 className="w-full px-4 py-2.5 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
               >
@@ -139,7 +163,7 @@ export default function ShippingForm({ onSubmit, defaultValues }: ShippingFormPr
               <select
                 name="district"
                 value={formData.district}
-                onChange={handleChange}
+                onChange={handleChangeAndSubmit}
                 required
                 className="w-full px-4 py-2.5 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
               >
@@ -157,7 +181,7 @@ export default function ShippingForm({ onSubmit, defaultValues }: ShippingFormPr
               <select
                 name="ward"
                 value={formData.ward}
-                onChange={handleChange}
+                onChange={handleChangeAndSubmit}
                 required
                 className="w-full px-4 py-2.5 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-background text-foreground"
               >
@@ -187,5 +211,6 @@ export default function ShippingForm({ onSubmit, defaultValues }: ShippingFormPr
     </form>
   );
 }
+
 
 

@@ -10,6 +10,10 @@
       "Helvetica Neue", Arial, sans-serif !important;
   }
 
+  button {
+    cursor: pointer;
+  }
+
 }
 
 :root {
@@ -841,10 +845,13 @@ html {
    UTILITY CLASSES - Buttons
    ============================================ */
 
+.btn {
+  cursor: pointer;
+}
+
 .btn:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
-  cursor: pointer;
 }
 
 .btn:disabled {
@@ -1110,7 +1117,14 @@ html {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
-
+.btn-danger {
+  background-color: var(--danger);
+  color: white;
+  border-color: transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
 .btn-ghost-secondary::before {
   content: '';
   position: absolute;
@@ -2110,4 +2124,33 @@ html {
   50% {
     transform: translateY(-40px) scale(1.05);
   }
+}
+
+/* Modal Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out;
 }

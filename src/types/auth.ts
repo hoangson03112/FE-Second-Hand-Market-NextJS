@@ -1,3 +1,5 @@
+import { Address } from "./address";
+
 export interface LoginRequest {
   username: string;
   password: string;
@@ -6,8 +8,7 @@ export interface LoginRequest {
 export interface LoginResponse {
   status: "success" | "password" | "login" | "inactive" | "error";
   message: string;
-  token?: string; // accessToken - refreshToken được set vào HttpOnly cookie, không trả về trong body
-  user?: any;
+  token?: string;
 }
 
 export interface RegisterRequest {
@@ -33,19 +34,18 @@ export interface VerifyRequest {
 export interface VerifyResponse {
   status: "success" | "error";
   message: string;
-  token?: string; // accessToken - refreshToken được set vào HttpOnly cookie, không trả về trong body
+  accessToken?: string;
 }
 
 export interface AccountInfo {
   accountID: string;
   fullName?: string;
   avatar?: string;
-  cart?: any;
   role?: string;
   email: string;
   phoneNumber: string;
   createdAt?: string;
-  addresses?: any[];
+  addresses?: Address[];
 }
 
 export interface AccountResponse {
@@ -53,4 +53,8 @@ export interface AccountResponse {
   message?: string;
   account?: AccountInfo;
 }
-
+export interface RefreshResponse {
+  success: boolean;
+  message: string;
+  token?: string;
+}

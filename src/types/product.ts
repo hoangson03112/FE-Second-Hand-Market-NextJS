@@ -13,7 +13,7 @@ export interface IProduct {
   attributes: IAttribute[];
   images: IImage[];
   status: "pending" | "approved" | "rejected";
-  condition?: string; // "new" | "like_new" | "good" | "fair" | "poor"
+  condition?: string;
   estimatedWeight?: IEstimatedWeight;
   createdAt: string;
   updatedAt?: string;
@@ -30,7 +30,7 @@ export interface IAttribute {
 }
 export interface IEstimatedWeight {
   value: number;
-  confidence: number; 
+  confidence: number;
 }
 export interface IAccount {
   _id: string;
@@ -48,7 +48,7 @@ export interface ISeller {
   phoneNumber: string;
   totalReviews: number;
   avgRating: number;
-  totalProducts:number
+  totalProducts: number;
 }
 
 export interface IImage {

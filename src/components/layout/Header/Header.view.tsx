@@ -6,18 +6,17 @@ import { useRouter } from "next/navigation";
 import type { HeaderViewProps } from "./Header.types";
 import { ICategory, ISubCategory } from "@/types/category";
 import { useTokenStore } from "@/store/useTokenStore";
-import { useUser } from "@/hooks/useUser";
 import { AuthService } from "@/services/auth.service";
 import { Search, ShoppingCart,Bell, ChevronUp, ChevronDown } from "lucide-react";
 
 export default function HeaderView(props: HeaderViewProps) {
   const {
+    account,
     visibleCategories,
     categories,
     isLoading,
     activeCategory,
     showAllCategories,
-    isAuthenticated,
     onMouseEnterCategory,
     onMouseLeaveCategory,
     onShowAll,
@@ -30,14 +29,12 @@ export default function HeaderView(props: HeaderViewProps) {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { clearAuth } = useTokenStore();
-  const { data: account } = useUser();
 
   const submitSearch = (e?: React.FormEvent) => {
     e?.preventDefault();
     if (query.trim()) onSearch(query.trim());
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -82,7 +79,7 @@ export default function HeaderView(props: HeaderViewProps) {
 
   return (
     <header className="relative bg-gradient-to-br from-cream-50 via-neutral-50 to-taupe-50 backdrop-blur-md border-b border-default sticky top-0 z-50 shadow-md">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(141,119,86,0.15)_1px,transparent_0)] [background-size:20px_20px] opacity-40" />
+      <div className="absolute inset-0 opacity-40" />
       <div className="relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-28">
@@ -123,7 +120,7 @@ export default function HeaderView(props: HeaderViewProps) {
             </div>
 
             <div className="hidden md:flex items-center justify-end gap-3">
-              {!isAuthenticated ? (
+              {!account ? (
                 <Link
                   href="/login"
                   className="inline-flex items-center justify-center px-5 py-2.5 text-base font-medium rounded-full text-white btn-primary hover-bg-primary-dark transition-colors"
@@ -163,7 +160,7 @@ export default function HeaderView(props: HeaderViewProps) {
                       {account?.avatar ? (
                         <Image
                           src={account.avatar}
-                          alt={account.fullName || "UnKnow"}
+                          alt={account.fullName || "Unknown"}
                           width={36}
                           height={36}
                           className="rounded-full object-cover"

@@ -18,10 +18,12 @@ export default function Register() {
   const {
     formData,
     confirmPassword,
+    errors,
     error,
     isLoading,
     handleChange,
     handleConfirmPasswordChange,
+    handleBlur,
     handleSubmit,
   } = useRegister();
 
@@ -40,86 +42,122 @@ export default function Register() {
             <ErrorMessage message={error} />
 
             <div className="space-y-4">
-              <InputField
-                id="fullName"
-                name="fullName"
-                label="Họ và tên"
-                value={formData.fullName || ""}
-                onChange={handleChange}
-                placeholder="Nhập họ và tên"
-                icon={
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                }
-              />
+              <div>
+                <InputField
+                  id="fullName"
+                  name="fullName"
+                  label="Họ và tên"
+                  value={formData.fullName || ""}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Nhập họ và tên"
+                  icon={
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  }
+                />
+                {errors.fullName && (
+                  <p className="mt-1 text-sm text-red-500">{errors.fullName}</p>
+                )}
+              </div>
 
-              <InputField
-                id="username"
-                name="username"
-                label="Tên đăng nhập"
-                value={formData.username}
-                onChange={handleChange}
-                placeholder="Nhập tên đăng nhập"
-                required
-                icon={
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                }
-              />
+              <div>
+                <InputField
+                  id="username"
+                  name="username"
+                  label="Tên đăng nhập"
+                  value={formData.username}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Nhập tên đăng nhập"
+                  required
+                  icon={
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  }
+                />
+                {errors.username && (
+                  <p className="mt-1 text-sm text-red-500">{errors.username}</p>
+                )}
+              </div>
 
-              <InputField
-                id="email"
-                name="email"
-                type="email"
-                label="Email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Nhập email"
-                required
-                icon={
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                }
-              />
+              <div>
+                <InputField
+                  id="email"
+                  name="email"
+                  type="email"
+                  label="Email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Nhập email"
+                  required
+                  icon={
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  }
+                />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                )}
+              </div>
 
-              <InputField
-                id="phoneNumber"
-                name="phoneNumber"
-                type="tel"
-                label="Số điện thoại"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                placeholder="Nhập số điện thoại"
-                required
-                icon={
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                }
-              />
+              <div>
+                <InputField
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  type="tel"
+                  label="Số điện thoại"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Nhập số điện thoại"
+                  required
+                  icon={
+                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  }
+                />
+                {errors.phoneNumber && (
+                  <p className="mt-1 text-sm text-red-500">{errors.phoneNumber}</p>
+                )}
+              </div>
 
-              <PasswordField
-                id="password"
-                name="password"
-                label="Mật khẩu"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Tối thiểu 6 ký tự"
-                required
-              />
+              <div>
+                <PasswordField
+                  id="password"
+                  name="password"
+                  label="Mật khẩu"
+                  value={formData.password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Tối thiểu 6 ký tự"
+                  required
+                />
+                {errors.password && (
+                  <p className="mt-1 text-sm text-red-500">{errors.password}</p>
+                )}
+              </div>
 
-              <PasswordField
-                id="confirmPassword"
-                name="confirmPassword"
-                label="Xác nhận mật khẩu"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-                placeholder="Nhập lại mật khẩu"
-                required
-              />
+              <div>
+                <PasswordField
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  label="Xác nhận mật khẩu"
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                  onBlur={handleBlur}
+                  placeholder="Nhập lại mật khẩu"
+                  required
+                />
+                {errors.confirmPassword && (
+                  <p className="mt-1 text-sm text-red-500">{errors.confirmPassword}</p>
+                )}
+              </div>
             </div>
 
             <AuthButton isLoading={isLoading}>

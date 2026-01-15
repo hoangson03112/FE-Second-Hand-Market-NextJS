@@ -7,6 +7,7 @@ import type {
   VerifyRequest,
   VerifyResponse,
   AccountResponse,
+  RefreshResponse,
 } from "@/types/auth";
 
 export const AuthService = {
@@ -28,5 +29,8 @@ export const AuthService = {
 
   logout: async (): Promise<{ success: boolean; message: string }> => {
     return axiosClient.post("/auth/logout");
+  },
+  refresh: async (): Promise<RefreshResponse> => {
+    return axiosClient.post("/auth/refresh");
   },
 };

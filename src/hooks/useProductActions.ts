@@ -1,17 +1,23 @@
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { IProduct } from "@/types/product";
+import { useCheckoutStore } from "@/store/useCheckoutStore";
+import { AccountInfo } from "@/types/auth";
 
 interface UseProductActionsProps {
   product: IProduct | null;
-  account: any;
+  account: AccountInfo;
   quantity: number;
 }
 
-export function useProductActions({ product, account, quantity }: UseProductActionsProps) {
+export function useProductActions({
+  product,
+  account,
+  quantity,
+}: UseProductActionsProps) {
   const router = useRouter();
   const [actionLoading, setActionLoading] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { setCheckoutItems } = useCheckoutStore();
 
   const handlePurchaseNow = useCallback(async () => {
     if (!account) {
@@ -31,19 +37,17 @@ export function useProductActions({ product, account, quantity }: UseProductActi
     try {
       setActionLoading(true);
 
-      const checkoutParams = new URLSearchParams({
-        productId: product._id,
-        quantity: quantity.toString(),
-        action: "purchase-now",
-      });
+      // Save product and quantity to checkout store
+      setCheckoutItems([{ product, quantity }]);
 
-      router.push(`/checkout?${checkoutParams.toString()}`);
+      // Navigate to checkout page
+      router.push("/checkout");
     } catch (error) {
       console.error("Lỗi khi xử lý mua ngay:", error);
     } finally {
       setActionLoading(false);
     }
-  }, [account, router, product, quantity]);
+  }, [account, router, product, quantity, setCheckoutItems]);
 
   const handleAddToCart = useCallback(async () => {
     if (!account) {
@@ -82,18 +86,13 @@ export function useProductActions({ product, account, quantity }: UseProductActi
     // TODO: Implement chat/contact functionality
   }, [product?.seller?._id]);
 
-  const handleToggleFavorite = useCallback(() => {
-    setIsFavorite(!isFavorite);
-    // TODO: Implement favorite/wishlist functionality
-  }, [isFavorite]);
+
 
   return {
     actionLoading,
-    isFavorite,
+
     handlePurchaseNow,
     handleAddToCart,
     handleContactSeller,
-    handleToggleFavorite,
   };
 }
-

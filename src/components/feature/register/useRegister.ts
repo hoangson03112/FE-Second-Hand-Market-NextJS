@@ -2,52 +2,103 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AuthService } from "@/services/auth.service";
 import type { RegisterRequest } from "@/types/auth";
+import { registerSchema, RegisterInput } from "@/schemas/auth.schema";
 
 export function useRegister() {
   const router = useRouter();
-  const [formData, setFormData] = useState<RegisterRequest>({
+  const [formData, setFormData] = useState<RegisterInput>({
     username: "",
     email: "",
     phoneNumber: "",
     password: "",
+    confirmPassword: "",
     fullName: "",
   });
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState<Partial<Record<keyof RegisterInput, string>>>({});
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+    // Clear errors khi user đang typing
     setError("");
+    if (errors[name as keyof RegisterInput]) {
+      setErrors({ ...errors, [name]: undefined });
+    }
   };
 
   const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
-    setError("");
+    handleChange(e); // Sử dụng handleChange chung
+  };
+
+  // Validate field khi blur
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const fieldName = name as keyof RegisterInput;
+    
+    // Validate từng field (trừ confirmPassword vì nó cần validate với password)
+    if (fieldName === "confirmPassword") {
+      // Validate confirmPassword với password hiện tại
+      if (value !== formData.password) {
+        setErrors({
+          ...errors,
+          confirmPassword: "Mật khẩu xác nhận không khớp",
+        });
+      } else {
+        setErrors({ ...errors, confirmPassword: undefined });
+      }
+      return;
+    }
+
+    // Skip nếu không phải field của schema (để tránh lỗi runtime)
+    if (!(fieldName in registerSchema.shape)) {
+      return;
+    }
+
+    const result = registerSchema.shape[fieldName].safeParse(value);
+    if (!result.success) {
+      setErrors({
+        ...errors,
+        [fieldName]: result.error.issues[0].message,
+      });
+    } else {
+      setErrors({ ...errors, [fieldName]: undefined });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setErrors({});
 
-    // Validation
-    if (formData.password !== confirmPassword) {
-      setError("Mật khẩu xác nhận không khớp");
+    // Validate toàn bộ form với Zod
+    const result = registerSchema.safeParse(formData);
+
+    if (!result.success) {
+      // Convert Zod errors thành object
+      const fieldErrors: Partial<Record<keyof RegisterInput, string>> = {};
+      result.error.issues.forEach((issue) => {
+        const fieldName = issue.path[0] as keyof RegisterInput;
+        if (fieldName) {
+          fieldErrors[fieldName] = issue.message;
+        }
+      });
+      setErrors(fieldErrors);
       return;
     }
 
-    if (formData.password.length < 6) {
-      setError("Mật khẩu phải có ít nhất 6 ký tự");
-      return;
-    }
-
+    // Submit với data đã validate
     setIsLoading(true);
 
     try {
-      const response = await AuthService.register(formData);
+      // Loại bỏ confirmPassword trước khi gửi API
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { confirmPassword, ...registerData } = result.data;
+      const response = await AuthService.register(registerData as RegisterRequest);
 
       if (response.status === "success") {
         router.push(`/verify-email?accountID=${response.accountID}`);
@@ -81,11 +132,13 @@ export function useRegister() {
 
   return {
     formData,
-    confirmPassword,
-    error,
+    confirmPassword: formData.confirmPassword, // For backward compatibility
+    errors, // Validation errors từ Zod
+    error, // API error
     isLoading,
     handleChange,
     handleConfirmPasswordChange,
+    handleBlur, // Thêm handleBlur
     handleSubmit,
   };
 }

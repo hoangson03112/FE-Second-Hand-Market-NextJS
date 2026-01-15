@@ -1,4 +1,2 @@
-export { default as Pagination } from "./Pagination";
-export type { PaginationProps } from "./Pagination";
-export { default as Background } from "./Background";
-
+export { ToastProvider, useToast } from "./Toast";
+export { ConfirmDialogProvider, useConfirm } from "./ConfirmDialog";

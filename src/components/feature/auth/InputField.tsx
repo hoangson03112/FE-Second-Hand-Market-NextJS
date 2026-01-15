@@ -7,6 +7,7 @@ interface InputFieldProps {
   label: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   placeholder?: string;
   required?: boolean;
   icon: React.ReactNode;
@@ -20,6 +21,7 @@ export default function InputField({
   label,
   value,
   onChange,
+  onBlur,
   placeholder,
   required = false,
   icon,
@@ -44,6 +46,7 @@ export default function InputField({
           required={required}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
           className={`block w-full pl-12 pr-4 py-4 bg-gray-50/50 border-2 rounded-xl text-base text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 ${
             error ? "border-red-300" : "border-gray-200"
           }`}

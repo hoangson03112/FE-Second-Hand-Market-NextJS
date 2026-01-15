@@ -1,32 +1,16 @@
 import { QueryClient } from "@tanstack/react-query";
 
-/**
- * Centralized QueryClient configuration
- * This ensures consistent caching and refetch behavior across the app
- */
 export const createQueryClient = () => {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        // Data is considered fresh for 5 minutes
-        staleTime: 5 * 60 * 1000, // 5 minutes
-
-        // Data stays in cache for 30 minutes
-        gcTime: 30 * 60 * 1000, // 30 minutes (formerly cacheTime)
-
-        // Don't refetch on window focus (reduce unnecessary requests)
+        staleTime: 5 * 60 * 1000,
+        gcTime: 30 * 60 * 1000,
         refetchOnWindowFocus: false,
-
-        // Don't refetch on reconnect
         refetchOnReconnect: false,
-
-        // Don't refetch on mount if data exists
         refetchOnMount: false,
-
-        // Retry failed requests once
         retry: 1,
 
-        // Retry delay increases exponentially
         retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
       },
       mutations: {
@@ -43,9 +27,6 @@ export const createQueryClient = () => {
   });
 };
 
-/**
- * Query keys factory for type-safe query keys
- */
 export const queryKeys = {
   // Categories
   categories: {
@@ -65,46 +46,47 @@ export const queryKeys = {
       [...queryKeys.products.lists(), filters] as const,
     details: () => [...queryKeys.products.all, "detail"] as const,
     detail: (id: string) => [...queryKeys.products.details(), id] as const,
-    byCategory: (categoryId: string, filters?: unknown) =>
-      [...queryKeys.products.lists(), "category", categoryId, filters] as const,
+    byCategory: (categorySlug: string, filters?: unknown) =>
+      [
+        ...queryKeys.products.lists(),
+        "category",
+        categorySlug,
+        filters,
+      ] as const,
     bySubCategory: (
-      categoryId: string,
-      subCategoryId: string,
+      categorySlug: string,
+      subCategorySlug: string,
       filters?: unknown
     ) =>
       [
         ...queryKeys.products.lists(),
         "category",
-        categoryId,
+        categorySlug,
         "sub",
-        subCategoryId,
+        subCategorySlug,
         filters,
       ] as const,
   },
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   // Users
   users: {
     all: ["users"] as const,
     details: () => [...queryKeys.users.all, "detail"] as const,
     detail: (id: string) => [...queryKeys.users.details(), id] as const,
     current: () => [...queryKeys.users.all, "current"] as const,
+  },
+
+  // Addresses
+  addresses: {
+    all: ["addresses"] as const,
+    lists: () => [...queryKeys.addresses.all, "list"] as const,
+    list: () => [...queryKeys.addresses.lists()] as const,
+    provinces: () => [...queryKeys.addresses.all, "provinces"] as const,
+    districts: (provinceId: number | null) =>
+      [...queryKeys.addresses.all, "districts", provinceId] as const,
+    wards: (districtId: number | null) =>
+      [...queryKeys.addresses.all, "wards", districtId] as const,
+    searchProvinces: (query: string) =>
+      [...queryKeys.addresses.all, "search", query] as const,
   },
 } as const;
