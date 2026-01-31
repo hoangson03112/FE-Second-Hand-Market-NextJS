@@ -2,12 +2,6 @@
 
 import HomePage from "@/components/feature/homepage";
 
-
-
-export default function page() {
-
-
-  return (
-<HomePage/>
-  );
+export default function Page() {
+  return <HomePage />;
 }

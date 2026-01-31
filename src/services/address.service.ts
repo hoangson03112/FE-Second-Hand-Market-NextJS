@@ -59,19 +59,14 @@ export const AddressService = {
     return axiosClient.put(`/addresses/${id}`, data);
   },
 
-  /**
-   * Delete an address
-   */
   deleteAddress: async (id: string): Promise<void> => {
     return axiosClient.delete(`/addresses/${id}`);
   },
 
-  // ========== GHN LOCATION DATA (External API) ==========
-
   getProvinces: async (): Promise<Province[]> => {
     try {
       const response = await rateLimitedRequest<GHNResponse<Province[]>>(
-        "/province"
+        "/master-data/province"
       );
       if (response.code === 200 && Array.isArray(response.data)) {
         return response.data;
@@ -84,7 +79,7 @@ export const AddressService = {
   getDistricts: async (provinceId: number): Promise<District[]> => {
     try {
       const response = await rateLimitedRequest<GHNResponse<District[]>>(
-        `/district?province_id=${provinceId}`
+        `/master-data/district?province_id=${provinceId}`
       );
 
       if (response.code === 200 && Array.isArray(response.data)) {
@@ -108,7 +103,7 @@ export const AddressService = {
   getWards: async (districtId: number): Promise<Ward[]> => {
     try {
       const response = await rateLimitedRequest<GHNResponse<Ward[]>>(
-        `/ward?district_id=${districtId}`
+        `/master-data/ward?district_id=${districtId}`
       );
 
       if (response.code === 200 && Array.isArray(response.data)) {
@@ -128,7 +123,6 @@ export const AddressService = {
       return [];
     }
   },
-
 
   searchProvinces: async (query: string): Promise<Province[]> => {
     try {

@@ -9,6 +9,7 @@ export type HeaderViewProps = {
   isLoading: boolean;
   activeCategory: string | null;
   showAllCategories: boolean;
+  cartItemCount?: number;
   onMouseEnterCategory: (id: string) => void;
   onMouseLeaveCategory: () => void;
   onShowAll: () => void;

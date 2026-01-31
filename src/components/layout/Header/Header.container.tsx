@@ -13,6 +13,7 @@ export default function HeaderContainer() {
     visibleCategories,
     activeCategory,
     showAllCategories,
+    cartItemCount,
     handleMouseEnterCategory,
     handleMouseLeaveCategory,
     handleShowAllCategories,
@@ -33,6 +34,7 @@ export default function HeaderContainer() {
       isLoading={isLoading}
       activeCategory={activeCategory}
       showAllCategories={showAllCategories}
+      cartItemCount={cartItemCount ?? 0}
       onMouseEnterCategory={handleMouseEnterCategory}
       onMouseLeaveCategory={handleMouseLeaveCategory}
       onShowAll={handleShowAllCategories}

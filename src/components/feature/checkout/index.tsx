@@ -37,13 +37,17 @@ export default function CheckOutPage() {
     orderItems,
     subtotal,
     total,
+    shipping,
+    shippingInfo,
+    isCalculatingShipping,
+    shippingError,
     paymentMethod,
     isSubmitting,
     shippingData,
     setPaymentMethod,
     updateShippingFromAddress,
-      handleCheckout,
-    } = useCheckout();
+    handleCheckout,
+  } = useCheckout();
 
   useEffect(() => {
     if (selectedAddress) {
@@ -99,9 +103,13 @@ export default function CheckOutPage() {
             <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-border p-6">
               <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
                 <span className="w-1 h-6 bg-primary rounded-full"></span>
-                Vận Chuyển
+                Thông Tin Vận Chuyển
               </h2>
-              <ShippingInfo shippingFee={30000} estimatedDays={3} />
+              <ShippingInfo
+                shippingInfo={shippingInfo}
+                isCalculating={isCalculatingShipping}
+                error={shippingError}
+              />
             </div>
 
             {/* Payment Method */}
@@ -119,7 +127,7 @@ export default function CheckOutPage() {
             <div className="sticky top-8 space-y-6">
               {/* Summary */}
               <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-border">
-                <CheckoutSummary subtotal={subtotal} shipping={30000} discount={0} />
+                <CheckoutSummary subtotal={subtotal} shipping={shipping} discount={0} />
               </div>
 
               {/* Checkout Button */}

@@ -32,10 +32,11 @@ export function useAddress() {
 
       try {
         const rawAddresses = await AddressService.getAddresses();
-        
-        // ✅ Transform IDs to names using cached GHN data from React Query
-        const enrichedAddresses = await enrichAddresses(rawAddresses, queryClient);
-        
+        const enrichedAddresses = await enrichAddresses(
+          rawAddresses,
+          queryClient
+        );
+
         return enrichedAddresses;
       } catch (error) {
         console.error("Error fetching addresses:", error);
@@ -78,7 +79,10 @@ export function useAddress() {
     await refetch(); // Đợi refetch hoàn thành
   };
 
-  const handleUpdateAddress = async (id: string, address: CreateAddressRequest) => {
+  const handleUpdateAddress = async (
+    id: string,
+    address: CreateAddressRequest
+  ) => {
     await AddressService.updateAddress(id, address);
     await refetch();
   };

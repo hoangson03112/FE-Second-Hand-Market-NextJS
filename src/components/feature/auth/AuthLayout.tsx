@@ -1,5 +1,5 @@
+import Background from "@/components/ui/Background";
 import React from "react";
-import { Background } from "@/components/ui";
 
 interface AuthLayoutProps {
   children: React.ReactNode;

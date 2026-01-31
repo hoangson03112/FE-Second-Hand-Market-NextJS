@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import useCategories from "@/hooks/useCategories";
 import { useUser } from "@/hooks/useUser";
+import { useCart } from "@/hooks/useCart";
 
 export function useHeader() {
   const { data: categories, isLoading } = useCategories();
   const { data: account } = useUser();
+  const { itemCount: cartItemCount } = useCart();
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [showAllCategories, setShowAllCategories] = useState(false);
 
@@ -36,6 +38,7 @@ export function useHeader() {
     visibleCategories,
     activeCategory,
     showAllCategories,
+    cartItemCount: cartItemCount ?? 0,
     handleMouseEnterCategory,
     handleMouseLeaveCategory,
     handleShowAllCategories,

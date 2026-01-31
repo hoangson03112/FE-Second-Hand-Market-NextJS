@@ -10,6 +10,12 @@ export interface CreateOrderRequest {
   shippingMethod: string;
   sellerId: string;
   paymentMethod: string;
+  // Optional extra info (Order model already supports these)
+  shippingFee?: number;
+  insuranceFee?: number;
+  codFee?: number;
+  totalShippingFee?: number;
+  expectedDeliveryTime?: string; // ISO string
 }
 
 export interface CreateOrderResponse {
@@ -74,6 +80,15 @@ export interface Order {
   [key: string]: unknown;
 }
 
+export interface SellerBankInfo {
+  bankName: string;
+  accountNumber: string;
+  accountHolder: string;
+  amount: number;
+  content: string;
+  orderId: string;
+}
+
 export const OrderService = {
   /**
    * Create a complete order with all required information
@@ -105,6 +120,24 @@ export const OrderService = {
     reason?: string
   ): Promise<{ orders: Order[]; message: string }> => {
     return axiosClient.patch("/orders/update", { orderId, status, reason });
+  },
+
+  /**
+   * Get seller bank info for order payment
+   */
+  getSellerBankInfo: async (
+    orderId: string
+  ): Promise<SellerBankInfo> => {
+    return axiosClient.get(`/orders/${orderId}/seller-bank-info`);
+  },
+
+  /**
+   * Confirm payment status
+   */
+  confirmPayment: async (
+    orderId: string
+  ): Promise<{ message: string; order: Order }> => {
+    return axiosClient.patch("/orders/update-payment-status", { orderId });
   },
 };
 

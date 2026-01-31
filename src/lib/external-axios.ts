@@ -7,8 +7,8 @@ let circuitBreakerOpen = false;
 let failureCount = 0;
 const FAILURE_THRESHOLD = 3;
 const CIRCUIT_RESET_TIME = 30000;
-
 const pendingRequests = new Map<string, Promise<any>>();
+console.log(process.env.NEXT_PUBLIC_GHN_SHOP_ID);
 
 export const externalApiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_GHN_API_URL,
@@ -141,8 +141,11 @@ export async function dedupedRequest<T>(
     return pendingRequests.get(cacheKey)!;
   }
 
-  // Make new request
-  const promise = externalApiClient.get(url, config).finally(() => {
+  // Make new request - support all HTTP methods
+  const promise = externalApiClient.request<T>({
+    url,
+    ...config,
+  }).finally(() => {
     // Remove from pending after completion
     pendingRequests.delete(cacheKey);
   }) as Promise<T>;

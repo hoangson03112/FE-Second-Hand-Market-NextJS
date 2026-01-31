@@ -1,9 +1,4 @@
-/**
- * Checkout Store (Client State)
- *
- * Manages checkout items and information using Zustand
- * Used for "Buy Now" flow to pass product data to checkout page
- */
+
 import { createClientStore } from "@/lib/state";
 import { IProduct } from "@/types/product";
 
@@ -22,7 +17,10 @@ interface CheckoutState {
 export const useCheckoutStore = createClientStore<CheckoutState>(
   (set) => ({
     items: [],
-    setCheckoutItems: (items) => set({ items }),
+    setCheckoutItems: (items) => {
+      console.log(items);
+      set({ items });
+    },
     clearCheckout: () => set({ items: [] }),
     addItem: (item) =>
       set((state: CheckoutState) => {

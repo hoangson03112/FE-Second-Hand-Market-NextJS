@@ -1,29 +1,13 @@
-import React from 'react'
-import { useState } from 'react';
-import { useEffect } from 'react';
 import HeroSection from './HeroSection';
-import { categories, stats, steps } from './constants';
 import CategoriesSection from './CategoriesSection';
 import HowItWorksSection from './HowItWorksSection';
 import FeaturesSection from './FeaturesSection';
-import { features } from './constants';
 import ScrollToTopButton from './ScrollToTopButton';
+import { categories, stats, steps, features } from './constants';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 
 export default function HomePage() {
-    const [showScrollTop, setShowScrollTop] = useState(false);
-
-    // Scroll handler
-    useEffect(() => {
-      const handleScroll = () => {
-        setShowScrollTop(window.scrollY > 300);
-      };
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-  
-    const scrollToTop = () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
+  const { showScrollTop, scrollToTop } = useScrollToTop();
   return (
     <div className="min-h-screen bg-white">
     <HeroSection stats={stats} />

@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -17,6 +18,7 @@ export default function HeaderView(props: HeaderViewProps) {
     isLoading,
     activeCategory,
     showAllCategories,
+    cartItemCount = 0,
     onMouseEnterCategory,
     onMouseLeaveCategory,
     onShowAll,
@@ -145,9 +147,14 @@ export default function HeaderView(props: HeaderViewProps) {
                   <Link
                     href="/cart"
                     className="relative p-2 rounded-full text-tertiary hover-bg-neutral hover-text-secondary transition-colors"
-                    aria-label="Giỏ hàng"
+                    aria-label={`Giỏ hàng${cartItemCount > 0 ? ` (${cartItemCount} sản phẩm)` : ""}`}
                   >
                     <ShoppingCart className="w-6 h-6 text-tertiary hover:text-primary" />
+                    {cartItemCount > 0 && (
+                      <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center text-[10px] font-semibold text-white bg-primary rounded-full">
+                        {cartItemCount > 99 ? "99+" : cartItemCount}
+                      </span>
+                    )}
                   </Link>
                   
                   {/* User Dropdown */}

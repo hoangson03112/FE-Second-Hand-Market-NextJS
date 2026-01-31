@@ -76,6 +76,12 @@ export const queryKeys = {
     current: () => [...queryKeys.users.all, "current"] as const,
   },
 
+  // Cart
+  cart: {
+    all: ["cart"] as const,
+    list: () => [...queryKeys.cart.all, "list"] as const,
+  },
+
   // Addresses
   addresses: {
     all: ["addresses"] as const,

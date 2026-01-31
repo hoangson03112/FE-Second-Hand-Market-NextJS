@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { IProduct } from "@/types/product";
 import { useCheckoutStore } from "@/store/useCheckoutStore";
 import { AccountInfo } from "@/types/auth";
+import { CartService } from "@/services";
 
 interface UseProductActionsProps {
   product: IProduct | null;
@@ -24,7 +25,6 @@ export function useProductActions({
       router.push("/login");
       return;
     }
-
     if (!product || quantity <= 0 || quantity > (product.stock || 0)) {
       return;
     }
@@ -36,8 +36,7 @@ export function useProductActions({
 
     try {
       setActionLoading(true);
-
-      // Save product and quantity to checkout store
+        
       setCheckoutItems([{ product, quantity }]);
 
       // Navigate to checkout page
@@ -67,7 +66,6 @@ export function useProductActions({
     try {
       setActionLoading(true);
 
-      const { CartService } = await import("@/services/cart.service");
       await CartService.addToCart({
         productId: product._id,
         quantity,

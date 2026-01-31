@@ -1,10 +1,7 @@
 "use client";
 
+import Verify from "@/components/feature/Verify/Verify";
 
 export default function VerifyEmailPage() {
-
-  return (
-    <VerifyEmailPage/>
-  );
+  return <Verify />;
 }
-

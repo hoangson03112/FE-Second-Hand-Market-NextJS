@@ -1,4 +1,4 @@
-import React from "react";
+import { ChangeEvent, FocusEvent, ReactNode } from "react";
 
 interface InputFieldProps {
   id: string;
@@ -6,11 +6,11 @@ interface InputFieldProps {
   type?: string;
   label: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   placeholder?: string;
   required?: boolean;
-  icon: React.ReactNode;
+  icon: ReactNode;
   error?: string;
 }
 

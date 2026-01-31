@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, use } from "react";
+import { useState, use } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { CategoryService } from "@/services/category.service";
 import { useProductsBySubCategory } from "@/hooks/useProducts";

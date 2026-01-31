@@ -1,78 +1,87 @@
 "use client";
 
-import { Truck, Clock, Package, CheckCircle } from "lucide-react";
+import { ShippingServiceOption } from "@/types/address";
 import { formatPrice } from "@/utils/format/price";
+import { Package, Clock, AlertCircle } from "lucide-react";
 
 interface ShippingInfoProps {
-  shippingFee?: number;
-  estimatedDays?: number;
+  shippingInfo: ShippingServiceOption | null;
+  isCalculating: boolean;
+  error?: string | null;
 }
 
-export default function ShippingInfo({ 
-  shippingFee = 30000, 
-  estimatedDays = 3 
+export default function ShippingInfo({
+  shippingInfo,
+  isCalculating,
+  error,
 }: ShippingInfoProps) {
-  return (
-    <div className="space-y-6">
-      {/* Main Info - Clean Cards */}
-      <div className="grid grid-cols-2 gap-4">
-        {/* Shipping Fee */}
-        <div className="p-4 rounded-xl border border-border bg-background hover:bg-muted/30 transition-colors">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="p-1.5 rounded-lg bg-primary/10">
-              <Truck className="h-4 w-4 text-primary" />
-            </div>
-            <span className="text-sm text-muted-foreground">Phí vận chuyển</span>
-          </div>
-          <p className="text-2xl font-bold text-foreground">
-            {formatPrice(shippingFee)}
-          </p>
-        </div>
+  // Loading state
+  if (isCalculating) {
+    return (
+      <div className="flex items-center gap-3 py-4">
+        <div className="animate-spin rounded-full h-5 w-5 border-2 border-primary border-t-transparent"></div>
+        <span className="text-sm text-muted-foreground">
+          Đang tính phí vận chuyển...
+        </span>
+      </div>
+    );
+  }
 
-        {/* Delivery Time */}
-        <div className="p-4 rounded-xl border border-border bg-background hover:bg-muted/30 transition-colors">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="p-1.5 rounded-lg bg-primary/10">
-              <Clock className="h-4 w-4 text-primary" />
-            </div>
-            <span className="text-sm text-muted-foreground">Thời gian giao</span>
-          </div>
-          <p className="text-2xl font-bold text-foreground">{estimatedDays} ngày</p>
-          <p className="text-xs text-muted-foreground mt-1">
-            Dự kiến: {getEstimatedDate(estimatedDays)}
+  // Error state
+  if (error) {
+    return (
+      <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+        <div className="flex-1">
+          <p className="text-sm font-medium text-red-900 mb-1">
+            Không thể tính phí vận chuyển
+          </p>
+          <p className="text-sm text-red-700">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // No shipping info yet
+  if (!shippingInfo) {
+    return (
+      <div className="text-center py-6 text-muted-foreground">
+        <Package className="h-8 w-8 mx-auto mb-2 opacity-50" />
+        <p className="text-sm">Vui lòng chọn địa chỉ giao hàng</p>
+      </div>
+    );
+  }
+
+  // Display shipping info
+  return (
+    <div className="space-y-4">
+      {/* Service name and price */}
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="font-medium text-foreground">{shippingInfo.short_name}</p>
+          {shippingInfo.service_name && (
+            <p className="text-sm text-muted-foreground mt-0.5">
+              {shippingInfo.service_name}
+            </p>
+          )}
+        </div>
+        <div className="text-right">
+          <p className="text-lg font-semibold text-foreground">
+            {formatPrice(shippingInfo.fee)}
           </p>
         </div>
       </div>
 
-      {/* Benefits List */}
-      <div className="space-y-2">
-        <div className="flex items-center gap-2 text-sm">
-          <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-          <span className="text-muted-foreground">Giao hàng nhanh chóng, đúng hẹn</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm">
-          <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-          <span className="text-muted-foreground">Kiểm tra hàng trước khi thanh toán</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm">
-          <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-          <span className="text-muted-foreground">Đóng gói cẩn thận, chắc chắn</span>
-        </div>
+      {/* Delivery time */}
+      <div className="flex items-center gap-2 text-sm text-muted-foreground pt-3 border-t">
+        <Clock className="h-4 w-4" />
+        <span>
+          Dự kiến giao hàng trong <strong className="text-foreground">{shippingInfo.estimatedDays} ngày</strong>
+          {shippingInfo.estimatedDate && (
+            <span className="ml-1">({shippingInfo.estimatedDate})</span>
+          )}
+        </span>
       </div>
     </div>
   );
-}
-
-// Helper function to calculate estimated delivery date
-function getEstimatedDate(days: number): string {
-  const date = new Date();
-  date.setDate(date.getDate() + days);
-  
-  const options: Intl.DateTimeFormatOptions = { 
-    weekday: 'short', 
-    month: 'short', 
-    day: 'numeric' 
-  };
-  
-  return date.toLocaleDateString('vi-VN', options);
 }

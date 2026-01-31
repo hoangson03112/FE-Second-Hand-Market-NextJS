@@ -1,4 +1,5 @@
 import axiosClient from "@/lib/axios";
+import type { GetCartResponse } from "@/types/cart";
 
 export interface PurchaseNowRequest {
   productId: string;
@@ -35,6 +36,13 @@ export interface AddToCartResponse {
 }
 
 export const CartService = {
+  /**
+   * Get current user's cart with populated product details
+   */
+  getCart: async (): Promise<GetCartResponse> => {
+    return axiosClient.get("/cart");
+  },
+
   /**
    * Purchase now - Create order immediately
    * This creates a temporary order that needs to be completed with shipping info

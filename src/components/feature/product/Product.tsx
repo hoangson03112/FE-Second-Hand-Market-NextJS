@@ -129,6 +129,7 @@ export default function Product({ id }: ProductProps) {
             />
 
             <ProductActionButtons
+              account={account}
               actionLoading={actionLoading}
               isOutOfStock={!product.stock || product.stock <= 0}
               onBuyNow={handlePurchaseNow}
