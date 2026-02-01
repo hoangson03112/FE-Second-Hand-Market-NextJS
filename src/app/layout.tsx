@@ -11,15 +11,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" className="h-full">
-      <body className="h-full flex flex-col font-sans antialiased">
+      <body className="min-h-screen flex flex-col font-sans antialiased">
         <Providers>
           <ToastProvider>
             <ConfirmDialogProvider>
               <Header />
-              <div className="flex-1 overflow-y-auto">
+              <main className="flex-1 flex flex-col">
                 {children}
-                <Footer />
-              </div>
+              </main>
+              <Footer />
             </ConfirmDialogProvider>
           </ToastProvider>
         </Providers>

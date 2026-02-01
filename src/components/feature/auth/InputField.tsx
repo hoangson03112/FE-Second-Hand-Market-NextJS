@@ -10,7 +10,7 @@ interface InputFieldProps {
   onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   placeholder?: string;
   required?: boolean;
-  icon: ReactNode;
+  icon?: ReactNode;
   error?: string;
 }
 
@@ -28,17 +28,17 @@ export default function InputField({
   error,
 }: InputFieldProps) {
   return (
-    <div className="space-y-2">
-      <label htmlFor={id} className="block text-sm font-semibold text-gray-700">
+    <div className="space-y-1.5">
+      <label htmlFor={id} className="block text-sm font-medium text-foreground">
         {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
+        {required && <span className="text-destructive ml-0.5">*</span>}
       </label>
-      <div className="relative group">
-        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-          <div className="text-gray-400 group-focus-within:text-primary transition-colors">
+      <div className="relative">
+        {icon && (
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-foreground">
             {icon}
           </div>
-        </div>
+        )}
         <input
           id={id}
           name={name}
@@ -47,14 +47,13 @@ export default function InputField({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          className={`block w-full pl-12 pr-4 py-4 bg-gray-50/50 border-2 rounded-xl text-base text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200 ${
-            error ? "border-red-300" : "border-gray-200"
+          className={`block w-full ${icon ? "pl-10" : "pl-4"} pr-4 py-3 rounded-xl border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-primary transition ${
+            error ? "border-destructive focus:ring-destructive/20" : "border-input"
           }`}
           placeholder={placeholder}
         />
       </div>
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-destructive">{error}</p>}
     </div>
   );
 }
-

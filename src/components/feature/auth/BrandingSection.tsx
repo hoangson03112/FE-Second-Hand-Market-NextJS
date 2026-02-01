@@ -22,48 +22,48 @@ export default function BrandingSection({
   features,
 }: BrandingSectionProps) {
   return (
-    <div className="hidden lg:block space-y-8 text-center lg:text-left">
-      <div className="space-y-6">
-        <div className="inline-block">
+    <div className="hidden lg:flex flex-col justify-center space-y-6">
+      <div className="space-y-5">
+        <div>
           <Image
             src="https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png"
-            alt="Eco Market Logo"
-            width={180}
-            height={180}
-            className="h-28 w-auto drop-shadow-2xl"
+            alt="Eco Market"
+            width={120}
+            height={120}
+            className="h-20 w-auto"
             priority
           />
         </div>
         <div>
-          <h1 className="text-5xl lg:text-6xl font-extrabold text-gray-900 mb-4 leading-tight">
-            {title}
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-dark">
-              {titleHighlight}
-            </span>
+          <h1 className="text-3xl xl:text-4xl font-bold text-foreground leading-tight">
+            {title}{" "}
+            <span className="text-primary">{titleHighlight}</span>
           </h1>
-          <p className="text-xl text-gray-600 leading-relaxed max-w-md">
+          <p className="mt-2 text-muted-foreground text-base max-w-md leading-relaxed">
             {description}
           </p>
         </div>
       </div>
-
-      <div className="grid grid-cols-1 gap-4 pt-8">
+      <ul className="space-y-3">
         {features.map((feature, index) => (
-          <div
+          <li
             key={index}
-            className="flex items-start gap-4 p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/20 shadow-sm hover:shadow-md transition-all"
+            className="flex items-center gap-3 p-3 rounded-xl bg-muted/50 border border-border"
           >
-            <div className={`flex-shrink-0 w-12 h-12 rounded-xl ${feature.gradient} flex items-center justify-center shadow-lg`}>
+            <div
+              className={`flex-shrink-0 w-10 h-10 rounded-lg ${feature.gradient} flex items-center justify-center text-white`}
+            >
               {feature.icon}
             </div>
             <div>
-              <h3 className="font-bold text-gray-900 mb-1">{feature.title}</h3>
-              <p className="text-sm text-gray-600">{feature.description}</p>
+              <h3 className="font-semibold text-foreground text-sm">{feature.title}</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                {feature.description}
+              </p>
             </div>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
-

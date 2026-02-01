@@ -6,3 +6,4 @@ export { CategoryService } from "./category.service";
 export { OrderService } from "./order.service";
 export { ProductService } from "./product.service";
 export { ShippingService } from "./shipping.service";
+export { SellerService } from "./seller.service";

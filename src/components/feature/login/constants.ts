@@ -1,5 +1,11 @@
 import React from "react";
 
+/** URL redirect sang backend OAuth Google. Cấu hình NEXT_PUBLIC_API_URL (vd: http://localhost:8080/eco-market). */
+export const getGoogleLoginUrl = (): string => {
+  const base = process.env.NEXT_PUBLIC_API_URL || "";
+  return `${base.replace(/\/$/, "")}/auth/google`;
+};
+
 export const loginFeatures = [
   {
     icon: React.createElement(

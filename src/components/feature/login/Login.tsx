@@ -12,11 +12,13 @@ import {
   Divider,
 } from "@/components/feature/auth";
 import { UserIcon, ArrowRightIcon } from "@/components/ui";
-import { useLogin } from "./useLogin";
+import { useLogin } from "./hooks/useLogin";
 import { loginFeatures } from "./constants";
+import { GoogleLoginButton } from "./components";
 
 export default function Login() {
-  const { formData, error, isLoading, handleChange, handleSubmit } = useLogin();
+  const { formData, errors, error, isLoading, handleChange, handleSubmit, handleGoogleLogin } =
+    useLogin();
 
   return (
     <AuthLayout>
@@ -24,66 +26,76 @@ export default function Login() {
         <BrandingSection
           title="Chào mừng"
           titleHighlight="trở lại!"
-          description="Đăng nhập để tiếp tục hành trình mua sắm xanh và tiết kiệm cùng chúng tôi"
+          description="Đăng nhập để tiếp tục mua sắm xanh và tiết kiệm cùng chúng tôi."
           features={loginFeatures}
         />
 
-        <AuthFormContainer title="Đăng nhập" subtitle="Nhập thông tin để tiếp tục">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+        <AuthFormContainer
+          title="Đăng nhập"
+          subtitle="Nhập tên đăng nhập và mật khẩu để tiếp tục"
+        >
+          <form className="space-y-5" onSubmit={handleSubmit}>
             <ErrorMessage message={error} />
 
-            <div className="space-y-5">
+            <div className="space-y-4">
               <InputField
                 id="username"
                 name="username"
                 label="Tên đăng nhập"
                 value={formData.username}
                 onChange={handleChange}
-                placeholder="Nhập tên đăng nhập"
+                placeholder="VD: nguyen_van_a"
                 required
                 icon={<UserIcon />}
+                error={errors.username}
               />
-
               <PasswordField
                 id="password"
                 name="password"
                 label="Mật khẩu"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Nhập mật khẩu"
+                placeholder="Tối thiểu 6 ký tự"
                 required
+                error={errors.password}
               />
             </div>
 
             <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2 cursor-pointer group">
+              <label className="flex items-center gap-2 cursor-pointer text-muted-foreground hover:text-foreground transition">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary focus:ring-2 cursor-pointer"
+                  className="w-4 h-4 rounded border-input text-primary focus:ring-primary"
                 />
-                <span className="text-gray-600 group-hover:text-gray-900 transition-colors">Ghi nhớ đăng nhập</span>
+                <span>Ghi nhớ đăng nhập</span>
               </label>
-              <Link href="/forgot-password" className="font-semibold text-primary hover:text-primary-dark transition-colors">
+              <Link
+                href="/forgot-password"
+                className="font-medium text-primary hover:underline"
+              >
                 Quên mật khẩu?
               </Link>
             </div>
 
             <AuthButton isLoading={isLoading}>
               <span>Đăng nhập</span>
-              <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRightIcon className="w-5 h-5" />
             </AuthButton>
 
             <Divider />
 
-            <div className="text-center">
-              <p className="text-gray-600">
-                Chưa có tài khoản?{" "}
-                <Link href="/register" className="font-semibold text-primary hover:text-primary-dark transition-colors inline-flex items-center gap-1">
-                  Đăng ký ngay
-                  <ArrowRightIcon className="w-4 h-4" />
-                </Link>
-              </p>
-            </div>
+            <GoogleLoginButton onClick={handleGoogleLogin} disabled={isLoading} />
+
+            <p className="text-center text-sm text-muted-foreground">
+              Chưa có tài khoản?{" "}
+              <Link
+                href="/register"
+                className="font-semibold text-primary hover:underline inline-flex items-center gap-1"
+              >
+                Đăng ký ngay
+                <ArrowRightIcon className="w-4 h-4" />
+              </Link>
+            </p>
           </form>
         </AuthFormContainer>
       </div>

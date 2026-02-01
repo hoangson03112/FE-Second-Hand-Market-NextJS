@@ -132,10 +132,10 @@ export default function HeaderView(props: HeaderViewProps) {
               ) : (
                 <>
                   <Link
-                    href="/sell"
+                    href={account?.role === "seller" ? "/sell" : "/become-seller"}
                     className="inline-flex items-center justify-center px-5 py-2.5  text-base font-medium rounded-full text-white btn-primary  hover-bg-primary-dark transition-colors"
                   >
-                    Đăng bán
+                    {account?.role === "seller" ? "Đăng bán" : "Đăng ký bán hàng"}
                   </Link>
                   <Link
                     href="/notifications"

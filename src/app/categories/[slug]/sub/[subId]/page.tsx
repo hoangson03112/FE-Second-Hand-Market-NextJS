@@ -5,9 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CategoryService } from "@/services/category.service";
 import { useProductsBySubCategory } from "@/hooks/useProducts";
 import { IProductFilters } from "@/types/product";
-import CategoryHeader from "@/components/feature/categories/CategoryHeader";
-import FilterBar from "@/components/feature/categories/FilterBar";
-import ProductList from "@/components/feature/categories/ProductList";
+import { CategoryHeader, FilterBar, ProductList } from "@/components/feature/categories";
 
 type SubCategoryPageProps = {
   params: Promise<{

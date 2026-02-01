@@ -7,7 +7,7 @@ interface BackgroundProps {
 
 export default function Background({ children, className = "" }: BackgroundProps) {
   return (
-    <div className={`min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-cream-50 to-taupe-50 ${className}`}>
+    <div className={` relative overflow-hidden bg-gradient-to-br from-slate-50 via-cream-50 to-taupe-50 ${className}`}>
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>

@@ -4,21 +4,22 @@ import { useState, useCallback } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useProduct } from "@/hooks/useProducts";
 import { useUser } from "@/hooks/useUser";
-import { useProductActions } from "@/hooks/useProductActions";
 import { formatPrice } from "@/utils/format/price";
 import { IAttribute } from "@/types/product";
-import ProductGalleryNew from "./ProductGalleryNew";
-import ProductHeader from "./ProductHeader";
-import SellerInfoCard from "./SellerInfoCard";
-import ProductPrice from "./ProductPrice";
-import ProductSpecifications from "./ProductSpecifications";
-import ProductDescription from "./ProductDescription";
-import QuantitySelector from "./QuantitySelector";
-import ProductActionButtons from "./ProductActionButtons";
-import ProductGuarantees from "./ProductGuarantees";
 import { AccountInfo } from "@/types/auth";
+import {
+  ProductGalleryNew,
+  ProductHeader,
+  SellerInfoCard,
+  ProductPrice,
+  ProductSpecifications,
+  ProductDescription,
+  QuantitySelector,
+  ProductActionButtons,
+  ProductGuarantees,
+} from "./components";
+import { useProduct, useProductActions } from "./hooks";
 
 interface ProductProps {
   id: string;

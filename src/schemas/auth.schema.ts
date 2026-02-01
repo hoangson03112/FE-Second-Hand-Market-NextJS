@@ -1,67 +1,62 @@
 import { z } from "zod";
 
-// Regex patterns
-const USERNAME_REGEX = /^[a-zA-Z0-9_]{3,20}$/;
-const PHONE_REGEX = /^(0|\+84)(3|5|7|8|9)[0-9]{8}$/;
+// Format-only validation - không chặt chẽ, đúng format là được
 
-// Login Schema
+// Username: 3-30 ký tự, chữ/số/chấm/gạch dưới
+const usernameSchema = z
+  .string()
+  .min(1, "Vui lòng nhập tên đăng nhập")
+  .min(3, "Tên đăng nhập từ 3–30 ký tự")
+  .max(30, "Tên đăng nhập từ 3–30 ký tự")
+  .regex(/^[a-zA-Z0-9._]+$/, "Chỉ dùng chữ, số, dấu chấm hoặc gạch dưới")
+  .trim();
+
+// Số điện thoại VN: 10–11 số, bắt đầu 0 hoặc +84
+const phoneSchema = z
+  .string()
+  .min(1, "Vui lòng nhập số điện thoại")
+  .transform((s) => s.replace(/\s/g, ""))
+  .refine((s) => /^(0|\+84)?[0-9]{9,10}$/.test(s), "Số điện thoại không đúng định dạng");
+
+// Login
 export const loginSchema = z.object({
-  username: z
-    .string()
-    .min(1, "Tên đăng nhập không được để trống")
-    .min(3, "Tên đăng nhập phải có ít nhất 3 ký tự")
-    .max(20, "Tên đăng nhập không được quá 20 ký tự")
-    .regex(USERNAME_REGEX, "Tên đăng nhập chỉ chứa chữ, số và dấu gạch dưới")
-    .trim(),
-
+  username: usernameSchema,
   password: z
     .string()
-    .min(1, "Mật khẩu không được để trống")
-    .min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
+    .min(1, "Vui lòng nhập mật khẩu")
+    .min(6, "Mật khẩu tối thiểu 6 ký tự"),
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;
 
-// Register Schema
+// Register
 export const registerSchema = z
   .object({
     fullName: z
       .string()
-      .min(2, "Họ tên phải có ít nhất 2 ký tự")
-      .max(50, "Họ tên không được quá 50 ký tự")
-      .regex(/^[a-zA-ZÀ-ỹ\s]+$/, "Họ tên chỉ chứa chữ cái và khoảng trắng")
       .trim()
-      .optional(),
+      .optional()
+      .refine((v) => !v || v.length === 0 || (v.length >= 2 && v.length <= 50 && /^[\p{L}\s]+$/u.test(v)), {
+        message: "Họ tên từ 2–50 ký tự, chỉ chữ và khoảng trắng",
+      }),
 
-    username: z
-      .string()
-      .min(3, "Tên đăng nhập phải có ít nhất 3 ký tự")
-      .max(20, "Tên đăng nhập không được quá 20 ký tự")
-      .regex(USERNAME_REGEX, "Tên đăng nhập chỉ chứa chữ, số và dấu gạch dưới")
-      .trim(),
+    username: usernameSchema,
 
     email: z
       .string()
-      .min(1, "Email không được để trống")
-      .email("Email không hợp lệ")
-      .max(100, "Email không được quá 100 ký tự")
+      .min(1, "Vui lòng nhập email")
+      .email("Email không đúng định dạng")
+      .max(100, "Email quá dài")
       .toLowerCase()
       .trim(),
 
-    phoneNumber: z
-      .string()
-      .min(10, "Số điện thoại phải có ít nhất 10 số")
-      .max(12, "Số điện thoại không hợp lệ")
-      .regex(
-        PHONE_REGEX,
-        "Số điện thoại không hợp lệ (phải bắt đầu bằng 0 hoặc +84)"
-      )
-      .trim(),
+    phoneNumber: phoneSchema,
 
     password: z
       .string()
-      .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
-      .max(50, "Mật khẩu không được quá 50 ký tự"),
+      .min(1, "Vui lòng nhập mật khẩu")
+      .min(6, "Mật khẩu tối thiểu 6 ký tự")
+      .max(100, "Mật khẩu quá dài"),
 
     confirmPassword: z.string().min(1, "Vui lòng xác nhận mật khẩu"),
   })

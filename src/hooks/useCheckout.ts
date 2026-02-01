@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useCheckoutStore, CheckoutItem } from "@/store/useCheckoutStore";
 import { useUser } from "./useUser";
-import { PaymentMethodType } from "@/components/feature/checkout/PaymentMethod";
+import { PaymentMethodType } from "@/components/feature/checkout/components/PaymentMethod";
 import { Address, ShippingServiceOption } from "@/types/address";
 import { ShippingService } from "@/services/shipping.service";
 import { OrderService, CreateOrderRequest } from "@/services/order.service";
