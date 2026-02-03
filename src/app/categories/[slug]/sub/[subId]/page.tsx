@@ -17,8 +17,8 @@ type SubCategoryPageProps = {
 export default function SubCategoryPage({ params }: SubCategoryPageProps) {
   const { slug, subId } = use(params);
   const [filters, setFilters] = useState<IProductFilters>({
-    category: slug,
-    subCategory: subId,
+    categorySlug: slug,
+    subCategorySlug: subId,
     sortBy: "newest",
     limit: 20,
     page: 1,

@@ -1,9 +1,4 @@
-/**
- * User Hook (Server State)
- *
- * Fetches current user account information from API
- * This is SERVER STATE because it's data from API
- */
+
 import { useQuery } from "@tanstack/react-query";
 import { AuthService } from "@/services/auth.service";
 import { queryKeys } from "@/lib/query-client";

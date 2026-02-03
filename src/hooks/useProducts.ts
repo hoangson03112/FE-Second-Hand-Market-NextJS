@@ -55,8 +55,6 @@ export function useProduct(id: string) {
       if (!id) throw new Error("Product ID is required");
 
       const data = await ProductService.getById(id);
-      console.log(data);
-
       return data;
     },
     enabled: !!id,

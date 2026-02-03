@@ -4,6 +4,7 @@ import { IProduct } from "@/types/product";
 import { useCheckoutStore } from "@/store/useCheckoutStore";
 import { AccountInfo } from "@/types/auth";
 import { CartService } from "@/services";
+import { useToast } from "@/components/ui";
 
 interface UseProductActionsProps {
   product: IProduct | null;
@@ -19,6 +20,7 @@ export function useProductActions({
   const router = useRouter();
   const [actionLoading, setActionLoading] = useState(false);
   const { setCheckoutItems } = useCheckoutStore();
+  const toast = useToast();
 
   const handlePurchaseNow = useCallback(async () => {
     if (!account) {
@@ -71,18 +73,17 @@ export function useProductActions({
         quantity,
       });
 
-      console.log("Đã thêm vào giỏ hàng thành công");
+      toast.success("Đã thêm vào giỏ hàng");
     } catch (error) {
       console.error("Lỗi khi thêm vào giỏ hàng:", error);
     } finally {
       setActionLoading(false);
     }
-  }, [account, product, quantity]);
+  }, [account, product, quantity, toast]);
 
   const handleContactSeller = useCallback(() => {
-    console.log("Liên hệ người bán:", product?.seller?._id);
     // TODO: Implement chat/contact functionality
-  }, [product?.seller?._id]);
+  }, []);
 
 
 

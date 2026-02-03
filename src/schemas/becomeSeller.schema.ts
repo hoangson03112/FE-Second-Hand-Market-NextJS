@@ -28,11 +28,11 @@ export const becomeSellerSchema = z.object({
     .min(2, "Tên chủ tài khoản phải có ít nhất 2 ký tự")
     .max(100)
     .trim(),
-  agreeTerms: z.literal(true, {
-    errorMap: () => ({ message: "Bạn cần đồng ý điều khoản sử dụng" }),
+  agreeTerms: z.boolean().refine((val) => val === true, {
+    message: "Bạn cần đồng ý điều khoản sử dụng",
   }),
-  agreePolicy: z.literal(true, {
-    errorMap: () => ({ message: "Bạn cần đồng ý chính sách bảo mật" }),
+  agreePolicy: z.boolean().refine((val) => val === true, {
+    message: "Bạn cần đồng ý chính sách bảo mật",
   }),
 });
 

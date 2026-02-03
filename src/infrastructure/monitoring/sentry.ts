@@ -1,9 +1,11 @@
 /**
  * Sentry Error Tracking
- * 
+ *
  * Integration with Sentry for error tracking and monitoring
  * Falls back gracefully if Sentry is not configured
  */
+
+import { logger } from "./logger";
 
 interface ErrorContext {
   [key: string]: unknown;
@@ -26,11 +28,9 @@ export function captureException(error: Error, context?: ErrorContext): void {
     } catch (sentryError) {
       console.error("Failed to capture exception to Sentry:", sentryError);
     }
-  } else {
-    // Fallback: log to console in development
-    if (process.env.NODE_ENV === "development") {
-      console.error("Sentry not configured. Error:", error, "Context:", context);
-    }
+  } else if (process.env.NODE_ENV === "development") {
+    // Fallback: log via centralized logger in development
+    logger.error("Sentry not configured. Error occurred", error, context);
   }
 }
 
@@ -56,10 +56,8 @@ export function captureMessage(
     } catch (sentryError) {
       console.error("Failed to capture message to Sentry:", sentryError);
     }
-  } else {
-    if (process.env.NODE_ENV === "development") {
-      console.log(`[Sentry ${level}]:`, message, context || "");
-    }
+  } else if (process.env.NODE_ENV === "development") {
+    logger.debug(`[Sentry ${level}]: ${message}`, context);
   }
 }
 

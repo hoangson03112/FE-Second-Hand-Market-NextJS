@@ -18,7 +18,6 @@ export const useCheckoutStore = createClientStore<CheckoutState>(
   (set) => ({
     items: [],
     setCheckoutItems: (items) => {
-      console.log(items);
       set({ items });
     },
     clearCheckout: () => set({ items: [] }),

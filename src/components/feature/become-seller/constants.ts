@@ -42,3 +42,6 @@ export const becomeSellerFeatures = [
     gradient: "bg-gradient-to-br from-taupe-500 to-taupe-600",
   },
 ];
+
+// Giới hạn sản phẩm cho user chưa verify
+export const UNVERIFIED_SELLER_PRODUCT_LIMIT = 5;

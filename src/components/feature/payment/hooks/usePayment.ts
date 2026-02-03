@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { OrderService, type SellerBankInfo } from "@/services/order.service";
 import axiosClient from "@/lib/axios";
+import { useToast } from "@/components/ui";
 import {
   PAYMENT_WINDOW_MINUTES,
   formatCountdown,
@@ -66,6 +67,7 @@ export function usePayment() {
   const [bankInfoLoading, setBankInfoLoading] = useState(true);
   const [bankInfoError, setBankInfoError] = useState<string | null>(null);
   const [isCancelling, setIsCancelling] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     if (!orderId) {
@@ -83,7 +85,7 @@ export function usePayment() {
         setOrder(normalized);
       } catch (error) {
         console.error("Error fetching order:", error);
-        alert(getErrorMessage(error, "Không thể tải thông tin đơn hàng"));
+        toast.error(getErrorMessage(error, "Không thể tải thông tin đơn hàng"));
         router.push("/");
       } finally {
         setIsLoading(false);
@@ -99,9 +101,12 @@ export function usePayment() {
         setBankInfo(info);
       } catch (error) {
         console.error("Error fetching bank info:", error);
-        setBankInfoError(
-          getErrorMessage(error, "Không thể tải thông tin ngân hàng")
+        const msg = getErrorMessage(
+          error,
+          "Không thể tải thông tin ngân hàng"
         );
+        setBankInfoError(msg);
+        toast.error(msg);
       } finally {
         setBankInfoLoading(false);
       }

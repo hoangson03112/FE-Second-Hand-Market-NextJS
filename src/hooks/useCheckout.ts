@@ -7,6 +7,7 @@ import { Address, ShippingServiceOption } from "@/types/address";
 import { ShippingService } from "@/services/shipping.service";
 import { OrderService, CreateOrderRequest } from "@/services/order.service";
 import { logger } from "@/infrastructure/monitoring/logger";
+import { useToast } from "@/components/ui";
 
 interface ShippingData {
   fullName: string;
@@ -45,6 +46,7 @@ export function useCheckout() {
   >({});
   const [isCalculatingShipping, setIsCalculatingShipping] = useState(false);
   const [shippingError, setShippingError] = useState<string | null>(null);
+  const toast = useToast();
 
   const updateShippingFromAddress = useCallback(
     async (address: Address) => {
@@ -165,17 +167,17 @@ export function useCheckout() {
 
   const handleCheckout = useCallback(async () => {
     if (!shippingData || !selectedAddressId) {
-      alert("Vui lòng chọn địa chỉ giao hàng");
+      toast.error("Vui lòng chọn địa chỉ giao hàng");
       return;
     }
 
     if (Object.keys(shippingInfoBySeller).length === 0) {
-      alert("Vui lòng đợi tính phí vận chuyển hoàn tất");
+      toast.error("Vui lòng đợi tính phí vận chuyển hoàn tất");
       return;
     }
 
     if (checkoutItems.length === 0) {
-      alert("Giỏ hàng trống");
+      toast.error("Giỏ hàng trống");
       return;
     }
 
@@ -234,8 +236,10 @@ export function useCheckout() {
     } catch (error) {
       logger.error("Failed to create order", error as Error);
       const message =
-        error instanceof Error ? error.message : "Không thể tạo đơn hàng. Vui lòng thử lại.";
-      alert(message);
+        error instanceof Error
+          ? error.message
+          : "Không thể tạo đơn hàng. Vui lòng thử lại.";
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
     }
@@ -247,6 +251,7 @@ export function useCheckout() {
     checkoutItems,
     clearCheckout,
     router,
+    toast,
   ]);
 
   return {

@@ -8,7 +8,6 @@ let failureCount = 0;
 const FAILURE_THRESHOLD = 3;
 const CIRCUIT_RESET_TIME = 30000;
 const pendingRequests = new Map<string, Promise<any>>();
-console.log(process.env.NEXT_PUBLIC_GHN_SHOP_ID);
 
 export const externalApiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_GHN_API_URL,

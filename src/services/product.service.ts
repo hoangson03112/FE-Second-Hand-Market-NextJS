@@ -1,7 +1,47 @@
 import axiosClient from "@/lib/axios";
-import { IProductFilters } from "@/types/product";
+import type {
+  IProductFilters,
+  AdminProductListParams,
+  AdminProductListResponse,
+} from "@/types/product";
+
+export interface CreateProductPayload {
+  name: string;
+  price: number;
+  stock: number;
+  description?: string;
+  categoryId: string;
+  subcategoryId: string;
+  condition?: "new" | "like_new" | "good" | "fair" | "poor";
+  attributes?: Array<{ key: string; value: string | number }>;
+  images?: File[];
+  video?: File | null;
+}
 
 export const ProductService = {
+  create: async (payload: CreateProductPayload) => {
+    const formData = new FormData();
+    formData.append("name", payload.name);
+    formData.append("price", payload.price.toString());
+    formData.append("stock", payload.stock.toString());
+    formData.append("description", payload.description ?? "");
+    formData.append("categoryId", payload.categoryId);
+    formData.append("subcategoryId", payload.subcategoryId);
+    formData.append("condition", payload.condition ?? "good");
+    formData.append(
+      "attributes",
+      JSON.stringify(payload.attributes ?? [])
+    );
+    if (payload.images?.length) {
+      payload.images.forEach((file) => formData.append("images", file));
+    }
+    if (payload.video) {
+      formData.append("video", payload.video);
+    }
+    const response = await axiosClient.post("/products", formData);
+    return response as { success: boolean; message: string; product: { id: string; name: string; status: string } };
+  },
+
   getAll: async (filters?: IProductFilters) => {
     const params = new URLSearchParams();
 
@@ -44,5 +84,28 @@ export const ProductService = {
       categorySlug,
       subCategorySlug,
     });
+  },
+
+  /** Admin: lấy danh sách sản phẩm (cần token + role admin) */
+  getProductsAdmin: async (
+    params?: AdminProductListParams
+  ): Promise<AdminProductListResponse> => {
+    const search = new URLSearchParams();
+    if (params?.status) search.set("status", params.status);
+    if (params?.page) search.set("page", String(params.page));
+    if (params?.limit) search.set("limit", String(params.limit));
+    const response = await axiosClient.get(`/products?${search.toString()}`);
+    return response as unknown as AdminProductListResponse;
+  },
+
+  /** Admin: cập nhật trạng thái sản phẩm (duyệt / từ chối) */
+  updateStatus: async (
+    productId: string,
+    status: "approved" | "rejected" | "pending" | "under_review"
+  ) => {
+    const response = await axiosClient.patch(`/products/${productId}/status`, {
+      status,
+    });
+    return response as { _id: string; status: string };
   },
 };

@@ -1,8 +1,8 @@
 import Footer from "@/components/layout/Footer/Footer";
 import "./globals.css";
 import Providers from "./providers";
-import Header from "@/components/layout/Header/Header";
 import { ToastProvider, ConfirmDialogProvider } from "@/components/ui";
+import Header from "@/components/layout/Header/Header";
 
 export default function RootLayout({
   children,

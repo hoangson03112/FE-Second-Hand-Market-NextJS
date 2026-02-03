@@ -8,7 +8,7 @@ export const BANK_CODE_MAP: Record<string, string> = {
   BIDV: "BID",
   Agribank: "VBA",
   Techcombank: "TCB",
-  MBBank: "MBB",
+  MBBank: "MB",
   ACB: "ACB",
   VPBank: "VPB",
   TPBank: "TPB",

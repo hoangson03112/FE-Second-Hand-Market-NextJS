@@ -6,10 +6,12 @@ import { OrderService } from "@/services/order.service";
 import { formatPrice } from "@/utils/format/price";
 import { CheckCircle2, Package, ArrowLeft, Home } from "lucide-react";
 import Link from "next/link";
+import { useToast } from "@/components/ui";
 
 export default function CheckoutSuccessPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const toast = useToast();
   const orderId = searchParams.get("orderId");
   const [order, setOrder] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +28,7 @@ export default function CheckoutSuccessPage() {
         setOrder(response.order);
       } catch (error) {
         console.error("Error fetching order:", error);
-        alert("Không thể tải thông tin đơn hàng");
+        toast.error("Không thể tải thông tin đơn hàng");
         router.push("/checkout");
       } finally {
         setIsLoading(false);
@@ -34,7 +36,7 @@ export default function CheckoutSuccessPage() {
     };
 
     fetchOrder();
-  }, [orderId, router]);
+  }, [orderId, router, toast]);
 
   if (isLoading) {
     return (

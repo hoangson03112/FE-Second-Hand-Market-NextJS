@@ -38,17 +38,24 @@ export interface IAccount {
 }
 export interface ISeller {
   _id: string;
-  fullName: string;
-  avatar: string | null;
-  province: string;
-  from_district_id: string;
-  from_ward_code: string;
-  createdAt: string;
-  businessAddress: string;
-  phoneNumber: string;
-  totalReviews: number;
-  avgRating: number;
-  totalProducts: number;
+  fullName?: string;
+  avatar?: string | null;
+  province?: string;
+  from_district_id?: string;
+  from_ward_code?: string;
+  createdAt?: string;
+  businessAddress?: string;
+  phoneNumber?: string;
+  totalReviews?: number;
+  avgRating?: number;
+  totalProducts?: number;
+  accountId?: string;
+  account?: {
+    _id: string;
+    fullName?: string;
+    username?: string;
+    email?: string;
+  };
 }
 
 export interface IImage {
@@ -78,5 +85,29 @@ export interface IProductListResponse {
   total: number;
   page: number;
   limit: number;
-  totalPages: number;
+  totalPages?: number;
+}
+
+/** Admin: danh sách sản phẩm (GET /products với verifyAdmin) */
+export type ProductStatusFilter =
+  | "pending"
+  | "approved"
+  | "rejected"
+  | "under_review"
+  | "active"
+  | "inactive"
+  | "sold";
+
+export interface AdminProductListParams {
+  status?: ProductStatusFilter;
+  page?: number;
+  limit?: number;
+}
+
+export interface AdminProductListResponse {
+  success: boolean;
+  data: IProduct[];
+  total: number;
+  page: number;
+  limit: number;
 }

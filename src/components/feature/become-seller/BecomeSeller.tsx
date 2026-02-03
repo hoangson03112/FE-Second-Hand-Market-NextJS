@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   AuthLayout,
   BrandingSection,
@@ -8,11 +7,14 @@ import {
   AuthButton,
   ErrorMessage,
 } from "@/components/feature/auth";
-import { useBecomeSeller } from "./hooks/useBecomeSeller";
-import { becomeSellerFeatures } from "./constants";
-import { useProvinces, useDistricts, useWards } from "@/hooks/useGHNLocation";
-import { useMemo } from "react";
 import { ArrowRightIcon } from "@/components/ui";
+import { useBecomeSeller } from "./hooks/useBecomeSeller";
+import { useBecomeSellerLocation } from "./hooks/useBecomeSellerLocation";
+import { becomeSellerFeatures, UNVERIFIED_SELLER_PRODUCT_LIMIT } from "./constants";
+import { AddressSection } from "./components/AddressSection";
+import { BankInfoSection } from "./components/BankInfoSection";
+import { IdCardSection } from "./components/IdCardSection";
+import { TermsSection } from "./components/TermsSection";
 
 export default function BecomeSeller() {
   const {
@@ -26,315 +28,162 @@ export default function BecomeSeller() {
     handleChange,
     handleFile,
     handleSubmit,
+    requestStatus,
+    isCheckingStatus,
+    hasRequest,
+    productLimit,
+    requiresVerification,
   } = useBecomeSeller();
-
-  const { data: provinces = [], isLoading: provincesLoading } = useProvinces();
-  const { data: districts = [], isLoading: districtsLoading } = useDistricts(
-    values.provinceId ? Number(values.provinceId) : undefined
-  );
-  const { data: wards = [], isLoading: wardsLoading } = useWards(
-    values.districtId ? Number(values.districtId) : undefined
-  );
-
-  const selectedProvince = useMemo(
-    () => provinces.find((p) => String(p.ProvinceID) === values.provinceId),
-    [provinces, values.provinceId]
-  );
-  const selectedDistrict = useMemo(
-    () => districts.find((d) => String(d.DistrictID) === values.districtId),
-    [districts, values.districtId]
-  );
-  const selectedWard = useMemo(
-    () => wards.find((w) => w.WardCode === values.wardCode),
-    [wards, values.wardCode]
-  );
-
-  const onProvinceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const provinceId = e.target.value;
-    const province = provinces.find((p) => String(p.ProvinceID) === provinceId) ?? null;
-    setValues((prev) => ({
-      ...prev,
-      provinceId,
-      districtId: "",
-      wardCode: "",
-      province: province?.ProvinceName ?? "",
-      district: "",
-      ward: "",
-    }));
-      };
-
-  const onDistrictChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const districtId = e.target.value;
-    const district = districts.find((d) => String(d.DistrictID) === districtId) ?? null;
-    setValues((prev) => ({
-      ...prev,
-      districtId,
-      wardCode: "",
-      district: district?.DistrictName ?? "",
-      ward: "",
-    }));
-      };
-
-  const onWardChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const wardCode = e.target.value;
-    const ward = wards.find((w) => w.WardCode === wardCode) ?? null;
-    setValues((prev) => ({
-      ...prev,
-      wardCode,
-      ward: ward?.WardName ?? "",
-    }));
-      };
+  const {
+    provinces,
+    districts,
+    wards,
+    provincesLoading,
+    districtsLoading,
+    wardsLoading,
+    selectedProvince,
+    selectedDistrict,
+    selectedWard,
+    onProvinceChange,
+    onDistrictChange,
+    onWardChange,
+  } = useBecomeSellerLocation({ values, setValues });
 
   return (
     <AuthLayout>
-      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div className="grid lg:grid-cols-[1.1fr,1.2fr] gap-8 lg:gap-12 items-stretch">
         <BrandingSection
           title="Đăng ký"
           titleHighlight="bán hàng"
-          description="Trở thành seller để đăng sản phẩm, quản lý đơn hàng và nhận thanh toán an toàn trên Eco Market."
+          description="Trở thành seller đáng tin cậy trên Eco Market, mở gian hàng riêng để đăng sản phẩm, quản lý đơn và nhận thanh toán an toàn."
           features={becomeSellerFeatures}
         />
 
         <AuthFormContainer
           title="Đăng ký làm Seller"
-          subtitle="Điền thông tin và tải ảnh CCCD để xác minh"
+          subtitle="Điền nhanh các thông tin cần thiết để bắt đầu bán hàng"
           maxHeight="max-h-[90vh]"
         >
-          <form onSubmit={handleSubmit} className="space-y-5 overflow-y-auto max-h-[70vh] pr-2">
-            <ErrorMessage message={apiError} />
-
-            {/* Địa chỉ kinh doanh */}
-            <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-foreground border-b border-default pb-1">
-                Địa chỉ kinh doanh / lấy hàng
-              </h3>
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Tỉnh/Thành phố <span className="text-red-500">*</span>
-                </label>
-                <select
-                  name="provinceId"
-                  value={values.provinceId}
-                  onChange={onProvinceChange}
-                  disabled={provincesLoading}
-                  className="w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:bg-muted"
-                >
-                  <option value="">
-                    {provincesLoading ? "Đang tải..." : "Chọn Tỉnh/Thành phố"}
-                  </option>
-                  {provinces.map((p) => (
-                    <option key={p.ProvinceID} value={p.ProvinceID}>
-                      {p.ProvinceName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Quận/Huyện <span className="text-red-500">*</span>
-                </label>
-                <select
-                  name="districtId"
-                  value={values.districtId}
-                  onChange={onDistrictChange}
-                  disabled={!values.provinceId || districtsLoading}
-                  className="w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:bg-muted"
-                >
-                  <option value="">
-                    {!values.provinceId ? "Chọn Tỉnh trước" : districtsLoading ? "Đang tải..." : "Chọn Quận/Huyện"}
-                  </option>
-                  {districts.map((d) => (
-                    <option key={d.DistrictID} value={d.DistrictID}>
-                      {d.DistrictName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Phường/Xã <span className="text-red-500">*</span>
-                </label>
-                <select
-                  name="wardCode"
-                  value={values.wardCode}
-                  onChange={onWardChange}
-                  disabled={!values.districtId || wardsLoading}
-                  className="w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:bg-muted"
-                >
-                  <option value="">
-                    {!values.districtId ? "Chọn Quận trước" : wardsLoading ? "Đang tải..." : "Chọn Phường/Xã"}
-                  </option>
-                  {wards.map((w) => (
-                    <option key={w.WardCode} value={w.WardCode}>
-                      {w.WardName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Địa chỉ cụ thể (số nhà, đường) <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="address"
-                  value={values.address}
-                  onChange={handleChange}
-                  placeholder="Số nhà, tên đường..."
-                  className="w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
-                />
-                {errors.address && (
-                  <p className="mt-1 text-sm text-red-500">{errors.address}</p>
-                )}
+          {isCheckingStatus ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent" />
+            </div>
+          ) : hasRequest && requestStatus === "pending" ? (
+            <div className="space-y-4">
+              <div className="rounded-xl border border-yellow-500/50 bg-yellow-50/50 p-4 space-y-2">
+                <h3 className="text-sm font-semibold text-yellow-800">
+                  Yêu cầu đang chờ phê duyệt
+                </h3>
+                <p className="text-xs text-yellow-700">
+                  Bạn đã gửi yêu cầu trở thành seller. Hồ sơ của bạn đang được đội ngũ Eco Market
+                  kiểm duyệt trong vòng 24h. Vui lòng chờ thông báo qua email hoặc kiểm tra lại sau.
+                </p>
               </div>
             </div>
-
-            {/* Thông tin ngân hàng */}
-            <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-foreground border-b border-default pb-1">
-                Thông tin ngân hàng nhận thanh toán
-              </h3>
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Tên ngân hàng <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="bankName"
-                  value={values.bankName}
-                  onChange={handleChange}
-                  placeholder="VD: Vietcombank"
-                  className="w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
-                />
-                {errors.bankName && (
-                  <p className="mt-1 text-sm text-red-500">{errors.bankName}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Số tài khoản <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="accountNumber"
-                  value={values.accountNumber}
-                  onChange={handleChange}
-                  placeholder="Chỉ nhập số"
-                  className="w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
-                />
-                {errors.accountNumber && (
-                  <p className="mt-1 text-sm text-red-500">{errors.accountNumber}</p>
-                )}
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Chủ tài khoản <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="accountHolder"
-                  value={values.accountHolder}
-                  onChange={handleChange}
-                  placeholder="Họ tên in trên thẻ"
-                  className="w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
-                />
-                {errors.accountHolder && (
-                  <p className="mt-1 text-sm text-red-500">{errors.accountHolder}</p>
-                )}
+          ) : hasRequest && requestStatus === "rejected" ? (
+            <div className="space-y-4">
+              <div className="rounded-xl border border-red-500/50 bg-red-50/50 p-4 space-y-2">
+                <h3 className="text-sm font-semibold text-red-800">
+                  Yêu cầu đã bị từ chối
+                </h3>
+                <p className="text-xs text-red-700">
+                  {apiError || "Yêu cầu của bạn đã bị từ chối. Vui lòng liên hệ hỗ trợ để được giải đáp."}
+                </p>
               </div>
             </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <ErrorMessage message={apiError} />
 
-            {/* Ảnh CCCD */}
-            <div className="space-y-3">
-              <h3 className="text-sm font-semibold text-foreground border-b border-default pb-1">
-                Ảnh CCCD/CMND <span className="text-red-500">*</span>
-              </h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Mặt trước</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFile("idCardFront")}
-                    className="w-full text-sm text-muted-foreground file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-primary file:text-white"
-                  />
-                  {idCardFront && (
-                    <p className="mt-1 text-xs text-green-600">{idCardFront.name}</p>
-                  )}
-                  {errors.idCardFront && (
-                    <p className="mt-1 text-sm text-red-500">{errors.idCardFront}</p>
-                  )}
+              {/* Product limit info banner */}
+              {productLimit && requiresVerification && requestStatus !== "approved" && (
+                <div className="rounded-xl border border-blue-500/50 bg-blue-50/50 p-4 space-y-2">
+                  <div className="flex items-start gap-2">
+                    <svg
+                      className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <div className="flex-1">
+                      <h4 className="text-sm font-semibold text-blue-800 mb-1">
+                        Bạn đã đăng {productLimit.totalProducts}/{productLimit.limit} sản phẩm
+                      </h4>
+                      <p className="text-xs text-blue-700">
+                        Để tiếp tục đăng sản phẩm không giới hạn, nhận thanh toán online và được
+                        ưu tiên hiển thị, vui lòng xác minh tài khoản seller bằng cách điền form
+                        bên dưới.
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1">Mặt sau</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFile("idCardBack")}
-                    className="w-full text-sm text-muted-foreground file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-primary file:text-white"
-                  />
-                  {idCardBack && (
-                    <p className="mt-1 text-xs text-green-600">{idCardBack.name}</p>
-                  )}
-                  {errors.idCardBack && (
-                    <p className="mt-1 text-sm text-red-500">{errors.idCardBack}</p>
-                  )}
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Ảnh đại diện (tùy chọn)</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFile("avatar")}
-                  className="w-full text-sm text-muted-foreground file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-primary file:text-white"
-                />
-              </div>
-            </div>
-
-            {/* Điều khoản */}
-            <div className="space-y-2">
-              <label className="flex items-start gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  name="agreeTerms"
-                  checked={values.agreeTerms}
-                  onChange={handleChange}
-                  className="mt-1 rounded border-border"
-                />
-                <span className="text-sm">
-                  Tôi đồng ý với <Link href="/terms" className="text-primary underline">điều khoản sử dụng</Link> của Eco Market
-                </span>
-              </label>
-              {errors.agreeTerms && (
-                <p className="text-sm text-red-500">{errors.agreeTerms}</p>
               )}
-              <label className="flex items-start gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  name="agreePolicy"
-                  checked={values.agreePolicy}
-                  onChange={handleChange}
-                  className="mt-1 rounded border-border"
-                />
-                <span className="text-sm">
-                  Tôi đồng ý với <Link href="/privacy" className="text-primary underline">chính sách bảo mật</Link>
-                </span>
-              </label>
-              {errors.agreePolicy && (
-                <p className="text-sm text-red-500">{errors.agreePolicy}</p>
-              )}
-            </div>
 
-            <AuthButton isLoading={isLoading}>
-              <span>Gửi đăng ký</span>
-              <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </AuthButton>
+            <AddressSection
+              values={values}
+              errors={errors}
+              provinces={provinces}
+              districts={districts}
+              wards={wards}
+              provincesLoading={provincesLoading}
+              districtsLoading={districtsLoading}
+              wardsLoading={wardsLoading}
+              selectedProvince={selectedProvince}
+              selectedDistrict={selectedDistrict}
+              selectedWard={selectedWard}
+              onProvinceChange={onProvinceChange}
+              onDistrictChange={onDistrictChange}
+              onWardChange={onWardChange}
+              onAddressChange={handleChange}
+            />
 
-            <p className="text-center text-sm text-muted-foreground">
-              Chúng tôi sẽ xem xét và phản hồi trong vòng 24h. Liên hệ hỗ trợ nếu cần.
-            </p>
-          </form>
+            <BankInfoSection values={values} errors={errors} onChange={handleChange} />
+
+            <IdCardSection
+              idCardFront={idCardFront}
+              idCardBack={idCardBack}
+              errors={errors}
+              onFileChange={handleFile}
+            />
+
+            <TermsSection values={values} errors={errors} onChange={handleChange} />
+
+              <div className="space-y-3 pt-1">
+                <AuthButton
+                  isLoading={isLoading}
+                  disabled={hasRequest && requestStatus === "pending"}
+                >
+                  <span>
+                    {requiresVerification
+                      ? "Xác minh tài khoản seller"
+                      : "Bắt đầu bán hàng"}
+                  </span>
+                  <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </AuthButton>
+                <p className="text-center text-xs text-muted-foreground">
+                  {requiresVerification ? (
+                    <>
+                      Xác minh tài khoản để mở khóa đăng sản phẩm không giới hạn và nhận thanh
+                      toán online. Hồ sơ của bạn sẽ được đội ngũ Eco Market kiểm duyệt trong vòng
+                      24h.
+                    </>
+                  ) : (
+                    <>
+                      Hồ sơ của bạn sẽ được đội ngũ Eco Market kiểm duyệt trong vòng 24h. Nếu cần
+                      hỗ trợ gấp, vui lòng liên hệ kênh chăm sóc khách hàng.
+                    </>
+                  )}
+                </p>
+              </div>
+            </form>
+          )}
         </AuthFormContainer>
       </div>
     </AuthLayout>

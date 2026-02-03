@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, {
   AxiosError,
   AxiosResponse,
@@ -120,6 +121,7 @@ axiosClient.interceptors.response.use(
           "/auth/login",
           "/auth/register",
           "/auth/refresh",
+          "/auth/logout",
         ];
         const shouldSkipRefresh = skipRefreshUrls.some((skipUrl) =>
           url.includes(skipUrl)

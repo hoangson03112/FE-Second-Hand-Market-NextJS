@@ -4,10 +4,16 @@ import { useMemo, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "./useCart";
 import { moveSelectedCartToCheckout } from "@/utils/cartToCheckout";
-import { getSelectedSubtotal, groupCartBySeller, type CartGroupBySeller } from "@/utils/cartUtils";
+import {
+  getSelectedSubtotal,
+  groupCartBySeller,
+  type CartGroupBySeller,
+} from "@/utils/cartUtils";
+import { useToast } from "@/components/ui";
 
 export function useCartPage() {
   const router = useRouter();
+  const toast = useToast();
   const {
     cartItems,
     isLoadingCart,
@@ -95,11 +101,11 @@ export function useCartPage() {
       router.push("/checkout");
     } catch (err) {
       console.error(err);
-      alert("Không thể tải thông tin sản phẩm. Vui lòng thử lại.");
+      toast.error("Không thể tải thông tin sản phẩm. Vui lòng thử lại.");
     } finally {
       setIsGoingToCheckout(false);
     }
-  }, [cartItems, selectedIds, selectedCount]);
+  }, [cartItems, selectedIds, selectedCount, router, toast]);
 
   return {
     // Data

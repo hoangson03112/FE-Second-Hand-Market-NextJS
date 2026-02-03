@@ -16,3 +16,19 @@ export interface RegisterSellerResponse {
   success: boolean;
   message: string;
 }
+
+export type SellerRequestStatus = "pending" | "approved" | "rejected" | null;
+
+export interface SellerRequestStatusResponse {
+  hasRequest: boolean;
+  status: SellerRequestStatus;
+  message?: string;
+}
+
+export interface SellerProductLimitResponse {
+  totalProducts: number;
+  pendingProducts: number;
+  approvedProducts: number;
+  limit: number;
+  requiresVerification: boolean;
+}

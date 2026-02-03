@@ -34,6 +34,7 @@ export interface VerifyRequest {
 export interface VerifyResponse {
   status: "success" | "error";
   message: string;
+  token?: string;
   accessToken?: string;
 }
 
