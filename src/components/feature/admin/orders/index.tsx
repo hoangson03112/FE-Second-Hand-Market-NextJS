@@ -175,7 +175,7 @@ export default function AdminOrders() {
                                   );
                                 })}
                               </p>
-                              {order.shippingAddress && (
+                              {order.shippingAddress != null ? (
                                 <p>
                                   <span className="font-medium text-foreground">
                                     Địa chỉ giao:
@@ -186,7 +186,7 @@ export default function AdminOrders() {
                                   )}
                                   ...
                                 </p>
-                              )}
+                              ) : null}
                             </div>
                           </td>
                         </tr>
