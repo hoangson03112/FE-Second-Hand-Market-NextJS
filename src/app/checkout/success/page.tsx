@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { OrderService } from "@/services/order.service";
+import { OrderService, type Order } from "@/services/order.service";
 import { formatPrice } from "@/utils/format/price";
-import { CheckCircle2, Package, ArrowLeft, Home } from "lucide-react";
+import { CheckCircle2, Package, Home } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/components/ui";
 
@@ -13,7 +13,7 @@ export default function CheckoutSuccessPage() {
   const router = useRouter();
   const toast = useToast();
   const orderId = searchParams.get("orderId");
-  const [order, setOrder] = useState<any>(null);
+  const [order, setOrder] = useState<Order | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

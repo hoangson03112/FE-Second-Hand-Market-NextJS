@@ -53,9 +53,10 @@ export function useAdminCategories() {
       setCategoryNameDraft("");
       toast.success("Cập nhật danh mục thành công");
     },
-    onError: (err: any) => {
+    onError: (err: unknown) => {
       const message =
-        err?.response?.data?.message ?? "Không cập nhật được danh mục.";
+        (err as { response?: { data?: { message?: string } } })?.response
+          ?.data?.message ?? "Không cập nhật được danh mục.";
       toast.error(message);
     },
   });
@@ -73,9 +74,10 @@ export function useAdminCategories() {
       setSubError(null);
       toast.success("Đã tạo danh mục con thành công");
     },
-    onError: (err: any) => {
+    onError: (err: unknown) => {
       const message =
-        err?.response?.data?.message ?? "Không tạo được danh mục con.";
+        (err as { response?: { data?: { message?: string } } })?.response
+          ?.data?.message ?? "Không tạo được danh mục con.";
       setSubError(message);
       toast.error(message);
     },
@@ -101,9 +103,10 @@ export function useAdminCategories() {
       setSubNameDraft("");
       toast.success("Cập nhật danh mục con thành công");
     },
-    onError: (err: any) => {
+    onError: (err: unknown) => {
       const message =
-        err?.response?.data?.message ?? "Không cập nhật được danh mục con.";
+        (err as { response?: { data?: { message?: string } } })?.response
+          ?.data?.message ?? "Không cập nhật được danh mục con.";
       setSubError(message);
       toast.error(message);
     },
@@ -118,9 +121,10 @@ export function useAdminCategories() {
       setSubError(null);
       toast.success("Đã xóa danh mục con thành công");
     },
-    onError: (err: any) => {
+    onError: (err: unknown) => {
       const message =
-        err?.response?.data?.message ??
+        (err as { response?: { data?: { message?: string } } })?.response
+          ?.data?.message ??
         "Không xóa được danh mục con (có thể còn sản phẩm đang dùng).";
       setSubError(message);
       toast.error(message);

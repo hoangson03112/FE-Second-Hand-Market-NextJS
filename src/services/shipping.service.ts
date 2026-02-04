@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { rateLimitedRequest } from "@/lib/external-axios";
 import type {
   GHNResponse,
+  GHNAvailableService,
   CalculateShippingFeeRequest,
   ShippingFeeData,
   CalculateExpectedDeliveryTimeRequest,
@@ -104,9 +104,11 @@ export const ShippingService = {
   getAvailableServices: async (
     from_district_id: number,
     to_district_id: number
-  ): Promise<any[]> => {
+  ): Promise<GHNAvailableService[]> => {
     try {
-      const response = await rateLimitedRequest<GHNResponse<any[]>>(
+      const response = await rateLimitedRequest<
+        GHNResponse<GHNAvailableService[]>
+      >(
         "/v2/shipping-order/available-services",
         {
           method: "POST",

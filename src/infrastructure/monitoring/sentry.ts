@@ -7,6 +7,16 @@
 
 import { logger } from "./logger";
 
+declare global {
+  interface Window {
+    Sentry?: {
+      captureException: (error: Error, options?: { contexts?: Record<string, unknown> }) => void;
+      captureMessage: (message: string, options?: { level?: string; contexts?: Record<string, unknown> }) => void;
+      setUser: (user: { id?: string; email?: string; username?: string } | null) => void;
+    };
+  }
+}
+
 interface ErrorContext {
   [key: string]: unknown;
 }
@@ -18,9 +28,9 @@ interface ErrorContext {
  */
 export function captureException(error: Error, context?: ErrorContext): void {
   // Check if Sentry is available
-  if (typeof window !== "undefined" && (window as any).Sentry) {
+  if (typeof window !== "undefined" && window.Sentry) {
     try {
-      (window as any).Sentry.captureException(error, {
+      window.Sentry.captureException(error, {
         contexts: {
           custom: context || {},
         },
@@ -45,9 +55,9 @@ export function captureMessage(
   level: "debug" | "info" | "warning" | "error" | "fatal" = "info",
   context?: ErrorContext
 ): void {
-  if (typeof window !== "undefined" && (window as any).Sentry) {
+  if (typeof window !== "undefined" && window.Sentry) {
     try {
-      (window as any).Sentry.captureMessage(message, {
+      window.Sentry.captureMessage(message, {
         level,
         contexts: {
           custom: context || {},
@@ -66,9 +76,9 @@ export function captureMessage(
  * @param user - User information
  */
 export function setUserContext(user: { id?: string; email?: string; username?: string }): void {
-  if (typeof window !== "undefined" && (window as any).Sentry) {
+  if (typeof window !== "undefined" && window.Sentry) {
     try {
-      (window as any).Sentry.setUser(user);
+      window.Sentry.setUser(user);
     } catch (sentryError) {
       console.error("Failed to set user context in Sentry:", sentryError);
     }
@@ -79,9 +89,9 @@ export function setUserContext(user: { id?: string; email?: string; username?: s
  * Clear user context from Sentry
  */
 export function clearUserContext(): void {
-  if (typeof window !== "undefined" && (window as any).Sentry) {
+  if (typeof window !== "undefined" && window.Sentry) {
     try {
-      (window as any).Sentry.setUser(null);
+      window.Sentry.setUser(null);
     } catch (sentryError) {
       console.error("Failed to clear user context in Sentry:", sentryError);
     }

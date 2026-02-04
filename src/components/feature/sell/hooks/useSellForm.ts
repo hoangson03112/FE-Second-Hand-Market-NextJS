@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useCallback, useEffect, useMemo } from "react";
-import { useRouter } from "next/navigation";
 import { ProductService, type CreateProductPayload } from "@/services/product.service";
+import { useToast } from "@/components/ui";
 import { PickupAddressService } from "@/services/pickupAddress.service";
 import { useUser } from "@/hooks/useUser";
 import { useProvinces, useDistricts, useWards } from "@/hooks/useGHNLocation";
@@ -52,7 +52,7 @@ const PICKUP_INITIAL: PickupFormValues = {
 };
 
 export function useSellForm() {
-  const router = useRouter();
+  const toast = useToast();
   const { data: account } = useUser();
   const [values, setValues] = useState<SellFormValues>(INITIAL);
   const [pickup, setPickup] = useState<PickupFormValues>(PICKUP_INITIAL);
@@ -242,7 +242,8 @@ export function useSellForm() {
         };
         const result = await ProductService.create(payload);
         if (result.success) {
-          router.push("/sell/success");
+          toast.success("Đăng sản phẩm thành công");
+          setValues(INITIAL);
         } else {
           setApiError("Đăng sản phẩm thất bại. Vui lòng thử lại.");
         }
@@ -258,7 +259,7 @@ export function useSellForm() {
     [
       values,
       validate,
-      router,
+      toast,
       showPickupSection,
       pickup,
       selectedProvince,

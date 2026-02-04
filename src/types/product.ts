@@ -12,7 +12,14 @@ export interface IProduct {
   subcategory: ISubCategory;
   attributes: IAttribute[];
   images: IImage[];
-  status: "pending" | "approved" | "rejected";
+  status:
+    | "pending"
+    | "approved"
+    | "rejected"
+    | "under_review"
+    | "active"
+    | "inactive"
+    | "sold";
   condition?: string;
   estimatedWeight?: IEstimatedWeight;
   createdAt: string;

@@ -1,8 +1,7 @@
-import Footer from "@/components/layout/Footer/Footer";
 import "./globals.css";
 import Providers from "./providers";
 import { ToastProvider, ConfirmDialogProvider } from "@/components/ui";
-import Header from "@/components/layout/Header/Header";
+import SiteLayout from "@/components/layout/SiteLayout";
 
 export default function RootLayout({
   children,
@@ -15,11 +14,7 @@ export default function RootLayout({
         <Providers>
           <ToastProvider>
             <ConfirmDialogProvider>
-              <Header />
-              <main className="flex-1 flex flex-col">
-                {children}
-              </main>
-              <Footer />
+              <SiteLayout>{children}</SiteLayout>
             </ConfirmDialogProvider>
           </ToastProvider>
         </Providers>

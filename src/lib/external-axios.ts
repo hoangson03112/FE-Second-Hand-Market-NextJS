@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { captureException } from "@/infrastructure/monitoring/sentry";
 import { logger } from "@/infrastructure/monitoring/logger";
@@ -7,7 +6,7 @@ let circuitBreakerOpen = false;
 let failureCount = 0;
 const FAILURE_THRESHOLD = 3;
 const CIRCUIT_RESET_TIME = 30000;
-const pendingRequests = new Map<string, Promise<any>>();
+const pendingRequests = new Map<string, Promise<unknown>>();
 
 export const externalApiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_GHN_API_URL,
@@ -137,7 +136,7 @@ export async function dedupedRequest<T>(
   // Check if request is already pending
   if (pendingRequests.has(cacheKey)) {
     logger.info(`Deduplicating request to ${url}`);
-    return pendingRequests.get(cacheKey)!;
+    return pendingRequests.get(cacheKey) as Promise<T>;
   }
 
   // Make new request - support all HTTP methods

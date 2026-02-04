@@ -156,14 +156,24 @@ export default function AdminOrders() {
                                 <span className="font-medium text-foreground">
                                   Sản phẩm:
                                 </span>{" "}
-                                {order.products?.map((p, i) => (
-                                  <span key={`${order._id}-${i}`} className="mr-2">
-                                    {typeof p.productId === "object" &&
-                                    (p.productId as any)?.name != null
-                                      ? `${(p.productId as any).name} x${p.quantity}`
-                                      : `#${p.quantity}`}
-                                  </span>
-                                ))}
+                                {order.products?.map((p, i) => {
+                                  const productName =
+                                    typeof p.productId === "object" &&
+                                    p.productId !== null &&
+                                    "name" in p.productId
+                                      ? (p.productId as { name: string }).name
+                                      : null;
+                                  return (
+                                    <span
+                                      key={`${order._id}-${i}`}
+                                      className="mr-2"
+                                    >
+                                      {productName != null
+                                        ? `${productName} x${p.quantity}`
+                                        : `#${p.quantity}`}
+                                    </span>
+                                  );
+                                })}
                               </p>
                               {order.shippingAddress && (
                                 <p>

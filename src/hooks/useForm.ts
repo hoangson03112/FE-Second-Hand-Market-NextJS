@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-
 import { useState, ChangeEvent } from "react";
 
 interface UseFormOptions<T> {
@@ -8,7 +5,7 @@ interface UseFormOptions<T> {
   onSubmit?: (values: T) => void | Promise<void>;
 }
 
-export function useForm<T extends Record<string, any>>({
+export function useForm<T extends Record<string, unknown>>({
   initialValues,
   onSubmit,
 }: UseFormOptions<T>) {
@@ -52,7 +49,7 @@ export function useForm<T extends Record<string, any>>({
   /**
    * Set giá trị cho một field cụ thể
    */
-  const setValue = (name: keyof T, value: any) => {
+  const setValue = (name: keyof T, value: T[keyof T]) => {
     setValues({
       ...values,
       [name]: value,

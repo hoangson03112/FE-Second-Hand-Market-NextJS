@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, {
   AxiosError,
   AxiosResponse,
@@ -30,8 +29,7 @@ axiosClient.interceptors.request.use(
     // If sending FormData (file upload), let the browser/axios set the correct multipart boundary
     // (do NOT force application/json from defaults)
     if (config.data instanceof FormData && config.headers) {
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      delete (config.headers as any)["Content-Type"];
+      delete (config.headers as Record<string, unknown>)["Content-Type"];
     }
 
     // Log request in development

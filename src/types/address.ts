@@ -143,6 +143,16 @@ export interface ExpectedDeliveryTimeData {
 }
 
 /**
+ * GHN Available Service (from available-services API)
+ */
+export interface GHNAvailableService {
+  service_id: number;
+  short_name: string;
+  service_type_id: number;
+  service_name?: string;
+}
+
+/**
  * Combined Shipping Info (for frontend use)
  */
 export interface ShippingInfo {

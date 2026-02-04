@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, type QueryClient } from "@tanstack/react-query";
 import { AddressService } from "@/services/address.service";
 import type { Province, District, Ward } from "@/types/address";
 
@@ -65,7 +64,9 @@ export function usePrefetchDistricts(provinceId?: string | number) {
 /**
  * Helper: Get cached provinces hoặc fetch nếu chưa có
  */
-export async function getCachedProvinces(queryClient: any): Promise<Province[]> {
+export async function getCachedProvinces(
+  queryClient: QueryClient
+): Promise<Province[]> {
   return await queryClient.ensureQueryData({
     queryKey: ["ghn", "provinces"],
     queryFn: () => AddressService.getProvinces(),
@@ -77,7 +78,7 @@ export async function getCachedProvinces(queryClient: any): Promise<Province[]> 
  * Helper: Get cached districts hoặc fetch nếu chưa có
  */
 export async function getCachedDistricts(
-  queryClient: any,
+  queryClient: QueryClient,
   provinceId: string | number
 ): Promise<District[]> {
   return await queryClient.ensureQueryData({
@@ -91,7 +92,7 @@ export async function getCachedDistricts(
  * Helper: Get cached wards hoặc fetch nếu chưa có
  */
 export async function getCachedWards(
-  queryClient: any,
+  queryClient: QueryClient,
   districtId: string | number
 ): Promise<Ward[]> {
   return await queryClient.ensureQueryData({

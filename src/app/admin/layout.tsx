@@ -15,6 +15,7 @@ import {
   FolderTree,
   Flag,
   Bot,
+  Home,
 } from "lucide-react";
 
 export default function AdminLayout({
@@ -70,6 +71,13 @@ export default function AdminLayout({
               Admin
             </span>
           </div>
+          <Link
+            href="/"
+            className="mt-3 flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+          >
+            <Home className="w-4 h-4 shrink-0" />
+            Về trang chủ
+          </Link>
         </div>
         <nav className="p-2 space-y-0.5">
           {nav.map((item) => {

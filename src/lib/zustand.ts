@@ -1,9 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from "zustand";
 import { devtools, persist, subscribeWithSelector } from "zustand/middleware";
+import type { StateCreator, StoreApi } from "zustand";
 
 export function createStore<T extends object>(
-  storeCreator: (set: any, get: any) => T,
+  storeCreator: (
+    set: StoreApi<T>["setState"],
+    get: StoreApi<T>["getState"]
+  ) => T,
   options?: {
     name?: string;
     persist?: boolean;
@@ -16,7 +19,9 @@ export function createStore<T extends object>(
     devtools: enableDevtools = true,
   } = options || {};
 
-  let creator: any = subscribeWithSelector(storeCreator);
+  let creator: StateCreator<T, [], []> = subscribeWithSelector(
+    storeCreator as StateCreator<T, [], []>
+  );
 
   if (shouldPersist) {
     creator = persist(creator, { name });
@@ -26,5 +31,5 @@ export function createStore<T extends object>(
     creator = devtools(creator, { name });
   }
 
-  return create<T>()(creator as any);
+  return create<T>()(creator);
 }

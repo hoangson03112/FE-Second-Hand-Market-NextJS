@@ -90,12 +90,17 @@ export const ProductService = {
   getProductsAdmin: async (
     params?: AdminProductListParams
   ): Promise<AdminProductListResponse> => {
-    const search = new URLSearchParams();
-    if (params?.status) search.set("status", params.status);
-    if (params?.page) search.set("page", String(params.page));
-    if (params?.limit) search.set("limit", String(params.limit));
-    const response = await axiosClient.get(`/products?${search.toString()}`);
-    return response as unknown as AdminProductListResponse;
+    const queryParams: Record<string, string | number> = {};
+
+    if (params?.status) queryParams.status = params.status;
+    if (params?.page) queryParams.page = params.page;
+    if (params?.limit) queryParams.limit = params.limit;
+
+    const response = await axiosClient.get("/products", {
+      params: queryParams,
+    });
+
+    return response as AdminProductListResponse;
   },
 
   /** Admin: cập nhật trạng thái sản phẩm (duyệt / từ chối) */

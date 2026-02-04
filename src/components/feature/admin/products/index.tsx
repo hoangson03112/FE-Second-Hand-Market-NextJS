@@ -7,12 +7,31 @@ import {
   Eye,
   X,
   Loader2,
+  ExternalLink,
 } from "lucide-react";
+import Link from "next/link";
 import type { IProduct, ProductStatusFilter } from "@/types/product";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import Pagination from "@/components/ui/Pagination";
 import { useAdminProducts } from "./hooks/useAdminProducts";
+
+const CONDITION_LABEL: Record<string, string> = {
+  new: "Mới",
+  like_new: "Như mới",
+  good: "Tốt",
+  fair: "Khá",
+  poor: "Kém",
+};
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex gap-2">
+      <span className="text-muted-foreground shrink-0">{label}:</span>
+      <span className="text-foreground break-all">{value}</span>
+    </div>
+  );
+}
 
 const STATUS_TABS: { value: ProductStatusFilter | ""; label: string }[] = [
   { value: "", label: "Tất cả" },
@@ -22,6 +41,7 @@ const STATUS_TABS: { value: ProductStatusFilter | ""; label: string }[] = [
   { value: "rejected", label: "Từ chối" },
 ];
 
+/** Nhãn tiếng Việt cho mọi trạng thái, không hiển thị mã tiếng Anh */
 const STATUS_BADGE: Record<string, { label: string; className: string }> = {
   pending: {
     label: "Chờ duyệt",
@@ -29,6 +49,10 @@ const STATUS_BADGE: Record<string, { label: string; className: string }> = {
       "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200",
   },
   under_review: {
+    label: "Đang xem xét",
+    className: "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-200",
+  },
+  pending_review: {
     label: "Đang xem xét",
     className: "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-200",
   },
@@ -53,6 +77,10 @@ const STATUS_BADGE: Record<string, { label: string; className: string }> = {
       "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
   },
 };
+
+function getStatusLabel(status: string): string {
+  return STATUS_BADGE[status]?.label ?? "Khác";
+}
 
 export default function AdminProducts() {
   const {
@@ -131,6 +159,15 @@ export default function AdminProducts() {
                       Giá
                     </th>
                     <th className="text-left px-4 py-3 font-medium text-foreground hidden md:table-cell">
+                      Danh mục
+                    </th>
+                    <th className="text-left px-4 py-3 font-medium text-foreground hidden md:table-cell">
+                      SL
+                    </th>
+                    <th className="text-left px-4 py-3 font-medium text-foreground hidden lg:table-cell">
+                      Tình trạng
+                    </th>
+                    <th className="text-left px-4 py-3 font-medium text-foreground hidden md:table-cell">
                       Người đăng
                     </th>
                     <th className="text-left px-4 py-3 font-medium text-foreground">
@@ -179,8 +216,20 @@ export default function AdminProducts() {
                         <td className="px-4 py-3 hidden sm:table-cell text-muted-foreground">
                           {formatPrice(product.price)}
                         </td>
-                        <td className="px-4 py-3 hidden md:table-cell text-muted-foreground">
-                          {product.seller?.account?.fullName ?? "—"}
+                        <td className="px-4 py-3 hidden md:table-cell text-muted-foreground text-xs">
+                          {product.category?.name ?? "—"}
+                          {product.subcategory?.name ? ` / ${product.subcategory.name}` : ""}
+                        </td>
+                        <td className="px-4 py-3 hidden md:table-cell text-muted-foreground tabular-nums">
+                          {product.stock}
+                        </td>
+                        <td className="px-4 py-3 hidden lg:table-cell text-muted-foreground text-xs">
+                          {product.condition
+                            ? CONDITION_LABEL[product.condition] ?? product.condition
+                            : "—"}
+                        </td>
+                        <td className="px-4 py-3 hidden md:table-cell text-muted-foreground text-xs">
+                          {product.seller?.account?.fullName ?? product.seller?.fullName ?? "—"}
                         </td>
                         <td className="px-4 py-3">
                           <span
@@ -253,81 +302,155 @@ export default function AdminProducts() {
           onClick={() => setSelectedProduct(null)}
         >
           <div
-            className="bg-card rounded-xl border border-border shadow-xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+            className="bg-card rounded-xl border border-border shadow-xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
               <h2 className="font-semibold text-foreground">Chi tiết sản phẩm</h2>
-              <button
-                type="button"
-                onClick={() => setSelectedProduct(null)}
-                className="p-2 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="p-4 overflow-y-auto space-y-4">
-              <div className="flex gap-4">
-                <div className="w-24 h-24 rounded-lg border border-border bg-muted overflow-hidden shrink-0">
-                  {selectedProduct.avatar?.url ? (
-                    <img
-                      src={selectedProduct.avatar.url}
-                      alt=""
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Package className="w-8 h-8 text-muted-foreground" />
-                    </div>
-                  )}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-medium text-foreground">
-                    {selectedProduct.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mt-0.5">
-                    {formatPrice(selectedProduct.price)} · SL:{" "}
-                    {selectedProduct.stock}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {selectedProduct.category?.name} /{" "}
-                    {selectedProduct.subcategory?.name}
-                  </p>
-                </div>
+              <div className="flex items-center gap-2">
+                <Link
+                  href={`/products/${selectedProduct._id}/${selectedProduct.slug ?? ""}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                >
+                  Xem trang SP <ExternalLink className="w-3 h-3" />
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => setSelectedProduct(null)}
+                  className="p-2 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
+                >
+                  <X className="w-4 h-4" />
+                </button>
               </div>
-
-              {selectedProduct.description && (
-                <div>
-                  <p className="text-xs font-medium text-foreground mb-1">Mô tả</p>
-                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                    {selectedProduct.description}
-                  </p>
-                </div>
-              )}
-
-              {selectedProduct.images?.length > 0 && (
-                <div>
-                  <p className="text-xs font-medium text-foreground mb-2">
-                    Ảnh ({selectedProduct.images.length})
-                  </p>
-                  <div className="flex gap-2 overflow-x-auto pb-2">
-                    {selectedProduct.images.map((img, i) => (
+            </div>
+            <div className="p-4 overflow-y-auto space-y-5 text-sm">
+              {/* Thông tin cơ bản */}
+              <section>
+                <h3 className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">
+                  Thông tin cơ bản
+                </h3>
+                <div className="flex gap-4">
+                  <div className="w-24 h-24 rounded-lg border border-border bg-muted overflow-hidden shrink-0">
+                    {selectedProduct.avatar?.url ? (
                       <img
-                        key={i}
-                        src={img.url}
+                        src={selectedProduct.avatar.url}
                         alt=""
-                        className="w-20 h-20 rounded-lg border border-border object-cover shrink-0"
+                        className="w-full h-full object-cover"
                       />
-                    ))}
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Package className="w-8 h-8 text-muted-foreground" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="min-w-0 flex-1 grid grid-cols-2 gap-x-4 gap-y-1">
+                    <Row label="ID" value={selectedProduct._id} />
+                    <Row label="Tên" value={selectedProduct.name} />
+                    <Row label="Slug" value={selectedProduct.slug || "—"} />
+                    <Row label="Giá" value={formatPrice(selectedProduct.price)} />
+                    <Row label="Tồn kho" value={String(selectedProduct.stock)} />
+                    <Row
+                      label="Tình trạng"
+                      value={
+                        selectedProduct.condition
+                          ? CONDITION_LABEL[selectedProduct.condition] ?? selectedProduct.condition
+                          : "—"
+                      }
+                    />
+                    <Row
+                      label="Trạng thái"
+                      value={
+                        STATUS_BADGE[selectedProduct.status]?.label ?? selectedProduct.status
+                      }
+                    />
+                    <Row
+                      label="Danh mục"
+                      value={
+                        [selectedProduct.category?.name, selectedProduct.subcategory?.name]
+                          .filter(Boolean)
+                          .join(" / ") || "—"
+                      }
+                    />
+                    <Row label="Vị trí" value={selectedProduct.location || "—"} />
+                    <Row label="Lượt xem" value={selectedProduct.views != null ? String(selectedProduct.views) : "—"} />
+                    <Row label="Lượt thích" value={selectedProduct.likes != null ? String(selectedProduct.likes) : "—"} />
+                    <Row
+                      label="Ngày tạo"
+                      value={selectedProduct.createdAt ? format(selectedProduct.createdAt) : "—"}
+                    />
+                    <Row
+                      label="Cập nhật"
+                      value={selectedProduct.updatedAt ? format(selectedProduct.updatedAt) : "—"}
+                    />
                   </div>
                 </div>
+              </section>
+
+              {/* Cân nặng ước tính (AI) */}
+              {selectedProduct.estimatedWeight && (
+                <section>
+                  <h3 className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">
+                    Cân nặng ước tính (AI)
+                  </h3>
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                    <Row
+                      label="Giá trị (kg)"
+                      value={String(selectedProduct.estimatedWeight.value)}
+                    />
+                    <Row
+                      label="Độ tin cậy"
+                      value={String(selectedProduct.estimatedWeight.confidence)}
+                    />
+                  </div>
+                </section>
               )}
 
-              {selectedProduct.attributes?.length > 0 && (
-                <div>
-                  <p className="text-xs font-medium text-foreground mb-1">
-                    Thuộc tính
-                  </p>
+              {/* Mô tả */}
+              <section>
+                <h3 className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">
+                  Mô tả
+                </h3>
+                <p className="text-muted-foreground whitespace-pre-wrap">
+                  {selectedProduct.description?.trim() || "—"}
+                </p>
+              </section>
+
+              {/* Ảnh sản phẩm */}
+              <section>
+                <h3 className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">
+                  Ảnh ({selectedProduct.images?.length ?? 0})
+                </h3>
+                <div className="flex gap-2 overflow-x-auto pb-2 flex-wrap">
+                  {selectedProduct.images?.length
+                    ? selectedProduct.images.map((img, i) => (
+                        <div
+                          key={img.publicId ?? i}
+                          className="shrink-0 rounded-lg border border-border overflow-hidden bg-muted"
+                        >
+                          <img
+                            src={img.url}
+                            alt={img.originalName || ""}
+                            className="w-20 h-20 object-cover"
+                          />
+                          {(img.originalName || img.size) && (
+                            <p className="px-2 py-0.5 text-[10px] text-muted-foreground truncate max-w-[120px]">
+                              {img.originalName || `${(img.size / 1024).toFixed(1)} KB`}
+                            </p>
+                          )}
+                        </div>
+                      ))
+                    : "—"}
+                </div>
+              </section>
+
+              {/* Thuộc tính */}
+              <section>
+                <h3 className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">
+                  Thuộc tính
+                </h3>
+                {selectedProduct.attributes?.length ? (
                   <div className="flex flex-wrap gap-2">
                     {selectedProduct.attributes.map((attr) => (
                       <span
@@ -338,8 +461,88 @@ export default function AdminProducts() {
                       </span>
                     ))}
                   </div>
+                ) : (
+                  <p className="text-muted-foreground">—</p>
+                )}
+              </section>
+
+              {/* Người bán */}
+              <section>
+                <h3 className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">
+                  Người bán
+                </h3>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                  <Row label="Seller ID" value={selectedProduct.seller?._id ?? "—"} />
+                  <Row
+                    label="Họ tên"
+                    value={
+                      selectedProduct.seller?.account?.fullName ??
+                      selectedProduct.seller?.fullName ??
+                      "—"
+                    }
+                  />
+                  <Row
+                    label="Username"
+                    value={selectedProduct.seller?.account?.username ?? "—"}
+                  />
+                  <Row
+                    label="Email"
+                    value={selectedProduct.seller?.account?.email ?? "—"}
+                  />
+                  <Row
+                    label="Số điện thoại"
+                    value={selectedProduct.seller?.phoneNumber ?? "—"}
+                  />
+                  <Row
+                    label="Tỉnh/TP"
+                    value={selectedProduct.seller?.province ?? "—"}
+                  />
+                  <Row
+                    label="Địa chỉ kinh doanh"
+                    value={selectedProduct.seller?.businessAddress ?? "—"}
+                  />
+                  <Row
+                    label="Mã quận (GHN)"
+                    value={selectedProduct.seller?.from_district_id ?? "—"}
+                  />
+                  <Row
+                    label="Mã phường (GHN)"
+                    value={selectedProduct.seller?.from_ward_code ?? "—"}
+                  />
+                  <Row
+                    label="Ngày tạo seller"
+                    value={
+                      selectedProduct.seller?.createdAt
+                        ? format(selectedProduct.seller.createdAt)
+                        : "—"
+                    }
+                  />
+                  <Row
+                    label="Đánh giá TB"
+                    value={
+                      selectedProduct.seller?.avgRating != null
+                        ? String(selectedProduct.seller.avgRating)
+                        : "—"
+                    }
+                  />
+                  <Row
+                    label="Số đánh giá"
+                    value={
+                      selectedProduct.seller?.totalReviews != null
+                        ? String(selectedProduct.seller.totalReviews)
+                        : "—"
+                    }
+                  />
+                  <Row
+                    label="Tổng sản phẩm"
+                    value={
+                      selectedProduct.seller?.totalProducts != null
+                        ? String(selectedProduct.seller.totalProducts)
+                        : "—"
+                    }
+                  />
                 </div>
-              )}
+              </section>
             </div>
 
             <div className="px-4 py-3 border-t border-border flex gap-2 justify-end shrink-0">
