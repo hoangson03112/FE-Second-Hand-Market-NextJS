@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { AdminService, type AdminOrder } from "@/services/admin.service";
+import { AdminService } from "@/services/admin.service";
+import type { AdminOrder } from "@/types/admin";
 
 export function useAdminOrders() {
   const [expandedId, setExpandedId] = useState<string | null>(null);

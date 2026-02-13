@@ -1,5 +1,6 @@
 import axiosClient from "@/lib/axios";
 import type {
+  AccountInfo,
   LoginRequest,
   LoginResponse,
   RegisterRequest,
@@ -32,5 +33,20 @@ export const AuthService = {
   },
   refresh: async (): Promise<RefreshResponse> => {
     return axiosClient.post("/auth/refresh");
+  },
+
+  updateProfile: async (data: {
+    fullName: string;
+    email: string;
+    phoneNumber: string;
+  }): Promise<{ message: string; updatedAccount: AccountInfo }> => {
+    const res = await axiosClient.put("/accounts/update", data);
+    return res as { message: string; updatedAccount: AccountInfo };
+  },
+  changePassword: async (data: {
+    oldPassword: string;
+    newPassword: string;
+  }): Promise<{ message: string }> => {
+    return axiosClient.put("/accounts/change-password", data);
   },
 };

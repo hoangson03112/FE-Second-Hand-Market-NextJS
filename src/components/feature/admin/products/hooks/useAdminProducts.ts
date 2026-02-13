@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ProductService } from "@/services/product.service";
 import type { IProduct, ProductStatusFilter } from "@/types/product";
 import { useToast } from "@/components/ui";
+import { isAxiosError } from "axios";
 
 const LIMIT = 10;
 
@@ -15,6 +16,7 @@ export function useAdminProducts() {
   );
   const [page, setPage] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
+  const [rejectProduct, setRejectProduct] = useState<IProduct | null>(null); // Sản phẩm đang được reject
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["admin", "products", statusFilter, page],
@@ -30,21 +32,27 @@ export function useAdminProducts() {
     mutationFn: ({
       productId,
       status,
+      reason,
     }: {
       productId: string;
       status: "approved" | "rejected";
-    }) => ProductService.updateStatus(productId, status),
+      reason?: string;
+    }) => ProductService.updateStatus(productId, status, reason),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["admin", "products"] });
       setSelectedProduct(null);
+      setRejectProduct(null);
       toast.success(
         variables.status === "approved"
           ? "Đã duyệt sản phẩm thành công"
           : "Đã từ chối sản phẩm"
       );
     },
-    onError: () => {
-      toast.error("Không thể cập nhật trạng thái sản phẩm. Vui lòng thử lại.");
+    onError: (err: unknown) => {
+      const message =
+        (isAxiosError(err) ? (err.response?.data as { message?: string } | undefined)?.message : undefined) ||
+        "Không thể cập nhật trạng thái sản phẩm. Vui lòng thử lại.";
+      toast.error(message);
     },
   });
 
@@ -58,14 +66,21 @@ export function useAdminProducts() {
     [updateStatusMutation]
   );
 
-  const handleReject = useCallback(
-    (product: IProduct) => {
+  const handleRejectClick = useCallback((product: IProduct) => {
+    // Mở modal nhập lý do
+    setRejectProduct(product);
+  }, []);
+
+  const handleRejectConfirm = useCallback(
+    (reason: string) => {
+      if (!rejectProduct) return;
       updateStatusMutation.mutate({
-        productId: product._id,
+        productId: rejectProduct._id,
         status: "rejected",
+        reason,
       });
     },
-    [updateStatusMutation]
+    [rejectProduct, updateStatusMutation]
   );
 
   const totalPages = data
@@ -85,7 +100,10 @@ export function useAdminProducts() {
     setSelectedProduct,
     isUpdating: updateStatusMutation.isPending,
     handleApprove,
-    handleReject,
+    handleReject: handleRejectClick,
+    rejectProduct,
+    setRejectProduct,
+    handleRejectConfirm,
   };
 }
 

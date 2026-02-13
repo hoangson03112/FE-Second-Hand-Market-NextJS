@@ -1,7 +1,7 @@
 "use client";
 
 import Pagination from "@/components/ui/Pagination";
-import type { AdminSeller } from "@/services/admin.service";
+import type { AdminSeller } from "@/types/admin";
 import { format } from "@/utils/format/date";
 import {
   Store,

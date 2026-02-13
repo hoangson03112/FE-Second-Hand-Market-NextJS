@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Address } from "@/types/address";
-import {
-  AddressService,
-  CreateAddressRequest,
-} from "@/services/address.service";
+import type { Address, CreateAddressRequest } from "@/types/address";
+import { AddressService } from "@/services/address.service";
 import { queryKeys } from "@/lib/query-client";
 import { serverStateConfig } from "@/lib/state";
 import { useTokenStore } from "@/store/useTokenStore";

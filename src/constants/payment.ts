@@ -1,6 +1,20 @@
-import type { SellerBankInfo } from "@/services/order.service";
+import type { SellerBankInfo } from "@/types/order";
 
+/**
+ * Payment-related constants
+ * Bank codes, VietQR, and payment window configuration
+ */
+
+// ============================================================================
+// Payment Configuration
+// ============================================================================
+
+/** Thời gian thanh toán (phút) */
 export const PAYMENT_WINDOW_MINUTES = 15;
+
+// ============================================================================
+// Bank Codes
+// ============================================================================
 
 export const BANK_CODE_MAP: Record<string, string> = {
   Vietcombank: "VCB",
@@ -46,6 +60,15 @@ export const BANK_CODE_MAP: Record<string, string> = {
   ShinhanBank: "SHB",
 };
 
+// ============================================================================
+// Helper Functions
+// ============================================================================
+
+/**
+ * Get bank code from bank name
+ * @param bankName - Full bank name (e.g., "Vietcombank")
+ * @returns Bank code (e.g., "VCB")
+ */
 export function getBankCode(bankName: string): string {
   if (BANK_CODE_MAP[bankName]) {
     return BANK_CODE_MAP[bankName];
@@ -59,6 +82,11 @@ export function getBankCode(bankName: string): string {
   return bankName.substring(0, 3).toUpperCase();
 }
 
+/**
+ * Generate VietQR image URL for payment
+ * @param bankInfo - Seller bank information
+ * @returns VietQR image URL
+ */
 export function generateVietQRImageUrl(bankInfo: SellerBankInfo): string {
   const bankCode = getBankCode(bankInfo.bankName);
   const amount = Math.round(bankInfo.amount);
@@ -67,6 +95,11 @@ export function generateVietQRImageUrl(bankInfo: SellerBankInfo): string {
   return `https://img.vietqr.io/image/${bankCode}-${cleanAccountNumber}-compact2.png?amount=${amount}&addInfo=${content}`;
 }
 
+/**
+ * Format countdown timer
+ * @param secondsLeft - Seconds remaining
+ * @returns Formatted time string (MM:SS)
+ */
 export function formatCountdown(secondsLeft: number | null): string {
   if (secondsLeft === null) return "--:--";
   const mm = Math.floor(secondsLeft / 60);

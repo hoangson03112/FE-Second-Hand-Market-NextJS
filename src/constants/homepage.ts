@@ -1,4 +1,12 @@
+/**
+ * Homepage-related constants
+ * Categories, stats, features, and how-it-works steps
+ */
+
+// ============================================================================
 // Categories
+// ============================================================================
+
 export const categories = [
   { name: "Đồ điện tử", icon: "📱", color: "primary" },
   { name: "Thời trang", icon: "👕", color: "secondary" },
@@ -8,7 +16,10 @@ export const categories = [
   { name: "Khác", icon: "🎯", color: "secondary" },
 ];
 
+// ============================================================================
 // Stats
+// ============================================================================
+
 export const stats = [
   { number: "10K+", label: "Người dùng", icon: "👥" },
   { number: "50K+", label: "Sản phẩm", icon: "📦" },
@@ -16,7 +27,10 @@ export const stats = [
   { number: "4.8", label: "Đánh giá", icon: "⭐" },
 ];
 
+// ============================================================================
 // Features
+// ============================================================================
+
 export const features = [
   {
     icon: "🔒",
@@ -40,7 +54,10 @@ export const features = [
   },
 ];
 
-// Steps
+// ============================================================================
+// How It Works Steps
+// ============================================================================
+
 export const steps = [
   {
     step: "01",
@@ -61,4 +78,3 @@ export const steps = [
     icon: "🤝",
   },
 ];
-

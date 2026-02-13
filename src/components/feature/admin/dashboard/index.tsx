@@ -1,7 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { AdminService, type DashboardStats } from "@/services/admin.service";
+import { AdminService } from "@/services/admin.service";
+import type { DashboardStats } from "@/types/admin";
 import {
   LayoutDashboard,
   Package,
@@ -55,7 +56,7 @@ function StatCard({
 }
 
 export default function AdminDashboard() {
-  const { data: stats, isLoading, error } = useQuery({
+  const { data: stats, isLoading, error } = useQuery<DashboardStats, Error>({
     queryKey: ["admin", "dashboard"],
     queryFn: () => AdminService.getDashboardStats(),
   });
@@ -76,7 +77,7 @@ export default function AdminDashboard() {
     );
   }
 
-  const s = stats as DashboardStats;
+  const s = stats;
 
   return (
     <div className="space-y-6">

@@ -15,6 +15,7 @@ import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import Pagination from "@/components/ui/Pagination";
 import { useAdminProducts } from "./hooks/useAdminProducts";
+import { RejectReasonDialog } from "./RejectReasonDialog";
 
 const CONDITION_LABEL: Record<string, string> = {
   new: "Mới",
@@ -97,6 +98,9 @@ export default function AdminProducts() {
     isUpdating,
     handleApprove,
     handleReject,
+    rejectProduct,
+    setRejectProduct,
+    handleRejectConfirm,
   } = useAdminProducts();
 
   return (
@@ -232,11 +236,18 @@ export default function AdminProducts() {
                           {product.seller?.account?.fullName ?? product.seller?.fullName ?? "—"}
                         </td>
                         <td className="px-4 py-3">
-                          <span
-                            className={`inline-flex px-2 py-0.5 rounded text-xs font-medium ${statusInfo.className}`}
-                          >
-                            {statusInfo.label}
-                          </span>
+                          <div className="flex flex-col gap-1">
+                            <span
+                              className={`inline-flex px-2 py-0.5 rounded text-xs font-medium ${statusInfo.className}`}
+                            >
+                              {statusInfo.label}
+                            </span>
+                            {product.aiModerationResult?.humanReviewRequested && (
+                              <span className="inline-flex px-2 py-0.5 rounded text-[10px] font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200">
+                                👤 User yêu cầu duyệt lại
+                              </span>
+                            )}
+                          </div>
                         </td>
                         <td className="px-4 py-3 hidden lg:table-cell text-muted-foreground text-xs">
                           {product.createdAt ? format(product.createdAt) : "—"}
@@ -582,6 +593,15 @@ export default function AdminProducts() {
           </div>
         </div>
       )}
+
+      {/* Modal nhập lý do từ chối */}
+      <RejectReasonDialog
+        isOpen={!!rejectProduct}
+        productName={rejectProduct?.name || ""}
+        onConfirm={handleRejectConfirm}
+        onCancel={() => setRejectProduct(null)}
+        isLoading={isUpdating}
+      />
     </div>
   );
 }

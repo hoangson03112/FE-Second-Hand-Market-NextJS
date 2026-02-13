@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   AuthLayout,
   BrandingSection,
@@ -13,12 +15,27 @@ import {
 } from "@/components/feature/auth";
 import { UserIcon, ArrowRightIcon } from "@/components/ui";
 import { useLogin } from "./hooks/useLogin";
-import { loginFeatures } from "./constants";
+import { loginFeatures } from "@/constants";
 import { GoogleLoginButton } from "./components";
+import { useUser } from "@/hooks/useUser";
 
 export default function Login() {
+  const router = useRouter();
+  const { data: account } = useUser();
   const { formData, errors, error, isLoading, handleChange, handleSubmit, handleGoogleLogin } =
     useLogin();
+
+  // Nếu đã đăng nhập thì không cho vào màn login nữa → chuyển sang trang sản phẩm đã đăng
+  useEffect(() => {
+    if (account) {
+      router.replace("/my/listings");
+    }
+  }, [account, router]);
+
+  if (account) {
+    // Đang redirect, không render form login
+    return null;
+  }
 
   return (
     <AuthLayout>

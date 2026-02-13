@@ -7,3 +7,4 @@ export { default as ProductDescription } from "./ProductDescription";
 export { default as QuantitySelector } from "./QuantitySelector";
 export { default as ProductActionButtons } from "./ProductActionButtons";
 export { default as ProductGuarantees } from "./ProductGuarantees";
+export { default as ReportProductModal } from "./ReportProductModal";

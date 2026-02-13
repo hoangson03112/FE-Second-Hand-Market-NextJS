@@ -18,7 +18,11 @@ export default function SellerInfoCard({ seller, onContactSeller }: SellerInfoCa
       <div className="flex items-start gap-4">
         <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
           {seller.avatar ? (
-            <Image src={seller.avatar} alt={seller.fullName} className="w-full h-full object-cover" />
+            <Image
+              src={seller.avatar}
+              alt={seller.fullName ?? "Seller"}
+              className="w-full h-full object-cover"
+            />
           ) : (
             <User className="h-6 w-6 text-primary" />
           )}

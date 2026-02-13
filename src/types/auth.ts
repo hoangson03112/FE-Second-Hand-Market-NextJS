@@ -38,6 +38,8 @@ export interface VerifyResponse {
   accessToken?: string;
 }
 
+export type AccountProvider = "google" | "local";
+
 export interface AccountInfo {
   accountID: string;
   fullName?: string;
@@ -47,6 +49,8 @@ export interface AccountInfo {
   phoneNumber: string;
   createdAt?: string;
   addresses?: Address[];
+  /** "google" = đăng nhập Google OAuth, "local" = đăng nhập email/mật khẩu */
+  provider?: AccountProvider;
 }
 
 export interface AccountResponse {

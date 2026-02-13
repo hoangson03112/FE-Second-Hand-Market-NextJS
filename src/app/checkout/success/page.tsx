@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { OrderService, type Order } from "@/services/order.service";
+import { OrderService } from "@/services/order.service";
+import type { Order } from "@/types/order";
 import { formatPrice } from "@/utils/format/price";
 import { CheckCircle2, Package, Home } from "lucide-react";
 import Link from "next/link";
@@ -126,12 +127,12 @@ export default function CheckoutSuccessPage() {
             <Home className="h-4 w-4" />
             Về trang chủ
           </Link>
-          <button
-            onClick={() => router.push(`/orders/${orderId}`)}
-            className="flex-1 btn btn-primary py-3"
+          <Link
+            href={`/orders/${orderId}`}
+            className="flex-1 py-3 bg-primary text-primary-foreground rounded-lg font-semibold text-center hover:bg-primary/90"
           >
             Xem chi tiết đơn hàng
-          </button>
+          </Link>
         </div>
       </div>
     </div>

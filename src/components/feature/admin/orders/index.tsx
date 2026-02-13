@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { ShoppingCart, Loader2, ChevronDown, ChevronUp } from "lucide-react";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
-import type { AdminOrder } from "@/services/admin.service";
+import type { AdminOrder } from "@/types/admin";
 import { useAdminOrders } from "./hooks/useAdminOrders";
 
 const STATUS_BADGE: Record<string, { label: string; className: string }> = {

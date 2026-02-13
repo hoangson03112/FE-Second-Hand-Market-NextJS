@@ -31,12 +31,12 @@ export default function ProductGalleryNew({
         </div>
       </div>
       {imageUrls.length > 1 && (
-        <div className="grid grid-cols-3 gap-3">
-          {imageUrls.slice(0, 6).map((img, idx) => (
+        <div className="flex gap-2 overflow-x-auto pb-1">
+          {imageUrls.slice(0, 8).map((img, idx) => (
             <button
               key={idx}
               onClick={() => setSelectedImage(idx)}
-              className={`relative overflow-hidden rounded-lg aspect-square border-2 transition ${
+              className={`relative shrink-0 w-14 h-14 overflow-hidden rounded-md border-2 transition ${
                 selectedImage === idx ? "border-primary" : "border-border hover:border-primary"
               }`}
             >

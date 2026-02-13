@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { AdminService, type AdminSeller } from "@/services/admin.service";
+import { AdminService } from "@/services/admin.service";
+import type { AdminSeller, GetAdminSellersParams } from "@/types/admin";
 import { useToast } from "@/components/ui";
 
 const LIMIT = 10;
@@ -9,8 +10,10 @@ export function useAdminSellers() {
   const queryClient = useQueryClient();
   const toast = useToast();
 
+  type SellerStatusFilter = NonNullable<GetAdminSellersParams["status"]> | "";
+
   const [statusFilter, setStatusFilter] = useState<
-    "pending" | "approved" | "rejected" | ""
+    SellerStatusFilter
   >("");
   const [page, setPage] = useState(1);
   const [selectedSeller, setSelectedSeller] = useState<AdminSeller | null>(null);

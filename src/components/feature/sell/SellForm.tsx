@@ -13,11 +13,13 @@ import {
   Upload,
   Video,
   Film,
+  AlertCircle,
 } from "lucide-react";
-import { useSellForm } from "./hooks/useSellForm";
+import { useSellForm } from "./hooks";
 import { useCategories } from "@/hooks/useCategories";
 import { ErrorMessage } from "@/components/feature/auth";
-import { PickupAddressSection } from "./components/PickupAddressSection";
+import { PickupAddressSection } from "./components";
+import { useRouter } from "next/navigation";
 
 const CONDITION_OPTIONS: {
   value: "new" | "like_new" | "good" | "fair" | "poor";
@@ -57,6 +59,7 @@ function SectionCard({
 }
 
 export default function SellForm() {
+  const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
   const { data: categories = [] } = useCategories();
@@ -65,9 +68,16 @@ export default function SellForm() {
     errors,
     apiError,
     isLoading,
+    isLoadingProduct,
+    isEditMode,
+    existingImageUrls,
+    existingVideoUrl,
+    currentProduct,
     handleChange,
     setImages,
     setVideo,
+    removeExistingImage,
+    removeExistingVideo,
     handleSubmit,
     addAttribute,
     removeAttribute,
@@ -83,8 +93,17 @@ export default function SellForm() {
     onPickupDistrictChange,
     onPickupWardChange,
     onPickupBusinessAddressChange,
+    savePickupAddress,
+    isSavingPickup,
   } = useSellForm();
 
+  // Check if can request review
+  const canRequestReview =
+    isEditMode &&
+    currentProduct?.status === "rejected" &&
+    !currentProduct?.aiModerationResult?.humanReviewRequested;
+
+  console.log(values);
   const subCategories = values.categoryId
     ? categories.find((c) => c._id === values.categoryId)?.subCategories ?? []
     : [];
@@ -121,15 +140,30 @@ export default function SellForm() {
     "w-full rounded-lg border border-border bg-background px-2.5 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-0";
   const labelClass = "block text-xs font-medium text-foreground mb-1";
 
+  if (isLoadingProduct) {
+    return (
+      <div className="w-full max-w-6xl mx-auto px-4 py-6 lg:py-8">
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <div className="text-center">
+            <div className="w-10 h-10 rounded-full border-2 border-primary border-t-transparent animate-spin mx-auto mb-4" />
+            <p className="text-sm text-muted-foreground">Đang tải thông tin sản phẩm...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-6 lg:py-8">
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
           <h1 className="text-xl lg:text-2xl font-bold text-foreground tracking-tight">
-            Đăng sản phẩm
+            {isEditMode ? "Cập nhật sản phẩm" : "Đăng sản phẩm"}
           </h1>
           <p className="text-muted-foreground text-xs mt-0.5">
-            Điền thông tin để sản phẩm dễ được tìm thấy
+            {isEditMode
+              ? "Cập nhật thông tin sản phẩm của bạn"
+              : "Điền thông tin để sản phẩm dễ được tìm thấy"}
           </p>
         </div>
       </div>
@@ -150,6 +184,8 @@ export default function SellForm() {
             onDistrictChange={onPickupDistrictChange}
             onWardChange={onPickupWardChange}
             onBusinessAddressChange={onPickupBusinessAddressChange}
+            onSavePickupAddress={savePickupAddress}
+            isSavingPickup={isSavingPickup}
           />
         )}
 
@@ -361,11 +397,45 @@ export default function SellForm() {
                       Chọn ảnh hoặc kéo thả
                     </p>
                   </div>
+                  {/* Hiển thị ảnh cũ (khi edit) */}
+                  {existingImageUrls.length > 0 && (
+                    <div className="grid grid-cols-4 gap-2 mt-2">
+                      {existingImageUrls.map((url, i) => (
+                        <div
+                          key={`existing-${i}`}
+                          className="relative aspect-square rounded-lg border border-border overflow-hidden bg-muted group"
+                        >
+                          <img
+                            src={url}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                          {i === 0 && values.images.length === 0 && (
+                            <span className="absolute bottom-0.5 left-0.5 text-[9px] font-medium bg-primary text-primary-foreground px-1 py-0.5 rounded">
+                              Đại diện
+                            </span>
+                          )}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeExistingImage(i);
+                            }}
+                            className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                            aria-label="Xóa ảnh"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  {/* Hiển thị ảnh mới */}
                   {values.images.length > 0 && (
                     <div className="grid grid-cols-4 gap-2 mt-2">
                       {values.images.map((file, i) => (
                         <div
-                          key={i}
+                          key={`new-${i}`}
                           className="relative aspect-square rounded-lg border border-border overflow-hidden bg-muted group"
                         >
                           <img
@@ -373,7 +443,7 @@ export default function SellForm() {
                             alt=""
                             className="w-full h-full object-cover"
                           />
-                          {i === 0 && (
+                          {(i === 0 && existingImageUrls.length === 0) && (
                             <span className="absolute bottom-0.5 left-0.5 text-[9px] font-medium bg-primary text-primary-foreground px-1 py-0.5 rounded">
                               Đại diện
                             </span>
@@ -411,7 +481,32 @@ export default function SellForm() {
                     onChange={handleVideoChange}
                     className="hidden"
                   />
-                  {!values.video ? (
+                  {/* Hiển thị video cũ (khi edit) */}
+                  {existingVideoUrl && !values.video && (
+                    <div className="relative rounded-lg border border-border bg-muted/30 p-2 flex items-center gap-2 mb-2">
+                      <div className="w-10 h-10 rounded bg-muted flex items-center justify-center shrink-0">
+                        <Video className="w-5 h-5 text-muted-foreground" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-medium text-foreground truncate">
+                          Video hiện tại
+                        </p>
+                        <p className="text-[10px] text-muted-foreground">
+                          Đã tải lên
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={removeExistingVideo}
+                        className="p-1.5 rounded text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                        aria-label="Xóa video"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+                  {/* Hiển thị video mới hoặc nút chọn video */}
+                  {!values.video && !existingVideoUrl ? (
                     <button
                       type="button"
                       onClick={() => videoInputRef.current?.click()}
@@ -422,7 +517,7 @@ export default function SellForm() {
                         Chọn video
                       </span>
                     </button>
-                  ) : (
+                  ) : values.video ? (
                     <div className="relative rounded-lg border border-border bg-muted/30 p-2 flex items-center gap-2">
                       <div className="w-10 h-10 rounded bg-muted flex items-center justify-center shrink-0">
                         <Video className="w-5 h-5 text-muted-foreground" />
@@ -444,6 +539,19 @@ export default function SellForm() {
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
+                  ) : null}
+                  {/* Nút thêm video mới khi đã có video cũ */}
+                  {existingVideoUrl && !values.video && (
+                    <button
+                      type="button"
+                      onClick={() => videoInputRef.current?.click()}
+                      className="w-full mt-2 rounded-lg border-2 border-dashed border-border bg-muted/30 px-4 py-2 text-center hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center gap-1"
+                    >
+                      <Video className="w-5 h-5 text-muted-foreground" />
+                      <span className="text-xs font-medium text-foreground">
+                        Thay thế video
+                      </span>
+                    </button>
                   )}
                 </div>
               </div>
@@ -451,16 +559,58 @@ export default function SellForm() {
           </div>
         </div>
 
+        {/* Rejected product warning & request review */}
+        {currentProduct?.status === "rejected" && (
+          <div className="rounded-xl border border-red-200 bg-red-50/50 dark:bg-red-900/10 p-4 mb-4">
+            <div className="flex items-start gap-3">
+              <div className="shrink-0 w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-sm font-semibold text-red-900 dark:text-red-300 mb-1">
+                  Sản phẩm bị từ chối
+                </h4>
+                {currentProduct?.aiModerationResult?.rejectionReason && (
+                  <p className="text-xs text-red-700 dark:text-red-400 mb-3">
+                    <span className="font-medium">Lý do:</span>{" "}
+                    {currentProduct.aiModerationResult.rejectionReason}
+                  </p>
+                )}
+                {currentProduct?.aiModerationResult?.humanReviewRequested ? (
+                  <div className="flex items-center gap-2 text-xs text-blue-700 dark:text-blue-400">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+                    Đã yêu cầu duyệt lại. Admin sẽ xem xét trong 24h.
+                  </div>
+                ) : (
+                  <p className="text-xs text-muted-foreground">
+                    Bạn có thể chỉnh sửa sản phẩm theo yêu cầu, sau đó nhấn &ldquo;Lưu và yêu cầu duyệt lại&rdquo; để admin xem xét.
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-col sm:flex-row gap-2 pt-2">
           <button
             type="submit"
             disabled={isLoading}
             className="flex-1 rounded-full bg-primary text-white font-medium py-2.5 px-6 hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
           >
-            {isLoading ? "Đang đăng..." : "Đăng sản phẩm"}
+            {isLoading
+              ? isEditMode
+                ? canRequestReview
+                  ? "Đang lưu và yêu cầu duyệt lại..."
+                  : "Đang cập nhật..."
+                : "Đang đăng..."
+              : isEditMode
+                ? canRequestReview
+                  ? "Lưu và yêu cầu duyệt lại"
+                  : "Cập nhật sản phẩm"
+                : "Đăng sản phẩm"}
           </button>
           <Link
-            href="/"
+            href={isEditMode ? "/my/listings" : "/"}
             className="flex-1 text-center rounded-full border border-border py-2.5 px-6 text-sm font-medium text-foreground hover:bg-muted transition-colors"
           >
             Hủy

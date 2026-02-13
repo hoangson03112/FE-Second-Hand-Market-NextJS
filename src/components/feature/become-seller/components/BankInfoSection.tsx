@@ -1,7 +1,7 @@
 import React from "react";
 import type { ChangeEvent } from "react";
 import type { BecomeSellerFormValues, BecomeSellerErrors } from "../hooks/useBecomeSeller";
-import { BANK_CODE_MAP } from "@/components/feature/payment/constants";
+import { BANK_CODE_MAP } from "@/constants";
 
 interface BankInfoSectionProps {
   values: BecomeSellerFormValues;

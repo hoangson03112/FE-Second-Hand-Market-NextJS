@@ -9,6 +9,7 @@ import CartLoginPrompt from "./components/CartLoginPrompt";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { useCartPage } from "./hooks";
 import { useTokenStore } from "@/store/useTokenStore";
+import { PageContainer, Container } from "@/components/layout/Container";
 
 export default function Cart() {
   const router = useRouter();
@@ -36,41 +37,41 @@ export default function Cart() {
 
   if (!accessToken) {
     return (
-      <div className="min-h-screen bg-background">
+      <PageContainer withBackground={false}>
         <CartHeader onBack={onBack} />
-        <main className="max-w-4xl mx-auto px-4 pb-8 pt-4">
+        <Container as="main" maxWidth="4xl" paddingX="md" paddingY="md">
           <CartLoginPrompt />
-        </main>
-      </div>
+        </Container>
+      </PageContainer>
     );
   }
 
   if (isLoadingCart) {
     return (
-      <div className="min-h-screen bg-background">
+      <PageContainer withBackground={false}>
         <CartHeader onBack={onBack} />
-        <main className="max-w-4xl mx-auto px-4 py-12 flex items-center justify-center min-h-[40vh]">
+        <Container as="main" maxWidth="4xl" paddingX="md" paddingY="lg" className="flex items-center justify-center min-h-[40vh]">
           <LoadingSpinner size="lg" message="Đang tải giỏ hàng..." />
-        </main>
-      </div>
+        </Container>
+      </PageContainer>
     );
   }
 
   if (!cartItems.length) {
     return (
-      <div className="min-h-screen bg-background">
+      <PageContainer withBackground={false}>
         <CartHeader onBack={onBack} />
-        <main className="max-w-4xl mx-auto px-4 py-8">
+        <Container as="main" maxWidth="4xl" paddingX="md" paddingY="lg">
           <CartEmpty />
-        </main>
-      </div>
+        </Container>
+      </PageContainer>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <PageContainer withBackground={false} className="pb-24">
       <CartHeader onBack={onBack} />
-      <main className="max-w-4xl mx-auto px-4 py-4">
+      <Container as="main" maxWidth="4xl" paddingX="md" paddingY="md">
         {groups.map((group) => (
           <ShopCartGroup
             key={group.sellerId}
@@ -86,7 +87,7 @@ export default function Cart() {
             isUpdating={isBusy}
           />
         ))}
-      </main>
+      </Container>
       <CartBottomBar
         allSelected={allSelected}
         onSelectAll={handleSelectAll}
@@ -97,6 +98,6 @@ export default function Cart() {
         onGoToCheckout={handleGoToCheckout}
         isGoingToCheckout={isGoingToCheckout}
       />
-    </div>
+    </PageContainer>
   );
 }

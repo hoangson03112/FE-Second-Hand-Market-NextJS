@@ -16,6 +16,21 @@ export interface Address {
   isDefault?: boolean;
 }
 
+export interface CreateAddressRequest {
+  fullName: string;
+  specificAddress: string;
+  phoneNumber: string;
+  provinceId?: string;
+  wardCode?: string;
+  districtId?: string;
+  isDefault?: boolean;
+}
+
+export interface AddressResponse {
+  status?: string;
+  data?: Address[];
+}
+
 // ========== GHN API Types ==========
 
 /**

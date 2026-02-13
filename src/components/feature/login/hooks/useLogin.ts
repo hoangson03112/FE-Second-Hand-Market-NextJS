@@ -6,7 +6,7 @@ import { useTokenStore } from "@/store/useTokenStore";
 import { queryKeys } from "@/lib/query-client";
 import type { LoginRequest } from "@/types/auth";
 import { loginSchema } from "@/schemas/auth.schema";
-import { getGoogleLoginUrl } from "../constants";
+import { getGoogleLoginUrl } from "@/constants";
 
 export function useLogin() {
   const router = useRouter();

@@ -7,5 +7,7 @@ export { OrderService } from "./order.service";
 export { ProductService } from "./product.service";
 export { ShippingService } from "./shipping.service";
 export { SellerService } from "./seller.service";
-export { PickupAddressService } from "./pickupAddress.service";
 export { AdminService } from "./admin.service";
+export { ChatService } from "./chat.service";
+export { ReportService } from "./report.service";
+export { SellerReviewService } from "./sellerReview.service";

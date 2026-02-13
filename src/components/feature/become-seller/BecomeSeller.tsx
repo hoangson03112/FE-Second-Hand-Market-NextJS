@@ -8,13 +8,14 @@ import {
   ErrorMessage,
 } from "@/components/feature/auth";
 import { ArrowRightIcon } from "@/components/ui";
-import { useBecomeSeller } from "./hooks/useBecomeSeller";
-import { useBecomeSellerLocation } from "./hooks/useBecomeSellerLocation";
-import { becomeSellerFeatures, UNVERIFIED_SELLER_PRODUCT_LIMIT } from "./constants";
-import { AddressSection } from "./components/AddressSection";
-import { BankInfoSection } from "./components/BankInfoSection";
-import { IdCardSection } from "./components/IdCardSection";
-import { TermsSection } from "./components/TermsSection";
+import { useBecomeSeller, useBecomeSellerLocation } from "./hooks";
+import { becomeSellerFeatures, UNVERIFIED_SELLER_PRODUCT_LIMIT } from "@/constants";
+import {
+  AddressSection,
+  BankInfoSection,
+  IdCardSection,
+  TermsSection,
+} from "./components";
 
 export default function BecomeSeller() {
   const {

@@ -14,6 +14,7 @@ import {
   ShippingInfo,
 } from "./components";
 import { useAddress, useCheckout } from "./hooks";
+import { PageContainer, Container } from "@/components/layout/Container";
 
 export default function Checkout() {
   const router = useRouter();
@@ -55,8 +56,8 @@ export default function Checkout() {
   }, [selectedAddress, updateShippingFromAddress]);
 
   return (
-    <div className="min-h-screen bg-background">
-      <main className="max-w-7xl mx-auto px-4 py-8">
+    <PageContainer withBackground={false}>
+      <Container as="main" maxWidth="7xl" paddingX="md" paddingY="lg">
         <CheckoutHeader onBack={() => router.back()} />
 
         <AddressModal
@@ -129,7 +130,7 @@ export default function Checkout() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </Container>
+    </PageContainer>
   );
 }

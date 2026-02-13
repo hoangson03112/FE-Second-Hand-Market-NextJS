@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { IProduct } from "@/types/product";
 import { useCheckoutStore } from "@/store/useCheckoutStore";
 import { AccountInfo } from "@/types/auth";
-import { CartService } from "@/services";
+import { CartService, ChatService } from "@/services";
 import { useToast } from "@/components/ui";
 
 interface UseProductActionsProps {
@@ -81,9 +81,35 @@ export function useProductActions({
     }
   }, [account, product, quantity, toast]);
 
-  const handleContactSeller = useCallback(() => {
-    // TODO: Implement chat/contact functionality
-  }, []);
+  const handleContactSeller = useCallback(async () => {
+    if (!account) {
+      router.push("/login");
+      return;
+    }
+    if (!product?.seller?._id || !product._id) {
+      toast.error("Không thể liên hệ người bán");
+      return;
+    }
+    try {
+      setActionLoading(true);
+      const res = await ChatService.findOrCreateWithProduct(
+        product._id,
+        product.seller._id
+      );
+      if (res.success && res.data?.conversationId) {
+        router.push(
+          `/chat?conversationId=${res.data.conversationId}&partnerId=${res.partner?._id || product.seller._id}`
+        );
+      } else {
+        toast.error("Không thể mở hội thoại");
+      }
+    } catch (error) {
+      console.error("Lỗi khi liên hệ người bán:", error);
+      toast.error("Không thể liên hệ người bán");
+    } finally {
+      setActionLoading(false);
+    }
+  }, [account, product, router, toast]);
 
 
 

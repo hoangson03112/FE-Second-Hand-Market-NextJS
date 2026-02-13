@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { AdminService, type AdminAccount } from "@/services/admin.service";
+import { AdminService } from "@/services/admin.service";
+import type { AdminAccount } from "@/types/admin";
 
 export function useAdminUsers() {
   const { data, isLoading, error } = useQuery({

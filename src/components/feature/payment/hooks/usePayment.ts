@@ -2,14 +2,15 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { OrderService, type SellerBankInfo } from "@/services/order.service";
+import { OrderService } from "@/services/order.service";
+import type { SellerBankInfo } from "@/types/order";
 import axiosClient from "@/lib/axios";
 import { useToast } from "@/components/ui";
 import {
   PAYMENT_WINDOW_MINUTES,
   formatCountdown,
   generateVietQRImageUrl,
-} from "../constants";
+} from "@/constants";
 
 export type OrderLite = {
   _id: string;

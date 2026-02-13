@@ -3,9 +3,9 @@
 import React from "react";
 import type { ChangeEvent } from "react";
 import type { Province, District, Ward } from "@/types/address";
-import type { PickupFormValues } from "../hooks/useSellForm";
-import type { PickupAddressData } from "@/types/pickupAddress";
-import { MapPin, Truck } from "lucide-react";
+import type { PickupFormValues } from "@/types/sell";
+import type { Address } from "@/types/address";
+import { MapPin, Save } from "lucide-react";
 
 interface PickupAddressSectionProps {
   values: PickupFormValues;
@@ -13,11 +13,13 @@ interface PickupAddressSectionProps {
   provinces: Province[];
   districts: District[];
   wards: Ward[];
-  savedPickup: PickupAddressData | null;
+  savedPickup: Address | null;
   onProvinceChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   onDistrictChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   onWardChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   onBusinessAddressChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onSavePickupAddress?: () => void;
+  isSavingPickup?: boolean;
 }
 
 const inputClass =
@@ -35,7 +37,12 @@ export function PickupAddressSection({
   onDistrictChange,
   onWardChange,
   onBusinessAddressChange,
+  onSavePickupAddress,
+  isSavingPickup = false,
 }: PickupAddressSectionProps) {
+  const showSavedBanner =
+    savedPickup && !values.provinceId && savedPickup.specificAddress?.trim();
+
   return (
     <section className="rounded-xl border border-amber-200/60 bg-amber-50/50 dark:border-amber-800/40 dark:bg-amber-950/20 overflow-hidden">
       {/* Header: rõ ràng dành cho buyer */}
@@ -47,7 +54,7 @@ export function PickupAddressSection({
           <div className="flex items-center gap-2 flex-wrap">
             <h2 className="text-sm font-semibold text-foreground">Địa chỉ lấy hàng</h2>
             <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-amber-200/80 dark:bg-amber-800/50 text-amber-800 dark:text-amber-200">
-              Tài khoản mua hàng (buyer)
+              Tài khoản mua hàng
             </span>
           </div>
           <p className="text-xs text-muted-foreground mt-0.5">
@@ -57,15 +64,12 @@ export function PickupAddressSection({
       </div>
 
       <div className="p-4 space-y-4">
-        {savedPickup && !values.provinceId && (
+        {showSavedBanner && (
           <div className="flex items-center gap-2 rounded-lg bg-muted/50 px-3 py-2 text-xs text-muted-foreground">
-            <Truck className="w-3.5 h-3.5 shrink-0" />
-            <span>
-              Đã lưu: {savedPickup.businessAddress}, {savedPickup.ward}, {savedPickup.district}, {savedPickup.province}
-            </span>
+            <span>Đã lưu: {savedPickup.specificAddress}</span>
           </div>
         )}
-
+ 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div>
             <label className={labelClass}>
@@ -73,13 +77,13 @@ export function PickupAddressSection({
             </label>
             <select
               name="pickupProvinceId"
-              value={values.provinceId}
+              value={values.provinceId ?? ""}
               onChange={onProvinceChange}
               className={inputClass}
             >
               <option value="">Chọn Tỉnh/Thành phố</option>
               {provinces.map((p) => (
-                <option key={p.ProvinceID} value={p.ProvinceID}>
+                <option key={p.ProvinceID} value={String(p.ProvinceID)}>
                   {p.ProvinceName}
                 </option>
               ))}
@@ -94,7 +98,7 @@ export function PickupAddressSection({
             </label>
             <select
               name="pickupDistrictId"
-              value={values.districtId}
+              value={values.districtId ?? ""}
               onChange={onDistrictChange}
               disabled={!values.provinceId}
               className={inputClass}
@@ -103,7 +107,7 @@ export function PickupAddressSection({
                 {!values.provinceId ? "Chọn Tỉnh trước" : "Chọn Quận/Huyện"}
               </option>
               {districts.map((d) => (
-                <option key={d.DistrictID} value={d.DistrictID}>
+                <option key={d.DistrictID} value={String(d.DistrictID)}>
                   {d.DistrictName}
                 </option>
               ))}
@@ -118,7 +122,7 @@ export function PickupAddressSection({
             </label>
             <select
               name="pickupWardCode"
-              value={values.wardCode}
+              value={values.wardCode ?? ""}
               onChange={onWardChange}
               disabled={!values.districtId}
               className={inputClass}
@@ -127,7 +131,7 @@ export function PickupAddressSection({
                 {!values.districtId ? "Chọn Quận trước" : "Chọn Phường/Xã"}
               </option>
               {wards.map((w) => (
-                <option key={w.WardCode} value={w.WardCode}>
+                <option key={w.WardCode} value={String(w.WardCode)}>
                   {w.WardName}
                 </option>
               ))}
@@ -145,7 +149,7 @@ export function PickupAddressSection({
           <input
             type="text"
             name="pickupBusinessAddress"
-            value={values.businessAddress}
+            value={values.businessAddress ?? ""}
             onChange={onBusinessAddressChange}
             placeholder="Ví dụ: 123 Nguyễn Trãi, phường 5..."
             className={inputClass}
@@ -154,6 +158,20 @@ export function PickupAddressSection({
             <p className="mt-0.5 text-xs text-red-500">{errors.businessAddress}</p>
           )}
         </div>
+
+        {onSavePickupAddress && (
+          <div className="pt-1">
+            <button
+              type="button"
+              onClick={onSavePickupAddress}
+              disabled={isSavingPickup || !values.provinceId || !values.districtId || !values.wardCode || !values.businessAddress?.trim()}
+              className="inline-flex items-center gap-2 rounded-lg bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-700 disabled:opacity-50 disabled:pointer-events-none transition-colors"
+            >
+              <Save className="w-4 h-4" />
+              {isSavingPickup ? "Đang lưu..." : "Lưu địa chỉ"}
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

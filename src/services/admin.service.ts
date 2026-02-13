@@ -1,89 +1,14 @@
 import axiosClient from "@/lib/axios";
-
-export interface DashboardStats {
-  totalRevenue: number;
-  soldProducts: number;
-  newUsers: number;
-  completionRate: number;
-  salesData: unknown[];
-  categoryData: { _id: string; value: number }[];
-  userActivityData: {
-    day: string;
-    visits: number;
-    listings: number;
-    purchases: number;
-  }[];
-}
-
-export interface AdminOrder {
-  _id: string;
-  buyerId: { _id: string; fullName: string; email: string; phoneNumber?: string };
-  sellerId: unknown;
-  products: Array<{
-    productId: { name: string; price: number; images?: unknown[]; avatar?: { url: string };
-      categoryId?: { name: string }; subcategoryId?: { name: string } };
-    quantity: number;
-  }>;
-  totalAmount: number;
-  shippingAddress?: unknown;
-  status: string;
-  statusPayment?: boolean;
-  createdAt: string;
-  updatedAt?: string;
-}
-
-export interface AdminAccount {
-  _id: string;
-  fullName?: string;
-  email: string;
-  phoneNumber?: string;
-  role?: string;
-  createdAt?: string;
-  avatar?: { url: string };
-}
-
-export interface AdminSeller {
-  _id: string;
-  accountId: {
-    _id: string;
-    fullName: string;
-    email: string;
-    phoneNumber?: string;
-    createdAt?: string;
-    avatar?: { url: string };
-  };
-  verificationStatus: "pending" | "approved" | "rejected" | "banned";
-  businessAddress?: string;
-  province?: string;
-  district?: string;
-  ward?: string;
-  createdAt?: string;
-}
-
-export interface AdminReport {
-  _id: string;
-  type: string;
-  targetId?: unknown;
-  reporterId?: { fullName: string; email: string; phoneNumber?: string };
-  status?: string;
-  reason?: string;
-  description?: string;
-  images?: { url: string }[];
-  createdAt: string;
-}
-
-export interface AdminCategory {
-  _id: string;
-  name: string;
-  slug: string;
-  status?: "active" | "inactive";
-  subCategories: {
-    _id: string;
-    name: string;
-    slug: string;
-    status?: "active" | "inactive";
-  }[];
-}
+import type {
+  DashboardStats,
+  AdminOrder,
+  AdminAccount,
+  AdminSeller,
+  AdminReport,
+  AdminCategory,
+  GetAdminSellersParams,
+  GetAdminSellersResponse,
+} from "@/types/admin";
 
 export const AdminService = {
   getDashboardStats: async (): Promise<DashboardStats> => {
@@ -101,32 +26,13 @@ export const AdminService = {
     return res as unknown as { accounts: AdminAccount[] };
   },
 
-  getSellers: async (params?: {
-    status?: "pending" | "approved" | "rejected";
-    page?: number;
-    limit?: number;
-  }) => {
+  getSellers: async (params?: GetAdminSellersParams): Promise<GetAdminSellersResponse> => {
     const search = new URLSearchParams();
     if (params?.status) search.set("status", params.status);
     if (params?.page) search.set("page", String(params.page));
     if (params?.limit) search.set("limit", String(params.limit));
     const res = await axiosClient.get(`/sellers/admin/all?${search.toString()}`);
-    return res as {
-      success: boolean;
-      data: AdminSeller[];
-      pagination: {
-        currentPage: number;
-        totalPages: number;
-        totalItems: number;
-        itemsPerPage: number;
-      };
-      statistics: {
-        total: number;
-        pending: number;
-        approved: number;
-        rejected: number;
-      };
-    };
+    return res as unknown as GetAdminSellersResponse;
   },
 
   updateSellerStatus: async (
@@ -202,4 +108,15 @@ export const AdminService = {
   toggleModerationMode: async (mode: "strict" | "balanced") => {
     return axiosClient.put("/admin/admin/moderation/toggle-mode", { mode });
   },
+};
+
+export type {
+  DashboardStats,
+  AdminOrder,
+  AdminAccount,
+  AdminSeller,
+  AdminReport,
+  AdminCategory,
+  GetAdminSellersParams,
+  GetAdminSellersResponse,
 };

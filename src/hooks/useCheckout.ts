@@ -5,7 +5,8 @@ import { useUser } from "./useUser";
 import { PaymentMethodType } from "@/components/feature/checkout/components/PaymentMethod";
 import { Address, ShippingServiceOption } from "@/types/address";
 import { ShippingService } from "@/services/shipping.service";
-import { OrderService, CreateOrderRequest } from "@/services/order.service";
+import { OrderService } from "@/services/order.service";
+import type { CreateOrderRequest } from "@/types/order";
 import { logger } from "@/infrastructure/monitoring/logger";
 import { useToast } from "@/components/ui";
 

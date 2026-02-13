@@ -19,17 +19,20 @@ export function createStore<T extends object>(
     devtools: enableDevtools = true,
   } = options || {};
 
-  let creator: StateCreator<T, [], []> = subscribeWithSelector(
-    storeCreator as StateCreator<T, [], []>
+  const baseCreator = subscribeWithSelector(
+    storeCreator as unknown as StateCreator<T, [], []>
   );
 
-  if (shouldPersist) {
-    creator = persist(creator, { name });
-  }
+  const persistedCreator = shouldPersist
+    ? persist(baseCreator as unknown as StateCreator<T, [], []>, { name })
+    : baseCreator;
 
-  if (enableDevtools && process.env.NODE_ENV === "development") {
-    creator = devtools(creator, { name });
-  }
+  const finalCreator =
+    enableDevtools && process.env.NODE_ENV === "development"
+      ? devtools(persistedCreator as unknown as StateCreator<T, [], []>, { name })
+      : persistedCreator;
 
-  return create<T>()(creator);
+  // TS: middleware mutator types are carried in `finalCreator`,
+  // but `create<T>()` here expects a plain StateCreator signature.
+  return create<T>()(finalCreator as unknown as StateCreator<T, [], []>);
 }

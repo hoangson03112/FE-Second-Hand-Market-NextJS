@@ -4,4 +4,4 @@ import Login from "./Login";
 
 export default Login;
 export { useLogin } from "./hooks";
-export { loginFeatures } from "./constants";
+export { loginFeatures } from "@/constants";

@@ -28,6 +28,20 @@ export interface IProduct {
   location?: string;
   views?: number;
   likes?: number;
+  aiModerationResult?: {
+    approved?: boolean | null;
+    confidence?: number;
+    reasons?: string[];
+    reviewedAt?: string | null;
+    processingStarted?: string | null;
+    humanReviewRequested?: boolean;
+    humanReviewRequestedAt?: string | null;
+    humanReviewRequestedBy?: string;
+    bypassAI?: boolean;
+    rejectionReason?: string | null;
+    rejectedBy?: string;
+    rejectedAt?: string | null;
+  };
 }
 
 export interface IAttribute {

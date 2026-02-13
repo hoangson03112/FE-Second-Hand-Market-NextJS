@@ -15,3 +15,4 @@ export {
   ProductActionButtons,
   ProductGuarantees,
 } from "./components";
+export type { ProductProps } from "./Product.types";

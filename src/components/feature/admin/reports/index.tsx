@@ -3,7 +3,7 @@
 import { Fragment } from "react";
 import { Flag, Loader2, ChevronDown, ChevronUp } from "lucide-react";
 import { format } from "@/utils/format/date";
-import type { AdminReport } from "@/services/admin.service";
+import type { AdminReport } from "@/types/admin";
 import { useAdminReports } from "./hooks/useAdminReports";
 
 export default function AdminReports() {

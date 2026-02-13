@@ -1,93 +1,10 @@
 import axiosClient from "@/lib/axios";
-
-export interface CreateOrderRequest {
-  products: Array<{
-    productId: string;
-    quantity: number;
-  }>;
-  totalAmount: number;
-  shippingAddress: string; // Address ID
-  shippingMethod: string;
-  sellerId: string;
-  paymentMethod: string;
-  // Optional extra info (Order model already supports these)
-  shippingFee?: number;
-  insuranceFee?: number;
-  codFee?: number;
-  totalShippingFee?: number;
-  expectedDeliveryTime?: string; // ISO string
-}
-
-export interface CreateOrderResponse {
-  order: {
-    _id: string;
-    buyerId: string;
-    sellerId: string;
-    products: Array<{
-      productId: string;
-      quantity: number;
-    }>;
-    totalAmount: number;
-    shippingAddress: string;
-    shippingMethod: string;
-    paymentMethod: string;
-    status: string;
-    statusPayment: boolean;
-    createdAt: string;
-    updatedAt: string;
-    [key: string]: unknown;
-  };
-}
-
-export interface Order {
-  _id: string;
-  buyerId: {
-    _id: string;
-    fullName: string;
-    email: string;
-    phoneNumber: string;
-  };
-  sellerId: {
-    _id: string;
-    fullName: string;
-    email: string;
-    phoneNumber: string;
-  };
-  products: Array<{
-    productId: {
-      _id: string;
-      name: string;
-      price: number;
-      avatar: string;
-      [key: string]: unknown;
-    };
-    quantity: number;
-  }>;
-  totalAmount: number;
-  shippingAddress: {
-    _id: string;
-    fullName: string;
-    phoneNumber: string;
-    address: string;
-    [key: string]: unknown;
-  };
-  shippingMethod: string;
-  paymentMethod: string;
-  status: string;
-  statusPayment: boolean;
-  createdAt: string;
-  updatedAt: string;
-  [key: string]: unknown;
-}
-
-export interface SellerBankInfo {
-  bankName: string;
-  accountNumber: string;
-  accountHolder: string;
-  amount: number;
-  content: string;
-  orderId: string;
-}
+import type {
+  CreateOrderRequest,
+  CreateOrderResponse,
+  Order,
+  SellerBankInfo,
+} from "@/types/order";
 
 export const OrderService = {
   /**
@@ -138,6 +55,29 @@ export const OrderService = {
     orderId: string
   ): Promise<{ message: string; order: Order }> => {
     return axiosClient.patch("/orders/update-payment-status", { orderId });
+  },
+
+  /**
+   * Get orders for seller (orders where current user is seller)
+   */
+  getSellerOrders: async (): Promise<{ orders: Order[] }> => {
+    const res = await axiosClient.get("/orders/seller/my");
+    return { orders: res.orders || res.data || [] };
+  },
+
+  /**
+   * Update order by seller (status: delivered, cancelled, etc.)
+   */
+  updateSellerOrder: async (
+    orderId: string,
+    status: string,
+    reason?: string
+  ): Promise<{ order: Order }> => {
+    const res = await axiosClient.patch(
+      `/orders/seller/update/${orderId}`,
+      { status, reason }
+    );
+    return { order: res.order || res };
   },
 };
 

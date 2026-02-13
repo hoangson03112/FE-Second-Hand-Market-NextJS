@@ -11,7 +11,7 @@ import {
   Trash2,
   Search,
 } from "lucide-react";
-import type { AdminCategory } from "@/services/admin.service";
+import type { AdminCategory } from "@/types/admin";
 import { useAdminCategories } from "./hooks/useAdminCategories";
 
 export default function AdminCategories() {

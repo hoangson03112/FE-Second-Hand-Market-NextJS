@@ -4,4 +4,4 @@ import Register from "./Register";
 
 export default Register;
 export { useRegister } from "./hooks";
-export { registerFeatures } from "./constants";
+export { registerFeatures } from "@/constants";

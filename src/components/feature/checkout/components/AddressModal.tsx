@@ -3,7 +3,7 @@
 import { Address } from "@/types/address";
 import { MapPin, Plus, X, ArrowLeft } from "lucide-react";
 import { AddressForm } from "./AddressForm";
-import { CreateAddressRequest } from "@/services/address.service";
+import type { CreateAddressRequest } from "@/types/address";
 import { useState } from "react";
 import AddressList from "./AddressList";
 

@@ -1,39 +1,11 @@
 import axiosClient from "@/lib/axios";
-import type { GetCartResponse } from "@/types/cart";
-
-export interface PurchaseNowRequest {
-  productId: string;
-  quantity: number;
-}
-
-export interface PurchaseNowResponse {
-  status: string;
-  message: string;
-  order: {
-    _id: string;
-    products: Array<{
-      productId: {
-        _id: string;
-        name: string;
-        price: number;
-        avatar: string;
-        [key: string]: unknown;
-      };
-      quantity: number;
-    }>;
-    [key: string]: unknown;
-  };
-}
-
-export interface AddToCartRequest {
-  productId: string;
-  quantity: number;
-}
-
-export interface AddToCartResponse {
-  status: string;
-  message: string;
-}
+import type {
+  GetCartResponse,
+  PurchaseNowRequest,
+  PurchaseNowResponse,
+  AddToCartRequest,
+  AddToCartResponse,
+} from "@/types/cart";
 
 export const CartService = {
   /**

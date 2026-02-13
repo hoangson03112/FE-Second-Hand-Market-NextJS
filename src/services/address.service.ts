@@ -2,26 +2,13 @@ import axiosClient from "@/lib/axios";
 import { rateLimitedRequest } from "@/lib/external-axios";
 import type {
   Address,
+  CreateAddressRequest,
   Province,
   District,
   Ward,
   GHNResponse,
 } from "@/types/address";
 import { logger } from "@/infrastructure/monitoring/logger";
-
-export interface CreateAddressRequest {
-  fullName: string;
-  specificAddress: string;
-  phoneNumber: string;
-  provinceId?: string;
-  wardCode?: string;
-  districtId?: string;
-}
-
-export interface AddressResponse {
-  status?: string;
-  data?: Address[];
-}
 
 /**
  * Address Service - Manages user addresses and GHN location data

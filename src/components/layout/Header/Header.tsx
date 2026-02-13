@@ -3,7 +3,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ICategory, ISubCategory } from "@/types/category";
-import { Search, ShoppingCart, Bell, ChevronUp, ChevronDown, Settings } from "lucide-react";
+import {
+  Search,
+  ShoppingCart,
+  Bell,
+  MessageCircle,
+  ChevronUp,
+  ChevronDown,
+  Settings,
+  Package,
+  Truck,
+} from "lucide-react";
 import { useHeader } from "./hooks/useHeader";
 
 export default function Header() {
@@ -90,6 +100,13 @@ export default function Header() {
                     className="inline-flex items-center justify-center px-5 py-2.5  text-base font-medium rounded-full text-white btn-primary  hover-bg-primary-dark transition-colors"
                   >
                     {sellButtonText}
+                  </Link>
+                  <Link
+                    href="/chat"
+                    className="relative p-2 rounded-full text-tertiary hover-bg-neutral hover-text-secondary transition-colors"
+                    aria-label="Tin nhắn"
+                  >
+                    <MessageCircle className="w-6 h-6 text-tertiary hover:text-primary" />
                   </Link>
                   <Link
                     href="/notifications"
@@ -181,6 +198,26 @@ export default function Header() {
                             </div>
                           </Link>)}
                           <Link
+                            href="/chat"
+                            onClick={closeUserDropdown}
+                            className="block px-4 py-2 text-sm text-secondary hover-bg-neutral transition-colors"
+                          >
+                            <div className="flex items-center gap-2">
+                              <MessageCircle className="w-4 h-4" />
+                              Tin nhắn
+                            </div>
+                          </Link>
+                          <Link
+                            href="/my/listings"
+                            onClick={closeUserDropdown}
+                            className="block px-4 py-2 text-sm text-secondary hover-bg-neutral transition-colors"
+                          >
+                            <div className="flex items-center gap-2">
+                              <Package className="w-4 h-4" />
+                              Sản phẩm đã đăng
+                            </div>
+                          </Link>
+                          <Link
                             href="/orders"
                             onClick={closeUserDropdown}
                             className="block px-4 py-2 text-sm text-secondary hover-bg-neutral transition-colors"
@@ -202,6 +239,18 @@ export default function Header() {
                               Đơn hàng của tôi
                             </div>
                           </Link>
+                          {account.role === "seller" && (
+                            <Link
+                              href="/my/orders"
+                              onClick={closeUserDropdown}
+                              className="block px-4 py-2 text-sm text-secondary hover-bg-neutral transition-colors"
+                            >
+                              <div className="flex items-center gap-2">
+                                <Truck className="w-4 h-4" />
+                                Đơn hàng bán (Seller)
+                              </div>
+                            </Link>
+                          )}
                           <button
                             onClick={handleLogout}
                             className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"

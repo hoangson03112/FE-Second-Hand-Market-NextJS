@@ -24,12 +24,17 @@ export default function ProductCard({ product }: ProductCardProps) {
     >
       <div className="relative aspect-square overflow-hidden bg-neutral-100">
         <Image
-          src={product.avatar.url}
+          src={product.avatar?.url ?? product.images?.[0]?.url ?? "/file.svg"}
           alt={product.name}
           fill
           className="object-cover group-hover:scale-110 transition-transform duration-300"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
+        {(product.stock ?? 0) === 1 && (
+          <span className="absolute top-3 left-3 px-2 py-0.5 rounded-md bg-amber-500/90 text-white text-xs font-medium">
+            Chỉ còn 1
+          </span>
+        )}
         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
             className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:text-white transition-colors shadow-md"

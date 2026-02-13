@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ProductService } from "@/services/product.service";
-import { IProductFilters } from "@/types/product";
+import type { IProduct, IProductFilters } from "@/types/product";
 import { queryKeys } from "@/lib/query-client";
 
 export function useProducts(filters?: IProductFilters) {
@@ -49,14 +49,22 @@ export function useProductsBySubCategory(
 }
 
 export function useProduct(id: string) {
-  return useQuery({
+  return useQuery<IProduct>({
     queryKey: queryKeys.products.detail(id),
     queryFn: async () => {
       if (!id) throw new Error("Product ID is required");
-
-      const data = await ProductService.getById(id);
-      return data;
+      return ProductService.getById(id);
     },
     enabled: !!id,
+  });
+}
+
+export function useProductsSearch(searchQuery: string, filters?: IProductFilters) {
+  return useQuery({
+    queryKey: [...queryKeys.products.all, "search", searchQuery, filters],
+    queryFn: async () => {
+      return ProductService.search(searchQuery, filters);
+    },
+    enabled: !!searchQuery && searchQuery.trim().length > 0,
   });
 }

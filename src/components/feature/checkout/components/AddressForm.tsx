@@ -2,8 +2,7 @@
 
 import { useProvinces, useDistricts, useWards } from "@/hooks/useGHNLocation";
 import { useForm } from "@/hooks/useForm";
-import { CreateAddressRequest } from "@/services/address.service";
-import { Address } from "@/types/address";
+import type { CreateAddressRequest, Address } from "@/types/address";
 
 interface AddressFormProps {
   initialData?: Address | null;

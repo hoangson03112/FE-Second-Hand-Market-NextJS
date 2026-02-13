@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { SellerService } from "@/services/seller.service";
 import { becomeSellerSchema, type BecomeSellerInput } from "@/schemas/becomeSeller.schema";
 import type { SellerRequestStatus, SellerProductLimitResponse } from "@/types/seller";
-import { UNVERIFIED_SELLER_PRODUCT_LIMIT } from "../constants";
+import { UNVERIFIED_SELLER_PRODUCT_LIMIT } from "@/constants";
 
 export type BecomeSellerFormValues = BecomeSellerInput & {
   agreeTerms: boolean;
