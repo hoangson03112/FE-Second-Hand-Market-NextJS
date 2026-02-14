@@ -10,16 +10,17 @@ import {
   ProductLoadingState,
   ProductCard,
 } from "./components";
-import { PageContainer, Container } from "@/components/layout/Container";
+import { Container } from "@/components/layout/Container";
+import { Package } from "lucide-react";
 
 export default function MyProducts() {
   const { products, isLoading, error, refetch } = useMyProducts();
   const { deletingId, handleDelete } = useDeleteProduct(refetch);
   const { activeFilter, setActiveFilter, stats, filteredProducts } = useProductsFilter(products);
-  const [viewMode, setViewMode] = useState<"list" | "grid">("list");
+  const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
 
   return (
-    <div className="min-h-screen bg-gray-50/50">
+    <div className="min-h-screen bg-background">
       <ProductListHeader
         stats={stats}
         activeFilter={activeFilter}
@@ -30,13 +31,7 @@ export default function MyProducts() {
       
       <Container maxWidth="7xl" paddingX="md" paddingY="lg">
         {error && (
-          <div
-            className={cn(
-              "rounded-xl px-4 py-3 text-sm mb-6",
-              "bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-300",
-              "border border-red-200 dark:border-red-800"
-            )}
-          >
+          <div className="rounded-lg px-4 py-3 text-sm mb-6 bg-red-50 text-red-600 border border-red-200">
             {PRODUCT_MESSAGES.LOAD_ERROR}
           </div>
         )}
@@ -46,7 +41,8 @@ export default function MyProducts() {
         ) : products.length === 0 ? (
           <EmptyProductState />
         ) : filteredProducts.length === 0 ? (
-          <div className="rounded-2xl bg-card border border-border p-16 text-center">
+          <div className="rounded-xl bg-card border border-border p-16 text-center">
+            <Package className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
             <p className="text-muted-foreground">
               Không có sản phẩm nào trong danh mục này
             </p>
@@ -55,8 +51,8 @@ export default function MyProducts() {
           <div
             className={cn(
               viewMode === "grid"
-                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-                : "space-y-4"
+                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+                : "space-y-3"
             )}
           >
             {filteredProducts.map((product) => (
