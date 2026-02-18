@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { useHeader } from "./hooks/useHeader";
 
-// Swiss Typographic Style Header - Flat, rectangular, minimal decoration
+// Swiss Typographic Style Header - Refined, elegant, minimal
 
 export default function Header() {
   const {
@@ -46,19 +46,22 @@ export default function Header() {
 
   
   return (
-    <header className="sticky top-0 z-50 bg-cream-50 border-b border-taupe-200" data-swiss-style="true">
+    <header className="sticky top-0 z-50 bg-cream-50/98 backdrop-blur-sm border-b border-taupe-200/80" data-swiss-style="true">
+      {/* Subtle top accent line */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+      
       <div className="relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 md:h-24">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <Link href="/" className="flex items-center">
+              <Link href="/" className="flex items-center group">
                 <Image
                   src="https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png"
                   alt="Eco Market Logo"
                   width={140}
                   height={140}
-                  className="h-16 md:h-20 w-auto"
+                  className="h-16 md:h-20 w-auto transition-opacity duration-200 group-hover:opacity-90"
                   priority
                 />
               </Link>
@@ -81,7 +84,7 @@ export default function Header() {
                   <input
                     id="search"
                     name="search"
-                    className="block w-full bg-taupe-50 border border-taupe-200 py-3 pl-12 pr-6 text-base text-taupe-900 placeholder:text-taupe-400 focus:outline-none focus:border-primary transition-colors duration-200"
+                    className="block w-full bg-white border border-taupe-200 py-3 pl-12 pr-6 text-base text-taupe-900 placeholder:text-taupe-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all duration-200 shadow-sm"
                     placeholder="Tìm kiếm sản phẩm..."
                     type="search"
                     value={query}
@@ -97,7 +100,7 @@ export default function Header() {
               {!account ? (
                 <Link
                   href="/login"
-                  className="inline-flex items-center justify-center border border-taupe-900 bg-taupe-900 px-6 py-2.5 text-sm font-semibold uppercase tracking-[0.14em] text-cream-50 hover:bg-primary hover:border-primary transition-colors duration-200"
+                  className="inline-flex items-center justify-center border-2 border-taupe-900 bg-taupe-900 px-6 py-2.5 text-sm font-bold uppercase tracking-[0.16em] text-cream-50 hover:bg-primary hover:border-primary transition-all duration-200 shadow-[2px_2px_0_0_rgba(107,95,82,0.15)] hover:shadow-[3px_3px_0_0_rgba(107,95,82,0.2)] hover:-translate-x-[1px] hover:-translate-y-[1px]"
                 >
                   Đăng nhập
                 </Link>
@@ -106,7 +109,7 @@ export default function Header() {
                   {/* Sell button */}
                   <Link
                     href={sellButtonHref}
-                    className="inline-flex items-center justify-center border border-taupe-900 bg-taupe-900 px-5 py-2.5 text-xs lg:text-sm font-semibold uppercase tracking-[0.14em] text-cream-50 hover:bg-primary hover:border-primary transition-colors duration-200"
+                    className="inline-flex items-center justify-center border-2 border-taupe-900 bg-taupe-900 px-5 py-2.5 text-xs lg:text-sm font-bold uppercase tracking-[0.16em] text-cream-50 hover:bg-primary hover:border-primary transition-all duration-200 shadow-[2px_2px_0_0_rgba(107,95,82,0.15)] hover:shadow-[3px_3px_0_0_rgba(107,95,82,0.2)] hover:-translate-x-[1px] hover:-translate-y-[1px]"
                   >
                     {sellButtonText}
                   </Link>
@@ -114,7 +117,7 @@ export default function Header() {
                   {/* Icon buttons */}
                   <Link
                     href="/chat"
-                    className="p-2 text-taupe-500 hover:text-primary transition-colors duration-200"
+                    className="p-2.5 text-taupe-500 hover:text-primary hover:bg-taupe-50 transition-all duration-200"
                     aria-label="Tin nhắn"
                   >
                     <MessageCircle className="w-5 h-5" />
@@ -122,7 +125,7 @@ export default function Header() {
                   
                   <Link
                     href="/notifications"
-                    className="p-2 text-taupe-500 hover:text-primary transition-colors duration-200"
+                    className="p-2.5 text-taupe-500 hover:text-primary hover:bg-taupe-50 transition-all duration-200"
                     aria-label="Thông báo"
                   >
                     <Bell className="w-5 h-5" />
@@ -130,12 +133,12 @@ export default function Header() {
                   
                   <Link
                     href="/cart"
-                    className="relative p-2 text-taupe-500 hover:text-primary transition-colors duration-200"
+                    className="relative p-2.5 text-taupe-500 hover:text-primary hover:bg-taupe-50 transition-all duration-200"
                     aria-label={`Giỏ hàng${cartItemCount > 0 ? ` (${cartItemCount} sản phẩm)` : ""}`}
                   >
                     <ShoppingCart className="w-5 h-5" />
                     {cartItemCount > 0 && (
-                      <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 flex items-center justify-center text-[10px] font-bold text-white bg-primary">
+                      <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center text-[10px] font-black text-white bg-primary border-2 border-cream-50">
                         {cartItemCount > 99 ? "99+" : cartItemCount}
                       </span>
                     )}
@@ -145,7 +148,7 @@ export default function Header() {
                   <div className="relative" ref={dropdownRef}>
                     <button
                       onClick={toggleUserDropdown}
-                      className="flex items-center gap-2 p-1 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      className="flex items-center gap-2 p-1 focus:outline-none focus:ring-2 focus:ring-primary/20 rounded-sm"
                       aria-label="User menu"
                     >
                       {account?.avatar ? (
@@ -154,10 +157,10 @@ export default function Header() {
                           alt={account.fullName || "Unknown"}
                           width={36}
                           height={36}
-                          className="object-cover"
+                          className="object-cover border-2 border-taupe-200"
                         />
                       ) : (
-                        <div className="w-9 h-9 bg-primary flex items-center justify-center text-white font-bold text-sm">
+                        <div className="w-9 h-9 bg-primary flex items-center justify-center text-white font-black text-sm border-2 border-taupe-200">
                           {getInitials(account?.fullName)}
                         </div>
                       )}
@@ -169,15 +172,15 @@ export default function Header() {
                     </button>
 
                     {showUserDropdown && (
-                      <div className="absolute right-0 mt-1 w-64 bg-cream-50 border border-taupe-200 py-2 z-50">
+                      <div className="absolute right-0 mt-2 w-64 bg-white border-2 border-taupe-200 py-2 z-50 shadow-[4px_4px_0_0_rgba(107,95,82,0.1)]">
                         <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary" />
                         
                         {/* User info */}
-                        <div className="px-4 py-4 border-b border-taupe-200">
-                          <p className="text-sm font-bold text-taupe-900 truncate">
+                        <div className="px-4 py-4 border-b-2 border-taupe-200">
+                          <p className="text-sm font-black text-taupe-900 truncate tracking-tight">
                             {account?.fullName || "Người dùng"}
                           </p>
-                          <p className="text-xs text-taupe-500 truncate mt-1">
+                          <p className="text-xs text-taupe-500 truncate mt-1 font-medium">
                             {account?.email}
                           </p>
                         </div>
@@ -186,7 +189,7 @@ export default function Header() {
                           <Link
                             href="/profile"
                             onClick={closeUserDropdown}
-                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
                           >
                             <svg
                               className="w-4 h-4 text-taupe-500"
@@ -208,7 +211,7 @@ export default function Header() {
                             <Link
                               href="/admin"
                               onClick={closeUserDropdown}
-                              className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
+                              className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
                             >
                               <Settings className="w-4 h-4 text-taupe-500" />
                               <span>Quản trị</span>
@@ -218,7 +221,7 @@ export default function Header() {
                           <Link
                             href="/chat"
                             onClick={closeUserDropdown}
-                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
                           >
                             <MessageCircle className="w-4 h-4 text-taupe-500" />
                             <span>Tin nhắn</span>
@@ -227,7 +230,7 @@ export default function Header() {
                           <Link
                             href="/my/listings"
                             onClick={closeUserDropdown}
-                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
                           >
                             <Package className="w-4 h-4 text-taupe-500" />
                             <span>Sản phẩm đã đăng</span>
@@ -236,7 +239,7 @@ export default function Header() {
                           <Link
                             href="/orders"
                             onClick={closeUserDropdown}
-                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
+                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
                           >
                             <svg
                               className="w-4 h-4 text-taupe-500"
@@ -258,19 +261,19 @@ export default function Header() {
                             <Link
                               href="/my/orders"
                               onClick={closeUserDropdown}
-                              className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
+                              className="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
                             >
                               <Truck className="w-4 h-4 text-taupe-500" />
                               <span>Đơn hàng bán (Seller)</span>
                             </Link>
                           )}
                           
-                          <div className="my-2 mx-4 h-px bg-taupe-200" />
+                          <div className="my-2 mx-4 h-[1px] bg-taupe-200" />
                           
                           {/* Logout button */}
                           <button
                             onClick={handleLogout}
-                            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors duration-200"
+                            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors duration-200"
                           >
                             <svg
                               className="w-4 h-4"
@@ -299,7 +302,7 @@ export default function Header() {
       </div>
 
       {/* Navigation */}
-      <nav className="hidden md:block border-t border-taupe-100 bg-cream-50">
+      <nav className="hidden md:block border-t-2 border-taupe-200 bg-cream-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-6 h-14 relative">
             {/* All categories dropdown */}
@@ -308,17 +311,17 @@ export default function Header() {
               onMouseEnter={handleShowAllCategories}
               onMouseLeave={handleHideAllCategories}
             >
-              <div className="flex items-center gap-2 text-sm font-semibold text-taupe-700 hover:text-primary transition-colors duration-200 py-2 px-4 cursor-pointer">
+              <div className="flex items-center gap-2 text-sm font-bold text-taupe-700 hover:text-primary transition-colors duration-200 py-2 px-4 cursor-pointer uppercase tracking-[0.08em]">
                 <svg
                   className="w-4 h-4 text-taupe-500"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  strokeWidth={2}
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
                     d="M4 6h16M4 12h16M4 18h7"
                   />
                 </svg>
@@ -330,49 +333,49 @@ export default function Header() {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  strokeWidth={2}
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
                     d="M19 9l-7 7-7-7"
                   />
                 </svg>
               </div>
 
               {showAllCategories && (
-                <div className="absolute left-0 top-full mt-1 w-screen max-w-5xl z-50 bg-cream-50 border border-taupe-200">
+                <div className="absolute left-0 top-full mt-1 w-screen max-w-5xl z-50 bg-white border-2 border-taupe-200 shadow-[4px_4px_0_0_rgba(107,95,82,0.1)]">
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary" />
                   
-                  <div className="p-6">
-                    <div className="mb-6">
-                      <h3 className="text-xl font-bold text-taupe-900">
+                  <div className="p-8">
+                    <div className="mb-8">
+                      <h3 className="text-2xl font-black text-taupe-900 tracking-tight">
                         Tất cả danh mục
                       </h3>
-                      <p className="text-sm text-taupe-500 mt-1">
+                      <p className="text-sm text-taupe-500 mt-2 font-medium">
                         Khám phá tất cả sản phẩm
                       </p>
                     </div>
-                    <div className="grid grid-cols-3 gap-8 max-h-[32rem] overflow-y-auto custom-scrollbar pr-2">
+                    <div className="grid grid-cols-3 gap-10 max-h-[32rem] overflow-y-auto custom-scrollbar pr-2">
                           {categories.map((category: ICategory) => (
-                            <div key={category._id} className="space-y-3">
+                            <div key={category._id} className="space-y-4">
                               <Link
                                 href={`/categories/${category.slug}`}
-                                className="flex items-center gap-2 text-sm font-bold text-taupe-900 hover:text-primary transition-colors duration-200"
+                                className="flex items-center gap-2 text-sm font-black text-taupe-900 hover:text-primary transition-colors duration-200 uppercase tracking-[0.06em]"
                               >
-                                <div className="w-1 h-1 bg-primary" />
+                                <div className="w-1.5 h-1.5 bg-primary" />
                                 {category.name}
                               </Link>
                               {category.subCategories &&
                                 category.subCategories.length > 0 && (
-                                  <div className="space-y-1.5 pl-3 border-l-2 border-taupe-200">
+                                  <div className="space-y-2 pl-3 border-l-2 border-taupe-200">
                                     {category.subCategories
                                       .slice(0, 5)
                                       .map((sub: ISubCategory) => (
                                         <Link
                                           key={sub._id}
                                           href={`/categories/${category.slug}/sub/${sub.slug}`}
-                                          className="block text-xs font-medium text-taupe-500 hover:text-primary transition-colors duration-200"
+                                          className="block text-xs font-semibold text-taupe-500 hover:text-primary transition-colors duration-200"
                                         >
                                           {sub.name}
                                         </Link>
@@ -387,7 +390,7 @@ export default function Header() {
                 )}
               </div>
 
-              <div className="w-px h-6 bg-taupe-200"></div>
+              <div className="w-[1px] h-6 bg-taupe-200"></div>
               
               {/* Category links */}
               <div className="flex flex-row flex-1 gap-1">
@@ -404,7 +407,7 @@ export default function Header() {
                   >
                     <Link
                       href={`/categories/${category.slug}`}
-                      className="flex items-center gap-1.5 text-sm font-semibold text-taupe-700 hover:text-primary transition-colors duration-200 py-2 px-3 whitespace-nowrap border-b-2 border-transparent hover:border-primary"
+                      className="flex items-center gap-1.5 text-sm font-bold text-taupe-700 hover:text-primary transition-colors duration-200 py-2 px-3 whitespace-nowrap border-b-2 border-transparent hover:border-primary uppercase tracking-[0.06em]"
                     >
                       <span>{category.name}</span>
                       {category.subCategories &&
@@ -416,11 +419,11 @@ export default function Header() {
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
+                            strokeWidth={2}
                           >
                             <path
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              strokeWidth={2}
                               d="M19 9l-7 7-7-7"
                             />
                           </svg>
@@ -431,11 +434,11 @@ export default function Header() {
                     {activeCategory === category._id &&
                       category.subCategories &&
                       category.subCategories.length > 0 && (
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-72 z-50 bg-cream-50 border border-taupe-200">
+                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-72 z-50 bg-white border-2 border-taupe-200 shadow-[4px_4px_0_0_rgba(107,95,82,0.1)]">
                           <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary" />
                           
                           <div className="py-2">
-                            <div className="px-4 py-3 text-xs font-bold text-taupe-900 uppercase tracking-[0.2em] border-b border-taupe-200 bg-taupe-50">
+                            <div className="px-4 py-3 text-xs font-black text-taupe-900 uppercase tracking-[0.24em] border-b-2 border-taupe-200 bg-taupe-50">
                               {category.name}
                             </div>
                             
@@ -446,7 +449,7 @@ export default function Header() {
                                   <Link
                                     key={sub._id}
                                     href={`/categories/${category.slug}/sub/${sub.slug}`}
-                                    className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
+                                    className="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-taupe-900 hover:bg-taupe-50 hover:text-primary transition-colors duration-200"
                                     role="menuitem"
                                   >
                                     <div className="w-1 h-1 bg-taupe-300" />
@@ -464,7 +467,7 @@ export default function Header() {
 
               {/* Loading state */}
               {isLoading && (
-                <div className="flex items-center gap-2 text-sm font-medium text-taupe-500">
+                <div className="flex items-center gap-2 text-sm font-semibold text-taupe-500">
                   <div className="relative w-4 h-4">
                     <div className="absolute inset-0 border-2 border-primary/20"></div>
                     <div className="absolute inset-0 border-2 border-primary border-t-transparent animate-spin"></div>

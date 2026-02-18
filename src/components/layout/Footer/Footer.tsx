@@ -74,27 +74,27 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-taupe-900 border-t border-taupe-800">
-      {/* Top accent line */}
-      <div className="h-[2px] bg-primary w-full" />
-
+    <footer className="bg-taupe-900 border-t-2 border-taupe-800 relative">
+      {/* Top accent line with gradient */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent" />
+      
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main content */}
-        <div className="py-12 md:py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
+        <div className="py-16 md:py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-16">
 
           {/* Brand column */}
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-5">
+            <Link href="/" className="inline-block mb-6 group">
               <Image
                 src="https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png"
                 alt="Eco Market Logo"
                 width={120}
                 height={120}
-                className="h-14 w-auto brightness-0 invert opacity-90"
+                className="h-16 w-auto brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity duration-200"
                 priority
               />
             </Link>
-            <p className="text-sm text-taupe-400 leading-relaxed max-w-sm mb-8">
+            <p className="text-sm text-taupe-400 leading-relaxed max-w-sm mb-10 font-medium">
               Nền tảng mua bán đồ cũ thông minh, kết nối người mua và người bán
               một cách an toàn, tiện lợi và thân thiện với môi trường.
             </p>
@@ -107,7 +107,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 flex items-center justify-center border border-taupe-700 text-taupe-500 hover:border-primary hover:text-primary transition-colors duration-200"
+                  className="w-10 h-10 flex items-center justify-center border-2 border-taupe-700 text-taupe-500 hover:border-primary hover:text-primary hover:bg-taupe-800 transition-all duration-200"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -118,13 +118,13 @@ export default function Footer() {
 
           {/* About */}
           <div>
-            <h3 className="text-[11px] font-bold tracking-[0.32em] uppercase text-taupe-500 mb-5">
+            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-500 mb-6">
               VỀ CHÚNG TÔI
             </h3>
             <ul className="space-y-3">
               {footerLinks.about.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-taupe-400 hover:text-cream-100 transition-colors duration-200">
+                  <Link href={link.href} className="text-sm text-taupe-400 hover:text-cream-100 transition-colors duration-200 font-medium">
                     {link.name}
                   </Link>
                 </li>
@@ -134,13 +134,13 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <h3 className="text-[11px] font-bold tracking-[0.32em] uppercase text-taupe-500 mb-5">
+            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-500 mb-6">
               HỖ TRỢ
             </h3>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-taupe-400 hover:text-cream-100 transition-colors duration-200">
+                  <Link href={link.href} className="text-sm text-taupe-400 hover:text-cream-100 transition-colors duration-200 font-medium">
                     {link.name}
                   </Link>
                 </li>
@@ -150,26 +150,26 @@ export default function Footer() {
 
           {/* Legal + Categories */}
           <div>
-            <h3 className="text-[11px] font-bold tracking-[0.32em] uppercase text-taupe-500 mb-5">
+            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-500 mb-6">
               CHÍNH SÁCH
             </h3>
-            <ul className="space-y-3 mb-8">
+            <ul className="space-y-3 mb-10">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-taupe-400 hover:text-cream-100 transition-colors duration-200">
+                  <Link href={link.href} className="text-sm text-taupe-400 hover:text-cream-100 transition-colors duration-200 font-medium">
                     {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
 
-            <h3 className="text-[11px] font-bold tracking-[0.32em] uppercase text-taupe-500 mb-5">
+            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-500 mb-6">
               DANH MỤC
             </h3>
             <ul className="space-y-3">
               {footerLinks.categories.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-taupe-400 hover:text-cream-100 transition-colors duration-200">
+                  <Link href={link.href} className="text-sm text-taupe-400 hover:text-cream-100 transition-colors duration-200 font-medium">
                     {link.name}
                   </Link>
                 </li>
@@ -179,16 +179,16 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-taupe-800 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-taupe-600">
+        <div className="border-t-2 border-taupe-800 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-taupe-600 font-medium">
             © {currentYear} Chợ Đồ Cũ Thông Minh. Tất cả quyền được bảo lưu.
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-8">
             {["Điều khoản", "Bảo mật", "Sitemap"].map((label, i) => (
               <Link
                 key={i}
                 href={`/${label.toLowerCase().replace(/\s/g, "-")}`}
-                className="text-xs text-taupe-600 hover:text-taupe-300 transition-colors duration-200"
+                className="text-xs text-taupe-600 hover:text-taupe-300 transition-colors duration-200 font-medium uppercase tracking-[0.08em]"
               >
                 {label}
               </Link>
