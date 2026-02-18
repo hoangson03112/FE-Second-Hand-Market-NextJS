@@ -29,12 +29,12 @@ export default function CategoriesSection({
         {/* Header */}
         <div className="mb-12 md:mb-16 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-[11px] font-bold tracking-[0.4em] uppercase text-taupe-500">
+            <p className="text-[11px] font-black tracking-[0.4em] uppercase text-taupe-300">
               DANH MỤC
             </p>
             <h2
               className={cn(
-                "mt-4 text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-cream-100 leading-[1.05]",
+                "mt-4 text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-white leading-[1.05]",
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               )}
               style={{ transition: "all 420ms ease-out" }}
@@ -47,7 +47,7 @@ export default function CategoriesSection({
 
           <p
             className={cn(
-              "max-w-xs text-sm text-taupe-400 leading-relaxed",
+              "max-w-xs text-sm text-taupe-200 leading-relaxed font-medium",
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
             )}
             style={{ transition: "all 420ms ease-out 60ms" }}
@@ -76,15 +76,15 @@ export default function CategoriesSection({
               }}
             >
               <div className="flex items-baseline gap-4">
-                <span className="text-[11px] font-bold tracking-[0.2em] text-taupe-600 tabular-nums w-5 shrink-0">
+                <span className="text-[11px] font-black tracking-[0.2em] text-taupe-400 tabular-nums w-5 shrink-0">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span className="text-sm md:text-base font-semibold text-taupe-300 group-hover:text-cream-100 transition-colors duration-200">
+                <span className="text-sm md:text-base font-bold text-taupe-200 group-hover:text-white transition-colors duration-200">
                   {category.name}
                 </span>
               </div>
 
-              <span className="text-[11px] font-bold tracking-[0.28em] uppercase text-taupe-700 group-hover:text-primary transition-colors duration-200">
+              <span className="text-[11px] font-black tracking-[0.28em] uppercase text-taupe-300 group-hover:text-primary transition-colors duration-200">
                 XEM →
               </span>
             </div>

@@ -94,7 +94,7 @@ export default function Footer() {
                 priority
               />
             </Link>
-            <p className="text-sm text-taupe-400 leading-relaxed max-w-sm mb-10 font-medium">
+            <p className="text-sm text-taupe-300 leading-relaxed max-w-sm mb-10 font-medium">
               Nền tảng mua bán đồ cũ thông minh, kết nối người mua và người bán
               một cách an toàn, tiện lợi và thân thiện với môi trường.
             </p>
@@ -107,7 +107,7 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center border-2 border-taupe-700 text-taupe-500 hover:border-primary hover:text-primary hover:bg-taupe-800 transition-all duration-200"
+                  className="w-10 h-10 flex items-center justify-center border-2 border-taupe-600 text-taupe-300 hover:border-primary hover:text-primary hover:bg-taupe-800 transition-all duration-200"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -118,13 +118,13 @@ export default function Footer() {
 
           {/* About */}
           <div>
-            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-500 mb-6">
+            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-300 mb-6">
               VỀ CHÚNG TÔI
             </h3>
             <ul className="space-y-3">
               {footerLinks.about.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-taupe-400 hover:text-cream-100 transition-colors duration-200 font-medium">
+                  <Link href={link.href} className="text-sm text-taupe-200 hover:text-cream-100 transition-colors duration-200 font-semibold">
                     {link.name}
                   </Link>
                 </li>
@@ -134,13 +134,13 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-500 mb-6">
+            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-300 mb-6">
               HỖ TRỢ
             </h3>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-taupe-400 hover:text-cream-100 transition-colors duration-200 font-medium">
+                  <Link href={link.href} className="text-sm text-taupe-200 hover:text-cream-100 transition-colors duration-200 font-semibold">
                     {link.name}
                   </Link>
                 </li>
@@ -150,26 +150,26 @@ export default function Footer() {
 
           {/* Legal + Categories */}
           <div>
-            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-500 mb-6">
+            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-300 mb-6">
               CHÍNH SÁCH
             </h3>
             <ul className="space-y-3 mb-10">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-taupe-400 hover:text-cream-100 transition-colors duration-200 font-medium">
+                  <Link href={link.href} className="text-sm text-taupe-200 hover:text-cream-100 transition-colors duration-200 font-semibold">
                     {link.name}
                   </Link>
                 </li>
               ))}
             </ul>
 
-            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-500 mb-6">
+            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-300 mb-6">
               DANH MỤC
             </h3>
             <ul className="space-y-3">
               {footerLinks.categories.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-taupe-400 hover:text-cream-100 transition-colors duration-200 font-medium">
+                  <Link href={link.href} className="text-sm text-taupe-200 hover:text-cream-100 transition-colors duration-200 font-semibold">
                     {link.name}
                   </Link>
                 </li>
@@ -180,7 +180,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t-2 border-taupe-800 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-taupe-600 font-medium">
+          <p className="text-xs text-taupe-300 font-medium">
             © {currentYear} Chợ Đồ Cũ Thông Minh. Tất cả quyền được bảo lưu.
           </p>
           <div className="flex items-center gap-8">
@@ -188,7 +188,7 @@ export default function Footer() {
               <Link
                 key={i}
                 href={`/${label.toLowerCase().replace(/\s/g, "-")}`}
-                className="text-xs text-taupe-600 hover:text-taupe-300 transition-colors duration-200 font-medium uppercase tracking-[0.08em]"
+                className="text-xs text-taupe-300 hover:text-cream-100 transition-colors duration-200 font-semibold uppercase tracking-[0.08em]"
               >
                 {label}
               </Link>

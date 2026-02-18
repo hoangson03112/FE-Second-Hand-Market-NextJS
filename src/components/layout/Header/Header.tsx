@@ -46,12 +46,12 @@ export default function Header() {
 
   
   return (
-    <header className="sticky top-0 z-50 bg-cream-50/98 backdrop-blur-sm border-b border-taupe-200/80" data-swiss-style="true">
+    <header className="sticky top-0 z-50 bg-white border-b-2 border-taupe-200" data-swiss-style="true">
       {/* Subtle top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent" />
       
       <div className="relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 md:h-24">
             {/* Logo */}
             <div className="flex-shrink-0">
@@ -117,7 +117,7 @@ export default function Header() {
                   {/* Icon buttons */}
                   <Link
                     href="/chat"
-                    className="p-2.5 text-taupe-500 hover:text-primary hover:bg-taupe-50 transition-all duration-200"
+                    className="p-2.5 text-taupe-700 hover:text-primary hover:bg-taupe-50 transition-all duration-200"
                     aria-label="Tin nhắn"
                   >
                     <MessageCircle className="w-5 h-5" />
@@ -125,7 +125,7 @@ export default function Header() {
                   
                   <Link
                     href="/notifications"
-                    className="p-2.5 text-taupe-500 hover:text-primary hover:bg-taupe-50 transition-all duration-200"
+                    className="p-2.5 text-taupe-700 hover:text-primary hover:bg-taupe-50 transition-all duration-200"
                     aria-label="Thông báo"
                   >
                     <Bell className="w-5 h-5" />
@@ -133,7 +133,7 @@ export default function Header() {
                   
                   <Link
                     href="/cart"
-                    className="relative p-2.5 text-taupe-500 hover:text-primary hover:bg-taupe-50 transition-all duration-200"
+                    className="relative p-2.5 text-taupe-700 hover:text-primary hover:bg-taupe-50 transition-all duration-200"
                     aria-label={`Giỏ hàng${cartItemCount > 0 ? ` (${cartItemCount} sản phẩm)` : ""}`}
                   >
                     <ShoppingCart className="w-5 h-5" />
@@ -165,9 +165,9 @@ export default function Header() {
                         </div>
                       )}
                       {showUserDropdown ? (
-                        <ChevronUp className="w-4 h-4 text-taupe-500" />
+                        <ChevronUp className="w-4 h-4 text-taupe-700" />
                       ) : (
-                        <ChevronDown className="w-4 h-4 text-taupe-500" />
+                        <ChevronDown className="w-4 h-4 text-taupe-700" />
                       )}
                     </button>
 
@@ -302,8 +302,8 @@ export default function Header() {
       </div>
 
       {/* Navigation */}
-      <nav className="hidden md:block border-t-2 border-taupe-200 bg-cream-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="hidden md:block border-t-2 border-taupe-200 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-6 h-14 relative">
             {/* All categories dropdown */}
             <div
@@ -311,7 +311,7 @@ export default function Header() {
               onMouseEnter={handleShowAllCategories}
               onMouseLeave={handleHideAllCategories}
             >
-              <div className="flex items-center gap-2 text-sm font-bold text-taupe-700 hover:text-primary transition-colors duration-200 py-2 px-4 cursor-pointer uppercase tracking-[0.08em]">
+              <div className="flex items-center gap-2 text-sm font-black text-taupe-900 hover:text-primary transition-colors duration-200 py-2 px-4 cursor-pointer uppercase tracking-[0.08em]">
                 <svg
                   className="w-4 h-4 text-taupe-500"
                   fill="none"
@@ -407,7 +407,7 @@ export default function Header() {
                   >
                     <Link
                       href={`/categories/${category.slug}`}
-                      className="flex items-center gap-1.5 text-sm font-bold text-taupe-700 hover:text-primary transition-colors duration-200 py-2 px-3 whitespace-nowrap border-b-2 border-transparent hover:border-primary uppercase tracking-[0.06em]"
+                      className="flex items-center gap-1.5 text-sm font-black text-taupe-900 hover:text-primary transition-colors duration-200 py-2 px-3 whitespace-nowrap border-b-2 border-transparent hover:border-primary uppercase tracking-[0.06em]"
                     >
                       <span>{category.name}</span>
                       {category.subCategories &&
