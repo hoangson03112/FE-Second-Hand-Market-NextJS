@@ -100,7 +100,7 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Row 2: Vinyl record + Book + small label */}
+            {/* Row 2: Vinyl record + Book */}
             <div className="grid grid-cols-[2fr,3fr] gap-3">
 
               {/* Vinyl record */}
@@ -128,11 +128,9 @@ export default function HeroSection() {
                 </span>
                 <div className="flex justify-center items-center py-2">
                   <svg width="52" height="58" viewBox="0 0 52 58" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    {/* Book stack */}
                     <rect x="4" y="36" width="44" height="14" rx="2" stroke="#6B5F52" strokeWidth="1.6"/>
                     <rect x="2" y="22" width="44" height="14" rx="2" stroke="#6B5F52" strokeWidth="1.6" fill="#F0EAE0"/>
                     <rect x="6" y="8" width="40" height="14" rx="2" stroke="#6B5F52" strokeWidth="1.8" fill="white"/>
-                    {/* Lines on top book */}
                     <line x1="12" y1="14" x2="36" y2="14" stroke="#9A8C7E" strokeWidth="1.4" strokeLinecap="round"/>
                     <line x1="12" y1="18" x2="28" y2="18" stroke="#C4B8A8" strokeWidth="1" strokeLinecap="round"/>
                   </svg>
@@ -141,7 +139,7 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Bottom rule line */}
+            {/* Bottom rule */}
             <div className="flex items-center gap-3 pt-1">
               <div className="h-[1px] w-4 bg-primary" />
               <span className="text-[9px] font-bold tracking-[0.32em] uppercase text-taupe-400">
