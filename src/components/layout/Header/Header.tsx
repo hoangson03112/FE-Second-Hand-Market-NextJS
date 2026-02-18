@@ -46,7 +46,7 @@ export default function Header() {
 
   
   return (
-    <header className="sticky top-0 z-50 bg-white border-b-2 border-taupe-200" data-swiss-style="true">
+    <header className="sticky top-0 z-50 bg-cream-50 border-b-2 border-taupe-200" data-swiss-style="true">
       {/* Subtle top accent line */}
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent" />
       
@@ -84,7 +84,7 @@ export default function Header() {
                   <input
                     id="search"
                     name="search"
-                    className="block w-full bg-white border border-taupe-200 py-3 pl-12 pr-6 text-base text-taupe-900 placeholder:text-taupe-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all duration-200 shadow-sm"
+                    className="block w-full bg-cream-100 border border-taupe-200 py-3 pl-12 pr-6 text-base text-taupe-900 placeholder:text-taupe-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all duration-200 shadow-sm"
                     placeholder="Tìm kiếm sản phẩm..."
                     type="search"
                     value={query}
@@ -172,7 +172,7 @@ export default function Header() {
                     </button>
 
                     {showUserDropdown && (
-                      <div className="absolute right-0 mt-2 w-64 bg-white border-2 border-taupe-200 py-2 z-50 shadow-[4px_4px_0_0_rgba(107,95,82,0.1)]">
+                      <div className="absolute right-0 mt-2 w-64 bg-cream-50 border-2 border-taupe-200 py-2 z-50 shadow-[4px_4px_0_0_rgba(107,95,82,0.1)]">
                         <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary" />
                         
                         {/* User info */}
@@ -302,7 +302,7 @@ export default function Header() {
       </div>
 
       {/* Navigation */}
-      <nav className="hidden md:block border-t-2 border-taupe-200 bg-white">
+      <nav className="hidden md:block border-t-2 border-taupe-200 bg-cream-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-6 h-14 relative">
             {/* All categories dropdown */}
@@ -344,7 +344,7 @@ export default function Header() {
               </div>
 
               {showAllCategories && (
-                <div className="absolute left-0 top-full mt-1 w-screen max-w-5xl z-50 bg-white border-2 border-taupe-200 shadow-[4px_4px_0_0_rgba(107,95,82,0.1)]">
+                <div className="absolute left-0 top-full mt-1 w-screen max-w-5xl z-50 bg-cream-50 border-2 border-taupe-200 shadow-[4px_4px_0_0_rgba(107,95,82,0.1)]">
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary" />
                   
                   <div className="p-8">
@@ -434,7 +434,7 @@ export default function Header() {
                     {activeCategory === category._id &&
                       category.subCategories &&
                       category.subCategories.length > 0 && (
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-72 z-50 bg-white border-2 border-taupe-200 shadow-[4px_4px_0_0_rgba(107,95,82,0.1)]">
+                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-72 z-50 bg-cream-50 border-2 border-taupe-200 shadow-[4px_4px_0_0_rgba(107,95,82,0.1)]">
                           <div className="absolute top-0 left-0 right-0 h-[2px] bg-primary" />
                           
                           <div className="py-2">
