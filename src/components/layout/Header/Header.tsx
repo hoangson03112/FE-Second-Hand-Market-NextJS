@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { useHeader } from "./hooks/useHeader";
 
+// Swiss Typographic Style Header - Flat, rectangular, minimal decoration
+
 export default function Header() {
   const {
     account,
