@@ -39,6 +39,8 @@ export function useHeader() {
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const categoryLeaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const allCategoriesLeaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const visibleCategories = useMemo(
     () => categories?.slice(0, 7),
@@ -46,19 +48,35 @@ export function useHeader() {
   );
 
   const handleMouseEnterCategory = useCallback((id: string) => {
+    // Clear any pending hide timeout
+    if (categoryLeaveTimeoutRef.current) {
+      clearTimeout(categoryLeaveTimeoutRef.current);
+      categoryLeaveTimeoutRef.current = null;
+    }
     setActiveCategory(id);
   }, []);
 
   const handleMouseLeaveCategory = useCallback(() => {
-    setActiveCategory(null);
+    // Add delay before hiding dropdown
+    categoryLeaveTimeoutRef.current = setTimeout(() => {
+      setActiveCategory(null);
+    }, 200); // 500ms delay - easier to move mouse
   }, []);
 
   const handleShowAllCategories = useCallback(() => {
+    // Clear any pending hide timeout
+    if (allCategoriesLeaveTimeoutRef.current) {
+      clearTimeout(allCategoriesLeaveTimeoutRef.current);
+      allCategoriesLeaveTimeoutRef.current = null;
+    }
     setShowAllCategories(true);
   }, []);
 
   const handleHideAllCategories = useCallback(() => {
-    setShowAllCategories(false);
+    // Add delay before hiding dropdown
+    allCategoriesLeaveTimeoutRef.current = setTimeout(() => {
+      setShowAllCategories(false);
+    }, 200); // 500ms delay - easier to move mouse
   }, []);
 
   const handleSearch = useCallback(
@@ -114,6 +132,13 @@ export function useHeader() {
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      // Cleanup timeouts on unmount
+      if (categoryLeaveTimeoutRef.current) {
+        clearTimeout(categoryLeaveTimeoutRef.current);
+      }
+      if (allCategoriesLeaveTimeoutRef.current) {
+        clearTimeout(allCategoriesLeaveTimeoutRef.current);
+      }
     };
   }, [showUserDropdown]);
 

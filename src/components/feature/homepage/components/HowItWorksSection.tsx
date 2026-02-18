@@ -2,6 +2,7 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "../hooks";
 
 interface Step {
   step: string;
@@ -15,36 +16,78 @@ interface HowItWorksSectionProps {
 }
 
 export default function HowItWorksSection({ steps }: HowItWorksSectionProps) {
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.05 });
+
   return (
-    <section className="py-20 bg-white bg-wave relative">
+    <section
+      ref={ref}
+      className="border-b border-taupe-200 bg-taupe-50 py-16 md:py-24"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className={cn("text-3xl md:text-4xl font-bold mb-4", "animate-fade-in-up", "text-neutral-900")}>
-            🚀 Cách thức hoạt động
-          </h2>
-          <p className={cn("text-lg max-w-2xl mx-auto", "animate-fade-in-up animation-delay-200", "text-neutral-700 font-medium")}>
-            Chỉ với 3 bước đơn giản, bạn có thể mua bán đồ cũ một cách dễ dàng
+
+        {/* Header */}
+        <div className="mb-12 md:mb-16 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-[11px] font-bold tracking-[0.4em] uppercase text-taupe-400">
+              QUY TRÌNH
+            </p>
+            <h2
+              className={cn(
+                "mt-4 text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-taupe-900 leading-[1.05]",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+              style={{ transition: "all 420ms ease-out" }}
+            >
+              Chỉ 3 bước
+              <br />
+              <span className="text-primary">để bắt đầu.</span>
+            </h2>
+          </div>
+
+          <p
+            className={cn(
+              "max-w-xs text-sm text-taupe-500 leading-relaxed",
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+            )}
+            style={{ transition: "all 420ms ease-out 60ms" }}
+          >
+            Từ đăng ký đến hoàn tất giao dịch — đơn giản, minh bạch, không
+            phức tạp.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+
+        {/* Steps */}
+        <div className="grid gap-0 md:grid-cols-3">
           {steps.map((step, index) => (
-            <div key={index} className={cn("relative text-center animate-fade-in-up", `animation-delay-${(index + 1) * 200}`)}>
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg z-10 shadow-lg">
-                {step.step}
-              </div>
-              <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary-tint to-secondary-tint border-4 border-primary mx-auto mb-6 flex items-center justify-center text-5xl animate-float-slow hover-scale">
-                {step.icon}
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-neutral-900">{step.title}</h3>
-              <p className="text-neutral-700 leading-relaxed font-medium">{step.description}</p>
-              {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-16 -right-6 w-12 h-0.5 bg-neutral-300">
-                  <div className="absolute -right-2 -top-2 text-neutral-400 text-2xl">→</div>
-                </div>
+            <div
+              key={index}
+              className={cn(
+                "border-t-2 border-taupe-200 pt-6 pb-10 md:pr-10 lg:pr-16",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
               )}
+              style={{
+                transition: `all 450ms ease-out ${isVisible ? index * 100 + 150 : 0}ms`,
+                borderTopColor: index === 0 ? "var(--color-primary)" : undefined,
+              }}
+            >
+              {/* Large display number */}
+              <span
+                className="block text-[4.5rem] md:text-[5.5rem] font-black leading-none tracking-tight select-none mb-5"
+                style={{ color: "var(--taupe-200)" }}
+              >
+                {step.step}
+              </span>
+
+              <h3 className="text-base md:text-lg font-bold tracking-tight text-taupe-900 mb-2">
+                {step.title}
+              </h3>
+              <p className="text-sm text-taupe-500 leading-relaxed">
+                {step.description}
+              </p>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
