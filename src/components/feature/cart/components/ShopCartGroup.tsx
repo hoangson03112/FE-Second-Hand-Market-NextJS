@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronRight, User } from "lucide-react";
 import CartItem from "./CartItem";
 import type { CartItem as CartItemType } from "@/types/cart";
 
 interface ShopCartGroupProps {
-  sellerId: string;
   sellerName: string;
   sellerAvatar: string | null;
   items: CartItemType[];
@@ -19,7 +19,6 @@ interface ShopCartGroupProps {
 }
 
 export default function ShopCartGroup({
-  sellerId,
   sellerName,
   sellerAvatar,
   items,
@@ -54,9 +53,11 @@ export default function ShopCartGroup({
           className="flex-1 flex items-center gap-2.5 min-w-0 hover:opacity-80 transition-opacity"
         >
           {sellerAvatar ? (
-            <img
+            <Image
               src={sellerAvatar}
               alt={sellerName}
+              width={32}
+              height={32}
               className="w-8 h-8 rounded-full object-cover flex-shrink-0 ring-1 ring-neutral-200"
             />
           ) : (

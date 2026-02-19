@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Package,
   FolderTree,
@@ -19,7 +20,6 @@ import { useSellForm } from "./hooks";
 import { useCategories } from "@/hooks/useCategories";
 import { ErrorMessage } from "@/components/feature/auth";
 import { PickupAddressSection } from "./components";
-import { useRouter } from "next/navigation";
 
 const CONDITION_OPTIONS: {
   value: "new" | "like_new" | "good" | "fair" | "poor";
@@ -59,7 +59,6 @@ function SectionCard({
 }
 
 export default function SellForm() {
-  const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
   const { data: categories = [] } = useCategories();
@@ -402,10 +401,11 @@ export default function SellForm() {
                           key={`existing-${i}`}
                           className="relative aspect-square rounded-lg border border-border overflow-hidden bg-muted group"
                         >
-                          <img
+                          <Image
                             src={url}
                             alt={`Ảnh sản phẩm ${i + 1}${i === 0 ? ' (ảnh đại diện)' : ''}`}
-                            className="w-full h-full object-cover"
+                            fill
+                            className="object-cover"
                           />
                           {i === 0 && values.images.length === 0 && (
                             <span className="absolute bottom-0.5 left-0.5 text-[9px] font-medium bg-primary text-primary-foreground px-1 py-0.5 rounded">
@@ -435,10 +435,12 @@ export default function SellForm() {
                           key={`new-${i}`}
                           className="relative aspect-square rounded-lg border border-border overflow-hidden bg-muted group"
                         >
-                          <img
+                          <Image
                             src={URL.createObjectURL(file)}
                             alt={`Ảnh sản phẩm mới ${i + 1}${i === 0 && existingImageUrls.length === 0 ? ' (ảnh đại diện)' : ''}`}
-                            className="w-full h-full object-cover"
+                            fill
+                            className="object-cover"
+                            unoptimized
                           />
                           {(i === 0 && existingImageUrls.length === 0) && (
                             <span className="absolute bottom-0.5 left-0.5 text-[9px] font-medium bg-primary text-primary-foreground px-1 py-0.5 rounded">

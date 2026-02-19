@@ -1,7 +1,7 @@
 "use client";
 
 import { Address } from "@/types/address";
-import { CheckCircle2, Circle, Phone, User, Home, Edit2, Trash2 } from "lucide-react";
+import { Phone, User, Home, Edit2, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useConfirm } from "@/components/ui";
 import { useToast } from "@/components/ui";
@@ -51,7 +51,7 @@ export default function AddressCard({
       try {
         await onDelete();
         toast.success("Đã xóa địa chỉ thành công");
-      } catch (error) {
+      } catch {
         toast.error("Không thể xóa địa chỉ. Vui lòng thử lại");
       } finally {
         setIsDeleting(false);

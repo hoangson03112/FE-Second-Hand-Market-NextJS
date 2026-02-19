@@ -59,7 +59,7 @@ export const AddressService = {
         return response.data;
       }
       return [];
-    } catch (error) {
+    } catch {
       return [];
     }
   },

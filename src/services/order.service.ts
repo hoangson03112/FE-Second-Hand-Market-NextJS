@@ -61,8 +61,9 @@ export const OrderService = {
    * Get orders for seller (orders where current user is seller)
    */
   getSellerOrders: async (): Promise<{ orders: Order[] }> => {
-    const res: any = await axiosClient.get("/orders/seller/my");
-    return { orders: res.orders || res.data?.orders || res.data || [] };
+    const res = await axiosClient.get<{ orders: Order[] }>("/orders/seller/my");
+    const data = res as { orders?: Order[] };
+    return { orders: data.orders || [] };
   },
 
   /**
@@ -73,11 +74,12 @@ export const OrderService = {
     status: string,
     reason?: string
   ): Promise<{ order: Order }> => {
-    const res: any = await axiosClient.patch(
+    const res = await axiosClient.patch<{ order: Order }>(
       `/orders/seller/update/${orderId}`,
       { status, reason }
     );
-    return { order: res.order || res.data?.order || res.data };
+    const data = res as { order?: Order };
+    return { order: data.order || {} as Order };
   },
 
   /**

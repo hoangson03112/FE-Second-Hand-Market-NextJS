@@ -29,7 +29,7 @@ export function generateProductMetadata(product: {
     openGraph: {
       title,
       description,
-      type: "product",
+      type: "website",
       images: [
         {
           url: imageUrl,

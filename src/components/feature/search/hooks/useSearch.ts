@@ -3,7 +3,16 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useProductsSearch } from "@/hooks/useProducts";
-import type { IProductFilters } from "@/types/product";
+import type { IProductFilters, IProduct } from "@/types/product";
+
+interface SearchResponse {
+  success: boolean;
+  data: IProduct[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
 
 export function useSearch() {
   const searchParams = useSearchParams();
@@ -28,14 +37,16 @@ export function useSearch() {
     page: filters.page,
   });
 
+  const response = productsData as SearchResponse | undefined;
+
   return {
     q,
     filters,
     setFilters,
-    products: productsData?.data || [],
-    total: productsData?.total || 0,
-    totalPages: productsData?.totalPages || 1,
-    currentPage: productsData?.page || 1,
+    products: response?.data || [],
+    total: response?.total || 0,
+    totalPages: response?.totalPages || 1,
+    currentPage: response?.page || 1,
     isLoading,
     error,
   };

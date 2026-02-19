@@ -7,7 +7,6 @@ interface ProductHeaderProps {
   name: string;
   averageRating: number;
   totalReviews: number;
-  sellerName: string;
   category?: {
     _id: string;
     name: string;
@@ -22,7 +21,6 @@ export default function ProductHeader({
   name,
   averageRating,
   totalReviews,
-  sellerName,
   category,
   subcategory,
 }: ProductHeaderProps) {

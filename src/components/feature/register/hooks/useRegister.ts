@@ -67,6 +67,7 @@ export function useRegister() {
     }
     setIsLoading(true);
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { confirmPassword, ...registerData } = result.data;
       const response = await AuthService.register(registerData as RegisterRequest);
       if (response.status === "success") {

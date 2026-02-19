@@ -21,19 +21,20 @@ class Logger {
     }
 
     const timestamp = new Date().toISOString();
-    const logEntry = {
-      timestamp,
-      level,
-      message,
-      ...(error && {
-        error: {
-          name: error.name,
-          message: error.message,
-          stack: error.stack,
-        },
-      }),
-      ...context,
-    };
+    // Log entry structure for future logging service integration
+    // const logEntry = {
+    //   timestamp,
+    //   level,
+    //   message,
+    //   ...(error && {
+    //     error: {
+    //       name: error.name,
+    //       message: error.message,
+    //       stack: error.stack,
+    //     },
+    //   }),
+    //   ...context,
+    // };
 
     switch (level) {
       case "error":

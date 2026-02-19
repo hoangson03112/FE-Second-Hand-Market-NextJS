@@ -3,7 +3,7 @@ export const formatMonthYear = (dateString: string) => {
   try {
     const date = new Date(dateString);
     return `${date.getMonth() + 1}/${date.getFullYear()}`;
-  } catch (error) {
+  } catch {
     return "N/A";
   }
 };
@@ -18,7 +18,7 @@ export const format = (dateString: string) => {
       hour: "2-digit",
       minute: "2-digit",
     });
-  } catch (error) {
+  } catch {
     return "—";
   }
 };

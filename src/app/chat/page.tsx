@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,13 +8,22 @@ import { ArrowLeft, MessageCircle, Loader2 } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
 import { ChatService } from "@/services/chat.service";
 
-export default function ChatPage() {
+interface Conversation {
+  _id: string;
+  conversationId?: string;
+  avatar?: string;
+  name: string;
+  lastMessage?: string;
+  unreadCount?: number;
+}
+
+function ChatPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const conversationId = searchParams.get("conversationId");
   const partnerId = searchParams.get("partnerId");
   const { data: account, isLoading } = useUser();
-  const [conversations, setConversations] = useState<any[]>([]);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -77,7 +86,7 @@ export default function ChatPage() {
           </div>
         ) : (
           <div className="space-y-2">
-            {conversations.map((conv: any) => (
+            {conversations.map((conv) => (
               <Link
                 key={conv.conversationId || conv._id}
                 href={`/chat/${conv._id}?conversationId=${conv.conversationId || conv._id}`}
@@ -123,5 +132,17 @@ export default function ChatPage() {
         )}
       </main>
     </div>
+  );
+}
+
+export default function ChatPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent" />
+      </div>
+    }>
+      <ChatPageContent />
+    </Suspense>
   );
 }

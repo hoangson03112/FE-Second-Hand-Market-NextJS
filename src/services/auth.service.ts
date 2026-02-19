@@ -40,8 +40,7 @@ export const AuthService = {
     email: string;
     phoneNumber: string;
   }): Promise<{ message: string; updatedAccount: AccountInfo }> => {
-    const res = await axiosClient.put("/accounts/update", data);
-    return res as { message: string; updatedAccount: AccountInfo };
+    return axiosClient.put("/accounts/update", data);
   },
   changePassword: async (data: {
     oldPassword: string;

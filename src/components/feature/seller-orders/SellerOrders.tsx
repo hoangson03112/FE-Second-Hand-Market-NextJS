@@ -205,11 +205,9 @@ export default function SellerOrders() {
           <div className="space-y-4">
             {filteredOrders.map((order) => {
               const firstProduct = order.products?.[0]?.productId;
-              const avatar =
-                firstProduct?.avatar?.url ||
-                (typeof firstProduct?.avatar === "string"
-                  ? firstProduct.avatar
-                  : "/placeholder.svg");
+              const avatar = typeof firstProduct?.avatar === "string"
+                ? firstProduct.avatar
+                : firstProduct?.avatar?.url || "/placeholder.svg";
               const statusLabel =
                 STATUS_LABELS[order.status] || order.status || "Đang xử lý";
               const statusColor = STATUS_COLORS[order.status] || "bg-neutral-100 text-neutral-800 border-neutral-300";
@@ -316,10 +314,6 @@ export default function SellerOrders() {
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                        Hủy
-                      </button>
                     </div>
                   )}
 

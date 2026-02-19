@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { SellerService } from "@/services/seller.service";
 import { becomeSellerSchema, type BecomeSellerInput } from "@/schemas/becomeSeller.schema";
 import type { SellerRequestStatus, SellerProductLimitResponse } from "@/types/seller";
-import { UNVERIFIED_SELLER_PRODUCT_LIMIT } from "@/constants";
 
 export type BecomeSellerFormValues = BecomeSellerInput & {
   agreeTerms: boolean;
@@ -89,7 +88,6 @@ export function useBecomeSeller() {
           setApiError(statusResponse.message || "Yêu cầu của bạn đã bị từ chối. Vui lòng liên hệ hỗ trợ.");
         }
       } catch (err: unknown) {
-        const ax = err as { response?: { data?: { message?: string } } };
         console.error("Error checking seller request status:", err);
         // Don't block form if check fails, just log error
       } finally {

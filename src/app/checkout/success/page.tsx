@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { OrderService } from "@/services/order.service";
 import type { Order } from "@/types/order";
 import { formatPrice } from "@/utils/format/price";
-import { CheckCircle2, Package, Home, Truck, Calendar, CreditCard, MapPin, Phone, User } from "lucide-react";
+import { CheckCircle2, Package, Home, Truck, Calendar, CreditCard, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/components/ui";
 
-export default function CheckoutSuccessPage() {
+function CheckoutSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const toast = useToast();
@@ -253,5 +253,17 @@ export default function CheckoutSuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent" />
+      </div>
+    }>
+      <CheckoutSuccessContent />
+    </Suspense>
   );
 }
