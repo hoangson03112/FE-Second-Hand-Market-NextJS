@@ -8,12 +8,12 @@
 // ============================================================================
 
 export const categories = [
-  { name: "Đồ điện tử", icon: "📱", color: "primary" },
-  { name: "Thời trang", icon: "👕", color: "secondary" },
-  { name: "Nội thất", icon: "🪑", color: "primary" },
-  { name: "Sách & Văn phòng", icon: "📚", color: "secondary" },
-  { name: "Xe cộ", icon: "🚗", color: "primary" },
-  { name: "Khác", icon: "🎯", color: "secondary" },
+  { name: "Đồ điện tử", slug: "do-dien-tu", icon: "📱", color: "primary" },
+  { name: "Thời trang", slug: "thoi-trang", icon: "👕", color: "secondary" },
+  { name: "Nội thất", slug: "noi-that", icon: "🪑", color: "primary" },
+  { name: "Sách & Văn phòng", slug: "sach-van-phong", icon: "📚", color: "secondary" },
+  { name: "Xe cộ", slug: "xe-co", icon: "🚗", color: "primary" },
+  { name: "Khác", slug: "khac", icon: "🎯", color: "secondary" },
 ];
 
 // ============================================================================

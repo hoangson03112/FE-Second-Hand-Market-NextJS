@@ -51,31 +51,48 @@ export interface Order {
     email: string;
     phoneNumber: string;
   };
+  ghnOrderCode?: string;
   products: Array<{
     productId: {
       _id: string;
       name: string;
       price: number;
-      avatar: string;
-      [key: string]: unknown;
+      avatar: {
+        url: string;
+        alt?: string;
+      } | string;
+      images?: Array<{
+        url: string;
+        alt?: string;
+      }>;
+      condition?: string;
+      stock?: number;
     };
     quantity: number;
+    price: number;
   }>;
+  productAmount?: number;
+  shippingFee?: number;
+  insuranceFee?: number;
+  codFee?: number;
+  totalShippingFee?: number;
   totalAmount: number;
   shippingAddress: {
     _id: string;
     fullName: string;
     phoneNumber: string;
-    address: string;
-    [key: string]: unknown;
+    province?: string;
+    district?: string;
+    ward?: string;
+    specificAddress: string;
   };
   shippingMethod: string;
   paymentMethod: string;
   status: string;
   statusPayment: boolean;
+  expectedDeliveryTime?: string;
   createdAt: string;
   updatedAt: string;
-  [key: string]: unknown;
 }
 
 export interface SellerBankInfo {

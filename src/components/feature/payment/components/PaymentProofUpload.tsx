@@ -20,7 +20,7 @@ export function PaymentProofUpload({
   const disabled = isExpired || isConfirmingPayment;
 
   return (
-    <div className="bg-white rounded-lg border border-border p-6 shadow-sm">
+    <div className="bg-cream-50 rounded-lg border border-border p-6 shadow-sm">
       <div className="flex items-center gap-3 mb-4">
         <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
           <svg

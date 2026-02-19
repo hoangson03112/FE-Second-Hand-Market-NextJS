@@ -61,8 +61,8 @@ export const OrderService = {
    * Get orders for seller (orders where current user is seller)
    */
   getSellerOrders: async (): Promise<{ orders: Order[] }> => {
-    const res = await axiosClient.get("/orders/seller/my");
-    return { orders: res.orders || res.data || [] };
+    const res: any = await axiosClient.get("/orders/seller/my");
+    return { orders: res.orders || res.data?.orders || res.data || [] };
   },
 
   /**
@@ -73,11 +73,28 @@ export const OrderService = {
     status: string,
     reason?: string
   ): Promise<{ order: Order }> => {
-    const res = await axiosClient.patch(
+    const res: any = await axiosClient.patch(
       `/orders/seller/update/${orderId}`,
       { status, reason }
     );
-    return { order: res.order || res };
+    return { order: res.order || res.data?.order || res.data };
+  },
+
+  /**
+   * Buyer confirms received order (delivered -> completed)
+   */
+  confirmReceived: async (orderId: string): Promise<{ message: string; order: Order }> => {
+    return axiosClient.patch(`/orders/${orderId}/confirm-received`);
+  },
+
+  /**
+   * Buyer requests refund
+   */
+  requestRefund: async (
+    orderId: string,
+    reason: string
+  ): Promise<{ message: string; order: Order }> => {
+    return axiosClient.patch(`/orders/${orderId}/request-refund`, { reason });
   },
 };
 

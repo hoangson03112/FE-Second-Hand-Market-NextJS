@@ -11,7 +11,7 @@ import { useScrollToTop } from "./hooks";
 export default function HomePage() {
   const { showScrollTop, scrollToTop } = useScrollToTop();
   return (
-    <div className="min-h-screen bg-cream-50">
+    <div className="min-h-screen bg-beige-50">
       <HeroSection />
       <CategoriesSection categories={categories} />
       <HowItWorksSection steps={steps} />

@@ -44,7 +44,11 @@ export default function Product({ id }: ProductProps) {
     handlePurchaseNow,
     handleAddToCart,
     handleContactSeller,
-  } = useProductActions({ product: product ?? null, account: account as AccountInfo, quantity });
+  } = useProductActions({
+    product: product ?? null,
+    account: account as AccountInfo,
+    quantity,
+  });
 
   const handleQuantityChange = useCallback(
     (newQuantity: number) => {
@@ -52,16 +56,24 @@ export default function Product({ id }: ProductProps) {
         setQuantity(newQuantity);
       }
     },
-    [product?.stock]
+    [product?.stock],
   );
 
   // Loading state
   if (isLoading) {
     return (
       <PageContainer withBackground={false}>
-        <Container as="main" maxWidth="7xl" paddingX="md" paddingY="lg" className="text-center">
+        <Container
+          as="main"
+          maxWidth="7xl"
+          paddingX="md"
+          paddingY="lg"
+          className="text-center"
+        >
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-6"></div>
-          <p className="text-muted-foreground text-lg">Đang tải thông tin sản phẩm...</p>
+          <p className="text-neutral-600 text-lg">
+            Đang tải thông tin sản phẩm...
+          </p>
         </Container>
       </PageContainer>
     );
@@ -70,10 +82,13 @@ export default function Product({ id }: ProductProps) {
   // Error or not found
   if (error || !product) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
         <main className="max-w-7xl mx-auto px-4 py-20 text-center">
-          <p className="text-muted-foreground text-lg">Không tìm thấy sản phẩm</p>
-          <Link href="/" className="text-primary hover:underline mt-4 inline-block">
+          <p className="text-neutral-600 text-lg">Không tìm thấy sản phẩm</p>
+          <Link
+            href="/"
+            className="text-primary hover:underline mt-4 inline-block"
+          >
             Quay lại trang chủ
           </Link>
         </main>
@@ -87,10 +102,12 @@ export default function Product({ id }: ProductProps) {
 
   // Convert attributes to details format
   const productDetails =
-    product.attributes?.map((attr: IAttribute) => `${attr.key}: ${attr.value}`) || [];
+    product.attributes?.map(
+      (attr: IAttribute) => `${attr.key}: ${attr.value}`,
+    ) || [];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
       <main className="max-w-7xl mx-auto px-4 py-8">
         <button
           onClick={() => router.back()}
@@ -102,15 +119,14 @@ export default function Product({ id }: ProductProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
           <div className="gap-4 flex-col flex">
-                 {/* Gallery Section */}
-          <ProductGalleryNew
-            images={product.images || [product.avatar]}
-            productName={product.name}
-            condition={product.condition || "Đã sử dụng"}
-          />
-        <ProductSpecifications details={productDetails} />
-            </div>
-     
+            {/* Gallery Section */}
+            <ProductGalleryNew
+              images={product.images || [product.avatar]}
+              productName={product.name}
+              condition={product.condition || "Đã sử dụng"}
+            />
+            <ProductSpecifications details={productDetails} />
+          </div>
 
           {/* Details Section */}
           <div className="flex flex-col">
@@ -119,6 +135,8 @@ export default function Product({ id }: ProductProps) {
               averageRating={averageRating}
               totalReviews={totalReviews}
               sellerName={product.seller?.fullName ?? "Người bán"}
+              category={product.category}
+              subcategory={product.subcategory}
             />
 
             {product.seller && (
@@ -130,11 +148,13 @@ export default function Product({ id }: ProductProps) {
 
             <ProductPrice
               price={product.price}
-              formattedPrice={product.price ? formatPrice(product.price) : "Liên hệ"}
+              formattedPrice={
+                product.price ? formatPrice(product.price) : "Liên hệ"
+              }
             />
 
             {(product.stock ?? 0) === 0 && (
-              <div className="rounded-lg bg-red-500/10 text-red-600 dark:text-red-400 px-3 py-2 text-sm font-medium">
+              <div className=" rounded-lg bg-red-500/10 text-red-600 dark:text-red-400 px-3 py-2 text-sm font-medium my-3">
                 Hết hàng
               </div>
             )}
@@ -166,7 +186,6 @@ export default function Product({ id }: ProductProps) {
             {/* <ProductGuarantees /> */}
           </div>
         </div>
-
 
         <ProductDescription description={product.description} />
 

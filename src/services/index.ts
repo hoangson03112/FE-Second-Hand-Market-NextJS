@@ -11,3 +11,4 @@ export { AdminService } from "./admin.service";
 export { ChatService } from "./chat.service";
 export { ReportService } from "./report.service";
 export { SellerReviewService } from "./sellerReview.service";
+export { ProductReviewService } from "./productReview.service";

@@ -102,7 +102,7 @@ export function ProductListHeader({
                 <span>{config.label}</span>
                 <span className={cn(
                   "ml-1 px-2 py-0.5 rounded-md text-xs font-semibold tabular-nums",
-                  isActive ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
+                  isActive ? "bg-cream-100/30 text-white" : "bg-muted text-muted-foreground"
                 )}>
                   {count}
                 </span>

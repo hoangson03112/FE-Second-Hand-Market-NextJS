@@ -4,6 +4,7 @@ import {
   getCachedProvinces,
   getCachedDistricts,
   getCachedWards,
+  useProvinces,
 } from "@/hooks/useGHNLocation";
 
 /**
@@ -12,7 +13,7 @@ import {
  */
 export async function enrichAddressWithNames(
   address: Address,
-  queryClient: QueryClient
+  queryClient: QueryClient,
 ): Promise<Address> {
   try {
     const enrichedAddress = { ...address };
@@ -26,7 +27,7 @@ export async function enrichAddressWithNames(
     if (address.provinceId && !address.province) {
       const provinces = await getCachedProvinces(queryClient);
       const province = provinces.find(
-        (p) => p.ProvinceID.toString() === address.provinceId?.toString()
+        (p) => p.ProvinceID.toString() === address.provinceId?.toString(),
       );
       if (province) {
         enrichedAddress.province = province.ProvinceName;
@@ -37,10 +38,10 @@ export async function enrichAddressWithNames(
     if (address.districtId && !address.district && address.provinceId) {
       const districts = await getCachedDistricts(
         queryClient,
-        address.provinceId
+        address.provinceId,
       );
       const district = districts.find(
-        (d) => d.DistrictID.toString() === address.districtId?.toString()
+        (d) => d.DistrictID.toString() === address.districtId?.toString(),
       );
       if (district) {
         enrichedAddress.district = district.DistrictName;
@@ -68,19 +69,26 @@ export async function enrichAddressWithNames(
   }
 }
 
-/**
- * Enrich multiple addresses in parallel using cached data
- * Tất cả data đều lấy từ React Query cache
- */
+export function getProvinceName(provinceId?: string | null): string {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { data: provinces = [] } = useProvinces();
+
+  if (provinceId && provinces.length > 0) {
+    const found = provinces.find(
+      (p) => String(p.ProvinceID) === String(provinceId),
+    );
+    return found?.ProvinceName ?? "Chưa cập nhật";
+  }
+  return "Chưa cập nhật";
+}
+
 export async function enrichAddresses(
   addresses: Address[],
-  queryClient: QueryClient
+  queryClient: QueryClient,
 ): Promise<Address[]> {
   try {
-    // Get provinces từ cache (chỉ call API 1 lần duy nhất)
     const provinces = await getCachedProvinces(queryClient);
 
-    // Collect unique province và district IDs để prefetch
     const uniqueProvinceIds = new Set<string>();
     const uniqueDistrictIds = new Set<string>();
 
@@ -91,11 +99,11 @@ export async function enrichAddresses(
 
     // Prefetch tất cả districts và wards cần thiết song song
     const districtPromises = Array.from(uniqueProvinceIds).map((provinceId) =>
-      getCachedDistricts(queryClient, provinceId)
+      getCachedDistricts(queryClient, provinceId),
     );
 
     const wardPromises = Array.from(uniqueDistrictIds).map((districtId) =>
-      getCachedWards(queryClient, districtId)
+      getCachedWards(queryClient, districtId),
     );
 
     // Chờ tất cả prefetch xong
@@ -121,7 +129,7 @@ export async function enrichAddresses(
       // Get province name
       if (address.provinceId && !address.province) {
         const province = provinces.find(
-          (p) => p.ProvinceID.toString() === address.provinceId?.toString()
+          (p) => p.ProvinceID.toString() === address.provinceId?.toString(),
         );
         if (province) {
           enriched.province = province.ProvinceName;
@@ -132,7 +140,7 @@ export async function enrichAddresses(
       if (address.districtId && !address.district && address.provinceId) {
         const districts = districtsMap.get(address.provinceId) || [];
         const district = districts.find(
-          (d) => d.DistrictID.toString() === address.districtId?.toString()
+          (d) => d.DistrictID.toString() === address.districtId?.toString(),
         );
         if (district) {
           enriched.district = district.DistrictName;

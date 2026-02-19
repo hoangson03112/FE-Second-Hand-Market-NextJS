@@ -21,8 +21,8 @@ export default function CheckoutHeader({ onBack }: CheckoutHeaderProps) {
           <ShoppingBag className="h-6 w-6 text-primary" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Xác Nhận Đơn Hàng</h1>
-          <p className="text-muted-foreground">Kiểm tra thông tin trước khi thanh toán</p>
+          <h1 className="text-3xl font-bold text-neutral-900">Xác Nhận Đơn Hàng</h1>
+          <p className="text-neutral-600">Kiểm tra thông tin trước khi thanh toán</p>
         </div>
       </div>
     </>

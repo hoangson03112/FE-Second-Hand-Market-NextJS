@@ -203,7 +203,7 @@ export default function AdminProducts() {
                               {product.avatar?.url ? (
                                 <img
                                   src={product.avatar.url}
-                                  alt=""
+                                  alt={product.name}
                                   className="w-full h-full object-cover"
                                 />
                               ) : (
@@ -347,7 +347,7 @@ export default function AdminProducts() {
                     {selectedProduct.avatar?.url ? (
                       <img
                         src={selectedProduct.avatar.url}
-                        alt=""
+                        alt={selectedProduct.name}
                         className="w-full h-full object-cover"
                       />
                     ) : (

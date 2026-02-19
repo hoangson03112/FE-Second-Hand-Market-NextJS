@@ -11,7 +11,7 @@ export default function GoogleLoginButton({ onClick, disabled }: GoogleLoginButt
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="w-full flex justify-center items-center gap-2.5 py-3.5 px-4 rounded-xl border-2 border-border bg-background text-foreground font-semibold hover:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition disabled:opacity-50 disabled:pointer-events-none"
+      className="w-full flex justify-center items-center gap-3 py-4 px-6 border border-gray-200 bg-white text-taupe-900 font-semibold text-[15px] rounded-xl hover:bg-gray-50 hover:border-gray-300 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary/20 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none shadow-md"
     >
       <GoogleIcon className="w-5 h-5" />
       <span>Đăng nhập bằng Google</span>

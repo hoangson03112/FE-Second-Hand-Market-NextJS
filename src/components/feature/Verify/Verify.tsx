@@ -92,11 +92,11 @@ export default function Verify() {
     }
   
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cream-50 via-neutral-50 to-taupe-50 p-4 lg:p-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-neutral-50 to-background p-4 lg:p-8">
     <div className="w-full max-w-md">
-      <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8 lg:p-10">
+      <div className="bg-cream-50/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-taupe-200/50 p-8 lg:p-10">
         <div className="text-center mb-8">
-          <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center">
+          <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary flex items-center justify-center">
             <EmailVerifyIcon className="w-10 h-10 text-white" />
           </div>
           <h2 className="text-3xl font-bold text-primary mb-2">Xác thực email</h2>
@@ -161,7 +161,7 @@ export default function Verify() {
           <button
             type="submit"
             disabled={isLoading || code.length !== 4}
-            className="w-full flex justify-center items-center gap-2 py-4 px-6 bg-gradient-to-r from-primary to-primary-dark text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            className="w-full flex justify-center items-center gap-2 py-4 px-6 bg-primary hover:bg-primary/90 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
             {isLoading ? (
               <>

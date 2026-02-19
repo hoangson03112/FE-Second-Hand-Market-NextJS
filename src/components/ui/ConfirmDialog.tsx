@@ -58,8 +58,8 @@ export function ConfirmDialogProvider({ children }: { children: ReactNode }) {
         };
       case "warning":
         return {
-          icon: "bg-yellow-100 text-yellow-600",
-          button: "btn bg-yellow-600 text-white hover:bg-yellow-700",
+          icon: "bg-amber-100 text-amber-600",
+          button: "btn bg-amber-600 text-white hover:bg-amber-700",
         };
       default:
         return {

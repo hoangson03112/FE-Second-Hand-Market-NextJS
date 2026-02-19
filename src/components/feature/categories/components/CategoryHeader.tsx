@@ -20,7 +20,7 @@ export default function CategoryHeader({ category, subCategory, breadcrumbs }: C
       : "Khám phá sản phẩm";
 
   return (
-    <div className="bg-gradient-to-br from-cream-50 via-white to-taupe-50 py-12 border-b border-default">
+    <div className="bg-gradient-to-br from-background via-cream-50 to-background py-12 border-b border-default">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {breadcrumbs && breadcrumbs.length > 0 && (
           <nav className="mb-4" aria-label="Breadcrumb">
@@ -51,7 +51,7 @@ export default function CategoryHeader({ category, subCategory, breadcrumbs }: C
                 href={`/categories/${category._id}/sub/${sub._id}`}
                 className={cn(
                   "px-4 py-2 rounded-full text-sm font-medium",
-                  "bg-white border-2 border-default hover-border-primary",
+                  "bg-cream-50 border-2 border-default hover-border-primary",
                   "hover:bg-primary-tint transition-all duration-300",
                   "hover-lift"
                 )}

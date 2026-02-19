@@ -23,11 +23,16 @@ interface ProductCardProps {
   viewMode?: "list" | "grid";
 }
 
-export function ProductCard({ product, onDelete, isDeleting, viewMode = "list" }: ProductCardProps) {
+export function ProductCard({
+  product,
+  onDelete,
+  isDeleting,
+  viewMode = "list",
+}: ProductCardProps) {
   const statusCfg =
     PRODUCT_STATUS_CONFIG[product.status as ProductStatusFilter] ??
     PRODUCT_STATUS_CONFIG.pending;
-    
+
   const isVisibleOnSite =
     product.status === "approved" ||
     product.status === "active" ||
@@ -55,16 +60,19 @@ export function ProductCard({ product, onDelete, isDeleting, viewMode = "list" }
               <Package className="w-12 h-12 text-muted-foreground/40" />
             </div>
           )}
-          
+
           <div className="absolute top-2 right-2">
             <span
               className={cn(
                 "inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium bg-card/90 backdrop-blur-sm border",
-                statusCfg.text
+                statusCfg.text,
               )}
               style={{ borderColor: `${statusCfg.color}40` }}
             >
-              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: statusCfg.color }} />
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ backgroundColor: statusCfg.color }}
+              />
               {statusCfg.label}
             </span>
           </div>
@@ -74,7 +82,7 @@ export function ProductCard({ product, onDelete, isDeleting, viewMode = "list" }
           <h3 className="font-medium text-foreground line-clamp-2 text-sm mb-2 leading-snug">
             {product.name}
           </h3>
-          
+
           {product.categoryId?.name && (
             <div className="flex items-center gap-1 text-xs text-muted-foreground mb-3">
               <Tag className="w-3 h-3" />
@@ -82,16 +90,17 @@ export function ProductCard({ product, onDelete, isDeleting, viewMode = "list" }
             </div>
           )}
 
-          {product.status === "rejected" && product.aiModerationResult?.rejectionReason && (
-            <div className="p-2 rounded-lg bg-red-50 border border-red-200 mb-3">
-              <div className="flex items-start gap-1.5">
-                <AlertCircle className="w-3.5 h-3.5 text-red-600 shrink-0 mt-0.5" />
-                <p className="text-xs text-red-700 line-clamp-2">
-                  {product.aiModerationResult.rejectionReason}
-                </p>
+          {product.status === "rejected" &&
+            product.aiModerationResult?.rejectionReason && (
+              <div className="p-2 rounded-lg bg-red-50 border border-red-200 mb-3">
+                <div className="flex items-start gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 text-red-600 shrink-0 mt-0.5" />
+                  <p className="text-xs text-red-700 line-clamp-2">
+                    {product.aiModerationResult.rejectionReason}
+                  </p>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
           <div className="flex items-center justify-between mb-3 pt-2 border-t border-border">
             <span className="text-lg font-bold text-foreground tabular-nums">
@@ -185,28 +194,32 @@ export function ProductCard({ product, onDelete, isDeleting, viewMode = "list" }
             <span
               className={cn(
                 "inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap border shrink-0",
-                statusCfg.text
+                statusCfg.text,
               )}
               style={{
                 backgroundColor: `${statusCfg.color}10`,
                 borderColor: `${statusCfg.color}40`,
               }}
             >
-              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: statusCfg.color }} />
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ backgroundColor: statusCfg.color }}
+              />
               {statusCfg.label}
             </span>
           </div>
 
-          {product.status === "rejected" && product.aiModerationResult?.rejectionReason && (
-            <div className="p-2 rounded-lg bg-red-50 border border-red-200 mb-2">
-              <div className="flex items-start gap-1.5">
-                <AlertCircle className="w-3.5 h-3.5 text-red-600 shrink-0 mt-0.5" />
-                <p className="text-xs text-red-700 line-clamp-1">
-                  {product.aiModerationResult.rejectionReason}
-                </p>
+          {product.status === "rejected" &&
+            product.aiModerationResult?.rejectionReason && (
+              <div className="p-2 rounded-lg bg-red-50 border border-red-200 mb-2">
+                <div className="flex items-start gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 text-red-600 shrink-0 mt-0.5" />
+                  <p className="text-xs text-red-700 line-clamp-1">
+                    {product.aiModerationResult.rejectionReason}
+                  </p>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
           <div className="flex items-center justify-between">
             <span className="text-xl font-bold text-foreground tabular-nums">

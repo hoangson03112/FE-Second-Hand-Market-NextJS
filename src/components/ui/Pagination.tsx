@@ -83,17 +83,16 @@ export default function Pagination({
         onClick={handlePrevious}
         disabled={currentPage === 1}
         className={cn(
-          "flex items-center justify-center w-10 h-10 rounded-lg",
-          "border border-gray-300",
-          "transition-colors",
-          "disabled:opacity-50 disabled:cursor-not-allowed",
+          "flex items-center justify-center w-11 h-11 border-2",
+          "transition-all duration-200 font-black",
+          "disabled:opacity-40 disabled:cursor-not-allowed",
           currentPage === 1
-            ? "bg-gray-100 text-gray-400"
-            : "bg-white text-gray-700 hover:bg-primary hover:text-white hover:border-primary"
+            ? "bg-taupe-100 text-taupe-300 border-taupe-200"
+            : "bg-cream-50 text-taupe-900 border-taupe-300 hover:bg-primary hover:text-cream-50 hover:border-primary"
         )}
         aria-label="Trang trước"
       >
-        <ChevronLeft className="w-5 h-5" />
+        <ChevronLeft className="w-5 h-5" strokeWidth={3} />
       </button>
 
       {/* Page Numbers */}
@@ -103,9 +102,9 @@ export default function Pagination({
             return (
               <span
                 key={`ellipsis-${index}`}
-                className="px-2 text-gray-400"
+                className="px-2 text-taupe-400 font-black text-[18px]"
               >
-                ...
+                •••
               </span>
             );
           }
@@ -118,12 +117,12 @@ export default function Pagination({
               key={pageNum}
               onClick={() => handlePageClick(pageNum)}
               className={cn(
-                "flex items-center justify-center min-w-[40px] h-10 px-3 rounded-lg",
-                "border transition-colors",
-                "font-medium",
+                "flex items-center justify-center min-w-[44px] h-11 px-3 border-2",
+                "transition-all duration-200",
+                "font-black text-[14px] tabular-nums",
                 isActive
-                  ? "bg-primary text-white border-primary"
-                  : "bg-white text-gray-700 border-gray-300 hover:bg-primary hover:text-white hover:border-primary"
+                  ? "bg-primary text-cream-50 border-primary"
+                  : "bg-cream-50 text-taupe-900 border-taupe-300 hover:bg-primary hover:text-cream-50 hover:border-primary"
               )}
               aria-label={`Trang ${pageNum}`}
               aria-current={isActive ? "page" : undefined}
@@ -139,17 +138,16 @@ export default function Pagination({
         onClick={handleNext}
         disabled={currentPage === totalPages}
         className={cn(
-          "flex items-center justify-center w-10 h-10 rounded-lg",
-          "border border-gray-300",
-          "transition-colors",
-          "disabled:opacity-50 disabled:cursor-not-allowed",
+          "flex items-center justify-center w-11 h-11 border-2",
+          "transition-all duration-200 font-black",
+          "disabled:opacity-40 disabled:cursor-not-allowed",
           currentPage === totalPages
-            ? "bg-gray-100 text-gray-400"
-            : "bg-white text-gray-700 hover:bg-primary hover:text-white hover:border-primary"
+            ? "bg-taupe-100 text-taupe-300 border-taupe-200"
+            : "bg-cream-50 text-taupe-900 border-taupe-300 hover:bg-primary hover:text-cream-50 hover:border-primary"
         )}
         aria-label="Trang sau"
       >
-        <ChevronRight className="w-5 h-5" />
+        <ChevronRight className="w-5 h-5" strokeWidth={3} />
       </button>
     </div>
   );

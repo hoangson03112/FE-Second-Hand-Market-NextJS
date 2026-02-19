@@ -38,15 +38,15 @@ export default function ShopCartGroup({
   };
 
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden mb-4">
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-border bg-muted/30">
+    <div className="bg-cream-50/90 backdrop-blur-md rounded-3xl border-2 border-neutral-200/60 shadow-lg shadow-neutral-200/50 overflow-hidden mb-4">
+      <div className="flex items-center gap-3 px-4 py-3 border-b-2 border-neutral-200/60 bg-cream-50/50">
         <label className="flex-shrink-0 cursor-pointer">
           <input
             type="checkbox"
             checked={allSelected}
             onChange={(e) => handleSelectAll(e.target.checked)}
             disabled={isUpdating}
-            className="w-4 h-4 rounded border-border text-primary focus:ring-primary cursor-pointer disabled:opacity-50"
+            className="w-4 h-4 rounded border-neutral-300 text-primary focus:ring-primary cursor-pointer disabled:opacity-50"
           />
         </label>
         <Link
@@ -57,19 +57,19 @@ export default function ShopCartGroup({
             <img
               src={sellerAvatar}
               alt={sellerName}
-              className="w-8 h-8 rounded-full object-cover flex-shrink-0 ring-1 ring-border"
+              className="w-8 h-8 rounded-full object-cover flex-shrink-0 ring-1 ring-neutral-200"
             />
           ) : (
-            <span className="w-8 h-8 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-              <User className="h-4 w-4 text-muted-foreground" />
+            <span className="w-8 h-8 rounded-full bg-cream-50 flex items-center justify-center flex-shrink-0">
+              <User className="h-4 w-4 text-neutral-600" />
             </span>
           )}
-          <span className="text-sm font-medium text-foreground truncate">{sellerName}</span>
+          <span className="text-sm font-medium text-neutral-900 truncate">{sellerName}</span>
         </Link>
-        <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+        <ChevronRight className="h-4 w-4 text-neutral-600 flex-shrink-0" />
       </div>
 
-      <div className="divide-y divide-border">
+      <div className="divide-y-2 divide-neutral-200/60">
         {items.map((item) => (
           <CartItem
             key={item.productId?._id ?? String(Math.random())}

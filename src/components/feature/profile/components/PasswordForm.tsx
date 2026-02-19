@@ -32,7 +32,7 @@ export function PasswordForm({
     if (/[!@#$%^&*]/.test(password)) strength++;
 
     if (strength <= 1) return { strength, label: "Yếu", color: "text-destructive" };
-    if (strength <= 3) return { strength, label: "Trung bình", color: "text-yellow-500" };
+    if (strength <= 3) return { strength, label: "Trung bình", color: "text-amber-500" };
     return { strength, label: "Mạnh", color: "text-green-500" };
   };
 
@@ -141,7 +141,7 @@ export function PasswordForm({
                     <div 
                       className={`h-full transition-all duration-300 ${
                         passwordStrength.strength <= 1 ? "bg-destructive w-1/3" :
-                        passwordStrength.strength <= 3 ? "bg-yellow-500 w-2/3" :
+                        passwordStrength.strength <= 3 ? "bg-amber-500 w-2/3" :
                         "bg-green-500 w-full"
                       }`}
                     />

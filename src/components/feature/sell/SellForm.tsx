@@ -93,8 +93,7 @@ export default function SellForm() {
     onPickupDistrictChange,
     onPickupWardChange,
     onPickupBusinessAddressChange,
-    savePickupAddress,
-    isSavingPickup,
+    onPickupPhoneNumberChange,
   } = useSellForm();
 
   // Check if can request review
@@ -103,7 +102,6 @@ export default function SellForm() {
     currentProduct?.status === "rejected" &&
     !currentProduct?.aiModerationResult?.humanReviewRequested;
 
-  console.log(values);
   const subCategories = values.categoryId
     ? categories.find((c) => c._id === values.categoryId)?.subCategories ?? []
     : [];
@@ -184,8 +182,7 @@ export default function SellForm() {
             onDistrictChange={onPickupDistrictChange}
             onWardChange={onPickupWardChange}
             onBusinessAddressChange={onPickupBusinessAddressChange}
-            onSavePickupAddress={savePickupAddress}
-            isSavingPickup={isSavingPickup}
+            onPhoneNumberChange={onPickupPhoneNumberChange}
           />
         )}
 
@@ -407,7 +404,7 @@ export default function SellForm() {
                         >
                           <img
                             src={url}
-                            alt=""
+                            alt={`Ảnh sản phẩm ${i + 1}${i === 0 ? ' (ảnh đại diện)' : ''}`}
                             className="w-full h-full object-cover"
                           />
                           {i === 0 && values.images.length === 0 && (
@@ -440,7 +437,7 @@ export default function SellForm() {
                         >
                           <img
                             src={URL.createObjectURL(file)}
-                            alt=""
+                            alt={`Ảnh sản phẩm mới ${i + 1}${i === 0 && existingImageUrls.length === 0 ? ' (ảnh đại diện)' : ''}`}
                             className="w-full h-full object-cover"
                           />
                           {(i === 0 && existingImageUrls.length === 0) && (

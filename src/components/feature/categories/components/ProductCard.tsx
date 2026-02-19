@@ -6,20 +6,22 @@ import { cn } from "@/lib/utils";
 import { IProduct } from "@/types/product";
 import { MapPin } from "lucide-react";
 import { formatPrice } from "@/utils/format/price";
+import { getProvinceName } from "@/utils";
 
 interface ProductCardProps {
   product: IProduct;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const provinceDisplay = getProvinceName(product.seller?.from_province_id);
   return (
     <Link
       href={`/products/${product._id}/${product?.slug}`}
       className={cn(
-        "group relative bg-white rounded-2xl overflow-hidden",
+        "group relative bg-cream-50 rounded-2xl overflow-hidden",
         "border border-default hover-border-primary",
         "hover-lift transition-all duration-300",
-        "animate-scale-in"
+        "animate-scale-in",
       )}
     >
       <div className="relative aspect-square overflow-hidden bg-neutral-100">
@@ -37,12 +39,22 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
           <button
-            className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:text-white transition-colors shadow-md"
+            className="w-10 h-10 rounded-full bg-cream-50/90 backdrop-blur-sm flex items-center justify-center hover:bg-primary hover:text-white transition-colors shadow-md"
             onClick={(e) => e.preventDefault()}
             aria-label="Thêm vào yêu thích"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
             </svg>
           </button>
         </div>
@@ -52,12 +64,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.name}
         </h3>
         <div className="flex items-baseline gap-2 mb-3">
-          <span className="text-xl font-bold text-primary">{formatPrice(product.price)}</span>
+          <span className="text-xl font-bold text-primary">
+            {formatPrice(product.price)}
+          </span>
         </div>
         <div className="flex items-center justify-between text-sm text-tertiary">
           <div className="flex items-center gap-1">
             <MapPin className="w-3 h-3 text-red-500" />
-            <span>{product.seller?.province || "Chưa cập nhật"}</span>
+            <span>{provinceDisplay}</span>
           </div>
         </div>
       </div>

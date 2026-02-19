@@ -68,7 +68,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       case "error":
         return "bg-red-50 text-red-800 border-red-200";
       case "warning":
-        return "bg-yellow-50 text-yellow-800 border-yellow-200";
+        return "bg-amber-50 text-amber-800 border-amber-200";
       default:
         return "bg-blue-50 text-blue-800 border-blue-200";
     }

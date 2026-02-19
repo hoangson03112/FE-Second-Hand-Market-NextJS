@@ -68,7 +68,7 @@ export default function ChatPage() {
             <Loader2 className="w-12 h-12 animate-spin text-primary" />
           </div>
         ) : conversations.length === 0 && !conversationId ? (
-          <div className="bg-white rounded-2xl border border-border p-12 text-center">
+          <div className="bg-cream-50 rounded-2xl border border-border p-12 text-center">
             <MessageCircle className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
             <p className="text-muted-foreground mb-2">Chưa có cuộc trò chuyện nào</p>
             <p className="text-sm text-muted-foreground">
@@ -81,7 +81,7 @@ export default function ChatPage() {
               <Link
                 key={conv.conversationId || conv._id}
                 href={`/chat/${conv._id}?conversationId=${conv.conversationId || conv._id}`}
-                className="block bg-white rounded-xl border border-border p-4 hover:shadow-md transition-shadow"
+                className="block bg-cream-50 rounded-xl border border-border p-4 hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center overflow-hidden shrink-0">

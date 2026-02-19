@@ -42,7 +42,7 @@ export default function NotificationsPage() {
           Thông báo
         </h1>
 
-        <div className="bg-white rounded-2xl border border-border p-12 text-center">
+        <div className="bg-cream-50 rounded-2xl border border-border p-12 text-center">
           <Bell className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
           <p className="text-muted-foreground mb-2">
             Chưa có thông báo nào

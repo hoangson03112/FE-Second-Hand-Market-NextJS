@@ -24,6 +24,7 @@ export type PickupFormValues = {
   districtId: string;
   wardCode: string;
   businessAddress: string;
+  phoneNumber: string;
 };
 
 export interface IProductWithMediaAndIds extends IProduct {
@@ -33,6 +34,7 @@ export interface IProductWithMediaAndIds extends IProduct {
     districtId?: string;
     wardCode?: string;
     businessAddress?: string;
+    phoneNumber?: string;
   };
 
   /**

@@ -39,7 +39,7 @@ export default function Login() {
 
   return (
     <AuthLayout>
-      <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-center">
         <BrandingSection
           title="Chào mừng"
           titleHighlight="trở lại!"
@@ -51,10 +51,10 @@ export default function Login() {
           title="Đăng nhập"
           subtitle="Nhập tên đăng nhập và mật khẩu để tiếp tục"
         >
-          <form className="space-y-5" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <ErrorMessage message={error} />
 
-            <div className="space-y-4">
+            <div className="space-y-5">
               <InputField
                 id="username"
                 name="username"
@@ -78,17 +78,17 @@ export default function Login() {
               />
             </div>
 
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2 cursor-pointer text-muted-foreground hover:text-foreground transition">
+            <div className="flex items-center justify-between text-[14px]">
+              <label className="flex items-center gap-2.5 cursor-pointer text-taupe-600 hover:text-taupe-900 transition-colors group">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 rounded border-input text-primary focus:ring-primary"
+                  className="w-4 h-4 rounded-md border-2 border-gray-300 text-primary focus:ring-2 focus:ring-primary/30 focus:ring-offset-0 cursor-pointer"
                 />
-                <span>Ghi nhớ đăng nhập</span>
+                <span className="font-medium">Ghi nhớ đăng nhập</span>
               </label>
               <Link
                 href="/forgot-password"
-                className="font-medium text-primary hover:underline"
+                className="font-semibold text-primary hover:text-primary/80 transition-colors"
               >
                 Quên mật khẩu?
               </Link>
@@ -103,11 +103,11 @@ export default function Login() {
 
             <GoogleLoginButton onClick={handleGoogleLogin} disabled={isLoading} />
 
-            <p className="text-center text-sm text-muted-foreground">
+            <p className="text-center text-[15px] text-taupe-600">
               Chưa có tài khoản?{" "}
               <Link
                 href="/register"
-                className="font-semibold text-primary hover:underline inline-flex items-center gap-1"
+                className="font-semibold text-primary hover:text-primary/80 inline-flex items-center gap-1.5 transition-colors"
               >
                 Đăng ký ngay
                 <ArrowRightIcon className="w-4 h-4" />

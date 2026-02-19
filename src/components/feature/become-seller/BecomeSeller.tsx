@@ -71,11 +71,11 @@ export default function BecomeSeller() {
             </div>
           ) : hasRequest && requestStatus === "pending" ? (
             <div className="space-y-4">
-              <div className="rounded-xl border border-yellow-500/50 bg-yellow-50/50 p-4 space-y-2">
-                <h3 className="text-sm font-semibold text-yellow-800">
+              <div className="rounded-xl border border-amber-500/50 bg-amber-50/50 p-4 space-y-2">
+                <h3 className="text-sm font-semibold text-amber-800">
                   Yêu cầu đang chờ phê duyệt
                 </h3>
-                <p className="text-xs text-yellow-700">
+                <p className="text-xs text-amber-700">
                   Bạn đã gửi yêu cầu trở thành seller. Hồ sơ của bạn đang được đội ngũ Eco Market
                   kiểm duyệt trong vòng 24h. Vui lòng chờ thông báo qua email hoặc kiểm tra lại sau.
                 </p>

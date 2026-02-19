@@ -17,7 +17,7 @@
 }
 
 :root {
-  /* Premium color palette: Cream/Ivory + Warm taupe + Deep charcoal + Blush accent */
+  /* Premium color palette: Cream/Ivory + Warm taupe + Deep charcoal + Soft accent */
   --background: oklch(0.975 0.005 70);
   --foreground: oklch(0.15 0.03 270);
   --card: oklch(1 0 0);
@@ -58,6 +58,10 @@
   --cream-100: #fdf9f3;
   --cream-200: #faf3e6;
   --cream-300: #f6e9d1;
+
+  /* Beige / Màu da nhạt (light skin tone) */
+  --beige-50: #f7f2ea;
+  --beige-100: #f0e8dc;
 
   /* Warm taupe (primary) */
   --taupe-50: #f7f5f2;
@@ -264,6 +268,10 @@
   --color-cream-200: var(--cream-200);
   --color-cream-300: var(--cream-300);
 
+  /* Beige / Màu da nhạt */
+  --color-beige-50: var(--beige-50);
+  --color-beige-100: var(--beige-100);
+
   /* Taupe Colors */
   --color-taupe-50: var(--taupe-50);
   --color-taupe-100: var(--taupe-100);
@@ -429,78 +437,88 @@ body {
 }
 
 /* ============================================
-   CUSTOM SCROLLBAR STYLES - Elegant & Slim
+   CUSTOM SCROLLBAR STYLES - Swiss Typography Design
+   Minimalist, Functional, Grid-based
    ============================================ */
 
-/* Webkit browsers (Chrome, Safari, Edge) */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg,
-      rgba(251, 146, 60, 0.4) 0%,
-      rgba(96, 165, 250, 0.4) 100%);
-  border-radius: 10px;
-  border: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg,
-      rgba(251, 146, 60, 0.6) 0%,
-      rgba(96, 165, 250, 0.6) 100%);
-  width: 8px;
-}
-
-::-webkit-scrollbar-thumb:active {
-  background: linear-gradient(180deg,
-      rgba(251, 146, 60, 0.8) 0%,
-      rgba(96, 165, 250, 0.8) 100%);
-}
-
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(251, 146, 60, 0.4) transparent;
-}
-
-/* Smooth scrollbar for all elements */
+/* Smooth scroll cho toàn site */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar for specific containers */
-.custom-scrollbar::-webkit-scrollbar {
+/* WebKit (Chrome, Safari, Edge) — Global scrollbar */
+*::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: var(--neutral-50);
-  border-radius: 8px;
+*::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 4px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg,
-      var(--orange-200) 0%,
-      var(--blue-200) 100%);
-  border-radius: 8px;
-  border: 1px solid var(--neutral-100);
+*::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+  border: 2px solid #f5f5f5;
+  transition: background-color 0.2s ease;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg,
-      var(--orange-400) 0%,
-      var(--blue-400) 100%);
+*::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: #6b7280;
+}
+
+/* Firefox — Global scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--taupe-300) var(--cream-50);
+}
+
+/* Vertical scrollbar precision (main content) */
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #fafafa;
+  border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border: 2px solid #fafafa;
+  border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+body::-webkit-scrollbar-thumb:active {
+  background: #6b7280;
+}
+
+/* Dark mode scrollbar */
+.dark *::-webkit-scrollbar-track {
+  background: var(--charcoal-900);
+  border-left-color: var(--charcoal-700);
+}
+
+.dark *::-webkit-scrollbar-thumb {
+  background: var(--charcoal-600);
+  border-color: var(--charcoal-900);
+}
+
+.dark *::-webkit-scrollbar-thumb:hover {
+  background: var(--charcoal-500);
+}
+
+.dark * {
+  scrollbar-color: var(--charcoal-600) var(--charcoal-900);
 }
 
 [data-lenis-prevent] {
@@ -1117,6 +1135,7 @@ html {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
+
 .btn-danger {
   background-color: var(--danger);
   color: white;
@@ -1125,6 +1144,7 @@ html {
   position: relative;
   overflow: hidden;
 }
+
 .btn-ghost-secondary::before {
   content: '';
   position: absolute;
@@ -2131,6 +2151,7 @@ html {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -2141,6 +2162,7 @@ html {
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -2153,4 +2175,152 @@ html {
 
 .animate-scale-in {
   animation: scale-in 0.2s ease-out;
+}
+
+/* ============================================
+   SMOOTH SCROLL REVEAL ANIMATIONS
+   ============================================ */
+
+/* Ultra smooth easing functions */
+.ease-smooth {
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.ease-butter {
+  transition-timing-function: cubic-bezier(0.33, 0.0, 0.2, 1);
+}
+
+.ease-elastic {
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Smooth scroll reveal keyframes */
+@keyframes smoothRevealUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes smoothRevealFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes smoothRevealScale {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes smoothFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Smooth reveal utility classes */
+.scroll-reveal {
+  animation: smoothRevealUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.scroll-reveal-fade {
+  animation: smoothRevealFade 0.8s cubic-bezier(0.33, 0.0, 0.2, 1) forwards;
+}
+
+.scroll-reveal-scale {
+  animation: smoothRevealScale 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Ultra smooth transitions */
+.transition-ultra-smooth {
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.transition-butter {
+  transition: all 0.8s cubic-bezier(0.33, 0.0, 0.2, 1);
+}
+
+.transition-spring {
+  transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* GPU Acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent layout shifts during animations */
+.prevent-shift {
+  contain: layout style paint;
+  content-visibility: auto;
+}
+
+/* Smooth transform optimization */
+.smooth-transform {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Optimize opacity changes */
+.smooth-opacity {
+  will-change: opacity;
+}
+
+/* Combined smooth animation */
+.smooth-animate {
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Reset will-change after animation */
+.animate-complete {
+  will-change: auto;
+}
+
+/* Silky smooth easing - iOS-like */
+.ease-ios {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ease-material {
+  transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.ease-framer {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }

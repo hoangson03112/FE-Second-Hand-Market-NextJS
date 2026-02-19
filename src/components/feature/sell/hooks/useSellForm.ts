@@ -15,7 +15,7 @@ import type {
   PickupFormValues,
   IProductWithMediaAndIds,
 } from "@/types/sell";
-import type { Address, CreateAddressRequest } from "@/types/address";
+import type { Address } from "@/types/address";
 
 const INITIAL: SellFormValues = {
   name: "",
@@ -35,6 +35,7 @@ const PICKUP_INITIAL: PickupFormValues = {
   districtId: "",
   wardCode: "",
   businessAddress: "",
+  phoneNumber: "",
 };
 
 function mapProductToFormValues(product: IProductWithMediaAndIds): SellFormValues {
@@ -82,6 +83,7 @@ function getSellerPickupFromProduct(
   districtId: string;
   wardCode: string;
   businessAddress: string;
+  phoneNumber?: string;
 } | null {
   // Ưu tiên product.pickupAddress (địa chỉ lưu theo từng sp – buyer 3 sp = 3 địa chỉ khác nhau)
   const pickup = product.pickupAddress;
@@ -96,6 +98,7 @@ function getSellerPickupFromProduct(
         districtId: pickup.districtId,
         wardCode: pickup.wardCode,
         businessAddress: pickup.businessAddress,
+        phoneNumber: pickup.phoneNumber ?? undefined,
       };
     }
   }
@@ -126,6 +129,7 @@ function getSellerPickupFromProduct(
     districtId: String(sellerDistrictId),
     wardCode: sellerWardCode,
     businessAddress: sellerBusinessAddress,
+    phoneNumber: undefined,
   };
 }
 
@@ -174,39 +178,13 @@ function validatePickupFields(
   if (!pickup.businessAddress?.trim()) {
     pickupErr.businessAddress = "Vui lòng nhập địa chỉ cụ thể";
   }
-
-  return pickupErr;
-}
-
-async function upsertAddressFromPickup(
-  pickup: PickupFormValues,
-  account: { fullName?: string | null; phoneNumber?: string | null } | null
-): Promise<Address> {
-  const addresses = await AddressService.getAddresses();
-
-  const existingDefault =
-    addresses.find((addr) => addr.isDefault) || addresses[0] || null;
-
-  const baseFullName =
-    existingDefault?.fullName ?? account?.fullName ?? "";
-  const basePhone =
-    existingDefault?.phoneNumber ?? account?.phoneNumber ?? "";
-
-  const payload: CreateAddressRequest = {
-    fullName: baseFullName,
-    phoneNumber: basePhone,
-    specificAddress: pickup.businessAddress.trim(),
-    provinceId: pickup.provinceId,
-    districtId: pickup.districtId,
-    wardCode: pickup.wardCode,
-    isDefault: true,
-  };
-
-  if (existingDefault) {
-    return AddressService.updateAddress(existingDefault._id, payload);
+  if (!pickup.phoneNumber?.trim()) {
+    pickupErr.phoneNumber = "Vui lòng nhập số điện thoại";
+  } else if (!/^[0-9]{10,11}$/.test(pickup.phoneNumber.replace(/\s/g, ""))) {
+    pickupErr.phoneNumber = "Số điện thoại không hợp lệ (10-11 số)";
   }
 
-  return AddressService.createAddress(payload);
+  return pickupErr;
 }
 
 export function useSellForm() {
@@ -227,7 +205,6 @@ export function useSellForm() {
   // Lưu URLs của ảnh và video hiện tại (khi edit)
   const [existingImageUrls, setExistingImageUrls] = useState<string[]>([]);
   const [existingVideoUrl, setExistingVideoUrl] = useState<string | null>(null);
-  const [isSavingPickup, setIsSavingPickup] = useState(false);
   // Lưu product data (khi edit) để có thể check status và humanReviewRequested
   const [currentProduct, setCurrentProduct] = useState<IProductWithMediaAndIds | null>(null);
   const router = useRouter();
@@ -303,14 +280,13 @@ export function useSellForm() {
         if (showPickupSection) {
           const sellerPickup = getSellerPickupFromProduct(product);
           if (sellerPickup) {
-            const { provinceId, districtId, wardCode, businessAddress } = sellerPickup;
+            const { provinceId, districtId, wardCode, businessAddress, phoneNumber } = sellerPickup;
+            const basePickup = { districtId, wardCode, businessAddress, phoneNumber: phoneNumber ?? "" };
             if (provinceId) {
               if (!cancelled) {
                 setPickup({
                   provinceId,
-                  districtId,
-                  wardCode,
-                  businessAddress,
+                  ...basePickup,
                 });
               }
             } else {
@@ -318,9 +294,7 @@ export function useSellForm() {
               if (!cancelled) {
                 setPickup((prev) => ({
                   ...prev,
-                  districtId,
-                  wardCode,
-                  businessAddress,
+                  ...basePickup,
                 }));
               }
 
@@ -332,9 +306,7 @@ export function useSellForm() {
                 if (!cancelled && resolvedProvinceId) {
                   setPickup({
                     provinceId: resolvedProvinceId,
-                    districtId,
-                    wardCode,
-                    businessAddress,
+                    ...basePickup,
                   });
                 }
               } catch (err) {
@@ -352,6 +324,7 @@ export function useSellForm() {
                 districtId: defaultAddr.districtId ?? "",
                 wardCode: defaultAddr.wardCode ?? "",
                 businessAddress: defaultAddr.specificAddress ?? "",
+                phoneNumber: defaultAddr.phoneNumber ?? "",
               };
               const hasAll = base.provinceId && base.districtId && base.wardCode;
               if (hasAll) {
@@ -434,6 +407,7 @@ export function useSellForm() {
         districtId: savedPickup.districtId ?? "",
         wardCode: savedPickup.wardCode ?? "",
         businessAddress: savedPickup.specificAddress ?? "",
+        phoneNumber: savedPickup.phoneNumber ?? "",
       };
 
       const hasProvince = !!base.provinceId;
@@ -515,6 +489,11 @@ export function useSellForm() {
     setPickupErrors((prev) => (prev.businessAddress ? { ...prev, businessAddress: undefined } : prev));
   }, []);
 
+  const onPickupPhoneNumberChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setPickup((prev) => ({ ...prev, phoneNumber: e.target.value }));
+    setPickupErrors((prev) => (prev.phoneNumber ? { ...prev, phoneNumber: undefined } : prev));
+  }, []);
+
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
@@ -594,10 +573,6 @@ export function useSellForm() {
 
       setIsLoading(true);
       try {
-        if (showPickupSection && selectedProvince && selectedDistrict && selectedWard) {
-          await upsertAddressFromPickup(pickup, account ?? null);
-        }
-
         const attributesFiltered = values.attributes.filter(
           (a) => a.key.trim() && a.value.trim()
         );
@@ -616,12 +591,14 @@ export function useSellForm() {
             pickup.provinceId &&
             pickup.districtId &&
             pickup.wardCode &&
-            pickup.businessAddress?.trim() && {
+            pickup.businessAddress?.trim() &&
+            pickup.phoneNumber?.trim() && {
               pickupAddress: {
                 provinceId: pickup.provinceId,
                 districtId: pickup.districtId,
                 wardCode: pickup.wardCode,
                 businessAddress: pickup.businessAddress.trim(),
+                phoneNumber: pickup.phoneNumber.trim(),
               },
             }),
         };
@@ -686,9 +663,6 @@ export function useSellForm() {
       router,
       showPickupSection,
       pickup,
-      selectedProvince,
-      selectedDistrict,
-      selectedWard,
       isEditMode,
       editProductId,
     ]
@@ -701,28 +675,6 @@ export function useSellForm() {
   const removeExistingVideo = useCallback(() => {
     setExistingVideoUrl(null);
   }, []);
-
-  const savePickupAddress = useCallback(async () => {
-    if (!showPickupSection) return;
-    const err = validatePickupFields(pickup);
-    setPickupErrors(err);
-    if (Object.keys(err).length > 0) return;
-    setIsSavingPickup(true);
-    setApiError("");
-    try {
-      const updated = await upsertAddressFromPickup(pickup, account ?? null);
-      setSavedPickup(updated);
-      toast.success("Đã lưu địa chỉ lấy hàng.");
-    } catch (e) {
-      const ax = e as { response?: { data?: { message?: string } } };
-      toast.error(
-        (ax.response?.data as { message?: string })?.message ??
-          "Lưu địa chỉ thất bại."
-      );
-    } finally {
-      setIsSavingPickup(false);
-    }
-  }, [showPickupSection, pickup, toast, account]);
 
   return {
     values,
@@ -758,7 +710,6 @@ export function useSellForm() {
     onPickupDistrictChange,
     onPickupWardChange,
     onPickupBusinessAddressChange,
-    savePickupAddress,
-    isSavingPickup,
+    onPickupPhoneNumberChange,
   };
 }

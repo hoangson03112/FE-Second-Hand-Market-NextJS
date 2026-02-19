@@ -33,6 +33,9 @@ export const ProductService = {
       formData.append("pickupDistrictId", payload.pickupAddress.districtId);
       formData.append("pickupWardCode", payload.pickupAddress.wardCode);
       formData.append("pickupBusinessAddress", payload.pickupAddress.businessAddress);
+      if (payload.pickupAddress.phoneNumber) {
+        formData.append("pickupPhoneNumber", payload.pickupAddress.phoneNumber);
+      }
     }
 
     // Upload sản phẩm (ảnh/video) có thể mất thời gian lâu hơn,
@@ -192,6 +195,9 @@ export const ProductService = {
       formData.append("pickupDistrictId", payload.pickupAddress.districtId);
       formData.append("pickupWardCode", payload.pickupAddress.wardCode);
       formData.append("pickupBusinessAddress", payload.pickupAddress.businessAddress);
+      if (payload.pickupAddress.phoneNumber) {
+        formData.append("pickupPhoneNumber", payload.pickupAddress.phoneNumber);
+      }
     }
 
     const response = await axiosClient.put(`/products/${productId}`, formData, {

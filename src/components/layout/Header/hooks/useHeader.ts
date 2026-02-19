@@ -43,7 +43,7 @@ export function useHeader() {
   const allCategoriesLeaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const visibleCategories = useMemo(
-    () => categories?.slice(0, 7),
+    () => categories?.slice(0, 9),
     [categories]
   );
 

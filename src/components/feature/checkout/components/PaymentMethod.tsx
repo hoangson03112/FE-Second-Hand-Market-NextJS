@@ -36,8 +36,8 @@ export default function PaymentMethod({ selected, onSelect }: PaymentMethodProps
         return (
           <label
             key={method.id}
-            className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${
-              isSelected ? "border-primary bg-primary/5" : "border-border hover:border-primary/30 hover:bg-muted/30"
+            className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-300 ${
+              isSelected ? "border-primary bg-primary/5 shadow-md shadow-primary/10" : "border-neutral-200/60 hover:border-primary/30 hover:bg-cream-50/50 hover:shadow-md"
             }`}
           >
             <input
@@ -50,25 +50,29 @@ export default function PaymentMethod({ selected, onSelect }: PaymentMethodProps
             <div className="flex-shrink-0">
               <div
                 className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                  isSelected ? "border-primary bg-primary" : "border-muted-foreground"
+                  isSelected ? "border-primary bg-primary" : "border-neutral-400"
                 }`}
               >
-                {isSelected && <div className="w-2 h-2 rounded-full bg-white" />}
+                {isSelected && <div className="w-2 h-2 rounded-full bg-cream-100" />}
               </div>
             </div>
-            <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${isSelected ? "bg-primary/10" : "bg-muted"}`}>
-              <Icon className={`h-5 w-5 ${isSelected ? "text-primary" : "text-muted-foreground"}`} />
+            <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all ${
+              isSelected ? "bg-primary/10" : "bg-cream-50"
+            }`}>
+              <Icon className={`h-5 w-5 ${
+                isSelected ? "text-primary" : "text-neutral-600"
+              }`} />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <h4 className="font-semibold text-foreground">{method.name}</h4>
+                <h4 className="font-semibold text-neutral-900">{method.name}</h4>
                 {method.badge && (
                   <span className="px-2 py-0.5 bg-primary text-white text-xs font-medium rounded-full">
                     {method.badge}
                   </span>
                 )}
               </div>
-              <p className="text-sm text-muted-foreground mt-0.5">{method.description}</p>
+              <p className="text-sm text-neutral-600 mt-0.5">{method.description}</p>
             </div>
           </label>
         );

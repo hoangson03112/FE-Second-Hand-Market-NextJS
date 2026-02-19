@@ -6,7 +6,7 @@ export interface PaymentOrderSummaryProps {
 
 export function PaymentOrderSummary({ totalAmount }: PaymentOrderSummaryProps) {
   return (
-    <div className="bg-white rounded-lg border border-border p-6">
+    <div className="bg-cream-50 rounded-lg border border-border p-6">
       <h2 className="font-semibold text-foreground mb-4">
         Thông tin đơn hàng
       </h2>

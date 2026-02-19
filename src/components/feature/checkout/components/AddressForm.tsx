@@ -94,7 +94,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
               value={values.provinceId}
               onChange={handleProvinceChange}
               disabled={provincesLoading}
-              className="w-full p-3 pr-10 border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed appearance-none bg-white"
+              className="w-full p-3 pr-10 border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed appearance-none bg-cream-50"
               required
             >
               <option value="">
@@ -127,7 +127,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
               value={values.districtId}
               onChange={handleDistrictChange}
               disabled={!values.provinceId || districtsLoading}
-              className="w-full p-3 pr-10 border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed appearance-none bg-white"
+              className="w-full p-3 pr-10 border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed appearance-none bg-cream-50"
               required
             >
               <option value="">
@@ -158,7 +158,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
               value={values.wardCode}
               onChange={handleWardChange}
               disabled={!values.districtId || wardsLoading}
-              className="w-full p-3 pr-10 border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed appearance-none bg-white"
+              className="w-full p-3 pr-10 border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed appearance-none bg-cream-50"
               required
             >
               <option value="">
@@ -187,7 +187,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
             value={values.specificAddress}
             onChange={handleChange}
             placeholder="Số nhà, tên đường..."
-            className="bg-white w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
+            className="bg-cream-50 w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
             required
           />
         </div>
@@ -200,7 +200,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
             value={values.fullName}
             onChange={handleChange}
             placeholder="Nguyễn Văn A"
-            className="bg-white w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
+            className="bg-cream-50 w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
             required
           />
         </div>
@@ -213,7 +213,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
             value={values.phoneNumber}
             onChange={handleChange}
             placeholder="0912345678"
-            className="bg-white w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
+            className="bg-cream-50 w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
             required
           />
         </div>

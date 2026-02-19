@@ -62,6 +62,7 @@ export interface ISeller {
   fullName?: string;
   avatar?: string | null;
   province?: string;
+  from_province_id?: string | null;
   from_district_id?: string;
   from_ward_code?: string;
   createdAt?: string;

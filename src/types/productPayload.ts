@@ -3,6 +3,7 @@ export interface PickupAddressPayload {
   districtId: string;
   wardCode: string;
   businessAddress: string;
+  phoneNumber?: string;
 }
 
 export interface CreateProductPayload {

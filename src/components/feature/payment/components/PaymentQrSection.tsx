@@ -14,7 +14,7 @@ export function PaymentQrSection({
   qrCodeImageUrl,
 }: PaymentQrSectionProps) {
   return (
-    <div className="bg-white rounded-lg border border-border p-6">
+    <div className="bg-cream-50 rounded-lg border border-border p-6">
       <h2 className="font-semibold text-foreground mb-4 text-center">
         Quét QR để thanh toán
       </h2>
@@ -28,7 +28,7 @@ export function PaymentQrSection({
             <p className="text-sm text-red-600 text-center">{bankInfoError}</p>
           </div>
         ) : bankInfo && qrCodeImageUrl ? (
-          <div className="w-94 bg-white rounded-lg flex items-center justify-center border-2 border-border">
+          <div className="w-94 bg-cream-50 rounded-lg flex items-center justify-center border-2 border-border">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={qrCodeImageUrl}

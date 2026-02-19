@@ -61,7 +61,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     : undefined;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
       <CategoryHeader category={categoryData} breadcrumbs={breadcrumbs} />
 
       <FilterBar

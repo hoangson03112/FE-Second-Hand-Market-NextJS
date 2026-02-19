@@ -46,7 +46,7 @@ export function RejectReasonDialog({
       {/* Dialog */}
       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
         <div
-          className="relative bg-white dark:bg-[var(--charcoal-900)] rounded-2xl shadow-xl w-full max-w-md animate-in zoom-in-95 slide-in-from-bottom-4"
+          className="relative bg-cream-50 dark:bg-[var(--charcoal-900)] rounded-2xl shadow-xl w-full max-w-md animate-in zoom-in-95 slide-in-from-bottom-4"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
@@ -89,7 +89,7 @@ export function RejectReasonDialog({
                 placeholder="Ví dụ: Hình ảnh không khớp với mô tả, vi phạm chính sách, nội dung không phù hợp..."
                 required
                 rows={4}
-                className="w-full px-3 py-2 rounded-lg border border-[var(--taupe-300)] dark:border-[var(--charcoal-600)] bg-white dark:bg-[var(--charcoal-800)] text-[var(--charcoal-900)] dark:text-white placeholder:text-[var(--charcoal-400)] focus:outline-none focus:ring-2 focus:ring-[var(--taupe-500)] focus:border-transparent resize-none"
+                className="w-full px-3 py-2 rounded-lg border border-[var(--taupe-300)] dark:border-[var(--charcoal-600)] bg-cream-50 dark:bg-[var(--charcoal-800)] text-[var(--charcoal-900)] dark:text-white placeholder:text-[var(--charcoal-400)] focus:outline-none focus:ring-2 focus:ring-[var(--taupe-500)] focus:border-transparent resize-none"
                 disabled={isLoading}
               />
               <p className="text-xs text-[var(--charcoal-500)] dark:text-[var(--charcoal-400)] mt-2">

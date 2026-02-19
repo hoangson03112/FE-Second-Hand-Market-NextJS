@@ -5,7 +5,7 @@ import type { ChangeEvent } from "react";
 import type { Province, District, Ward } from "@/types/address";
 import type { PickupFormValues } from "@/types/sell";
 import type { Address } from "@/types/address";
-import { MapPin, Save } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 interface PickupAddressSectionProps {
   values: PickupFormValues;
@@ -18,8 +18,7 @@ interface PickupAddressSectionProps {
   onDistrictChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   onWardChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   onBusinessAddressChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onSavePickupAddress?: () => void;
-  isSavingPickup?: boolean;
+  onPhoneNumberChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const inputClass =
@@ -37,8 +36,7 @@ export function PickupAddressSection({
   onDistrictChange,
   onWardChange,
   onBusinessAddressChange,
-  onSavePickupAddress,
-  isSavingPickup = false,
+  onPhoneNumberChange,
 }: PickupAddressSectionProps) {
   const showSavedBanner =
     savedPickup && !values.provinceId && savedPickup.specificAddress?.trim();
@@ -159,19 +157,22 @@ export function PickupAddressSection({
           )}
         </div>
 
-        {onSavePickupAddress && (
-          <div className="pt-1">
-            <button
-              type="button"
-              onClick={onSavePickupAddress}
-              disabled={isSavingPickup || !values.provinceId || !values.districtId || !values.wardCode || !values.businessAddress?.trim()}
-              className="inline-flex items-center gap-2 rounded-lg bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-700 disabled:opacity-50 disabled:pointer-events-none transition-colors"
-            >
-              <Save className="w-4 h-4" />
-              {isSavingPickup ? "Đang lưu..." : "Lưu địa chỉ"}
-            </button>
-          </div>
-        )}
+        <div>
+          <label className={labelClass}>
+            Số điện thoại <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="tel"
+            name="pickupPhoneNumber"
+            value={values.phoneNumber ?? ""}
+            onChange={onPhoneNumberChange}
+            placeholder="Ví dụ: 0901234567"
+            className={inputClass}
+          />
+          {errors.phoneNumber && (
+            <p className="mt-0.5 text-xs text-red-500">{errors.phoneNumber}</p>
+          )}
+        </div>
       </div>
     </section>
   );
