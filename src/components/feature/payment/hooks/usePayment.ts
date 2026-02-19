@@ -115,7 +115,7 @@ export function usePayment() {
 
     fetchOrder();
     fetchBankInfo();
-  }, [orderId, router]);
+  }, [orderId, router, toast]);
 
   const expiresAt = useMemo(() => {
     if (!order?.createdAt) return null;

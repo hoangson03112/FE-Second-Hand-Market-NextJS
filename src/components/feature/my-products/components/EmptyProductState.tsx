@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Package, Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { PRODUCT_MESSAGES } from "@/constants";
 
 export function EmptyProductState() {

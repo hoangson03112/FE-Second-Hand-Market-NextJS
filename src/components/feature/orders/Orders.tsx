@@ -9,7 +9,7 @@ import { useUser } from "@/hooks/useUser";
 import { OrderService } from "@/services/order.service";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
-import { PageContainer, Container } from "@/components/layout/Container";
+import { Container } from "@/components/layout/Container";
 import type { Order } from "@/types/order";
 
 const STATUS_LABELS: Record<string, string> = {
@@ -232,8 +232,9 @@ export default function Orders() {
                     <div className="space-y-3">
                       {order.products?.map((item, idx) => {
                         const product = item.productId;
-                        const avatar = product?.avatar?.url || 
-                          (typeof product?.avatar === "string" ? product.avatar : "/placeholder.svg");
+                        const avatar = typeof product?.avatar === "string" 
+                          ? product.avatar 
+                          : product?.avatar?.url || "/placeholder.svg";
                         
                         return (
                           <div key={idx} className="flex gap-4 p-3 rounded-2xl hover:bg-cream-50/50 transition-colors">

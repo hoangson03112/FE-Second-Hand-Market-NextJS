@@ -19,7 +19,6 @@ import {
   ProductDescription,
   QuantitySelector,
   ProductActionButtons,
-  ProductGuarantees,
   ReportProductModal,
 } from "./components";
 import { useProduct, useProductActions } from "./hooks";
@@ -134,7 +133,6 @@ export default function Product({ id }: ProductProps) {
               name={product.name}
               averageRating={averageRating}
               totalReviews={totalReviews}
-              sellerName={product.seller?.fullName ?? "Người bán"}
               category={product.category}
               subcategory={product.subcategory}
             />

@@ -10,6 +10,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import type { IProduct, ProductStatusFilter } from "@/types/product";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
@@ -78,10 +79,6 @@ const STATUS_BADGE: Record<string, { label: string; className: string }> = {
       "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
   },
 };
-
-function getStatusLabel(status: string): string {
-  return STATUS_BADGE[status]?.label ?? "Khác";
-}
 
 export default function AdminProducts() {
   const {
@@ -201,9 +198,11 @@ export default function AdminProducts() {
                           <div className="flex items-center gap-3">
                             <div className="w-12 h-12 rounded-lg border border-border bg-muted overflow-hidden shrink-0">
                               {product.avatar?.url ? (
-                                <img
+                                <Image
                                   src={product.avatar.url}
                                   alt={product.name}
+                                  width={48}
+                                  height={48}
                                   className="w-full h-full object-cover"
                                 />
                               ) : (
@@ -345,9 +344,11 @@ export default function AdminProducts() {
                 <div className="flex gap-4">
                   <div className="w-24 h-24 rounded-lg border border-border bg-muted overflow-hidden shrink-0">
                     {selectedProduct.avatar?.url ? (
-                      <img
+                      <Image
                         src={selectedProduct.avatar.url}
                         alt={selectedProduct.name}
+                        width={96}
+                        height={96}
                         className="w-full h-full object-cover"
                       />
                     ) : (
@@ -440,9 +441,11 @@ export default function AdminProducts() {
                           key={img.publicId ?? i}
                           className="shrink-0 rounded-lg border border-border overflow-hidden bg-muted"
                         >
-                          <img
+                          <Image
                             src={img.url}
                             alt={img.originalName || ""}
+                            width={80}
+                            height={80}
                             className="w-20 h-20 object-cover"
                           />
                           {(img.originalName || img.size) && (

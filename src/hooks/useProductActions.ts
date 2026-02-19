@@ -79,7 +79,7 @@ export function useProductActions({
     } finally {
       setActionLoading(false);
     }
-  }, [account, product, quantity, toast]);
+  }, [account, product, quantity, toast, router]);
 
   const handleContactSeller = useCallback(async () => {
     if (!account) {

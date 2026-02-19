@@ -341,6 +341,7 @@ export function useSellForm() {
                       districtId: base.districtId,
                       wardCode: base.wardCode,
                       businessAddress: base.businessAddress,
+                      phoneNumber: base.phoneNumber,
                     });
                   }
                 } catch (err) {
@@ -445,6 +446,7 @@ export function useSellForm() {
             districtId: base.districtId,
             wardCode: base.wardCode,
             businessAddress: base.businessAddress,
+            phoneNumber: base.phoneNumber,
           });
         }
       } catch (err) {
@@ -616,7 +618,7 @@ export function useSellForm() {
               try {
                 await ProductService.requestReview(editProductId);
                 toast.success("Cập nhật và yêu cầu duyệt lại thành công! Admin sẽ xem xét trong 24h.");
-              } catch (error) {
+              } catch {
                 toast.success("Cập nhật sản phẩm thành công");
                 toast.error("Không thể gửi yêu cầu duyệt lại. Vui lòng thử lại sau.");
               }
@@ -665,6 +667,7 @@ export function useSellForm() {
       pickup,
       isEditMode,
       editProductId,
+      currentProduct,
     ]
   );
 

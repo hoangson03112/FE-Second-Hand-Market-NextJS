@@ -30,7 +30,10 @@ export function useAdminCategories() {
     queryFn: () => AdminService.getCategories(),
   });
 
-  const categories: AdminCategory[] = data?.data ?? [];
+  const categories: AdminCategory[] = useMemo(
+    () => data?.data ?? [],
+    [data?.data]
+  );
 
   const selectedCategory = useMemo(
     () => categories.find((c) => c._id === selectedCategoryId) ?? null,

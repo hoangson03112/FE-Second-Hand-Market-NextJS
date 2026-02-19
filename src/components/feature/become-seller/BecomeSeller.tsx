@@ -9,7 +9,7 @@ import {
 } from "@/components/feature/auth";
 import { ArrowRightIcon } from "@/components/ui";
 import { useBecomeSeller, useBecomeSellerLocation } from "./hooks";
-import { becomeSellerFeatures, UNVERIFIED_SELLER_PRODUCT_LIMIT } from "@/constants";
+import { becomeSellerFeatures } from "@/constants";
 import {
   AddressSection,
   BankInfoSection,

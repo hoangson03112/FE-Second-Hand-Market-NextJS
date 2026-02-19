@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import { ComponentType } from "react";
 
 /**
  * Lazy load heavy components với loading fallback
@@ -12,12 +11,12 @@ export const LazyChat = dynamic(() => import("@/app/chat/page"), {
       <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent" />
     </div>
   ),
-  ssr: false, // Chat thường cần real-time, không cần SSR
+  ssr: false,
 });
 
 // Confirmation dialogs
 export const LazyConfirmDialog = dynamic(
-  () => import("@/components/ui/ConfirmDialog"),
+  () => import("@/components/ui/ConfirmDialog").then(m => ({ default: m.ConfirmDialogProvider })),
   {
     loading: () => null,
     ssr: false,
@@ -25,24 +24,14 @@ export const LazyConfirmDialog = dynamic(
 );
 
 // Toast notifications
-export const LazyToast = dynamic(() => import("@/components/ui/Toast"), {
+export const LazyToast = dynamic(() => import("@/components/ui/Toast").then(m => ({ default: m.ToastProvider })), {
   loading: () => null,
   ssr: false,
 });
 
-// Heavy product features
-export const LazyProductReviews = dynamic(
-  () => import("@/components/feature/product/ProductReviews"),
-  {
-    loading: () => (
-      <div className="animate-pulse bg-neutral-100 h-40 rounded-lg" />
-    ),
-  }
-);
-
-// Admin components (không cần load ngay)
+// Admin components
 export const LazyAdminDashboard = dynamic(
-  () => import("@/components/feature/admin/Dashboard"),
+  () => import("@/components/feature/admin/dashboard"),
   {
     loading: () => (
       <div className="flex items-center justify-center min-h-screen">
@@ -51,29 +40,3 @@ export const LazyAdminDashboard = dynamic(
     ),
   }
 );
-
-// Map components (nếu có)
-export const LazyMap = dynamic(() => import("@/components/common/Map"), {
-  loading: () => (
-    <div className="w-full h-64 bg-neutral-100 animate-pulse rounded-lg flex items-center justify-center">
-      <span className="text-neutral-500">Đang tải bản đồ...</span>
-    </div>
-  ),
-  ssr: false, // Map libraries thường không support SSR
-});
-
-/**
- * Generic lazy component wrapper
- */
-export function lazyLoad<T extends ComponentType<any>>(
-  importFunc: () => Promise<{ default: T }>,
-  options?: {
-    loading?: React.ComponentType;
-    ssr?: boolean;
-  }
-) {
-  return dynamic(importFunc, {
-    loading: options?.loading || (() => <div>Loading...</div>),
-    ssr: options?.ssr !== undefined ? options.ssr : true,
-  });
-}

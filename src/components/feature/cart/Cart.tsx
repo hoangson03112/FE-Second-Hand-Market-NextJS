@@ -75,7 +75,6 @@ export default function Cart() {
         {groups.map((group) => (
           <ShopCartGroup
             key={group.sellerId}
-            sellerId={group.sellerId}
             sellerName={group.sellerName}
             sellerAvatar={group.sellerAvatar}
             items={group.items}
