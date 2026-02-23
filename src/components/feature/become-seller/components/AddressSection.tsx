@@ -1,11 +1,25 @@
 import React from "react";
 import type { ChangeEvent } from "react";
 import type { Province, District, Ward } from "@/types/address";
-import type { BecomeSellerFormValues, BecomeSellerErrors } from "../hooks/useBecomeSeller";
+
+interface AddressValues {
+  provinceId: string;
+  districtId: string;
+  wardCode: string;
+  address: string;
+  phoneNumber: string;
+  [key: string]: unknown;
+}
+
+interface AddressErrors {
+  address?: string;
+  phoneNumber?: string;
+  [key: string]: string | undefined;
+}
 
 interface AddressSectionProps {
-  values: BecomeSellerFormValues;
-  errors: BecomeSellerErrors;
+  values: AddressValues;
+  errors: AddressErrors;
   provinces: Province[];
   districts: District[];
   wards: Ward[];

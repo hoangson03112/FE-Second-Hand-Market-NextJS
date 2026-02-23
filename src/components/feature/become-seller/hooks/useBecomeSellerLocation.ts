@@ -2,11 +2,20 @@ import { useMemo, useCallback } from "react";
 import type { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { useProvinces, useDistricts, useWards } from "@/hooks/useGHNLocation";
 import type { Province, District, Ward } from "@/types/address";
-import type { BecomeSellerFormValues } from "./useBecomeSeller";
+
+interface LocationValues {
+  provinceId: string;
+  districtId: string;
+  wardCode: string;
+  province: string;
+  district: string;
+  ward: string;
+  [key: string]: unknown;
+}
 
 export interface UseBecomeSellerLocationParams {
-  values: BecomeSellerFormValues;
-  setValues: Dispatch<SetStateAction<BecomeSellerFormValues>>;
+  values: LocationValues;
+  setValues: Dispatch<SetStateAction<LocationValues>>;
 }
 
 export interface UseBecomeSellerLocationResult {
