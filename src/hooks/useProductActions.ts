@@ -1,10 +1,12 @@
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { IProduct } from "@/types/product";
 import { useCheckoutStore } from "@/store/useCheckoutStore";
 import { AccountInfo } from "@/types/auth";
 import { CartService, ChatService } from "@/services";
 import { useToast } from "@/components/ui";
+import { queryKeys } from "@/lib/query-client";
 
 interface UseProductActionsProps {
   product: IProduct | null;
@@ -18,6 +20,7 @@ export function useProductActions({
   quantity,
 }: UseProductActionsProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [actionLoading, setActionLoading] = useState(false);
   const { setCheckoutItems } = useCheckoutStore();
   const toast = useToast();
@@ -73,13 +76,18 @@ export function useProductActions({
         quantity,
       });
 
+      // Invalidate cart queries to refresh cart data
+      queryClient.invalidateQueries({ queryKey: queryKeys.cart.list() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });
+
       toast.success("Đã thêm vào giỏ hàng");
     } catch (error) {
       console.error("Lỗi khi thêm vào giỏ hàng:", error);
+      toast.error("Không thể thêm vào giỏ hàng");
     } finally {
       setActionLoading(false);
     }
-  }, [account, product, quantity, toast, router]);
+  }, [account, product, quantity, toast, router, queryClient]);
 
   const handleContactSeller = useCallback(async () => {
     if (!account) {

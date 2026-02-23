@@ -38,7 +38,7 @@ export default function SearchResults({
               page: 1,
             })
           }
-          className="px-4 py-2 rounded-lg border border-border bg-background text-sm"
+          className="h-10 px-4 border-2 border-taupe-300 focus:border-primary focus:outline-none text-sm text-taupe-700 bg-cream-50"
         >
           <option value="newest">Mới nhất</option>
           <option value="oldest">Cũ nhất</option>

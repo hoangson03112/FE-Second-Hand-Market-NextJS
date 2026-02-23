@@ -21,7 +21,7 @@ export const IdCardSection: React.FC<IdCardSectionProps> = ({
         <h3 className="text-sm font-semibold text-foreground">
           Ảnh CCCD/CMND <span className="text-red-500">*</span>
         </h3>
-        <span className="text-[11px] font-medium text-primary">Bước 3</span>
+        <span className="text-[11px] font-medium text-primary">Bước 2</span>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

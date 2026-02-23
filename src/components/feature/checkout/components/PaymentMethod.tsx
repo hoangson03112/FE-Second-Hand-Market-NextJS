@@ -29,15 +29,15 @@ export default function PaymentMethod({ selected, onSelect }: PaymentMethodProps
   ];
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2.5">
       {methods.map((method) => {
         const Icon = method.icon;
         const isSelected = selected === method.id;
         return (
           <label
             key={method.id}
-            className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-300 ${
-              isSelected ? "border-primary bg-primary/5 shadow-md shadow-primary/10" : "border-neutral-200/60 hover:border-primary/30 hover:bg-cream-50/50 hover:shadow-md"
+            className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition ${
+              isSelected ? "border-primary bg-primary/5" : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
             }`}
           >
             <input
@@ -49,30 +49,30 @@ export default function PaymentMethod({ selected, onSelect }: PaymentMethodProps
             />
             <div className="flex-shrink-0">
               <div
-                className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                  isSelected ? "border-primary bg-primary" : "border-neutral-400"
+                className={`w-4 h-4 rounded-full border flex items-center justify-center transition ${
+                  isSelected ? "border-primary bg-primary" : "border-gray-400"
                 }`}
               >
-                {isSelected && <div className="w-2 h-2 rounded-full bg-cream-100" />}
+                {isSelected && <div className="w-2 h-2 rounded-full bg-white" />}
               </div>
             </div>
-            <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all ${
-              isSelected ? "bg-primary/10" : "bg-cream-50"
+            <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${
+              isSelected ? "bg-primary/10" : "bg-gray-100"
             }`}>
-              <Icon className={`h-5 w-5 ${
-                isSelected ? "text-primary" : "text-neutral-600"
+              <Icon className={`h-4 w-4 ${
+                isSelected ? "text-primary" : "text-gray-600"
               }`} />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <h4 className="font-semibold text-neutral-900">{method.name}</h4>
+                <h4 className="text-sm font-medium text-gray-900">{method.name}</h4>
                 {method.badge && (
-                  <span className="px-2 py-0.5 bg-primary text-white text-xs font-medium rounded-full">
+                  <span className="px-2 py-0.5 bg-primary text-white text-xs font-medium rounded-md">
                     {method.badge}
                   </span>
                 )}
               </div>
-              <p className="text-sm text-neutral-600 mt-0.5">{method.description}</p>
+              <p className="text-xs text-gray-600 mt-0.5">{method.description}</p>
             </div>
           </label>
         );

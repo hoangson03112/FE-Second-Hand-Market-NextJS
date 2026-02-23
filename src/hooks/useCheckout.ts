@@ -84,11 +84,17 @@ export function useCheckout() {
         let totalFee = 0;
 
         for (const [sellerId, sellerItems] of groups) {
-          const seller = sellerItems[0]?.product?.seller;
-          const fromDistrictId = seller?.from_district_id
-            ? parseInt(seller.from_district_id)
-            : NaN;
-          const fromWardCode = seller?.from_ward_code ?? "";
+          const firstProduct = sellerItems[0]?.product;
+          const seller = firstProduct?.seller;
+          // Ưu tiên product.address (Address ref mới), fallback về seller fields cũ
+          const pickupAddress = firstProduct?.address;
+          const fromDistrictId = pickupAddress?.districtId
+            ? parseInt(pickupAddress.districtId)
+            : seller?.from_district_id
+              ? parseInt(seller.from_district_id)
+              : NaN;
+          const fromWardCode =
+            pickupAddress?.wardCode ?? seller?.from_ward_code ?? "";
 
           if (isNaN(fromDistrictId) || !fromWardCode) {
             setShippingError(

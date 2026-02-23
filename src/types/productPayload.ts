@@ -1,11 +1,3 @@
-export interface PickupAddressPayload {
-  provinceId: string;
-  districtId: string;
-  wardCode: string;
-  businessAddress: string;
-  phoneNumber?: string;
-}
-
 export interface CreateProductPayload {
   name: string;
   price: number;
@@ -17,8 +9,16 @@ export interface CreateProductPayload {
   attributes?: Array<{ key: string; value: string | number }>;
   images?: File[];
   video?: File | null;
-  pickupAddress?: PickupAddressPayload;
+  // Buyer: địa chỉ lấy hàng inline
+  provinceId?: string;
+  districtId?: string;
+  wardCode?: string;
+  specificAddress?: string;
+  fullName?: string;
+  phoneNumber?: string;
+  // Seller: chọn từ danh sách địa chỉ đã lưu
+  addressId?: string;
 }
 
-export type UpdateProductPayload = CreateProductPayload; // pickupAddress optional
+export type UpdateProductPayload = CreateProductPayload;
 

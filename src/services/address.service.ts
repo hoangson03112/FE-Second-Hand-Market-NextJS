@@ -17,11 +17,13 @@ export const AddressService = {
   // ========== USER ADDRESSES (Internal API) ==========
 
   /**
-   * Get all addresses of the current user
+   * Get addresses of the current user, optionally filtered by type
    */
-  getAddresses: async (): Promise<Address[]> => {
+  getAddresses: async (type?: "delivery" | "pickup"): Promise<Address[]> => {
     try {
-      const response = await axiosClient.get("/addresses");
+      const response = await axiosClient.get("/addresses", {
+        params: type ? { type } : undefined,
+      });
       return Array.isArray(response) ? response : [];
     } catch (error) {
       logger.error("Failed to fetch addresses", error as Error);

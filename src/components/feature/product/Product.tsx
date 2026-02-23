@@ -106,17 +106,17 @@ export default function Product({ id }: ProductProps) {
     ) || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
-      <main className="max-w-7xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-taupe-50">
+      <main className="max-w-7xl mx-auto px-4 py-6">
         <button
           onClick={() => router.back()}
-          className="inline-flex items-center gap-2 text-primary hover:underline mb-8 font-medium"
+          className="inline-flex items-center gap-2 text-taupe-600 hover:text-primary mb-4 text-sm"
         >
           <ArrowLeft className="h-4 w-4" />
-          Quay lại
+          Trở lại
         </button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
           <div className="gap-4 flex-col flex">
             {/* Gallery Section */}
             <ProductGalleryNew
@@ -152,17 +152,17 @@ export default function Product({ id }: ProductProps) {
             />
 
             {(product.stock ?? 0) === 0 && (
-              <div className=" rounded-lg bg-red-500/10 text-red-600 dark:text-red-400 px-3 py-2 text-sm font-medium my-3">
+              <div className="rounded-lg bg-red-50 text-red-600 px-4 py-2 text-sm font-medium my-3 border border-red-200">
                 Hết hàng
               </div>
             )}
             {(product.stock ?? 0) === 1 && (
-              <div className="rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-300 px-3 py-2 text-sm font-medium my-3">
+              <div className="rounded-lg bg-orange-50 text-orange-700 px-4 py-2 text-sm font-medium my-3 border border-orange-200">
                 Chỉ còn 1 sản phẩm
               </div>
             )}
             {(product.stock ?? 0) > 1 && (
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-taupe-600 mb-3">
                 Còn {product.stock} sản phẩm
               </div>
             )}
@@ -192,7 +192,7 @@ export default function Product({ id }: ProductProps) {
             <button
               type="button"
               onClick={() => setShowReportModal(true)}
-              className="text-sm text-muted-foreground hover:text-red-600 underline"
+              className="text-sm text-gray-500 hover:text-red-600 underline"
             >
               Báo cáo sản phẩm này
             </button>

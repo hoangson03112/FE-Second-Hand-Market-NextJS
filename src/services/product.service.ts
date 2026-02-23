@@ -28,15 +28,13 @@ export const ProductService = {
     if (payload.video) {
       formData.append("video", payload.video);
     }
-    if (payload.pickupAddress) {
-      formData.append("pickupProvinceId", payload.pickupAddress.provinceId);
-      formData.append("pickupDistrictId", payload.pickupAddress.districtId);
-      formData.append("pickupWardCode", payload.pickupAddress.wardCode);
-      formData.append("pickupBusinessAddress", payload.pickupAddress.businessAddress);
-      if (payload.pickupAddress.phoneNumber) {
-        formData.append("pickupPhoneNumber", payload.pickupAddress.phoneNumber);
-      }
-    }
+    if (payload.provinceId) formData.append("provinceId", payload.provinceId);
+    if (payload.districtId) formData.append("districtId", payload.districtId);
+    if (payload.wardCode) formData.append("wardCode", payload.wardCode);
+    if (payload.specificAddress) formData.append("specificAddress", payload.specificAddress);
+    if (payload.fullName) formData.append("fullName", payload.fullName);
+    if (payload.phoneNumber) formData.append("phoneNumber", payload.phoneNumber);
+    if (payload.addressId) formData.append("addressId", payload.addressId);
 
     // Upload sản phẩm (ảnh/video) có thể mất thời gian lâu hơn,
     // nên tăng timeout để tránh request bị `canceled` giữa chừng.
@@ -190,15 +188,13 @@ export const ProductService = {
     if (payload.video) {
       formData.append("video", payload.video);
     }
-    if (payload.pickupAddress) {
-      formData.append("pickupProvinceId", payload.pickupAddress.provinceId);
-      formData.append("pickupDistrictId", payload.pickupAddress.districtId);
-      formData.append("pickupWardCode", payload.pickupAddress.wardCode);
-      formData.append("pickupBusinessAddress", payload.pickupAddress.businessAddress);
-      if (payload.pickupAddress.phoneNumber) {
-        formData.append("pickupPhoneNumber", payload.pickupAddress.phoneNumber);
-      }
-    }
+    if (payload.provinceId) formData.append("provinceId", payload.provinceId);
+    if (payload.districtId) formData.append("districtId", payload.districtId);
+    if (payload.wardCode) formData.append("wardCode", payload.wardCode);
+    if (payload.specificAddress) formData.append("specificAddress", payload.specificAddress);
+    if (payload.fullName) formData.append("fullName", payload.fullName);
+    if (payload.phoneNumber) formData.append("phoneNumber", payload.phoneNumber);
+    if (payload.addressId) formData.append("addressId", payload.addressId);
 
     const response = await axiosClient.put(`/products/${productId}`, formData, {
       timeout: 60000, // 60s cho upload file

@@ -6,10 +6,12 @@ import { queryKeys } from "@/lib/query-client";
 import { serverStateConfig } from "@/lib/state";
 import { useTokenStore } from "@/store/useTokenStore";
 import { enrichAddresses } from "@/utils/addressTransform";
+import { useToast } from "@/components/ui";
 
 export function useAddress() {
   const accessToken = useTokenStore((state) => state.accessToken);
   const queryClient = useQueryClient();
+  const toast = useToast();
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [showNewAddressForm, setShowNewAddressForm] = useState(false);
@@ -21,14 +23,14 @@ export function useAddress() {
     error,
     refetch,
   } = useQuery<Address[]>({
-    queryKey: queryKeys.addresses.list(),
+    queryKey: [...queryKeys.addresses.list(), "delivery"],
     queryFn: async () => {
       if (!accessToken) {
         return [];
       }
 
       try {
-        const rawAddresses = await AddressService.getAddresses();
+        const rawAddresses = await AddressService.getAddresses("delivery");
         const enrichedAddresses = await enrichAddresses(
           rawAddresses,
           queryClient
@@ -72,16 +74,30 @@ export function useAddress() {
   };
 
   const handleCreateAddress = async (address: CreateAddressRequest) => {
-    await AddressService.createAddress(address);
-    await refetch(); // Đợi refetch hoàn thành
+    try {
+      await AddressService.createAddress(address);
+      await queryClient.invalidateQueries({ queryKey: queryKeys.addresses.list() });
+      await refetch();
+      toast.success("Đã thêm địa chỉ thành công");
+    } catch (err) {
+      toast.error("Không thể thêm địa chỉ. Vui lòng kiểm tra và thử lại.");
+      throw err;
+    }
   };
 
   const handleUpdateAddress = async (
     id: string,
     address: CreateAddressRequest
   ) => {
-    await AddressService.updateAddress(id, address);
-    await refetch();
+    try {
+      await AddressService.updateAddress(id, address);
+      await queryClient.invalidateQueries({ queryKey: queryKeys.addresses.list() });
+      await refetch();
+      toast.success("Đã cập nhật địa chỉ thành công");
+    } catch (err) {
+      toast.error("Không thể cập nhật địa chỉ. Vui lòng thử lại.");
+      throw err;
+    }
   };
 
   const handleDeleteAddress = async (id: string) => {

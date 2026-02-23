@@ -14,7 +14,7 @@ export const TermsSection: React.FC<TermsSectionProps> = ({ values, errors, onCh
     <div className="rounded-xl border border-border bg-muted/40 p-3 lg:p-4 space-y-3">
       <div className="flex items-center justify-between gap-2">
         <h3 className="text-sm font-semibold text-foreground">Điều khoản & chính sách</h3>
-        <span className="text-[11px] font-medium text-primary">Bước 4</span>
+        <span className="text-[11px] font-medium text-primary">Bước 3</span>
       </div>
 
       <div className="space-y-2">
