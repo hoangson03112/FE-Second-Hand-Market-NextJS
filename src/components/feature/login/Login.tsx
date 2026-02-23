@@ -82,7 +82,7 @@ export default function Login() {
               <label className="flex items-center gap-2.5 cursor-pointer text-taupe-600 hover:text-taupe-900 transition-colors group">
                 <input
                   type="checkbox"
-                  className="w-4 h-4 rounded-md border-2 border-gray-300 text-primary focus:ring-2 focus:ring-primary/30 focus:ring-offset-0 cursor-pointer"
+                  className="w-4 h-4 border-2 border-taupe-300 text-primary focus:ring-2 focus:ring-primary/30 focus:ring-offset-0 cursor-pointer"
                 />
                 <span className="font-medium">Ghi nhớ đăng nhập</span>
               </label>

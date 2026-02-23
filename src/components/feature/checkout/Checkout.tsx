@@ -57,7 +57,7 @@ export default function Checkout() {
 
   return (
     <PageContainer withBackground={false}>
-      <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
+      <div className="min-h-screen bg-gray-50">
       <Container as="main" maxWidth="7xl" paddingX="md" paddingY="lg">
         <CheckoutHeader onBack={() => router.back()} />
 
@@ -74,9 +74,8 @@ export default function Checkout() {
           onDeleteAddress={handleDeleteAddress}
         />
 
-        <div className="bg-cream-50/90 backdrop-blur-md rounded-3xl shadow-lg shadow-neutral-200/50 border-2 border-neutral-200/60 p-6 mb-6">
-          <h2 className="text-xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
-            <span className="w-1 h-6 bg-primary rounded-full" />
+        <div className="bg-white rounded-lg border border-gray-200 shadow-md p-5 mb-4">
+          <h2 className="text-lg font-medium text-gray-900 mb-4 pb-3 border-b border-gray-200">
             Địa Chỉ Nhận Hàng
           </h2>
           <AddressSection
@@ -85,19 +84,17 @@ export default function Checkout() {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-            <div className="bg-cream-50/90 backdrop-blur-md rounded-3xl shadow-lg shadow-neutral-200/50 border-2 border-neutral-200/60 p-6">
-              <h2 className="text-xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
-                <span className="w-1 h-6 bg-primary rounded-full" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-2 space-y-4">
+            <div className="bg-white rounded-lg border border-gray-200 shadow-md p-5">
+              <h2 className="text-lg font-medium text-gray-900 mb-4 pb-3 border-b border-gray-200">
                 Sản Phẩm ({orderItems.length})
               </h2>
               <OrderItems items={orderItems} />
             </div>
 
-            <div className="bg-cream-50/90 backdrop-blur-md rounded-3xl shadow-lg shadow-neutral-200/50 border-2 border-neutral-200/60 p-6">
-              <h2 className="text-xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
-                <span className="w-1 h-6 bg-primary rounded-full" />
+            <div className="bg-white rounded-lg border border-gray-200 shadow-md p-5">
+              <h2 className="text-lg font-medium text-gray-900 mb-4 pb-3 border-b border-gray-200">
                 Thông Tin Vận Chuyển
               </h2>
               <ShippingInfo
@@ -107,9 +104,8 @@ export default function Checkout() {
               />
             </div>
 
-            <div className="bg-cream-50/90 backdrop-blur-md rounded-3xl shadow-lg shadow-neutral-200/50 border-2 border-neutral-200/60 p-6">
-              <h2 className="text-xl font-bold text-neutral-900 mb-4 flex items-center gap-2">
-                <span className="w-1 h-6 bg-primary rounded-full" />
+            <div className="bg-white rounded-lg border border-gray-200 shadow-md p-5">
+              <h2 className="text-lg font-medium text-gray-900 mb-4 pb-3 border-b border-gray-200">
                 Phương Thức Thanh Toán
               </h2>
               <PaymentMethod selected={paymentMethod} onSelect={setPaymentMethod} />
@@ -117,8 +113,8 @@ export default function Checkout() {
           </div>
 
           <div className="lg:col-span-1">
-            <div className="sticky top-8 space-y-6">
-              <div className="bg-cream-50/90 backdrop-blur-md rounded-3xl shadow-lg shadow-neutral-200/50 border-2 border-neutral-200/60">
+            <div className="sticky top-8 space-y-4">
+              <div className="bg-white rounded-lg border border-gray-200 shadow-md">
                 <CheckoutSummary subtotal={subtotal} shipping={shipping} discount={0} />
               </div>
               <CheckoutButton

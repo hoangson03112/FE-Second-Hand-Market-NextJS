@@ -1,17 +1,6 @@
 import { z } from "zod";
 
 export const becomeSellerSchema = z.object({
-  address: z
-    .string()
-    .min(5, "Địa chỉ kinh doanh phải có ít nhất 5 ký tự")
-    .max(200, "Địa chỉ không được quá 200 ký tự")
-    .trim(),
-  provinceId: z.string().min(1, "Vui lòng chọn Tỉnh/Thành phố"),
-  districtId: z.string().min(1, "Vui lòng chọn Quận/Huyện"),
-  wardCode: z.string().min(1, "Vui lòng chọn Phường/Xã"),
-  province: z.string().min(1),
-  district: z.string().min(1),
-  ward: z.string().min(1),
   bankName: z
     .string()
     .min(2, "Tên ngân hàng phải có ít nhất 2 ký tự")
@@ -27,6 +16,11 @@ export const becomeSellerSchema = z.object({
     .string()
     .min(2, "Tên chủ tài khoản phải có ít nhất 2 ký tự")
     .max(100)
+    .trim(),
+  phoneNumber: z
+    .string()
+    .min(1, "Vui lòng nhập số điện thoại")
+    .regex(/^[0-9]{10,11}$/, "Số điện thoại không hợp lệ (10-11 số)")
     .trim(),
   agreeTerms: z.boolean().refine((val) => val === true, {
     message: "Bạn cần đồng ý điều khoản sử dụng",

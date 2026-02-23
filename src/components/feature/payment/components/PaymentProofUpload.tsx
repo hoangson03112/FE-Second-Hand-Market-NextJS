@@ -49,10 +49,10 @@ export function PaymentProofUpload({
         <label
           className={`relative flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-xl cursor-pointer transition-all ${
             disabled
-              ? "border-gray-200 bg-gray-50 cursor-not-allowed"
+              ? "border-taupe-200 bg-taupe-50 cursor-not-allowed"
               : proofPreviewUrl
                 ? "border-green-300 bg-green-50"
-                : "border-gray-300 bg-gray-50 hover:border-primary hover:bg-primary/5"
+                : "border-taupe-300 bg-taupe-50 hover:border-primary hover:bg-primary/5"
           }`}
         >
           <input

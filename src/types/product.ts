@@ -28,6 +28,15 @@ export interface IProduct {
   location?: string;
   views?: number;
   likes?: number;
+  address?: {
+    _id?: string;
+    provinceId?: string;
+    districtId?: string;
+    wardCode?: string;
+    specificAddress?: string;
+    fullName?: string;
+    phoneNumber?: string;
+  } | null;
   aiModerationResult?: {
     approved?: boolean | null;
     confidence?: number;

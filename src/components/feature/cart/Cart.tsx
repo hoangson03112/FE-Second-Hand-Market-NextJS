@@ -69,9 +69,9 @@ export default function Cart() {
   }
 
   return (
-    <PageContainer withBackground={false} className="pb-24 bg-gradient-to-b from-background via-cream-50/30 to-background min-h-screen">
+    <PageContainer withBackground={false} className="pb-24 bg-taupe-50 min-h-screen">
       <CartHeader onBack={onBack} />
-      <Container as="main" maxWidth="4xl" paddingX="md" paddingY="md">
+      <Container as="main" maxWidth="7xl" paddingX="md" paddingY="md">
         {groups.map((group) => (
           <ShopCartGroup
             key={group.sellerId}

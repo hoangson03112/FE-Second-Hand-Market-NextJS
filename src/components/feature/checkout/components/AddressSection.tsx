@@ -11,7 +11,7 @@ interface AddressSectionProps {
 const formatAddress = (address: Address | null) => {
   if (!address) return "";
   const parts = [
-    address.address,
+    address.specificAddress || address.address,
     address.ward,
     address.district,
     address.province,
@@ -25,18 +25,18 @@ export default function AddressSection({
 }: AddressSectionProps) {
   if (!selectedAddress) {
     return (
-      <div className="bg-cream-50/50 rounded-2xl p-5 border-2 border-neutral-200/60">
+      <div className="bg-taupe-50 p-4 border border-taupe-200">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-              <MapPin className="h-5 w-5 text-primary" />
+            <div className="w-8 h-8 bg-primary/10 flex items-center justify-center">
+              <MapPin className="h-4 w-4 text-primary" />
             </div>
             <div>
-              <p className="font-semibold text-neutral-900">Chưa có địa chỉ giao hàng</p>
-              <p className="text-sm text-neutral-600">Vui lòng thêm địa chễ để tiếp tục</p>
+              <p className="font-medium text-taupe-900 text-sm">Chưa có địa chỉ giao hàng</p>
+              <p className="text-xs text-taupe-600">Vui lòng thêm địa chỉ để tiếp tục</p>
             </div>
           </div>
-          <button onClick={onChangeAddress} className="btn btn-primary btn-sm rounded-lg">
+          <button onClick={onChangeAddress} className="btn btn-primary btn-sm text-sm px-4 py-2">
             Thêm địa chỉ
           </button>
         </div>
@@ -45,26 +45,26 @@ export default function AddressSection({
   }
 
   return (
-    <div className="bg-cream-50/50 rounded-2xl p-5 border-2 border-neutral-200/60">
+    <div className="bg-taupe-50 p-4 border border-taupe-200">
       <div className="flex justify-between items-start gap-4">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
-            <span className="font-bold text-neutral-900 text-lg">{selectedAddress.fullName}</span>
-            <span className="h-4 w-px bg-neutral-300" />
-            <span className="text-neutral-600">{selectedAddress.phoneNumber}</span>
+            <span className="font-medium text-taupe-900">{selectedAddress.fullName}</span>
+            <span className="h-3 w-px bg-taupe-200" />
+            <span className="text-sm text-taupe-600">{selectedAddress.phoneNumber}</span>
             {selectedAddress.isDefault && (
-              <span className="px-2.5 py-0.5 bg-primary/10 text-primary text-xs font-semibold rounded-full">
+              <span className="px-2 py-0.5 bg-primary/10 text-primary text-xs font-medium">
                 Mặc định
               </span>
             )}
           </div>
-          <p className="text-sm text-neutral-600">{formatAddress(selectedAddress)}</p>
+          <p className="text-sm text-taupe-600">{formatAddress(selectedAddress)}</p>
         </div>
         <button
           onClick={onChangeAddress}
-          className="btn btn-secondary btn-sm flex items-center gap-2 rounded-lg"
+          className="btn btn-secondary btn-sm flex items-center gap-2 text-sm px-3 py-1.5"
         >
-          <Edit2 className="h-4 w-4" />
+          <Edit2 className="h-3.5 w-3.5" />
           Thay đổi
         </button>
       </div>

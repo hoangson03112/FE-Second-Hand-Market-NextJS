@@ -1,23 +1,34 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
-  AuthLayout,
-  BrandingSection,
-  AuthFormContainer,
-  AuthButton,
-  ErrorMessage,
-} from "@/components/feature/auth";
-import { ArrowRightIcon } from "@/components/ui";
-import { useBecomeSeller, useBecomeSellerLocation } from "./hooks";
-import { becomeSellerFeatures } from "@/constants";
+  ArrowLeft,
+  Store,
+  ShieldCheck,
+  Banknote,
+  PackageCheck,
+  Clock,
+  CheckCircle2,
+  XCircle,
+} from "lucide-react";
+import { ErrorMessage } from "@/components/feature/auth";
+import { useBecomeSeller } from "./hooks";
 import {
-  AddressSection,
   BankInfoSection,
   IdCardSection,
   TermsSection,
 } from "./components";
 
+const PERKS = [
+  { icon: PackageCheck, text: "Đăng sản phẩm không giới hạn" },
+  { icon: Banknote, text: "Nhận thanh toán online an toàn" },
+  { icon: ShieldCheck, text: "Huy hiệu Seller xác minh" },
+];
+
 export default function BecomeSeller() {
+  const router = useRouter();
+
   const {
     values,
     setValues,
@@ -35,115 +46,104 @@ export default function BecomeSeller() {
     productLimit,
     requiresVerification,
   } = useBecomeSeller();
-  const {
-    provinces,
-    districts,
-    wards,
-    provincesLoading,
-    districtsLoading,
-    wardsLoading,
-    selectedProvince,
-    selectedDistrict,
-    selectedWard,
-    onProvinceChange,
-    onDistrictChange,
-    onWardChange,
-  } = useBecomeSellerLocation({ values, setValues });
 
   return (
-    <AuthLayout>
-      <div className="grid lg:grid-cols-[1.1fr,1.2fr] gap-8 lg:gap-12 items-stretch">
-        <BrandingSection
-          title="Đăng ký"
-          titleHighlight="bán hàng"
-          description="Trở thành seller đáng tin cậy trên Eco Market, mở gian hàng riêng để đăng sản phẩm, quản lý đơn và nhận thanh toán an toàn."
-          features={becomeSellerFeatures}
-        />
+    <div className="min-h-screen bg-background">
+      {/* Top bar */}
+      <div className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Quay lại
+          </button>
+          <span className="text-muted-foreground/40 select-none">|</span>
+          <span className="text-sm font-medium text-foreground">Đăng ký làm Seller</span>
+        </div>
+      </div>
 
-        <AuthFormContainer
-          title="Đăng ký làm Seller"
-          subtitle="Điền nhanh các thông tin cần thiết để bắt đầu bán hàng"
-          maxHeight="max-h-[90vh]"
-        >
-          {isCheckingStatus ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent" />
-            </div>
-          ) : hasRequest && requestStatus === "pending" ? (
-            <div className="space-y-4">
-              <div className="rounded-xl border border-amber-500/50 bg-amber-50/50 p-4 space-y-2">
-                <h3 className="text-sm font-semibold text-amber-800">
-                  Yêu cầu đang chờ phê duyệt
-                </h3>
-                <p className="text-xs text-amber-700">
-                  Bạn đã gửi yêu cầu trở thành seller. Hồ sơ của bạn đang được đội ngũ Eco Market
-                  kiểm duyệt trong vòng 24h. Vui lòng chờ thông báo qua email hoặc kiểm tra lại sau.
-                </p>
-              </div>
-            </div>
-          ) : hasRequest && requestStatus === "rejected" ? (
-            <div className="space-y-4">
-              <div className="rounded-xl border border-red-500/50 bg-red-50/50 p-4 space-y-2">
-                <h3 className="text-sm font-semibold text-red-800">
-                  Yêu cầu đã bị từ chối
-                </h3>
-                <p className="text-xs text-red-700">
-                  {apiError || "Yêu cầu của bạn đã bị từ chối. Vui lòng liên hệ hỗ trợ để được giải đáp."}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <ErrorMessage message={apiError} />
-
-              {/* Product limit info banner */}
-              {productLimit && requiresVerification && requestStatus !== "approved" && (
-                <div className="rounded-xl border border-blue-500/50 bg-blue-50/50 p-4 space-y-2">
-                  <div className="flex items-start gap-2">
-                    <svg
-                      className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                    <div className="flex-1">
-                      <h4 className="text-sm font-semibold text-blue-800 mb-1">
-                        Bạn đã đăng {productLimit.totalProducts}/{productLimit.limit} sản phẩm
-                      </h4>
-                      <p className="text-xs text-blue-700">
-                        Để tiếp tục đăng sản phẩm không giới hạn, nhận thanh toán online và được
-                        ưu tiên hiển thị, vui lòng xác minh tài khoản seller bằng cách điền form
-                        bên dưới.
-                      </p>
-                    </div>
-                  </div>
+      <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
+        {/* Hero */}
+        <div className="rounded-2xl border border-border bg-card p-6 flex items-start gap-4">
+          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+            <Store className="w-6 h-6 text-primary" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-lg font-bold text-foreground mb-1">
+              {requiresVerification ? "Xác minh tài khoản Seller" : "Mở gian hàng của bạn"}
+            </h1>
+            <p className="text-sm text-muted-foreground mb-4">
+              {requiresVerification
+                ? "Hoàn tất xác minh để mở khóa đăng sản phẩm không giới hạn và nhận thanh toán online."
+                : "Điền thông tin để trở thành seller trên Eco Market và bắt đầu bán hàng ngay hôm nay."}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {PERKS.map(({ icon: Icon, text }) => (
+                <div key={text} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <Icon className="w-3.5 h-3.5 text-primary shrink-0" />
+                  {text}
                 </div>
-              )}
+              ))}
+            </div>
+          </div>
+        </div>
 
-            <AddressSection
-              values={values}
-              errors={errors}
-              provinces={provinces}
-              districts={districts}
-              wards={wards}
-              provincesLoading={provincesLoading}
-              districtsLoading={districtsLoading}
-              wardsLoading={wardsLoading}
-              selectedProvince={selectedProvince}
-              selectedDistrict={selectedDistrict}
-              selectedWard={selectedWard}
-              onProvinceChange={onProvinceChange}
-              onDistrictChange={onDistrictChange}
-              onWardChange={onWardChange}
-              onAddressChange={handleChange}
-            />
+        {/* Product limit banner */}
+        {productLimit && requiresVerification && requestStatus !== "approved" && (
+          <div className="rounded-xl border border-amber-400/50 bg-amber-50/60 dark:bg-amber-950/20 px-4 py-3 flex items-start gap-3">
+            <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0" />
+            <p className="text-xs text-amber-800 dark:text-amber-300">
+              Bạn đã đăng{" "}
+              <span className="font-semibold">
+                {productLimit.totalProducts}/{productLimit.limit}
+              </span>{" "}
+              sản phẩm. Xác minh tài khoản để đăng không giới hạn.
+            </p>
+          </div>
+        )}
+
+        {/* Main content */}
+        {isCheckingStatus ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent" />
+          </div>
+        ) : hasRequest && requestStatus === "pending" ? (
+          <div className="rounded-2xl border border-amber-400/50 bg-amber-50/60 dark:bg-amber-950/20 p-6 flex items-start gap-4">
+            <Clock className="w-6 h-6 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+            <div>
+              <h3 className="text-sm font-semibold text-amber-800 dark:text-amber-300 mb-1">
+                Hồ sơ đang được xét duyệt
+              </h3>
+              <p className="text-xs text-amber-700 dark:text-amber-400">
+                Đội ngũ Eco Market đang kiểm duyệt hồ sơ của bạn trong vòng 24h. Bạn sẽ nhận
+                thông báo qua email khi có kết quả.
+              </p>
+              <Link
+                href="/"
+                className="mt-3 inline-flex items-center text-xs font-medium text-amber-800 dark:text-amber-300 hover:underline"
+              >
+                Về trang chủ
+              </Link>
+            </div>
+          </div>
+        ) : hasRequest && requestStatus === "rejected" ? (
+          <div className="rounded-2xl border border-red-400/50 bg-red-50/60 dark:bg-red-950/20 p-6 flex items-start gap-4">
+            <XCircle className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
+            <div>
+              <h3 className="text-sm font-semibold text-red-700 dark:text-red-400 mb-1">
+                Yêu cầu đã bị từ chối
+              </h3>
+              <p className="text-xs text-red-600 dark:text-red-400">
+                {apiError || "Yêu cầu của bạn đã bị từ chối. Vui lòng liên hệ hỗ trợ để được giải đáp."}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <ErrorMessage message={apiError} />
 
             <BankInfoSection values={values} errors={errors} onChange={handleChange} />
 
@@ -156,37 +156,33 @@ export default function BecomeSeller() {
 
             <TermsSection values={values} errors={errors} onChange={handleChange} />
 
-              <div className="space-y-3 pt-1">
-                <AuthButton
-                  isLoading={isLoading}
-                  disabled={hasRequest && requestStatus === "pending"}
-                >
-                  <span>
-                    {requiresVerification
-                      ? "Xác minh tài khoản seller"
-                      : "Bắt đầu bán hàng"}
-                  </span>
-                  <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </AuthButton>
-                <p className="text-center text-xs text-muted-foreground">
-                  {requiresVerification ? (
-                    <>
-                      Xác minh tài khoản để mở khóa đăng sản phẩm không giới hạn và nhận thanh
-                      toán online. Hồ sơ của bạn sẽ được đội ngũ Eco Market kiểm duyệt trong vòng
-                      24h.
-                    </>
-                  ) : (
-                    <>
-                      Hồ sơ của bạn sẽ được đội ngũ Eco Market kiểm duyệt trong vòng 24h. Nếu cần
-                      hỗ trợ gấp, vui lòng liên hệ kênh chăm sóc khách hàng.
-                    </>
-                  )}
-                </p>
-              </div>
-            </form>
-          )}
-        </AuthFormContainer>
+            <div className="flex flex-col sm:flex-row gap-2 pt-2">
+              <button
+                type="submit"
+                disabled={isLoading || (hasRequest && requestStatus === "pending")}
+                className="flex-1 h-11 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+              >
+                {isLoading
+                  ? "Đang gửi hồ sơ..."
+                  : requiresVerification
+                    ? "Xác minh tài khoản seller"
+                    : "Bắt đầu bán hàng"}
+              </button>
+              <button
+                type="button"
+                onClick={() => router.back()}
+                className="flex-1 h-11 rounded-xl border border-border text-muted-foreground text-sm font-medium hover:bg-muted hover:text-foreground transition-colors"
+              >
+                Hủy
+              </button>
+            </div>
+
+            <p className="text-center text-xs text-muted-foreground pb-2">
+              Hồ sơ sẽ được đội ngũ Eco Market kiểm duyệt trong vòng 24h.
+            </p>
+          </form>
+        )}
       </div>
-    </AuthLayout>
+    </div>
   );
 }

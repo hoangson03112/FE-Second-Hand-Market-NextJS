@@ -4,9 +4,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Package, Loader2, ShoppingBag, ChevronRight, MapPin, Truck, Clock, MessageSquare } from "lucide-react";
+import { ArrowLeft, Package, Loader2, ShoppingBag, ChevronRight, MapPin, Truck, Clock, MessageSquare, XCircle } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
 import { OrderService } from "@/services/order.service";
+import { useConfirm } from "@/components/ui";
+import { useToast } from "@/components/ui";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import { Container } from "@/components/layout/Container";
@@ -60,6 +62,33 @@ export default function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("all");
+  const [cancellingId, setCancellingId] = useState<string | null>(null);
+  const { confirm } = useConfirm();
+  const toast = useToast();
+
+  const handleCancel = async (orderId: string) => {
+    const ok = await confirm({
+      title: "Hủy đơn hàng",
+      message: "Bạn có chắc muốn hủy đơn hàng này không? Hành động này không thể hoàn tác.",
+      confirmText: "Hủy đơn",
+      cancelText: "Giữ lại",
+      variant: "danger",
+    });
+    if (!ok) return;
+    setCancellingId(orderId);
+    try {
+      await OrderService.updateStatus(orderId, "cancelled");
+      setOrders((prev) =>
+        prev.map((o) => (o._id === orderId ? { ...o, status: "cancelled" } : o))
+      );
+      toast.success("Hủy đơn hàng thành công.");
+    } catch (err) {
+      console.error("Cancel order error:", err);
+      toast.error("Hủy đơn thất bại, vui lòng thử lại.");
+    } finally {
+      setCancellingId(null);
+    }
+  };
 
   useEffect(() => {
     if (!userLoading && !account) {
@@ -210,9 +239,15 @@ export default function Orders() {
                         <ShoppingBag className="w-5 h-5 text-primary" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-neutral-900 text-sm">
-                          Mã đơn: <span className="font-mono">{order._id.slice(-8).toUpperCase()}</span>
-                        </p>
+                        {order.ghnOrderCode ? (
+                          <p className="font-semibold text-neutral-900 text-sm">
+                            Mã vận đơn: <span className="font-mono">{order.ghnOrderCode}</span>
+                          </p>
+                        ) : (
+                          <p className="font-semibold text-neutral-900 text-sm">
+                            Đơn hàng <span className="font-mono text-neutral-500">#{order._id.slice(-8).toUpperCase()}</span>
+                          </p>
+                        )}
                         <div className="flex items-center gap-2 mt-0.5">
                           <Clock className="w-3.5 h-3.5 text-neutral-500" />
                           <p className="text-xs text-neutral-600">
@@ -342,13 +377,29 @@ export default function Orders() {
                         </div>
                       </div>
 
-                      <Link
-                        href={`/orders/${order._id}`}
-                        className="px-6 py-2.5 rounded-full bg-primary text-white font-semibold hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2 group/btn"
-                      >
-                        <span>Xem chi tiết</span>
-                        <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
-                      </Link>
+                      <div className="flex items-center gap-2">
+                        {order.status === "pending" && (
+                          <button
+                            onClick={() => handleCancel(order._id)}
+                            disabled={cancellingId === order._id}
+                            className="px-4 py-2.5 rounded-full border-2 border-red-300 text-red-600 font-semibold text-sm hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1.5"
+                          >
+                            {cancellingId === order._id ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <XCircle className="w-4 h-4" />
+                            )}
+                            Hủy đơn
+                          </button>
+                        )}
+                        <Link
+                          href={`/orders/${order._id}`}
+                          className="px-6 py-2.5 rounded-full bg-primary text-white font-semibold hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2 group/btn"
+                        >
+                          <span>Xem chi tiết</span>
+                          <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>

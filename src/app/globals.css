@@ -372,6 +372,47 @@ body {
   color: var(--foreground);
 }
 
+/* Unified UI surfaces */
+.ui-shell {
+  background: linear-gradient(180deg,
+      var(--color-bg-secondary) 0%,
+      var(--color-bg-primary) 65%);
+}
+
+.ui-section {
+  background: var(--color-bg-secondary);
+}
+
+.ui-section-alt {
+  background: var(--color-bg-primary-tint);
+}
+
+.ui-card {
+  background: var(--card);
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.06);
+}
+
+.ui-text-muted {
+  color: var(--color-text-secondary);
+}
+
+/* Swiss-inspired helpers */
+.ui-eyebrow {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.ui-heading {
+  letter-spacing: -0.015em;
+}
+
+.ui-divider {
+  height: 1px;
+  background: color-mix(in srgb, var(--border) 65%, transparent);
+}
+
 .mask-diagonal {
   -webkit-mask-image: linear-gradient(to bottom right,
       black 90%,
@@ -1694,6 +1735,95 @@ body::-webkit-scrollbar-thumb:active {
   animation: bounceIn 0.8s ease-out forwards;
 }
 
+/* Marquee / ticker scroll */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+
+.animate-marquee-fast {
+  animation: marquee 16s linear infinite;
+}
+
+/* Reveal line (width 0 → 100%) */
+@keyframes reveal-width {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+
+  to {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+.animate-reveal-width {
+  animation: reveal-width 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Soft float for decorative elements */
+@keyframes float-soft {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float-soft {
+  animation: float-soft 5s ease-in-out infinite;
+}
+
+/* Glow pulse for accent dots */
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 currentColor;
+  }
+
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 8px 3px currentColor;
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2.4s ease-in-out infinite;
+}
+
+/* Line draw (opacity + translate-x for underlines) */
+@keyframes line-draw {
+  from {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  to {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+.animate-line-draw {
+  animation: line-draw 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* Stagger Animation Delays */
 .animation-delay-100 {
   animation-delay: 100ms;
@@ -1727,7 +1857,28 @@ body::-webkit-scrollbar-thumb:active {
   animation-delay: 800ms;
 }
 
-/* Hover Effects */
+.animation-delay-900 {
+  animation-delay: 900ms;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1000ms;
+}
+
+.animation-delay-1200 {
+  animation-delay: 1200ms;
+}
+
+.animation-delay-1400 {
+  animation-delay: 1400ms;
+}
+
+/* Initial state for stagger animations (opacity:0 so they don't flash) */
+.opacity-0-init {
+  opacity: 0;
+}
+
+
 .hover-lift {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

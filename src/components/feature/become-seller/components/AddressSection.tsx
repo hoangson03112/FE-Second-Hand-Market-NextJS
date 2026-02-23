@@ -1,11 +1,25 @@
 import React from "react";
 import type { ChangeEvent } from "react";
 import type { Province, District, Ward } from "@/types/address";
-import type { BecomeSellerFormValues, BecomeSellerErrors } from "../hooks/useBecomeSeller";
+
+interface AddressValues {
+  provinceId: string;
+  districtId: string;
+  wardCode: string;
+  address: string;
+  phoneNumber: string;
+  [key: string]: unknown;
+}
+
+interface AddressErrors {
+  address?: string;
+  phoneNumber?: string;
+  [key: string]: string | undefined;
+}
 
 interface AddressSectionProps {
-  values: BecomeSellerFormValues;
-  errors: BecomeSellerErrors;
+  values: AddressValues;
+  errors: AddressErrors;
   provinces: Province[];
   districts: District[];
   wards: Ward[];
@@ -126,21 +140,41 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
         </div>
       </div>
 
-      <div>
-        <label className="block text-xs font-medium mb-1">
-          Địa chỉ cụ thể (số nhà, đường) <span className="text-red-500">*</span>
-        </label>
-        <input
-          type="text"
-          name="address"
-          value={values.address}
-          onChange={onAddressChange}
-          placeholder="Ví dụ: 123 Nguyễn Trãi, phường 5..."
-          className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-        />
-        {errors.address && (
-          <p className="mt-1 text-xs text-red-500">{errors.address}</p>
-        )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label className="block text-xs font-medium mb-1">
+            Địa chỉ cụ thể (số nhà, đường) <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="address"
+            value={values.address}
+            onChange={onAddressChange}
+            placeholder="Ví dụ: 123 Nguyễn Trãi, phường 5..."
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          />
+          {errors.address && (
+            <p className="mt-1 text-xs text-red-500">{errors.address}</p>
+          )}
+        </div>
+
+        <div>
+          <label className="block text-xs font-medium mb-1">
+            Số điện thoại <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="tel"
+            name="phoneNumber"
+            inputMode="numeric"
+            value={values.phoneNumber}
+            onChange={onAddressChange}
+            placeholder="VD: 0901234567"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          />
+          {errors.phoneNumber && (
+            <p className="mt-1 text-xs text-red-500">{errors.phoneNumber}</p>
+          )}
+        </div>
       </div>
     </div>
   );

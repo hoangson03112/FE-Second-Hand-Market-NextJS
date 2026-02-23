@@ -18,13 +18,7 @@ export type BecomeSellerErrors = Partial<Record<keyof BecomeSellerInput, string>
 };
 
 const INITIAL: BecomeSellerFormValues = {
-  address: "",
-  provinceId: "",
-  districtId: "",
-  wardCode: "",
-  province: "",
-  district: "",
-  ward: "",
+  phoneNumber: "",
   bankName: "",
   accountNumber: "",
   accountHolder: "",
@@ -180,16 +174,10 @@ export function useBecomeSeller() {
       setIsLoading(true);
       try {
         const formData = new FormData();
-        formData.append("address", result.data.address);
-        formData.append("province", result.data.province);
-        formData.append("district", result.data.district);
-        formData.append("ward", result.data.ward);
-        formData.append("province_id", result.data.provinceId);
-        formData.append("from_district_id", result.data.districtId);
-        formData.append("from_ward_code", result.data.wardCode);
         formData.append("bankName", result.data.bankName);
         formData.append("accountNumber", result.data.accountNumber);
         formData.append("accountHolder", result.data.accountHolder);
+        formData.append("phoneNumber", result.data.phoneNumber);
         formData.append("agreeTerms", "true");
         formData.append("agreePolicy", "true");
         formData.append("idCardFront", idCardFront);

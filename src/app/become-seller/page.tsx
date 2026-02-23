@@ -6,6 +6,7 @@ import { useUser } from "@/hooks/useUser";
 import { useTokenStore } from "@/store/useTokenStore";
 import BecomeSeller from "@/components/feature/become-seller";
 import Link from "next/link";
+import { ArrowLeft, CheckCircle2, Store } from "lucide-react";
 
 export default function BecomeSellerPage() {
   const router = useRouter();
@@ -18,8 +19,6 @@ export default function BecomeSellerPage() {
       router.replace("/login?redirect=/become-seller");
       return;
     }
-    // Allow access even if already seller - they might want to update info
-    // The component will handle showing appropriate message
   }, [accessToken, account, isLoading, router]);
 
   if (isLoading || !accessToken || !account) {
@@ -30,32 +29,53 @@ export default function BecomeSellerPage() {
     );
   }
 
-  // If already seller, show info but still allow access
   if (account.role === "seller") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background px-4 py-12">
-        <div className="text-center max-w-md space-y-4">
-          <div className="rounded-xl border border-green-500/50 bg-green-50/50 p-4">
-            <p className="text-lg font-semibold text-green-800 mb-2">
-              Bạn đã là Seller
-            </p>
-            <p className="text-sm text-green-700 mb-4">
-              Bạn có thể đăng sản phẩm và quản lý đơn hàng. Nếu cần cập nhật thông tin ngân hàng
-              hoặc địa chỉ, vui lòng liên hệ hỗ trợ.
-            </p>
-            <div className="flex gap-3 justify-center">
-              <Link
-                href="/sell"
-                className="inline-flex items-center justify-center px-5 py-2.5 rounded-full text-white btn-primary"
-              >
-                Đăng sản phẩm
-              </Link>
-              <Link
-                href="/"
-                className="inline-flex items-center justify-center px-5 py-2.5 rounded-full border border-border bg-background hover:bg-muted"
-              >
-                Về trang chủ
-              </Link>
+      <div className="min-h-screen bg-background">
+        {/* Top bar */}
+        <div className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+          <div className="max-w-3xl mx-auto px-4 h-14 flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => router.back()}
+              className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Quay lại
+            </button>
+            <span className="text-muted-foreground/40 select-none">|</span>
+            <span className="text-sm font-medium text-foreground">Tài khoản Seller</span>
+          </div>
+        </div>
+
+        <div className="max-w-3xl mx-auto px-4 py-8">
+          <div className="rounded-2xl border border-green-400/50 bg-green-50/50 dark:bg-green-950/20 p-6 flex items-start gap-4">
+            <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center shrink-0">
+              <CheckCircle2 className="w-6 h-6 text-green-600 dark:text-green-400" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h1 className="text-base font-bold text-green-800 dark:text-green-300 mb-1">
+                Bạn đã là Seller
+              </h1>
+              <p className="text-sm text-green-700 dark:text-green-400 mb-4">
+                Tài khoản của bạn đã được xác minh. Bạn có thể đăng sản phẩm và quản lý đơn hàng.
+                Để cập nhật thông tin ngân hàng hoặc địa chỉ, vui lòng liên hệ hỗ trợ.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  href="/sell"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
+                  <Store className="w-3.5 h-3.5" />
+                  Đăng sản phẩm
+                </Link>
+                <Link
+                  href="/"
+                  className="inline-flex items-center rounded-lg border border-border px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                >
+                  Về trang chủ
+                </Link>
+              </div>
             </div>
           </div>
         </div>

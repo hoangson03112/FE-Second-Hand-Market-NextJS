@@ -23,19 +23,20 @@ export type PickupFormValues = {
   provinceId: string;
   districtId: string;
   wardCode: string;
-  businessAddress: string;
+  specificAddress: string;
   phoneNumber: string;
 };
 
 export interface IProductWithMediaAndIds extends IProduct {
-  /** Địa chỉ lấy hàng đi theo sản phẩm (buyer – mỗi sp có thể khác địa chỉ) */
-  pickupAddress?: {
+  /** Địa chỉ lấy hàng – Address ref được populate từ backend */
+  address?: {
     provinceId?: string;
     districtId?: string;
     wardCode?: string;
-    businessAddress?: string;
+    specificAddress?: string;
+    fullName?: string;
     phoneNumber?: string;
-  };
+  } | null;
 
   /**
    * Backend có thể trả thêm field `video` khi lấy chi tiết sản phẩm.

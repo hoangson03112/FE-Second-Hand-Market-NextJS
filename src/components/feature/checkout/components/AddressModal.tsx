@@ -147,6 +147,7 @@ export default function AddressModal({
               </div>
             ) : (
               <AddressForm
+                key={editingAddress?._id ?? "new"}
                 initialData={editingAddress}
                 onSubmit={handleFormSubmit}
                 onSuccess={

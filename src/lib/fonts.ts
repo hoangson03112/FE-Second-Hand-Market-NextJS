@@ -1,9 +1,9 @@
 import { Inter } from "next/font/google";
 
-// Optimized Inter font - chỉ load weights cần thiết
+// Optimized Inter font
 export const inter = Inter({
   subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "900"],
   display: "swap",
   variable: "--font-inter",
   preload: true,
