@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
 
+import { IconArrowLeft } from "@tabler/icons-react";
 interface CartHeaderProps {
   onBack: () => void;
 }
@@ -16,7 +16,7 @@ export default function CartHeader({ onBack }: CartHeaderProps) {
           type="button"
           aria-label="Quay lại"
         >
-          <ArrowLeft className="h-5 w-5 text-taupe-700" />
+          <IconArrowLeft className="h-5 w-5 text-taupe-700" />
         </button>
         <h1 className="text-lg font-semibold text-taupe-900 flex-1">Giỏ Hàng</h1>
       </div>

@@ -1,4 +1,4 @@
-import { Copy, Building2 } from "lucide-react";
+import { IconCopy, IconBuilding } from "@tabler/icons-react";
 import { formatPrice } from "@/utils/format/price";
 
 export interface DisplayBankInfo {
@@ -26,7 +26,7 @@ export function PaymentBankInfo({
     <div className="bg-cream-50 rounded-lg border border-border p-6">
       <div className="flex items-center gap-3 mb-4">
         <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-          <Building2 className="h-5 w-5 text-blue-600" />
+          <IconBuilding className="h-5 w-5 text-blue-600" />
         </div>
         <h2 className="font-semibold text-foreground">
           Thông tin chuyển khoản
@@ -58,7 +58,7 @@ export function PaymentBankInfo({
                 className="p-1 hover:bg-background rounded transition-colors"
                 title="Sao chép"
               >
-                <Copy className="h-4 w-4 text-muted-foreground" />
+                <IconCopy className="h-4 w-4 text-muted-foreground" />
               </button>
             </div>
           </div>
@@ -82,7 +82,7 @@ export function PaymentBankInfo({
                 className="p-1 hover:bg-background rounded transition-colors flex-shrink-0"
                 title="Sao chép"
               >
-                <Copy className="h-4 w-4 text-muted-foreground" />
+                <IconCopy className="h-4 w-4 text-muted-foreground" />
               </button>
             </div>
             <p className="font-medium text-xs break-all">

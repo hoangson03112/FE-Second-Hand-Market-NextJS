@@ -6,7 +6,7 @@ import { queryKeys } from "@/lib/query-client";
 import { serverStateConfig } from "@/lib/state";
 import { useTokenStore } from "@/store/useTokenStore";
 import { enrichAddresses } from "@/utils/addressTransform";
-import { useToast } from "@/components/ui";
+import { useToast } from "@/components/ui/Toast";
 
 export function useAddress() {
   const accessToken = useTokenStore((state) => state.accessToken);

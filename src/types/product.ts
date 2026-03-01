@@ -28,6 +28,8 @@ export interface IProduct {
   location?: string;
   views?: number;
   likes?: number;
+  avgRating?: number;
+  totalReviews?: number;
   address?: {
     _id?: string;
     provinceId?: string;
@@ -70,6 +72,7 @@ export interface ISeller {
   _id: string;
   fullName?: string;
   avatar?: string | null;
+  role?: string;
   province?: string;
   from_province_id?: string | null;
   from_district_id?: string;

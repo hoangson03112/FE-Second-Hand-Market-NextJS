@@ -1,5 +1,6 @@
 "use client";
 
+import { IconShoppingCart, IconBolt, IconLock } from "@tabler/icons-react";
 import type { AccountInfo } from "@/types/auth";
 
 interface ProductActionButtonsProps {
@@ -17,24 +18,49 @@ export default function ProductActionButtons({
   onAddToCart,
   account,
 }: ProductActionButtonsProps) {
-  return (
-    <div className="flex gap-3 mb-4">
+  const disabled = actionLoading || isOutOfStock;
+
+  if (!account) {
+    return (
       <button
         onClick={onBuyNow}
-        disabled={actionLoading || isOutOfStock}
-        className="flex-1 bg-primary text-primary-foreground py-3 rounded-lg font-medium hover:shadow-md transition disabled:opacity-40 disabled:cursor-not-allowed"
+        className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-taupe-100 text-taupe-500 border-2 border-taupe-200 font-semibold text-sm hover:bg-taupe-200 transition-all duration-200"
       >
-        {actionLoading ? "Đang xử lý..." : !account ? "Đăng nhập" : isOutOfStock ? "Hết hàng" : "Mua Ngay"}
+        <IconLock className="w-4 h-4" />
+        Đăng nhập để mua hàng
       </button>
-      {account && (
-        <button
-          onClick={onAddToCart}
-          disabled={actionLoading || isOutOfStock}
-          className="flex-1 border border-primary text-primary py-3 rounded-lg font-medium hover:bg-primary/5 transition disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          {actionLoading ? "Đang thêm..." : "Thêm Vào Giỏ"}
-        </button>
-      )}
+    );
+  }
+
+  if (isOutOfStock) {
+    return (
+      <div className="w-full py-3.5 rounded-xl bg-taupe-100 text-taupe-400 border-2 border-taupe-200 font-semibold text-sm text-center">
+        Hết hàng
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-2.5">
+      {/* Buy now — primary CTA */}
+      <button
+        onClick={onBuyNow}
+        disabled={disabled}
+        className="relative w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-primary text-white font-bold text-sm tracking-wide overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:brightness-110 active:scale-[0.98] shadow-sm hover:shadow-md"
+      >
+        <IconBolt className="w-4 h-4 shrink-0" />
+        {actionLoading ? "Đang xử lý..." : "Mua ngay"}
+      </button>
+
+      {/* Add to cart — secondary */}
+      <button
+        onClick={onAddToCart}
+        disabled={disabled}
+        className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-white border-2 border-primary/30 text-primary font-semibold text-sm tracking-wide hover:bg-primary/5 hover:border-primary/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 active:scale-[0.98]"
+      >
+        <IconShoppingCart className="w-4 h-4 shrink-0" />
+        {actionLoading ? "Đang thêm..." : "Thêm vào giỏ"}
+      </button>
     </div>
   );
 }

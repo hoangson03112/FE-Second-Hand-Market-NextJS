@@ -7,7 +7,7 @@ import CartBottomBar from "./components/CartBottomBar";
 import CartEmpty from "./components/CartEmpty";
 import CartLoginPrompt from "./components/CartLoginPrompt";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
-import { useCartPage } from "./hooks";
+import { useCartPage } from "@/hooks";
 import { useTokenStore } from "@/store/useTokenStore";
 import { PageContainer, Container } from "@/components/layout/Container";
 

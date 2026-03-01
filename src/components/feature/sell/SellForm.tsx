@@ -1,26 +1,12 @@
 "use client";
 
+import { IconPackage, IconFolders, IconFileText, IconPhoto, IconListDetails, IconPlus, IconTrash, IconUpload, IconVideo, IconMovie, IconAlertCircle, IconBuildingStore, IconArrowRight } from "@tabler/icons-react";
 import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Package,
-  FolderTree,
-  FileText,
-  ImageIcon,
-  ListPlus,
-  Plus,
-  Trash2,
-  Upload,
-  Video,
-  Film,
-  AlertCircle,
-  Store,
-  ArrowRight,
-} from "lucide-react";
 import { useSellForm } from "./hooks";
 import { useCategories } from "@/hooks/useCategories";
-import { ErrorMessage } from "@/components/feature/auth";
+import ErrorMessage from "@/components/feature/auth/ErrorMessage";
 import { PickupAddressSection } from "./components";
 
 const CONDITION_OPTIONS: {
@@ -169,10 +155,10 @@ export default function SellForm() {
             href="/become-seller"
             className="flex items-center gap-1.5 rounded-lg border border-primary/40 bg-primary/5 px-3 py-2 text-xs font-semibold text-primary hover:bg-primary/10 hover:border-primary transition-colors shrink-0"
           >
-            <Store className="w-3.5 h-3.5" />
+            <IconBuildingStore className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Đăng ký làm Seller</span>
             <span className="sm:hidden">Làm Seller</span>
-            <ArrowRight className="w-3 h-3" />
+            <IconArrowRight className="w-3 h-3" />
           </Link>
         )}
       </div>
@@ -199,7 +185,7 @@ export default function SellForm() {
         <div className="grid lg:grid-cols-2 gap-4 lg:gap-6 lg:items-stretch">
           {/* Cột trái: thông tin + danh mục + mô tả */}
           <div className="flex flex-col gap-4">
-            <SectionCard icon={Package} title="Thông tin cơ bản">
+            <SectionCard icon={IconPackage} title="Thông tin cơ bản">
               <div className="space-y-3">
                 <div>
                   <label className={labelClass}>
@@ -272,7 +258,7 @@ export default function SellForm() {
               </div>
             </SectionCard>
 
-            <SectionCard icon={FolderTree} title="Danh mục">
+            <SectionCard icon={IconFolders} title="Danh mục">
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <label className={labelClass}>
@@ -320,7 +306,7 @@ export default function SellForm() {
               </div>
             </SectionCard>
 
-            <SectionCard icon={FileText} title="Mô tả" className="flex-1 min-h-0">
+            <SectionCard icon={IconFileText} title="Mô tả" className="flex-1 min-h-0">
               <textarea
                 name="description"
                 value={values.description}
@@ -332,9 +318,9 @@ export default function SellForm() {
             </SectionCard>
           </div>
 
-          {/* Cột phải: Thuộc tính + Ảnh & Video — chia đều với cột trái */}
+          {/* Cột phải: Thuộc tính + Ảnh & IconVideo — chia đều với cột trái */}
           <div className="flex flex-col gap-4">
-            <SectionCard icon={ListPlus} title="Thuộc tính" className="min-h-0 shrink-0">
+            <SectionCard icon={IconListDetails} title="Thuộc tính" className="min-h-0 shrink-0">
               <div className="space-y-2">
                 <div className="space-y-2 max-h-32 overflow-y-auto pr-1">
                   {values.attributes.map((attr, index) => (
@@ -362,7 +348,7 @@ export default function SellForm() {
                         className="p-1.5 rounded text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                         aria-label="Xóa"
                       >
-                        <Trash2 className="w-3.5 h-3.5" />
+                        <IconTrash className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   ))}
@@ -372,13 +358,13 @@ export default function SellForm() {
                   onClick={addAttribute}
                   className="w-full flex items-center justify-center gap-1.5 rounded-lg border border-dashed border-border py-2 text-xs font-medium text-muted-foreground hover:border-primary hover:text-primary"
                 >
-                  <Plus className="w-3.5 h-3.5" />
+                  <IconPlus className="w-3.5 h-3.5" />
                   Thêm thuộc tính
                 </button>
               </div>
             </SectionCard>
 
-            <SectionCard icon={ImageIcon} title="Ảnh & Video" className="flex-1 min-h-0 flex flex-col">
+            <SectionCard icon={IconPhoto} title="Ảnh & IconVideo" className="flex-1 min-h-0 flex flex-col">
               <div className="space-y-4 flex-1 min-h-0 flex flex-col">
                 {/* Ảnh: ít nhất 1, tối đa 10 */}
                 <div className="flex-shrink-0">
@@ -399,7 +385,7 @@ export default function SellForm() {
                     onClick={() => fileInputRef.current?.click()}
                     className="rounded-lg border-2 border-dashed border-border bg-muted/30 px-4 py-4 text-center cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors"
                   >
-                    <Upload className="w-7 h-7 mx-auto text-muted-foreground mb-1" />
+                    <IconUpload className="w-7 h-7 mx-auto text-muted-foreground mb-1" />
                     <p className="text-xs font-medium text-foreground">
                       Chọn ảnh hoặc kéo thả
                     </p>
@@ -478,11 +464,11 @@ export default function SellForm() {
                   )}
                 </div>
 
-                {/* Video: tùy chọn, tối đa 1 */}
+                {/* IconVideo: tùy chọn, tối đa 1 */}
                 <div className="pt-2 border-t border-border flex-shrink-0">
                   <p className="text-xs font-medium text-foreground mb-2 flex items-center gap-1.5">
-                    <Film className="w-3.5 h-3.5" />
-                    Video (tùy chọn, tối đa 50MB)
+                    <IconMovie className="w-3.5 h-3.5" />
+                    IconVideo (tùy chọn, tối đa 50MB)
                   </p>
                   <input
                     ref={videoInputRef}
@@ -495,11 +481,11 @@ export default function SellForm() {
                   {existingVideoUrl && !values.video && (
                     <div className="relative rounded-lg border border-border bg-muted/30 p-2 flex items-center gap-2 mb-2">
                       <div className="w-10 h-10 rounded bg-muted flex items-center justify-center shrink-0">
-                        <Video className="w-5 h-5 text-muted-foreground" />
+                        <IconVideo className="w-5 h-5 text-muted-foreground" />
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="text-xs font-medium text-foreground truncate">
-                          Video hiện tại
+                          IconVideo hiện tại
                         </p>
                         <p className="text-[10px] text-muted-foreground">
                           Đã tải lên
@@ -511,7 +497,7 @@ export default function SellForm() {
                         className="p-1.5 rounded text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                         aria-label="Xóa video"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <IconTrash className="w-4 h-4" />
                       </button>
                     </div>
                   )}
@@ -522,7 +508,7 @@ export default function SellForm() {
                       onClick={() => videoInputRef.current?.click()}
                       className="w-full rounded-lg border-2 border-dashed border-border bg-muted/30 px-4 py-4 text-center hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center gap-1"
                     >
-                      <Video className="w-7 h-7 text-muted-foreground" />
+                      <IconVideo className="w-7 h-7 text-muted-foreground" />
                       <span className="text-xs font-medium text-foreground">
                         Chọn video
                       </span>
@@ -530,7 +516,7 @@ export default function SellForm() {
                   ) : values.video ? (
                     <div className="relative rounded-lg border border-border bg-muted/30 p-2 flex items-center gap-2">
                       <div className="w-10 h-10 rounded bg-muted flex items-center justify-center shrink-0">
-                        <Video className="w-5 h-5 text-muted-foreground" />
+                        <IconVideo className="w-5 h-5 text-muted-foreground" />
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="text-xs font-medium text-foreground truncate">
@@ -546,7 +532,7 @@ export default function SellForm() {
                         className="p-1.5 rounded text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                         aria-label="Xóa video"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <IconTrash className="w-4 h-4" />
                       </button>
                     </div>
                   ) : null}
@@ -557,7 +543,7 @@ export default function SellForm() {
                       onClick={() => videoInputRef.current?.click()}
                       className="w-full mt-2 rounded-lg border-2 border-dashed border-border bg-muted/30 px-4 py-2 text-center hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center gap-1"
                     >
-                      <Video className="w-5 h-5 text-muted-foreground" />
+                      <IconVideo className="w-5 h-5 text-muted-foreground" />
                       <span className="text-xs font-medium text-foreground">
                         Thay thế video
                       </span>
@@ -574,7 +560,7 @@ export default function SellForm() {
           <div className="rounded-xl border border-red-200 bg-red-50/50 dark:bg-red-900/10 p-4 mb-4">
             <div className="flex items-start gap-3">
               <div className="shrink-0 w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                <IconAlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
               </div>
               <div className="flex-1 min-w-0">
                 <h4 className="text-sm font-semibold text-red-900 dark:text-red-300 mb-1">

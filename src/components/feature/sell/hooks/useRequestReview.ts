@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ProductService } from "@/services/product.service";
-import { useToast } from "@/components/ui";
+import { useToast } from "@/components/ui/Toast";
 
 export function useRequestReview(onSuccess?: () => void) {
   const toast = useToast();

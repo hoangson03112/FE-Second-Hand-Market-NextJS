@@ -2,15 +2,15 @@ import { useCallback, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminService } from "@/services/admin.service";
 import type { AdminSeller, GetAdminSellersParams } from "@/types/admin";
-import { useToast } from "@/components/ui";
+import { useToast } from "@/components/ui/Toast";
 
 const LIMIT = 10;
+
+export type SellerStatusFilter = NonNullable<GetAdminSellersParams["status"]> | "";
 
 export function useAdminSellers() {
   const queryClient = useQueryClient();
   const toast = useToast();
-
-  type SellerStatusFilter = NonNullable<GetAdminSellersParams["status"]> | "";
 
   const [statusFilter, setStatusFilter] = useState<
     SellerStatusFilter

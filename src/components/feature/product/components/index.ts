@@ -1,10 +1,10 @@
+export { default as ProductActionButtons } from "./ProductActionButtons";
+export { default as ProductDescription } from "./ProductDescription";
 export { default as ProductGalleryNew } from "./ProductGalleryNew";
+export { default as ProductGuarantees } from "./ProductGuarantees";
 export { default as ProductHeader } from "./ProductHeader";
-export { default as SellerInfoCard } from "./SellerInfoCard";
 export { default as ProductPrice } from "./ProductPrice";
 export { default as ProductSpecifications } from "./ProductSpecifications";
-export { default as ProductDescription } from "./ProductDescription";
 export { default as QuantitySelector } from "./QuantitySelector";
-export { default as ProductActionButtons } from "./ProductActionButtons";
-export { default as ProductGuarantees } from "./ProductGuarantees";
 export { default as ReportProductModal } from "./ReportProductModal";
+export { default as SellerInfoCard } from "./SellerInfoCard";

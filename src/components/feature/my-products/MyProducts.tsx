@@ -1,5 +1,6 @@
 "use client";
 
+import { IconPackage } from "@tabler/icons-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { PRODUCT_MESSAGES } from "@/constants";
@@ -11,7 +12,6 @@ import {
   ProductCard,
 } from "./components";
 import { Container } from "@/components/layout/Container";
-import { Package } from "lucide-react";
 
 export default function MyProducts() {
   const { products, isLoading, error, refetch } = useMyProducts();
@@ -42,7 +42,7 @@ export default function MyProducts() {
           <EmptyProductState />
         ) : filteredProducts.length === 0 ? (
           <div className="rounded-xl bg-card border border-border p-16 text-center">
-            <Package className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
+            <IconPackage className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
             <p className="text-muted-foreground">
               Không có sản phẩm nào trong danh mục này
             </p>

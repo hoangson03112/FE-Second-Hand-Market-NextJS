@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ProductService } from "@/services/product.service";
-import { useToast } from "@/components/ui";
+import { useToast } from "@/components/ui/Toast";
 import type { MyListingsResponse } from "@/types/myProducts";
 
 export function useMyProducts() {

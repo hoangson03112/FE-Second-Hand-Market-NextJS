@@ -1,4 +1,11 @@
-import { Loader2, User, Mail, Phone, AlertCircle, CheckCircle2 } from "lucide-react";
+import {
+  IconLoader2,
+  IconUser,
+  IconMail,
+  IconPhone,
+  IconAlertCircle,
+  IconCircleCheck,
+} from "@tabler/icons-react";
 import type { ProfileFormData } from "../types";
 
 interface ProfileFormProps {
@@ -23,7 +30,7 @@ export function ProfileForm({
         <div className="flex items-start justify-between">
           <div>
             <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
-              <User className="w-5 h-5 text-primary" />
+              <IconUser className="w-5 h-5 text-primary" />
               Hồ Sơ Của Tôi
             </h2>
             <p className="text-sm text-muted-foreground mt-1.5">
@@ -39,7 +46,7 @@ export function ProfileForm({
           {/* Full name */}
           <div className="group">
             <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-              <User className="w-4 h-4 text-primary" />
+              <IconUser className="w-4 h-4 text-primary" />
               Họ và tên
               <span className="text-destructive">*</span>
             </label>
@@ -53,14 +60,14 @@ export function ProfileForm({
                 placeholder="VD: Nguyễn Văn A"
                 required
               />
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <IconUser className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             </div>
           </div>
 
           {/* Email */}
           <div className="group">
             <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-              <Mail className="w-4 h-4 text-primary" />
+              <IconMail className="w-4 h-4 text-primary" />
               Email
               <span className="text-destructive">*</span>
               {isGoogleUser && (
@@ -85,25 +92,34 @@ export function ProfileForm({
                 placeholder="email@example.com"
                 required
               />
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <IconMail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               {isGoogleUser && (
-                <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
+                <IconCircleCheck className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
               )}
             </div>
-            {isGoogleUser && (
+            {isGoogleUser ? (
               <div className="flex items-start gap-2 mt-2 p-2.5 rounded-lg bg-primary/5 border border-primary/10">
-                <AlertCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                <IconAlertCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                 <p className="text-xs text-muted-foreground">
-                  Email này được liên kết với tài khoản Google của bạn và không thể thay đổi trực tiếp.
+                  Email này được liên kết với tài khoản Google của bạn và không
+                  thể thay đổi trực tiếp.
+                </p>
+              </div>
+            ) : (
+              <div className="flex items-start gap-2 mt-2 p-2.5 rounded-lg bg-blue-50 border border-blue-200">
+                <span className="text-sm shrink-0">📧</span>
+                <p className="text-xs text-blue-700">
+                  <strong>Lưu ý:</strong> Khi thay đổi email, bạn sẽ nhận được
+                  email xác nhận tại địa chỉ mới.
                 </p>
               </div>
             )}
           </div>
 
-          {/* Phone */}
+          {/* IconPhone */}
           <div className="group">
             <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-              <Phone className="w-4 h-4 text-primary" />
+              <IconPhone className="w-4 h-4 text-primary" />
               Số điện thoại
             </label>
             <div className="relative">
@@ -115,11 +131,15 @@ export function ProfileForm({
                 className="w-full px-4 py-3 pl-10 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                 placeholder="VD: 0912 345 678"
               />
-              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <IconPhone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             </div>
-            <p className="mt-2 text-xs text-muted-foreground">
-              Số điện thoại sẽ được sử dụng để liên hệ khi có vấn đề với đơn hàng
-            </p>
+            <div className="flex items-start gap-2 mt-2 p-2.5 rounded-lg bg-blue-50 border border-blue-200">
+              <span className="text-sm shrink-0">📧</span>
+              <p className="text-xs text-blue-700">
+                <strong>Lưu ý:</strong> Khi thay đổi số điện thoại, bạn sẽ nhận
+                được email xác nhận.
+              </p>
+            </div>
           </div>
 
           {/* Divider */}
@@ -136,12 +156,12 @@ export function ProfileForm({
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <IconLoader2 className="w-4 h-4 animate-spin" />
                     Đang lưu...
                   </>
                 ) : (
                   <>
-                    <CheckCircle2 className="w-4 h-4" />
+                    <IconCircleCheck className="w-4 h-4" />
                     Lưu thay đổi
                   </>
                 )}

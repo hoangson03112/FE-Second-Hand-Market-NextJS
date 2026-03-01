@@ -1,5 +1,5 @@
+import { IconArrowLeft } from "@tabler/icons-react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { PaymentTimer } from "./PaymentTimer";
 
 export interface PaymentHeaderProps {
@@ -21,7 +21,7 @@ export function PaymentHeader({
         href="/"
         className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <IconArrowLeft className="h-4 w-4" />
         Quay lại
       </Link>
 
@@ -31,7 +31,7 @@ export function PaymentHeader({
             Thanh toán đơn hàng
           </h1>
           <p className="text-sm text-muted-foreground">
-            Mã đơn hàng:{" "}
+            Mã đơn nội bộ:{" "}
             <span className="font-mono font-semibold text-foreground">
               {orderId}
             </span>

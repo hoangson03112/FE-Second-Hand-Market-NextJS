@@ -1,6 +1,7 @@
 import "./globals.css";
 import Providers from "./providers";
-import { ToastProvider, ConfirmDialogProvider } from "@/components/ui";
+import { ToastProvider } from "@/components/ui/Toast";
+import { ConfirmDialogProvider } from "@/components/ui/ConfirmDialog";
 import SiteLayout from "@/components/layout/SiteLayout";
 import type { Metadata } from "next";
 import { inter } from "@/lib/fonts";

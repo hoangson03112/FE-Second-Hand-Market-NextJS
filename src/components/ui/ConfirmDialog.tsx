@@ -1,7 +1,7 @@
 "use client";
 
+import { IconAlertTriangle, IconX } from "@tabler/icons-react";
 import { createContext, useContext, useState, useCallback, ReactNode } from "react";
-import { AlertTriangle, X } from "lucide-react";
 
 interface ConfirmOptions {
   title?: string;
@@ -86,18 +86,18 @@ export function ConfirmDialogProvider({ children }: { children: ReactNode }) {
       {/* Dialog */}
       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
         <div
-          className="relative bg-background rounded-2xl shadow-xl w-full max-w-md animate-in zoom-in-95 slide-in-from-bottom-4"
+          className="relative bg-background rounded-3xl shadow-xl w-full max-w-md animate-in zoom-in-95 slide-in-from-bottom-4"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
           <div className="flex items-start justify-between p-6 border-b border-border">
             <div className="flex items-start gap-4">
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${styles.icon}`}>
-                <AlertTriangle className="h-5 w-5" />
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${styles.icon}`}>
+                <IconAlertTriangle className="h-5 w-5" />
               </div>
               <div>
                 <h3 className="text-lg font-bold text-foreground">
-                  {options.title || "Xác nhận"}
+                  {options.title || "IconXác nhận"}
                 </h3>
                 <p className="text-sm text-muted-foreground mt-1">
                   {options.message}
@@ -106,9 +106,9 @@ export function ConfirmDialogProvider({ children }: { children: ReactNode }) {
             </div>
             <button
               onClick={handleCancel}
-              className="p-2 hover:bg-muted rounded-lg transition-colors"
+              className="p-2 hover:bg-muted rounded-xl transition-colors"
             >
-              <X className="h-5 w-5 text-muted-foreground" />
+              <IconX className="h-5 w-5 text-muted-foreground" />
             </button>
           </div>
 
@@ -116,15 +116,15 @@ export function ConfirmDialogProvider({ children }: { children: ReactNode }) {
           <div className="flex items-center gap-3 p-6">
             <button
               onClick={handleCancel}
-              className="flex-1 btn btn-secondary rounded-lg"
+              className="flex-1 btn btn-secondary rounded-xl"
             >
               {options.cancelText || "Hủy"}
             </button>
             <button
               onClick={handleConfirm}
-              className={`flex-1 rounded-lg ${styles.button}`}
+              className={`flex-1 rounded-xl ${styles.button}`}
             >
-              {options.confirmText || "Xác nhận"}
+              {options.confirmText || "IconXác nhận"}
             </button>
           </div>
         </div>

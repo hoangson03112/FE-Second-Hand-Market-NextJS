@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { cn } from "@/lib/utils";
 import { IProduct } from "@/types/product";
 import ProductCard from "./ProductCard";
 import Pagination from "@/components/ui/Pagination";
@@ -30,14 +29,14 @@ export default function ProductList({
 }: ProductListProps) {
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {[...Array(8)].map((_, index) => (
-          <div key={index} className={cn("bg-cream-50 rounded-2xl overflow-hidden", "border border-default", "animate-shimmer")}>
-            <div className="aspect-square bg-neutral-200" />
-            <div className="p-4 space-y-3">
-              <div className="h-4 bg-neutral-200 rounded w-3/4" />
-              <div className="h-6 bg-neutral-200 rounded w-1/2" />
-              <div className="h-3 bg-neutral-200 rounded w-full" />
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        {[...Array(10)].map((_, index) => (
+          <div key={index} className="bg-white rounded-2xl overflow-hidden border border-border/60 animate-pulse">
+            <div className="aspect-[4/3] bg-taupe-100" />
+            <div className="p-3 space-y-2">
+              <div className="h-3.5 bg-taupe-100 rounded-md w-full" />
+              <div className="h-3.5 bg-taupe-100 rounded-md w-2/3" />
+              <div className="h-5 bg-taupe-100 rounded-md w-1/2 mt-1" />
             </div>
           </div>
         ))}
@@ -47,23 +46,25 @@ export default function ProductList({
 
   if (products.length === 0) {
     return (
-      <div className="text-center py-20">
-        <div className="text-6xl mb-4">🔍</div>
-        <h3 className="text-xl font-bold text-neutral-900 mb-2">{emptyMessage}</h3>
-        <p className="text-neutral-600">Thử thay đổi bộ lọc hoặc tìm kiếm với từ khóa khác</p>
+      <div className="flex flex-col items-center justify-center py-24 text-center">
+        <div className="w-20 h-20 rounded-2xl bg-taupe-100 flex items-center justify-center text-4xl mb-5 shadow-sm">
+          🔍
+        </div>
+        <h3 className="text-lg font-bold text-taupe-900 mb-1.5">{emptyMessage}</h3>
+        <p className="text-sm text-taupe-500 max-w-xs">Thử thay đổi bộ lọc hoặc tìm kiếm với từ khóa khác</p>
       </div>
     );
   }
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </div>
       {pagination && pagination.totalPages > 1 && onPageChange && (
-        <div className="mt-8 flex justify-center">
+        <div className="mt-10 flex justify-center">
           <Pagination
             currentPage={pagination.currentPage}
             totalPages={pagination.totalPages}

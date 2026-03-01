@@ -3,17 +3,16 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  AuthLayout,
-  BrandingSection,
-  InputField,
-  PasswordField,
-  ErrorMessage,
-  AuthButton,
-  AuthFormContainer,
-  Divider,
-} from "@/components/feature/auth";
-import { UserIcon, ArrowRightIcon } from "@/components/ui";
+import AuthLayout from "@/components/feature/auth/AuthLayout";
+import BrandingSection from "@/components/feature/auth/BrandingSection";
+import InputField from "@/components/feature/auth/InputField";
+import PasswordField from "@/components/feature/auth/PasswordField";
+import ErrorMessage from "@/components/feature/auth/ErrorMessage";
+import AuthButton from "@/components/feature/auth/AuthButton";
+import AuthFormContainer from "@/components/feature/auth/AuthFormContainer";
+import Divider from "@/components/feature/auth/Divider";
+import { UserIcon } from "@/components/ui/icons/UserIcon";
+import { ArrowRightIcon } from "@/components/ui/icons/ArrowRightIcon";
 import { useLogin } from "./hooks/useLogin";
 import { loginFeatures } from "@/constants";
 import { GoogleLoginButton } from "./components";

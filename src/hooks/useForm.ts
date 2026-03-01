@@ -1,4 +1,5 @@
 import { useState, ChangeEvent } from "react";
+import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
 
 interface UseFormOptions<T> {
   initialValues: T;
@@ -30,10 +31,11 @@ export function useForm<T extends Record<string, unknown>>({
         [name]: checked,
       });
     } else {
+      const normalizedValue = sanitizeFieldInput(name, value);
       // Handle text, number, select, textarea, etc.
       setValues({
         ...values,
-        [name]: value,
+        [name]: normalizedValue,
       });
     }
 
@@ -106,7 +108,8 @@ export function useForm<T extends Record<string, unknown>>({
 
     setIsSubmitting(true);
     try {
-      await onSubmit(values);
+      const normalizedValues = sanitizeFormValues(values);
+      await onSubmit(normalizedValues);
     } catch (error) {
       console.error("Form submission error:", error);
     } finally {

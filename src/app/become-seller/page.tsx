@@ -1,12 +1,12 @@
 "use client";
 
+import { IconArrowLeft, IconCircleCheck, IconBuildingStore } from "@tabler/icons-react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { useTokenStore } from "@/store/useTokenStore";
-import BecomeSeller from "@/components/feature/become-seller";
+import BecomeSeller from "@/components/feature/become-seller/BecomeSeller";
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, Store } from "lucide-react";
 
 export default function BecomeSellerPage() {
   const router = useRouter();
@@ -40,7 +40,7 @@ export default function BecomeSellerPage() {
               onClick={() => router.back()}
               className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              <ArrowLeft className="w-4 h-4" />
+              <IconArrowLeft className="w-4 h-4" />
               Quay lại
             </button>
             <span className="text-muted-foreground/40 select-none">|</span>
@@ -51,7 +51,7 @@ export default function BecomeSellerPage() {
         <div className="max-w-3xl mx-auto px-4 py-8">
           <div className="rounded-2xl border border-green-400/50 bg-green-50/50 dark:bg-green-950/20 p-6 flex items-start gap-4">
             <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center shrink-0">
-              <CheckCircle2 className="w-6 h-6 text-green-600 dark:text-green-400" />
+              <IconCircleCheck className="w-6 h-6 text-green-600 dark:text-green-400" />
             </div>
             <div className="flex-1 min-w-0">
               <h1 className="text-base font-bold text-green-800 dark:text-green-300 mb-1">
@@ -66,7 +66,7 @@ export default function BecomeSellerPage() {
                   href="/sell"
                   className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
                 >
-                  <Store className="w-3.5 h-3.5" />
+                  <IconBuildingStore className="w-3.5 h-3.5" />
                   Đăng sản phẩm
                 </Link>
                 <Link

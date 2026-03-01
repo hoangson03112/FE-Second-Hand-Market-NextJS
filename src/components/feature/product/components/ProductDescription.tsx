@@ -6,8 +6,8 @@ interface ProductDescriptionProps {
 
 export default function ProductDescription({ description }: ProductDescriptionProps) {
   return (
-    <div className="bg-cream-50 border border-taupe-200 p-5">
-      <h2 className="text-lg font-medium text-taupe-900 mb-4 pb-3 border-b border-taupe-200 uppercase tracking-[0.08em]">
+    <div className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl p-6 shadow-md">
+      <h2 className="text-lg font-semibold text-taupe-900 mb-4 pb-3 border-b-2 border-border uppercase tracking-wider">
         Mô Tả Sản Phẩm
       </h2>
       <div>

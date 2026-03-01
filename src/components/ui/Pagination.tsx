@@ -1,7 +1,7 @@
 "use client";
 
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import React from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface PaginationProps {
@@ -92,7 +92,7 @@ export default function Pagination({
         )}
         aria-label="Trang trước"
       >
-        <ChevronLeft className="w-5 h-5" strokeWidth={3} />
+        <IconChevronLeft className="w-5 h-5" strokeWidth={3} />
       </button>
 
       {/* Page Numbers */}
@@ -147,7 +147,7 @@ export default function Pagination({
         )}
         aria-label="Trang sau"
       >
-        <ChevronRight className="w-5 h-5" strokeWidth={3} />
+        <IconChevronRight className="w-5 h-5" strokeWidth={3} />
       </button>
     </div>
   );

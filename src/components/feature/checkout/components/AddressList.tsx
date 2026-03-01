@@ -1,7 +1,7 @@
 "use client";
 
+import { IconMapPin } from "@tabler/icons-react";
 import { Address } from "@/types/address";
-import { MapPin } from "lucide-react";
 import AddressCard from "./AddressCard";
 
 interface AddressListProps {
@@ -25,7 +25,7 @@ export default function AddressList({
     return (
       <div className="text-center py-16">
         <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
-          <MapPin className="h-10 w-10 text-primary" />
+          <IconMapPin className="h-10 w-10 text-primary" />
         </div>
         <h3 className="text-lg font-bold text-foreground mb-2">
           Chưa có địa chỉ nào

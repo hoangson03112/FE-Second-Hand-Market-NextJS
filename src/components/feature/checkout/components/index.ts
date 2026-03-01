@@ -8,7 +8,6 @@ export { default as CheckoutHeader } from "./CheckoutHeader";
 export { default as CheckoutSummary } from "./CheckoutSummary";
 export { default as OrderItems } from "./OrderItems";
 export { default as PaymentMethod } from "./PaymentMethod";
-export type { PaymentMethodType } from "./PaymentMethod";
 export { default as ShippingForm } from "./ShippingForm";
 export { default as ShippingInfo } from "./ShippingInfo";
 export { default as TrustBadges } from "./TrustBadges";

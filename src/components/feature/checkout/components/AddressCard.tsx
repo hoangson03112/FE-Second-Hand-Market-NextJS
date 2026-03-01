@@ -1,10 +1,10 @@
 "use client";
 
+import { IconPhone, IconUser, IconHome, IconEdit, IconTrash } from "@tabler/icons-react";
 import { Address } from "@/types/address";
-import { Phone, User, Home, Edit2, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { useConfirm } from "@/components/ui";
-import { useToast } from "@/components/ui";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
+import { useToast } from "@/components/ui/Toast";
 
 interface AddressCardProps {
   address: Address;
@@ -78,13 +78,13 @@ export default function AddressCard({
           <div className="flex items-center gap-2 flex-wrap">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                <User className="h-4 w-4 text-primary" />
+                <IconUser className="h-4 w-4 text-primary" />
               </div>
               <span className="font-bold text-foreground">{address.fullName}</span>
             </div>
             <div className="h-4 w-px bg-border" />
             <div className="flex items-center gap-1.5 text-muted-foreground">
-              <Phone className="h-3.5 w-3.5" />
+              <IconPhone className="h-3.5 w-3.5" />
               <span className="text-sm">{address.phoneNumber}</span>
             </div>
             {address.isDefault && (
@@ -94,7 +94,7 @@ export default function AddressCard({
             )}
           </div>
           <div className="flex items-start gap-2">
-            <Home className="h-4 w-4 text-muted-foreground mt-0.5" />
+            <IconHome className="h-4 w-4 text-muted-foreground mt-0.5" />
             <p className="text-sm text-muted-foreground leading-relaxed flex-1">
               {formatAddress(address)}
             </p>
@@ -106,14 +106,14 @@ export default function AddressCard({
               onClick={handleEdit}
               className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-primary hover:bg-primary/10 rounded-lg transition-colors whitespace-nowrap"
             >
-              <Edit2 className="h-3.5 w-3.5" />
+              <IconEdit className="h-3.5 w-3.5" />
             </button>
             <button
               onClick={handleDelete}
               disabled={isDeleting}
               className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50 whitespace-nowrap"
             >
-              <Trash2 className="h-3.5 w-3.5" />
+              <IconTrash className="h-3.5 w-3.5" />
             </button>
           </div>
         </div>

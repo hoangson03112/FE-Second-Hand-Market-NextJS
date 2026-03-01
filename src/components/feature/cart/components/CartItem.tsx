@@ -1,8 +1,8 @@
 "use client";
 
+import { IconTrash } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
-import { Trash2 } from "lucide-react";
 import { formatPrice } from "@/utils/format/price";
 import type { CartItem as CartItemType } from "@/types/cart";
 
@@ -37,20 +37,20 @@ export default function CartItem({
   const productHref = `/products/${product._id}/${product.slug}`;
 
   return (
-    <div className="flex gap-3 py-4 px-5 items-start bg-card lg:items-center">
+    <div className="flex gap-3 py-4 px-5 items-start bg-card hover:bg-cream-50/30 transition-colors lg:items-center">
       <label className="flex-shrink-0 cursor-pointer pt-1 lg:pt-0">
         <input
           type="checkbox"
           checked={checked}
           onChange={() => onToggle(product._id)}
           disabled={isUpdating}
-          className="w-4 h-4 border-2 border-taupe-300 rounded-sm text-primary focus:ring-1 focus:ring-primary cursor-pointer disabled:opacity-50"
+          className="w-4 h-4 border-2 border-taupe-300 rounded-md text-primary focus:ring-2 focus:ring-primary/50 cursor-pointer disabled:opacity-50 transition-all"
         />
       </label>
 
       <Link
         href={productHref}
-        className="flex-shrink-0 w-20 h-20 border border-default overflow-hidden bg-taupe-50 rounded-lg hover:border-primary/50 transition-colors"
+        className="flex-shrink-0 w-20 h-20 border-2 border-border overflow-hidden bg-gradient-to-br from-taupe-50 to-cream-50 rounded-xl hover:border-primary hover:shadow-md transition-all duration-300"
       >
         {imageUrl ? (
           <Image
@@ -95,22 +95,22 @@ export default function CartItem({
               type="button"
               onClick={() => onRemove(product._id)}
               disabled={isUpdating}
-              className="text-taupe-400 hover:text-red-500 transition-colors disabled:opacity-50"
+              className="text-taupe-400 hover:text-red-500 hover:scale-110 transition-all duration-200 disabled:opacity-50"
             >
-              <Trash2 className="h-4 w-4" />
+              <IconTrash className="h-4 w-4" />
             </button>
           </div>
 
           <div className="flex items-center justify-between gap-3">
             <div
-              className="flex items-center border border-default overflow-hidden rounded-lg"
+              className="flex items-center border-2 border-border overflow-hidden rounded-xl shadow-sm"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 type="button"
                 disabled={item.quantity <= 1 || isUpdating}
                 onClick={() => onQuantityChange(product._id, item.quantity - 1)}
-                className="w-7 h-7 flex items-center justify-center text-taupe-600 hover:bg-taupe-50 disabled:opacity-40 disabled:cursor-not-allowed border-r border-default"
+                className="w-7 h-7 flex items-center justify-center text-taupe-600 hover:bg-primary/10 hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed border-r border-border transition-colors"
               >
                 −
               </button>
@@ -124,7 +124,7 @@ export default function CartItem({
                 type="button"
                 disabled={item.quantity >= maxQty || isUpdating}
                 onClick={() => onQuantityChange(product._id, item.quantity + 1)}
-                className="w-7 h-7 flex items-center justify-center text-taupe-600 hover:bg-taupe-50 disabled:opacity-40 disabled:cursor-not-allowed border-l border-default"
+                className="w-7 h-7 flex items-center justify-center text-taupe-600 hover:bg-primary/10 hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed border-l border-border transition-colors"
               >
                 +
               </button>
@@ -151,12 +151,12 @@ export default function CartItem({
         </div>
 
         <div className="w-28 flex justify-center" onClick={(e) => e.stopPropagation()}>
-          <div className="flex items-center border border-default overflow-hidden rounded-lg">
+          <div className="flex items-center border-2 border-border overflow-hidden rounded-xl shadow-sm">
             <button
               type="button"
               disabled={item.quantity <= 1 || isUpdating}
               onClick={() => onQuantityChange(product._id, item.quantity - 1)}
-              className="w-8 h-8 flex items-center justify-center text-taupe-600 hover:bg-taupe-50 disabled:opacity-40 disabled:cursor-not-allowed border-r border-default"
+              className="w-8 h-8 flex items-center justify-center text-taupe-600 hover:bg-primary/10 hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed border-r border-border transition-colors"
             >
               −
             </button>
@@ -170,7 +170,7 @@ export default function CartItem({
               type="button"
               disabled={item.quantity >= maxQty || isUpdating}
               onClick={() => onQuantityChange(product._id, item.quantity + 1)}
-              className="w-8 h-8 flex items-center justify-center text-taupe-600 hover:bg-taupe-50 disabled:opacity-40 disabled:cursor-not-allowed border-l border-default"
+              className="w-8 h-8 flex items-center justify-center text-taupe-600 hover:bg-primary/10 hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed border-l border-border transition-colors"
             >
               +
             </button>
@@ -188,7 +188,7 @@ export default function CartItem({
             disabled={isUpdating}
             className="text-taupe-400 hover:text-red-500 transition-colors disabled:opacity-50"
           >
-            <Trash2 className="h-4 w-4" />
+            <IconTrash className="h-4 w-4" />
           </button>
         </div>
       </div>

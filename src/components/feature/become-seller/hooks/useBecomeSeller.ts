@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { SellerService } from "@/services/seller.service";
 import { becomeSellerSchema, type BecomeSellerInput } from "@/schemas/becomeSeller.schema";
 import type { SellerRequestStatus, SellerProductLimitResponse } from "@/types/seller";
+import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
 
 export type BecomeSellerFormValues = BecomeSellerInput & {
   agreeTerms: boolean;
@@ -96,7 +97,11 @@ export function useBecomeSeller() {
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       const { name, value, type } = e.target;
       const checked = (e.target as HTMLInputElement).checked;
-      setValues((prev) => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
+      const normalizedValue = sanitizeFieldInput(name, value);
+      setValues((prev) => ({
+        ...prev,
+        [name]: type === "checkbox" ? checked : normalizedValue,
+      }));
       setApiError("");
       setErrors((prev) => (prev[name as keyof typeof prev] ? { ...prev, [name]: undefined } : prev));
     },
@@ -156,7 +161,7 @@ export function useBecomeSeller() {
         }));
       }
       const payload = {
-        ...values,
+        ...sanitizeFormValues(values),
         agreeTerms: values.agreeTerms === true,
         agreePolicy: values.agreePolicy === true,
       };

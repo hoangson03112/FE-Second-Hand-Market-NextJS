@@ -1,4 +1,4 @@
-import { CheckCircle2 } from "lucide-react";
+import { IconCircleCheck } from "@tabler/icons-react";
 
 export interface PaymentProofUploadProps {
   proofPreviewUrl: string | null;
@@ -122,7 +122,7 @@ export function PaymentProofUpload({
         )}
         {paymentSuccess && (
           <div className="flex items-start gap-2 p-3 bg-green-50 border border-green-200 rounded-lg">
-            <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+            <IconCircleCheck className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
             <p className="text-sm text-green-600">{paymentSuccess}</p>
           </div>
         )}

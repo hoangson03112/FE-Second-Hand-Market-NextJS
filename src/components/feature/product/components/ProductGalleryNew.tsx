@@ -23,14 +23,14 @@ export default function ProductGalleryNew({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="relative overflow-hidden bg-muted rounded-xl aspect-square group">
+      <div className="relative overflow-hidden bg-gradient-to-br from-taupe-50 to-cream-50 rounded-2xl aspect-square group border-2 border-border shadow-lg">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={imageUrls[selectedImage]}
           alt={productName}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        <div className={`absolute top-4 right-4 px-3 py-1.5 rounded-full font-semibold text-sm backdrop-blur-sm border ${badgeColorClass}`}>
+        <div className={`absolute top-4 right-4 px-3 py-1.5 rounded-xl font-semibold text-sm backdrop-blur-md border-2 shadow-md ${badgeColorClass}`}>
           {conditionLabel}
         </div>
       </div>
@@ -40,8 +40,8 @@ export default function ProductGalleryNew({
             <button
               key={idx}
               onClick={() => setSelectedImage(idx)}
-              className={`relative shrink-0 w-14 h-14 overflow-hidden rounded-md border-2 transition ${
-                selectedImage === idx ? "border-primary" : "border-border hover:border-primary"
+              className={`relative shrink-0 w-14 h-14 overflow-hidden rounded-xl border-2 transition-all duration-300 ${
+                selectedImage === idx ? "border-primary shadow-md scale-105" : "border-border hover:border-primary hover:shadow-sm"
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -4,7 +4,7 @@ import type React from "react";
 import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import { ProductService } from "@/services/product.service";
 import type { CreateProductPayload, UpdateProductPayload } from "@/types/productPayload";
-import { useToast } from "@/components/ui";
+import { useToast } from "@/components/ui/Toast";
 import { useUser } from "@/hooks/useUser";
 import { useProvinces, useDistricts, useWards } from "@/hooks/useGHNLocation";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -15,6 +15,7 @@ import type {
   PickupFormValues,
   IProductWithMediaAndIds,
 } from "@/types/sell";
+import { sanitizeFieldInput } from "@/utils";
 
 
 const INITIAL: SellFormValues = {
@@ -401,21 +402,24 @@ export function useSellForm() {
   }, []);
 
   const onPickupSpecificAddressChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setPickup((prev) => ({ ...prev, specificAddress: e.target.value }));
+    const normalizedValue = sanitizeFieldInput("specificAddress", e.target.value);
+    setPickup((prev) => ({ ...prev, specificAddress: normalizedValue }));
     setPickupErrors((prev) => (prev.specificAddress ? { ...prev, specificAddress: undefined } : prev));
   }, []);
 
   const onPickupPhoneNumberChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setPickup((prev) => ({ ...prev, phoneNumber: e.target.value }));
+    const normalizedValue = sanitizeFieldInput("phoneNumber", e.target.value);
+    setPickup((prev) => ({ ...prev, phoneNumber: normalizedValue }));
     setPickupErrors((prev) => (prev.phoneNumber ? { ...prev, phoneNumber: undefined } : prev));
   }, []);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
+      const normalizedValue = sanitizeFieldInput(name, value);
       setValues((prev) => ({
         ...prev,
-        [name]: value,
+        [name]: normalizedValue,
         ...(name === "categoryId" ? { subcategoryId: "" } : {}),
       }));
       setApiError("");
@@ -446,10 +450,11 @@ export function useSellForm() {
 
   const updateAttribute = useCallback(
     (index: number, field: "key" | "value", value: string) => {
+      const normalizedValue = sanitizeFieldInput(field, value);
       setValues((prev) => ({
         ...prev,
         attributes: prev.attributes.map((attr, i) =>
-          i === index ? { ...attr, [field]: value } : attr
+          i === index ? { ...attr, [field]: normalizedValue } : attr
         ),
       }));
     },
