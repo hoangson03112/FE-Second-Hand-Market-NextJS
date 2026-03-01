@@ -1,5 +1,5 @@
+import { IconPlus, IconPackage, IconClock, IconCircleCheck, IconCircleX, IconCurrencyDollar, IconLayoutGrid, IconList } from "@tabler/icons-react";
 import Link from "next/link";
-import { Plus, Package, Clock, CheckCircle, XCircle, DollarSign, LayoutGrid, List } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ProductStatusFilter } from "@/types/myProducts";
 
@@ -18,11 +18,11 @@ interface ProductListHeaderProps {
 }
 
 const FILTER_CONFIGS = [
-  { value: "all" as const, label: "Tất cả", icon: Package },
-  { value: "pending" as const, label: "Chờ duyệt", icon: Clock },
-  { value: "approved" as const, label: "Đã duyệt", icon: CheckCircle },
-  { value: "rejected" as const, label: "Từ chối", icon: XCircle },
-  { value: "sold" as const, label: "Đã bán", icon: DollarSign },
+  { value: "all" as const, label: "Tất cả", icon: IconPackage },
+  { value: "pending" as const, label: "Chờ duyệt", icon: IconClock },
+  { value: "approved" as const, label: "Đã duyệt", icon: IconCircleCheck },
+  { value: "rejected" as const, label: "Từ chối", icon: IconCircleX },
+  { value: "sold" as const, label: "Đã bán", icon: IconCurrencyDollar },
 ];
 
 export function ProductListHeader({
@@ -56,7 +56,7 @@ export function ProductListHeader({
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                <List className="w-4 h-4" />
+                <IconList className="w-4 h-4" />
               </button>
               <button
                 onClick={() => onViewModeChange("grid")}
@@ -67,7 +67,7 @@ export function ProductListHeader({
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                <LayoutGrid className="w-4 h-4" />
+                <IconLayoutGrid className="w-4 h-4" />
               </button>
             </div>
 
@@ -75,7 +75,7 @@ export function ProductListHeader({
               href="/sell"
               className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
             >
-              <Plus className="w-4 h-4" />
+              <IconPlus className="w-4 h-4" />
               Đăng tin
             </Link>
           </div>

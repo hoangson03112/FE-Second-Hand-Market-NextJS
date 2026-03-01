@@ -3,10 +3,11 @@ import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUser } from "@/hooks/useUser";
 import { AuthService } from "@/services/auth.service";
-import { useToast } from "@/components/ui";
+import { useToast } from "@/components/ui/Toast";
 import { queryKeys } from "@/lib/query-client";
 import type { ProfileFormData } from "../types";
 import { PROFILE_MESSAGES } from "@/constants";
+import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
 
 export function useProfile() {
   const router = useRouter();
@@ -38,21 +39,23 @@ export function useProfile() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const normalizedValue = sanitizeFieldInput(name, value);
+    setFormData((prev) => ({ ...prev, [name]: normalizedValue }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
+      const normalizedData = sanitizeFormValues(formData);
       const isGoogleUser = account?.provider === "google";
       const payload = isGoogleUser
         ? {
-            fullName: formData.fullName,
-            phoneNumber: formData.phoneNumber,
+            fullName: normalizedData.fullName,
+            phoneNumber: normalizedData.phoneNumber,
             email: account!.email,
           }
-        : formData;
+        : normalizedData;
 
       await AuthService.updateProfile(payload);
       queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });

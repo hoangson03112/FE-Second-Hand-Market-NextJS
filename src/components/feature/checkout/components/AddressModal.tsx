@@ -1,7 +1,7 @@
 "use client";
 
+import { IconMapPin, IconPlus, IconX, IconArrowLeft } from "@tabler/icons-react";
 import { Address } from "@/types/address";
-import { MapPin, Plus, X, ArrowLeft } from "lucide-react";
 import { AddressForm } from "./AddressForm";
 import type { CreateAddressRequest } from "@/types/address";
 import { useState } from "react";
@@ -87,12 +87,12 @@ export default function AddressModal({
                   onClick={handleBack}
                   className="p-2 hover:bg-muted rounded-lg transition-colors"
                 >
-                  <ArrowLeft className="h-5 w-5 text-muted-foreground" />
+                  <IconArrowLeft className="h-5 w-5 text-muted-foreground" />
                 </button>
               )}
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                  <MapPin className="h-5 w-5 text-primary" />
+                  <IconMapPin className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-foreground">
@@ -114,7 +114,7 @@ export default function AddressModal({
               onClick={onHide}
               className="p-2 hover:bg-muted rounded-lg transition-colors"
             >
-              <X className="h-5 w-5 text-muted-foreground" />
+              <IconX className="h-5 w-5 text-muted-foreground" />
             </button>
           </div>
           <div className="flex-1 overflow-y-auto p-6">
@@ -137,7 +137,7 @@ export default function AddressModal({
                 >
                   <div className="flex items-center justify-center gap-2">
                     <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                      <Plus className="h-4 w-4 text-primary" />
+                      <IconPlus className="h-4 w-4 text-primary" />
                     </div>
                     <span className="font-semibold text-foreground">
                       Thêm địa chỉ mới

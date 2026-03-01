@@ -1,18 +1,9 @@
 "use client";
 
+import { IconArrowLeft, IconBuildingStore, IconShieldCheck, IconCashBanknote, IconPackageExport, IconClock, IconCircleCheck, IconCircleX } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import {
-  ArrowLeft,
-  Store,
-  ShieldCheck,
-  Banknote,
-  PackageCheck,
-  Clock,
-  CheckCircle2,
-  XCircle,
-} from "lucide-react";
-import { ErrorMessage } from "@/components/feature/auth";
+import ErrorMessage from "@/components/feature/auth/ErrorMessage";
 import { useBecomeSeller } from "./hooks";
 import {
   BankInfoSection,
@@ -21,9 +12,9 @@ import {
 } from "./components";
 
 const PERKS = [
-  { icon: PackageCheck, text: "Đăng sản phẩm không giới hạn" },
-  { icon: Banknote, text: "Nhận thanh toán online an toàn" },
-  { icon: ShieldCheck, text: "Huy hiệu Seller xác minh" },
+  { icon: IconPackageExport, text: "Đăng sản phẩm không giới hạn" },
+  { icon: IconCashBanknote, text: "Nhận thanh toán online an toàn" },
+  { icon: IconShieldCheck, text: "Huy hiệu Seller xác minh" },
 ];
 
 export default function BecomeSeller() {
@@ -57,7 +48,7 @@ export default function BecomeSeller() {
             onClick={() => router.back()}
             className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <IconArrowLeft className="w-4 h-4" />
             Quay lại
           </button>
           <span className="text-muted-foreground/40 select-none">|</span>
@@ -69,7 +60,7 @@ export default function BecomeSeller() {
         {/* Hero */}
         <div className="rounded-2xl border border-border bg-card p-6 flex items-start gap-4">
           <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-            <Store className="w-6 h-6 text-primary" />
+            <IconBuildingStore className="w-6 h-6 text-primary" />
           </div>
           <div className="flex-1 min-w-0">
             <h1 className="text-lg font-bold text-foreground mb-1">
@@ -94,7 +85,7 @@ export default function BecomeSeller() {
         {/* Product limit banner */}
         {productLimit && requiresVerification && requestStatus !== "approved" && (
           <div className="rounded-xl border border-amber-400/50 bg-amber-50/60 dark:bg-amber-950/20 px-4 py-3 flex items-start gap-3">
-            <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0" />
+            <IconClock className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0" />
             <p className="text-xs text-amber-800 dark:text-amber-300">
               Bạn đã đăng{" "}
               <span className="font-semibold">
@@ -112,7 +103,7 @@ export default function BecomeSeller() {
           </div>
         ) : hasRequest && requestStatus === "pending" ? (
           <div className="rounded-2xl border border-amber-400/50 bg-amber-50/60 dark:bg-amber-950/20 p-6 flex items-start gap-4">
-            <Clock className="w-6 h-6 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+            <IconClock className="w-6 h-6 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
             <div>
               <h3 className="text-sm font-semibold text-amber-800 dark:text-amber-300 mb-1">
                 Hồ sơ đang được xét duyệt
@@ -131,7 +122,7 @@ export default function BecomeSeller() {
           </div>
         ) : hasRequest && requestStatus === "rejected" ? (
           <div className="rounded-2xl border border-red-400/50 bg-red-50/60 dark:bg-red-950/20 p-6 flex items-start gap-4">
-            <XCircle className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
+            <IconCircleX className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
             <div>
               <h3 className="text-sm font-semibold text-red-700 dark:text-red-400 mb-1">
                 Yêu cầu đã bị từ chối

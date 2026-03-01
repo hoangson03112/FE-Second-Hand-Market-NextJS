@@ -38,13 +38,31 @@ export function useHeader() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [showAllCategories, setShowAllCategories] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState(1280);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const categoryLeaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const allCategoriesLeaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  useEffect(() => {
+    const updateViewportWidth = () => setViewportWidth(window.innerWidth);
+    updateViewportWidth();
+    window.addEventListener("resize", updateViewportWidth);
+
+    return () => {
+      window.removeEventListener("resize", updateViewportWidth);
+    };
+  }, []);
+
+  const visibleCategoryLimit = useMemo(() => {
+    if (viewportWidth >= 1536) return 8;
+    if (viewportWidth >= 1280) return 6;
+    if (viewportWidth >= 1024) return 4;
+    return 0;
+  }, [viewportWidth]);
+
   const visibleCategories = useMemo(
-    () => categories?.slice(0, 8),
-    [categories]
+    () => categories?.slice(0, visibleCategoryLimit),
+    [categories, visibleCategoryLimit]
   );
 
   const handleMouseEnterCategory = useCallback((id: string) => {

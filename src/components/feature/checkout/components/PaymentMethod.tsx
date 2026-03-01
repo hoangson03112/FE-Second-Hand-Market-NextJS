@@ -1,21 +1,22 @@
 "use client";
 
-import { Wallet, Building2 } from "lucide-react";
 
+import { IconWallet, IconBuilding } from "@tabler/icons-react";
 export type PaymentMethodType = "cod" | "bank_transfer";
 
 interface PaymentMethodProps {
   selected: PaymentMethodType;
   onSelect: (method: PaymentMethodType) => void;
+  showBankTransfer?: boolean;
 }
 
-export default function PaymentMethod({ selected, onSelect }: PaymentMethodProps) {
-  const methods = [
+export default function PaymentMethod({ selected, onSelect, showBankTransfer = false }: PaymentMethodProps) {
+  const allMethods = [
     {
       id: "bank_transfer" as PaymentMethodType,
       name: "Thanh toán trước qua ngân hàng",
       description: "Chuyển khoản trước, xác nhận nhanh",
-      icon: Building2,
+      icon: IconBuilding,
       badge: "Khuyến nghị",
       color: "primary",
     },
@@ -23,10 +24,14 @@ export default function PaymentMethod({ selected, onSelect }: PaymentMethodProps
       id: "cod" as PaymentMethodType,
       name: "Thanh toán khi nhận hàng (COD)",
       description: "Thanh toán tiền mặt khi nhận hàng",
-      icon: Wallet,
+      icon: IconWallet,
       color: "secondary",
     },
   ];
+
+  const methods = allMethods.filter(
+    (m) => m.id !== "bank_transfer" || showBankTransfer
+  );
 
   return (
     <div className="space-y-2.5">

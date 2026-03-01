@@ -1,14 +1,14 @@
 "use client";
 
+import { IconCircleCheck, IconHome, IconArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
-import { CheckCircle2, Home, ArrowRight } from "lucide-react";
 
 export default function BecomeSellerSuccessPage() {
   return (
     <div className="min-h-screen bg-background py-12 flex items-center justify-center px-4">
       <div className="max-w-lg mx-auto text-center">
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 mb-6">
-          <CheckCircle2 className="h-12 w-12 text-green-600" />
+          <IconCircleCheck className="h-12 w-12 text-green-600" />
         </div>
         <h1 className="text-2xl font-bold text-foreground mb-3">
           Đăng ký Seller đã được gửi!
@@ -21,7 +21,7 @@ export default function BecomeSellerSuccessPage() {
             href="/"
             className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-border text-foreground hover:bg-muted transition-colors"
           >
-            <Home className="h-4 w-4" />
+            <IconHome className="h-4 w-4" />
             Về trang chủ
           </Link>
           <Link
@@ -29,7 +29,7 @@ export default function BecomeSellerSuccessPage() {
             className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-white btn-primary"
           >
             Mua sắm ngay
-            <ArrowRight className="h-4 w-4" />
+            <IconArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { AuthService } from "@/services/auth.service";
 import type { RegisterRequest } from "@/types/auth";
 import { registerSchema, RegisterInput } from "@/schemas/auth.schema";
+import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
 
 export function useRegister() {
   const router = useRouter();
@@ -20,7 +21,8 @@ export function useRegister() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const normalizedValue = sanitizeFieldInput(name, value);
+    setFormData({ ...formData, [name]: normalizedValue });
     setError("");
     if (errors[name as keyof RegisterInput]) {
       setErrors({ ...errors, [name]: undefined });
@@ -55,7 +57,8 @@ export function useRegister() {
     e.preventDefault();
     setError("");
     setErrors({});
-    const result = registerSchema.safeParse(formData);
+    const normalizedData = sanitizeFormValues(formData);
+    const result = registerSchema.safeParse(normalizedData);
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof RegisterInput, string>> = {};
       result.error.issues.forEach((issue) => {

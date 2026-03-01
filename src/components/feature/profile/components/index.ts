@@ -1,6 +1,6 @@
 export { Breadcrumb } from "./Breadcrumb";
-export { UserAvatar } from "./UserAvatar";
-export { ProfileSidebar } from "./ProfileSidebar";
-export { ProfileForm } from "./ProfileForm";
-export { PasswordForm } from "./PasswordForm";
 export { LoadingState } from "./LoadingState";
+export { PasswordForm } from "./PasswordForm";
+export { ProfileForm } from "./ProfileForm";
+export { ProfileSidebar } from "./ProfileSidebar";
+export { UserAvatar } from "./UserAvatar";

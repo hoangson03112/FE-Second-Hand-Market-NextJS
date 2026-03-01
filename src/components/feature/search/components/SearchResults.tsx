@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductList } from "@/components/feature/categories";
+import { ProductList } from "@/components/feature/categories/components";
 import type { IProduct, IProductFilters } from "@/types/product";
 
 interface SearchResultsProps {
@@ -38,7 +38,7 @@ export default function SearchResults({
               page: 1,
             })
           }
-          className="h-10 px-4 border-2 border-taupe-300 focus:border-primary focus:outline-none text-sm text-taupe-700 bg-cream-50"
+          className="h-10 px-4 border-2 border-border rounded-xl focus:border-primary focus:outline-none text-sm text-taupe-700 bg-cream-50 focus:ring-2 focus:ring-primary/20 transition-all"
         >
           <option value="newest">Mới nhất</option>
           <option value="oldest">Cũ nhất</option>

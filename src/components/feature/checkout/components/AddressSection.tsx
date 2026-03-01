@@ -1,6 +1,6 @@
 "use client";
 
-import { MapPin, Edit2 } from "lucide-react";
+import { IconMapPin, IconEdit } from "@tabler/icons-react";
 import { Address } from "@/types/address";
 
 interface AddressSectionProps {
@@ -29,7 +29,7 @@ export default function AddressSection({
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-primary/10 flex items-center justify-center">
-              <MapPin className="h-4 w-4 text-primary" />
+              <IconMapPin className="h-4 w-4 text-primary" />
             </div>
             <div>
               <p className="font-medium text-taupe-900 text-sm">Chưa có địa chỉ giao hàng</p>
@@ -64,7 +64,7 @@ export default function AddressSection({
           onClick={onChangeAddress}
           className="btn btn-secondary btn-sm flex items-center gap-2 text-sm px-3 py-1.5"
         >
-          <Edit2 className="h-3.5 w-3.5" />
+          <IconEdit className="h-3.5 w-3.5" />
           Thay đổi
         </button>
       </div>

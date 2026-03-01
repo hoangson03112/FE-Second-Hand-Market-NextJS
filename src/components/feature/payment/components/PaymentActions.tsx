@@ -1,5 +1,5 @@
+import { IconCircleCheck } from "@tabler/icons-react";
 import Link from "next/link";
-import { CheckCircle2 } from "lucide-react";
 
 export interface PaymentActionsProps {
   isExpired: boolean;
@@ -52,7 +52,7 @@ export function PaymentActions({
           </span>
         ) : (
           <span className="flex items-center justify-center gap-2">
-            <CheckCircle2 className="h-5 w-5" />
+            <IconCircleCheck className="h-5 w-5" />
             Đã thanh toán
           </span>
         )}

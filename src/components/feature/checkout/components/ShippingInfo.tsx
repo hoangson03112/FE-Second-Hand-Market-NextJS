@@ -1,8 +1,8 @@
 "use client";
 
+import { IconPackage, IconClock, IconAlertCircle } from "@tabler/icons-react";
 import { ShippingServiceOption } from "@/types/address";
 import { formatPrice } from "@/utils/format/price";
-import { Package, Clock, AlertCircle } from "lucide-react";
 
 interface SellerShippingItem {
   sellerName: string;
@@ -42,7 +42,7 @@ export default function ShippingInfo({
     return (
       <div className="flex flex-col gap-3 p-4 bg-red-50/80 border-2 border-red-200 rounded-xl">
         <div className="flex items-start gap-3">
-          <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+          <IconAlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
           <div className="flex-1">
             <p className="text-sm font-medium text-red-900 mb-1">Không thể tính phí vận chuyển</p>
             <p className="text-sm text-red-700">{error}</p>
@@ -60,7 +60,7 @@ export default function ShippingInfo({
   if (!shippingInfo) {
     return (
       <div className="text-center py-6 text-taupe-600">
-        <Package className="h-8 w-8 mx-auto mb-2 opacity-50" />
+        <IconPackage className="h-8 w-8 mx-auto mb-2 opacity-50" />
         <p className="text-sm mb-3">Vui lòng chọn địa chỉ giao hàng ở trên để xem phí vận chuyển</p>
         {onAddAddress && (
           <button type="button" onClick={onAddAddress} className="btn btn-secondary btn-sm">
@@ -118,7 +118,7 @@ export default function ShippingInfo({
             </div>
           </div>
           <div className="flex items-center gap-2 text-sm text-taupe-600 pt-3 border-t border-default">
-            <Clock className="h-4 w-4" />
+            <IconClock className="h-4 w-4" />
             <span>
               Dự kiến giao hàng trong <strong className="text-taupe-900">{shippingInfo.estimatedDays} ngày</strong>
               {shippingInfo.estimatedDate && <span className="ml-1">({shippingInfo.estimatedDate})</span>}

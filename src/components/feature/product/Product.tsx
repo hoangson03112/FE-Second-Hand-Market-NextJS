@@ -1,8 +1,8 @@
 "use client";
 
+import { IconArrowLeft } from "@tabler/icons-react";
 import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUser } from "@/hooks/useUser";
@@ -21,7 +21,7 @@ import {
   ProductActionButtons,
   ReportProductModal,
 } from "./components";
-import { useProduct, useProductActions } from "./hooks";
+import { useProduct, useProductActions } from "@/hooks";
 import type { ProductProps } from "./Product.types";
 import { PageContainer, Container } from "@/components/layout/Container";
 
@@ -95,9 +95,8 @@ export default function Product({ id }: ProductProps) {
     );
   }
 
-  // Calculate rating (placeholder - would come from reviews API)
-  const averageRating = 4.5;
-  const totalReviews = 0;
+  const averageRating = product.avgRating ?? 0;
+  const totalReviews = product.totalReviews ?? 0;
 
   // Convert attributes to details format
   const productDetails =
@@ -106,13 +105,13 @@ export default function Product({ id }: ProductProps) {
     ) || [];
 
   return (
-    <div className="min-h-screen bg-taupe-50">
+    <div className="min-h-screen bg-gradient-to-br from-cream-50 to-taupe-50/30">
       <main className="max-w-7xl mx-auto px-4 py-6">
         <button
           onClick={() => router.back()}
           className="inline-flex items-center gap-2 text-taupe-600 hover:text-primary mb-4 text-sm"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <IconArrowLeft className="h-4 w-4" />
           Trở lại
         </button>
 
@@ -152,12 +151,12 @@ export default function Product({ id }: ProductProps) {
             />
 
             {(product.stock ?? 0) === 0 && (
-              <div className="rounded-lg bg-red-50 text-red-600 px-4 py-2 text-sm font-medium my-3 border border-red-200">
+              <div className="rounded-xl bg-gradient-to-r from-red-50 to-red-100 text-red-600 px-4 py-3 text-sm font-semibold my-3 border-2 border-red-200 shadow-sm">
                 Hết hàng
               </div>
             )}
             {(product.stock ?? 0) === 1 && (
-              <div className="rounded-lg bg-orange-50 text-orange-700 px-4 py-2 text-sm font-medium my-3 border border-orange-200">
+              <div className="rounded-xl bg-gradient-to-r from-orange-50 to-orange-100 text-orange-700 px-4 py-3 text-sm font-semibold my-3 border-2 border-orange-200 shadow-sm">
                 Chỉ còn 1 sản phẩm
               </div>
             )}

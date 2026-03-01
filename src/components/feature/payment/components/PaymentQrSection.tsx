@@ -1,4 +1,4 @@
-import { QrCode } from "lucide-react";
+import { IconQrcode } from "@tabler/icons-react";
 
 export interface PaymentQrSectionProps {
   bankInfoLoading: boolean;
@@ -54,7 +54,7 @@ export function PaymentQrSection({
           </div>
         ) : (
           <div className="w-64 h-64 bg-muted rounded-lg flex items-center justify-center border-2 border-dashed border-border">
-            <QrCode className="h-32 w-32 text-muted-foreground opacity-50" />
+            <IconQrcode className="h-32 w-32 text-muted-foreground opacity-50" />
           </div>
         )}
       </div>

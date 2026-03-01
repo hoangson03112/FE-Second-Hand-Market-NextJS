@@ -1,6 +1,6 @@
 "use client";
 
-import { Star, Truck, MapPin, Clock, User } from "lucide-react";
+import { IconUser, IconStar, IconTruck, IconMapPin, IconClock } from "@tabler/icons-react";
 import { ISeller } from "@/types/product";
 import Image from "next/image";
 import { getProvinceName } from "@/utils";
@@ -20,12 +20,12 @@ export default function SellerInfoCard({
     ? new Date(seller.createdAt).getFullYear().toString()
     : "2023";
   return (
-    <div className="bg-cream-50 p-5 mb-3 border border-taupe-200">
+    <div className="bg-gradient-to-br from-cream-50 to-taupe-50/50 p-5 mb-3 border-2 border-border rounded-2xl shadow-md">
       <h3 className="font-medium text-taupe-900 mb-4 text-sm uppercase tracking-[0.1em]">
         Thông Tin Người Bán
       </h3>
       <div className="flex items-start gap-3">
-        <div className="w-12 h-12 bg-taupe-100 flex items-center justify-center flex-shrink-0 overflow-hidden border border-taupe-200">
+        <div className="w-12 h-12 bg-gradient-to-br from-taupe-100 to-taupe-200 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden border-2 border-border">
           {seller.avatar ? (
             <Image
               src={seller.avatar}
@@ -35,7 +35,7 @@ export default function SellerInfoCard({
               className="w-full h-full object-cover"
             />
           ) : (
-            <User className="h-6 w-6 text-taupe-400" />
+            <IconUser className="h-6 w-6 text-taupe-400" />
           )}
         </div>
         <div className="flex-1">
@@ -47,7 +47,7 @@ export default function SellerInfoCard({
               <div className="flex items-center gap-2 text-sm text-taupe-600">
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => (
-                    <Star
+                    <IconStar
                       key={i}
                       className={`h-3 w-3 ${i < Math.floor(seller.avgRating!) ? "fill-primary text-primary" : "fill-taupe-200 text-taupe-200"}`}
                     />
@@ -57,17 +57,17 @@ export default function SellerInfoCard({
               </div>
             )}
             <div className="flex items-center gap-2 text-sm text-taupe-600">
-              <Truck className="h-3.5 w-3.5" />
+              <IconTruck className="h-3.5 w-3.5" />
               <span>{seller?.totalProducts || 1} sản phẩm</span>
             </div>
             {provinceDisplay && (
               <div className="flex items-center gap-2 text-sm text-taupe-600">
-                <MapPin className="h-3.5 w-3.5" />
+                <IconMapPin className="h-3.5 w-3.5" />
                 <span>{provinceDisplay}</span>
               </div>
             )}
             <div className="flex items-center gap-2 text-sm text-taupe-600">
-              <Clock className="h-3.5 w-3.5" />
+              <IconClock className="h-3.5 w-3.5" />
               <span>Tham gia {joinedYear}</span>
             </div>
           </div>
@@ -75,7 +75,7 @@ export default function SellerInfoCard({
       </div>
       <button
         onClick={onContactSeller}
-        className="w-full mt-4 border-2 border-taupe-300 text-taupe-700 py-2.5 text-[13px] font-black uppercase tracking-[0.12em] hover:border-taupe-600 hover:text-taupe-900 transition-colors"
+        className="w-full mt-4 border-2 border-primary text-primary py-3 rounded-xl text-sm font-bold uppercase tracking-wider hover:bg-primary hover:text-white hover:shadow-lg transition-all duration-300"
       >
         Chat với người bán
       </button>

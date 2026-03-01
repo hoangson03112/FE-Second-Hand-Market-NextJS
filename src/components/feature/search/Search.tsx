@@ -22,7 +22,7 @@ export default function Search() {
   } = useSearch();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background to-cream-50/40">
       <SearchHeader query={q} total={total} />
 
       <div className="max-w-7xl mx-auto px-4 py-8">

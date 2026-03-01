@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import Verify from "@/components/feature/Verify";
+import Verify from "@/components/feature/Verify/Verify";
 
 export default function VerifyEmailPage() {
   return (

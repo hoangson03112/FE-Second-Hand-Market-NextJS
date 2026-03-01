@@ -1,7 +1,7 @@
 "use client";
 
+import { IconX, IconAlertTriangle } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
-import { X, AlertTriangle } from "lucide-react";
 
 interface RejectReasonDialogProps {
   isOpen: boolean;
@@ -53,7 +53,7 @@ export function RejectReasonDialog({
           <div className="flex items-start justify-between p-6 border-b border-[var(--taupe-200)]">
             <div className="flex items-start gap-4 flex-1">
               <div className="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0">
-                <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                <IconAlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-lg font-semibold text-[var(--charcoal-900)] dark:text-white">
@@ -69,7 +69,7 @@ export function RejectReasonDialog({
               disabled={isLoading}
               className="p-2 hover:bg-[var(--cream-200)] dark:hover:bg-[var(--charcoal-700)] rounded-lg transition-colors shrink-0"
             >
-              <X className="h-5 w-5 text-[var(--charcoal-500)] dark:text-[var(--charcoal-400)]" />
+              <IconX className="h-5 w-5 text-[var(--charcoal-500)] dark:text-[var(--charcoal-400)]" />
             </button>
           </div>
 
@@ -112,7 +112,7 @@ export function RejectReasonDialog({
                 disabled={!reason.trim() || isLoading}
                 className="flex-1 px-4 py-2 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? "Đang xử lý..." : "Xác nhận từ chối"}
+                {isLoading ? "Đang xử lý..." : "IconXác nhận từ chối"}
               </button>
             </div>
           </form>

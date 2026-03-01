@@ -1,1 +1,0 @@
-export { useRegister } from "./useRegister";

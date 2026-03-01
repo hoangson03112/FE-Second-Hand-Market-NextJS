@@ -1,9 +1,9 @@
 "use client";
 
+import { IconX } from "@tabler/icons-react";
 import { useState } from "react";
-import { X } from "lucide-react";
 import { ReportService } from "@/services/report.service";
-import { useToast } from "@/components/ui";
+import { useToast } from "@/components/ui/Toast";
 
 interface ReportProductModalProps {
   productId: string;
@@ -55,7 +55,7 @@ export default function ReportProductModal({
               className="p-2 rounded-full hover:bg-muted transition-colors"
               aria-label="Đóng"
             >
-              <X className="w-5 h-5" />
+              <IconX className="w-5 h-5" />
             </button>
           </div>
           <p className="text-sm text-muted-foreground mb-4">

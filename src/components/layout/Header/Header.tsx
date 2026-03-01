@@ -1,22 +1,9 @@
 "use client";
 
+import { IconSearch, IconShoppingCart, IconBell, IconMessageCircle, IconChevronDown, IconSettings, IconPackage, IconTruck, IconUser, IconLogout, IconPlus, IconAlignLeft } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
 import { ICategory, ISubCategory } from "@/types/category";
-import {
-  Search,
-  ShoppingCart,
-  Bell,
-  MessageCircle,
-  ChevronDown,
-  Settings,
-  Package,
-  Truck,
-  User,
-  LogOut,
-  Plus,
-  AlignLeft,
-} from "lucide-react";
 import { useHeader } from "./hooks/useHeader";
 
 export default function Header() {
@@ -56,8 +43,8 @@ export default function Header() {
         boxShadow: "0 2px 12px rgba(26,23,20,0.06)",
       }}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center h-[60px] gap-2.5">
+      <div className="container mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center h-[56px] sm:h-[60px] gap-1.5 sm:gap-2.5">
 
           {/* Logo */}
           <Link href="/" className="shrink-0 group">
@@ -66,14 +53,14 @@ export default function Header() {
               alt="Eco Market"
               width={110}
               height={110}
-              className="h-9 w-auto object-contain transition-opacity duration-200 group-hover:opacity-70"
+              className="h-8 sm:h-9 w-auto max-w-[92px] sm:max-w-none object-contain transition-opacity duration-200 group-hover:opacity-70"
               priority
             />
           </Link>
 
           {/* Tất cả — pill trigger */}
           <div
-            className="relative shrink-0"
+            className="relative shrink-0 hidden md:block"
             onMouseEnter={handleShowAllCategories}
             onMouseLeave={handleHideAllCategories}
           >
@@ -88,9 +75,9 @@ export default function Header() {
               onMouseEnter={e => { if (!showAllCategories) (e.currentTarget as HTMLElement).style.background = "#E2D4C2"; }}
               onMouseLeave={e => { if (!showAllCategories) (e.currentTarget as HTMLElement).style.background = "#EDE0D4"; }}
             >
-              <AlignLeft className="w-3.5 h-3.5 shrink-0" strokeWidth={2.5} />
+              <IconAlignLeft className="w-3.5 h-3.5 shrink-0" strokeWidth={2.5} />
               <span className="hidden lg:inline">Danh mục</span>
-              <ChevronDown
+              <IconChevronDown
                 className={`w-3 h-3 shrink-0 transition-transform duration-200 ${showAllCategories ? "rotate-180" : ""}`}
                 strokeWidth={2.5}
               />
@@ -158,7 +145,7 @@ export default function Header() {
           <div className="w-px h-4 shrink-0 hidden lg:block" style={{ background: "#DDD0C0" }} />
 
           {/* Category nav — flex-1 */}
-          <nav className="hidden lg:flex flex-1 items-center gap-0.5 min-w-0">
+          <nav className="hidden lg:flex flex-1 items-center gap-0 xl:gap-0.5 min-w-0">
             {isLoading ? (
               <div className="flex items-center gap-1.5 px-2" style={{ color: "#B8997D" }}>
                 <div className="w-2.5 h-2.5 border-2 rounded-full animate-spin" style={{ borderColor: "#EDE0D4", borderTopColor: "#C47B5A" }} />
@@ -173,14 +160,14 @@ export default function Header() {
                 >
                   <Link
                     href={`/categories/${category.slug}`}
-                    className="flex items-center gap-0.5 px-2.5 py-1 text-[12.5px] font-medium whitespace-nowrap rounded-full transition-all duration-150"
+                    className="flex items-center gap-0.5 px-2 xl:px-2.5 py-1 text-[12px] xl:text-[12.5px] font-medium whitespace-nowrap rounded-full transition-all duration-150 max-w-[132px] xl:max-w-none"
                     style={{ color: activeCategory === category._id ? "#C47B5A" : "#5C4E3D" }}
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#C47B5A"; (e.currentTarget as HTMLElement).style.background = "#F5EDE4"; }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = activeCategory === category._id ? "#C47B5A" : "#5C4E3D"; (e.currentTarget as HTMLElement).style.background = ""; }}
                   >
-                    {category.name}
+                    <span className="truncate">{category.name}</span>
                     {category.subCategories?.length > 0 && (
-                      <ChevronDown
+                      <IconChevronDown
                         className={`w-3 h-3 shrink-0 transition-transform duration-200 ${activeCategory === category._id ? "rotate-180" : ""}`}
                         strokeWidth={2.5}
                       />
@@ -219,10 +206,10 @@ export default function Header() {
             )}
           </nav>
 
-          {/* Search */}
-          <form onSubmit={submitSearch} role="search" className="hidden md:flex shrink-0 w-48 lg:w-56 xl:w-64">
+          {/* IconSearch */}
+          <form onSubmit={submitSearch} role="search" className="hidden md:flex shrink-0 w-44 lg:w-48 xl:w-56 2xl:w-64">
             <div className="relative w-full">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none" style={{ color: "#A8957F" }} />
+              <IconSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none" style={{ color: "#A8957F" }} />
               <input
                 id="header-search"
                 name="search"
@@ -247,19 +234,19 @@ export default function Header() {
           </form>
 
           {/* Actions */}
-          <div className="flex items-center gap-1.5 shrink-0">
+          <div className="flex items-center gap-0.5 sm:gap-1.5 shrink-0 ml-auto">
             {!account ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <Link
                   href="/login"
-                  className="inline-flex items-center justify-center h-9 px-4 text-[13px] font-semibold transition-all duration-150 hover:opacity-85"
+                  className="inline-flex items-center justify-center h-8 sm:h-9 px-3 sm:px-4 text-[12px] sm:text-[13px] font-semibold transition-all duration-150 hover:opacity-85"
                   style={{ color: "#4A3F33", background: "#EDE0D4", borderRadius: "9999px" }}
                 >
                   Đăng nhập
                 </Link>
                 <Link
                   href="/register"
-                  className="hidden sm:inline-flex items-center justify-center h-9 px-4 text-[13px] font-semibold transition-all duration-150 hover:opacity-90"
+                  className="hidden md:inline-flex items-center justify-center h-9 px-4 text-[13px] font-semibold transition-all duration-150 hover:opacity-90"
                   style={{
                     background: "linear-gradient(135deg, #C47B5A 0%, #B06038 100%)",
                     color: "#FDFAF6",
@@ -282,20 +269,20 @@ export default function Header() {
                     boxShadow: "0 2px 8px rgba(196,123,90,0.32)",
                   }}
                 >
-                  <Plus className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  <IconPlus className="w-3.5 h-3.5" strokeWidth={2.5} />
                   {sellButtonText}
                 </Link>
 
                 <div className="flex items-center">
                   {[
-                    { href: "/chat", icon: <MessageCircle className="w-[17px] h-[17px]" />, label: "Tin nhắn" },
-                    { href: "/notifications", icon: <Bell className="w-[17px] h-[17px]" />, label: "Thông báo" },
+                    { href: "/chat", icon: <IconMessageCircle className="w-[17px] h-[17px]" />, label: "Tin nhắn", mobileClass: "hidden xl:flex" },
+                    { href: "/notifications", icon: <IconBell className="w-[17px] h-[17px]" />, label: "Thông báo", mobileClass: "hidden xl:flex" },
                   ].map(item => (
                     <Link
                       key={item.href}
                       href={item.href}
                       aria-label={item.label}
-                      className="flex items-center justify-center w-9 h-9 rounded-full transition-all duration-150"
+                      className={`${item.mobileClass ?? "flex"} items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full transition-all duration-150`}
                       style={{ color: "#7A6755" }}
                       onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#C47B5A"; (e.currentTarget as HTMLElement).style.background = "#EDE0D4"; }}
                       onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "#7A6755"; (e.currentTarget as HTMLElement).style.background = ""; }}
@@ -306,12 +293,12 @@ export default function Header() {
                   <Link
                     href="/cart"
                     aria-label="Giỏ hàng"
-                    className="relative flex items-center justify-center w-9 h-9 rounded-full transition-all duration-150"
+                    className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full transition-all duration-150"
                     style={{ color: "#7A6755" }}
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "#C47B5A"; (e.currentTarget as HTMLElement).style.background = "#EDE0D4"; }}
                     onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "#7A6755"; (e.currentTarget as HTMLElement).style.background = ""; }}
                   >
-                    <ShoppingCart className="w-[17px] h-[17px]" />
+                    <IconShoppingCart className="w-[17px] h-[17px]" />
                     {cartItemCount > 0 && (
                       <span
                         className="absolute top-0 right-0 min-w-[16px] h-4 flex items-center justify-center text-white text-[9px] font-bold"
@@ -323,12 +310,12 @@ export default function Header() {
                   </Link>
                 </div>
 
-                {/* User dropdown */}
+                {/* IconUser dropdown */}
                 <div className="relative" ref={dropdownRef}>
                   <button
                     type="button"
                     onClick={toggleUserDropdown}
-                    className="flex items-center gap-1.5 h-9 pl-1 pr-2.5 rounded-full transition-all duration-150 focus:outline-none"
+                    className="flex items-center gap-1 sm:gap-1.5 h-8 sm:h-9 pl-0.5 sm:pl-1 pr-1.5 sm:pr-2.5 rounded-full transition-all duration-150 focus:outline-none"
                     style={{ background: showUserDropdown ? "#EDE0D4" : "transparent" }}
                     onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#EDE0D4"; }}
                     onMouseLeave={e => { if (!showUserDropdown) (e.currentTarget as HTMLElement).style.background = "transparent"; }}
@@ -341,19 +328,19 @@ export default function Header() {
                         alt=""
                         width={30}
                         height={30}
-                        className="w-[30px] h-[30px] object-cover rounded-full"
+                        className="w-7 h-7 sm:w-[30px] sm:h-[30px] object-cover rounded-full"
                         style={{ border: "2px solid #DDD0C0" }}
                       />
                     ) : (
                       <span
-                        className="w-[30px] h-[30px] flex items-center justify-center text-white text-[11px] font-bold rounded-full"
+                        className="w-7 h-7 sm:w-[30px] sm:h-[30px] flex items-center justify-center text-white text-[11px] font-bold rounded-full"
                         style={{ background: "linear-gradient(135deg, #C47B5A 0%, #B06038 100%)" }}
                       >
                         {getInitials(account?.fullName)}
                       </span>
                     )}
-                    <ChevronDown
-                      className={`w-3.5 h-3.5 transition-transform duration-200 ${showUserDropdown ? "rotate-180" : ""}`}
+                    <IconChevronDown
+                      className={`hidden sm:block w-3.5 h-3.5 transition-transform duration-200 ${showUserDropdown ? "rotate-180" : ""}`}
                       style={{ color: "#8A7264" }}
                       strokeWidth={2.5}
                     />
@@ -386,12 +373,12 @@ export default function Header() {
                       </div>
                       <div className="p-1.5">
                         {[
-                          { href: "/profile", icon: <User className="w-4 h-4 shrink-0" />, label: "Thông tin tài khoản", show: true },
-                          { href: "/admin", icon: <Settings className="w-4 h-4 shrink-0" />, label: "Quản trị", show: account.role === "admin" },
-                          { href: "/chat", icon: <MessageCircle className="w-4 h-4 shrink-0" />, label: "Tin nhắn", show: true },
-                          { href: "/my/listings", icon: <Package className="w-4 h-4 shrink-0" />, label: "Sản phẩm đã đăng", show: true },
+                          { href: "/profile", icon: <IconUser className="w-4 h-4 shrink-0" />, label: "Thông tin tài khoản", show: true },
+                          { href: "/admin", icon: <IconSettings className="w-4 h-4 shrink-0" />, label: "Quản trị", show: account.role === "admin" },
+                          { href: "/chat", icon: <IconMessageCircle className="w-4 h-4 shrink-0" />, label: "Tin nhắn", show: true },
+                          { href: "/my/listings", icon: <IconPackage className="w-4 h-4 shrink-0" />, label: "Sản phẩm đã đăng", show: true },
                           { href: "/orders", icon: <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>, label: "Đơn hàng của tôi", show: true },
-                          { href: "/my/orders", icon: <Truck className="w-4 h-4 shrink-0" />, label: "Đơn hàng bán", show: account.role === "seller" },
+                          { href: "/seller/orders", icon: <IconTruck className="w-4 h-4 shrink-0" />, label: "Đơn hàng bán của tôi", show: true },
                         ].filter(item => item.show).map(item => (
                           <Link
                             key={item.href}
@@ -415,7 +402,7 @@ export default function Header() {
                           onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = "#FEF0EE"; }}
                           onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = ""; }}
                         >
-                          <LogOut className="w-4 h-4 shrink-0" />Đăng xuất
+                          <IconLogout className="w-4 h-4 shrink-0" />Đăng xuất
                         </button>
                       </div>
                     </div>

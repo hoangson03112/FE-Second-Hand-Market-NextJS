@@ -1,5 +1,5 @@
+import { IconUser, IconCamera } from "@tabler/icons-react";
 import Image from "next/image";
-import { User, Camera } from "lucide-react";
 
 interface UserAvatarProps {
   avatarUrl: string | null;
@@ -37,13 +37,13 @@ export function UserAvatar({
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <User className={`${sizeClasses.icon} text-muted-foreground`} />
+            <IconUser className={`${sizeClasses.icon} text-muted-foreground`} />
           </div>
         )}
       </div>
       {showEditIcon && (
         <div className="absolute inset-0 rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
-          <Camera className={`${sizeClasses.editIcon} text-white`} />
+          <IconCamera className={`${sizeClasses.editIcon} text-white`} />
         </div>
       )}
     </div>

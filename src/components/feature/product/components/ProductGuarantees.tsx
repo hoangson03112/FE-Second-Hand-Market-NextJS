@@ -1,12 +1,12 @@
 "use client";
 
-import { Truck, Shield, MessageCircle } from "lucide-react";
 
+import { IconTruck, IconShield, IconMessageCircle } from "@tabler/icons-react";
 export default function ProductGuarantees() {
   const guarantees = [
-    { icon: Truck, title: "Vận Chuyển Miễn Phí", description: "Toàn quốc" },
-    { icon: Shield, title: "Bảo Vệ Người Mua", description: "Hoàn tiền 100%" },
-    { icon: MessageCircle, title: "Hỗ Trợ 24/7", description: "Phản hồi nhanh" },
+    { icon: IconTruck, title: "Vận Chuyển Miễn Phí", description: "Toàn quốc" },
+    { icon: IconShield, title: "Bảo Vệ Người Mua", description: "Hoàn tiền 100%" },
+    { icon: IconMessageCircle, title: "Hỗ Trợ 24/7", description: "Phản hồi nhanh" },
   ];
   return (
     <div className="border-t border-border pt-5 mt-5">

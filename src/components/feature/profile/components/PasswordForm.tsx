@@ -1,4 +1,4 @@
-import { Loader2, Lock, KeyRound, ShieldCheck, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { IconLoader2, IconLock, IconKey, IconShieldCheck, IconAlertTriangle, IconCircleCheck } from "@tabler/icons-react";
 import { useState } from "react";
 import type { PasswordFormData } from "../types";
 import { PASSWORD_MIN_LENGTH } from "@/constants";
@@ -47,7 +47,7 @@ export function PasswordForm({
         <div className="flex items-start justify-between">
           <div>
             <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
-              <Lock className="w-5 h-5 text-primary" />
+              <IconLock className="w-5 h-5 text-primary" />
               Đổi Mật Khẩu
             </h2>
             <p className="text-sm text-muted-foreground mt-1.5">
@@ -59,9 +59,9 @@ export function PasswordForm({
 
       {/* Security tips */}
       <div className="p-6 pb-0">
-        <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
+        <div className="p-4 rounded-lg bg-primary/5 border border-primary/10 mb-4">
           <div className="flex gap-3">
-            <ShieldCheck className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <IconShieldCheck className="w-5 h-5 text-primary shrink-0 mt-0.5" />
             <div className="space-y-1">
               <h4 className="text-sm font-medium text-foreground">Mẹo bảo mật</h4>
               <ul className="text-xs text-muted-foreground space-y-1">
@@ -73,6 +73,20 @@ export function PasswordForm({
             </div>
           </div>
         </div>
+
+        {/* Email notification info */}
+        <div className="p-4 rounded-lg bg-blue-50 border border-blue-200">
+          <div className="flex gap-3">
+            <span className="text-xl shrink-0">📧</span>
+            <div className="space-y-1">
+              <h4 className="text-sm font-medium text-blue-900">Thông báo qua email</h4>
+              <p className="text-xs text-blue-700 leading-relaxed">
+                Sau khi đổi mật khẩu thành công, bạn sẽ nhận được <strong>email xác nhận</strong> để đảm bảo tài khoản an toàn. 
+                Nếu không phải bạn thực hiện, vui lòng liên hệ ngay với chúng tôi.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Form */}
@@ -81,7 +95,7 @@ export function PasswordForm({
           {/* Old password */}
           <div className="group">
             <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-              <KeyRound className="w-4 h-4 text-primary" />
+              <IconKey className="w-4 h-4 text-primary" />
               Mật khẩu hiện tại
               <span className="text-destructive">*</span>
             </label>
@@ -95,7 +109,7 @@ export function PasswordForm({
                 placeholder="Nhập mật khẩu hiện tại"
                 required
               />
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <IconLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <button
                 type="button"
                 onClick={() => setShowOldPassword(!showOldPassword)}
@@ -109,7 +123,7 @@ export function PasswordForm({
           {/* New password */}
           <div className="group">
             <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-              <KeyRound className="w-4 h-4 text-primary" />
+              <IconKey className="w-4 h-4 text-primary" />
               Mật khẩu mới
               <span className="text-destructive">*</span>
             </label>
@@ -124,7 +138,7 @@ export function PasswordForm({
                 required
                 minLength={PASSWORD_MIN_LENGTH}
               />
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <IconLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <button
                 type="button"
                 onClick={() => setShowNewPassword(!showNewPassword)}
@@ -157,7 +171,7 @@ export function PasswordForm({
           {/* Confirm password */}
           <div className="group">
             <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-              <ShieldCheck className="w-4 h-4 text-primary" />
+              <IconShieldCheck className="w-4 h-4 text-primary" />
               Xác nhận mật khẩu
               <span className="text-destructive">*</span>
             </label>
@@ -171,7 +185,7 @@ export function PasswordForm({
                 placeholder="Nhập lại mật khẩu mới"
                 required
               />
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <IconLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -185,12 +199,12 @@ export function PasswordForm({
               <div className="mt-2 flex items-center gap-1.5">
                 {passwordsMatch ? (
                   <>
-                    <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                    <IconCircleCheck className="w-3.5 h-3.5 text-green-500" />
                     <span className="text-xs text-green-500">Mật khẩu khớp</span>
                   </>
                 ) : (
                   <>
-                    <AlertTriangle className="w-3.5 h-3.5 text-destructive" />
+                    <IconAlertTriangle className="w-3.5 h-3.5 text-destructive" />
                     <span className="text-xs text-destructive">Mật khẩu không khớp</span>
                   </>
                 )}
@@ -212,12 +226,12 @@ export function PasswordForm({
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <IconLoader2 className="w-4 h-4 animate-spin" />
                     Đang xử lý...
                   </>
                 ) : (
                   <>
-                    <CheckCircle2 className="w-4 h-4" />
+                    <IconCircleCheck className="w-4 h-4" />
                     Đổi mật khẩu
                   </>
                 )}

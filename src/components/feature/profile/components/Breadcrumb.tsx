@@ -1,5 +1,5 @@
+import { IconChevronRight } from "@tabler/icons-react";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 
 export function Breadcrumb() {
   return (
@@ -9,7 +9,7 @@ export function Breadcrumb() {
           <Link href="/" className="text-primary hover:text-primary/80">
             Trang chủ
           </Link>
-          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          <IconChevronRight className="w-4 h-4 text-muted-foreground" />
           <span className="text-foreground">Tài khoản của tôi</span>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AuthService } from "@/services/auth.service";
-import { useToast } from "@/components/ui";
+import { useToast } from "@/components/ui/Toast";
 import type { PasswordFormData } from "../types";
 import { PROFILE_MESSAGES, PASSWORD_MIN_LENGTH } from "@/constants";
 

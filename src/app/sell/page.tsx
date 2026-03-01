@@ -4,7 +4,7 @@ import { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { useTokenStore } from "@/store/useTokenStore";
-import SellForm from "@/components/feature/sell";
+import SellForm from "@/components/feature/sell/SellForm";
 
 function SellPageContent() {
   const router = useRouter();

@@ -1,4 +1,4 @@
-import { Clock } from "lucide-react";
+import { IconClock } from "@tabler/icons-react";
 
 export interface PaymentTimerProps {
   secondsLeft: number | null;
@@ -33,7 +33,7 @@ export function PaymentTimer({
               : "bg-blue-100"
         }`}
       >
-        <Clock
+        <IconClock
           className={`h-5 w-5 ${
             isExpired
               ? "text-red-600"

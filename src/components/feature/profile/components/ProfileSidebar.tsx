@@ -1,4 +1,4 @@
-import { User, Lock, ChevronRight, Shield, Award } from "lucide-react";
+import { IconUser, IconLock, IconChevronRight, IconShield, IconAward } from "@tabler/icons-react";
 import { UserAvatar } from "./UserAvatar";
 import type { TabId } from "../types";
 
@@ -29,7 +29,7 @@ export function ProfileSidebar({
   return (
     <aside className="lg:w-64 shrink-0">
       <div className="bg-card rounded-xl border border-border overflow-hidden shadow-md">
-        {/* User info with enhanced design */}
+        {/* IconUser info with enhanced design */}
         <div className="relative bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-6">
           <div className="flex flex-col items-center text-center">
             <div className="relative mb-3">
@@ -41,7 +41,7 @@ export function ProfileSidebar({
               />
               {/* Badge */}
               <div className="absolute -bottom-1 -right-1 bg-primary rounded-full p-1.5 shadow-lg">
-                <Award className="w-3.5 h-3.5 text-primary-foreground" />
+                <IconAward className="w-3.5 h-3.5 text-primary-foreground" />
               </div>
             </div>
             <h3 className="font-semibold text-foreground text-base mb-1 line-clamp-1">
@@ -52,7 +52,7 @@ export function ProfileSidebar({
             </p>
             {isGoogleUser && (
               <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background/50 backdrop-blur-sm border border-border/50">
-                <Shield className="w-3 h-3 text-primary" />
+                <IconShield className="w-3 h-3 text-primary" />
                 <span className="text-xs font-medium text-foreground">Google Account</span>
               </div>
             )}
@@ -68,11 +68,11 @@ export function ProfileSidebar({
           >
             <div className="flex items-center gap-3">
               <div className={`p-1.5 rounded-lg ${activeTab === "profile" ? "bg-primary/10" : "bg-muted/50"}`}>
-                <User className="w-4 h-4" />
+                <IconUser className="w-4 h-4" />
               </div>
               <span>Hồ sơ</span>
             </div>
-            {activeTab === "profile" && <ChevronRight className="w-4 h-4" />}
+            {activeTab === "profile" && <IconChevronRight className="w-4 h-4" />}
           </button>
           {!isGoogleUser && (
             <button
@@ -82,11 +82,11 @@ export function ProfileSidebar({
             >
               <div className="flex items-center gap-3">
                 <div className={`p-1.5 rounded-lg ${activeTab === "password" ? "bg-primary/10" : "bg-muted/50"}`}>
-                  <Lock className="w-4 h-4" />
+                  <IconLock className="w-4 h-4" />
                 </div>
                 <span>Đổi mật khẩu</span>
               </div>
-              {activeTab === "password" && <ChevronRight className="w-4 h-4" />}
+              {activeTab === "password" && <IconChevronRight className="w-4 h-4" />}
             </button>
           )}
         </nav>

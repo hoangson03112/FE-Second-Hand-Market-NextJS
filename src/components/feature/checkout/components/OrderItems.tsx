@@ -1,7 +1,7 @@
 "use client";
 
+import { IconBuildingStore } from "@tabler/icons-react";
 import { formatPrice } from "@/utils/format/price";
-import { Store } from "lucide-react";
 import Image from "next/image";
 
 interface OrderItem {
@@ -57,7 +57,7 @@ export default function OrderItems({ items }: OrderItemsProps) {
           {item.seller && (
             <div className="px-3 py-2 bg-gray-50 border-t border-gray-200">
               <div className="flex items-center gap-2">
-                <Store className="h-3.5 w-3.5 text-gray-600" />
+                <IconBuildingStore className="h-3.5 w-3.5 text-gray-600" />
                 <span className="text-xs text-gray-600">Người bán:</span>
                 <div className="flex items-center gap-2">
                   {item.seller.avatar && (

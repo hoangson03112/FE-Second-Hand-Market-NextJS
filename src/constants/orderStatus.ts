@@ -63,5 +63,43 @@ export const STATUS_CONFIG: Record<
     icon: "❌",
   },
 };
+// Simple labels map for backward compatibility
+export const STATUS_LABELS: Record<string, string> = {
+  pending: "Chờ xác nhận",
+  confirmed: "Đã xác nhận",
+  picked_up: "Đã lấy hàng",
+  shipping: "Đang vận chuyển",
+  out_for_delivery: "Đang giao hàng",
+  delivered: "Đã giao",
+  completed: "Hoàn thành",
+  failed: "Giao thất bại",
+  returned: "Đã hoàn hàng",
+  cancelled: "Đã hủy",
+};
+
+// Simple colors map for backward compatibility
+export const STATUS_COLORS: Record<string, string> = {
+  pending: "bg-amber-100 text-amber-800 border-amber-300",
+  confirmed: "bg-blue-100 text-blue-800 border-blue-300",
+  picked_up: "bg-cyan-100 text-cyan-800 border-cyan-300",
+  shipping: "bg-purple-100 text-purple-800 border-purple-300",
+  out_for_delivery: "bg-indigo-100 text-indigo-800 border-indigo-300",
+  delivered: "bg-green-100 text-green-800 border-green-300",
+  completed: "bg-green-100 text-green-800 border-green-300",
+  failed: "bg-red-100 text-red-800 border-red-300",
+  returned: "bg-orange-100 text-orange-800 border-orange-300",
+  cancelled: "bg-neutral-100 text-neutral-800 border-neutral-300",
+};
+
+export const ORDER_TABS = [
+  { key: "all", label: "Tất cả" },
+  { key: "pending", label: "Chờ xác nhận" },
+  { key: "confirmed", label: "Đã xác nhận" },
+  { key: "picked_up", label: "Đã lấy hàng" },
+  { key: "shipping", label: "Đang vận chuyển" },
+  { key: "out_for_delivery", label: "Đang giao" },
+  { key: "delivered", label: "Đã giao" },
+  { key: "completed", label: "Hoàn thành" },
+] as const;
 
 export type OrderStatus = keyof typeof STATUS_CONFIG;

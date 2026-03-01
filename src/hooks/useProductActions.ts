@@ -5,7 +5,7 @@ import { IProduct } from "@/types/product";
 import { useCheckoutStore } from "@/store/useCheckoutStore";
 import { AccountInfo } from "@/types/auth";
 import { CartService, ChatService } from "@/services";
-import { useToast } from "@/components/ui";
+import { useToast } from "@/components/ui/Toast";
 import { queryKeys } from "@/lib/query-client";
 
 interface UseProductActionsProps {

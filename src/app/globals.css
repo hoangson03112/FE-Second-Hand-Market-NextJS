@@ -5,13 +5,32 @@
 
 @layer base {
   html {
-    font-family: -apple-system, BlinkMacSystemFont,
-      "SF Pro Text", "SF Pro Display",
-      "Helvetica Neue", Arial, sans-serif !important;
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont,
+      "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   }
 
   button {
     cursor: pointer;
+  }
+
+  input,
+  textarea,
+  select {
+    border-radius: 0.75rem;
+  }
+
+  /* Card-like elements */
+  .rounded,
+  .rounded-lg {
+    border-radius: 0.75rem;
+  }
+
+  .rounded-xl {
+    border-radius: 1rem;
+  }
+
+  .rounded-2xl {
+    border-radius: 1.25rem;
   }
 
 }
@@ -42,7 +61,7 @@
   --chart-3: oklch(0.7 0.08 80);
   --chart-4: oklch(0.5 0.06 200);
   --chart-5: oklch(0.65 0.1 120);
-  --radius: 0.5rem;
+  --radius: 0.75rem;
   --sidebar: oklch(0.975 0.005 70);
   --sidebar-foreground: oklch(0.15 0.03 270);
   --sidebar-primary: oklch(0.5 0.08 35);
@@ -374,9 +393,11 @@ body {
 
 /* Unified UI surfaces */
 .ui-shell {
-  background: linear-gradient(180deg,
-      var(--color-bg-secondary) 0%,
-      var(--color-bg-primary) 65%);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-secondary) 0%,
+    var(--color-bg-primary) 65%
+  );
 }
 
 .ui-section {
@@ -906,6 +927,9 @@ body::-webkit-scrollbar-thumb:active {
 
 .btn {
   cursor: pointer;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
 .btn:focus {
@@ -1737,89 +1761,49 @@ body::-webkit-scrollbar-thumb:active {
 
 /* Marquee / ticker scroll */
 @keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 .animate-marquee {
   animation: marquee 32s linear infinite;
 }
-
 .animate-marquee-fast {
   animation: marquee 16s linear infinite;
 }
 
 /* Reveal line (width 0 → 100%) */
 @keyframes reveal-width {
-  from {
-    width: 0;
-    opacity: 0;
-  }
-
-  to {
-    width: 100%;
-    opacity: 1;
-  }
+  from { width: 0; opacity: 0; }
+  to { width: 100%; opacity: 1; }
 }
-
 .animate-reveal-width {
   animation: reveal-width 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Soft float for decorative elements */
 @keyframes float-soft {
-
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-6px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
 }
-
 .animate-float-soft {
   animation: float-soft 5s ease-in-out infinite;
 }
 
 /* Glow pulse for accent dots */
 @keyframes glow-pulse {
-
-  0%,
-  100% {
-    opacity: 1;
-    box-shadow: 0 0 0 0 currentColor;
-  }
-
-  50% {
-    opacity: 0.7;
-    box-shadow: 0 0 8px 3px currentColor;
-  }
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 currentColor; }
+  50% { opacity: 0.7; box-shadow: 0 0 8px 3px currentColor; }
 }
-
 .animate-glow-pulse {
   animation: glow-pulse 2.4s ease-in-out infinite;
 }
 
 /* Line draw (opacity + translate-x for underlines) */
 @keyframes line-draw {
-  from {
-    transform: scaleX(0);
-    transform-origin: left;
-  }
-
-  to {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
+  from { transform: scaleX(0); transform-origin: left; }
+  to { transform: scaleX(1); transform-origin: left; }
 }
-
 .animate-line-draw {
   animation: line-draw 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

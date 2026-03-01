@@ -1,14 +1,16 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useCheckoutStore, CheckoutItem } from "@/store/useCheckoutStore";
 import { useUser } from "./useUser";
+import { useCart } from "./useCart";
 import { PaymentMethodType } from "@/components/feature/checkout/components/PaymentMethod";
+import { formatCondition } from "@/utils/format";
 import { Address, ShippingServiceOption } from "@/types/address";
 import { ShippingService } from "@/services/shipping.service";
 import { OrderService } from "@/services/order.service";
 import type { CreateOrderRequest } from "@/types/order";
 import { logger } from "@/infrastructure/monitoring/logger";
-import { useToast } from "@/components/ui";
+import { useToast } from "@/components/ui/Toast";
 
 interface ShippingData {
   fullName: string;
@@ -37,6 +39,7 @@ export function useCheckout() {
   const router = useRouter();
   const { items: checkoutItems, clearCheckout } = useCheckoutStore();
   const { data: account } = useUser();
+  const { removeItems } = useCart();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethodType>("cod");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [shippingData, setShippingData] = useState<ShippingData | null>(null);
@@ -152,13 +155,20 @@ export function useCheckout() {
     image: item.product.avatar?.url || "",
     price: item.product.price,
     quantity: item.quantity,
-    condition: item.product.condition || "mới",
+    condition: formatCondition(item.product.condition),
     seller: {
       name: item.product.seller?.fullName || "Không rõ",
       from_district_id: item.product.seller?.from_district_id || "",
       from_ward_code: item.product.seller?.from_ward_code || "",
     },
   }));
+
+  const isBankTransferAvailable = useMemo(() => {
+    if (checkoutItems.length === 0) return false;
+    return checkoutItems.every(
+      (item) => item.product.seller?.role === "seller"
+    );
+  }, [checkoutItems]);
 
   const subtotal = orderItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -215,7 +225,7 @@ export function useCheckout() {
           })),
           totalAmount: groupTotal,
           shippingAddress: selectedAddressId,
-          shippingMethod: shipInfo.short_name || "GHN",
+          shippingMethod: `GHN - ${shipInfo.short_name || "Chuẩn"}`,
           sellerId,
           paymentMethod: paymentMethod === "bank_transfer" ? "bank_transfer" : "cod",
           shippingFee: shipInfo.shippingFee ?? shipInfo.fee,
@@ -230,6 +240,10 @@ export function useCheckout() {
         orderIds.push(response.order._id);
       }
 
+      // Xóa sản phẩm đã đặt hàng khỏi giỏ hàng
+      const productIds = checkoutItems.map((item) => item.product._id);
+      await removeItems(productIds);
+      
       clearCheckout();
 
       const firstOrderId = orderIds[0];
@@ -256,6 +270,7 @@ export function useCheckout() {
     shippingInfoBySeller,
     paymentMethod,
     checkoutItems,
+    removeItems,
     clearCheckout,
     router,
     toast,
@@ -272,6 +287,7 @@ export function useCheckout() {
     paymentMethod,
     isSubmitting,
     shippingData,
+    isBankTransferAvailable,
     setPaymentMethod,
     updateShippingFromAddress,
     handleCheckout,

@@ -1,7 +1,7 @@
 "use client";
 
+import { IconX, IconCircleCheck, IconAlertCircle, IconInfoCircle, IconAlertTriangle } from "@tabler/icons-react";
 import { createContext, useContext, useState, useCallback, ReactNode } from "react";
-import { X, CheckCircle, AlertCircle, Info, AlertTriangle } from "lucide-react";
 
 type ToastType = "success" | "error" | "info" | "warning";
 
@@ -51,13 +51,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const getIcon = (type: ToastType) => {
     switch (type) {
       case "success":
-        return <CheckCircle className="h-5 w-5" />;
+        return <IconCircleCheck className="h-5 w-5" />;
       case "error":
-        return <AlertCircle className="h-5 w-5" />;
+        return <IconAlertCircle className="h-5 w-5" />;
       case "warning":
-        return <AlertTriangle className="h-5 w-5" />;
+        return <IconAlertTriangle className="h-5 w-5" />;
       default:
-        return <Info className="h-5 w-5" />;
+        return <IconInfoCircle className="h-5 w-5" />;
     }
   };
 
@@ -91,9 +91,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             <p className="flex-1 text-sm font-medium">{toast.message}</p>
             <button
               onClick={() => removeToast(toast.id)}
-              className="p-1 hover:bg-black/10 rounded-lg transition-colors"
+              className="p-1 hover:bg-black/10 rounded-xl transition-colors"
             >
-              <X className="h-4 w-4" />
+              <IconX className="h-4 w-4" />
             </button>
           </div>
         ))}

@@ -31,7 +31,7 @@ externalApiClient.interceptors.request.use(
     if (process.env.NODE_ENV === "development") {
       logger.apiRequest(
         config.method?.toUpperCase() || "GET",
-        config.url || ""
+        config.url || "",
       );
     }
 
@@ -42,7 +42,7 @@ externalApiClient.interceptors.request.use(
       context: "external_api_request_error",
     });
     return Promise.reject(error);
-  }
+  },
 );
 
 externalApiClient.interceptors.response.use(
@@ -53,7 +53,7 @@ externalApiClient.interceptors.response.use(
       logger.apiResponse(
         response.config.method?.toUpperCase() || "GET",
         response.config.url || "",
-        response.status
+        response.status,
       );
     }
 
@@ -86,7 +86,7 @@ externalApiClient.interceptors.response.use(
     logger.apiResponse(
       config?.method?.toUpperCase() || "GET",
       config?.url || "",
-      error.response?.status || 0
+      error.response?.status || 0,
     );
 
     // Track error in Sentry
@@ -110,7 +110,7 @@ externalApiClient.interceptors.response.use(
         // Max 2 retries
         const retryDelay = Math.min(
           1000 * Math.pow(2, config._retry - 1),
-          5000
+          5000,
         );
 
         logger.info(`Retrying request (attempt ${config._retry})`, {
@@ -124,12 +124,12 @@ externalApiClient.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export async function dedupedRequest<T>(
   url: string,
-  config?: AxiosRequestConfig
+  config?: AxiosRequestConfig,
 ): Promise<T> {
   const cacheKey = `${config?.method || "GET"}:${url}`;
 
@@ -140,13 +140,15 @@ export async function dedupedRequest<T>(
   }
 
   // Make new request - support all HTTP methods
-  const promise = externalApiClient.request<T>({
-    url,
-    ...config,
-  }).finally(() => {
-    // Remove from pending after completion
-    pendingRequests.delete(cacheKey);
-  }) as Promise<T>;
+  const promise = externalApiClient
+    .request<T>({
+      url,
+      ...config,
+    })
+    .finally(() => {
+      // Remove from pending after completion
+      pendingRequests.delete(cacheKey);
+    }) as Promise<T>;
 
   // Store pending request
   pendingRequests.set(cacheKey, promise);
@@ -160,13 +162,13 @@ const MAX_REQUESTS_PER_WINDOW = 30;
 
 export async function rateLimitedRequest<T>(
   url: string,
-  config?: AxiosRequestConfig
+  config?: AxiosRequestConfig,
 ): Promise<T> {
   const now = Date.now();
 
   // Clean old timestamps
   const recentRequests = requestTimestamps.filter(
-    (timestamp) => now - timestamp < RATE_LIMIT_WINDOW
+    (timestamp) => now - timestamp < RATE_LIMIT_WINDOW,
   );
 
   // Check rate limit

@@ -1,10 +1,10 @@
 "use client";
 
+import { IconArrowLeft, IconMessageCircle, IconLoader2 } from "@tabler/icons-react";
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, MessageCircle, Loader2 } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
 import { ChatService } from "@/services/chat.service";
 
@@ -63,22 +63,22 @@ function ChatPageContent() {
           href="/"
           className="inline-flex items-center gap-2 text-primary hover:underline mb-8 font-medium"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <IconArrowLeft className="h-4 w-4" />
           Quay lại
         </Link>
 
         <h1 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-          <MessageCircle className="w-8 h-8" />
+          <IconMessageCircle className="w-8 h-8" />
           Tin nhắn
         </h1>
 
         {loading ? (
           <div className="flex justify-center py-12">
-            <Loader2 className="w-12 h-12 animate-spin text-primary" />
+            <IconLoader2 className="w-12 h-12 animate-spin text-primary" />
           </div>
         ) : conversations.length === 0 && !conversationId ? (
           <div className="bg-cream-50 rounded-2xl border border-border p-12 text-center">
-            <MessageCircle className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+            <IconMessageCircle className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
             <p className="text-muted-foreground mb-2">Chưa có cuộc trò chuyện nào</p>
             <p className="text-sm text-muted-foreground">
               Nhấn &quot;Liên hệ người bán&quot; trên trang sản phẩm để bắt đầu chat

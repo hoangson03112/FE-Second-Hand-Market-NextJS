@@ -1,9 +1,9 @@
 "use client";
 
+import { IconArrowLeft, IconBell } from "@tabler/icons-react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Bell } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
 
 export default function NotificationsPage() {
@@ -33,17 +33,17 @@ export default function NotificationsPage() {
           href="/"
           className="inline-flex items-center gap-2 text-primary hover:underline mb-8 font-medium"
         >
-          <ArrowLeft className="h-4 w-4" />
+          <IconArrowLeft className="h-4 w-4" />
           Quay lại
         </Link>
 
         <h1 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-          <Bell className="w-8 h-8" />
+          <IconBell className="w-8 h-8" />
           Thông báo
         </h1>
 
         <div className="bg-cream-50 rounded-2xl border border-border p-12 text-center">
-          <Bell className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+          <IconBell className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
           <p className="text-muted-foreground mb-2">
             Chưa có thông báo nào
           </p>

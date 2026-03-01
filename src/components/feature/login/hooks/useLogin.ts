@@ -7,6 +7,7 @@ import { queryKeys } from "@/lib/query-client";
 import type { LoginRequest } from "@/types/auth";
 import { loginSchema } from "@/schemas/auth.schema";
 import { getGoogleLoginUrl } from "@/constants";
+import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
 
 export function useLogin() {
   const router = useRouter();
@@ -43,7 +44,8 @@ export function useLogin() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const normalizedValue = sanitizeFieldInput(name, value);
+    setFormData({ ...formData, [name]: normalizedValue });
     setError("");
     if (errors[name as keyof typeof errors]) {
       setErrors({ ...errors, [name]: undefined });
@@ -53,7 +55,8 @@ export function useLogin() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    const result = loginSchema.safeParse(formData);
+    const normalizedData = sanitizeFormValues(formData);
+    const result = loginSchema.safeParse(normalizedData);
     if (!result.success) {
       const fieldErrors: { username?: string; password?: string } = {};
       result.error.issues.forEach((issue) => {
@@ -68,7 +71,7 @@ export function useLogin() {
     setErrors({});
     setIsLoading(true);
     try {
-      const response = await AuthService.login(formData);
+      const response = await AuthService.login(normalizedData);
       if (response.status === "success" && response.token) {
         setAccessToken(response.token);
         queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });

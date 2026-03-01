@@ -1,10 +1,8 @@
-﻿"use client";
-
+import { IconMapPin } from "@tabler/icons-react";
 import React from "react";
 import type { ChangeEvent } from "react";
 import type { Province, District, Ward } from "@/types/address";
 import type { PickupFormValues } from "@/types/sell";
-import { MapPin } from "lucide-react";
 
 interface PickupAddressSectionProps {
   values: PickupFormValues;
@@ -40,7 +38,7 @@ export function PickupAddressSection({
       {/* Header */}
       <div className="flex items-center gap-2 px-3 py-2.5 bg-muted/50 border-b border-border shrink-0">
         <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-          <MapPin className="w-3.5 h-3.5 text-primary" />
+          <IconMapPin className="w-3.5 h-3.5 text-primary" />
         </div>
         <h3 className="text-xs font-semibold text-foreground">Địa chỉ lấy hàng</h3>
         <span className="ml-auto text-[10px] font-medium px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
