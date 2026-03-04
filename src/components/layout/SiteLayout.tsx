@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer/Footer";
+import { FloatingChatBox } from "@/features/chat";
 
 export default function SiteLayout({
   children,
@@ -21,6 +22,7 @@ export default function SiteLayout({
       <Header />
       <main className="flex-1 flex flex-col">{children}</main>
       <Footer />
+      <FloatingChatBox />
     </>
   );
 }

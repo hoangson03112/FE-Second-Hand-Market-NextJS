@@ -12,7 +12,7 @@ type Props = {
   sellerName?: string;
 };
 
-export function AddressDetail({ address, sellerName: _sellerName }: Props) {
+export function AddressDetail({ address, sellerName }: Props) {
   const { data: provinces = [] } = useProvinces();
   const { data: districts = [] } = useDistricts(address.provinceId);
   const { data: wards = [] } = useWards(address.districtId);
@@ -26,7 +26,7 @@ export function AddressDetail({ address, sellerName: _sellerName }: Props) {
   const wardName = wards.find((w) => w.WardCode === address.wardCode)?.WardName;
 
   const rows = [
-    { label: "Liên hệ", value: address.fullName },
+    { label: "Liên hệ", value: address.fullName || sellerName },
     { label: "SĐT", value: address.phoneNumber },
     { label: "Địa chỉ", value: address.specificAddress },
     {

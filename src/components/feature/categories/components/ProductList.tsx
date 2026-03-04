@@ -32,7 +32,7 @@ export default function ProductList({
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {[...Array(10)].map((_, index) => (
           <div key={index} className="bg-white rounded-2xl overflow-hidden border border-border/60 animate-pulse">
-            <div className="aspect-[4/3] bg-taupe-100" />
+            <div className="aspect-square bg-taupe-100" />
             <div className="p-3 space-y-2">
               <div className="h-3.5 bg-taupe-100 rounded-md w-full" />
               <div className="h-3.5 bg-taupe-100 rounded-md w-2/3" />

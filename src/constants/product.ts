@@ -31,6 +31,12 @@ export const PRODUCT_STATUS_CONFIG: Record<
     text: "text-red-700 dark:text-red-400",
     color: "#f87171",
   },
+  review_requested: {
+    label: "Yêu cầu xem xét",
+    dot: "bg-yellow-400",
+    text: "text-yellow-700 dark:text-yellow-400",
+    color: "#facc15",
+  },
   approved: {
     label: "Đã duyệt",
     dot: "bg-emerald-400",

@@ -20,5 +20,10 @@ export interface CreateProductPayload {
   addressId?: string;
 }
 
-export type UpdateProductPayload = CreateProductPayload;
+export interface UpdateProductPayload extends CreateProductPayload {
+  // Để giữ lại ảnh/video cũ khi update
+  existingImages?: Array<{ url: string; publicId: string; originalName?: string; type?: string; size?: number }>;
+  existingVideoUrl?: string;
+  removeVideo?: boolean;
+}
 

@@ -1,11 +1,10 @@
 "use client";
 
 import HeroSection from "./components/HeroSection";
-import CategoriesSection from "./components/CategoriesSection";
 import HowItWorksSection from "./components/HowItWorksSection";
 import FeaturesSection from "./components/FeaturesSection";
 import ScrollToTopButton from "./components/ScrollToTopButton";
-import { categories, steps, features } from "@/constants";
+import { steps, features } from "@/constants";
 import { useScrollToTop } from "./hooks";
 
 export default function HomePage() {

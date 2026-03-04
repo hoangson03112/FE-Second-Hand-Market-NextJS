@@ -1,6 +1,6 @@
 "use client";
 
-import { IconArrowLeft, IconBuildingStore, IconShieldCheck, IconCashBanknote, IconPackageExport, IconClock, IconCircleCheck, IconCircleX } from "@tabler/icons-react";
+import { IconArrowLeft, IconBuildingStore, IconShieldCheck, IconCashBanknote, IconPackageExport, IconClock, IconCircleX } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ErrorMessage from "@/components/feature/auth/ErrorMessage";
@@ -22,7 +22,6 @@ export default function BecomeSeller() {
 
   const {
     values,
-    setValues,
     errors,
     apiError,
     isLoading,

@@ -13,7 +13,7 @@ export function useCategoryPage({ slug }: UseCategoryPageProps) {
   const [filters, setFilters] = useState<IProductFilters>({
     categorySlug: slug,
     sortBy: "newest",
-    limit: 20,
+    limit: 12,
     page: 1,
   });
 
