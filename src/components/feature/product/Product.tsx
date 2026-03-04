@@ -132,6 +132,9 @@ export default function Product({ id }: ProductProps) {
               name={product.name}
               averageRating={averageRating}
               totalReviews={totalReviews}
+              productId={product._id}
+              productSlug={product.slug}
+              productImage={product.avatar?.url || product.images?.[0]?.url}
               category={product.category}
               subcategory={product.subcategory}
             />
@@ -148,6 +151,8 @@ export default function Product({ id }: ProductProps) {
               formattedPrice={
                 product.price ? formatPrice(product.price) : "Liên hệ"
               }
+              originalPrice={product.originalPrice}
+              hasPersonalDiscount={product.hasPersonalDiscount}
             />
 
             {(product.stock ?? 0) === 0 && (

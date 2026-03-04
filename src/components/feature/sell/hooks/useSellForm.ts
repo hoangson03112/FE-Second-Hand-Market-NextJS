@@ -208,8 +208,8 @@ export function useSellForm() {
   const [apiError, setApiError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingProduct, setIsLoadingProduct] = useState(false);
-  // Lưu URLs của ảnh và video hiện tại (khi edit)
-  const [existingImageUrls, setExistingImageUrls] = useState<string[]>([]);
+  // Lưu thông tin đầy đủ của ảnh và video hiện tại (khi edit)
+  const [existingImages, setExistingImages] = useState<Array<{ url: string; publicId: string; originalName?: string; type?: string; size?: number }>>([]);
   const [existingVideoUrl, setExistingVideoUrl] = useState<string | null>(null);
   // Lưu product data (khi edit) để có thể check status và humanReviewRequested
   const [currentProduct, setCurrentProduct] = useState<IProductWithMediaAndIds | null>(null);
@@ -244,7 +244,7 @@ export function useSellForm() {
     if (prevIsEditModeRef.current && !isEditMode) {
       setValues(INITIAL);
       setPickup(PICKUP_INITIAL);
-      setExistingImageUrls([]);
+      setExistingImages([]);
       setExistingVideoUrl(null);
     }
     prevIsEditModeRef.current = isEditMode;
@@ -275,10 +275,28 @@ export function useSellForm() {
         setCurrentProduct(product);
         
         // Populate form with product data
-        const imageUrls = product.images?.map((img) => img.url).filter(Boolean) || [];
+        let existingImageData = product.images?.map((img) => ({
+          url: img.url,
+          publicId: img.publicId,
+          originalName: img.originalName,
+          type: img.type,
+          size: img.size,
+        })).filter((img) => img.url && img.publicId) || [];
+        
+        // ⭐ Fallback: Nếu images rỗng nhưng có avatar, dùng avatar làm ảnh duy nhất
+        if (existingImageData.length === 0 && product.avatar?.url && product.avatar?.publicId) {
+          existingImageData = [{
+            url: product.avatar.url,
+            publicId: product.avatar.publicId,
+            originalName: product.avatar.originalName,
+            type: product.avatar.type,
+            size: product.avatar.size,
+          }];
+        }
+        
         const videoUrl = product.video?.url ?? null;
 
-        setExistingImageUrls(imageUrls);
+        setExistingImages(existingImageData);
         setExistingVideoUrl(videoUrl);
         setValues(mapProductToFormValues(product));
 
@@ -473,7 +491,7 @@ export function useSellForm() {
     if (!values.categoryId) newErrors.categoryId = "Vui lòng chọn danh mục";
     if (!values.subcategoryId) newErrors.subcategoryId = "Vui lòng chọn danh mục con";
     // Cho phép có ảnh cũ hoặc ảnh mới
-    if (values.images.length === 0 && existingImageUrls.length === 0) {
+    if (values.images.length === 0 && existingImages.length === 0) {
       newErrors.images = "Vui lòng tải ít nhất 1 ảnh sản phẩm";
     }
     setErrors(newErrors);
@@ -484,7 +502,7 @@ export function useSellForm() {
       if (Object.keys(pickupErr).length > 0) return false;
     }
     return Object.keys(newErrors).length === 0;
-  }, [values, showPickupSection, pickup, existingImageUrls]);
+  }, [values, showPickupSection, pickup, existingImages]);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -523,8 +541,12 @@ export function useSellForm() {
         };
 
         if (isEditMode && editProductId) {
-          // Update existing product
-          const result = await ProductService.update(editProductId, payload);
+          // Update existing product - thêm existingImages để giữ lại ảnh cũ
+          const updatePayload: UpdateProductPayload = {
+            ...payload,
+            existingImages: existingImages,
+          };
+          const result = await ProductService.update(editProductId, updatePayload);
           if (result.success) {
             // Auto request review if product is rejected and hasn't been requested yet
             const shouldAutoRequestReview = 
@@ -585,11 +607,12 @@ export function useSellForm() {
       isEditMode,
       editProductId,
       currentProduct,
+      existingImages,
     ]
   );
 
   const removeExistingImage = useCallback((index: number) => {
-    setExistingImageUrls((prev) => prev.filter((_, i) => i !== index));
+    setExistingImages((prev) => prev.filter((_, i) => i !== index));
   }, []);
 
   const removeExistingVideo = useCallback(() => {
@@ -604,7 +627,7 @@ export function useSellForm() {
     isLoading,
     isLoadingProduct,
     isEditMode,
-    existingImageUrls,
+    existingImageUrls: existingImages.map((img) => img.url),
     existingVideoUrl,
     currentProduct,
     handleChange,

@@ -2,6 +2,7 @@ import axiosClient from "@/lib/axios";
 import type {
   IProduct,
   IProductFilters,
+  IProductListResponse,
   AdminProductListParams,
   AdminProductListResponse,
 } from "@/types/product";
@@ -72,7 +73,7 @@ export const ProductService = {
     return await axiosClient.get(`/products/search?${params.toString()}`);
   },
 
-  getAll: async (filters?: IProductFilters) => {
+  getAll: async (filters?: IProductFilters): Promise<IProductListResponse> => {
     const params = new URLSearchParams();
 
     if (filters?.categorySlug)
@@ -92,7 +93,7 @@ export const ProductService = {
     const response = await axiosClient.get(
       `/products/categories?${params.toString()}`
     );
-    return response.data;
+    return response as unknown as IProductListResponse;
   },
 
   /** Chi tiết sản phẩm đầy đủ – dùng khi xem trang chi tiết hoặc mở form Edit */
@@ -106,7 +107,7 @@ export const ProductService = {
     return product as IProduct;
   },
 
-  getByCategory: async (categorySlug: string, filters?: IProductFilters) => {
+  getByCategory: async (categorySlug: string, filters?: IProductFilters): Promise<IProductListResponse> => {
     return ProductService.getAll({ ...filters, categorySlug });
   },
 
@@ -114,7 +115,7 @@ export const ProductService = {
     categorySlug: string,
     subCategorySlug: string,
     filters?: IProductFilters
-  ) => {
+  ): Promise<IProductListResponse> => {
     return ProductService.getAll({
       ...filters,
       categorySlug,
@@ -182,8 +183,13 @@ export const ProductService = {
       "attributes",
       JSON.stringify(payload.attributes ?? [])
     );
+    // Gửi thông tin ảnh cũ để giữ lại
+    if (payload.existingImages && payload.existingImages.length > 0) {
+      formData.append("existingImages", JSON.stringify(payload.existingImages));
+    }
+    // Gửi ảnh mới (nếu có)
     if (payload.images?.length) {
-      payload.images.forEach((file) => formData.append("images", file));
+      payload.images.forEach((file) => formData.append("newImages", file));
     }
     if (payload.video) {
       formData.append("video", payload.video);

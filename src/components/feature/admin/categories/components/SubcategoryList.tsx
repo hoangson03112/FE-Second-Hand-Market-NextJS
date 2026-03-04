@@ -40,7 +40,7 @@ export default function SubcategoryList({
       return subcategories;
     }
     return subcategories.filter((s) =>
-      s.name.toLowerCase().includes(normalizedSubSearch)
+      s.name.toLowerCase().includes(normalizedSubSearch),
     );
   }, [normalizedSubSearch, subcategories]);
 

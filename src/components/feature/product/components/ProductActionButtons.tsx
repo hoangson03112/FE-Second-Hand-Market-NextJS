@@ -41,25 +41,25 @@ export default function ProductActionButtons({
   }
 
   return (
-    <div className="flex flex-col gap-2.5">
-      {/* Buy now — primary CTA */}
-      <button
-        onClick={onBuyNow}
-        disabled={disabled}
-        className="relative w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-primary text-white font-bold text-sm tracking-wide overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:brightness-110 active:scale-[0.98] shadow-sm hover:shadow-md"
-      >
-        <IconBolt className="w-4 h-4 shrink-0" />
-        {actionLoading ? "Đang xử lý..." : "Mua ngay"}
-      </button>
-
+    <div className="flex flex-row gap-3">
       {/* Add to cart — secondary */}
       <button
         onClick={onAddToCart}
         disabled={disabled}
-        className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-white border-2 border-primary/30 text-primary font-semibold text-sm tracking-wide hover:bg-primary/5 hover:border-primary/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 active:scale-[0.98]"
+        className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl bg-white border-2 border-primary/30 text-primary font-semibold text-sm tracking-wide hover:bg-primary/5 hover:border-primary/60 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 active:scale-[0.98]"
       >
         <IconShoppingCart className="w-4 h-4 shrink-0" />
         {actionLoading ? "Đang thêm..." : "Thêm vào giỏ"}
+      </button>
+
+      {/* Buy now — primary CTA */}
+      <button
+        onClick={onBuyNow}
+        disabled={disabled}
+        className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl bg-primary text-white font-bold text-sm tracking-wide overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:brightness-110 active:scale-[0.98] shadow-sm hover:shadow-md"
+      >
+        <IconBolt className="w-4 h-4 shrink-0" />
+        {actionLoading ? "Đang xử lý..." : "Mua ngay"}
       </button>
     </div>
   );

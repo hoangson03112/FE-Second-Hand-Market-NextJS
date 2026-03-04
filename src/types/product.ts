@@ -5,6 +5,9 @@ export interface IProduct {
   name: string;
   slug: string;
   price: number;
+  originalPrice?: number; // Giá gốc (nếu có personal discount)
+  hasPersonalDiscount?: boolean; // Flag để biết có discount không
+  personalDiscountId?: string; // ID của discount (để mark as used khi order)
   avatar: IImage;
   stock: number;
   description: string;
@@ -17,6 +20,7 @@ export interface IProduct {
     | "approved"
     | "rejected"
     | "under_review"
+    | "review_requested"
     | "active"
     | "inactive"
     | "sold";
@@ -83,12 +87,19 @@ export interface ISeller {
   totalReviews?: number;
   avgRating?: number;
   totalProducts?: number;
+  stats?: {
+    avgRating?: number;
+    totalReviews?: number;
+    totalProductsActive?: number;
+  };
   accountId?: string;
   account?: {
     _id: string;
     fullName?: string;
     username?: string;
     email?: string;
+    phoneNumber?: string;
+    role?: string;
   };
 }
 
@@ -128,6 +139,7 @@ export type ProductStatusFilter =
   | "approved"
   | "rejected"
   | "under_review"
+  | "review_requested"
   | "active"
   | "inactive"
   | "sold";

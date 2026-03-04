@@ -14,7 +14,7 @@ export function useSubCategoryPage({ slug, subId }: UseSubCategoryPageProps) {
     categorySlug: slug,
     subCategorySlug: subId,
     sortBy: "newest",
-    limit: 20,
+    limit: 12,
     page: 1,
   });
 

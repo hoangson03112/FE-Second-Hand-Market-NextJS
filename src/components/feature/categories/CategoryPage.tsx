@@ -43,7 +43,7 @@ export default function CategoryPage({ slug }: CategoryPageProps) {
               currentPage: products?.page || 1,
               totalPages: products?.totalPages || 1,
               total: products?.total || 0,
-              limit: products?.limit || 20,
+              limit: products?.limit || 12,
             }}
             onPageChange={(page: number) => {
               setFilters((prev) => ({ ...prev, page }));

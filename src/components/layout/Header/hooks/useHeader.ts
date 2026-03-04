@@ -5,6 +5,7 @@ import useCategories from "@/hooks/useCategories";
 import { useUser } from "@/hooks/useUser";
 import { useCart } from "@/hooks/useCart";
 import { useTokenStore } from "@/store/useTokenStore";
+import { useNotificationStore } from "@/store/useNotificationStore";
 import { AuthService } from "@/services/auth.service";
 import { SellerService } from "@/services/seller.service";
 
@@ -24,6 +25,7 @@ export function useHeader() {
   const { data: categories, isLoading } = useCategories();
   const { data: account } = useUser();
   const { itemCount: cartItemCount } = useCart();
+  const unreadNotificationCount = useNotificationStore((state) => state.unreadCount);
   const accessToken = useTokenStore((state) => state.accessToken);
 
   // Check product limit to determine if user can post products
@@ -205,5 +207,6 @@ export function useHeader() {
     getInitials,
     sellButtonHref,
     sellButtonText,
+    unreadNotificationCount,
   };
 }

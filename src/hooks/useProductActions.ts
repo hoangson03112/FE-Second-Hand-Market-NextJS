@@ -4,9 +4,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { IProduct } from "@/types/product";
 import { useCheckoutStore } from "@/store/useCheckoutStore";
 import { AccountInfo } from "@/types/auth";
-import { CartService, ChatService } from "@/services";
+import { CartService } from "@/services";
 import { useToast } from "@/components/ui/Toast";
 import { queryKeys } from "@/lib/query-client";
+import { openChatWithSeller } from "@/utils/chat";
 
 interface UseProductActionsProps {
   product: IProduct | null;
@@ -100,17 +101,21 @@ export function useProductActions({
     }
     try {
       setActionLoading(true);
-      const res = await ChatService.findOrCreateWithProduct(
-        product._id,
-        product.seller._id
-      );
-      if (res.success && res.data?.conversationId) {
-        router.push(
-          `/chat?conversationId=${res.data.conversationId}&partnerId=${res.partner?._id || product.seller._id}`
-        );
-      } else {
-        toast.error("Không thể mở hội thoại");
-      }
+      
+      // Open floating chat box with seller and product info
+      openChatWithSeller({
+        _id: product.seller._id,
+        fullName: product.seller.fullName,
+        avatar: product.seller.avatar || undefined,
+      }, {
+        _id: product._id,
+        name: product.name,
+        price: product.price,
+        image: typeof product.images?.[0] === 'string' ? product.images[0] : product.images?.[0]?.url,
+        slug: product.slug,
+      });
+      
+      toast.success(`Đang mở chat với ${product.seller.fullName || 'người bán'}`);
     } catch (error) {
       console.error("Lỗi khi liên hệ người bán:", error);
       toast.error("Không thể liên hệ người bán");

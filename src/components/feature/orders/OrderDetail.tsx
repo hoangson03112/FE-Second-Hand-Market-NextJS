@@ -1,6 +1,6 @@
 "use client";
 
-import { IconArrowLeft, IconPackage, IconMapPin, IconPhone, IconTruck, IconStar, IconShoppingBag, IconClock, IconCreditCard, IconUser, IconCircleCheck, IconCircleX, IconMessage } from "@tabler/icons-react";
+import { IconArrowLeft, IconPackage, IconMapPin, IconPhone, IconStar, IconShoppingBag, IconClock, IconCreditCard, IconUser, IconCircleCheck, IconCircleX, IconMessage } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
