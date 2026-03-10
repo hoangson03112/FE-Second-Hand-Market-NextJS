@@ -1,5 +1,5 @@
 import { use } from "react";
-import CategoryPage from "@/components/feature/categories/CategoryPage";
+import CategoryPage from "@/features/categories/CategoryPage";
 
 type CategoryPageComponentProps = {
   params: Promise<{

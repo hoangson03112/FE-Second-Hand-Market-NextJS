@@ -1,4 +1,4 @@
-import MyProducts from "@/components/feature/my-products/MyProducts";
+import MyProducts from "@/features/my-products/MyProducts";
 
 export default function MyListingsPage() {
   return <MyProducts />;

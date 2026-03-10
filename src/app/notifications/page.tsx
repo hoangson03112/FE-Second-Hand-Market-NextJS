@@ -1,38 +1,55 @@
 "use client";
 
-import { IconArrowLeft, IconBell, IconCheck, IconTrash } from "@tabler/icons-react";
+import {
+  IconArrowLeft,
+  IconBell,
+  IconCheck,
+  IconTrash,
+  IconPackage,
+  IconMessageCircle,
+  IconTag,
+  IconChevronRight,
+} from "@tabler/icons-react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useUser } from "@/hooks/useUser";
 import { useNotificationStore } from "@/store/useNotificationStore";
+import { NotificationService } from "@/services/notification.service";
+import { usePagination } from "@/hooks/usePagination";
+import Pagination from "@/components/ui/Pagination";
+import type { NotificationType } from "@/store/useNotificationStore";
+import { formatTimeAgo } from "@/utils/format/date";
 
-function formatTimeAgo(dateString: string) {
-  const date = new Date(dateString);
-  const diff = Date.now() - date.getTime();
-  const minute = 60 * 1000;
-  const hour = 60 * minute;
-  const day = 24 * hour;
+const PAGE_SIZE = 20;
 
-  if (diff < minute) return "Vừa xong";
-  if (diff < hour) return `${Math.floor(diff / minute)} phút trước`;
-  if (diff < day) return `${Math.floor(diff / hour)} giờ trước`;
-  return `${Math.floor(diff / day)} ngày trước`;
+function TypeIcon({ type }: { type: NotificationType }) {
+  const base = "w-8 h-8 rounded-full flex items-center justify-center shrink-0";
+  switch (type) {
+    case "order":   return <span className={`${base} bg-secondary text-foreground`}><IconPackage       className="w-4 h-4" /></span>;
+    case "chat":    return <span className={`${base} bg-primary/10 text-primary`}><IconMessageCircle className="w-4 h-4" /></span>;
+    case "product": return <span className={`${base} bg-primary/10 text-primary`}><IconTag          className="w-4 h-4" /></span>;
+    default:        return <span className={`${base} bg-muted text-muted-foreground`}><IconBell            className="w-4 h-4" /></span>;
+  }
 }
+
+// ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function NotificationsPage() {
   const router = useRouter();
   const { data: account, isLoading } = useUser();
-  const notifications = useNotificationStore((state) => state.notifications);
-  const unreadCount = useNotificationStore((state) => state.unreadCount);
-  const markAsRead = useNotificationStore((state) => state.markAsRead);
-  const markAllAsRead = useNotificationStore((state) => state.markAllAsRead);
-  const clearNotifications = useNotificationStore((state) => state.clearNotifications);
+  const notifications    = useNotificationStore((s) => s.notifications);
+  const unreadCount      = useNotificationStore((s) => s.unreadCount);
+  const markAsRead       = useNotificationStore((s) => s.markAsRead);
+  const markAllAsRead    = useNotificationStore((s) => s.markAllAsRead);
+  const removeNotification = useNotificationStore((s) => s.removeNotification);
+
+  const totalPages = Math.max(1, Math.ceil(notifications.length / PAGE_SIZE));
+  const { page, setPage } = usePagination(totalPages);
+  const paginatedNotifications = notifications.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   useEffect(() => {
-    if (!isLoading && !account) {
-      router.push("/login");
-    }
+    if (!isLoading && !account) router.push("/login");
   }, [account, isLoading, router]);
 
   if (isLoading) {
@@ -44,6 +61,23 @@ export default function NotificationsPage() {
   }
 
   if (!account) return null;
+
+  function handleMarkAsRead(id: string) {
+    markAsRead(id);
+    NotificationService.markAsRead(id).catch(() => {});
+  }
+
+  function handleMarkAllAsRead() {
+    markAllAsRead();
+    NotificationService.markAllAsRead().catch(() => {});
+  }
+
+  function handleDelete(e: React.MouseEvent, id: string) {
+    e.preventDefault();
+    e.stopPropagation();
+    removeNotification(id);
+    NotificationService.deleteNotification(id).catch(() => {});
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -59,34 +93,29 @@ export default function NotificationsPage() {
         <h1 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
           <IconBell className="w-8 h-8" />
           Thông báo
+          {unreadCount > 0 && (
+            <span className="ml-1 px-2 py-0.5 text-xs font-bold bg-primary text-primary-foreground rounded-full">
+              {unreadCount}
+            </span>
+          )}
         </h1>
 
         <div className="flex items-center justify-between mb-4">
           <p className="text-sm text-muted-foreground">
             {notifications.length} thông báo • {unreadCount} chưa đọc
           </p>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={markAllAsRead}
-              disabled={unreadCount === 0}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-border text-sm disabled:opacity-50"
-            >
-              <IconCheck className="w-4 h-4" />
-              Đọc tất cả
-            </button>
-            <button
-              onClick={clearNotifications}
-              disabled={notifications.length === 0}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-border text-sm disabled:opacity-50"
-            >
-              <IconTrash className="w-4 h-4" />
-              Xóa tất cả
-            </button>
-          </div>
+          <button
+            onClick={handleMarkAllAsRead}
+            disabled={unreadCount === 0}
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-border text-sm disabled:opacity-50 hover:bg-muted transition-colors"
+          >
+            <IconCheck className="w-4 h-4" />
+            Đọc tất cả
+          </button>
         </div>
 
         {notifications.length === 0 ? (
-          <div className="bg-cream-50 rounded-2xl border border-border p-12 text-center">
+          <div className="bg-muted/30 rounded-2xl border border-border p-12 text-center">
             <IconBell className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
             <p className="text-muted-foreground mb-2">Chưa có thông báo nào</p>
             <p className="text-sm text-muted-foreground">
@@ -94,33 +123,61 @@ export default function NotificationsPage() {
             </p>
           </div>
         ) : (
-          <div className="space-y-3">
-            {notifications.map((item) => (
-              <Link
+          <>
+            <div className="space-y-2">
+              {paginatedNotifications.map((item) => (
+              <div
                 key={item.id}
-                href={item.link || "/notifications"}
-                onClick={() => markAsRead(item.id)}
-                className={`block rounded-xl border p-4 transition-colors ${
+                className={`group relative rounded-xl border transition-colors duration-200 ${
                   item.read
                     ? "bg-background border-border"
-                    : "bg-cream-50 border-primary/30"
+                    : "bg-primary/[0.07] border-primary/20 hover:bg-primary/[0.11]"
                 }`}
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="font-semibold text-foreground">{item.title}</p>
-                    <p className="text-sm text-muted-foreground mt-1 break-words">{item.message}</p>
+                <Link
+                  href={item.link || "/notifications"}
+                  onClick={() => handleMarkAsRead(item.id)}
+                  className="flex items-start gap-3 p-4 pr-14"
+                >
+                  <TypeIcon type={item.type} />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-2">
+                      <p className={`font-semibold text-foreground text-sm leading-snug ${!item.read ? "font-bold" : ""}`}>
+                        {item.title}
+                      </p>
+                      {!item.read && (
+                        <span className="w-2 h-2 rounded-full bg-primary mt-1 shrink-0" />
+                      )}
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-0.5 line-clamp-2">{item.message}</p>
+                    <p className="text-xs text-muted-foreground/70 mt-1">{formatTimeAgo(item.createdAt)}</p>
                   </div>
-                  {!item.read && (
-                    <span className="w-2.5 h-2.5 rounded-full bg-primary mt-1 shrink-0" />
+                  {item.link && (
+                    <IconChevronRight className="w-4 h-4 text-muted-foreground shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
                   )}
-                </div>
-                <p className="text-xs text-muted-foreground mt-2">{formatTimeAgo(item.createdAt)}</p>
-              </Link>
+                </Link>
+
+                {/* Delete button */}
+                <button
+                  onClick={(e) => handleDelete(e, item.id)}
+                  className="absolute top-3 right-3 p-1.5 rounded-lg text-muted-foreground hover:bg-primary/10 hover:text-primary opacity-0 group-hover:opacity-100 transition-all"
+                  title="Xóa thông báo"
+                >
+                  <IconTrash className="w-3.5 h-3.5" />
+                </button>
+              </div>
             ))}
           </div>
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+            className="mt-4"
+          />
+        </>
         )}
       </main>
     </div>
   );
 }
+

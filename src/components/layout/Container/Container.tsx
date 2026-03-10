@@ -40,15 +40,7 @@ const paddingYClasses: Record<Padding, string> = {
   lg: "py-6 sm:py-8",
 };
 
-/**
- * Container component with configurable max-width and padding
- * Provides consistent spacing and centering across the app
- * 
- * @example
- * <Container maxWidth="7xl" paddingX="md" paddingY="lg">
- *   <YourContent />
- * </Container>
- */
+
 export function Container({
   children,
   maxWidth = "7xl",

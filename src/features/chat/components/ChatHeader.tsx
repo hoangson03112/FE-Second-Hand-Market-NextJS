@@ -4,18 +4,14 @@ import type { Conversation } from "@/types/chat";
 interface ChatHeaderProps {
   selectedConversation: Conversation | null;
   isConnected: boolean;
-  isMinimized: boolean;
   onBack: () => void;
-  onToggleMinimize: () => void;
   onClose: () => void;
 }
 
 export function ChatHeader({
   selectedConversation,
   isConnected,
-  isMinimized,
   onBack,
-  onToggleMinimize,
   onClose,
 }: ChatHeaderProps) {
   return (
@@ -30,7 +26,7 @@ export function ChatHeader({
           </span>
           {selectedConversation && isConnected && (
             <span className="text-sm text-white/80 flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse" />
+              <span className="w-2.5 h-2.5 bg-primary/70 rounded-full animate-pulse" />
               Đang hoạt động
             </span>
           )}
@@ -46,13 +42,7 @@ export function ChatHeader({
             ← Quay lại
           </button>
         )}
-        <button
-          onClick={onToggleMinimize}
-          className="hover:bg-white/20 rounded-full p-2.5 transition-colors"
-          aria-label={isMinimized ? "Expand" : "Minimize"}
-        >
-          <IconMinus className="w-5 h-5" />
-        </button>
+
         <button
           onClick={onClose}
           className="hover:bg-white/20 rounded-full p-2.5 transition-colors"

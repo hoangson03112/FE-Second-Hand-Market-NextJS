@@ -95,4 +95,17 @@ export const queryKeys = {
     searchProvinces: (query: string) =>
       [...queryKeys.addresses.all, "search", query] as const,
   },
+
+  // Orders
+  orders: {
+    all: ["orders"] as const,
+    myOrders: () => [...queryKeys.orders.all, "my"] as const,
+    sellerOrders: () => [...queryKeys.orders.all, "seller"] as const,
+    adminOrders: (params?: { page?: number; status?: string; search?: string }) =>
+      [...queryKeys.orders.all, "admin", params] as const,
+    detail: (id: string) => [...queryKeys.orders.all, "detail", id] as const,
+    tracking: (id: string) => [...queryKeys.orders.all, "tracking", id] as const,
+    refunds: () => [...queryKeys.orders.all, "refunds"] as const,
+    payouts: () => [...queryKeys.orders.all, "payouts"] as const,
+  },
 } as const;

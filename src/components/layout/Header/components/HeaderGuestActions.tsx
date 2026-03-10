@@ -5,8 +5,7 @@ export function HeaderGuestActions() {
     <div className="flex items-center gap-1.5 sm:gap-2">
       <Link
         href="/login"
-        className="inline-flex items-center justify-center h-8 sm:h-9 px-3 sm:px-4 text-[12px] sm:text-[13px] font-semibold transition-all duration-150 hover:opacity-85"
-        style={{ color: "#4A3F33", background: "#EDE0D4", borderRadius: "9999px" }}
+        className="inline-flex items-center justify-center h-8 sm:h-9 px-3 sm:px-4 text-[12px] sm:text-[13px] font-semibold transition-all duration-150 hover:opacity-85 text-neutral-700 bg-secondary rounded-full"
       >
         Đăng nhập
       </Link>
@@ -14,10 +13,10 @@ export function HeaderGuestActions() {
         href="/register"
         className="hidden md:inline-flex items-center justify-center h-9 px-4 text-[13px] font-semibold transition-all duration-150 hover:opacity-90"
         style={{
-          background: "linear-gradient(135deg, #C47B5A 0%, #B06038 100%)",
-          color: "#FDFAF6",
+          background: "linear-gradient(135deg, var(--primary) 0%, oklch(0.43 0.08 35) 100%)",
+          color: "var(--background)",
           borderRadius: "9999px",
-          boxShadow: "0 2px 8px rgba(196,123,90,0.32)",
+          boxShadow: "0 2px 8px color-mix(in oklch, var(--primary) 32%, transparent)",
         }}
       >
         Đăng ký

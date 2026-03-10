@@ -10,24 +10,24 @@ interface InfoBoxProps {
 
 const variantStyles: Record<InfoBoxVariant, { bg: string; border: string; text: string }> = {
   info: {
-    bg: "bg-blue-50",
-    border: "border-blue-200",
-    text: "text-blue-800",
+    bg: "bg-muted/60",
+    border: "border-border",
+    text: "text-foreground/80",
   },
   warning: {
-    bg: "bg-amber-50",
-    border: "border-amber-200",
-    text: "text-amber-800",
+    bg: "bg-primary/8",
+    border: "border-primary/20",
+    text: "text-primary/90",
   },
   success: {
-    bg: "bg-green-50",
-    border: "border-green-200",
-    text: "text-green-800",
+    bg: "bg-secondary/60",
+    border: "border-border",
+    text: "text-foreground/80",
   },
   error: {
-    bg: "bg-red-50",
-    border: "border-red-200",
-    text: "text-red-800",
+    bg: "bg-destructive/8",
+    border: "border-destructive/20",
+    text: "text-destructive",
   },
 };
 

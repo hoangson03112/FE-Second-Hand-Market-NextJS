@@ -53,17 +53,17 @@ export function ConfirmDialogProvider({ children }: { children: ReactNode }) {
     switch (options?.variant) {
       case "danger":
         return {
-          icon: "bg-red-100 text-red-600",
-          button: "btn bg-red-600 text-white hover:bg-red-700",
+          icon: "bg-destructive/10 text-destructive",
+          button: "btn bg-destructive text-destructive-foreground hover:bg-destructive/90",
         };
       case "warning":
         return {
-          icon: "bg-amber-100 text-amber-600",
-          button: "btn bg-amber-600 text-white hover:bg-amber-700",
+          icon: "bg-primary/10 text-primary",
+          button: "btn bg-primary text-primary-foreground hover:bg-primary/90",
         };
       default:
         return {
-          icon: "bg-blue-100 text-blue-600",
+          icon: "bg-secondary text-foreground",
           button: "btn btn-primary",
         };
     }

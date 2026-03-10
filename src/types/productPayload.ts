@@ -16,8 +16,9 @@ export interface CreateProductPayload {
   specificAddress?: string;
   fullName?: string;
   phoneNumber?: string;
-  // Seller: chọn từ danh sách địa chỉ đã lưu
+  // Seller or buyer: chọn từ danh sách địa chỉ đã lưu
   addressId?: string;
+  deliveryOptions?: { localPickup?: boolean; codShipping?: boolean };
 }
 
 export interface UpdateProductPayload extends CreateProductPayload {

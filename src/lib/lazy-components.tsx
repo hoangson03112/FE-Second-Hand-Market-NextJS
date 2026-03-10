@@ -31,7 +31,7 @@ export const LazyToast = dynamic(() => import("@/components/ui/Toast").then(m =>
 
 // Admin components
 export const LazyAdminDashboard = dynamic(
-  () => import("@/components/feature/admin/dashboard"),
+  () => import("@/features/admin/dashboard"),
   {
     loading: () => (
       <div className="flex items-center justify-center min-h-screen">

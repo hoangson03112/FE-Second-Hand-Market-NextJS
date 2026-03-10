@@ -2,6 +2,7 @@
 
 import { IconX, IconAlertTriangle } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 interface ConfirmWithReasonDialogProps {
   isOpen: boolean;
@@ -20,12 +21,12 @@ interface ConfirmWithReasonDialogProps {
 
 const VARIANT = {
   danger: {
-    icon: "bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400",
-    confirm: "bg-red-600 hover:bg-red-700 text-white",
+    icon: "bg-destructive/10 dark:bg-destructive/20 text-destructive",
+    confirm: "bg-destructive hover:bg-destructive/90 text-destructive-foreground",
   },
   warning: {
-    icon: "bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400",
-    confirm: "bg-amber-600 hover:bg-amber-700 text-white",
+    icon: "bg-primary/10 dark:bg-primary/20 text-primary",
+    confirm: "bg-primary hover:bg-primary/90 text-primary-foreground",
   },
 };
 
@@ -58,7 +59,7 @@ export function ConfirmWithReasonDialog({
     if (reason.trim()) onConfirm(reason.trim());
   };
 
-  return (
+  const content = (
     <>
       {/* Backdrop */}
       <div
@@ -99,7 +100,7 @@ export function ConfirmWithReasonDialog({
           <form onSubmit={handleSubmit}>
             <div className="p-6">
               <label htmlFor="confirm-reason" className="block text-sm font-medium text-foreground mb-2">
-                {reasonLabel} <span className="text-red-500">*</span>
+                {reasonLabel} <span className="text-destructive">*</span>
               </label>
               <textarea
                 id="confirm-reason"
@@ -139,4 +140,6 @@ export function ConfirmWithReasonDialog({
       </div>
     </>
   );
+
+  return createPortal(content, document.body);
 }

@@ -1,155 +1,123 @@
 "use client";
 
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import React from "react";
 import { cn } from "@/lib/utils";
 
 export interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  className?: string;
 }
+
+// ─── Smart page-number window ─────────────────────────────────────────────────
+
+function getPageWindow(current: number, total: number): (number | "...")[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  if (current <= 3) return [1, 2, 3, 4, 5, "...", total];
+  if (current >= total - 2)
+    return [1, "...", total - 4, total - 3, total - 2, total - 1, total];
+  return [1, "...", current - 1, current, current + 1, "...", total];
+}
+
+// ─── Component ────────────────────────────────────────────────────────────────
 
 export default function Pagination({
   currentPage,
   totalPages,
   onPageChange,
+  className,
 }: PaginationProps) {
-  const getPageNumbers = () => {
-    const pages: (number | string)[] = [];
-    const maxVisible = 7;
+  if (totalPages <= 1) return null;
 
-    if (totalPages <= maxVisible) {
-      // Show all pages if total is less than max visible
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      // Always show first page
-      pages.push(1);
-
-      if (currentPage <= 3) {
-        // Show first few pages
-        for (let i = 2; i <= 5; i++) {
-          pages.push(i);
-        }
-        pages.push("ellipsis");
-        pages.push(totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        // Show last few pages
-        pages.push("ellipsis");
-        for (let i = totalPages - 4; i <= totalPages; i++) {
-          pages.push(i);
-        }
-      } else {
-        // Show pages around current
-        pages.push("ellipsis");
-        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-          pages.push(i);
-        }
-        pages.push("ellipsis");
-        pages.push(totalPages);
-      }
-    }
-
-    return pages;
-  };
-
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      onPageChange(currentPage - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPages) {
-      onPageChange(currentPage + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  const handlePageClick = (page: number) => {
-    onPageChange(page);
+  const goto = (p: number) => {
+    if (p < 1 || p > totalPages || p === currentPage) return;
+    onPageChange(p);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const pageNumbers = getPageNumbers();
+  const pages = getPageWindow(currentPage, totalPages);
 
   return (
-    <div className="flex items-center justify-center gap-2">
-      {/* Previous Button */}
+    <nav
+      role="navigation"
+      aria-label="Phân trang"
+      className={cn("flex items-center justify-center gap-2", className)}
+    >
+      {/* ── Prev ── */}
       <button
-        onClick={handlePrevious}
+        onClick={() => goto(currentPage - 1)}
         disabled={currentPage === 1}
-        className={cn(
-          "flex items-center justify-center w-11 h-11 border-2",
-          "transition-all duration-200 font-black",
-          "disabled:opacity-40 disabled:cursor-not-allowed",
-          currentPage === 1
-            ? "bg-taupe-100 text-taupe-300 border-taupe-200"
-            : "bg-cream-50 text-taupe-900 border-taupe-300 hover:bg-primary hover:text-cream-50 hover:border-primary"
-        )}
         aria-label="Trang trước"
+        className={cn(
+          "inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border text-sm font-medium",
+          "transition-all duration-150 select-none outline-none",
+          "focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-1",
+          currentPage === 1
+            ? "border-border/50 bg-muted/40 text-muted-foreground/50 cursor-not-allowed pointer-events-none"
+            : "border-border/70 bg-background text-foreground hover:bg-muted/60 hover:border-border hover:-translate-y-px hover:shadow-sm active:translate-y-0",
+        )}
       >
-        <IconChevronLeft className="w-5 h-5" strokeWidth={3} />
+        <IconChevronLeft className="w-3.5 h-3.5 shrink-0" />
+        <span className="hidden sm:inline">Trước</span>
       </button>
 
-      {/* Page Numbers */}
-      <div className="flex items-center gap-1">
-        {pageNumbers.map((page, index) => {
-          if (page === "ellipsis") {
+      {/* ── Page numbers trough ── */}
+      <div className="inline-flex items-center gap-0.5 p-0.5 rounded-xl border border-border/60 bg-muted/30">
+        {pages.map((p, i) => {
+          if (p === "...") {
             return (
               <span
-                key={`ellipsis-${index}`}
-                className="px-2 text-taupe-400 font-black text-[18px]"
+                key={`ellipsis-${i}`}
+                className="w-8 h-7 inline-flex items-center justify-center text-xs text-muted-foreground/60 tracking-widest"
               >
-                •••
+                ···
               </span>
             );
           }
 
-          const pageNum = page as number;
-          const isActive = pageNum === currentPage;
+          const n = p as number;
+          const isActive = n === currentPage;
 
           return (
             <button
-              key={pageNum}
-              onClick={() => handlePageClick(pageNum)}
-              className={cn(
-                "flex items-center justify-center min-w-[44px] h-11 px-3 border-2",
-                "transition-all duration-200",
-                "font-black text-[14px] tabular-nums",
-                isActive
-                  ? "bg-primary text-cream-50 border-primary"
-                  : "bg-cream-50 text-taupe-900 border-taupe-300 hover:bg-primary hover:text-cream-50 hover:border-primary"
-              )}
-              aria-label={`Trang ${pageNum}`}
+              key={n}
+              onClick={() => goto(n)}
+              aria-label={`Trang ${n}`}
               aria-current={isActive ? "page" : undefined}
+              className={cn(
+                "inline-flex items-center justify-center min-w-[30px] h-7 px-2 rounded-lg text-sm",
+                "transition-all duration-150 select-none outline-none",
+                "focus-visible:ring-2 focus-visible:ring-primary/30",
+                isActive
+                  ? "bg-foreground text-background font-semibold shadow-sm cursor-default pointer-events-none"
+                  : "text-muted-foreground font-medium hover:bg-background hover:text-foreground hover:shadow-xs cursor-pointer",
+              )}
             >
-              {pageNum}
+              {n}
             </button>
           );
         })}
       </div>
 
-      {/* Next Button */}
+      {/* ── Next ── */}
       <button
-        onClick={handleNext}
+        onClick={() => goto(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className={cn(
-          "flex items-center justify-center w-11 h-11 border-2",
-          "transition-all duration-200 font-black",
-          "disabled:opacity-40 disabled:cursor-not-allowed",
-          currentPage === totalPages
-            ? "bg-taupe-100 text-taupe-300 border-taupe-200"
-            : "bg-cream-50 text-taupe-900 border-taupe-300 hover:bg-primary hover:text-cream-50 hover:border-primary"
-        )}
         aria-label="Trang sau"
+        className={cn(
+          "inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border text-sm font-medium",
+          "transition-all duration-150 select-none outline-none",
+          "focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-1",
+          currentPage === totalPages
+            ? "border-border/50 bg-muted/40 text-muted-foreground/50 cursor-not-allowed pointer-events-none"
+            : "border-border/70 bg-background text-foreground hover:bg-muted/60 hover:border-border hover:-translate-y-px hover:shadow-sm active:translate-y-0",
+        )}
       >
-        <IconChevronRight className="w-5 h-5" strokeWidth={3} />
+        <span className="hidden sm:inline">Sau</span>
+        <IconChevronRight className="w-3.5 h-3.5 shrink-0" />
       </button>
-    </div>
+    </nav>
   );
 }
 

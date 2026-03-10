@@ -1,5 +1,5 @@
 import { use } from "react";
-import SubCategoryPage from "@/components/feature/categories/SubCategoryPage";
+import SubCategoryPage from "@/features/categories/SubCategoryPage";
 
 type SubCategoryPageComponentProps = {
   params: Promise<{

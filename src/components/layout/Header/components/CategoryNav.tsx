@@ -20,10 +20,9 @@ export function CategoryNav({
   return (
     <nav className="hidden lg:flex flex-1 items-center gap-0 xl:gap-0.5 min-w-0">
       {isLoading ? (
-        <div className="flex items-center gap-1.5 px-2" style={{ color: "#B8997D" }}>
+        <div className="flex items-center gap-1.5 px-2 text-muted-foreground">
           <div
-            className="w-2.5 h-2.5 border-2 rounded-full animate-spin"
-            style={{ borderColor: "#EDE0D4", borderTopColor: "#C47B5A" }}
+            className="w-2.5 h-2.5 border-2 rounded-full animate-spin border-border border-t-primary"
           />
         </div>
       ) : (
@@ -36,17 +35,7 @@ export function CategoryNav({
           >
             <Link
               href={`/categories/${category.slug}`}
-              className="flex items-center gap-0.5 px-2 xl:px-2.5 py-1 text-[12px] xl:text-[12.5px] font-medium whitespace-nowrap rounded-full transition-all duration-150 max-w-[132px] xl:max-w-none"
-              style={{ color: activeCategory === category._id ? "#C47B5A" : "#5C4E3D" }}
-              onMouseEnter={(event) => {
-                event.currentTarget.style.color = "#C47B5A";
-                event.currentTarget.style.background = "#F5EDE4";
-              }}
-              onMouseLeave={(event) => {
-                event.currentTarget.style.color =
-                  activeCategory === category._id ? "#C47B5A" : "#5C4E3D";
-                event.currentTarget.style.background = "";
-              }}
+              className={`flex items-center gap-0.5 px-2 xl:px-2.5 py-1 text-[12px] xl:text-[12.5px] font-medium whitespace-nowrap rounded-full transition-all duration-150 max-w-[132px] xl:max-w-none hover:bg-primary/10 hover:text-foreground ${activeCategory === category._id ? "bg-primary/15 text-foreground font-semibold" : "text-neutral-700"}`}
             >
               <span className="truncate">{category.name}</span>
               {category.subCategories?.length > 0 && (
@@ -63,14 +52,14 @@ export function CategoryNav({
               <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 w-52">
                 <div
                   style={{
-                    background: "#FDFAF6",
-                    border: "1px solid #E4D9CC",
+                    background: "var(--background)",
+                    border: "1px solid var(--border)",
                     borderRadius: "14px",
                     boxShadow: "0 12px 36px rgba(26,23,20,0.12)",
                   }}
                 >
-                  <div className="px-4 pt-3 pb-2" style={{ borderBottom: "1px solid #EDE0D4" }}>
-                    <p className="text-[11px] font-semibold" style={{ color: "#C47B5A" }}>
+                  <div className="px-4 pt-3 pb-2 border-b border-border">
+                    <p className="text-[11px] font-semibold text-primary">
                       {category.name}
                     </p>
                   </div>
@@ -79,21 +68,11 @@ export function CategoryNav({
                       <Link
                         key={sub._id}
                         href={`/categories/${category.slug}/sub/${sub.slug}`}
-                        className="flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium rounded-lg transition-colors"
-                        style={{ color: "#4A3F33" }}
-                        onMouseEnter={(event) => {
-                          event.currentTarget.style.background = "#F5EDE4";
-                          event.currentTarget.style.color = "#C47B5A";
-                        }}
-                        onMouseLeave={(event) => {
-                          event.currentTarget.style.background = "";
-                          event.currentTarget.style.color = "#4A3F33";
-                        }}
+                        className="flex items-center gap-2.5 px-3 py-2 text-[13px] font-medium rounded-lg transition-colors text-foreground hover:bg-primary/10 hover:text-foreground"
                         role="menuitem"
                       >
                         <span
-                          className="w-1.5 h-1.5 rounded-full shrink-0"
-                          style={{ background: "#C47B5A", opacity: 0.45 }}
+                          className="w-1.5 h-1.5 rounded-full shrink-0 bg-primary/45"
                         />
                         {sub.name}
                       </Link>

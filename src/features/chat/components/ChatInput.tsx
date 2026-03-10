@@ -10,6 +10,7 @@ import {
 interface ChatInputProps {
   value: string;
   sending: boolean;
+  errorMessage?: string | null;
   selectedFiles: File[];
   onChange: (value: string) => void;
   onFilesChange: (files: File[]) => void;
@@ -21,6 +22,7 @@ interface ChatInputProps {
 export function ChatInput({
   value,
   sending,
+  errorMessage,
   selectedFiles,
   onChange,
   onFilesChange,
@@ -51,6 +53,12 @@ export function ChatInput({
       onSubmit={onSubmit}
       className="border-t-2 border-border bg-white p-6 rounded-b-3xl"
     >
+      {errorMessage && (
+        <div className="mb-3 rounded-lg border border-destructive/20 bg-destructive/8 px-3 py-2 text-sm text-destructive">
+          {errorMessage}
+        </div>
+      )}
+
       {selectedFiles.length > 0 && (
         <div className="mb-3 rounded-xl border border-border bg-muted/30 p-3">
           <div className="flex items-center justify-between mb-2">
@@ -137,7 +145,7 @@ export function ChatInput({
         <button
           type="submit"
           disabled={!hasContent || sending}
-          className="bg-gradient-to-r from-primary to-primary/90 text-white px-6 py-3.5 rounded-xl hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 font-medium"
+          className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground px-6 py-3.5 rounded-xl hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 font-medium"
         >
           {sending ? (
             <IconLoader2 className="w-6 h-6 animate-spin" />

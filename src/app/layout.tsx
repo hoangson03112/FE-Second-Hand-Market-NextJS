@@ -3,6 +3,7 @@ import Providers from "./providers";
 import { ToastProvider } from "@/components/ui/Toast";
 import { ConfirmDialogProvider } from "@/components/ui/ConfirmDialog";
 import SiteLayout from "@/components/layout/SiteLayout";
+import { RealtimeNotificationToast } from "@/components/common/RealtimeNotificationToast";
 import type { Metadata } from "next";
 import { inter } from "@/lib/fonts";
 
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    url: "https://eco-marketplace.vn",
+    url: "https://www.ecomarket.io.vn",
     siteName: "Eco Marketplace",
     title: "Eco Marketplace - Sàn thương mại điện tử đồ cũ",
     description:
@@ -66,7 +67,12 @@ export const metadata: Metadata = {
     google: "your-google-verification-code",
   },
   alternates: {
-    canonical: "https://eco-marketplace.vn",
+    canonical: "https://www.ecomarket.io.vn",
+  },
+  icons: {
+    icon: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
+    shortcut: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
+    apple: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
   },
 };
 
@@ -80,6 +86,7 @@ export default function RootLayout({
       <body className={`min-h-screen flex flex-col antialiased ${inter.className}`}>
         <Providers>
           <ToastProvider>
+            <RealtimeNotificationToast />
             <ConfirmDialogProvider>
               <SiteLayout>{children}</SiteLayout>
             </ConfirmDialogProvider>

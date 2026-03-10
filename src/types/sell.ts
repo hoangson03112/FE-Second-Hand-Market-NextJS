@@ -18,6 +18,11 @@ export type SellFormValues = {
   attributes: ProductAttribute[];
 };
 
+export type DeliveryOptions = {
+  localPickup: boolean;
+  codShipping: boolean;
+};
+
 /** Địa chỉ lấy hàng (cho user chưa verify seller) */
 export type PickupFormValues = {
   provinceId: string;
@@ -30,12 +35,19 @@ export type PickupFormValues = {
 export interface IProductWithMediaAndIds extends IProduct {
   /** Địa chỉ lấy hàng – Address ref được populate từ backend */
   address?: {
+    _id?: string;
     provinceId?: string;
     districtId?: string;
     wardCode?: string;
     specificAddress?: string;
     fullName?: string;
     phoneNumber?: string;
+  } | null;
+
+  /** Hình thức giao hàng */
+  deliveryOptions?: {
+    localPickup?: boolean;
+    codShipping?: boolean;
   } | null;
 
   /**

@@ -20,3 +20,6 @@ export * from "./homepage";
 
 // Product constants (status, messages, configurations)
 export * from "./product";
+
+// Centralized Vietnamese message constants for all modules
+export * from "./messages";

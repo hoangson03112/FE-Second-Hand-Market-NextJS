@@ -11,7 +11,7 @@ import { ChatHeader } from "./ChatHeader";
 import { ChatConversationList } from "./ChatConversationList";
 import { ChatMessages } from "./ChatMessages";
 import { ChatInput } from "./ChatInput";
-import { buildProductMessage } from "../utils/productMessage";
+import { buildProductMessage, buildOrderMessage } from "../utils/productMessage";
 
 interface ProductInfo {
   _id: string;
@@ -21,24 +21,36 @@ interface ProductInfo {
   slug?: string;
 }
 
+interface OrderInfo {
+  _id: string;
+  status: string;
+  ghnOrderCode?: string;
+  products: Array<{ name: string; quantity: number; price: number }>;
+  totalAmount: number;
+}
+
 interface OpenChatEventDetail {
   userId: string;
   userName: string;
   userAvatar?: string;
   product?: ProductInfo;
+  order?: OrderInfo;
 }
 
 export default function FloatingChatBox() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversation, setSelectedConversation] =
     useState<Conversation | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const [draftByConversation, setDraftByConversation] = useState<
+    Record<string, string>
+  >({});
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
   const [sendingMessage, setSendingMessage] = useState(false);
+  const [chatError, setChatError] = useState<string | null>(null);
   const messageListRef = useRef<HTMLDivElement>(null);
   const shouldAutoScrollRef = useRef(true);
 
@@ -78,6 +90,7 @@ export default function FloatingChatBox() {
       userName: string,
       userAvatar?: string,
       product?: ProductInfo,
+      order?: OrderInfo,
     ) => {
       const conversation: Conversation = {
         _id: userId,
@@ -87,9 +100,37 @@ export default function FloatingChatBox() {
       };
 
       setIsOpen(true);
-      setIsMinimized(false);
       setSelectedConversation(conversation);
+      setNewMessage(draftByConversation[userId] || "");
       await loadMessages(userId);
+
+      if (order && account) {
+        const orderMessage = buildOrderMessage({
+          orderId: order._id,
+          status: order.status,
+          ghnOrderCode: order.ghnOrderCode,
+          products: order.products,
+          totalAmount: order.totalAmount,
+        });
+
+        try {
+          await ChatService.sendMessage(userId, orderMessage);
+
+          const tempMessage: Message = {
+            _id: Date.now().toString(),
+            conversationId: "",
+            senderId: account.accountID,
+            receiverId: userId,
+            type: "text",
+            text: orderMessage,
+            createdAt: new Date().toISOString(),
+          };
+
+          setMessages((prev) => [...prev, tempMessage]);
+        } catch (error) {
+          console.error("Error sending order message:", error);
+        }
+      }
 
       if (product && account) {
         const productUrl =
@@ -123,14 +164,14 @@ export default function FloatingChatBox() {
         }
       }
     },
-    [account, loadMessages],
+    [account, draftByConversation, loadMessages],
   );
 
   useEffect(() => {
     const handleOpenChat = (event: Event) => {
       const customEvent = event as CustomEvent<OpenChatEventDetail>;
-      const { userId, userName, userAvatar, product } = customEvent.detail;
-      openChatWith(userId, userName, userAvatar, product);
+      const { userId, userName, userAvatar, product, order } = customEvent.detail;
+      openChatWith(userId, userName, userAvatar, product, order);
     };
 
     window.addEventListener("openChat", handleOpenChat);
@@ -156,7 +197,6 @@ export default function FloatingChatBox() {
 
       const isConversationOpen =
         isOpen &&
-        !isMinimized &&
         selectedConversation?._id &&
         selectedConversation._id === newMsg.senderId;
 
@@ -172,6 +212,8 @@ export default function FloatingChatBox() {
           metadata: {
             conversationId: newMsg.conversationId,
             senderId: newMsg.senderId,
+            senderName: newMsg.senderName,
+            senderAvatar: newMsg.senderAvatar,
           },
         });
       }
@@ -187,14 +229,13 @@ export default function FloatingChatBox() {
   }, [
     account?.accountID,
     addNotification,
-    isMinimized,
     isOpen,
     lastMessage,
     selectedConversation?._id,
   ]);
 
   useEffect(() => {
-    if (!isOpen || isMinimized || !selectedConversation || loading) return;
+    if (!isOpen || !selectedConversation || loading) return;
     if (!shouldAutoScrollRef.current) return;
 
     const frame = requestAnimationFrame(() => {
@@ -204,7 +245,7 @@ export default function FloatingChatBox() {
     });
 
     return () => cancelAnimationFrame(frame);
-  }, [messages, isOpen, isMinimized, loading, selectedConversation]);
+  }, [messages, isOpen, loading, selectedConversation]);
 
   const handleMessageScroll = useCallback(() => {
     const container = messageListRef.current;
@@ -221,6 +262,8 @@ export default function FloatingChatBox() {
 
   const handleSelectConversation = (conversation: Conversation) => {
     setSelectedConversation(conversation);
+    setNewMessage(draftByConversation[conversation._id] || "");
+    setChatError(null);
     loadMessages(conversation._id);
   };
 
@@ -237,6 +280,7 @@ export default function FloatingChatBox() {
 
     try {
       setSendingMessage(true);
+      setChatError(null);
 
       let uploadedMedia: Message["media"] = [];
       if (selectedFiles.length > 0) {
@@ -276,8 +320,20 @@ export default function FloatingChatBox() {
       setMessages((prev) => [...prev, tempMessage]);
       setNewMessage("");
       setSelectedFiles([]);
+      setDraftByConversation((prev) => ({
+        ...prev,
+        [selectedConversation._id]: "",
+      }));
     } catch (error) {
       console.error("Error sending message:", error);
+      const fallbackMessage = "Không thể gửi tin nhắn. Vui lòng thử lại.";
+      if (error instanceof Error && error.message.includes("Upload")) {
+        setChatError(
+          "Upload ảnh/video thất bại. Vui lòng kiểm tra file và thử lại.",
+        );
+      } else {
+        setChatError(fallbackMessage);
+      }
     } finally {
       setSendingMessage(false);
     }
@@ -300,12 +356,12 @@ export default function FloatingChatBox() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 bg-primary hover:bg-primary/90 text-white rounded-full p-6 shadow-lg hover:shadow-xl transition-all z-50 group hover:scale-110"
+          className="fixed bottom-6 right-6 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full p-6 shadow-lg hover:shadow-xl transition-all z-50 group hover:scale-110"
           aria-label="Open chat"
         >
           <IconMessageCircle className="w-8 h-8" />
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-sm rounded-full min-w-[28px] h-7 px-2 flex items-center justify-center font-bold shadow-md">
+            <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-sm rounded-full min-w-[28px] h-7 px-2 flex items-center justify-center font-bold shadow-md">
               {unreadCount}
             </span>
           )}
@@ -314,76 +370,84 @@ export default function FloatingChatBox() {
 
       {isOpen && (
         <div
-          className={`fixed bottom-6 right-6 w-[600px] bg-white rounded-3xl shadow-2xl flex flex-col z-50 border-2 border-primary/20 transition-all duration-300 ${
-            isMinimized ? "h-16" : "h-[720px]"
-          }`}
+          className={
+            "fixed bottom-6 right-6 w-[600px] bg-white rounded-3xl shadow-2xl flex flex-col z-50 border-2 border-primary/20 transition-all duration-300 h-[720px]"
+          }
         >
           <ChatHeader
             selectedConversation={selectedConversation}
             isConnected={isConnected}
-            isMinimized={isMinimized}
             onBack={handleBackToList}
-            onToggleMinimize={() => setIsMinimized((prev) => !prev)}
             onClose={() => {
               setIsOpen(false);
-              setIsMinimized(false);
               setSelectedConversation(null);
             }}
           />
 
-          {!isConnected && !isMinimized && (
-            <div className="bg-yellow-50 text-yellow-800 text-sm px-5 py-2.5 text-center border-b border-yellow-200 flex items-center justify-center gap-2">
+          {!isConnected && (
+            <div className="bg-primary/8 text-primary/90 text-sm px-5 py-2.5 text-center border-b border-primary/20 flex items-center justify-center gap-2">
               <IconLoader2 className="w-4 h-4 animate-spin" />
               <span>Đang kết nối lại...</span>
             </div>
           )}
 
-          {!isMinimized && (
-            <div className="flex-1 overflow-hidden">
-              {!selectedConversation ? (
-                <div className="h-full overflow-y-auto">
-                  <ChatConversationList
+          <div className="flex-1 overflow-hidden">
+            {!selectedConversation ? (
+              <div className="h-full overflow-y-auto">
+                <ChatConversationList
+                  loading={loading}
+                  conversations={conversations}
+                  onSelect={handleSelectConversation}
+                />
+              </div>
+            ) : (
+              <div className="flex flex-col h-full">
+                <div
+                  ref={messageListRef}
+                  onScroll={handleMessageScroll}
+                  className="flex-1 overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-cream-50/30 to-transparent"
+                >
+                  <ChatMessages
                     loading={loading}
-                    conversations={conversations}
-                    onSelect={handleSelectConversation}
+                    messages={messages}
+                    accountId={account.accountID}
                   />
                 </div>
-              ) : (
-                <div className="flex flex-col h-full">
-                  <div
-                    ref={messageListRef}
-                    onScroll={handleMessageScroll}
-                    className="flex-1 overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-cream-50/30 to-transparent"
-                  >
-                    <ChatMessages
-                      loading={loading}
-                      messages={messages}
-                      accountId={account.accountID}
-                    />
-                  </div>
 
-                  <ChatInput
-                    value={newMessage}
-                    sending={sendingMessage}
-                    selectedFiles={selectedFiles}
-                    onChange={setNewMessage}
-                    onFilesChange={(files) => {
-                      setSelectedFiles((prev) =>
-                        [...prev, ...files].slice(0, 5),
-                      );
-                    }}
-                    onRemoveFile={(index) => {
-                      setSelectedFiles((prev) =>
-                        prev.filter((_, idx) => idx !== index),
-                      );
-                    }}
-                    onClearFiles={() => setSelectedFiles([])}
-                    onSubmit={handleSendMessage}
-                  />
-                </div>
-              )}
-            </div>
-          )}
+                <ChatInput
+                  value={newMessage}
+                  sending={sendingMessage}
+                  errorMessage={chatError}
+                  selectedFiles={selectedFiles}
+                  onChange={(value) => {
+                    setNewMessage(value);
+                    setChatError(null);
+                    if (selectedConversation) {
+                      setDraftByConversation((prev) => ({
+                        ...prev,
+                        [selectedConversation._id]: value,
+                      }));
+                    }
+                  }}
+                  onFilesChange={(files) => {
+                    setSelectedFiles((prev) => [...prev, ...files].slice(0, 5));
+                    setChatError(null);
+                  }}
+                  onRemoveFile={(index) => {
+                    setSelectedFiles((prev) =>
+                      prev.filter((_, idx) => idx !== index),
+                    );
+                    setChatError(null);
+                  }}
+                  onClearFiles={() => {
+                    setSelectedFiles([]);
+                    setChatError(null);
+                  }}
+                  onSubmit={handleSendMessage}
+                />
+              </div>
+            )}
+          </div>
         </div>
       )}
     </>
