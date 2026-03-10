@@ -34,14 +34,7 @@ export function UserMenuDropdown({
       <button
         type="button"
         onClick={toggleUserDropdown}
-        className="flex items-center gap-1 sm:gap-1.5 h-8 sm:h-9 pl-0.5 sm:pl-1 pr-1.5 sm:pr-2.5 rounded-full transition-all duration-150 focus:outline-none"
-        style={{ background: showUserDropdown ? "#EDE0D4" : "transparent" }}
-        onMouseEnter={(event) => {
-          event.currentTarget.style.background = "#EDE0D4";
-        }}
-        onMouseLeave={(event) => {
-          if (!showUserDropdown) event.currentTarget.style.background = "transparent";
-        }}
+        className={`flex items-center gap-1 sm:gap-1.5 h-8 sm:h-9 pl-0.5 sm:pl-1 pr-1.5 sm:pr-2.5 rounded-full transition-all duration-150 focus:outline-none hover:bg-primary/10 ${showUserDropdown ? "bg-primary/10" : ""}`}
         aria-expanded={showUserDropdown}
         aria-haspopup="true"
       >
@@ -52,19 +45,18 @@ export function UserMenuDropdown({
             width={30}
             height={30}
             className="w-7 h-7 sm:w-[30px] sm:h-[30px] object-cover rounded-full"
-            style={{ border: "2px solid #DDD0C0" }}
+            style={{ border: "2px solid var(--border)" }}
           />
         ) : (
           <span
             className="w-7 h-7 sm:w-[30px] sm:h-[30px] flex items-center justify-center text-white text-[11px] font-bold rounded-full"
-            style={{ background: "linear-gradient(135deg, #C47B5A 0%, #B06038 100%)" }}
+            style={{ background: "linear-gradient(135deg, var(--primary) 0%, oklch(0.43 0.08 35) 100%)" }}
           >
             {getInitials(account?.fullName)}
           </span>
         )}
         <IconChevronDown
-          className={`hidden sm:block w-3.5 h-3.5 transition-transform duration-200 ${showUserDropdown ? "rotate-180" : ""}`}
-          style={{ color: "#8A7264" }}
+          className={`hidden sm:block w-3.5 h-3.5 transition-transform duration-200 text-muted-foreground ${showUserDropdown ? "rotate-180" : ""}`}
           strokeWidth={2.5}
         />
       </button>
@@ -73,13 +65,13 @@ export function UserMenuDropdown({
         <div
           className="absolute right-0 mt-2 w-60 z-50"
           style={{
-            background: "#FDFAF6",
-            border: "1px solid #E4D9CC",
+            background: "var(--background)",
+            border: "1px solid var(--border)",
             borderRadius: "16px",
             boxShadow: "0 16px 48px rgba(26,23,20,0.13), 0 2px 8px rgba(26,23,20,0.05)",
           }}
         >
-          <div className="px-4 pt-4 pb-3" style={{ borderBottom: "1px solid #EDE0D4" }}>
+          <div className="px-4 pt-4 pb-3 border-b border-border">
             <div className="flex items-center gap-3">
               {account?.avatar ? (
                 <Image
@@ -88,21 +80,21 @@ export function UserMenuDropdown({
                   width={36}
                   height={36}
                   className="w-9 h-9 rounded-full object-cover shrink-0"
-                  style={{ border: "2px solid #DDD0C0" }}
+                  style={{ border: "2px solid var(--border)" }}
                 />
               ) : (
                 <span
                   className="w-9 h-9 flex items-center justify-center text-white text-[13px] font-bold shrink-0 rounded-full"
-                  style={{ background: "linear-gradient(135deg, #C47B5A 0%, #B06038 100%)" }}
+                  style={{ background: "linear-gradient(135deg, var(--primary) 0%, oklch(0.43 0.08 35) 100%)" }}
                 >
                   {getInitials(account?.fullName)}
                 </span>
               )}
               <div className="min-w-0 flex-1">
-                <p className="text-[13px] font-semibold truncate" style={{ color: "#1A1714" }}>
+                <p className="text-[13px] font-semibold truncate text-foreground">
                   {account?.fullName || "Người dùng"}
                 </p>
-                <p className="text-[11.5px] truncate mt-0.5" style={{ color: "#A8957F" }}>
+                <p className="text-[11.5px] truncate mt-0.5 text-muted-foreground">
                   {account?.email}
                 </p>
               </div>
@@ -132,33 +124,17 @@ export function UserMenuDropdown({
                   key={item.href}
                   href={item.href}
                   onClick={closeUserDropdown}
-                  className="flex items-center gap-3 px-3 py-2.5 text-[13px] font-medium rounded-xl transition-all duration-100"
-                  style={{ color: "#3A3028" }}
-                  onMouseEnter={(event) => {
-                    event.currentTarget.style.background = "#F5EDE4";
-                    event.currentTarget.style.color = "#C47B5A";
-                  }}
-                  onMouseLeave={(event) => {
-                    event.currentTarget.style.background = "";
-                    event.currentTarget.style.color = "#3A3028";
-                  }}
+                  className="flex items-center gap-3 px-3 py-2.5 text-[13px] font-medium rounded-xl transition-all duration-100 text-foreground hover:bg-primary/10 hover:text-foreground"
                 >
-                  <span style={{ color: "#B8997D" }}>{item.icon}</span>
+                  <span className="text-muted-foreground group-hover:text-primary">{item.icon}</span>
                   {item.label}
                 </Link>
               ))}
-            <div className="my-1 mx-1" style={{ height: "1px", background: "#EDE0D4" }} />
+            <div className="my-1 mx-1 h-px bg-border" />
             <button
               type="button"
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-3 py-2.5 text-[13px] font-medium rounded-xl transition-all duration-100"
-              style={{ color: "#C0392B" }}
-              onMouseEnter={(event) => {
-                event.currentTarget.style.background = "#FEF0EE";
-              }}
-              onMouseLeave={(event) => {
-                event.currentTarget.style.background = "";
-              }}
+              className="w-full flex items-center gap-3 px-3 py-2.5 text-[13px] font-medium rounded-xl transition-all duration-100 text-destructive hover:bg-destructive/5"
             >
               <IconLogout className="w-4 h-4 shrink-0" />Đăng xuất
             </button>

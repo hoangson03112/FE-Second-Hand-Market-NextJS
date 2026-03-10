@@ -65,6 +65,36 @@ class WebSocketService {
         this.messageHandlers.forEach((handler) => handler(message));
       });
 
+      this.socket.on("new-message-notification", (data: unknown) => {
+        const message: WebSocketMessage = {
+          type: "chat:notification",
+          userId,
+          data,
+          timestamp: new Date().toISOString(),
+        };
+        this.messageHandlers.forEach((handler) => handler(message));
+      });
+
+      this.socket.on("order-notification", (data: unknown) => {
+        const message: WebSocketMessage = {
+          type: "order:notification",
+          userId,
+          data,
+          timestamp: new Date().toISOString(),
+        };
+        this.messageHandlers.forEach((handler) => handler(message));
+      });
+
+      this.socket.on("product-notification", (data: unknown) => {
+        const message: WebSocketMessage = {
+          type: "product:notification",
+          userId,
+          data,
+          timestamp: new Date().toISOString(),
+        };
+        this.messageHandlers.forEach((handler) => handler(message));
+      });
+
       this.socket.on("message-error", (error: unknown) => {
         logger.error("Socket message error", new Error(String(error)));
       });

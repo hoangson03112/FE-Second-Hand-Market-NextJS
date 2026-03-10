@@ -200,6 +200,7 @@ export const ShippingService = {
       const [feeData, timeData] = await Promise.all([
         ShippingService.calculateShippingFee({
           from_district_id: params.from_district_id,
+          from_ward_code: params.from_ward_code,
           to_district_id: params.to_district_id,
           to_ward_code: params.to_ward_code,
           weight: params.weight || 500,

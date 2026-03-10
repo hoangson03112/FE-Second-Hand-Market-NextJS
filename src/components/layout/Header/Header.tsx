@@ -42,7 +42,7 @@ export default function Header() {
           background: "rgba(253,250,246,0.97)",
           backdropFilter: "blur(14px)",
           WebkitBackdropFilter: "blur(14px)",
-          borderBottom: "1px solid #E4D9CC",
+          borderBottom: "1px solid var(--border)",
           boxShadow: "0 2px 12px rgba(26,23,20,0.06)",
         }}
       >
@@ -58,7 +58,7 @@ export default function Header() {
             />
 
           {/* Divider */}
-          <div className="w-px h-4 shrink-0 hidden lg:block" style={{ background: "#DDD0C0" }} />
+          <div className="w-px h-4 shrink-0 hidden lg:block bg-border" />
 
             <CategoryNav
               isLoading={isLoading}

@@ -1,4 +1,4 @@
-import AdminUsers from "@/components/feature/admin/users/AdminUsers";
+import AdminUsers from "@/features/admin/users/AdminUsers";
 
 export default function AdminUsersPage() {
   return <AdminUsers />;

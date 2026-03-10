@@ -1,0 +1,217 @@
+"use client";
+
+import { IconArrowLeft } from "@tabler/icons-react";
+import { useState, useCallback, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { useUser } from "@/hooks/useUser";
+import { queryKeys } from "@/lib/query-client";
+import { formatPrice } from "@/utils/format/price";
+import type { IAttribute } from "@/types/product";
+import type { AccountInfo } from "@/types/auth";
+import {
+  ProductGalleryNew,
+  ProductHeader,
+  SellerInfoCard,
+  ProductPrice,
+  ProductSpecifications,
+  ProductDescription,
+  QuantitySelector,
+  ProductActionButtons,
+  ReportProductModal,
+} from "./components";
+import { useProduct } from "@/hooks";
+import { useProductActions } from "./hooks/useProductActions";
+import type { ProductProps } from "./Product.types";
+import { PageContainer, Container } from "@/components/layout/Container";
+
+export default function Product({ id }: ProductProps) {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { data: product, isLoading, error } = useProduct(id);
+
+  // Invalidate product list khi vào detail → quay lại list sẽ refetch stock mới nhất
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.products.lists() });
+  }, [id, queryClient]);
+  const { data: account } = useUser();
+  const [quantity, setQuantity] = useState(1);
+  const [showReportModal, setShowReportModal] = useState(false);
+
+  const {
+    actionLoading,
+    handlePurchaseNow,
+    handleAddToCart,
+    handleContactSeller,
+  } = useProductActions({
+    product: product ?? null,
+    account: account as AccountInfo,
+    quantity,
+  });
+
+  const handleQuantityChange = useCallback(
+    (newQuantity: number) => {
+      if (newQuantity > 0 && newQuantity <= (product?.stock || 0)) {
+        setQuantity(newQuantity);
+      }
+    },
+    [product?.stock],
+  );
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <PageContainer withBackground={false}>
+        <Container
+          as="main"
+          maxWidth="7xl"
+          paddingX="md"
+          paddingY="lg"
+          className="text-center"
+        >
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-6"></div>
+          <p className="text-neutral-600 text-lg">
+            Đang tải thông tin sản phẩm...
+          </p>
+        </Container>
+      </PageContainer>
+    );
+  }
+
+  // Error or not found
+  if (error || !product) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
+        <main className="max-w-7xl mx-auto px-4 py-20 text-center">
+          <p className="text-neutral-600 text-lg">Không tìm thấy sản phẩm</p>
+          <Link
+            href="/"
+            className="text-primary hover:underline mt-4 inline-block"
+          >
+            Quay lại trang chủ
+          </Link>
+        </main>
+      </div>
+    );
+  }
+
+  const averageRating = product.avgRating ?? 0;
+  const totalReviews = product.totalReviews ?? 0;
+
+  // Convert attributes to details format
+  const productDetails =
+    product.attributes?.map(
+      (attr: IAttribute) => `${attr.key}: ${attr.value}`,
+    ) || [];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-cream-50 to-taupe-50/30">
+      <main className="max-w-7xl mx-auto px-4 py-6">
+        <button
+          onClick={() => router.back()}
+          className="inline-flex items-center gap-2 text-taupe-600 hover:text-primary mb-4 text-sm"
+        >
+          <IconArrowLeft className="h-4 w-4" />
+          Trở lại
+        </button>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+          <div className="gap-4 flex-col flex">
+            {/* Gallery Section */}
+            <ProductGalleryNew
+              images={product.images || [product.avatar]}
+              productName={product.name}
+              condition={product.condition || "Đã sử dụng"}
+            />
+            <ProductSpecifications details={productDetails} />
+          </div>
+
+          {/* Details Section */}
+          <div className="flex flex-col">
+            <ProductHeader
+              name={product.name}
+              averageRating={averageRating}
+              totalReviews={totalReviews}
+              productId={product._id}
+              productSlug={product.slug}
+              productImage={product.avatar?.url || product.images?.[0]?.url}
+              category={product.category}
+              subcategory={product.subcategory}
+            />
+
+            {product.seller && (
+              <SellerInfoCard
+                seller={product.seller}
+                onContactSeller={handleContactSeller}
+              />
+            )}
+
+            <ProductPrice
+              price={product.price}
+              formattedPrice={
+                product.price ? formatPrice(product.price) : "Liên hệ"
+              }
+              originalPrice={product.originalPrice}
+              hasPersonalDiscount={product.hasPersonalDiscount}
+            />
+
+            {(product.stock ?? 0) === 0 && (
+              <div className="rounded-xl bg-destructive/8 text-destructive px-4 py-3 text-sm font-semibold my-3 border-2 border-destructive/20 shadow-sm">
+                Hết hàng
+              </div>
+            )}
+            {(product.stock ?? 0) === 1 && (
+              <div className="rounded-xl bg-gradient-to-r from-orange-50 to-orange-100 text-orange-700 px-4 py-3 text-sm font-semibold my-3 border-2 border-orange-200 shadow-sm">
+                Chỉ còn 1 sản phẩm
+              </div>
+            )}
+            {(product.stock ?? 0) > 1 && (
+              <div className="text-sm text-taupe-600 mb-3">
+                Còn {product.stock} sản phẩm
+              </div>
+            )}
+
+            <QuantitySelector
+              quantity={quantity}
+              maxQuantity={product.stock || 0}
+              onQuantityChange={handleQuantityChange}
+            />
+
+            <ProductActionButtons
+              account={account}
+              actionLoading={actionLoading}
+              isOutOfStock={!product.stock || product.stock <= 0}
+              onBuyNow={handlePurchaseNow}
+              onAddToCart={handleAddToCart}
+            />
+
+            {/* <ProductGuarantees /> */}
+          </div>
+        </div>
+
+        <ProductDescription description={product.description} />
+
+        {account && (
+          <div className="mt-6 text-center">
+            <button
+              type="button"
+              onClick={() => setShowReportModal(true)}
+              className="text-sm text-muted-foreground hover:text-destructive underline"
+            >
+              Báo cáo sản phẩm này
+            </button>
+          </div>
+        )}
+
+        {showReportModal && (
+          <ReportProductModal
+            productId={product._id}
+            productName={product.name}
+            onClose={() => setShowReportModal(false)}
+          />
+        )}
+      </main>
+    </div>
+  );
+}

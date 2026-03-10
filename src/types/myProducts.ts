@@ -21,9 +21,17 @@ export type MyListingProduct = {
   };
 };
 
+export type PaginationMeta = {
+  page: number;
+  limit: number;
+  totalItems: number;
+  totalPages: number;
+};
+
 export type MyListingsResponse = {
   success: boolean;
   data: MyListingProduct[];
   message?: string;
+  pagination?: PaginationMeta;
 };
 

@@ -1,3 +1,10 @@
+export type PaginationMeta = {
+  page: number;
+  limit: number;
+  totalItems: number;
+  totalPages: number;
+};
+
 export type DashboardSalesDataPoint = {
   /** Backend shape may vary by chart implementation */
   day?: string;
@@ -56,6 +63,15 @@ export interface AdminOrder {
   shippingAddress?: Record<string, unknown> | string | null;
   status: string;
   statusPayment?: boolean;
+  ghnOrderCode?: string;
+  ghnReturnOrderCode?: string;
+  refundBankInfo?: {
+    buyerBankName?: string;
+    buyerAccountNumber?: string;
+    buyerAccountHolder?: string;
+    submittedAt?: string;
+    type?: string;
+  } | null;
   createdAt: string;
   updatedAt?: string;
 }
@@ -87,7 +103,27 @@ export interface AdminSeller {
   province?: string;
   district?: string;
   ward?: string;
+  idCardFront?: { url: string; publicId?: string; originalName?: string; size?: number; uploadedAt?: string };
+  idCardBack?: { url: string; publicId?: string; originalName?: string; size?: number; uploadedAt?: string };
+  bankInfo?: {
+    bankName: string;
+    accountNumber: string;
+    accountHolder: string;
+    bankBin?: string;
+  };
+  stats?: {
+    totalProductsActive: number;
+    totalSold: number;
+    avgRating: number;
+    totalReviews: number;
+  };
+  approvedBy?: { _id: string; fullName: string; email: string };
+  rejectedReason?: string;
+  approvedDate?: string;
+  agreeTerms?: boolean;
+  agreePolicy?: boolean;
   createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface AdminReport {

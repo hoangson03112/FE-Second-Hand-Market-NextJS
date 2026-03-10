@@ -6,9 +6,13 @@ export function useWebSocket(userId: string | null | undefined) {
   const [lastMessage, setLastMessage] = useState<WebSocketMessage | null>(null);
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userId) {
+      // userId became null → user logged out → disconnect socket
+      websocketService.disconnect();
+      return;
+    }
 
-    // Connect to WebSocket
+    // Connect (no-op if already connected)
     websocketService.connect(userId);
 
     // Subscribe to messages
@@ -24,7 +28,8 @@ export function useWebSocket(userId: string | null | undefined) {
     return () => {
       clearInterval(interval);
       unsubscribe();
-      websocketService.disconnect();
+      // Do NOT disconnect here — other components share the same singleton socket.
+      // The socket is only disconnected when userId becomes null (logout).
     };
   }, [userId]);
 

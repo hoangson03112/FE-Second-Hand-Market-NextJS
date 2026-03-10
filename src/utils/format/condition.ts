@@ -14,32 +14,32 @@ interface ConditionInfo {
 const CONDITION_MAP: Record<ProductCondition, ConditionInfo> = {
   new: {
     label: "Mới",
-    color: "text-emerald-600",
-    badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    color: "text-primary",
+    badgeColor: "bg-primary/10 text-primary border-primary/20",
     description: "Sản phẩm hoàn toàn mới, chưa qua sử dụng",
   },
   like_new: {
     label: "Như mới",
-    color: "text-blue-600",
-    badgeColor: "bg-blue-50 text-blue-700 border-blue-200",
+    color: "text-foreground/80",
+    badgeColor: "bg-secondary text-foreground/80 border-border",
     description: "Sản phẩm gần như mới, ít dấu hiệu sử dụng",
   },
   good: {
     label: "Tốt",
-    color: "text-green-600",
-    badgeColor: "bg-green-50 text-green-700 border-green-200",
+    color: "text-foreground/70",
+    badgeColor: "bg-secondary/60 text-foreground/70 border-border",
     description: "Sản phẩm đã qua sử dụng nhưng còn tốt",
   },
   fair: {
     label: "Khá",
-    color: "text-amber-600",
-    badgeColor: "bg-amber-50 text-amber-700 border-amber-200",
+    color: "text-muted-foreground",
+    badgeColor: "bg-muted/60 text-muted-foreground border-border",
     description: "Sản phẩm có dấu hiệu sử dụng rõ ràng",
   },
   poor: {
     label: "Đã dùng lâu",
-    color: "text-orange-600",
-    badgeColor: "bg-orange-50 text-orange-700 border-orange-200",
+    color: "text-muted-foreground",
+    badgeColor: "bg-muted text-muted-foreground border-border",
     description: "Sản phẩm đã qua sử dụng lâu, có nhiều dấu hiệu hao mòn",
   },
 };

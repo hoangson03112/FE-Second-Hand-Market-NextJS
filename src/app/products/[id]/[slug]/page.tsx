@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
-import Product from "@/components/feature/product/Product";
+import Product from "@/features/product/Product";
 import { useProduct } from "@/hooks";
 
 export default function ProductPage() {

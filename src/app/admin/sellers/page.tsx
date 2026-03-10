@@ -1,4 +1,4 @@
-import AdminSellers from "@/components/feature/admin/sellers/AdminSellers";
+import AdminSellers from "@/features/admin/sellers/AdminSellers";
 
 export default function AdminSellersPage() {
   return <AdminSellers />;

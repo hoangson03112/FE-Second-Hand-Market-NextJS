@@ -96,6 +96,23 @@ export const ProductService = {
     return response as unknown as IProductListResponse;
   },
 
+  /** Lấy tất cả sản phẩm công khai (approved/active) – không cần category */
+  getAllPublic: async (filters?: IProductFilters): Promise<IProductListResponse> => {
+    const params = new URLSearchParams();
+    if (filters?.categorySlug) params.append("categorySlug", filters.categorySlug);
+    if (filters?.subCategorySlug) params.append("subCategorySlug", filters.subCategorySlug);
+    if (filters?.minPrice) params.append("minPrice", filters.minPrice.toString());
+    if (filters?.maxPrice) params.append("maxPrice", filters.maxPrice.toString());
+    if (filters?.condition) params.append("condition", filters.condition);
+    if (filters?.sortBy) params.append("sortBy", filters.sortBy);
+    if (filters?.search) params.append("search", filters.search);
+    if (filters?.page) params.append("page", filters.page.toString());
+    if (filters?.limit) params.append("limit", filters.limit.toString());
+
+    const response = await axiosClient.get(`/products/all?${params.toString()}`);
+    return response as unknown as IProductListResponse;
+  },
+
   /** Chi tiết sản phẩm đầy đủ – dùng khi xem trang chi tiết hoặc mở form Edit */
   getById: async (id: string): Promise<IProduct> => {
     const response = await axiosClient.get<{ success?: boolean; data?: IProduct }>(`/products/${id}`);
@@ -124,8 +141,12 @@ export const ProductService = {
   },
 
   /** User: danh sách sản phẩm đã đăng (chỉ fields cho list). Chi tiết đầy đủ khi bấm Edit gọi getById. */
-  getMyListings: async (): Promise<MyListingsResponse> => {
-    const response = await axiosClient.get("/products/my/listings");
+getMyListings: async (params?: { page?: number; limit?: number }): Promise<MyListingsResponse> => {
+      const qs = new URLSearchParams();
+      if (params?.page) qs.set("page", String(params.page));
+      if (params?.limit) qs.set("limit", String(params.limit));
+      const query = qs.toString();
+      const response = await axiosClient.get(`/products/my/listings${query ? `?${query}` : ""}`);
     return response as unknown as MyListingsResponse;
   },
 

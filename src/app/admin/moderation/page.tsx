@@ -1,4 +1,4 @@
-import AdminModeration from "@/components/feature/admin/moderation/AdminModeration";
+import AdminModeration from "@/features/admin/moderation/AdminModeration";
 
 export default function AdminModerationPage() {
   return <AdminModeration />;

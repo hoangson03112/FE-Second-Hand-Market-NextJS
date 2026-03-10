@@ -4,7 +4,14 @@ const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  
+
+  // ESLint is run separately (eslint-config-next + @rushstack/eslint-patch
+  // are incompatible with ESLint v9 flat config when invoked by next build).
+  // Run: npx eslint src --ext .ts,.tsx
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
   // Image optimization
   images: {
     remotePatterns: [

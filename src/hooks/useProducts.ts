@@ -13,6 +13,13 @@ export function useProducts(filters?: IProductFilters) {
   });
 }
 
+export function useAllPublicProducts(filters?: IProductFilters) {
+  return useQuery({
+    queryKey: [...queryKeys.products.all, "public-all", filters],
+    queryFn: async () => ProductService.getAllPublic(filters),
+  });
+}
+
 export function useProductsByCategory(
   categorySlug: string,
   filters?: IProductFilters

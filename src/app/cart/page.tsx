@@ -1,4 +1,4 @@
-import Cart from '@/components/feature/cart/Cart'
+import Cart from '@/features/cart/Cart'
 import React from 'react'
 
 export default function CartPage() {

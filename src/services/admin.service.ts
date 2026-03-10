@@ -8,7 +8,9 @@ import type {
   AdminCategory,
   GetAdminSellersParams,
   GetAdminSellersResponse,
+  PaginationMeta,
 } from "@/types/admin";
+import type { RefundRequest, SellerPayout, GHNTrackingData } from "@/types/order";
 
 export const AdminService = {
   getDashboardStats: async (): Promise<DashboardStats> => {
@@ -16,14 +18,33 @@ export const AdminService = {
     return res as unknown as DashboardStats;
   },
 
-  getOrders: async (): Promise<{ orders: AdminOrder[] }> => {
-    const res = await axiosClient.get("/orders/admin/all");
-    return res as unknown as { orders: AdminOrder[] };
+  getOrders: async (params?: {
+    page?: number;
+    limit?: number;
+    status?: string;
+    search?: string;
+  }): Promise<{ orders: AdminOrder[]; pagination: PaginationMeta }> => {
+    const qs = new URLSearchParams();
+    if (params?.page) qs.set("page", String(params.page));
+    if (params?.limit) qs.set("limit", String(params.limit));
+    if (params?.status && params.status !== "all") qs.set("status", params.status);
+    if (params?.search?.trim()) qs.set("search", params.search.trim());
+    const query = qs.toString();
+    const res = await axiosClient.get(`/orders/admin/all${query ? `?${query}` : ""}`);
+    return res as unknown as { orders: AdminOrder[]; pagination: PaginationMeta };
   },
 
-  getAccounts: async (): Promise<{ accounts: AdminAccount[] }> => {
-    const res = await axiosClient.get("/accounts/admin/list");
-    return res as unknown as { accounts: AdminAccount[] };
+  getAccounts: async (params?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+  }): Promise<{ accounts: AdminAccount[]; pagination: PaginationMeta }> => {
+    const qs = new URLSearchParams();
+    if (params?.page) qs.set("page", String(params.page));
+    if (params?.limit) qs.set("limit", String(params.limit));
+    if (params?.search?.trim()) qs.set("search", params.search.trim());
+    const res = await axiosClient.get(`/accounts/admin/list?${qs.toString()}`);
+    return res as unknown as { accounts: AdminAccount[]; pagination: PaginationMeta };
   },
 
   getSellers: async (params?: GetAdminSellersParams): Promise<GetAdminSellersResponse> => {
@@ -46,9 +67,15 @@ export const AdminService = {
     });
   },
 
-  getReports: async (): Promise<{ reports?: AdminReport[] }> => {
-    const res = await axiosClient.get("/reports");
-    return res as unknown as { reports?: AdminReport[] };
+  getReports: async (params?: {
+    page?: number;
+    limit?: number;
+  }): Promise<{ reports?: AdminReport[]; pagination?: PaginationMeta }> => {
+    const qs = new URLSearchParams();
+    if (params?.page) qs.set("page", String(params.page));
+    if (params?.limit) qs.set("limit", String(params.limit));
+    const res = await axiosClient.get(`/reports?${qs.toString()}`);
+    return res as unknown as { reports?: AdminReport[]; pagination?: PaginationMeta };
   },
 
   getCategories: async (): Promise<{ data: AdminCategory[] }> => {
@@ -108,6 +135,79 @@ export const AdminService = {
   toggleModerationMode: async (mode: "strict" | "balanced") => {
     return axiosClient.put("/admin/admin/moderation/toggle-mode", { mode });
   },
+
+  // ── Refund Management ────────────────────────────────────────────
+  /** Get all refunds (admin view) — from the refund module */
+  getRefunds: async (): Promise<{ refunds: RefundRequest[] }> => {
+    const res = await axiosClient.get("/refunds/admin/all");
+    return res as unknown as { refunds: RefundRequest[] };
+  },
+
+  /**
+   * Admin finalizes a refund: deducts seller wallet & marks order refunded.
+   * POST /orders/:orderId/complete-refund
+   */
+  approveRefund: async (
+    orderId: string,
+    adminNote?: string
+  ): Promise<{ message: string }> => {
+    return axiosClient.post(`/orders/${orderId}/complete-refund`, { adminNote });
+  },
+
+  /**
+   * Admin rejects a disputed refund.
+   * PUT /refunds/:refundId/admin-handle  (only works when status === "disputed")
+   */
+  rejectRefund: async (
+    refundId: string,
+    adminNote: string
+  ): Promise<{ message: string }> => {
+    return axiosClient.put(`/refunds/${refundId}/admin-handle`, {
+      decision: "reject",
+      comment: adminNote,
+    });
+  },
+
+  // ── Seller Payout Management ─────────────────────────────────────
+  /** List orders completed but payout not yet released */
+  getPayouts: async (): Promise<{ data: SellerPayout[] }> => {
+    const res = await axiosClient.get("/orders/admin/pending-payouts");
+    return res as unknown as { data: SellerPayout[] };
+  },
+
+  /** Admin manually triggers payout for a completed order */
+  triggerPayout: async (
+    orderId: string
+  ): Promise<{ message: string }> => {
+    return axiosClient.post(`/orders/${orderId}/payout`);
+  },
+
+  /**
+   * Admin confirms a bank transfer payment by a buyer.
+   * POST /orders/:orderId/confirm-bank-transfer
+   */
+  confirmBankTransfer: async (
+    orderId: string
+  ): Promise<{ message: string }> => {
+    return axiosClient.post(`/orders/${orderId}/confirm-bank-transfer`);
+  },
+
+  // ── GHN Tracking ─────────────────────────────────────────────────
+  getOrderTracking: async (
+    orderId: string
+  ): Promise<{ tracking: GHNTrackingData }> => {
+    const res = await axiosClient.get(`/orders/${orderId}/tracking`);
+    return res as unknown as { tracking: GHNTrackingData };
+  },
+
+  // ── Admin Order Status Update ─────────────────────────────────────
+  updateOrderStatus: async (
+    orderId: string,
+    status: string,
+    reason?: string
+  ): Promise<{ message: string }> => {
+    return axiosClient.patch(`/orders/admin/update-status/${orderId}`, { status, reason });
+  },
 };
 
 export type {
@@ -120,3 +220,4 @@ export type {
   GetAdminSellersParams,
   GetAdminSellersResponse,
 };
+export type { RefundRequest, SellerPayout, GHNTrackingData };

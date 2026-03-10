@@ -87,8 +87,8 @@ export default function ShareButton({ shareData, className = "" }: ShareButtonPr
     {
       name: copied ? "Đã copy!" : "Copy link",
       icon: copied ? IconCheck : IconLink,
-      color: copied ? "text-green-600" : "text-gray-700 dark:text-gray-300",
-      bgColor: copied ? "hover:bg-green-50 dark:hover:bg-green-900/20" : "hover:bg-gray-100 dark:hover:bg-gray-800",
+      color: copied ? "text-primary" : "text-muted-foreground",
+      bgColor: copied ? "hover:bg-secondary" : "hover:bg-muted",
       action: handleCopyLink,
     },
   ];
@@ -113,7 +113,7 @@ export default function ShareButton({ shareData, className = "" }: ShareButtonPr
           />
 
           {/* Dropdown */}
-          <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-border z-50 overflow-hidden">
+          <div className="absolute right-0 mt-2 w-64 bg-card rounded-xl shadow-2xl border border-border z-50 overflow-hidden">
             <div className="p-3 border-b border-border flex items-center justify-between">
               <h3 className="text-sm font-semibold text-foreground">
                 Chia sẻ sản phẩm
@@ -155,7 +155,7 @@ export default function ShareButton({ shareData, className = "" }: ShareButtonPr
                   }}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg ${option.bgColor} transition-colors text-left`}
                 >
-                  <div className={`w-8 h-8 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center ${option.color}`}>
+                  <div className={`w-8 h-8 rounded-full bg-muted flex items-center justify-center ${option.color}`}>
                     {option.customIcon || <option.icon className="w-5 h-5" />}
                   </div>
                   <span className="text-sm font-medium text-foreground">

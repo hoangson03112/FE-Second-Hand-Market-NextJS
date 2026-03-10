@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { useTokenStore } from "@/store/useTokenStore";
-import BecomeSeller from "@/components/feature/become-seller/BecomeSeller";
+import BecomeSeller from "@/features/become-seller/BecomeSeller";
 import Link from "next/link";
 
 export default function BecomeSellerPage() {
@@ -49,15 +49,15 @@ export default function BecomeSellerPage() {
         </div>
 
         <div className="max-w-3xl mx-auto px-4 py-8">
-          <div className="rounded-2xl border border-green-400/50 bg-green-50/50 dark:bg-green-950/20 p-6 flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center shrink-0">
-              <IconCircleCheck className="w-6 h-6 text-green-600 dark:text-green-400" />
+          <div className="rounded-2xl border border-border bg-secondary/60 dark:bg-secondary/30 p-6 flex items-start gap-4">
+            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+              <IconCircleCheck className="w-6 h-6 text-primary" />
             </div>
             <div className="flex-1 min-w-0">
-              <h1 className="text-base font-bold text-green-800 dark:text-green-300 mb-1">
+              <h1 className="text-base font-bold text-foreground mb-1">
                 Bạn đã là Seller
               </h1>
-              <p className="text-sm text-green-700 dark:text-green-400 mb-4">
+              <p className="text-sm text-muted-foreground mb-4">
                 Tài khoản của bạn đã được xác minh. Bạn có thể đăng sản phẩm và quản lý đơn hàng.
                 Để cập nhật thông tin ngân hàng hoặc địa chỉ, vui lòng liên hệ hỗ trợ.
               </p>

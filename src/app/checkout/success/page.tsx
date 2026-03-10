@@ -10,6 +10,7 @@ import {
   IconMapPin,
   IconChevronRight,
   IconClockHour4,
+  IconUser,
 } from "@tabler/icons-react";
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -18,7 +19,6 @@ import type { Order } from "@/types/order";
 import { formatPrice } from "@/utils/format/price";
 import Link from "next/link";
 import Image from "next/image";
-import { useToast } from "@/components/ui/Toast";
 
 const ORDER_PROGRESS_STEPS = [
   { key: "pending", label: "Chờ xác nhận", shortLabel: "Chờ xác nhận" },
@@ -39,7 +39,6 @@ const FAILED_STATUSES: Record<string, string> = {
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const toast = useToast();
   const orderId = searchParams.get("orderId");
   const [order, setOrder] = useState<Order | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,10 +46,11 @@ function CheckoutSuccessContent() {
   useEffect(() => {
     if (!orderId) { router.push("/checkout"); return; }
     OrderService.getById(orderId)
-      .then((r) => setOrder(r.order))
-      .catch(() => { toast.error("Không thể tải thông tin đơn hàng"); router.push("/checkout"); })
+      .then((r) => setOrder(r.order ?? null))
+      .catch(() => setOrder(null))
       .finally(() => setIsLoading(false));
-  }, [orderId, router, toast]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderId]);
 
   if (isLoading) {
     return (
@@ -59,7 +59,12 @@ function CheckoutSuccessContent() {
       </div>
     );
   }
-  if (!order) return null;
+  if (!order) return (
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4">
+      <p className="text-muted-foreground">Không thể tải thông tin đơn hàng.</p>
+      <Link href="/orders" className="px-4 py-2 rounded-xl bg-foreground text-background text-sm">Xem tất cả đơn hàng</Link>
+    </div>
+  );
 
   const addr = order.shippingAddress;
   const fullAddress = [addr?.specificAddress, addr?.ward, addr?.district, addr?.province]
@@ -89,32 +94,32 @@ function CheckoutSuccessContent() {
     : null;
 
   return (
-    <div className="min-h-screen bg-[#FDFAF6] py-6 sm:py-8 px-3 sm:px-4">
+    <div className="min-h-screen bg-background py-6 sm:py-8 px-3 sm:px-4">
       <div className="max-w-6xl mx-auto space-y-4 sm:space-y-5">
-        <div className="bg-white border border-[#EDE0D4] rounded-2xl p-4 sm:p-6 lg:p-7">
+        <div className="bg-cream-50 border border-border rounded-2xl p-4 sm:p-6 lg:p-7">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div className="flex items-start sm:items-center gap-3 sm:gap-4">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-green-50 border border-green-200 flex items-center justify-center shrink-0">
-                <IconCircleCheck className="w-6 h-6 sm:w-7 sm:h-7 text-green-600" strokeWidth={2} />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-secondary/60 border border-border flex items-center justify-center shrink-0">
+                <IconCircleCheck className="w-6 h-6 sm:w-7 sm:h-7 text-primary" strokeWidth={2} />
               </div>
               <div>
-                <h1 className="text-lg sm:text-xl font-semibold text-[#1A1714] leading-tight">Đặt hàng thành công!</h1>
-                <p className="text-sm text-[#7A6755] mt-0.5">
-                  Mã đơn: <span className="font-mono text-[#1A1714] font-medium select-all">#{order._id.slice(-10).toUpperCase()}</span>
+                <h1 className="text-lg sm:text-xl font-semibold text-foreground leading-tight">Đặt hàng thành công!</h1>
+                <p className="text-sm text-muted-foreground mt-0.5">
+                  Mã đơn: <span className="font-mono text-foreground font-medium select-all">#{order._id.slice(-10).toUpperCase()}</span>
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
               <Link
                 href="/"
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-[#D5C4B5] bg-white text-sm font-medium text-[#7A6755] hover:bg-[#FDFAF6] transition-colors"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-border bg-card text-sm font-medium text-muted-foreground hover:bg-cream-50 transition-colors"
               >
                 <IconHome className="w-4 h-4" />
                 Trang chủ
               </Link>
               <Link
                 href={`/orders/${orderId}`}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#1A1714] text-sm font-medium text-white hover:bg-[#2a221b] transition-colors"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-foreground text-sm font-medium text-background hover:bg-foreground/90 transition-colors"
               >
                 Xem đơn hàng
                 <IconChevronRight className="w-4 h-4" />
@@ -123,8 +128,8 @@ function CheckoutSuccessContent() {
           </div>
         </div>
 
-        <div className="bg-white border border-[#EDE0D4] rounded-2xl p-4 sm:p-5">
-          <p className="text-xs font-semibold text-[#7A6755] uppercase tracking-wider mb-4">Tiến trình đơn hàng</p>
+        <div className="bg-cream-50 border border-border rounded-2xl p-4 sm:p-5">
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">Tiến trình đơn hàng</p>
           <div className="flex items-center overflow-x-auto pb-1">
             {ORDER_PROGRESS_STEPS.map((step, i) => {
               const isDone = i < effectiveStepIndex;
@@ -134,43 +139,43 @@ function CheckoutSuccessContent() {
                   <div className="flex flex-col items-center gap-1">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${
                       isDone
-                        ? "bg-green-500 border-green-500"
+                        ? "bg-primary border-primary"
                         : isActive
-                          ? "bg-[#C47B5A] border-[#C47B5A]"
-                          : "bg-white border-[#D5C4B5]"
+                          ? "bg-primary border-primary"
+                          : "bg-card border-border"
                     }`}>
                       {isDone ? (
                         <IconCircleCheck className="w-4 h-4 text-white" strokeWidth={2} />
                       ) : isActive ? (
                         <IconTruck className="w-4 h-4 text-white" strokeWidth={2} />
                       ) : (
-                        <IconPackage className="w-4 h-4 text-[#D5C4B5]" strokeWidth={2} />
+                        <IconPackage className="w-4 h-4 text-border" strokeWidth={2} />
                       )}
                     </div>
                     <span
                       className={`text-[10px] text-center leading-tight w-14 sm:w-16 ${
                         isDone
-                          ? "text-green-600 font-medium"
+                          ? "text-primary font-medium"
                           : isActive
-                            ? "text-[#C47B5A] font-medium"
-                            : "text-[#B0A090]"
+                            ? "text-primary font-medium"
+                            : "text-neutral-400"
                       }`}
                     >
                       {step.shortLabel}
                     </span>
                   </div>
                   {i < ORDER_PROGRESS_STEPS.length - 1 && (
-                    <div className={`flex-1 h-0.5 mb-5 mx-1 ${i < effectiveStepIndex ? "bg-green-300" : "bg-[#EDE0D4]"}`} />
+                    <div className={`flex-1 h-0.5 mb-5 mx-1 ${i < effectiveStepIndex ? "bg-primary/50" : "bg-border"}`} />
                   )}
                 </div>
               );
             })}
           </div>
-          <p className="mt-3 text-xs text-[#7A6755]">
-            Trạng thái hiện tại: <span className="font-semibold text-[#1A1714]">{ORDER_PROGRESS_STEPS[effectiveStepIndex]?.label || "Đang xử lý"}</span>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Trạng thái hiện tại: <span className="font-semibold text-foreground">{ORDER_PROGRESS_STEPS[effectiveStepIndex]?.label || "Đang xử lý"}</span>
           </p>
           {isTerminalFailed && (
-            <p className="mt-2 text-xs font-medium text-red-600">
+            <p className="mt-2 text-xs font-medium text-destructive">
               {FAILED_STATUSES[order.status]}
             </p>
           )}
@@ -178,12 +183,12 @@ function CheckoutSuccessContent() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
           <div className="lg:col-span-7 xl:col-span-8 space-y-4 sm:space-y-5">
-            <div className="bg-white border border-[#EDE0D4] rounded-2xl overflow-hidden">
-              <div className="px-4 sm:px-5 py-3 border-b border-[#EDE0D4] flex items-center gap-2">
-                <IconPackage className="w-4 h-4 text-[#C47B5A]" />
-                <span className="text-sm font-semibold text-[#1A1714]">Sản phẩm đã đặt</span>
+            <div className="bg-cream-50 border border-border rounded-2xl overflow-hidden">
+              <div className="px-4 sm:px-5 py-3 border-b border-border flex items-center gap-2">
+                <IconPackage className="w-4 h-4 text-primary" />
+                <span className="text-sm font-semibold text-foreground">Sản phẩm đã đặt</span>
               </div>
-              <div className="divide-y divide-[#F5E6D8]">
+              <div className="divide-y divide-border">
                 {order.products?.map((item, i) => {
                   const p = item.productId;
                   const avatar = typeof p?.avatar === "string" ? p.avatar : p?.avatar?.url;
@@ -191,7 +196,7 @@ function CheckoutSuccessContent() {
 
                   return (
                     <div key={i} className="flex gap-3 sm:gap-4 p-4 sm:p-5">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-[#F5E6D8] shrink-0 border border-[#EDE0D4]">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-primary/8 shrink-0 border border-border">
                         <Image
                           src={imageUrl}
                           alt={p?.name ?? "Sản phẩm"}
@@ -201,11 +206,11 @@ function CheckoutSuccessContent() {
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm sm:text-base font-medium text-[#1A1714] line-clamp-2 leading-snug">
+                        <p className="text-sm sm:text-base font-medium text-foreground line-clamp-2 leading-snug">
                           {p?.name ?? "Sản phẩm"}
                         </p>
-                        <p className="text-xs sm:text-sm text-[#7A6755] mt-1">Số lượng: {item.quantity}</p>
-                        <p className="text-sm sm:text-base font-semibold text-[#C47B5A] mt-1.5">
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">Số lượng: {item.quantity}</p>
+                        <p className="text-sm sm:text-base font-semibold text-primary mt-1.5">
                           {formatPrice(item.price ?? p?.price ?? 0)}
                         </p>
                       </div>
@@ -215,71 +220,88 @@ function CheckoutSuccessContent() {
               </div>
             </div>
 
-            <div className="bg-white border border-[#EDE0D4] rounded-2xl overflow-hidden">
-              <div className="px-4 sm:px-5 py-3 border-b border-[#EDE0D4] flex items-center justify-between">
-                <span className="text-sm font-semibold text-[#1A1714]">Chi tiết thanh toán</span>
-                <span className="text-xs text-[#7A6755]">{order.products?.length || 0} sản phẩm</span>
+            <div className="bg-cream-50 border border-border rounded-2xl overflow-hidden">
+              <div className="px-4 sm:px-5 py-3 border-b border-border flex items-center justify-between">
+                <span className="text-sm font-semibold text-foreground">Chi tiết thanh toán</span>
+                <span className="text-xs text-muted-foreground">{order.products?.length || 0} sản phẩm</span>
               </div>
               <div className="px-4 sm:px-5 py-4 space-y-2">
-                <div className="flex justify-between text-sm text-[#7A6755]">
+                <div className="flex justify-between text-sm text-muted-foreground">
                   <span>Tiền hàng</span>
                   <span>{formatPrice(order.productAmount ?? 0)}</span>
                 </div>
-                <div className="flex justify-between text-sm text-[#7A6755]">
+                <div className="flex justify-between text-sm text-muted-foreground">
                   <span>Phí vận chuyển</span>
                   <span>{formatPrice(order.shippingFee ?? 0)}</span>
                 </div>
-                <div className="flex justify-between text-base font-semibold text-[#1A1714] pt-2 border-t border-[#EDE0D4] mt-2">
+                <div className="flex justify-between text-base font-semibold text-foreground pt-2 border-t border-border mt-2">
                   <span>Tổng cộng</span>
-                  <span className="text-[#C47B5A] text-lg">{formatPrice(order.totalAmount)}</span>
+                  <span className="text-primary text-lg">{formatPrice(order.totalAmount)}</span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-5 xl:col-span-4">
-            <div className="bg-white border border-[#EDE0D4] rounded-2xl overflow-hidden lg:sticky lg:top-24">
-              <div className="divide-y divide-[#F5E6D8]">
+            <div className="bg-cream-50 border border-border rounded-2xl overflow-hidden lg:sticky lg:top-24">
+              <div className="divide-y divide-border">
+                {order.sellerId && (
+                  <div className="flex items-start gap-3 p-4 sm:p-5">
+                    <IconUser className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                    <div>
+                      <p className="text-xs text-muted-foreground mb-0.5">Người bán</p>
+                      <Link
+                        href={`/seller/${order.sellerId._id}`}
+                        className="text-sm font-semibold text-foreground hover:text-primary transition-colors"
+                      >
+                        {order.sellerId.fullName}
+                      </Link>
+                      {order.sellerId.phoneNumber && (
+                        <p className="text-xs text-muted-foreground mt-0.5">{order.sellerId.phoneNumber}</p>
+                      )}
+                    </div>
+                  </div>
+                )}
                 <div className="flex items-start gap-3 p-4 sm:p-5">
-                  <IconMapPin className="w-4 h-4 text-[#C47B5A] mt-0.5 shrink-0" />
+                  <IconMapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <div>
-                    <p className="text-xs text-[#7A6755] mb-0.5">Giao đến</p>
-                    <p className="text-sm font-semibold text-[#1A1714]">{addr?.fullName}</p>
-                    <p className="text-sm text-[#7A6755]">{addr?.phoneNumber}</p>
-                    {fullAddress && <p className="text-xs text-[#7A6755] mt-0.5">{fullAddress}</p>}
+                    <p className="text-xs text-muted-foreground mb-0.5">Giao đến</p>
+                    <p className="text-sm font-semibold text-foreground">{addr?.fullName}</p>
+                    <p className="text-sm text-muted-foreground">{addr?.phoneNumber}</p>
+                    {fullAddress && <p className="text-xs text-muted-foreground mt-0.5">{fullAddress}</p>}
                   </div>
                 </div>
                 <div className="flex items-center gap-3 p-4 sm:p-5">
-                  <IconCreditCard className="w-4 h-4 text-[#C47B5A] shrink-0" />
+                  <IconCreditCard className="w-4 h-4 text-primary shrink-0" />
                   <div>
-                    <p className="text-xs text-[#7A6755] mb-0.5">Thanh toán</p>
-                    <p className="text-sm font-medium text-[#1A1714]">
+                    <p className="text-xs text-muted-foreground mb-0.5">Thanh toán</p>
+                    <p className="text-sm font-medium text-foreground">
                       {order.paymentMethod === "cod" ? "Thanh toán khi nhận hàng (COD)" : "Chuyển khoản ngân hàng"}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 p-4 sm:p-5">
-                  <IconCalendar className="w-4 h-4 text-[#C47B5A] shrink-0" />
+                  <IconCalendar className="w-4 h-4 text-primary shrink-0" />
                   <div>
-                    <p className="text-xs text-[#7A6755] mb-0.5">Thời gian đặt hàng</p>
-                    <p className="text-sm font-medium text-[#1A1714]">{orderedAt}</p>
+                    <p className="text-xs text-muted-foreground mb-0.5">Thời gian đặt hàng</p>
+                    <p className="text-sm font-medium text-foreground">{orderedAt}</p>
                   </div>
                 </div>
                 {expectedDelivery && (
                   <div className="flex items-center gap-3 p-4 sm:p-5">
-                    <IconClockHour4 className="w-4 h-4 text-[#C47B5A] shrink-0" />
-                    <div>
-                      <p className="text-xs text-[#7A6755] mb-0.5">Dự kiến giao</p>
-                      <p className="text-sm font-medium text-[#1A1714]">{expectedDelivery}</p>
+                  <IconClockHour4 className="w-4 h-4 text-primary shrink-0" />
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-0.5">Dự kiến giao</p>
+                    <p className="text-sm font-medium text-foreground">{expectedDelivery}</p>
                     </div>
                   </div>
                 )}
               </div>
 
-              <div className="p-4 sm:p-5 border-t border-[#EDE0D4] bg-white">
+              <div className="p-4 sm:p-5 border-t border-border bg-cream-50">
                 <Link
                   href={`/orders/${orderId}`}
-                  className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#1A1714] text-sm font-medium text-white hover:bg-[#2a221b] transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-foreground text-sm font-medium text-background hover:bg-foreground/90 transition-colors"
                 >
                   Xem chi tiết đơn hàng
                   <IconChevronRight className="w-4 h-4" />
@@ -292,14 +314,14 @@ function CheckoutSuccessContent() {
         <div className="lg:hidden flex gap-3 pb-4">
           <Link
             href="/"
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-[#D5C4B5] bg-white text-sm font-medium text-[#7A6755] hover:bg-[#FDFAF6] transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-border bg-card text-sm font-medium text-muted-foreground hover:bg-cream-50 transition-colors"
           >
             <IconHome className="w-4 h-4" />
             Trang chủ
           </Link>
           <Link
             href={`/orders/${orderId}`}
-            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-[#1A1714] text-sm font-medium text-white hover:bg-[#2a221b] transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-foreground text-sm font-medium text-background hover:bg-foreground/90 transition-colors"
           >
             Xem đơn hàng
             <IconChevronRight className="w-4 h-4" />

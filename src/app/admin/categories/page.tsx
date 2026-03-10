@@ -1,4 +1,4 @@
-import AdminCategories from "@/components/feature/admin/categories/AdminCategories";
+import AdminCategories from "@/features/admin/categories/AdminCategories";
 
 export default function AdminCategoriesPage() {
   return <AdminCategories />;

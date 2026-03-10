@@ -28,10 +28,14 @@ interface NotificationState {
   notifications: AppNotification[];
   unreadCount: number;
   addNotification: (notification: AddNotificationInput) => void;
+  /** Bulk-load from API. Existing notifications with matching dedupeKey are skipped. */
+  hydrate: (notifications: AppNotification[]) => void;
   markAsRead: (id: string) => void;
   markAllAsRead: () => void;
   removeNotification: (id: string) => void;
   clearNotifications: () => void;
+  /** Clear store — call on logout */
+  reset: () => void;
 }
 
 const MAX_NOTIFICATIONS = 100;
@@ -54,7 +58,9 @@ export const useNotificationStore = createClientStore<NotificationState>(
       }
 
       const next: AppNotification = {
-        id: notification.id || `noti_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+        id:
+          notification.id ||
+          `noti_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
         type: notification.type,
         title: notification.title,
         message: notification.message,
@@ -72,6 +78,17 @@ export const useNotificationStore = createClientStore<NotificationState>(
       });
     },
 
+    hydrate: (incoming) => {
+      const current = get().notifications;
+      const existingKeys = new Set(current.map((n) => n.dedupeKey).filter(Boolean));
+      const newOnes = incoming.filter((n) => !n.dedupeKey || !existingKeys.has(n.dedupeKey));
+      if (newOnes.length === 0) return;
+      const merged = [...current, ...newOnes]
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .slice(0, MAX_NOTIFICATIONS);
+      set({ notifications: merged, unreadCount: calculateUnreadCount(merged) });
+    },
+
     markAsRead: (id) => {
       const notifications = get().notifications.map((item) =>
         item.id === id ? { ...item, read: true } : item,
@@ -83,12 +100,17 @@ export const useNotificationStore = createClientStore<NotificationState>(
     },
 
     markAllAsRead: () => {
-      const notifications = get().notifications.map((item) => ({ ...item, read: true }));
+      const notifications = get().notifications.map((item) => ({
+        ...item,
+        read: true,
+      }));
       set({ notifications, unreadCount: 0 });
     },
 
     removeNotification: (id) => {
-      const notifications = get().notifications.filter((item) => item.id !== id);
+      const notifications = get().notifications.filter(
+        (item) => item.id !== id,
+      );
       set({
         notifications,
         unreadCount: calculateUnreadCount(notifications),
@@ -96,6 +118,10 @@ export const useNotificationStore = createClientStore<NotificationState>(
     },
 
     clearNotifications: () => {
+      set({ notifications: [], unreadCount: 0 });
+    },
+
+    reset: () => {
       set({ notifications: [], unreadCount: 0 });
     },
   }),

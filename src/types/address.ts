@@ -14,6 +14,7 @@ export interface Address {
   ward?: string;
   address?: string; 
   isDefault?: boolean;
+  type?: "delivery" | "pickup";
 }
 
 export interface CreateAddressRequest {
@@ -24,6 +25,7 @@ export interface CreateAddressRequest {
   wardCode?: string;
   districtId?: string;
   isDefault?: boolean;
+  type?: "delivery" | "pickup";
 }
 
 export interface AddressResponse {
@@ -31,7 +33,7 @@ export interface AddressResponse {
   data?: Address[];
 }
 
-// ========== GHN API Types ==========
+
 
 /**
  * GHN API Response Wrapper
