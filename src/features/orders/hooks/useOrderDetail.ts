@@ -84,13 +84,12 @@ export function useOrderDetail(orderId: string) {
     const fetchProductReviews = async () => {
       const reviews: Record<string, { rating: number; comment?: string }> = {};
       for (const item of order.products) {
+        const pid = item.productId?._id ?? (typeof item.productId === "string" ? item.productId : null);
+        if (!pid) continue;
         try {
-          const res = await ProductReviewService.getByOrderAndProduct(
-            orderId,
-            item.productId._id,
-          );
+          const res = await ProductReviewService.getByOrderAndProduct(orderId, pid);
           if (res?.review) {
-            reviews[item.productId._id] = {
+            reviews[String(pid)] = {
               rating: res.review.rating,
               comment: res.review.comment,
             };

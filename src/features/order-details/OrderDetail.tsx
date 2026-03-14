@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useOrderDetail } from "./hooks/useOrderDetail";
 import { OrderDetailView } from "./components/OrderDetailView";
 
@@ -26,7 +27,7 @@ export default function OrderDetail({ orderId, autoOpenRefund, autoOpenReview }:
   if (!state.order) return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4">
       <p className="text-neutral-500">Không tìm thấy đơn hàng hoặc bạn không có quyền xem.</p>
-      <a href="/orders" className="px-4 py-2 rounded-xl bg-foreground text-background text-sm">Về danh sách đơn hàng</a>
+      <Link href="/orders" className="px-4 py-2 rounded-xl bg-foreground text-background text-sm">Về danh sách đơn hàng</Link>
     </div>
   );
 
@@ -74,6 +75,8 @@ export default function OrderDetail({ orderId, autoOpenRefund, autoOpenReview }:
       handleOpenProductReview={state.handleOpenProductReview}
       handleSubmitProductReview={state.handleSubmitProductReview}
       handleSubmitBankInfo={state.handleSubmitBankInfo}
+      handleEscalateToAdmin={state.handleEscalateToAdmin}
+      isEscalatingToAdmin={state.isEscalatingToAdmin}
       isSubmittingBankInfo={state.isSubmittingBankInfo}
       bankName={state.bankName}
       setBankName={state.setBankName}

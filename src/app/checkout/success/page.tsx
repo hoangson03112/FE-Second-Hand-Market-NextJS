@@ -30,6 +30,13 @@ const ORDER_PROGRESS_STEPS = [
   { key: "completed", label: "Hoàn tất", shortLabel: "Hoàn tất" },
 ];
 
+const LOCAL_PICKUP_PROGRESS_STEPS = [
+  { key: "pending", label: "Chờ xác nhận", shortLabel: "Chờ xác nhận" },
+  { key: "confirmed", label: "Đã xác nhận", shortLabel: "Đã xác nhận" },
+  { key: "delivered", label: "Đã giao hàng", shortLabel: "Đã giao" },
+  { key: "completed", label: "Hoàn tất", shortLabel: "Hoàn tất" },
+];
+
 const FAILED_STATUSES: Record<string, string> = {
   failed: "Đơn hàng giao thất bại",
   returned: "Đơn hàng đã hoàn trả",
@@ -71,7 +78,9 @@ function CheckoutSuccessContent() {
     .filter(Boolean)
     .join(", ");
 
-  const currentStepIndex = ORDER_PROGRESS_STEPS.findIndex(
+  const isLocalPickup = order.shippingMethod === "local_pickup";
+  const progressSteps = isLocalPickup ? LOCAL_PICKUP_PROGRESS_STEPS : ORDER_PROGRESS_STEPS;
+  const currentStepIndex = progressSteps.findIndex(
     (step) => step.key === order.status
   );
   const effectiveStepIndex = currentStepIndex >= 0 ? currentStepIndex : 0;
@@ -131,7 +140,7 @@ function CheckoutSuccessContent() {
         <div className="bg-cream-50 border border-border rounded-2xl p-4 sm:p-5">
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">Tiến trình đơn hàng</p>
           <div className="flex items-center overflow-x-auto pb-1">
-            {ORDER_PROGRESS_STEPS.map((step, i) => {
+            {progressSteps.map((step, i) => {
               const isDone = i < effectiveStepIndex;
               const isActive = i === effectiveStepIndex;
               return (
@@ -164,7 +173,7 @@ function CheckoutSuccessContent() {
                       {step.shortLabel}
                     </span>
                   </div>
-                  {i < ORDER_PROGRESS_STEPS.length - 1 && (
+                  {i < progressSteps.length - 1 && (
                     <div className={`flex-1 h-0.5 mb-5 mx-1 ${i < effectiveStepIndex ? "bg-primary/50" : "bg-border"}`} />
                   )}
                 </div>
@@ -172,7 +181,7 @@ function CheckoutSuccessContent() {
             })}
           </div>
           <p className="mt-3 text-xs text-muted-foreground">
-            Trạng thái hiện tại: <span className="font-semibold text-foreground">{ORDER_PROGRESS_STEPS[effectiveStepIndex]?.label || "Đang xử lý"}</span>
+            Trạng thái hiện tại: <span className="font-semibold text-foreground">{progressSteps[effectiveStepIndex]?.label || "Đang xử lý"}</span>
           </p>
           {isTerminalFailed && (
             <p className="mt-2 text-xs font-medium text-destructive">
@@ -232,7 +241,7 @@ function CheckoutSuccessContent() {
                 </div>
                 <div className="flex justify-between text-sm text-muted-foreground">
                   <span>Phí vận chuyển</span>
-                  <span>{formatPrice(order.shippingFee ?? 0)}</span>
+                  <span>{isLocalPickup ? "Miễn phí" : formatPrice(order.shippingFee ?? 0)}</span>
                 </div>
                 <div className="flex justify-between text-base font-semibold text-foreground pt-2 border-t border-border mt-2">
                   <span>Tổng cộng</span>
@@ -265,10 +274,20 @@ function CheckoutSuccessContent() {
                 <div className="flex items-start gap-3 p-4 sm:p-5">
                   <IconMapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                   <div>
-                    <p className="text-xs text-muted-foreground mb-0.5">Giao đến</p>
-                    <p className="text-sm font-semibold text-foreground">{addr?.fullName}</p>
-                    <p className="text-sm text-muted-foreground">{addr?.phoneNumber}</p>
-                    {fullAddress && <p className="text-xs text-muted-foreground mt-0.5">{fullAddress}</p>}
+                      <p className="text-xs text-muted-foreground mb-0.5">
+                        {isLocalPickup ? "Thông tin liên hệ" : "Giao đến"}
+                      </p>
+                      {isLocalPickup ? (
+                        <p className="text-sm text-muted-foreground">
+                          Người bán và người mua tự thỏa thuận địa điểm gặp mặt
+                        </p>
+                      ) : (
+                        <>
+                          <p className="text-sm font-semibold text-foreground">{addr?.fullName}</p>
+                          <p className="text-sm text-muted-foreground">{addr?.phoneNumber}</p>
+                          {fullAddress && <p className="text-xs text-muted-foreground mt-0.5">{fullAddress}</p>}
+                        </>
+                      )}
                   </div>
                 </div>
                 <div className="flex items-center gap-3 p-4 sm:p-5">
@@ -276,7 +295,11 @@ function CheckoutSuccessContent() {
                   <div>
                     <p className="text-xs text-muted-foreground mb-0.5">Thanh toán</p>
                     <p className="text-sm font-medium text-foreground">
-                      {order.paymentMethod === "cod" ? "Thanh toán khi nhận hàng (COD)" : "Chuyển khoản ngân hàng"}
+                      {order.paymentMethod === "bank_transfer"
+                        ? "Chuyển khoản ngân hàng"
+                        : isLocalPickup
+                          ? "Thanh toán khi gặp mặt"
+                          : "Thanh toán khi nhận hàng (COD)"}
                     </p>
                   </div>
                 </div>

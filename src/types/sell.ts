@@ -16,6 +16,7 @@ export type SellFormValues = {
   images: File[];
   video: File | null;
   attributes: ProductAttribute[];
+  
 };
 
 export type DeliveryOptions = {
@@ -44,16 +45,7 @@ export interface IProductWithMediaAndIds extends IProduct {
     phoneNumber?: string;
   } | null;
 
-  /** Hình thức giao hàng */
-  deliveryOptions?: {
-    localPickup?: boolean;
-    codShipping?: boolean;
-  } | null;
 
-  /**
-   * Backend có thể trả thêm field `video` khi lấy chi tiết sản phẩm.
-   * Không dùng mọi nơi nên tách riêng type này cho màn hình Sell/Edit.
-   */
   video?: {
     url?: string | null;
   } | null;

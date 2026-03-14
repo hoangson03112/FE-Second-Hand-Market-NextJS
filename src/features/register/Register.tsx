@@ -32,10 +32,10 @@ export default function Register() {
     handleSubmit,
   } = useRegister();
 
-  // Nếu đã đăng nhập thì redirect
+  // Nếu đã đăng nhập thì redirect về trang Home
   useEffect(() => {
     if (account) {
-      router.replace("/my/listings");
+      router.replace("/");
     }
   }, [account, router]);
 

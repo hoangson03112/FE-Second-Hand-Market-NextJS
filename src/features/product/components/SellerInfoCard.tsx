@@ -4,21 +4,26 @@ import { IconUser, IconStar, IconTruck, IconMapPin, IconClock } from "@tabler/ic
 import { ISeller } from "@/types/product";
 import Image from "next/image";
 import { getProvinceName } from "@/utils";
+import { getMonthYear } from "@/utils/date";
 
 interface SellerInfoCardProps {
   seller: ISeller;
   onContactSeller: () => void;
+  location: string;
 }
 
 export default function SellerInfoCard({
   seller,
   onContactSeller,
+  location,
+  
 }: SellerInfoCardProps) {
-  const provinceDisplay = getProvinceName(seller?.from_province_id);
+  const provinceDisplay = getProvinceName(location);
 
-  const joinedYear = seller?.createdAt
-    ? new Date(seller.createdAt).getFullYear().toString()
-    : "2023";
+   
+  const joinedMonthYear = getMonthYear(seller?.createdAt);
+    
+  const totalActiveProducts = seller?.totalActiveProducts ?? 0;
   return (
     <div className="bg-gradient-to-br from-cream-50 to-taupe-50/50 p-5 mb-3 border-2 border-border rounded-2xl shadow-md">
       <h3 className="font-medium text-taupe-900 mb-4 text-sm uppercase tracking-[0.1em]">
@@ -58,8 +63,9 @@ export default function SellerInfoCard({
             )}
             <div className="flex items-center gap-2 text-sm text-taupe-600">
               <IconTruck className="h-3.5 w-3.5" />
-              <span>{seller?.totalProducts || 1} sản phẩm</span>
+              <span>{totalActiveProducts} sản phẩm đang bán</span>
             </div>
+
             {provinceDisplay && (
               <div className="flex items-center gap-2 text-sm text-taupe-600">
                 <IconMapPin className="h-3.5 w-3.5" />
@@ -68,7 +74,7 @@ export default function SellerInfoCard({
             )}
             <div className="flex items-center gap-2 text-sm text-taupe-600">
               <IconClock className="h-3.5 w-3.5" />
-              <span>Tham gia {joinedYear}</span>
+              <span>Tham gia {joinedMonthYear}</span>
             </div>
           </div>
         </div>

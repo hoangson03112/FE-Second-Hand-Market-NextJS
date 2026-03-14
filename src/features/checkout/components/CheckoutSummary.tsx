@@ -27,6 +27,7 @@ export default function CheckoutSummary({
 }: CheckoutSummaryProps) {
   const total = subtotal + shipping - discount;
   const isMultiSeller = sellerGroups.length > 1;
+  const allLocalPickup = sellerGroups.length > 0 && sellerGroups.every((g) => g.isLocalPickup);
 
   return (
     <div className="p-5 space-y-3">
@@ -49,7 +50,7 @@ export default function CheckoutSummary({
                 </div>
                 <div className="flex justify-between text-gray-500">
                   <span>Vận chuyển</span>
-                  <span>{group.shippingFee > 0 ? formatPrice(group.shippingFee) : "—"}</span>
+                  <span>{group.isLocalPickup ? "Miễn phí" : (group.shippingFee > 0 ? formatPrice(group.shippingFee) : "—")}</span>
                 </div>
                 <div className="flex items-center justify-between text-gray-500">
                   <span>Thanh toán</span>
@@ -72,7 +73,7 @@ export default function CheckoutSummary({
         <div className="flex justify-between text-sm">
           <span className="text-gray-600">Phí vận chuyển</span>
           <span className="text-gray-900">
-            {shipping === 0 ? "Đang tính..." : formatPrice(shipping)}
+            {allLocalPickup ? "Miễn phí" : (shipping === 0 ? "Đang tính..." : formatPrice(shipping))}
           </span>
         </div>
         {discount > 0 && (

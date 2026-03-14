@@ -10,6 +10,7 @@ import {
   IconEye,
 } from "@tabler/icons-react";
 import { CancelOrderReasonDialog } from "@/components/ui/CancelOrderReasonDialog";
+import { getShippingMethodType } from "@/utils/format";
 import type { Order } from "@/types/order";
 
 interface OrderActionsProps {
@@ -31,6 +32,7 @@ export default function OrderActions({
 }: OrderActionsProps) {
   const isUpdating = updatingId === order._id;
   const [cancelOpen, setCancelOpen] = useState(false);
+  const isLocalPickup = getShippingMethodType(order.shippingMethod) === "local_pickup";
 
   // ── Chờ xác nhận ──────────────────────────────────────────────────────────
   if (order.status === "pending") {
@@ -74,13 +76,16 @@ export default function OrderActions({
 
   // ── Đang vận chuyển ───────────────────────────────────────────────────────
   if (["confirmed", "picked_up", "shipping", "out_for_delivery"].includes(order.status)) {
+    const label = isLocalPickup
+      ? order.status === "confirmed"
+        ? "Đã xác nhận • Liên hệ người mua để sắp xếp giao hàng"
+        : "Đang chờ giao hàng trực tiếp"
+      : "Đơn hàng đang được GHN vận chuyển";
     return (
       <div className="px-3 pb-3">
         <div className="flex items-center gap-2 bg-muted border border-border rounded-xl px-3 py-2">
           <IconTruck className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-          <p className="text-[12px] font-medium text-foreground/70">
-            Đơn hàng đang được GHN vận chuyển
-          </p>
+          <p className="text-[12px] font-medium text-foreground/70">{label}</p>
         </div>
       </div>
     );

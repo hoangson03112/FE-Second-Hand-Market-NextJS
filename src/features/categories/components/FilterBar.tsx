@@ -3,42 +3,68 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { IProductFilters } from "@/types/product";
-import { ICategory } from "@/types/category";
+import type { Province } from "@/types/address";
+
+const SORT_OPTIONS = [
+  { value: "newest", label: "Mới nhất" },
+  { value: "price_low", label: "Giá tăng" },
+  { value: "price_high", label: "Giá giảm" },
+  { value: "popular", label: "Phổ biến" },
+] as const;
+
+const TRANSACTION_OPTIONS = [
+  { value: "meeting", label: "Gặp mặt" },
+  { value: "shipping", label: "Giao hàng" },
+] as const;
+
+const CONDITION_OPTIONS = [
+  { value: "new", label: "Mới" },
+  { value: "like_new", label: "Như mới" },
+  { value: "good", label: "Tốt" },
+  { value: "fair", label: "Khá" },
+  { value: "poor", label: "Cũ" },
+];
+
+const PRICE_PRESETS = [
+  { label: "< 100k", min: undefined, max: 100000 },
+  { label: "100k-500k", min: 100000, max: 500000 },
+  { label: "500k-1tr", min: 500000, max: 1000000 },
+  { label: "> 1tr", min: 1000000, max: undefined },
+];
 
 interface FilterBarProps {
   filters: IProductFilters;
   onFilterChange: (filters: IProductFilters) => void;
   totalProducts?: number;
-  categories?: ICategory[];
+  provinces?: Province[];
 }
 
-const SORT_OPTIONS = [
-  { value: "newest", label: "Mới nhất" },
-  { value: "price_low", label: "Giá thấp" },
-  { value: "price_high", label: "Giá cao" },
-  { value: "popular", label: "Phổ biến" },
-] as const;
-
-const CONDITION_OPTIONS = [
-  { value: "new", label: "Mới", emoji: "✨" },
-  { value: "like_new", label: "Như mới", emoji: "🌟" },
-  { value: "good", label: "Tốt", emoji: "👍" },
-  { value: "fair", label: "Khá", emoji: "🙂" },
-  { value: "poor", label: "Cũ", emoji: "🔧" },
-];
-
-const PRICE_PRESETS = [
-  { label: "Dưới 100k", min: undefined, max: 100000 },
-  { label: "100k – 500k", min: 100000, max: 500000 },
-  { label: "500k – 1tr", min: 500000, max: 1000000 },
-  { label: "Trên 1tr", min: 1000000, max: undefined },
-];
-
-export default function FilterBar({ filters, onFilterChange, totalProducts, categories }: FilterBarProps) {
+export default function FilterBar({
+  filters,
+  onFilterChange,
+  totalProducts,
+  provinces = [],
+}: FilterBarProps) {
   const [showFilters, setShowFilters] = useState(false);
 
   const handleSortChange = (sortBy: IProductFilters["sortBy"]) => {
     onFilterChange({ ...filters, sortBy });
+  };
+
+  const handleTransactionChange = (value: "meeting" | "shipping") => {
+    onFilterChange({
+      ...filters,
+      transactionMethod: filters.transactionMethod === value ? undefined : value,
+      page: 1,
+    });
+  };
+
+  const handleProvinceChange = (provinceId: string) => {
+    onFilterChange({
+      ...filters,
+      provinceId: provinceId === "" ? undefined : Number(provinceId),
+      page: 1,
+    });
   };
 
   const handlePriceRangeChange = (min?: number, max?: number) => {
@@ -53,23 +79,14 @@ export default function FilterBar({ filters, onFilterChange, totalProducts, cate
     });
   };
 
-  const handleCategoryChange = (slug: string) => {
-    onFilterChange({
-      ...filters,
-      categorySlug: slug === filters.categorySlug ? undefined : slug,
-      subCategorySlug: undefined,
-      page: 1,
-    });
-  };
-
   const clearFilters = () => {
     onFilterChange({
       ...filters,
       minPrice: undefined,
       maxPrice: undefined,
       condition: undefined,
-      categorySlug: undefined,
-      subCategorySlug: undefined,
+      transactionMethod: undefined,
+      provinceId: undefined,
       search: undefined,
       sortBy: "newest",
       page: 1,
@@ -79,7 +96,8 @@ export default function FilterBar({ filters, onFilterChange, totalProducts, cate
   const activeFilterCount = [
     filters.minPrice || filters.maxPrice,
     filters.condition,
-    filters.categorySlug,
+    filters.transactionMethod,
+    filters.provinceId != null,
     filters.search,
   ].filter(Boolean).length;
 
@@ -87,206 +105,210 @@ export default function FilterBar({ filters, onFilterChange, totalProducts, cate
     (p) => p.min === filters.minPrice && p.max === filters.maxPrice
   );
 
+  const selectedProvince = provinces.find(
+    (p) => String(p.ProvinceID) === String(filters.provinceId)
+  );
+
   return (
-    <div className="bg-white/90 backdrop-blur-md border-b border-taupe-200/70 shadow-sm sticky top-28 z-40">
-      {/* Main bar */}
+    <div
+      className="sticky top-[60px] z-[45] border-b border-taupe-100 bg-white"
+      style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-3 py-3 overflow-x-auto scrollbar-none">
+        <div className="flex items-center gap-4 py-3 overflow-x-auto">
+          {/* Province - compact */}
+          {provinces.length > 0 && (
+            <select
+              value={filters.provinceId != null ? String(filters.provinceId) : ""}
+              onChange={(e) => handleProvinceChange(e.target.value)}
+              className="h-9 min-w-[120px] pl-3 pr-8 rounded-full text-sm bg-taupe-50 text-taupe-700 border-0 appearance-none cursor-pointer hover:bg-taupe-100 transition-colors bg-no-repeat bg-[length:12px] bg-[right_10px_center]"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
+              }}
+            >
+              <option value="">Tỉnh thành</option>
+              {provinces.map((p) => (
+                <option key={p.ProvinceID} value={p.ProvinceID}>
+                  {p.ProvinceName}
+                </option>
+              ))}
+            </select>
+          )}
+
+          {/* Transaction pills */}
+          <div className="flex gap-1 shrink-0">
+            {TRANSACTION_OPTIONS.map((opt) => {
+              const isActive = filters.transactionMethod === opt.value;
+              return (
+                <button
+                  key={opt.value}
+                  onClick={() => handleTransactionChange(opt.value)}
+                  className={cn(
+                    "h-9 px-4 rounded-full text-sm font-medium whitespace-nowrap transition-colors",
+                    isActive
+                      ? "bg-[#1A1714] text-white"
+                      : "bg-taupe-50 text-taupe-600 hover:bg-taupe-100"
+                  )}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Sort pills */}
+          <div className="flex gap-1 shrink-0">
+            {SORT_OPTIONS.map((opt) => {
+              const isActive = filters.sortBy === opt.value;
+              return (
+                <button
+                  key={opt.value}
+                  onClick={() => handleSortChange(opt.value as IProductFilters["sortBy"])}
+                  className={cn(
+                    "h-9 px-4 rounded-full text-sm font-medium whitespace-nowrap transition-colors",
+                    isActive
+                      ? "bg-[#1A1714] text-white"
+                      : "bg-taupe-50 text-taupe-600 hover:bg-taupe-100"
+                  )}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
+          </div>
 
           {/* Filter toggle */}
           <button
             onClick={() => setShowFilters(!showFilters)}
             className={cn(
-              "shrink-0 h-9 px-3.5 rounded-xl border-2 text-sm font-semibold flex items-center gap-2 transition-all duration-200",
+              "h-9 px-4 rounded-full text-sm font-medium flex items-center gap-1.5 shrink-0 transition-colors",
               showFilters || activeFilterCount > 0
-                ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                : "border-border bg-card text-muted-foreground hover:border-primary/60 hover:text-primary"
+                ? "bg-[#1A1714] text-white"
+                : "bg-taupe-50 text-taupe-600 hover:bg-taupe-100"
             )}
           >
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-            </svg>
             Lọc
             {activeFilterCount > 0 && (
-              <span className="w-4 h-4 rounded-full bg-white/30 text-[10px] font-black flex items-center justify-center">
+              <span className="w-4 h-4 rounded-full bg-white/25 flex items-center justify-center text-[10px] font-bold">
                 {activeFilterCount}
               </span>
             )}
           </button>
 
-          <div className="w-px h-5 bg-taupe-200 shrink-0" />
+          <div className="flex-1 min-w-4" />
 
-          {/* Sort chips */}
-          {SORT_OPTIONS.map((opt) => (
+          {activeFilterCount > 0 && (
             <button
-              key={opt.value}
-              onClick={() => handleSortChange(opt.value as IProductFilters["sortBy"])}
-              className={cn(
-                "shrink-0 h-9 px-3.5 rounded-xl border text-sm font-medium transition-all duration-200",
-                filters.sortBy === opt.value
-                  ? "border-primary bg-primary/15 text-foreground font-semibold"
-                  : "border-border bg-card text-muted-foreground hover:border-border/60 hover:text-foreground"
-              )}
+              onClick={clearFilters}
+              className="text-sm text-taupe-400 hover:text-taupe-700 shrink-0"
             >
-              {opt.label}
+              Xóa lọc
             </button>
-          ))}
-
-          <div className="ml-auto shrink-0 flex items-center gap-3">
-            {activeFilterCount > 0 && (
-              <button
-                onClick={clearFilters}
-                className="h-9 px-3 rounded-xl text-sm text-taupe-500 hover:text-primary hover:bg-primary/5 transition-all duration-200 flex items-center gap-1.5 font-medium"
-              >
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                Xóa lọc
-              </button>
-            )}
-            {totalProducts !== undefined && (
-              <span className="text-sm text-taupe-400 font-medium whitespace-nowrap">
-                <span className="text-taupe-700 font-bold">{totalProducts.toLocaleString()}</span> sản phẩm
-              </span>
-            )}
-          </div>
+          )}
+          {totalProducts !== undefined && (
+            <span className="text-sm text-taupe-400 shrink-0">
+              <span className="font-semibold text-taupe-700">{totalProducts.toLocaleString()}</span> SP
+            </span>
+          )}
         </div>
 
-        {/* Active filter tags */}
+        {/* Active tags - minimal */}
         {activeFilterCount > 0 && (
-          <div className="flex items-center gap-2 pb-2.5 overflow-x-auto scrollbar-none">
-            <span className="text-xs text-taupe-400 shrink-0">Đang lọc:</span>
+          <div className="flex flex-wrap gap-2 pb-2">
             {filters.search && (
-              <span className="shrink-0 h-6 px-2.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold flex items-center gap-1">
-                🔍 {filters.search}
-                <button onClick={() => onFilterChange({ ...filters, search: undefined, page: 1 })} className="ml-1 opacity-60 hover:opacity-100">✕</button>
+              <span className="inline-flex items-center gap-1 h-6 pl-2.5 pr-1.5 rounded-full bg-taupe-100 text-taupe-700 text-xs">
+                {filters.search}
+                <button onClick={() => onFilterChange({ ...filters, search: undefined, page: 1 })} className="hover:bg-taupe-200 rounded-full p-0.5">×</button>
               </span>
             )}
-            {filters.categorySlug && (
-              <span className="shrink-0 h-6 px-2.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold flex items-center gap-1">
-                📂 {categories?.find(c => c.slug === filters.categorySlug)?.name || filters.categorySlug}
-                <button onClick={() => handleCategoryChange(filters.categorySlug!)} className="ml-1 opacity-60 hover:opacity-100">✕</button>
+            {selectedProvince && (
+              <span className="inline-flex items-center gap-1 h-6 pl-2.5 pr-1.5 rounded-full bg-taupe-100 text-taupe-700 text-xs">
+                {selectedProvince.ProvinceName}
+                <button onClick={() => handleProvinceChange("")} className="hover:bg-taupe-200 rounded-full p-0.5">×</button>
+              </span>
+            )}
+            {filters.transactionMethod && (
+              <span className="inline-flex items-center gap-1 h-6 pl-2.5 pr-1.5 rounded-full bg-taupe-100 text-taupe-700 text-xs">
+                {TRANSACTION_OPTIONS.find((o) => o.value === filters.transactionMethod)?.label}
+                <button onClick={() => handleTransactionChange(filters.transactionMethod!)} className="hover:bg-taupe-200 rounded-full p-0.5">×</button>
               </span>
             )}
             {filters.condition && (
-              <span className="shrink-0 h-6 px-2.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold flex items-center gap-1">
-                {CONDITION_OPTIONS.find(c => c.value === filters.condition)?.emoji}{" "}
-                {CONDITION_OPTIONS.find(c => c.value === filters.condition)?.label}
-                <button onClick={() => handleConditionChange(filters.condition!)} className="ml-1 opacity-60 hover:opacity-100">✕</button>
+              <span className="inline-flex items-center gap-1 h-6 pl-2.5 pr-1.5 rounded-full bg-taupe-100 text-taupe-700 text-xs">
+                {CONDITION_OPTIONS.find((c) => c.value === filters.condition)?.label}
+                <button onClick={() => handleConditionChange(filters.condition!)} className="hover:bg-taupe-200 rounded-full p-0.5">×</button>
               </span>
             )}
             {(filters.minPrice || filters.maxPrice) && (
-              <span className="shrink-0 h-6 px-2.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold flex items-center gap-1">
-                {activePricePreset
-                  ? activePricePreset.label
-                  : `${filters.minPrice ? (filters.minPrice / 1000).toFixed(0) + "k" : "0"} – ${filters.maxPrice ? (filters.maxPrice / 1000).toFixed(0) + "k" : "∞"}`}
-                <button onClick={() => handlePriceRangeChange(undefined, undefined)} className="ml-1 opacity-60 hover:opacity-100">✕</button>
+              <span className="inline-flex items-center gap-1 h-6 pl-2.5 pr-1.5 rounded-full bg-taupe-100 text-taupe-700 text-xs">
+                {activePricePreset?.label ?? `${filters.minPrice ? (filters.minPrice / 1000).toFixed(0) + "k" : "0"}-${filters.maxPrice ? (filters.maxPrice / 1000).toFixed(0) + "k" : "∞"}`}
+                <button onClick={() => handlePriceRangeChange(undefined, undefined)} className="hover:bg-taupe-200 rounded-full p-0.5">×</button>
               </span>
             )}
           </div>
         )}
-      </div>
 
-      {/* Expanded filter panel */}
-      {showFilters && (
-        <div className="border-t border-taupe-100 bg-gradient-to-b from-taupe-50/60 to-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-5 grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            {/* Categories — only shown when prop is provided */}
-            {categories && categories.length > 0 && (
-              <div className="md:col-span-2">
-                <p className="text-[11px] font-black uppercase tracking-[0.15em] text-taupe-400 mb-3">Danh mục</p>
-                <div className="flex flex-wrap gap-2">
-                  {categories.map((cat) => (
-                    <button
-                      key={cat._id}
-                      onClick={() => handleCategoryChange(cat.slug)}
-                      className={cn(
-                        "h-8 px-3.5 rounded-xl text-xs font-semibold border-2 transition-all duration-200",
-                        filters.categorySlug === cat.slug
-                          ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                          : "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-primary hover:bg-primary/5"
-                      )}
-                    >
-                      {cat.name}
-                    </button>
-                  ))}
+        {/* Expandable */}
+        {showFilters && (
+          <div className="pb-4 pt-2 border-t border-taupe-100">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <p className="text-xs font-medium text-taupe-500 mb-2">Khoảng giá</p>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {PRICE_PRESETS.map((preset) => {
+                    const isActive = preset.min === filters.minPrice && preset.max === filters.maxPrice;
+                    return (
+                      <button
+                        key={preset.label}
+                        onClick={() => handlePriceRangeChange(isActive ? undefined : preset.min, isActive ? undefined : preset.max)}
+                        className={cn(
+                          "h-8 px-3 rounded-full text-xs font-medium transition-colors",
+                          isActive ? "bg-[#1A1714] text-white" : "bg-taupe-50 text-taupe-600 hover:bg-taupe-100"
+                        )}
+                      >
+                        {preset.label}
+                      </button>
+                    );
+                  })}
                 </div>
-              </div>
-            )}
-
-            {/* Price */}
-            <div>
-              <p className="text-[11px] font-black uppercase tracking-[0.15em] text-taupe-400 mb-3">Khoảng giá</p>
-              {/* Quick presets */}
-              <div className="flex flex-wrap gap-2 mb-3">
-                {PRICE_PRESETS.map((preset) => {
-                  const isActive = preset.min === filters.minPrice && preset.max === filters.maxPrice;
-                  return (
-                    <button
-                      key={preset.label}
-                      onClick={() => handlePriceRangeChange(isActive ? undefined : preset.min, isActive ? undefined : preset.max)}
-                      className={cn(
-                        "h-8 px-3 rounded-lg text-xs font-semibold border transition-all duration-200",
-                        isActive
-                          ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                          : "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-primary hover:bg-primary/5"
-                      )}
-                    >
-                      {preset.label}
-                    </button>
-                  );
-                })}
-              </div>
-              {/* Custom range */}
-              <div className="flex items-center gap-2">
-                <div className="relative flex-1">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   <input
                     type="number"
                     placeholder="Từ (đ)"
                     value={filters.minPrice || ""}
                     onChange={(e) => handlePriceRangeChange(e.target.value ? Number(e.target.value) : undefined, filters.maxPrice)}
-                    className="w-full h-9 pl-3 pr-3 rounded-xl border-2 border-taupe-200 focus:border-primary focus:outline-none text-sm text-taupe-700 bg-white placeholder:text-taupe-300"
+                    className="w-full min-w-0 h-8 px-3 rounded-full text-sm bg-taupe-50 border-0 focus:ring-2 focus:ring-taupe-200"
                   />
-                </div>
-                <span className="text-taupe-300 font-light">—</span>
-                <div className="relative flex-1">
                   <input
                     type="number"
                     placeholder="Đến (đ)"
                     value={filters.maxPrice || ""}
                     onChange={(e) => handlePriceRangeChange(filters.minPrice, e.target.value ? Number(e.target.value) : undefined)}
-                    className="w-full h-9 pl-3 pr-3 rounded-xl border-2 border-taupe-200 focus:border-primary focus:outline-none text-sm text-taupe-700 bg-white placeholder:text-taupe-300"
+                    className="w-full min-w-0 h-8 px-3 rounded-full text-sm bg-taupe-50 border-0 focus:ring-2 focus:ring-taupe-200"
                   />
                 </div>
               </div>
-            </div>
-
-            {/* Condition */}
-            <div>
-              <p className="text-[11px] font-black uppercase tracking-[0.15em] text-taupe-400 mb-3">Tình trạng sản phẩm</p>
-              <div className="flex flex-wrap gap-2">
-                {CONDITION_OPTIONS.map(({ value, label, emoji }) => (
-                  <button
-                    key={value}
-                    onClick={() => handleConditionChange(value)}
-                    className={cn(
-                      "h-9 px-4 rounded-xl text-sm font-semibold border-2 transition-all duration-200 flex items-center gap-1.5",
-                      filters.condition === value
-                        ? "border-primary bg-primary text-primary-foreground shadow-sm scale-[1.02]"
-                        : "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-primary hover:bg-primary/5"
-                    )}
-                  >
-                    <span>{emoji}</span>
-                    {label}
-                  </button>
-                ))}
+              <div>
+                <p className="text-xs font-medium text-taupe-500 mb-2">Tình trạng</p>
+                <div className="flex flex-wrap gap-2">
+                  {CONDITION_OPTIONS.map(({ value, label }) => (
+                    <button
+                      key={value}
+                      onClick={() => handleConditionChange(value)}
+                      className={cn(
+                        "h-8 px-3 rounded-full text-xs font-medium transition-colors",
+                        filters.condition === value ? "bg-[#1A1714] text-white" : "bg-taupe-50 text-taupe-600 hover:bg-taupe-100"
+                      )}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

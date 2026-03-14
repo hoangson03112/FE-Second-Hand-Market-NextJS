@@ -1,4 +1,4 @@
-﻿import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCheckoutStore, CheckoutItem } from "@/store/useCheckoutStore";
 import { useUser } from "@/hooks/useUser";
@@ -20,6 +20,10 @@ export interface SellerGroup {
   shippingInfo: ShippingServiceOption | null;
   subtotal: number;
   shippingFee: number;
+  isLocalPickup: boolean;
+  canLocalPickup: boolean;
+  canCodShipping: boolean;
+  hasBothOptions: boolean;
 }
 
 interface ShippingData {
@@ -45,12 +49,23 @@ function groupCheckoutItemsBySeller(
   return map;
 }
 
+/** Nhóm có thể giao COD khi TẤT CẢ sản phẩm hỗ trợ codShipping */
+function canGroupCodShip(items: CheckoutItem[]): boolean {
+  return items.every((item) => item.product.deliveryOptions?.codShipping === true);
+}
+
+/** Nhóm có thể giao trực tiếp khi TẤT CẢ sản phẩm hỗ trợ localPickup */
+function canGroupLocalPickup(items: CheckoutItem[]): boolean {
+  return items.every((item) => item.product.deliveryOptions?.localPickup !== false);
+}
+
 export function useCheckout() {
   const router = useRouter();
   const { items: checkoutItems, clearCheckout } = useCheckoutStore();
   const { data: account } = useUser();
   const { removeItems } = useCart();
   const [paymentMethods, setPaymentMethods] = useState<Record<string, PaymentMethodType>>({});
+  const [deliveryMethodBySeller, setDeliveryMethodBySeller] = useState<Record<string, "local_pickup" | "cod_shipping">>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [shippingData, setShippingData] = useState<ShippingData | null>(null);
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
@@ -71,20 +86,44 @@ export function useCheckout() {
     return result;
   }, [checkoutItems]);
 
-  // Reset bank_transfer selection for sellers where it's not available
+  /** Trả về method đã chọn, fallback theo capability */
+  const resolveDeliveryMethod = useCallback(
+    (sellerId: string, canCod: boolean, canPickup: boolean): "local_pickup" | "cod_shipping" => {
+      if (deliveryMethodBySeller[sellerId]) return deliveryMethodBySeller[sellerId];
+      if (canCod && canPickup) return "cod_shipping"; // default khi có cả 2
+      if (!canPickup) return "cod_shipping";
+      return "local_pickup";
+    },
+    [deliveryMethodBySeller]
+  );
+
+  // Reset bank_transfer when not available or when delivery is local_pickup (gặp mặt trực tiếp)
+  const effectiveDeliveryBySeller = useMemo(() => {
+    const groups = groupCheckoutItemsBySeller(checkoutItems);
+    const out: Record<string, "local_pickup" | "cod_shipping"> = {};
+    for (const [sid, items] of groups) {
+      const canCod = canGroupCodShip(items);
+      const canPickup = canGroupLocalPickup(items);
+      out[sid] = resolveDeliveryMethod(sid, canCod, canPickup);
+    }
+    return out;
+  }, [checkoutItems, resolveDeliveryMethod]);
+
   useEffect(() => {
     setPaymentMethods((prev) => {
       const next = { ...prev };
       let changed = false;
       for (const [sid, available] of Object.entries(isBankTransferAvailableBySeller)) {
-        if (!available && prev[sid] === "bank_transfer") {
+        const isLocalPickup = effectiveDeliveryBySeller[sid] === "local_pickup";
+        const mustBeCod = !available || isLocalPickup;
+        if (mustBeCod && prev[sid] === "bank_transfer") {
           next[sid] = "cod";
           changed = true;
         }
       }
       return changed ? next : prev;
     });
-  }, [isBankTransferAvailableBySeller]);
+  }, [isBankTransferAvailableBySeller, effectiveDeliveryBySeller]);
 
   const setPaymentMethodForSeller = useCallback(
     (sellerId: string, method: PaymentMethodType) => {
@@ -96,6 +135,13 @@ export function useCheckout() {
   const getPaymentMethodForSeller = useCallback(
     (sellerId: string): PaymentMethodType => paymentMethods[sellerId] ?? "cod",
     [paymentMethods]
+  );
+
+  const setDeliveryMethodForSeller = useCallback(
+    (sellerId: string, method: "local_pickup" | "cod_shipping") => {
+      setDeliveryMethodBySeller((prev) => ({ ...prev, [sellerId]: method }));
+    },
+    []
   );
 
   const updateShippingFromAddress = useCallback(
@@ -131,6 +177,9 @@ export function useCheckout() {
         const bySeller: Record<string, ShippingServiceOption> = {};
 
         for (const [sellerId, sellerItems] of groups) {
+          // Chỉ tính GHN cho seller có thể ship COD
+          if (!canGroupCodShip(sellerItems)) continue;
+
           const firstProduct = sellerItems[0]?.product;
           const seller = firstProduct?.seller;
           const pickupAddress = firstProduct?.address;
@@ -189,9 +238,14 @@ export function useCheckout() {
     const groups = groupCheckoutItemsBySeller(checkoutItems);
     return Array.from(groups.entries()).map(([sellerId, items]) => {
       const seller = items[0]?.product?.seller;
+      const canCodShipping = canGroupCodShip(items);
+      const canLocalPickup = canGroupLocalPickup(items);
+      const hasBothOptions = canCodShipping && canLocalPickup;
+      const resolvedMethod = resolveDeliveryMethod(sellerId, canCodShipping, canLocalPickup);
+      const isLocalPickup = resolvedMethod === "local_pickup";
       const shippingInfo = shippingInfoBySeller[sellerId] ?? null;
       const subtotal = items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
-      const shippingFee = shippingInfo?.fee ?? 0;
+      const shippingFee = isLocalPickup ? 0 : (shippingInfo?.fee ?? 0);
       return {
         sellerId,
         sellerName: seller?.fullName ?? "Người bán",
@@ -200,21 +254,27 @@ export function useCheckout() {
         shippingInfo,
         subtotal,
         shippingFee,
+        isLocalPickup,
+        canLocalPickup,
+        canCodShipping,
+        hasBothOptions,
       };
     });
-  }, [checkoutItems, shippingInfoBySeller]);
+  }, [checkoutItems, shippingInfoBySeller, resolveDeliveryMethod]);
 
   const subtotal = sellerGroups.reduce((sum, g) => sum + g.subtotal, 0);
   const shipping = sellerGroups.reduce((sum, g) => sum + g.shippingFee, 0);
   const total = subtotal + shipping;
+  const allLocalPickup = sellerGroups.length > 0 && sellerGroups.every((g) => g.isLocalPickup);
 
   const handleCheckout = useCallback(async () => {
-    if (!shippingData || !selectedAddressId) {
+    if (!allLocalPickup && (!shippingData || !selectedAddressId)) {
       toast.error(CHECKOUT_MESSAGES.NO_ADDRESS);
       return;
     }
 
-    if (Object.keys(shippingInfoBySeller).length === 0) {
+    const hasGhnGroups = sellerGroups.some((g) => !g.isLocalPickup);
+    if (hasGhnGroups && Object.keys(shippingInfoBySeller).length === 0) {
       toast.error(CHECKOUT_MESSAGES.SHIPPING_LOADING);
       return;
     }
@@ -231,35 +291,51 @@ export function useCheckout() {
       const allOrderIds: string[] = [];
 
       for (const group of sellerGroups) {
-        const { sellerId, items: sellerItems, shippingInfo } = group;
-        if (!shippingInfo) {
-          throw new Error(`Thiếu phí vận chuyển cho người bán. Vui lòng chọn lại địa chỉ.`);
+        const { sellerId, items: sellerItems, shippingInfo, isLocalPickup } = group;
+        const payMethod = getPaymentMethodForSeller(sellerId);
+        let orderData: CreateOrderRequest;
+
+        if (isLocalPickup) {
+          orderData = {
+            products: sellerItems.map((item) => ({
+              productId: item.product._id,
+              quantity: item.quantity,
+            })),
+            totalAmount: group.subtotal,
+            shippingAddress: selectedAddressId ?? "",
+            shippingMethod: "local_pickup",
+            sellerId,
+            paymentMethod: payMethod,
+            shippingFee: 0,
+            totalShippingFee: 0,
+          };
+        } else {
+          if (!shippingInfo) {
+            throw new Error(`Thiếu phí vận chuyển cho người bán. Vui lòng chọn lại địa chỉ.`);
+          }
+          const groupTotal = group.subtotal + (shippingInfo.fee ?? 0);
+          orderData = {
+            products: sellerItems.map((item) => ({
+              productId: item.product._id,
+              quantity: item.quantity,
+            })),
+            totalAmount: groupTotal,
+            shippingAddress: selectedAddressId ?? "",
+            shippingMethod: `GHN - ${shippingInfo.short_name || "Chuẩn"}`,
+            sellerId,
+            paymentMethod: payMethod,
+            shippingFee: shippingInfo.shippingFee ?? shippingInfo.fee,
+            insuranceFee: shippingInfo.insuranceFee ?? 0,
+            codFee: shippingInfo.codFee ?? 0,
+            totalShippingFee: shippingInfo.totalShippingFee ?? shippingInfo.fee,
+            expectedDeliveryTime: shippingInfo.expectedDeliveryTime,
+          };
         }
 
-        const groupTotal = group.subtotal + (shippingInfo.fee ?? 0);
-        const method = getPaymentMethodForSeller(sellerId);
-
-        const orderData: CreateOrderRequest = {
-          products: sellerItems.map((item) => ({
-            productId: item.product._id,
-            quantity: item.quantity,
-          })),
-          totalAmount: groupTotal,
-          shippingAddress: selectedAddressId,
-          shippingMethod: `GHN - ${shippingInfo.short_name || "Chuẩn"}`,
-          sellerId,
-          paymentMethod: method,
-          shippingFee: shippingInfo.shippingFee ?? shippingInfo.fee,
-          insuranceFee: shippingInfo.insuranceFee ?? 0,
-          codFee: shippingInfo.codFee ?? 0,
-          totalShippingFee: shippingInfo.totalShippingFee ?? shippingInfo.fee,
-          expectedDeliveryTime: shippingInfo.expectedDeliveryTime,
-        };
-
-        logger.info("Creating order for seller", { sellerId, method, orderData });
+        logger.info("Creating order for seller", { sellerId, payMethod, orderData });
         const response = await OrderService.create(orderData);
         allOrderIds.push(response.order._id);
-        if (method === "bank_transfer") {
+        if (payMethod === "bank_transfer") {
           bankTransferOrderIds.push(response.order._id);
         }
       }
@@ -305,11 +381,14 @@ export function useCheckout() {
     subtotal,
     shipping,
     total,
+    allLocalPickup,
     isCalculatingShipping,
     shippingError,
     paymentMethods,
     setPaymentMethodForSeller,
     getPaymentMethodForSeller,
+    setDeliveryMethodForSeller,
+    deliveryMethodBySeller,
     isBankTransferAvailableBySeller,
     isSubmitting,
     shippingData,

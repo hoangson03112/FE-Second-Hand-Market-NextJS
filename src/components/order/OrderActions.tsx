@@ -91,6 +91,7 @@ export interface OrderActionsProps {
   role: "buyer" | "seller" | "admin";
   status: OrderStatus;
   orderId?: string;
+  isLocalPickup?: boolean;
   returnWindowExpiresAt?: string;
   cancelReason?: string;
   refundStatus?: string;
@@ -131,6 +132,7 @@ export function OrderActions({
   role,
   status,
   orderId,
+  isLocalPickup = false,
   returnWindowExpiresAt,
   cancelReason,
   refundStatus,
@@ -331,7 +333,7 @@ export function OrderActions({
       );
     }
 
-    /* refund_approved → GHN return created, buyer must drop off */
+    /* refund_approved → buyer must return item */
     if (status === "refund_approved") {
       return (
         <div className="bg-card rounded-2xl border border-blue-200 dark:border-blue-900/40 shadow-sm overflow-hidden">
@@ -343,11 +345,13 @@ export function OrderActions({
               </p>
             </div>
             <p className="text-xs text-blue-600 dark:text-blue-500 mt-1 ml-6">
-              Đến bưu cục GHN gần nhất và giao hàng theo vận đơn hoàn trả.
+              {isLocalPickup
+                ? "Liên hệ người bán để hẹn gặp mặt trả lại hàng trực tiếp."
+                : "Đến bưu cục GHN gần nhất và giao hàng theo vận đơn hoàn trả."}
             </p>
           </div>
           <div className="p-4 flex flex-col gap-2.5">
-            {onTrackReturnShipment && (
+            {!isLocalPickup && onTrackReturnShipment && (
               <ActionBtn
                 variant="primary"
                 icon={<IconTruck className="w-4 h-4" />}
@@ -522,8 +526,27 @@ export function OrderActions({
       );
     }
 
-    /* confirmed → create GHN order */
+    /* confirmed → create shipping or mark delivered directly */
     if (status === "confirmed") {
+      if (isLocalPickup) {
+        return (
+          <div className="bg-card rounded-2xl border border-border shadow-sm p-4 flex flex-col gap-2.5">
+            <div className="flex items-center gap-2 p-3 bg-emerald-50 rounded-xl border border-emerald-200">
+              <span className="text-base">🤝</span>
+              <p className="text-xs text-emerald-700">Liên hệ người mua để sắp xếp gặp mặt, sau đó xác nhận đã giao hàng tại trang chi tiết đơn.</p>
+            </div>
+            {onChatPartner && (
+              <ActionBtn
+                variant="outline"
+                icon={<IconMessage className="w-4 h-4" />}
+                onClick={onChatPartner}
+              >
+                Nhắn tin người mua
+              </ActionBtn>
+            )}
+          </div>
+        );
+      }
       return (
         <div className="bg-card rounded-2xl border border-border shadow-sm p-4 flex flex-col gap-2.5">
           <ActionBtn
@@ -660,10 +683,12 @@ export function OrderActions({
                             <h3 className="text-base font-semibold text-foreground">
                               Chấp thuận hoàn tiền?
                             </h3>
-                            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
                               Đơn #{shortId} sẽ chuyển sang &ldquo;Đang hoàn
-                              hàng&rdquo;. GHN return shipment sẽ được tạo tự
-                              động.
+                              hàng&rdquo;.{" "}
+                              {isLocalPickup
+                                ? "Người mua sẽ trực tiếp trả lại hàng cho bạn."
+                                : "GHN return shipment sẽ được tạo tự động."}
                             </p>
                           </div>
                         </div>

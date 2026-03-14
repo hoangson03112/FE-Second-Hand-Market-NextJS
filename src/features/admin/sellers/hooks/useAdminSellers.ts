@@ -73,6 +73,17 @@ export function useAdminSellers() {
     [updateStatusMutation, rejectReason]
   );
 
+  const handleBan = useCallback(
+    (seller: AdminSeller) => {
+      updateStatusMutation.mutate({
+        sellerId: seller._id,
+        status: "banned",
+        rejectedReason: rejectReason || undefined,
+      });
+    },
+    [updateStatusMutation, rejectReason]
+  );
+
   const sellers = data?.data ?? [];
   const pagination = data?.pagination;
   const statistics = data?.statistics;
@@ -105,6 +116,7 @@ export function useAdminSellers() {
     isUpdating: updateStatusMutation.isPending,
     handleApprove,
     handleReject,
+    handleBan,
     openSeller,
     closeSeller,
   };

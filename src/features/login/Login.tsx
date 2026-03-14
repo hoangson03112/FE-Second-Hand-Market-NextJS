@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import AuthLayout from "@/features/auth/AuthLayout";
 import BrandingSection from "@/features/auth/BrandingSection";
 import InputField from "@/features/auth/InputField";
@@ -24,12 +24,17 @@ export default function Login() {
   const { formData, errors, error, isLoading, handleChange, handleSubmit, handleGoogleLogin } =
     useLogin();
 
-  // Nếu đã đăng nhập thì không cho vào màn login nữa → chuyển sang trang sản phẩm đã đăng
+  // Nếu đã đăng nhập thì chuyển về trang trước đó (redirect) hoặc Home
+  const searchParams = useSearchParams();
   useEffect(() => {
     if (account) {
-      router.replace("/my/listings");
+      const redirect = searchParams.get("redirect");
+      const target = redirect && redirect.startsWith("/") && !redirect.startsWith("//")
+        ? redirect
+        : "/";
+      router.replace(target);
     }
-  }, [account, router]);
+  }, [account, router, searchParams]);
 
   if (account) {
     // Đang redirect, không render form login

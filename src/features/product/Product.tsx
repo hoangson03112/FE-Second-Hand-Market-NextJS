@@ -1,6 +1,6 @@
 "use client";
 
-import { IconArrowLeft } from "@tabler/icons-react";
+import { IconArrowLeft, IconTruck, IconMapPin } from "@tabler/icons-react";
 import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -142,6 +142,7 @@ export default function Product({ id }: ProductProps) {
 
             {product.seller && (
               <SellerInfoCard
+                location={product.address?.provinceId || ""}
                 seller={product.seller}
                 onContactSeller={handleContactSeller}
               />
@@ -169,6 +170,24 @@ export default function Product({ id }: ProductProps) {
             {(product.stock ?? 0) > 1 && (
               <div className="text-sm text-taupe-600 mb-3">
                 Còn {product.stock} sản phẩm
+              </div>
+            )}
+
+            {/* Delivery Options */}
+            {product.deliveryOptions && (
+              <div className="flex flex-wrap gap-2 mb-3">
+                {product.deliveryOptions.codShipping && (
+                  <div className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1.5 text-sm font-medium">
+                    <IconTruck className="h-4 w-4" />
+                    Giao hàng tận nơi (COD)
+                  </div>
+                )}
+                {product.deliveryOptions.localPickup && (
+                  <div className="inline-flex items-center gap-1.5 rounded-lg bg-green-50 text-green-700 border border-green-200 px-3 py-1.5 text-sm font-medium">
+                    <IconMapPin className="h-4 w-4" />
+                    Nhận hàng trực tiếp
+                  </div>
+                )}
               </div>
             )}
 

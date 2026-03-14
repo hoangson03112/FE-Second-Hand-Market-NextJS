@@ -34,6 +34,10 @@ export interface IProduct {
   likes?: number;
   avgRating?: number;
   totalReviews?: number;
+  deliveryOptions?: {
+    localPickup: boolean;
+    codShipping: boolean;
+  };
   address?: {
     _id?: string;
     provinceId?: string;
@@ -87,6 +91,7 @@ export interface ISeller {
   totalReviews?: number;
   avgRating?: number;
   totalProducts?: number;
+  totalActiveProducts?: number;
   stats?: {
     avgRating?: number;
     totalReviews?: number;
@@ -122,6 +127,10 @@ export interface IProductFilters {
   search?: string;
   page?: number;
   limit?: number;
+  /** Gặp mặt trực tiếp / Giao hàng */
+  transactionMethod?: "meeting" | "shipping";
+  /** GHN ProvinceID */
+  provinceId?: string | number;
 }
 
 export interface IProductListResponse {

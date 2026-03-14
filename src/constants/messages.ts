@@ -93,6 +93,8 @@ export const REVIEW_MESSAGES = {
 export const REFUND_MESSAGES = {
   REQUEST_SUCCESS: "Đã gửi yêu cầu hoàn tiền!",
   REQUEST_ERROR: "Không thể gửi yêu cầu hoàn tiền",
+  DISPUTE_ESCALATE_SUCCESS: "Đã gửi khiếu nại lên Admin. Quản trị viên sẽ xem xét và phản hồi.",
+  DISPUTE_ESCALATE_ERROR: "Không thể gửi khiếu nại. Vui lòng thử lại.",
 } as const;
 
 // ============================================================================

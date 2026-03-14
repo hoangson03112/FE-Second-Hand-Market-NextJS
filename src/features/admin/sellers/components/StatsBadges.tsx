@@ -3,6 +3,7 @@ interface StatsBadgesProps {
   pending: number;
   approved: number;
   rejected: number;
+  banned?: number;
 }
 
 export default function StatsBadges({
@@ -10,6 +11,7 @@ export default function StatsBadges({
   pending,
   approved,
   rejected,
+  banned = 0,
 }: StatsBadgesProps) {
   return (
     <div className="flex flex-wrap gap-2 text-sm">
@@ -25,6 +27,11 @@ export default function StatsBadges({
       <span className="rounded-lg bg-destructive/10 px-2 py-1 text-destructive dark:bg-destructive/20">
         Từ chối: {rejected}
       </span>
+      {banned > 0 && (
+        <span className="rounded-lg bg-muted px-2 py-1 text-muted-foreground">
+          Bị khóa: {banned}
+        </span>
+      )}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { IconMapPin, IconTruck } from "@tabler/icons-react";
 import { formatDateOnly } from "@/utils/format/date";
+import { formatShippingMethod } from "@/utils/format";
 import type { Order } from "@/types/order";
 
 interface OrderShippingCardProps {
@@ -25,7 +26,7 @@ export function OrderShippingCard({ order }: OrderShippingCardProps) {
       {order.shippingMethod && (
         <div className="mt-3 pt-3 border-t border-neutral-200 flex items-center gap-2 text-sm">
           <IconTruck className="w-4 h-4 text-neutral-500" />
-          <span className="text-neutral-600">{order.shippingMethod}</span>
+          <span className="text-neutral-600">{formatShippingMethod(order.shippingMethod)}</span>
           {order.expectedDeliveryTime && (
             <span className="text-neutral-500 ml-auto">{formatDateOnly(order.expectedDeliveryTime)}</span>
           )}
