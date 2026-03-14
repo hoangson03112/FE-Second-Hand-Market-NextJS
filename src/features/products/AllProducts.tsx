@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAllProducts } from "./hooks/useAllProducts";
-import { useCategories } from "@/hooks/useCategories";
+import { useProvinces } from "@/hooks/useGHNLocation";
 import AllProductsHeader from "./components/AllProductsHeader";
 import FilterBar from "@/features/categories/components/FilterBar";
 import FilterSidebar from "./components/FilterSidebar";
@@ -20,7 +20,7 @@ export default function AllProducts() {
     error,
   } = useAllProducts();
 
-  const { data: categories } = useCategories();
+  const { data: provinces = [] } = useProvinces();
 
   const [searchInput, setSearchInput] = useState(filters.search || "");
 
@@ -38,23 +38,23 @@ export default function AllProducts() {
         onSearchSubmit={handleSearchSubmit}
       />
 
-      {/* Sticky sort/filter-count bar (no category panel here) */}
       <FilterBar
         filters={filters}
         onFilterChange={setFilters}
         totalProducts={total}
+        provinces={provinces}
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex gap-6 items-start">
 
           {/* ── Left sidebar ── */}
-          <aside className="hidden lg:block w-56 xl:w-64 shrink-0 sticky top-28">
-            <div className="bg-white border border-taupe-200/80 rounded-2xl p-5 shadow-sm">
+          <aside className="hidden lg:block w-56 xl:w-64 shrink-0 sticky top-48">
+            <div className="rounded-2xl bg-white border border-taupe-100 p-5">
               <FilterSidebar
                 filters={filters}
                 onFilterChange={setFilters}
-                categories={categories}
+                provinces={provinces}
               />
             </div>
           </aside>

@@ -13,17 +13,21 @@ export function useAdminRefunds() {
     select: (d) => d.refunds ?? [],
   });
 
-  // Admin "approve" = finalize refund with wallet deduction (POST /orders/:id/complete-refund)
-  const approveMutation = useMutation({
-    mutationFn: ({ orderId }: { orderId: string }) =>
-      AdminService.approveRefund(orderId),
+  const approveDisputeMutation = useMutation({
+    mutationFn: ({ refundId, comment }: { refundId: string; comment?: string }) =>
+      AdminService.approveDispute(refundId, comment),
     onSuccess: () => qc.invalidateQueries({ queryKey: queryKeys.orders.refunds() }),
   });
 
-  // Admin "reject" = reject a disputed refund (PUT /refunds/:refundId/admin-handle)
-  const rejectMutation = useMutation({
+  const rejectDisputeMutation = useMutation({
     mutationFn: ({ refundId, adminNote }: { refundId: string; adminNote: string }) =>
       AdminService.rejectRefund(refundId, adminNote),
+    onSuccess: () => qc.invalidateQueries({ queryKey: queryKeys.orders.refunds() }),
+  });
+
+  const approveRefundMutation = useMutation({
+    mutationFn: ({ orderId }: { orderId: string }) =>
+      AdminService.approveRefund(orderId),
     onSuccess: () => qc.invalidateQueries({ queryKey: queryKeys.orders.refunds() }),
   });
 
@@ -31,9 +35,23 @@ export function useAdminRefunds() {
     refunds: data ?? [],
     isLoading,
     error,
-    approveRefund: approveMutation.mutateAsync,
-    rejectRefund: rejectMutation.mutateAsync,
-    isApproving: approveMutation.isPending,
-    isRejecting: rejectMutation.isPending,
+    approveDispute: approveDisputeMutation.mutateAsync,
+    rejectDispute: rejectDisputeMutation.mutateAsync,
+    approveRefund: approveRefundMutation.mutateAsync,
+    isApprovingDispute: approveDisputeMutation.isPending,
+    isRejectingDispute: rejectDisputeMutation.isPending,
+    isApprovingRefund: approveRefundMutation.isPending,
   };
+}
+
+export function useRefundDetail(refundId: string | null) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["refund-detail", refundId],
+    queryFn: async () => {
+      const res = await AdminService.getRefundDetail(refundId!);
+      return res;
+    },
+    enabled: !!refundId,
+  });
+  return { refund: data?.refund ?? null, isLoading };
 }

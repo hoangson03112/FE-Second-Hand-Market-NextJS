@@ -128,6 +128,29 @@ export function useSellerOrderDetail(orderId: string) {
     }
   };
 
+  // ── Seller marks local_pickup order as delivered ───────────────────────────
+  const handleMarkDelivered = async () => {
+    if (!order) return;
+    const ok = await confirm({
+      title: "Xác nhận đã giao hàng",
+      message: "Xác nhận người mua đã nhận hàng trực tiếp?",
+      confirmText: "Xác nhận",
+      cancelText: "Hủy",
+      variant: "info",
+    });
+    if (!ok) return;
+    setUpdatingStatus(true);
+    try {
+      await OrderService.updateSellerOrder(order._id, "delivered");
+      setOrder((prev) => prev ? { ...prev, status: "delivered" } : null);
+      toast.success("Đã cập nhật trạng thái giao hàng");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Không thể cập nhật trạng thái");
+    } finally {
+      setUpdatingStatus(false);
+    }
+  };
+
   return {
     router,
     account,
@@ -146,5 +169,6 @@ export function useSellerOrderDetail(orderId: string) {
     handleApproveRefund,
     handleRejectRefund,
     handleConfirmReturnReceived,
+    handleMarkDelivered,
   };
 }

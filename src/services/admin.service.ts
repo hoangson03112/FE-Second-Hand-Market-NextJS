@@ -38,13 +38,27 @@ export const AdminService = {
     page?: number;
     limit?: number;
     search?: string;
+    status?: "active" | "inactive" | "banned";
   }): Promise<{ accounts: AdminAccount[]; pagination: PaginationMeta }> => {
     const qs = new URLSearchParams();
     if (params?.page) qs.set("page", String(params.page));
     if (params?.limit) qs.set("limit", String(params.limit));
     if (params?.search?.trim()) qs.set("search", params.search.trim());
+    if (params?.status) qs.set("status", params.status);
     const res = await axiosClient.get(`/accounts/admin/list?${qs.toString()}`);
     return res as unknown as { accounts: AdminAccount[]; pagination: PaginationMeta };
+  },
+
+  updateAccountStatus: async (
+    accountId: string,
+    status: "active" | "banned",
+    reason?: string
+  ): Promise<{ message: string; account: AdminAccount }> => {
+    const res = await axiosClient.put(`/accounts/admin/${accountId}/status`, {
+      status,
+      reason,
+    });
+    return res as unknown as { message: string; account: AdminAccount };
   },
 
   getSellers: async (params?: GetAdminSellersParams): Promise<GetAdminSellersResponse> => {
@@ -138,9 +152,15 @@ export const AdminService = {
 
   // ── Refund Management ────────────────────────────────────────────
   /** Get all refunds (admin view) — from the refund module */
-  getRefunds: async (): Promise<{ refunds: RefundRequest[] }> => {
-    const res = await axiosClient.get("/refunds/admin/all");
+  getRefunds: async (params?: { status?: string }): Promise<{ refunds: RefundRequest[] }> => {
+    const res = await axiosClient.get("/refunds/admin/all", { params });
     return res as unknown as { refunds: RefundRequest[] };
+  },
+
+  /** Get refund detail (admin/buyer/seller) — full info including evidence, order */
+  getRefundDetail: async (refundId: string): Promise<{ success: boolean; refund: RefundRequest }> => {
+    const res = await axiosClient.get(`/refunds/${refundId}`);
+    return res as unknown as { success: boolean; refund: RefundRequest };
   },
 
   /**
@@ -155,8 +175,22 @@ export const AdminService = {
   },
 
   /**
-   * Admin rejects a disputed refund.
-   * PUT /refunds/:refundId/admin-handle  (only works when status === "disputed")
+   * Admin approves a disputed refund (sides with buyer).
+   * PUT /refunds/:refundId/admin-handle  (only when status === "disputed")
+   */
+  approveDispute: async (
+    refundId: string,
+    comment?: string
+  ): Promise<{ message: string }> => {
+    return axiosClient.put(`/refunds/${refundId}/admin-handle`, {
+      decision: "refund",
+      comment: comment ?? "",
+    });
+  },
+
+  /**
+   * Admin rejects a disputed refund (sides with seller).
+   * PUT /refunds/:refundId/admin-handle  (only when status === "disputed")
    */
   rejectRefund: async (
     refundId: string,

@@ -10,6 +10,7 @@ import {
   IconCircleCheck,
   IconBan,
   IconRefresh,
+  IconHandStop,
 } from "@tabler/icons-react";
 import { createPortal } from "react-dom";
 import { CancelOrderReasonDialog } from "@/components/ui/CancelOrderReasonDialog";
@@ -32,6 +33,8 @@ interface SellerActionButtonsProps {
   onTrackingClick?: () => void;
   onReturnTrackingClick?: () => void;
   onConfirmReturnReceived?: () => void;
+  onMarkDelivered?: () => void;
+  isLocalPickup?: boolean;
   onChatClick?: () => void;
 }
 
@@ -51,6 +54,8 @@ export function SellerActionButtons({
   onTrackingClick,
   onReturnTrackingClick,
   onConfirmReturnReceived,
+  onMarkDelivered,
+  isLocalPickup,
   onChatClick,
 }: SellerActionButtonsProps) {
   const { status } = order;
@@ -97,7 +102,10 @@ export function SellerActionButtons({
                   <h3 className="text-base font-semibold text-foreground">Chấp thuận hoàn tiền?</h3>
                   <p className="text-sm text-muted-foreground mt-1">
                     Đơn hàng #{order._id.slice(-8).toUpperCase()} sẽ chuyển sang trạng thái
-                    &ldquo;Đang hoàn hàng&rdquo;. GHN return shipment sẽ được tạo tự động.
+                    &ldquo;Đang hoàn hàng&rdquo;.{" "}
+                    {isLocalPickup
+                      ? "Người mua sẽ trực tiếp trả lại hàng cho bạn."
+                      : "GHN return shipment sẽ được tạo tự động."}
                   </p>
                 </div>
               </div>
@@ -172,10 +180,29 @@ export function SellerActionButtons({
     status === "shipping" ||
     status === "out_for_delivery"
   ) {
+    const showMarkDelivered = isLocalPickup && status === "confirmed" && !!onMarkDelivered;
     return (
       <>
         {dialogs}
         <div className="bg-card rounded-2xl border border-border shadow-sm p-4 flex flex-col gap-3">
+          {showMarkDelivered && (
+            <>
+              <div className="flex items-start gap-2 p-3 bg-emerald-50 rounded-xl border border-emerald-200">
+                <span className="text-base">🤝</span>
+                <p className="text-xs text-emerald-700">
+                  Sau khi gặp mặt và trao hàng cho người mua, nhấn nút bên dưới để xác nhận.
+                </p>
+              </div>
+              <button
+                onClick={onMarkDelivered}
+                disabled={updatingStatus}
+                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-semibold text-sm transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <IconHandStop className="w-4 h-4" />
+                {updatingStatus ? "Đang xử lý..." : "Xác nhận đã giao hàng"}
+              </button>
+            </>
+          )}
           {onTrackingClick && (
             <button
               onClick={onTrackingClick}
@@ -321,20 +348,34 @@ export function SellerActionButtons({
           <div className="p-4 bg-blue-50 dark:bg-blue-950/20 border-b border-blue-200 dark:border-blue-900/40">
             <div className="flex items-center gap-2 text-blue-700 dark:text-blue-400">
               <IconRefresh className="w-4 h-4 shrink-0" />
-              <p className="text-sm font-medium">Người mua đang gửi hàng hoàn</p>
+              <p className="text-sm font-medium">
+                {isLocalPickup ? "Người mua đang chuẩn bị trả hàng" : "Người mua đang gửi hàng hoàn"}
+              </p>
             </div>
             <p className="text-xs text-blue-600 dark:text-blue-500 mt-1 ml-6">
-              Theo dõi vận đơn hoàn để biết khi hàng đến nơi, rồi xác nhận nhận hàng.
+              {isLocalPickup
+                ? "Liên hệ người mua để thống nhất thời gian nhận lại hàng trực tiếp."
+                : "Theo dõi vận đơn hoàn để biết khi hàng đến nơi, rồi xác nhận nhận hàng."}
             </p>
           </div>
           <div className="p-4 flex flex-col gap-3">
-            {onReturnTrackingClick && (
+            {!isLocalPickup && onReturnTrackingClick && (
               <button
                 onClick={onReturnTrackingClick}
                 className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-blue-600 text-white hover:bg-blue-700 font-semibold text-sm transition-colors shadow-sm"
               >
                 <IconTruck className="w-4 h-4" />
                 Xem vận đơn hoàn
+              </button>
+            )}
+            {onConfirmReturnReceived && (
+              <button
+                onClick={onConfirmReturnReceived}
+                disabled={updatingStatus}
+                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-semibold text-sm transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <IconCircleCheck className="w-4 h-4" />
+                {updatingStatus ? "Đang xử lý..." : "Xác nhận đã nhận lại hàng"}
               </button>
             )}
             {onChatClick && (

@@ -88,11 +88,12 @@ export function getBankCode(bankName: string): string {
  * @returns VietQR image URL
  */
 export function generateVietQRImageUrl(bankInfo: SellerBankInfo): string {
-  const bankCode = getBankCode(bankInfo.bankName);
+  // Prefer bankBin (VietQR numeric BIN) for accuracy; fall back to derived bank code
+  const bankIdentifier = bankInfo.bankBin || getBankCode(bankInfo.bankName);
   const amount = Math.round(bankInfo.amount);
   const content = encodeURIComponent(bankInfo.content);
   const cleanAccountNumber = bankInfo.accountNumber.replace(/\s+/g, "");
-  return `https://img.vietqr.io/image/${bankCode}-${cleanAccountNumber}-compact2.png?amount=${amount}&addInfo=${content}`;
+  return `https://img.vietqr.io/image/${bankIdentifier}-${cleanAccountNumber}-compact2.png?amount=${amount}&addInfo=${content}`;
 }
 
 /**

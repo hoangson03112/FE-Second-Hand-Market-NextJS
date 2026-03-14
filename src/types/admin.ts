@@ -82,6 +82,7 @@ export interface AdminAccount {
   email: string;
   phoneNumber?: string;
   role?: string;
+  status?: "active" | "inactive" | "banned";
   createdAt?: string;
   avatar?: { url: string };
 }
@@ -152,7 +153,7 @@ export interface AdminCategory {
 }
 
 export type GetAdminSellersParams = {
-  status?: Extract<SellerVerificationStatus, "pending" | "approved" | "rejected">;
+  status?: SellerVerificationStatus;
   page?: number;
   limit?: number;
 };
@@ -171,6 +172,7 @@ export type GetAdminSellersResponse = {
     pending: number;
     approved: number;
     rejected: number;
+    banned?: number;
   };
 };
 

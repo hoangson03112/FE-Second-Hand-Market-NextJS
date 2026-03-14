@@ -1,7 +1,7 @@
 "use client";
 
 import { IconLayoutDashboard, IconPackage, IconShieldCheck, IconChevronRight, IconShoppingCart, IconUsers, IconBuildingStore, IconFolders, IconFlag, IconRobot, IconHome, IconCoinOff, IconCash } from "@tabler/icons-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useUser } from "@/hooks/useUser";
@@ -14,19 +14,27 @@ export default function AdminLayout({
   const router = useRouter();
   const pathname = usePathname();
   const { data: account, isLoading } = useUser();
+  const [authCheckReady, setAuthCheckReady] = useState(false);
+
+  // Đợi token store rehydrate từ localStorage trước khi kiểm tra auth (tránh F5 bị redirect nhầm)
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setAuthCheckReady(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   useEffect(() => {
+    if (!authCheckReady) return;
     if (isLoading) return;
     if (!account) {
-      router.replace("/login");
+      router.replace(`/login?redirect=${encodeURIComponent(pathname || "/admin")}`);
       return;
     }
     if (account.role !== "admin") {
       router.replace("/");
     }
-  }, [account, isLoading, router]);
+  }, [account, isLoading, router, pathname, authCheckReady]);
 
-  if (isLoading || !account || account.role !== "admin") {
+  if (!authCheckReady || isLoading || !account || account.role !== "admin") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted/30">
         <div className="animate-pulse text-muted-foreground text-sm">

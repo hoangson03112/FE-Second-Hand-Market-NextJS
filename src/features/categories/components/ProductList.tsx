@@ -58,18 +58,22 @@ export default function ProductList({
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 relative z-0">
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </div>
-      {pagination && pagination.totalPages >= 1 && onPageChange && (
-        <div className="mt-10 flex justify-center">
+      {pagination && onPageChange && (
+        <div className="mt-10 flex flex-col items-center gap-4">
           <Pagination
             currentPage={pagination.currentPage}
-            totalPages={pagination.totalPages}
+            totalPages={Math.max(1, pagination.totalPages)}
             onPageChange={onPageChange}
           />
+          <p className="text-sm text-taupe-500">
+            Trang {pagination.currentPage} / {Math.max(1, pagination.totalPages)}
+            {pagination.total > 0 && ` · ${pagination.total.toLocaleString()} sản phẩm`}
+          </p>
         </div>
       )}
     </>

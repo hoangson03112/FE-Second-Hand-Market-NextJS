@@ -9,8 +9,14 @@ const DOT_COLORS: Record<string, string> = {
   delivered: "bg-foreground/60",
   completed: "bg-foreground",
   failed: "bg-destructive",
-  returned: "bg-accent",
+  delivery_failed: "bg-destructive",
+  returning: "bg-amber-500",
+  return_shipping: "bg-amber-500",
+  returned: "bg-emerald-500",
   cancelled: "bg-muted-foreground",
+  refund_requested: "bg-orange-500",
+  refund_approved: "bg-blue-500",
+  refunded: "bg-violet-500",
 };
 
 interface StatusBadgeProps {

@@ -17,6 +17,7 @@ import Image from "next/image";
 import type { Order } from "@/types/order";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
+import { formatShippingMethod } from "@/utils/format";
 import { openChatWithOrder } from "@/utils/chat";
 import { STATUS_CONFIG } from "@/constants/orderStatus";
 import { StatusBadge } from "@/components/ui/StatusBadge";
@@ -163,7 +164,7 @@ console.log(order);
 					<div className="mt-3 flex items-center gap-2 text-sm">
 						<IconTruck className="w-4 h-4 text-neutral-600" />
 						<span className="text-neutral-600">Vận chuyển:</span>
-						<span className="font-medium text-neutral-900">{order.shippingMethod}</span>
+						<span className="font-medium text-neutral-900">{formatShippingMethod(order.shippingMethod)}</span>
 					</div>
 				)}
 

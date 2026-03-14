@@ -26,11 +26,20 @@ export function RealtimeNotificationToast() {
   const lastSeenId = useRef<string | null>(null);
 
   useEffect(() => {
-    if (notifications.length === 0) return;
+    if (notifications.length === 0) {
+      lastSeenId.current = null;
+      return;
+    }
 
     const newest = notifications[0];
     if (newest.read) return;
     if (newest.id === lastSeenId.current) return;
+
+    // Lần đầu có notifications = load từ hydrate (login) → không hiện toast
+    if (lastSeenId.current === null) {
+      lastSeenId.current = newest.id;
+      return;
+    }
 
     lastSeenId.current = newest.id;
 

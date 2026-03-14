@@ -3,7 +3,10 @@
 import type React from "react";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { ProductService } from "@/services/product.service";
-import type { CreateProductPayload, UpdateProductPayload } from "@/types/productPayload";
+import type {
+  CreateProductPayload,
+  UpdateProductPayload,
+} from "@/types/productPayload";
 import { useToast } from "@/components/ui/Toast";
 import { useUser } from "@/hooks/useUser";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -29,11 +32,13 @@ const INITIAL: SellFormValues = {
 };
 
 const INITIAL_DELIVERY: DeliveryOptions = {
-  localPickup: true,
+  localPickup: false,
   codShipping: false,
 };
 
-function mapProductToFormValues(product: IProductWithMediaAndIds): SellFormValues {
+function mapProductToFormValues(
+  product: IProductWithMediaAndIds,
+): SellFormValues {
   return {
     name: product.name || "",
     price: String(product.price || ""),
@@ -69,15 +74,26 @@ export function useSellForm() {
   const editProductId = searchParams.get("edit");
   const isEditMode = !!editProductId;
   const [values, setValues] = useState<SellFormValues>(INITIAL);
-  const [errors, setErrors] = useState<Partial<Record<keyof SellFormValues, string>>>({});
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof SellFormValues, string>>
+  >({});
   const [apiError, setApiError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingProduct, setIsLoadingProduct] = useState(false);
   // Lưu thông tin đầy đủ của ảnh và video hiện tại (khi edit)
-  const [existingImages, setExistingImages] = useState<Array<{ url: string; publicId: string; originalName?: string; type?: string; size?: number }>>([]);
+  const [existingImages, setExistingImages] = useState<
+    Array<{
+      url: string;
+      publicId: string;
+      originalName?: string;
+      type?: string;
+      size?: number;
+    }>
+  >([]);
   const [existingVideoUrl, setExistingVideoUrl] = useState<string | null>(null);
   // Lưu product data (khi edit) để có thể check status và humanReviewRequested
-  const [currentProduct, setCurrentProduct] = useState<IProductWithMediaAndIds | null>(null);
+  const [currentProduct, setCurrentProduct] =
+    useState<IProductWithMediaAndIds | null>(null);
   const router = useRouter();
 
   // Pickup address selector state
@@ -85,7 +101,8 @@ export function useSellForm() {
   const [pickupAddressError, setPickupAddressError] = useState("");
 
   // Delivery options state
-  const [deliveryOptions, setDeliveryOptions] = useState<DeliveryOptions>(INITIAL_DELIVERY);
+  const [deliveryOptions, setDeliveryOptions] =
+    useState<DeliveryOptions>(INITIAL_DELIVERY);
   const [deliveryOptionsError, setDeliveryOptionsError] = useState("");
 
   // For the "Đăng ký làm Seller" button: show only to buyers
@@ -114,8 +131,11 @@ export function useSellForm() {
       setIsLoadingProduct(true);
       try {
         const response = await ProductService.getById(editProductId);
-        const raw = response as { data?: IProductWithMediaAndIds } | IProductWithMediaAndIds;
-        const product = (("data" in raw ? raw.data : raw) ?? null) as IProductWithMediaAndIds | null;
+        const raw = response as
+          | { data?: IProductWithMediaAndIds }
+          | IProductWithMediaAndIds;
+        const product = (("data" in raw ? raw.data : raw) ??
+          null) as IProductWithMediaAndIds | null;
 
         if (!product || !product._id) {
           toast.error(PRODUCT_UI_MESSAGES.NOT_FOUND);
@@ -128,23 +148,32 @@ export function useSellForm() {
         setCurrentProduct(product);
 
         // Populate form with product data
-        let existingImageData = product.images?.map((img) => ({
-          url: img.url,
-          publicId: img.publicId,
-          originalName: img.originalName,
-          type: img.type,
-          size: img.size,
-        })).filter((img) => img.url && img.publicId) || [];
+        let existingImageData =
+          product.images
+            ?.map((img) => ({
+              url: img.url,
+              publicId: img.publicId,
+              originalName: img.originalName,
+              type: img.type,
+              size: img.size,
+            }))
+            .filter((img) => img.url && img.publicId) || [];
 
         // Fallback: Nếu images rỗng nhưng có avatar, dùng avatar làm ảnh duy nhất
-        if (existingImageData.length === 0 && product.avatar?.url && product.avatar?.publicId) {
-          existingImageData = [{
-            url: product.avatar.url,
-            publicId: product.avatar.publicId,
-            originalName: product.avatar.originalName,
-            type: product.avatar.type,
-            size: product.avatar.size,
-          }];
+        if (
+          existingImageData.length === 0 &&
+          product.avatar?.url &&
+          product.avatar?.publicId
+        ) {
+          existingImageData = [
+            {
+              url: product.avatar.url,
+              publicId: product.avatar.publicId,
+              originalName: product.avatar.originalName,
+              type: product.avatar.type,
+              size: product.avatar.size,
+            },
+          ];
         }
 
         setExistingImages(existingImageData);
@@ -184,7 +213,11 @@ export function useSellForm() {
   }, [isEditMode, editProductId, toast, router]);
 
   const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    (
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+      >,
+    ) => {
       const { name, value } = e.target;
       const normalizedValue = sanitizeFieldInput(name, value);
       setValues((prev) => ({
@@ -193,9 +226,13 @@ export function useSellForm() {
         ...(name === "categoryId" ? { subcategoryId: "" } : {}),
       }));
       setApiError("");
-      setErrors((prev) => (prev[name as keyof SellFormValues] ? { ...prev, [name]: undefined } : prev));
+      setErrors((prev) =>
+        prev[name as keyof SellFormValues]
+          ? { ...prev, [name]: undefined }
+          : prev,
+      );
     },
-    []
+    [],
   );
 
   const setImages = useCallback((files: File[]) => {
@@ -208,7 +245,10 @@ export function useSellForm() {
   }, []);
 
   const addAttribute = useCallback(() => {
-    setValues((prev) => ({ ...prev, attributes: [...prev.attributes, { key: "", value: "" }] }));
+    setValues((prev) => ({
+      ...prev,
+      attributes: [...prev.attributes, { key: "", value: "" }],
+    }));
   }, []);
 
   const removeAttribute = useCallback((index: number) => {
@@ -224,11 +264,11 @@ export function useSellForm() {
       setValues((prev) => ({
         ...prev,
         attributes: prev.attributes.map((attr, i) =>
-          i === index ? { ...attr, [field]: normalizedValue } : attr
+          i === index ? { ...attr, [field]: normalizedValue } : attr,
         ),
       }));
     },
-    []
+    [],
   );
 
   const handleSelectPickupAddress = useCallback((id: string) => {
@@ -250,10 +290,14 @@ export function useSellForm() {
     else if (Number(values.price) <= 0 || Number.isNaN(Number(values.price)))
       newErrors.price = "Giá không hợp lệ";
     if (!values.stock.trim()) newErrors.stock = "Vui lòng nhập số lượng";
-    else if (Number(values.stock) < 0 || !Number.isInteger(Number(values.stock)))
+    else if (
+      Number(values.stock) < 0 ||
+      !Number.isInteger(Number(values.stock))
+    )
       newErrors.stock = "Số lượng phải là số nguyên không âm";
     if (!values.categoryId) newErrors.categoryId = "Vui lòng chọn danh mục";
-    if (!values.subcategoryId) newErrors.subcategoryId = "Vui lòng chọn danh mục con";
+    if (!values.subcategoryId)
+      newErrors.subcategoryId = "Vui lòng chọn danh mục con";
     if (values.images.length === 0 && existingImages.length === 0) {
       newErrors.images = "Vui lòng tải ít nhất 1 ảnh sản phẩm";
     }
@@ -287,8 +331,9 @@ export function useSellForm() {
       setIsLoading(true);
       try {
         const attributesFiltered = values.attributes.filter(
-          (a) => a.key.trim() && a.value.trim()
+          (a) => a.key.trim() && a.value.trim(),
         );
+
         const payload: CreateProductPayload | UpdateProductPayload = {
           name: values.name.trim(),
           price: Number(values.price),
@@ -297,7 +342,10 @@ export function useSellForm() {
           categoryId: values.categoryId,
           subcategoryId: values.subcategoryId,
           condition: values.condition,
-          attributes: attributesFiltered.map((a) => ({ key: a.key.trim(), value: a.value.trim() })),
+          attributes: attributesFiltered.map((a) => ({
+            key: a.key.trim(),
+            value: a.value.trim(),
+          })),
           images: values.images,
           video: values.video ?? undefined,
           addressId: pickupAddressId,
@@ -309,7 +357,10 @@ export function useSellForm() {
             ...payload,
             existingImages: existingImages,
           };
-          const result = await ProductService.update(editProductId, updatePayload);
+          const result = await ProductService.update(
+            editProductId,
+            updatePayload,
+          );
           if (result.success) {
             const shouldAutoRequestReview =
               currentProduct?.status === "rejected" &&
@@ -353,7 +404,8 @@ export function useSellForm() {
       } catch (err: unknown) {
         const ax = err as { response?: { data?: { message?: string } } };
         setApiError(
-          (ax.response?.data as { message?: string })?.message ?? "Có lỗi xảy ra. Vui lòng thử lại."
+          (ax.response?.data as { message?: string })?.message ??
+            "Có lỗi xảy ra. Vui lòng thử lại.",
         );
         setIsLoading(false);
       }
@@ -369,7 +421,7 @@ export function useSellForm() {
       editProductId,
       currentProduct,
       existingImages,
-    ]
+    ],
   );
 
   const removeExistingImage = useCallback((index: number) => {
@@ -412,4 +464,3 @@ export function useSellForm() {
     showPickupSection,
   };
 }
-

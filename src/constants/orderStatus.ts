@@ -52,8 +52,8 @@ export const STATUS_CONFIG: Record<
   },
   returned: {
     label: "Đã hoàn hàng",
-    color: "text-accent-foreground",
-    bgColor: "bg-accent/20 border-accent/40",
+    color: "text-emerald-700",
+    bgColor: "bg-emerald-100 border-emerald-300",
     icon: "↩️",
   },
   cancelled: {
@@ -70,32 +70,32 @@ export const STATUS_CONFIG: Record<
   },
   returning: {
     label: "Đang hoàn hàng",
-    color: "text-accent-foreground",
-    bgColor: "bg-accent/20 border-accent/40",
+    color: "text-amber-700",
+    bgColor: "bg-amber-100 border-amber-300",
     icon: "↩️",
   },
   return_shipping: {
     label: "Đang hoàn hàng",
-    color: "text-accent-foreground",
-    bgColor: "bg-accent/20 border-accent/40",
+    color: "text-amber-700",
+    bgColor: "bg-amber-100 border-amber-300",
     icon: "↩️",
   },
   refund_requested: {
     label: "Yêu cầu hoàn tiền",
-    color: "text-primary/80",
-    bgColor: "bg-primary/8 border-primary/20",
+    color: "text-orange-700",
+    bgColor: "bg-orange-100 border-orange-300",
     icon: "💰",
   },
   refund_approved: {
     label: "Hoàn tiền đã duyệt",
-    color: "text-primary",
-    bgColor: "bg-primary/15 border-primary/30",
+    color: "text-blue-700",
+    bgColor: "bg-blue-100 border-blue-300",
     icon: "✔️",
   },
   refunded: {
     label: "Đã hoàn tiền",
-    color: "text-muted-foreground",
-    bgColor: "bg-muted/60 border-border",
+    color: "text-violet-700",
+    bgColor: "bg-violet-100 border-violet-300",
     icon: "💸",
   },
 };

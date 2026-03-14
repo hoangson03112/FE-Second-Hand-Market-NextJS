@@ -49,6 +49,7 @@ interface SellerDetailModalProps {
   onRejectReasonChange: (value: string) => void;
   onApprove: () => void;
   onReject: () => void;
+  onBan: () => void;
   onClose: () => void;
 }
 
@@ -59,6 +60,7 @@ export default function SellerDetailModal({
   onRejectReasonChange,
   onApprove,
   onReject,
+  onBan,
   onClose,
 }: SellerDetailModalProps) {
   const statusCfg = STATUS_CONFIG[seller.verificationStatus] ?? STATUS_CONFIG.pending;
@@ -214,18 +216,24 @@ export default function SellerDetailModal({
             </div>
           </Section>
 
-          {/* Reject reason input for pending */}
-          {seller.verificationStatus === "pending" && (
+          {/* Reject/Ban reason input */}
+          {(seller.verificationStatus === "pending" || seller.verificationStatus === "approved") && (
             <div className="rounded-xl border border-border bg-background p-4">
               <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-                Lý do từ chối (nếu từ chối)
+                {seller.verificationStatus === "pending"
+                  ? "Lý do từ chối (nếu từ chối)"
+                  : "Lý do khóa (bắt buộc khi khóa)"}
               </label>
               <textarea
                 value={rejectReason}
                 onChange={(e) => onRejectReasonChange(e.target.value)}
                 className="w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"
                 rows={2}
-                placeholder="Nhập lý do từ chối..."
+                placeholder={
+                  seller.verificationStatus === "pending"
+                    ? "Nhập lý do từ chối..."
+                    : "Nhập lý do khóa tài khoản..."
+                }
               />
             </div>
           )}
@@ -263,8 +271,8 @@ export default function SellerDetailModal({
           {seller.verificationStatus === "approved" && (
             <button
               type="button"
-              onClick={onReject}
-              disabled={isUpdating}
+              onClick={onBan}
+              disabled={isUpdating || !rejectReason.trim()}
               className="rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-2 text-sm font-medium text-destructive hover:bg-destructive/10 disabled:opacity-50 transition-colors"
             >
               Khóa tài khoản

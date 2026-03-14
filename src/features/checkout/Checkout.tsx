@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -40,11 +40,14 @@ export default function Checkout() {
     subtotal,
     total,
     shipping,
+    allLocalPickup,
     isCalculatingShipping,
     shippingError,
     paymentMethods,
     setPaymentMethodForSeller,
     getPaymentMethodForSeller,
+    setDeliveryMethodForSeller,
+    deliveryMethodBySeller,
     isBankTransferAvailableBySeller,
     isSubmitting,
     shippingData,
@@ -73,7 +76,9 @@ export default function Checkout() {
   };
 
   const isMultiSeller = sellerGroups.length > 1;
-  const totalItems = sellerGroups.reduce((sum, g) => sum + g.items.length, 0);
+
+  // Hiện địa chỉ nếu có bất kỳ seller nào có thể ship COD (có thể cần địa chỉ giao hàng)
+  const showAddressSection = sellerGroups.some((g) => g.canCodShipping);
 
   return (
     <PageContainer withBackground={false}>
@@ -94,16 +99,18 @@ export default function Checkout() {
             onDeleteAddress={handleDeleteAddress}
           />
 
-          {/* Delivery address */}
-          <div className="bg-white rounded-lg border border-gray-200 shadow-md p-5 mb-4">
-            <h2 className="text-lg font-medium text-gray-900 mb-4 pb-3 border-b border-gray-200">
-              Địa Chỉ Nhận Hàng
-            </h2>
-            <AddressSection
-              selectedAddress={selectedAddress}
-              onChangeAddress={handleOpenModal}
-            />
-          </div>
+          {/* Delivery address - Ẩn khi toàn bộ sản phẩm giao dịch trực tiếp */}
+          {showAddressSection && (
+            <div className="bg-white rounded-lg border border-gray-200 shadow-md p-5 mb-4">
+              <h2 className="text-lg font-medium text-gray-900 mb-4 pb-3 border-b border-gray-200">
+                Địa Chỉ Nhận Hàng
+              </h2>
+              <AddressSection
+                selectedAddress={selectedAddress}
+                onChangeAddress={handleOpenModal}
+              />
+            </div>
+          )}
 
           {/* Multi-seller notice */}
           {isMultiSeller && (
@@ -132,18 +139,25 @@ export default function Checkout() {
                     onPaymentMethodChange={(method) =>
                       setPaymentMethodForSeller(group.sellerId, method)
                     }
+                    deliveryMethod={deliveryMethodBySeller[group.sellerId] ?? (group.canCodShipping ? "cod_shipping" : "local_pickup")}
+                    onDeliveryMethodChange={(method) => {
+                      setDeliveryMethodForSeller(group.sellerId, method);
+                      if (method === "local_pickup") {
+                        setPaymentMethodForSeller(group.sellerId, "cod");
+                      }
+                    }}
                   />
                 ))
               )}
 
-              {/* Global shipping error */}
-              {shippingError && (
+              {/* Global shipping error / loading - chỉ hiện khi có GHN */}
+              {!allLocalPickup && shippingError && (
                 <div className="p-4 bg-destructive/8 border border-destructive/20 rounded-lg text-sm text-destructive">
                   {shippingError}
                 </div>
               )}
 
-              {isCalculatingShipping && (
+              {!allLocalPickup && isCalculatingShipping && (
                 <div className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200 shadow-md">
                   <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent" />
                   <span className="text-sm text-gray-600">Đang tính phí vận chuyển...</span>
@@ -165,7 +179,7 @@ export default function Checkout() {
                 <CheckoutButton
                   total={total}
                   isSubmitting={isSubmitting}
-                  isDisabled={!shippingData || sellerGroups.length === 0}
+                  isDisabled={(!allLocalPickup && !shippingData) || sellerGroups.length === 0}
                   onClick={handleCheckout}
                 />
                 <TrustBadges />

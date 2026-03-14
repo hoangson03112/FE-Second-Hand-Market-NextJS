@@ -230,6 +230,7 @@ export interface SellerBankInfo {
   bankName: string;
   accountNumber: string;
   accountHolder: string;
+  bankBin?: string | null;
   amount: number;
   content: string;
   orderId: string;

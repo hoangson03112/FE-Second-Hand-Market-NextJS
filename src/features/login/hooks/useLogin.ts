@@ -28,7 +28,11 @@ export function useLogin() {
     if (token) {
       setAccessToken(token);
       queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });
-      router.replace("/");
+      const redirect = searchParams.get("redirect");
+      const target = redirect && redirect.startsWith("/") && !redirect.startsWith("//")
+        ? redirect
+        : "/";
+      router.replace(target);
       router.refresh();
       return;
     }
@@ -37,6 +41,7 @@ export function useLogin() {
         google_failed: "Đăng nhập Google thất bại. Vui lòng thử lại.",
         google_no_user: "Không lấy được thông tin tài khoản Google.",
         google_not_configured: "Chức năng đăng nhập Google chưa được cấu hình.",
+        account_banned: "Tài khoản đã bị khóa bởi quản trị viên. Vui lòng liên hệ hỗ trợ.",
       };
       setError(messages[errorParam] || "Có lỗi xảy ra.");
     }
@@ -75,7 +80,11 @@ export function useLogin() {
       if (response.status === "success" && response.token) {
         setAccessToken(response.token);
         queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });
-        router.push("/");
+        const redirect = searchParams.get("redirect");
+        const target = redirect && redirect.startsWith("/") && !redirect.startsWith("//")
+          ? redirect
+          : "/";
+        router.push(target);
         router.refresh();
       } else {
         setError(response.message || "Đăng nhập thất bại");

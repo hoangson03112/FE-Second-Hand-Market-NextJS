@@ -2,6 +2,7 @@ import {
   IconCircleCheck,
   IconCircleX,
   IconEye,
+  IconBan,
 } from "@tabler/icons-react";
 import Image from "next/image";
 import type { AdminSeller } from "@/types/admin";
@@ -31,6 +32,7 @@ interface SellersTableProps {
   isUpdating: boolean;
   onApprove: (seller: AdminSeller) => void;
   onOpenDetail: (seller: AdminSeller) => void;
+  onOpenBan?: (seller: AdminSeller) => void;
 }
 
 export default function SellersTable({
@@ -38,6 +40,7 @@ export default function SellersTable({
   isUpdating,
   onApprove,
   onOpenDetail,
+  onOpenBan,
 }: SellersTableProps) {
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden">
@@ -132,6 +135,17 @@ export default function SellersTable({
                       >
                         <IconEye className="h-4 w-4" />
                       </button>
+                      {seller.verificationStatus === "approved" && onOpenBan && (
+                        <button
+                          type="button"
+                          onClick={() => onOpenBan(seller)}
+                          disabled={isUpdating}
+                          className="rounded-lg p-2 text-destructive hover:bg-destructive/5 disabled:opacity-50 transition-colors"
+                          title="Khóa tài khoản"
+                        >
+                          <IconBan className="h-4 w-4" />
+                        </button>
+                      )}
                       {seller.verificationStatus === "pending" && (
                         <>
                           <button

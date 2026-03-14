@@ -8,6 +8,7 @@ import {
   IconClock,
   IconDots,
   IconFileSearch,
+  IconLoader2,
   IconMoodSad,
   IconPackage,
   IconPhoto,
@@ -109,9 +110,12 @@ const PROGRESS_STEPS = [
 
 interface RefundDetailCardProps {
   refund: RefundDoc;
+  /** Called when buyer escalates a rejected refund to admin (dispute) */
+  onEscalateToAdmin?: () => void;
+  isEscalating?: boolean;
 }
 
-export function RefundDetailCard({ refund }: RefundDetailCardProps) {
+export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: RefundDetailCardProps) {
   const style = STATUS_STYLES[refund.status as StatusKey] ?? STATUS_STYLES.pending;
   const StatusIcon = style.Icon;
   const reasonInfo = REASON_LABELS[refund.reason] ?? { label: refund.reason, Icon: IconAlertTriangle };
@@ -323,6 +327,29 @@ export function RefundDetailCard({ refund }: RefundDetailCardProps) {
               <p className="text-sm text-foreground/80 pl-6 leading-relaxed">
                 &ldquo;{refund.sellerResponse.comment}&rdquo;
               </p>
+            )}
+            {/* Buyer escalate to admin when seller rejects */}
+            {refund.sellerResponse.decision === "rejected" &&
+             !refund.escalatedToAdmin &&
+             onEscalateToAdmin && (
+              <div className="mt-3 pt-3 border-t border-red-200/50">
+                <p className="text-xs text-red-700/80 mb-2">
+                  Bạn không đồng ý với quyết định của người bán? Gửi khiếu nại để Admin xem xét.
+                </p>
+                <button
+                  type="button"
+                  onClick={onEscalateToAdmin}
+                  disabled={isEscalating}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-600 text-white text-sm font-semibold hover:bg-purple-700 disabled:opacity-50 transition-colors"
+                >
+                  {isEscalating ? (
+                    <IconLoader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <IconShield className="w-4 h-4" />
+                  )}
+                  Khiếu nại lên Admin
+                </button>
+              </div>
             )}
           </div>
         )}

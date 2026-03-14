@@ -1,3 +1,4 @@
+import { IconBan, IconLockOpen } from "@tabler/icons-react";
 import type { AdminAccount } from "@/types/admin";
 import { format } from "@/utils/format/date";
 
@@ -5,6 +6,18 @@ const ROLE_LABELS: Record<string, string> = {
   admin: "Quản trị viên",
   seller: "Người bán",
   buyer: "Người mua",
+};
+
+const STATUS_LABELS: Record<string, string> = {
+  active: "Hoạt động",
+  inactive: "Chưa kích hoạt",
+  banned: "Bị khóa",
+};
+
+const STATUS_BADGE_STYLES: Record<string, { className: string }> = {
+  active: { className: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" },
+  inactive: { className: "bg-amber-500/10 text-amber-600 dark:text-amber-400" },
+  banned: { className: "bg-destructive/10 text-destructive dark:text-destructive/80" },
 };
 
 const ROLE_BADGE_STYLES: Record<string, { className: string }> = {
@@ -34,9 +47,17 @@ function getRoleBadgeClass(role?: string) {
 
 interface UsersTableProps {
   accounts: AdminAccount[];
+  isUpdating?: boolean;
+  onBan?: (account: AdminAccount) => void;
+  onUnban?: (account: AdminAccount) => void;
 }
 
-export default function UsersTable({ accounts }: UsersTableProps) {
+export default function UsersTable({
+  accounts,
+  isUpdating,
+  onBan,
+  onUnban,
+}: UsersTableProps) {
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden">
       <div className="overflow-x-auto">
@@ -55,6 +76,14 @@ export default function UsersTable({ accounts }: UsersTableProps) {
               <th className="text-left px-4 py-3 font-medium text-foreground hidden md:table-cell">
                 Ngày tạo
               </th>
+              <th className="text-left px-4 py-3 font-medium text-foreground hidden sm:table-cell">
+                Trạng thái
+              </th>
+              {(onBan || onUnban) && (
+                <th className="text-right px-4 py-3 font-medium text-foreground">
+                  Thao tác
+                </th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -107,6 +136,45 @@ export default function UsersTable({ accounts }: UsersTableProps) {
                 <td className="px-4 py-3 hidden md:table-cell text-muted-foreground text-xs">
                   {acc.createdAt ? format(acc.createdAt) : "—"}
                 </td>
+                <td className="px-4 py-3 hidden sm:table-cell">
+                  <span
+                    className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-medium ${
+                      STATUS_BADGE_STYLES[acc.status ?? "active"]?.className ??
+                      "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {STATUS_LABELS[acc.status ?? "active"] ?? acc.status ?? "—"}
+                  </span>
+                </td>
+                {(onBan || onUnban) && (
+                  <td className="px-4 py-3 text-right">
+                    {acc.status === "banned" ? (
+                      <button
+                        type="button"
+                        onClick={() => onUnban?.(acc)}
+                        disabled={isUpdating}
+                        className="inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-xs font-medium text-emerald-600 hover:bg-emerald-500/10 disabled:opacity-50"
+                        title="Mở khóa tài khoản"
+                      >
+                        <IconLockOpen className="h-4 w-4" />
+                        Mở khóa
+                      </button>
+                    ) : acc.role !== "admin" ? (
+                      <button
+                        type="button"
+                        onClick={() => onBan?.(acc)}
+                        disabled={isUpdating}
+                        className="inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-xs font-medium text-destructive hover:bg-destructive/10 disabled:opacity-50"
+                        title="Khóa tài khoản"
+                      >
+                        <IconBan className="h-4 w-4" />
+                        Khóa
+                      </button>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">—</span>
+                    )}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

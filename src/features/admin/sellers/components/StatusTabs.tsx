@@ -5,6 +5,7 @@ const STATUS_TABS = [
   { value: "pending", label: "Chờ duyệt" },
   { value: "approved", label: "Đã duyệt" },
   { value: "rejected", label: "Từ chối" },
+  { value: "banned", label: "Bị khóa" },
 ] as const;
 
 interface StatusTabsProps {

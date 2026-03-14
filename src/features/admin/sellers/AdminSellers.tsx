@@ -26,6 +26,7 @@ export default function AdminSellers() {
     isUpdating,
     handleApprove,
     handleReject,
+    handleBan,
     openSeller,
     closeSeller,
   } = useAdminSellers();
@@ -61,6 +62,7 @@ export default function AdminSellers() {
           pending={statistics.pending}
           approved={statistics.approved}
           rejected={statistics.rejected}
+          banned={statistics.banned}
         />
       )}
 
@@ -81,6 +83,7 @@ export default function AdminSellers() {
             isUpdating={isUpdating}
             onApprove={handleApprove}
             onOpenDetail={openSeller}
+            onOpenBan={openSeller}
           />
 
           {totalPages > 1 && (
@@ -103,6 +106,7 @@ export default function AdminSellers() {
           onRejectReasonChange={setRejectReason}
           onApprove={() => handleApprove(selectedSeller)}
           onReject={() => handleReject(selectedSeller)}
+          onBan={() => handleBan(selectedSeller)}
           onClose={closeSeller}
         />
       )}

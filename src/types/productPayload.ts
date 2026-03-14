@@ -9,22 +9,25 @@ export interface CreateProductPayload {
   attributes?: Array<{ key: string; value: string | number }>;
   images?: File[];
   video?: File | null;
-  // Buyer: địa chỉ lấy hàng inline
   provinceId?: string;
   districtId?: string;
   wardCode?: string;
   specificAddress?: string;
   fullName?: string;
   phoneNumber?: string;
-  // Seller or buyer: chọn từ danh sách địa chỉ đã lưu
   addressId?: string;
-  deliveryOptions?: { localPickup?: boolean; codShipping?: boolean };
+  deliveryOptions: { localPickup?: boolean; codShipping?: boolean };
 }
 
 export interface UpdateProductPayload extends CreateProductPayload {
   // Để giữ lại ảnh/video cũ khi update
-  existingImages?: Array<{ url: string; publicId: string; originalName?: string; type?: string; size?: number }>;
+  existingImages?: Array<{
+    url: string;
+    publicId: string;
+    originalName?: string;
+    type?: string;
+    size?: number;
+  }>;
   existingVideoUrl?: string;
   removeVideo?: boolean;
 }
-

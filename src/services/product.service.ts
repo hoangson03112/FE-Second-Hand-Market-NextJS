@@ -7,7 +7,10 @@ import type {
   AdminProductListResponse,
 } from "@/types/product";
 import type { MyListingsResponse } from "@/types/myProducts";
-import type { CreateProductPayload, UpdateProductPayload } from "@/types/productPayload";
+import type {
+  CreateProductPayload,
+  UpdateProductPayload,
+} from "@/types/productPayload";
 
 export const ProductService = {
   create: async (payload: CreateProductPayload) => {
@@ -19,10 +22,7 @@ export const ProductService = {
     formData.append("categoryId", payload.categoryId);
     formData.append("subcategoryId", payload.subcategoryId);
     formData.append("condition", payload.condition ?? "good");
-    formData.append(
-      "attributes",
-      JSON.stringify(payload.attributes ?? [])
-    );
+    formData.append("attributes", JSON.stringify(payload.attributes ?? []));
     if (payload.images?.length) {
       payload.images.forEach((file) => formData.append("images", file));
     }
@@ -32,9 +32,11 @@ export const ProductService = {
     if (payload.provinceId) formData.append("provinceId", payload.provinceId);
     if (payload.districtId) formData.append("districtId", payload.districtId);
     if (payload.wardCode) formData.append("wardCode", payload.wardCode);
-    if (payload.specificAddress) formData.append("specificAddress", payload.specificAddress);
+    if (payload.specificAddress)
+      formData.append("specificAddress", payload.specificAddress);
     if (payload.fullName) formData.append("fullName", payload.fullName);
-    if (payload.phoneNumber) formData.append("phoneNumber", payload.phoneNumber);
+    if (payload.phoneNumber)
+      formData.append("phoneNumber", payload.phoneNumber);
     if (payload.addressId) formData.append("addressId", payload.addressId);
 
     // Upload sản phẩm (ảnh/video) có thể mất thời gian lâu hơn,
@@ -65,8 +67,10 @@ export const ProductService = {
     const params = new URLSearchParams();
     params.append("q", query.trim());
     if (filters?.sortBy) params.append("sortBy", filters.sortBy);
-    if (filters?.minPrice) params.append("minPrice", filters.minPrice.toString());
-    if (filters?.maxPrice) params.append("maxPrice", filters.maxPrice.toString());
+    if (filters?.minPrice)
+      params.append("minPrice", filters.minPrice.toString());
+    if (filters?.maxPrice)
+      params.append("maxPrice", filters.maxPrice.toString());
     if (filters?.page) params.append("page", filters.page.toString());
     if (filters?.limit) params.append("limit", filters.limit.toString());
 
@@ -91,31 +95,46 @@ export const ProductService = {
     if (filters?.limit) params.append("limit", filters.limit.toString());
 
     const response = await axiosClient.get(
-      `/products/categories?${params.toString()}`
+      `/products/categories?${params.toString()}`,
     );
     return response as unknown as IProductListResponse;
   },
 
   /** Lấy tất cả sản phẩm công khai (approved/active) – không cần category */
-  getAllPublic: async (filters?: IProductFilters): Promise<IProductListResponse> => {
+  getAllPublic: async (
+    filters?: IProductFilters,
+  ): Promise<IProductListResponse> => {
     const params = new URLSearchParams();
-    if (filters?.categorySlug) params.append("categorySlug", filters.categorySlug);
-    if (filters?.subCategorySlug) params.append("subCategorySlug", filters.subCategorySlug);
-    if (filters?.minPrice) params.append("minPrice", filters.minPrice.toString());
-    if (filters?.maxPrice) params.append("maxPrice", filters.maxPrice.toString());
+    if (filters?.categorySlug)
+      params.append("categorySlug", filters.categorySlug);
+    if (filters?.subCategorySlug)
+      params.append("subCategorySlug", filters.subCategorySlug);
+    if (filters?.minPrice)
+      params.append("minPrice", filters.minPrice.toString());
+    if (filters?.maxPrice)
+      params.append("maxPrice", filters.maxPrice.toString());
     if (filters?.condition) params.append("condition", filters.condition);
     if (filters?.sortBy) params.append("sortBy", filters.sortBy);
     if (filters?.search) params.append("search", filters.search);
+    if (filters?.transactionMethod)
+      params.append("transactionMethod", filters.transactionMethod);
+    if (filters?.provinceId != null)
+      params.append("provinceId", String(filters.provinceId));
     if (filters?.page) params.append("page", filters.page.toString());
     if (filters?.limit) params.append("limit", filters.limit.toString());
 
-    const response = await axiosClient.get(`/products/all?${params.toString()}`);
+    const response = await axiosClient.get(
+      `/products/all?${params.toString()}`,
+    );
     return response as unknown as IProductListResponse;
   },
 
   /** Chi tiết sản phẩm đầy đủ – dùng khi xem trang chi tiết hoặc mở form Edit */
   getById: async (id: string): Promise<IProduct> => {
-    const response = await axiosClient.get<{ success?: boolean; data?: IProduct }>(`/products/${id}`);
+    const response = await axiosClient.get<{
+      success?: boolean;
+      data?: IProduct;
+    }>(`/products/${id}`);
     const body = response.data;
     const product = body?.data ?? body;
     if (!product || typeof product !== "object") {
@@ -124,14 +143,17 @@ export const ProductService = {
     return product as IProduct;
   },
 
-  getByCategory: async (categorySlug: string, filters?: IProductFilters): Promise<IProductListResponse> => {
+  getByCategory: async (
+    categorySlug: string,
+    filters?: IProductFilters,
+  ): Promise<IProductListResponse> => {
     return ProductService.getAll({ ...filters, categorySlug });
   },
 
   getBySubCategory: async (
     categorySlug: string,
     subCategorySlug: string,
-    filters?: IProductFilters
+    filters?: IProductFilters,
   ): Promise<IProductListResponse> => {
     return ProductService.getAll({
       ...filters,
@@ -141,18 +163,23 @@ export const ProductService = {
   },
 
   /** User: danh sách sản phẩm đã đăng (chỉ fields cho list). Chi tiết đầy đủ khi bấm Edit gọi getById. */
-getMyListings: async (params?: { page?: number; limit?: number }): Promise<MyListingsResponse> => {
-      const qs = new URLSearchParams();
-      if (params?.page) qs.set("page", String(params.page));
-      if (params?.limit) qs.set("limit", String(params.limit));
-      const query = qs.toString();
-      const response = await axiosClient.get(`/products/my/listings${query ? `?${query}` : ""}`);
+  getMyListings: async (params?: {
+    page?: number;
+    limit?: number;
+  }): Promise<MyListingsResponse> => {
+    const qs = new URLSearchParams();
+    if (params?.page) qs.set("page", String(params.page));
+    if (params?.limit) qs.set("limit", String(params.limit));
+    const query = qs.toString();
+    const response = await axiosClient.get(
+      `/products/my/listings${query ? `?${query}` : ""}`,
+    );
     return response as unknown as MyListingsResponse;
   },
 
   /** Admin: lấy danh sách sản phẩm (cần token + role admin) */
   getProductsAdmin: async (
-    params?: AdminProductListParams
+    params?: AdminProductListParams,
   ): Promise<AdminProductListResponse> => {
     const queryParams: Record<string, string | number> = {};
 
@@ -171,18 +198,25 @@ getMyListings: async (params?: { page?: number; limit?: number }): Promise<MyLis
   updateStatus: async (
     productId: string,
     status: "approved" | "rejected" | "pending" | "under_review",
-    reason?: string
+    reason?: string,
   ) => {
     const response = await axiosClient.patch(`/products/${productId}/status`, {
       status,
       reason, // Lý do từ chối (bắt buộc nếu status = "rejected")
     });
-    return response as unknown as { success: boolean; _id: string; status: string; message?: string };
+    return response as unknown as {
+      success: boolean;
+      _id: string;
+      status: string;
+      message?: string;
+    };
   },
 
   /** User: yêu cầu duyệt lại sản phẩm bị AI reject (gửi thẳng cho admin, không qua AI) */
   requestReview: async (productId: string) => {
-    const response = await axiosClient.post(`/products/${productId}/request-review`);
+    const response = await axiosClient.post(
+      `/products/${productId}/request-review`,
+    );
     return response as unknown as {
       success: boolean;
       message: string;
@@ -200,10 +234,8 @@ getMyListings: async (params?: { page?: number; limit?: number }): Promise<MyLis
     formData.append("categoryId", payload.categoryId);
     formData.append("subcategoryId", payload.subcategoryId);
     formData.append("condition", payload.condition ?? "good");
-    formData.append(
-      "attributes",
-      JSON.stringify(payload.attributes ?? [])
-    );
+    formData.append("attributes", JSON.stringify(payload.attributes ?? []));
+    formData.append("deliveryOptions", JSON.stringify(payload.deliveryOptions));
     // Gửi thông tin ảnh cũ để giữ lại
     if (payload.existingImages && payload.existingImages.length > 0) {
       formData.append("existingImages", JSON.stringify(payload.existingImages));
@@ -218,9 +250,11 @@ getMyListings: async (params?: { page?: number; limit?: number }): Promise<MyLis
     if (payload.provinceId) formData.append("provinceId", payload.provinceId);
     if (payload.districtId) formData.append("districtId", payload.districtId);
     if (payload.wardCode) formData.append("wardCode", payload.wardCode);
-    if (payload.specificAddress) formData.append("specificAddress", payload.specificAddress);
+    if (payload.specificAddress)
+      formData.append("specificAddress", payload.specificAddress);
     if (payload.fullName) formData.append("fullName", payload.fullName);
-    if (payload.phoneNumber) formData.append("phoneNumber", payload.phoneNumber);
+    if (payload.phoneNumber)
+      formData.append("phoneNumber", payload.phoneNumber);
     if (payload.addressId) formData.append("addressId", payload.addressId);
 
     const response = await axiosClient.put(`/products/${productId}`, formData, {

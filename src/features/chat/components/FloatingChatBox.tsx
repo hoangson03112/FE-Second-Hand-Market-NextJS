@@ -11,6 +11,7 @@ import { ChatHeader } from "./ChatHeader";
 import { ChatConversationList } from "./ChatConversationList";
 import { ChatMessages } from "./ChatMessages";
 import { ChatInput } from "./ChatInput";
+import SellerDiscountInline from "./SellerDiscountInline";
 import { buildProductMessage, buildOrderMessage } from "../utils/productMessage";
 
 interface ProductInfo {
@@ -445,6 +446,28 @@ export default function FloatingChatBox() {
                   }}
                   onSubmit={handleSendMessage}
                 />
+                {/* Inline discount form for sellers */}
+                {account?.role === "seller" && selectedConversation && (
+                  <SellerDiscountInline
+                    buyerId={selectedConversation._id}
+                    sellerId={account.accountID}
+                    onCreated={(discount) => {
+                      // Optionally notify in chat
+                      setMessages((prev) => [
+                        ...prev,
+                        {
+                          _id: Date.now().toString(),
+                          conversationId: "",
+                          senderId: account.accountID,
+                          receiverId: selectedConversation._id,
+                          type: "text",
+                          text: `Đã tạo giảm giá cho bạn: ${discount.productId} với giá ${discount.price.toLocaleString("vi-VN")}₫, hết hạn ${new Date(discount.endDate).toLocaleDateString("vi-VN")}`,
+                          createdAt: new Date().toISOString(),
+                        },
+                      ]);
+                    }}
+                  />
+                )}
               </div>
             )}
           </div>
