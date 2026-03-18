@@ -1,8 +1,8 @@
 "use client";
 
-import { IconUser, IconStar, IconTruck, IconMapPin, IconClock } from "@tabler/icons-react";
+import { IconStar, IconTruck, IconMapPin, IconClock } from "@tabler/icons-react";
 import { ISeller } from "@/types/product";
-import Image from "next/image";
+import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
 import { getProvinceName } from "@/utils";
 import { getMonthYear } from "@/utils/date";
 
@@ -30,19 +30,12 @@ export default function SellerInfoCard({
         Thông Tin Người Bán
       </h3>
       <div className="flex items-start gap-3">
-        <div className="w-12 h-12 bg-gradient-to-br from-taupe-100 to-taupe-200 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden border-2 border-border">
-          {seller.avatar ? (
-            <Image
-              src={seller.avatar}
-              alt={seller.fullName ?? "Seller"}
-              width={48}
-              height={48}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <IconUser className="h-6 w-6 text-taupe-400" />
-          )}
-        </div>
+        <AvatarOrInitials
+          avatar={seller.avatar as string | { url?: string } | null}
+          fullName={seller.fullName ?? ""}
+          size={48}
+          className="border-2 border-border"
+        />
         <div className="flex-1">
           <h4 className="font-medium text-taupe-900 mb-2">
             {seller.fullName}

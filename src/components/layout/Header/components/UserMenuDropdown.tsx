@@ -2,9 +2,11 @@ import { IconChevronDown, IconMessageCircle, IconSettings, IconPackage, IconTruc
 import Link from "next/link";
 import Image from "next/image";
 import { RefObject } from "react";
+import { getAvatarUrl } from "@/utils";
 
 interface HeaderAccount {
-  avatar?: string;
+  /** URL string hoặc object { url } từ API (local upload hoặc Google) */
+  avatar?: string | { url?: string };
   fullName?: string;
   email?: string;
   role?: string;
@@ -29,6 +31,7 @@ export function UserMenuDropdown({
   handleLogout,
   getInitials,
 }: UserMenuDropdownProps) {
+  const avatarUrl = getAvatarUrl(account?.avatar);
   return (
     <div className="relative" ref={dropdownRef}>
       <button
@@ -38,9 +41,9 @@ export function UserMenuDropdown({
         aria-expanded={showUserDropdown}
         aria-haspopup="true"
       >
-        {account?.avatar ? (
+        {avatarUrl ? (
           <Image
-            src={account.avatar}
+            src={avatarUrl}
             alt=""
             width={30}
             height={30}
@@ -73,9 +76,9 @@ export function UserMenuDropdown({
         >
           <div className="px-4 pt-4 pb-3 border-b border-border">
             <div className="flex items-center gap-3">
-              {account?.avatar ? (
+              {avatarUrl ? (
                 <Image
-                  src={account.avatar}
+                  src={avatarUrl}
                   alt=""
                   width={36}
                   height={36}

@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { IconMessageCircle, IconLoader2 } from "@tabler/icons-react";
+import { IconMessageCircle, IconLoader2, IconPercentage } from "@tabler/icons-react";
+import { useQuery } from "@tanstack/react-query";
 import { useUser } from "@/hooks/useUser";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { ChatService } from "@/services/chat.service";
+import { SellerService } from "@/services/seller.service";
 import type { Message, Conversation } from "@/types/chat";
 import { useNotificationStore } from "@/store/useNotificationStore";
+import { useTokenStore } from "@/store/useTokenStore";
 import { ChatHeader } from "./ChatHeader";
 import { ChatConversationList } from "./ChatConversationList";
 import { ChatMessages } from "./ChatMessages";
@@ -49,6 +52,7 @@ export default function FloatingChatBox() {
     Record<string, string>
   >({});
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [isDealMode, setIsDealMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sendingMessage, setSendingMessage] = useState(false);
   const [chatError, setChatError] = useState<string | null>(null);
@@ -56,10 +60,20 @@ export default function FloatingChatBox() {
   const shouldAutoScrollRef = useRef(true);
 
   const { data: account } = useUser();
+  const accessToken = useTokenStore((state) => state.accessToken);
   const { lastMessage, isConnected } = useWebSocket(account?.accountID);
   const addNotification = useNotificationStore(
     (state) => state.addNotification,
   );
+
+  const { data: productLimit } = useQuery({
+    queryKey: ["seller", "product-limit"],
+    queryFn: () => SellerService.getProductLimit(),
+    enabled: !!accessToken && !!account,
+    staleTime: 60000,
+  });
+
+  const canCreateDeal = (productLimit?.totalProducts ?? 0) > 0;
 
   const loadMessages = useCallback(async (partnerId: string) => {
     try {
@@ -194,7 +208,22 @@ export default function FloatingChatBox() {
       lastMessage.data
     ) {
       const newMsg = lastMessage.data as Message;
-      setMessages((prev) => [...prev, newMsg]);
+      const myId = account?.accountID;
+      if (!myId) return;
+
+      // Safety: ignore messages not addressed to / sent by current user
+      // (prevents cross-user leakage if socket routing misbehaves)
+      const isRelevant =
+        newMsg.senderId === myId || newMsg.receiverId === myId;
+      if (!isRelevant) return;
+
+      const otherPartyId = newMsg.senderId === myId ? newMsg.receiverId : newMsg.senderId;
+      const isCurrentThread =
+        !!selectedConversation?._id && selectedConversation._id === otherPartyId;
+
+      if (isCurrentThread) {
+        setMessages((prev) => [...prev, newMsg]);
+      }
 
       const isConversationOpen =
         isOpen &&
@@ -265,6 +294,7 @@ export default function FloatingChatBox() {
     setSelectedConversation(conversation);
     setNewMessage(draftByConversation[conversation._id] || "");
     setChatError(null);
+    setIsDealMode(false);
     loadMessages(conversation._id);
   };
 
@@ -343,6 +373,7 @@ export default function FloatingChatBox() {
   const handleBackToList = () => {
     setSelectedConversation(null);
     setMessages([]);
+    setIsDealMode(false);
   };
 
   if (!account) return null;
@@ -415,57 +446,89 @@ export default function FloatingChatBox() {
                   />
                 </div>
 
-                <ChatInput
-                  value={newMessage}
-                  sending={sendingMessage}
-                  errorMessage={chatError}
-                  selectedFiles={selectedFiles}
-                  onChange={(value) => {
-                    setNewMessage(value);
-                    setChatError(null);
-                    if (selectedConversation) {
-                      setDraftByConversation((prev) => ({
-                        ...prev,
-                        [selectedConversation._id]: value,
-                      }));
-                    }
-                  }}
-                  onFilesChange={(files) => {
-                    setSelectedFiles((prev) => [...prev, ...files].slice(0, 5));
-                    setChatError(null);
-                  }}
-                  onRemoveFile={(index) => {
-                    setSelectedFiles((prev) =>
-                      prev.filter((_, idx) => idx !== index),
-                    );
-                    setChatError(null);
-                  }}
-                  onClearFiles={() => {
-                    setSelectedFiles([]);
-                    setChatError(null);
-                  }}
-                  onSubmit={handleSendMessage}
-                />
-                {/* Inline discount form for sellers */}
-                {account?.role === "seller" && selectedConversation && (
+                {isDealMode && canCreateDeal && selectedConversation ? (
                   <SellerDiscountInline
                     buyerId={selectedConversation._id}
-                    sellerId={account.accountID}
-                    onCreated={(discount) => {
-                      // Optionally notify in chat
-                      setMessages((prev) => [
-                        ...prev,
-                        {
-                          _id: Date.now().toString(),
-                          conversationId: "",
-                          senderId: account.accountID,
-                          receiverId: selectedConversation._id,
-                          type: "text",
-                          text: `Đã tạo giảm giá cho bạn: ${discount.productId} với giá ${discount.price.toLocaleString("vi-VN")}₫, hết hạn ${new Date(discount.endDate).toLocaleDateString("vi-VN")}`,
-                          createdAt: new Date().toISOString(),
-                        },
-                      ]);
+                    buyerName={selectedConversation.name}
+                    onCancel={() => setIsDealMode(false)}
+                    onCreated={async ({ product, discountedPrice }) => {
+                      try {
+                        const productUrl =
+                          typeof window !== "undefined"
+                            ? `${window.location.origin}/products/${product._id}/${product.slug || "product"}`
+                            : "";
+                        const productMessage = buildProductMessage({
+                          name: `${product.name} (Ưu đãi riêng)`,
+                          price: discountedPrice,
+                          image: product.imageUrl,
+                          url: productUrl,
+                        });
+
+                        await ChatService.sendMessage(
+                          selectedConversation._id,
+                          productMessage,
+                        );
+                        setMessages((prev) => [
+                          ...prev,
+                          {
+                            _id: Date.now().toString(),
+                            conversationId: "",
+                            senderId: account.accountID,
+                            receiverId: selectedConversation._id,
+                            type: "text",
+                            text: productMessage,
+                            createdAt: new Date().toISOString(),
+                          },
+                        ]);
+                        setIsDealMode(false);
+                      } catch (error) {
+                        console.error("Error sending discount product message:", error);
+                      }
                     }}
+                  />
+                ) : (
+                  <ChatInput
+                    value={newMessage}
+                    sending={sendingMessage}
+                    errorMessage={chatError}
+                    selectedFiles={selectedFiles}
+                    extraActions={
+                      canCreateDeal && selectedConversation ? (
+                        <button
+                          type="button"
+                          onClick={() => setIsDealMode(true)}
+                          className="inline-flex h-[52px] items-center gap-1.5 rounded-xl border-2 border-primary/30 bg-primary/8 px-3.5 text-xs font-semibold text-primary transition hover:bg-primary/14"
+                        >
+                          <IconPercentage className="h-4 w-4" />
+                          Deal
+                        </button>
+                      ) : null
+                    }
+                    onChange={(value) => {
+                      setNewMessage(value);
+                      setChatError(null);
+                      if (selectedConversation) {
+                        setDraftByConversation((prev) => ({
+                          ...prev,
+                          [selectedConversation._id]: value,
+                        }));
+                      }
+                    }}
+                    onFilesChange={(files) => {
+                      setSelectedFiles((prev) => [...prev, ...files].slice(0, 5));
+                      setChatError(null);
+                    }}
+                    onRemoveFile={(index) => {
+                      setSelectedFiles((prev) =>
+                        prev.filter((_, idx) => idx !== index),
+                      );
+                      setChatError(null);
+                    }}
+                    onClearFiles={() => {
+                      setSelectedFiles([]);
+                      setChatError(null);
+                    }}
+                    onSubmit={handleSendMessage}
                   />
                 )}
               </div>

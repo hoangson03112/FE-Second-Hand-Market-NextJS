@@ -70,8 +70,13 @@ export default function SellersTable({
           </thead>
           <tbody>
             {sellers.map((seller: AdminSeller) => {
+              const effectiveStatus =
+                seller.accountId?.status === "banned"
+                  ? "banned"
+                  : seller.verificationStatus;
+
               const statusInfo =
-                STATUS_BADGE[seller.verificationStatus] ?? {
+                STATUS_BADGE[effectiveStatus] ?? {
                   label: seller.verificationStatus,
                   className: "bg-muted text-muted-foreground",
                 };

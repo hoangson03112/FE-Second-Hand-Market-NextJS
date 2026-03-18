@@ -11,6 +11,7 @@ import type { CreateOrderRequest } from "@/types/order";
 import { logger } from "@/infrastructure/monitoring/logger";
 import { useToast } from "@/components/ui/Toast";
 import { CHECKOUT_MESSAGES } from "@/constants/messages";
+import { getAvatarUrl } from "@/utils";
 
 export interface SellerGroup {
   sellerId: string;
@@ -249,7 +250,7 @@ export function useCheckout() {
       return {
         sellerId,
         sellerName: seller?.fullName ?? "Người bán",
-        sellerAvatar: seller?.avatar ?? null,
+        sellerAvatar: getAvatarUrl(seller?.avatar as { url?: string }) ?? null,
         items,
         shippingInfo,
         subtotal,

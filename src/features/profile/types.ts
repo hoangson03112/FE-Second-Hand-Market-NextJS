@@ -1,4 +1,4 @@
-export type TabId = "profile" | "password";
+export type TabId = "profile" | "password" | "bank";
 
 export interface ProfileFormData {
   fullName: string;
@@ -10,4 +10,11 @@ export interface PasswordFormData {
   oldPassword: string;
   newPassword: string;
   confirmPassword: string;
+}
+
+export interface BankFormData {
+  bankName: string;
+  accountNumber: string;
+  accountHolder: string;
+  bankBin?: string;
 }

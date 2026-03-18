@@ -26,13 +26,38 @@ export type DashboardUserActivityDataPoint = {
 };
 
 export interface DashboardStats {
-  totalRevenue: number;
-  soldProducts: number;
-  newUsers: number;
-  completionRate: number;
-  salesData: DashboardSalesDataPoint[];
-  categoryData: DashboardCategoryDataPoint[];
-  userActivityData: DashboardUserActivityDataPoint[];
+  kpis: {
+    totalRevenue: number;
+    totalOrders: number;
+    completionRate: number;
+    totalRefundAmount: number;
+    newUsers: number;
+    newSellers: number;
+  };
+  ordersByStatus: {
+    pending: number;
+    confirmed: number;
+    shipping: number;
+    delivered: number;
+    refund: number;
+    refunded: number;
+    cancelled: number;
+    totalRevenue: number;
+  };
+  refundsByStatus: {
+    pending: number;
+    approved: number;
+    returned: number;
+    processing: number;
+    completed: number;
+    failed: number;
+    totalRefundAmount: number;
+  };
+  risk: {
+    bannedAccounts: number;
+    bannedSellers: number;
+    pendingReports: number;
+  };
 }
 
 export type AdminUserRef = {
@@ -98,6 +123,8 @@ export interface AdminSeller {
     phoneNumber?: string;
     createdAt?: string;
     avatar?: { url: string };
+    status?: "active" | "inactive" | "banned";
+    role?: string;
   };
   verificationStatus: SellerVerificationStatus;
   businessAddress?: string;
@@ -131,11 +158,29 @@ export interface AdminReport {
   _id: string;
   type: string;
   targetId?: string | Record<string, unknown>;
-  reporterId?: { fullName: string; email: string; phoneNumber?: string };
+  reporterId?: { fullName: string; email: string; phoneNumber?: string } | null;
+  reporterEmail?: string;
+  reporterFullName?: string;
   status?: string;
   reason?: string;
   description?: string;
   images?: { url: string }[];
+  createdAt: string;
+}
+
+export interface AdminAuditLog {
+  _id: string;
+  adminId?: {
+    _id: string;
+    fullName?: string;
+    email?: string;
+  } | null;
+  action: string;
+  targetType: string;
+  targetId: string;
+  metadata?: Record<string, unknown>;
+  ip?: string | null;
+  userAgent?: string | null;
   createdAt: string;
 }
 
@@ -156,6 +201,8 @@ export type GetAdminSellersParams = {
   status?: SellerVerificationStatus;
   page?: number;
   limit?: number;
+  startDate?: string;
+  endDate?: string;
 };
 
 export type GetAdminSellersResponse = {

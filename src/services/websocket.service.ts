@@ -95,6 +95,16 @@ class WebSocketService {
         this.messageHandlers.forEach((handler) => handler(message));
       });
 
+      this.socket.on("account-banned", (data: unknown) => {
+        const message: WebSocketMessage = {
+          type: "account:banned",
+          userId,
+          data,
+          timestamp: new Date().toISOString(),
+        };
+        this.messageHandlers.forEach((handler) => handler(message));
+      });
+
       this.socket.on("message-error", (error: unknown) => {
         logger.error("Socket message error", new Error(String(error)));
       });

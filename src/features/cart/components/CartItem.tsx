@@ -90,7 +90,12 @@ export default function CartItem({
         
         <div className="mt-auto space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-base font-medium text-primary">{formatPrice(product.price)}</span>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-base font-medium text-primary">{formatPrice(product.price)}</span>
+              {product.hasPersonalDiscount && product.originalPrice != null && (
+                <span className="text-xs text-taupe-400 line-through">{formatPrice(product.originalPrice)}</span>
+              )}
+            </div>
             <button
               type="button"
               onClick={() => onRemove(product._id)}
@@ -146,8 +151,11 @@ export default function CartItem({
           {product.name}
         </Link>
 
-        <div className="w-24 text-center text-base font-medium text-taupe-900">
-          {formatPrice(product.price)}
+        <div className="w-24 text-center">
+          <div className="text-base font-medium text-primary">{formatPrice(product.price)}</div>
+          {product.hasPersonalDiscount && product.originalPrice != null && (
+            <div className="text-xs text-taupe-400 line-through">{formatPrice(product.originalPrice)}</div>
+          )}
         </div>
 
         <div className="w-28 flex justify-center" onClick={(e) => e.stopPropagation()}>

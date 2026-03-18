@@ -1,2 +1,3 @@
 export { usePasswordChange } from "./usePasswordChange";
 export { useProfile } from "./useProfile";
+export { useSellerBank } from "./useSellerBank";

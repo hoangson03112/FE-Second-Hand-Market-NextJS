@@ -1,5 +1,5 @@
+import { useMemo, useState } from "react";
 import { IconLoader2, IconMessageCircle } from "@tabler/icons-react";
-import Image from "next/image";
 import type { Conversation } from "@/types/chat";
 
 interface ChatConversationListProps {
@@ -70,6 +70,18 @@ function ConversationItem({
   conversation: Conversation;
   onSelect: (c: Conversation) => void;
 }) {
+  const [avatarLoadFailed, setAvatarLoadFailed] = useState(false);
+  const avatarUrl = useMemo(() => {
+    if (!conversation.avatar) return "";
+    if (typeof conversation.avatar === "string") return conversation.avatar;
+    if (typeof conversation.avatar === "object" && conversation.avatar?.url) {
+      return conversation.avatar.url;
+    }
+    return "";
+  }, [conversation.avatar]);
+
+  const showAvatarImage = Boolean(avatarUrl) && !avatarLoadFailed;
+
   return (
     <button
       onClick={() => onSelect(conversation)}
@@ -77,13 +89,12 @@ function ConversationItem({
     >
       <div className="relative">
         <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center overflow-hidden shrink-0 ring-2 ring-transparent group-hover:ring-primary/30 transition-all">
-          {conversation.avatar ? (
-            <Image
-              src={conversation.avatar}
+          {showAvatarImage ? (
+            <img
+              src={avatarUrl}
               alt={conversation.name}
-              width={56}
-              height={56}
-              className="object-cover"
+              className="h-full w-full object-cover"
+              onError={() => setAvatarLoadFailed(true)}
             />
           ) : (
             <span className="text-lg font-bold text-primary">

@@ -28,8 +28,10 @@ import { SellerActionButtons } from "./components/SellerActionButtons";
 import { useSellerOrderDetail } from "./hooks/useSellerOrderDetail";
 import { formatPrice } from "@/utils/format/price";
 import { format, formatTimeAgo } from "@/utils/format/date";
+import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
 import { formatShippingMethod, getShippingMethodType, formatPaymentMethod } from "@/utils/format";
 import { openChatWithOrder } from "@/utils/chat";
+import { getAvatarUrl } from "@/utils";
 
 interface TimelineEntry {
   status: string;
@@ -133,6 +135,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
       {
         _id: order.buyerId._id,
         fullName: order.buyerId.fullName,
+        avatar: getAvatarUrl((order.buyerId as { avatar?: { url?: string } })?.avatar) ?? undefined,
       },
       {
         _id: order._id,
@@ -392,11 +395,12 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
               <div className="p-5 space-y-4">
                 {/* Avatar + name */}
                 <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center shrink-0 ring-2 ring-primary/20">
-                    <span className="text-base font-bold text-primary">
-                      {order.buyerId.fullName?.charAt(0)?.toUpperCase() ?? "?"}
-                    </span>
-                  </div>
+                  <AvatarOrInitials
+                    avatar={(order.buyerId as { avatar?: { url?: string } })?.avatar}
+                    fullName={order.buyerId.fullName}
+                    size={44}
+                    className="ring-2 ring-primary/20"
+                  />
                   <div className="min-w-0">
                     <p className="font-semibold text-foreground truncate">{order.buyerId.fullName}</p>
                     <div className="flex items-center gap-1.5 mt-0.5">

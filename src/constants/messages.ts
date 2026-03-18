@@ -162,6 +162,25 @@ export const SHARE_MESSAGES = {
 } as const;
 
 // ============================================================================
+// Feature info (help users understand platform rules)
+// ============================================================================
+export const FEATURE_INFO = {
+  /** Sell page: product limit for non-seller */
+  SELLER_LIMIT: (used: number, limit: number) =>
+    `Bạn đã đăng ${used}/${limit} sản phẩm. Tài khoản thường giới hạn ${limit} sản phẩm. Đăng ký Seller để đăng không giới hạn và nhận thanh toán qua ngân hàng.`,
+  /** Sell page: seller has no limit */
+  SELLER_UNLIMITED: "Bạn là Seller — đăng sản phẩm không giới hạn và nhận thanh toán online.",
+  /** Checkout: why bank transfer is not available */
+  PAYMENT_COD_ONLY:
+    "Người bán chưa xác minh Seller — chỉ thanh toán khi nhận hàng (COD). Đơn từ Seller đã xác minh mới có thanh toán trước qua ngân hàng.",
+  /** Order detail: review policy */
+  REVIEW_PRODUCT_RULE:
+    "Sản phẩm còn nhiều trong kho (stock > 1) mới được đánh giá sản phẩm. Bạn luôn có thể đánh giá người bán để giúp cộng đồng tin tưởng hơn.",
+  /** Order detail: seller review tip */
+  REVIEW_SELLER_TIP: "Đánh giá người bán giúp người mua khác tin tưởng hơn khi giao dịch.",
+} as const;
+
+// ============================================================================
 // General / common
 // ============================================================================
 export const COMMON_MESSAGES = {

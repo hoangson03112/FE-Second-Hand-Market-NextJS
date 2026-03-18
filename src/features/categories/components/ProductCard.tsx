@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { IProduct } from "@/types/product";
 import { formatPrice } from "@/utils/format/price";
 import { getProvinceName } from "@/utils";
+import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
 
 interface ProductCardProps {
   product: IProduct;
@@ -29,6 +30,8 @@ const CONDITION_LABEL: Record<string, { label: string; color: string }> = {
 export default function ProductCard({ product }: ProductCardProps) {
   const provinceDisplay = getProvinceName(product.seller?.from_province_id);
   const condition = CONDITION_LABEL[product.condition ?? ""];
+  const sellerDisplayName =
+    product.seller?.fullName || product.seller?.account?.fullName || undefined;
 
   return (
     <Link
@@ -110,12 +113,24 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Meta info */}
         <div className="flex items-center justify-between text-[12px] text-taupe-400 mt-auto pt-3 border-t border-taupe-100">
-          {provinceDisplay && (
-            <div className="flex items-center gap-1">
-              <IconMapPin className="w-3.5 h-3.5 shrink-0" strokeWidth={2} />
-              <span className="max-w-[100px] truncate">{provinceDisplay}</span>
-            </div>
-          )}
+          <div className="flex items-center gap-2 min-w-0">
+            <AvatarOrInitials
+              avatar={product.seller?.avatar as { url?: string } | undefined}
+              fullName={sellerDisplayName}
+              size={20}
+              className="flex-shrink-0"
+            />
+            {provinceDisplay ? (
+              <span className="flex items-center gap-1 truncate">
+                <IconMapPin className="w-3.5 h-3.5 shrink-0" strokeWidth={2} />
+                <span className="max-w-[80px] truncate">{provinceDisplay}</span>
+              </span>
+            ) : (
+              sellerDisplayName && (
+                <span className="truncate max-w-[100px]">{sellerDisplayName}</span>
+              )
+            )}
+          </div>
           {(product.views ?? 0) > 0 && (
             <div className="flex items-center gap-1 ml-auto">
               <IconEye className="w-3.5 h-3.5" strokeWidth={2} />

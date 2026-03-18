@@ -19,8 +19,10 @@ import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import { formatShippingMethod } from "@/utils/format";
 import { openChatWithOrder } from "@/utils/chat";
+import { getAvatarUrl } from "@/utils";
 import { STATUS_CONFIG } from "@/constants/orderStatus";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
 
 interface OrderCardProps {
 	order: Order;
@@ -32,9 +34,6 @@ interface OrderCardProps {
 }
 
 export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfirmReceived, onOpenRefund }: OrderCardProps) {
-
-console.log(order);
-
 	return (
 		<div className="bg-cream-50/90 backdrop-blur-md rounded-3xl border-2 border-neutral-200/60 shadow-lg shadow-neutral-200/50 overflow-hidden hover:shadow-xl hover:shadow-neutral-200/60 transition-all duration-300 group">
 			<div className="bg-cream-50/50 px-5 py-4 border-b-2 border-neutral-200/60 flex items-center justify-between">
@@ -98,9 +97,11 @@ console.log(order);
 				{order.sellerId && (
 					<div className="mt-4 pt-4 border-t-2 border-neutral-200/60 flex items-center justify-between">
 						<div className="flex items-center gap-2">
-							<div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-								<IconPackage className="w-4 h-4 text-primary" />
-							</div>
+							<AvatarOrInitials
+								avatar={(order.sellerId as { avatar?: { url?: string } })?.avatar}
+								fullName={order.sellerId.fullName}
+								size={32}
+							/>
 							<div>
 								<p className="text-xs text-neutral-600">Người bán</p>
 								<p className="font-medium text-neutral-900 text-sm">{order.sellerId.fullName || "—"}</p>
@@ -112,6 +113,7 @@ console.log(order);
 									{
 										_id: order.sellerId._id,
 										fullName: order.sellerId.fullName,
+										avatar: getAvatarUrl((order.sellerId as { avatar?: { url?: string } })?.avatar) ?? undefined,
 									},
 									{
 										_id: order._id,

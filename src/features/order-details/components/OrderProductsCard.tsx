@@ -3,6 +3,7 @@ import { IconMessage, IconPackage, IconPhone, IconStar, IconUser } from "@tabler
 import { formatPrice } from "@/utils/format/price";
 import { getConditionBadgeColor, getConditionLabel } from "@/utils/format";
 import { openChatWithOrder } from "@/utils/chat";
+import { getAvatarUrl } from "@/utils";
 import type { Order } from "@/types/order";
 
 interface OrderProductsCardProps {
@@ -129,7 +130,11 @@ export function OrderProductsCard({
           <button
             onClick={() =>
               openChatWithOrder(
-                { _id: order.sellerId._id, fullName: order.sellerId.fullName },
+                {
+                  _id: order.sellerId._id,
+                  fullName: order.sellerId.fullName,
+                  avatar: getAvatarUrl((order.sellerId as { avatar?: { url?: string } })?.avatar) ?? undefined,
+                },
                 {
                   _id: order._id,
                   status: order.status,

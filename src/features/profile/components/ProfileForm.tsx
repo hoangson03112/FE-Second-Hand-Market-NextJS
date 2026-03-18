@@ -25,30 +25,18 @@ export function ProfileForm({
 }: ProfileFormProps) {
   return (
     <div>
-      {/* Header with gradient */}
-      <div className="relative px-6 py-5 border-b border-border bg-gradient-to-r from-primary/5 via-transparent to-transparent">
-        <div className="flex items-start justify-between">
-          <div>
-            <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
-              <IconUser className="w-5 h-5 text-primary" />
-              Hồ Sơ Của Tôi
-            </h2>
-            <p className="text-sm text-muted-foreground mt-1.5">
-              Quản lý thông tin cá nhân và bảo mật tài khoản của bạn
-            </p>
-          </div>
-        </div>
+      <div className="px-6 py-5 border-b border-border">
+        <h2 className="text-xl font-bold text-foreground">Hồ sơ của tôi</h2>
+        <p className="text-sm text-muted-foreground mt-0.5">
+          Quản lý thông tin cá nhân và bảo mật tài khoản
+        </p>
       </div>
 
-      {/* Form with enhanced styling */}
       <form onSubmit={onSubmit} className="p-6">
         <div className="space-y-6 max-w-3xl">
-          {/* Full name */}
-          <div className="group">
-            <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-              <IconUser className="w-4 h-4 text-primary" />
-              Họ và tên
-              <span className="text-destructive">*</span>
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Họ và tên <span className="text-destructive">*</span>
             </label>
             <div className="relative">
               <input
@@ -56,23 +44,20 @@ export function ProfileForm({
                 name="fullName"
                 value={formData.fullName}
                 onChange={onChange}
-                className="w-full px-4 py-3 pl-10 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                className="w-full h-11 pl-10 pr-4 rounded-xl border border-border bg-background text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
                 placeholder="VD: Nguyễn Văn A"
                 required
               />
-              <IconUser className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <IconUser className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
             </div>
           </div>
 
-          {/* Email */}
-          <div className="group">
-            <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-              <IconMail className="w-4 h-4 text-primary" />
-              Email
-              <span className="text-destructive">*</span>
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Email <span className="text-destructive">*</span>
               {isGoogleUser && (
-                <span className="ml-auto text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary font-normal">
-                  Được quản lý bởi Google
+                <span className="ml-2 text-xs font-normal px-2 py-0.5 rounded-lg bg-primary/10 text-primary">
+                  Quản lý bởi Google
                 </span>
               )}
             </label>
@@ -84,42 +69,34 @@ export function ProfileForm({
                 onChange={onChange}
                 readOnly={isGoogleUser}
                 disabled={isGoogleUser}
-                className={`w-full px-4 py-3 pl-10 rounded-lg border transition-all ${
+                className={`w-full h-11 pl-10 pr-4 rounded-xl border text-sm transition-all ${
                   isGoogleUser
-                    ? "bg-muted/50 cursor-not-allowed text-muted-foreground border-border/50"
-                    : "bg-background border-border focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                    ? "bg-muted/50 cursor-not-allowed text-muted-foreground border-border"
+                    : "bg-background border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
                 }`}
                 placeholder="email@example.com"
                 required
               />
-              <IconMail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <IconMail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
               {isGoogleUser && (
-                <IconCircleCheck className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
+                <IconCircleCheck className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary pointer-events-none" />
               )}
             </div>
-            {isGoogleUser ? (
-              <div className="flex items-start gap-2 mt-2 p-2.5 rounded-lg bg-primary/5 border border-primary/10">
+            {isGoogleUser && (
+              <p className="mt-2 flex items-start gap-2 text-xs text-muted-foreground p-3 rounded-xl bg-muted/50 border border-border">
                 <IconAlertCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                <p className="text-xs text-muted-foreground">
-                  Email này được liên kết với tài khoản Google của bạn và không
-                  thể thay đổi trực tiếp.
-                </p>
-              </div>
-            ) : (
-              <div className="flex items-start gap-2 mt-2 p-2.5 rounded-lg bg-blue-50 border border-blue-200">
-                <span className="text-sm shrink-0">📧</span>
-                <p className="text-xs text-blue-700">
-                  <strong>Lưu ý:</strong> Khi thay đổi email, bạn sẽ nhận được
-                  email xác nhận tại địa chỉ mới.
-                </p>
-              </div>
+                Email liên kết tài khoản Google, không thể thay đổi tại đây.
+              </p>
+            )}
+            {!isGoogleUser && (
+              <p className="mt-2 text-xs text-muted-foreground p-3 rounded-xl bg-primary/5 border border-primary/10">
+                Thay đổi email sẽ gửi xác nhận tới địa chỉ mới.
+              </p>
             )}
           </div>
 
-          {/* IconPhone */}
-          <div className="group">
-            <label className="flex items-center gap-2 text-sm font-medium text-foreground mb-2">
-              <IconPhone className="w-4 h-4 text-primary" />
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">
               Số điện thoại
             </label>
             <div className="relative">
@@ -128,45 +105,37 @@ export function ProfileForm({
                 name="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={onChange}
-                className="w-full px-4 py-3 pl-10 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                className="w-full h-11 pl-10 pr-4 rounded-xl border border-border bg-background text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
                 placeholder="VD: 0912 345 678"
               />
-              <IconPhone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <IconPhone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
             </div>
-            <div className="flex items-start gap-2 mt-2 p-2.5 rounded-lg bg-blue-50 border border-blue-200">
-              <span className="text-sm shrink-0">📧</span>
-              <p className="text-xs text-blue-700">
-                <strong>Lưu ý:</strong> Khi thay đổi số điện thoại, bạn sẽ nhận
-                được email xác nhận.
-              </p>
-            </div>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Có thể nhận mã xác nhận khi thay đổi SĐT.
+            </p>
           </div>
 
-          {/* Divider */}
-          <div className="border-t border-border pt-6">
-            {/* Submit */}
-            <div className="flex items-center justify-between">
-              <p className="text-sm text-muted-foreground">
-                <span className="text-destructive">*</span> Thông tin bắt buộc
-              </p>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="px-8 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2 font-medium shadow-sm hover:shadow-md"
-              >
-                {isSubmitting ? (
-                  <>
-                    <IconLoader2 className="w-4 h-4 animate-spin" />
-                    Đang lưu...
-                  </>
-                ) : (
-                  <>
-                    <IconCircleCheck className="w-4 h-4" />
-                    Lưu thay đổi
-                  </>
-                )}
-              </button>
-            </div>
+          <div className="border-t border-border pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <p className="text-sm text-muted-foreground">
+              <span className="text-destructive">*</span> Bắt buộc
+            </p>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="h-11 px-6 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
+            >
+              {isSubmitting ? (
+                <>
+                  <IconLoader2 className="w-4 h-4 animate-spin" />
+                  Đang lưu...
+                </>
+              ) : (
+                <>
+                  <IconCircleCheck className="w-4 h-4" />
+                  Lưu thay đổi
+                </>
+              )}
+            </button>
           </div>
         </div>
       </form>

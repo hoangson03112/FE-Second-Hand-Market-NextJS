@@ -32,3 +32,28 @@ export interface SellerProductLimitResponse {
   limit: number;
   requiresVerification: boolean;
 }
+
+export interface SellerBankInfo {
+  bankName: string;
+  accountNumber: string;
+  accountHolder: string;
+  bankBin?: string | null;
+}
+
+export interface SellerInfoResponse {
+  success: boolean;
+  data: {
+    _id: string;
+    accountId: string;
+    bankInfo: SellerBankInfo;
+    verificationStatus: string;
+    [key: string]: unknown;
+  };
+}
+
+export interface UpdateBankInfoPayload {
+  bankName: string;
+  accountNumber: string;
+  accountHolder: string;
+  bankBin?: string;
+}

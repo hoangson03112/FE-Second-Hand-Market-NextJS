@@ -1,9 +1,18 @@
-import { IconChevronDown, IconChevronUp, IconExternalLink, IconMapPin, IconPackage, IconTruck } from "@tabler/icons-react";
+import {
+  IconChevronDown,
+  IconChevronUp,
+  IconExternalLink,
+  IconMapPin,
+  IconPackage,
+  IconTruck,
+} from "@tabler/icons-react";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 import { Fragment } from "react";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import type { AdminOrder } from "@/types/admin";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
 
 const GHN_TRACKING_URL = "https://tracking.ghn.dev/?order_code=";
 
@@ -38,6 +47,7 @@ export default function OrdersTable({
   onCompleteRefund,
   isCompletingRefund,
 }: OrdersTableProps) {
+  const { confirm } = useConfirm();
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden">
       <div className="overflow-x-auto">
@@ -76,12 +86,21 @@ export default function OrdersTable({
                         {order.createdAt ? format(order.createdAt) : "—"}
                       </span>
                     </td>
-                    <td className="px-4 py-3 hidden sm:table-cell text-foreground">
-                      {order.buyerId?.fullName ?? "—"}
-                      <br />
-                      <span className="text-xs text-muted-foreground">
-                        {order.buyerId?.email ?? ""}
-                      </span>
+                    <td className="px-4 py-3 hidden sm:table-cell">
+                      <div className="flex items-center gap-2">
+                        <AvatarOrInitials
+                          avatar={(order.buyerId as { avatar?: { url?: string } })?.avatar}
+                          fullName={order.buyerId?.fullName}
+                          size={28}
+                        />
+                        <div>
+                          <span className="text-foreground">{order.buyerId?.fullName ?? "—"}</span>
+                          <br />
+                          <span className="text-xs text-muted-foreground">
+                            {order.buyerId?.email ?? ""}
+                          </span>
+                        </div>
+                      </div>
                     </td>
                     <td className="px-4 py-3 font-medium text-foreground">
                       {formatPrice(order.totalAmount)}
@@ -207,10 +226,21 @@ export default function OrdersTable({
                             ) : (
                               <p className="text-muted-foreground text-sm">Người mua chưa cung cấp STK</p>
                             )}
-                            {order.status === "returned" && (
+                            {(order.status as string) === "refund" && (
                               <button
                                 type="button"
-                                onClick={() => onCompleteRefund(order._id)}
+                                onClick={async () => {
+                                  const ok = await confirm({
+                                    title: "Xác nhận hoàn tiền",
+                                    message:
+                                      "Hoàn tiền đơn này sẽ trừ tiền khỏi ví seller và đánh dấu đơn là đã hoàn tiền. Bạn chắc chắn?",
+                                    confirmText: "Hoàn tiền",
+                                    cancelText: "Hủy",
+                                    variant: "danger",
+                                  });
+                                  if (!ok) return;
+                                  void onCompleteRefund(order._id);
+                                }}
                                 disabled={isCompletingRefund}
                                 className="mt-2 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                               >

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { IconLoader2, IconPackage } from "@tabler/icons-react";
 import type { ProductStatusFilter } from "@/types/product";
@@ -27,6 +27,7 @@ export default function AdminProducts() {
     rejectProduct,
     setRejectProduct,
     handleRejectConfirm,
+    handleToggleVisibility,
   } = useAdminProducts();
 
   return (
@@ -83,6 +84,7 @@ export default function AdminProducts() {
             onView={setSelectedProduct}
             onApprove={handleApprove}
             onReject={handleReject}
+            onToggleVisibility={handleToggleVisibility}
           />
 
           {totalPages > 1 && (

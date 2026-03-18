@@ -4,7 +4,7 @@ import { useToast } from "@/components/ui/Toast";
 import type { PasswordFormData } from "../types";
 import { PROFILE_MESSAGES, PASSWORD_MIN_LENGTH } from "@/constants";
 
-export function usePasswordChange() {
+export function usePasswordChange(isGoogleUser: boolean) {
   const toast = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<PasswordFormData>({
@@ -31,18 +31,28 @@ export function usePasswordChange() {
       return;
     }
 
+    if (!isGoogleUser && !formData.oldPassword) {
+      toast.error("Vui lòng nhập mật khẩu hiện tại.");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
-      await AuthService.changePassword({
-        oldPassword: formData.oldPassword,
-        newPassword: formData.newPassword,
-      });
-      setFormData({ oldPassword: "", newPassword: "", confirmPassword: "" });
-      toast.success(PROFILE_MESSAGES.PASSWORD_CHANGE_SUCCESS);
+      if (isGoogleUser) {
+        await AuthService.setPassword({ newPassword: formData.newPassword });
+        setFormData({ oldPassword: "", newPassword: "", confirmPassword: "" });
+        toast.success(PROFILE_MESSAGES.SET_PASSWORD_SUCCESS);
+      } else {
+        await AuthService.changePassword({
+          oldPassword: formData.oldPassword,
+          newPassword: formData.newPassword,
+        });
+        setFormData({ oldPassword: "", newPassword: "", confirmPassword: "" });
+        toast.success(PROFILE_MESSAGES.PASSWORD_CHANGE_SUCCESS);
+      }
     } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : PROFILE_MESSAGES.PASSWORD_CHANGE_ERROR
-      );
+      const message = error instanceof Error ? error.message : (isGoogleUser ? PROFILE_MESSAGES.SET_PASSWORD_ERROR : PROFILE_MESSAGES.PASSWORD_CHANGE_ERROR);
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
     }

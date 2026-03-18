@@ -1,11 +1,14 @@
+import { IconInfoCircle } from "@tabler/icons-react";
 import { Container } from "@/components/layout/Container";
 import { RefundModal } from "./RefundModal";
+import { FEATURE_INFO } from "@/constants/messages";
 import { ProductReviewModal } from "./ProductReviewModal";
 import { RefundDetailCard } from "./RefundDetailCard";
 import { OrderTracking } from "@/components/order";
 import { OrderDetailHeader } from "./OrderDetailHeader";
 import { OrderStatusHero } from "./OrderStatusHero";
 import { OrderProductsCard } from "./OrderProductsCard";
+import { OrderProgressCard } from "./OrderProgressCard";
 import { OrderSellerReviewSection } from "./OrderSellerReviewSection";
 import { OrderMetaCard } from "./OrderMetaCard";
 import { OrderShippingCard } from "./OrderShippingCard";
@@ -13,7 +16,7 @@ import { OrderBankInfoCard } from "./OrderBankInfoCard";
 import { OrderPriceSummary } from "./OrderPriceSummary";
 import { OrderActionButtons } from "./OrderActionButtons";
 import { CancelOrderReasonDialog } from "@/components/ui/CancelOrderReasonDialog";
-import { useOrderDetailView } from "../utils/useOrderDetailView";
+import { useOrderDetailView } from "../hooks/useOrderDetailView";
 import type { Order } from "@/types/order";
 
 const REFUND_RELATED_STATUSES = [
@@ -183,8 +186,22 @@ export function OrderDetailView({
                 productReviews={productReviews}
                 onOpenProductReview={handleOpenProductReview}
               />
+              {!showSellerReview && !isTerminal && (
+                <OrderProgressCard
+                  progressSteps={progressSteps}
+                  effectiveStepIdx={effectiveStepIdx}
+                  orderId={order._id}
+                  status={order.status}
+                  statusDescription={statusDescription}
+                />
+              )}
               {showSellerReview && (
-                <OrderSellerReviewSection
+                <>
+                  <div className="flex items-start gap-3 p-3 rounded-xl border border-primary/20 bg-primary/8">
+                    <IconInfoCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                    <p className="text-xs text-primary/90">{FEATURE_INFO.REVIEW_PRODUCT_RULE}</p>
+                  </div>
+                  <OrderSellerReviewSection
                   existingReview={existingReview}
                   showReviewForm={showReviewForm}
                   reviewRating={reviewRating}
@@ -194,6 +211,7 @@ export function OrderDetailView({
                   onCommentChange={setReviewComment}
                   onSubmit={handleSubmitReview}
                 />
+                </>
               )}
             </div>
 

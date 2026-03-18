@@ -6,6 +6,7 @@ import {
   IconCircleCheck,
   IconCircleX,
   IconEye,
+  IconRefresh,
 } from "@tabler/icons-react";
 import type { IProduct } from "@/types/product";
 import { formatPrice } from "@/utils/format/price";
@@ -18,9 +19,17 @@ type Props = {
   onView: (product: IProduct) => void;
   onApprove: (product: IProduct) => void;
   onReject: (product: IProduct) => void;
+  onToggleVisibility: (product: IProduct) => void;
 };
 
-export function ProductTable({ products, isUpdating, onView, onApprove, onReject }: Props) {
+export function ProductTable({
+  products,
+  isUpdating,
+  onView,
+  onApprove,
+  onReject,
+  onToggleVisibility,
+}: Props) {
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden">
       <div className="overflow-x-auto">
@@ -34,6 +43,7 @@ export function ProductTable({ products, isUpdating, onView, onApprove, onReject
               <th className="text-left px-4 py-3 font-medium text-foreground hidden lg:table-cell">Tình trạng</th>
               <th className="text-left px-4 py-3 font-medium text-foreground hidden md:table-cell">Người đăng</th>
               <th className="text-left px-4 py-3 font-medium text-foreground">Trạng thái</th>
+              <th className="text-left px-4 py-3 font-medium text-foreground">Hiển thị</th>
               <th className="text-left px-4 py-3 font-medium text-foreground hidden lg:table-cell">Ngày tạo</th>
               <th className="text-right px-4 py-3 font-medium text-foreground">Thao tác</th>
             </tr>
@@ -48,6 +58,12 @@ export function ProductTable({ products, isUpdating, onView, onApprove, onReject
                 product.status === "pending" ||
                 product.status === "under_review" ||
                 product.status === "review_requested";
+              const isVisible =
+                product.status === "approved" || product.status === "active";
+              const canToggleVisibility =
+                product.status === "approved" ||
+                product.status === "active" ||
+                product.status === "inactive";
 
               return (
                 <tr
@@ -108,6 +124,26 @@ export function ProductTable({ products, isUpdating, onView, onApprove, onReject
                     </span>
                   </td>
 
+                  {/* Hiển thị */}
+                  <td className="px-4 py-3">
+                    {canToggleVisibility ? (
+                      <span
+                        className={`inline-flex items-center gap-1 rounded-full border border-border px-2 py-0.5 text-[11px] font-medium ${
+                          isVisible ? "text-foreground" : "text-muted-foreground"
+                        }`}
+                      >
+                        <span
+                          className={`inline-block h-1.5 w-1.5 rounded-full ${
+                            isVisible ? "bg-emerald-500" : "bg-muted-foreground/50"
+                          }`}
+                        />
+                        {isVisible ? "Đang hiển thị" : "Đang ẩn"}
+                      </span>
+                    ) : (
+                      <span className="text-[11px] text-muted-foreground">Chưa hiển thị</span>
+                    )}
+                  </td>
+
                   <td className="px-4 py-3 hidden lg:table-cell text-muted-foreground text-xs">
                     {product.createdAt ? format(product.createdAt) : "—"}
                   </td>
@@ -144,6 +180,18 @@ export function ProductTable({ products, isUpdating, onView, onApprove, onReject
                             <IconCircleX className="w-4 h-4" />
                           </button>
                         </>
+                      )}
+                      {canToggleVisibility && (
+                        <button
+                          type="button"
+                          onClick={() => onToggleVisibility(product)}
+                          disabled={isUpdating}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-border px-2 py-1 text-[11px] font-medium text-foreground hover:bg-muted disabled:opacity-50"
+                          title={isVisible ? "Ẩn sản phẩm" : "Hiển thị sản phẩm"}
+                        >
+                          <IconRefresh className="h-3.5 w-3.5" />
+                          Cập nhật trạng thái
+                        </button>
                       )}
                     </div>
                   </td>

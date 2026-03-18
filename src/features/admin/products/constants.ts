@@ -13,7 +13,7 @@ export const STATUS_TABS: { value: ProductStatusFilter | ""; label: string }[] =
   { value: "pending", label: "Chờ duyệt" },
   { value: "review_requested", label: "Yêu cầu duyệt lại" },
   { value: "under_review", label: "Đang xem xét" },
-  { value: "approved", label: "Đã duyệt" },
+  { value: "approved", label: "Đang bán" },
   { value: "rejected", label: "Từ chối" },
 ];
 
@@ -23,7 +23,7 @@ export const STATUS_TABLE_BADGE: Record<string, { label: string; className: stri
   review_requested: { label: "Yêu cầu duyệt lại", className: "bg-primary/15 text-primary" },
   under_review:     { label: "Đang xem xét",       className: "bg-secondary text-foreground/80" },
   pending_review:   { label: "Đang xem xét",       className: "bg-secondary text-foreground/80" },
-  approved:     { label: "Đã duyệt",     className: "bg-secondary text-foreground/80" },
+  approved:     { label: "Đang bán",     className: "bg-primary/15 text-primary" },
   rejected:     { label: "Từ chối",      className: "bg-destructive/10 text-destructive" },
   active:       { label: "Đang bán",     className: "bg-primary/15 text-primary" },
   inactive:     { label: "Ẩn",           className: "bg-muted text-muted-foreground" },
@@ -50,9 +50,9 @@ export const STATUS_BADGE: Record<
     chip: "bg-secondary text-foreground/80",
   },
   approved: {
-    label: "Đã duyệt",
-    dot: "bg-primary/70",
-    chip: "bg-secondary text-foreground/80",
+    label: "Đang bán",
+    dot: "bg-primary",
+    chip: "bg-primary/15 text-primary",
   },
   active: {
     label: "Đang bán",

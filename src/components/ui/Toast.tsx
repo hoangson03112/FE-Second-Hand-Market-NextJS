@@ -1,6 +1,13 @@
 "use client";
 
-import { IconX, IconCircleCheck, IconAlertCircle, IconInfoCircle, IconAlertTriangle, IconPackage, IconMessageCircle, IconTag, IconBell } from "@tabler/icons-react";
+import {
+  IconX,
+  IconCircleCheck,
+  IconAlertCircle,
+  IconInfoCircle,
+  IconAlertTriangle,
+  IconBell,
+} from "@tabler/icons-react";
 import { createContext, useContext, useState, useCallback, ReactNode } from "react";
 
 type ToastType = "success" | "error" | "info" | "warning";
@@ -11,6 +18,7 @@ interface Toast {
   message: string;
   title?: string;
   onClick?: () => void;
+  duration: number;
 }
 
 interface NotificationOptions {
@@ -42,8 +50,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 
   const showToast = useCallback((message: string, type: ToastType = "info", opts?: { title?: string; onClick?: () => void; duration?: number }) => {
     const id = Math.random().toString(36).substring(7);
-    setToasts((prev) => [...prev, { id, message, type, title: opts?.title, onClick: opts?.onClick }]);
-    setTimeout(() => removeToast(id), opts?.duration ?? TOAST_DURATION);
+    const duration = opts?.duration ?? TOAST_DURATION;
+    setToasts((prev) => [
+      ...prev,
+      { id, message, type, title: opts?.title, onClick: opts?.onClick, duration },
+    ]);
+    setTimeout(() => removeToast(id), duration);
   }, [removeToast]);
 
   const contextValue: ToastContextType = {
@@ -59,27 +71,53 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   };
 
   const getIcon = (toast: Toast) => {
-    if (toast.title) {
-      // Rich notification icons by inferring from content
-      if (toast.type === "success") return <IconCircleCheck className="h-5 w-5 shrink-0" />;
-      if (toast.type === "error")   return <IconAlertCircle  className="h-5 w-5 shrink-0" />;
-      if (toast.type === "warning") return <IconAlertTriangle className="h-5 w-5 shrink-0" />;
-      return <IconBell className="h-5 w-5 shrink-0" />;
-    }
     switch (toast.type) {
       case "success": return <IconCircleCheck  className="h-5 w-5 shrink-0" />;
       case "error":   return <IconAlertCircle  className="h-5 w-5 shrink-0" />;
       case "warning": return <IconAlertTriangle className="h-5 w-5 shrink-0" />;
-      default:        return <IconInfoCircle   className="h-5 w-5 shrink-0" />;
+      default:        return toast.title ? <IconBell className="h-5 w-5 shrink-0" /> : <IconInfoCircle className="h-5 w-5 shrink-0" />;
     }
   };
 
   const getStyles = (type: ToastType) => {
     switch (type) {
-      case "success": return "bg-secondary/70 text-foreground border-border";
-      case "error":   return "bg-destructive/10 text-destructive border-destructive/20";
-      case "warning": return "bg-primary/8 text-primary/90 border-primary/20";
-      default:        return "bg-muted/60 text-foreground/80 border-border";
+      case "success":
+        return {
+          container: "border-emerald-500/25 bg-emerald-500/10 text-emerald-900 dark:text-emerald-100",
+          iconWrap: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300",
+          progress: "bg-emerald-500/70",
+        };
+      case "error":
+        return {
+          container: "border-destructive/30 bg-destructive/10 text-destructive",
+          iconWrap: "bg-destructive/15 text-destructive",
+          progress: "bg-destructive/80",
+        };
+      case "warning":
+        return {
+          container: "border-amber-500/30 bg-amber-500/10 text-amber-900 dark:text-amber-200",
+          iconWrap: "bg-amber-500/15 text-amber-700 dark:text-amber-300",
+          progress: "bg-amber-500/75",
+        };
+      default:
+        return {
+          container: "border-primary/25 bg-background/95 text-foreground",
+          iconWrap: "bg-primary/10 text-primary",
+          progress: "bg-primary/70",
+        };
+    }
+  };
+
+  const getDefaultTitle = (type: ToastType) => {
+    switch (type) {
+      case "success":
+        return "Thành công";
+      case "error":
+        return "Có lỗi xảy ra";
+      case "warning":
+        return "Lưu ý";
+      default:
+        return "Thông báo";
     }
   };
 
@@ -87,33 +125,45 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     <ToastContext.Provider value={contextValue}>
       {children}
 
-      <div className="fixed top-4 right-4 z-[9999] flex flex-col gap-2 max-w-sm w-full pr-4">
+      <div className="fixed top-4 right-4 z-[9999] flex w-full max-w-[380px] flex-col gap-3 pr-4">
         {toasts.map((toast) => (
-          <div
-            key={toast.id}
-            className={`flex items-start gap-3 p-4 rounded-xl border shadow-lg animate-in slide-in-from-top-2 ${getStyles(toast.type)} ${toast.onClick ? "cursor-pointer hover:brightness-95 transition-[filter]" : ""}`}
-            onClick={toast.onClick}
-          >
-            {getIcon(toast)}
-            <div className="flex-1 min-w-0">
-              {toast.title ? (
-                <>
-                  <p className="text-sm font-semibold leading-snug">{toast.title}</p>
-                  <p className="text-xs mt-0.5 opacity-80 leading-snug line-clamp-2">{toast.message}</p>
-                </>
-              ) : (
-                <p className="text-sm font-medium">{toast.message}</p>
-              )}
-              {toast.onClick && (
-                <p className="text-xs mt-1 opacity-60 font-medium">Nhấn để xem chi tiết →</p>
-              )}
-            </div>
-            <button
-              onClick={(e) => { e.stopPropagation(); removeToast(toast.id); }}
-              className="p-1 hover:bg-black/10 rounded-xl transition-colors shrink-0 mt-0.5"
+          <div key={toast.id} className="group relative overflow-hidden rounded-2xl">
+            <div
+              className={`backdrop-blur-sm shadow-xl ring-1 ring-black/5 dark:ring-white/5 flex items-start gap-3 rounded-2xl border px-4 py-3.5 animate-in slide-in-from-top-2 fade-in ${getStyles(toast.type).container} ${toast.onClick ? "cursor-pointer transition-transform hover:-translate-y-0.5" : ""}`}
+              onClick={toast.onClick}
             >
-              <IconX className="h-4 w-4" />
-            </button>
+              <div
+                className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${getStyles(toast.type).iconWrap}`}
+              >
+                {getIcon(toast)}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold leading-snug">
+                  {toast.title || getDefaultTitle(toast.type)}
+                </p>
+                <p className="mt-0.5 text-xs leading-relaxed opacity-90 line-clamp-2">
+                  {toast.message}
+                </p>
+                {toast.onClick && (
+                  <p className="mt-1 text-[11px] font-medium opacity-70">
+                    Nhấn để xem chi tiết
+                  </p>
+                )}
+              </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeToast(toast.id);
+                }}
+                className="mt-0.5 rounded-lg p-1.5 text-current/70 transition-colors hover:bg-black/5 hover:text-current dark:hover:bg-white/10"
+              >
+                <IconX className="h-4 w-4" />
+              </button>
+            </div>
+            <div
+              className={`absolute bottom-0 left-0 h-1 origin-left animate-[toast-shrink_linear_forwards] ${getStyles(toast.type).progress} group-hover:[animation-play-state:paused]`}
+              style={{ animationDuration: `${toast.duration}ms` }}
+            />
           </div>
         ))}
       </div>

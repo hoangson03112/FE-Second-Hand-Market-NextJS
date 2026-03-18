@@ -1,4 +1,5 @@
 import type { CartItem as CartItemType } from "@/types/cart";
+import { getAvatarUrl } from "@/utils";
 
 export function getSelectedSubtotal(
   cartItems: CartItemType[],
@@ -30,7 +31,7 @@ export function groupCartBySeller(
     const seller = item.productId?.sellerId;
     const id = seller?._id ?? "unknown";
     const name = seller?.fullName ?? "Shop";
-    const avatar = seller?.avatar ?? null;
+    const avatar = getAvatarUrl(seller?.avatar as { url?: string }) ?? null;
 
     if (!map.has(id)) {
       map.set(id, { sellerName: name, sellerAvatar: avatar, items: [] });

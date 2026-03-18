@@ -194,10 +194,16 @@ export const ProductService = {
     return response as unknown as AdminProductListResponse;
   },
 
-  /** Admin: cập nhật trạng thái sản phẩm (duyệt / từ chối) */
+  /** Admin: cập nhật trạng thái sản phẩm (duyệt / từ chối / bật tắt hiển thị) */
   updateStatus: async (
     productId: string,
-    status: "approved" | "rejected" | "pending" | "under_review",
+    status:
+      | "approved"
+      | "rejected"
+      | "pending"
+      | "under_review"
+      | "active"
+      | "inactive",
     reason?: string,
   ) => {
     const response = await axiosClient.patch(`/products/${productId}/status`, {

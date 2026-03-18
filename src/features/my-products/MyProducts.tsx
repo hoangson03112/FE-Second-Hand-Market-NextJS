@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { PRODUCT_MESSAGES } from "@/constants";
-import { useMyProducts, useDeleteProduct, useProductsFilter } from "./hooks";
+import { useMyProducts, useDeleteProduct, useDeleteDiscount, useProductsFilter } from "./hooks";
 import {
   ProductListHeader,
   EmptyProductState,
@@ -24,6 +24,7 @@ export default function MyProducts() {
   const queryClient = useQueryClient();
   const { products, isLoading, error, refetch } = useMyProducts();
   const { deletingId, handleDelete } = useDeleteProduct(refetch);
+  const { deletingId: deletingDiscountId, handleDelete: handleDeleteDiscount } = useDeleteDiscount(refetch);
   const { activeFilter, setActiveFilter, stats, filteredProducts } = useProductsFilter(products);
   const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
   const [requestingReviewId, setRequestingReviewId] = useState<string | null>(null);
@@ -108,6 +109,8 @@ export default function MyProducts() {
                   product={product}
                   onDelete={handleDelete}
                   isDeleting={deletingId === product._id}
+                  onDeleteDiscount={handleDeleteDiscount}
+                  isDeletingDiscount={deletingDiscountId}
                   onRequestReview={handleRequestReview}
                   isRequestingReview={requestingReviewId === product._id}
                   viewMode={viewMode}

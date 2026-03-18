@@ -4,10 +4,11 @@ import { useQueryClient } from "@tanstack/react-query";
 import { IProduct } from "@/types/product";
 import { useCheckoutStore } from "@/store/useCheckoutStore";
 import { AccountInfo } from "@/types/auth";
-import { CartService } from "@/services";
+import { CartService, ProductService } from "@/services";
 import { useToast } from "@/components/ui/Toast";
 import { queryKeys } from "@/lib/query-client";
 import { openChatWithSeller } from "@/utils/chat";
+import { getAvatarUrl } from "@/utils";
 import { CART_MESSAGES, SELLER_MESSAGES } from "@/constants/messages";
 
 interface UseProductActionsProps {
@@ -43,17 +44,16 @@ export function useProductActions({
 
     try {
       setActionLoading(true);
-        
-      setCheckoutItems([{ product, quantity }]);
-
-      // Navigate to checkout page
+      const freshProduct = await ProductService.getById(product._id);
+      setCheckoutItems([{ product: freshProduct as IProduct, quantity }]);
       router.push("/checkout");
     } catch (error) {
       console.error("Lỗi khi xử lý mua ngay:", error);
+      toast.error("Không thể tải thông tin sản phẩm. Vui lòng thử lại.");
     } finally {
       setActionLoading(false);
     }
-  }, [account, router, product, quantity, setCheckoutItems]);
+  }, [account, router, product, quantity, setCheckoutItems, toast]);
 
   const handleAddToCart = useCallback(async () => {
     if (!account) {
@@ -107,7 +107,7 @@ export function useProductActions({
       openChatWithSeller({
         _id: product.seller._id,
         fullName: product.seller.fullName,
-        avatar: product.seller.avatar || undefined,
+        avatar: getAvatarUrl(product.seller.avatar) ?? undefined,
       }, {
         _id: product._id,
         name: product.name,

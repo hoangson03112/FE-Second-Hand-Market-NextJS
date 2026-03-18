@@ -7,6 +7,7 @@ import { useAdminUsers } from "./hooks/useAdminUsers";
 import StatsCards from "./components/StatsCards";
 import SearchBar from "./components/SearchBar";
 import AccountStatusTabs from "./components/AccountStatusTabs";
+import RoleTabs from "./components/RoleTabs";
 import UsersTable from "./components/UsersTable";
 import EmptyState from "./components/EmptyState";
 import Pagination from "@/components/ui/Pagination";
@@ -25,6 +26,8 @@ export default function AdminUsers() {
     totalItems,
     statusFilter,
     setStatusFilter,
+    roleFilter,
+    setRoleFilter,
     handleBan,
     handleUnban,
     isUpdating,
@@ -95,7 +98,7 @@ export default function AdminUsers() {
         <div>
           <h1 className="text-lg font-bold text-foreground">Người dùng</h1>
           <p className="text-xs text-muted-foreground mt-0.5">
-            Danh sách tài khoản người mua (buyer)
+            Danh sách tài khoản (Account). Lọc theo vai trò bên dưới.
           </p>
         </div>
 
@@ -104,6 +107,7 @@ export default function AdminUsers() {
 
       <StatsCards totalUsers={totalItems} recent7Days={recent7Days} />
 
+      <RoleTabs activeRole={roleFilter} onRoleChange={setRoleFilter} />
       <AccountStatusTabs
         activeStatus={statusFilter}
         onStatusChange={setStatusFilter}

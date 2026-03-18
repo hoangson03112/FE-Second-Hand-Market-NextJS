@@ -18,6 +18,9 @@ export interface CartProduct {
   name: string;
   slug: string;
   price: number;
+  originalPrice?: number;
+  hasPersonalDiscount?: boolean;
+  personalDiscountId?: string;
   avatar: CartProductImage | null;
   stock: number;
   sellerId: CartProductSeller;

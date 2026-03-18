@@ -9,34 +9,16 @@ import {
   IconCheck,
   IconArrowLeft,
   IconArrowRight,
-  IconTool,
-  IconRepeat,
-  IconFileSearch,
-  IconPackage,
-  IconMoodSad,
-  IconDots,
   IconShield,
   IconTrash,
   IconAlertCircle,
 } from "@tabler/icons-react";
+import { REFUND_REASON_OPTIONS, REFUND_MAX_IMAGES, REFUND_MAX_VIDEOS } from "@/constants/refund";
+import { formatFileSize } from "@/utils/file";
+import { ModalHeader } from "@/components/ui/ModalHeader";
+import { RefundStepIndicator } from "@/components/refund";
 
-const REASON_OPTIONS = [
-  { value: "damaged",          label: "Hàng bị hỏng",      icon: IconTool,       desc: "Sản phẩm bị vỡ hoặc hỏng khi nhận" },
-  { value: "wrong_item",       label: "Giao sai hàng",      icon: IconRepeat,     desc: "Nhận sai sản phẩm, màu hoặc kích thước" },
-  { value: "not_as_described", label: "Không đúng mô tả",   icon: IconFileSearch, desc: "Sản phẩm khác so với mô tả trên trang" },
-  { value: "missing_parts",    label: "Thiếu phụ kiện",     icon: IconPackage,    desc: "Thiếu linh kiện hoặc phụ kiện đi kèm" },
-  { value: "quality_issue",    label: "Chất lượng kém",     icon: IconMoodSad,    desc: "Chất lượng thực tế kém hơn kỳ vọng" },
-  { value: "other",            label: "Lý do khác",         icon: IconDots,       desc: "Lý do khác chưa được liệt kê ở trên" },
-] as const;
-
-const MAX_IMAGES = 10;
-const MAX_VIDEOS = 3;
 const STEPS = ["Lý do", "Bằng chứng", "Xác nhận"];
-
-function formatFileSize(bytes: number): string {
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
 
 interface Props {
   show: boolean;
@@ -78,20 +60,20 @@ export function RefundModal({
 
   if (!show) return null;
 
-  const selectedReason = REASON_OPTIONS.find((r) => r.value === refundReason) ?? null;
+  const selectedReason = REFUND_REASON_OPTIONS.find((r) => r.value === refundReason) ?? null;
   const SelectedIcon = selectedReason?.icon ?? null;
   const canProceed =
     step === 1 ? refundReason !== "" : step === 2 ? refundDescription.trim().length >= 10 : true;
 
   const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
-    onImagesChange([...refundImages, ...files].slice(0, MAX_IMAGES));
+    onImagesChange([...refundImages, ...files].slice(0, REFUND_MAX_IMAGES));
     e.target.value = "";
   };
 
   const handleVideoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
-    onVideosChange([...refundVideos, ...files].slice(0, MAX_VIDEOS));
+    onVideosChange([...refundVideos, ...files].slice(0, REFUND_MAX_VIDEOS));
     e.target.value = "";
   };
 
@@ -100,8 +82,8 @@ export function RefundModal({
     setIsDragging(false);
     const imgFiles = Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith("image/"));
     const vidFiles = Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith("video/"));
-    if (imgFiles.length) onImagesChange([...refundImages, ...imgFiles].slice(0, MAX_IMAGES));
-    if (vidFiles.length) onVideosChange([...refundVideos, ...vidFiles].slice(0, MAX_VIDEOS));
+    if (imgFiles.length) onImagesChange([...refundImages, ...imgFiles].slice(0, REFUND_MAX_IMAGES));
+    if (vidFiles.length) onVideosChange([...refundVideos, ...vidFiles].slice(0, REFUND_MAX_VIDEOS));
   };
 
   return (
@@ -111,63 +93,15 @@ export function RefundModal({
     >
       <div className="bg-cream-50 rounded-3xl shadow-2xl w-full max-w-2xl max-h-[92vh] flex flex-col overflow-hidden">
 
-        {/* ── Header ── */}
-        <div className="flex items-start justify-between px-6 py-5 border-b-2 border-neutral-200/60">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-neutral-100 flex items-center justify-center flex-shrink-0">
-              <IconAlertCircle className="w-5 h-5 text-neutral-600" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-neutral-900">Yêu cầu hoàn tiền</h3>
-              <p className="text-xs text-neutral-500">Vui lòng cung cấp đầy đủ thông tin</p>
-            </div>
-          </div>
-          <button
-            onClick={onClose}
-            disabled={isSubmitting}
-            className="p-2 hover:bg-secondary rounded-full transition-colors disabled:opacity-50"
-          >
-            <IconX className="w-5 h-5 text-neutral-500" />
-          </button>
-        </div>
+        <ModalHeader
+          icon={<IconAlertCircle className="w-5 h-5 text-neutral-600" />}
+          title="Yêu cầu hoàn tiền"
+          subtitle="Vui lòng cung cấp đầy đủ thông tin"
+          onClose={onClose}
+          closeDisabled={isSubmitting}
+        />
 
-        {/* ── Step indicator ── */}
-        <div className="flex items-center justify-center gap-0 px-6 py-4 border-b border-neutral-200/60 bg-cream-50">
-          {STEPS.map((label, idx) => {
-            const s = idx + 1;
-            const isDone = s < step;
-            const isActive = s === step;
-            return (
-              <div key={s} className="flex items-center">
-                <div className="flex flex-col items-center gap-1">
-                  <div
-                    className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all
-                      ${isDone
-                        ? "bg-primary text-primary-foreground"
-                        : isActive
-                        ? "bg-foreground text-background"
-                        : "bg-neutral-200 text-neutral-400"
-                      }`}
-                  >
-                    {isDone ? <IconCheck className="w-3.5 h-3.5" /> : s}
-                  </div>
-                  <span
-                    className={`text-[10px] font-medium whitespace-nowrap
-                      ${isActive ? "text-neutral-900" : isDone ? "text-primary" : "text-neutral-400"}`}
-                  >
-                    {label}
-                  </span>
-                </div>
-                {idx < STEPS.length - 1 && (
-                  <div
-                    className={`w-16 h-px mx-1.5 mb-4 transition-all
-                      ${s < step ? "bg-primary" : "bg-neutral-200"}`}
-                  />
-                )}
-              </div>
-            );
-          })}
-        </div>
+        <RefundStepIndicator steps={STEPS} currentStep={step} />
 
         {/* ── Body ── */}
         <form onSubmit={onSubmit} className="flex flex-col flex-1 overflow-hidden">
@@ -183,7 +117,7 @@ export function RefundModal({
                   </div>
 
                   <div className="grid grid-cols-2 gap-2.5">
-                    {REASON_OPTIONS.map((opt) => {
+                    {REFUND_REASON_OPTIONS.map((opt) => {
                       const Icon = opt.icon;
                       const isSelected = refundReason === opt.value;
                       return (
@@ -275,7 +209,7 @@ export function RefundModal({
                         Ảnh bằng chứng
                       </label>
                       <span className="text-xs text-neutral-400 bg-neutral-100 px-2 py-0.5 rounded-full font-medium">
-                        {refundImages.length}/{MAX_IMAGES}
+                        {refundImages.length}/{REFUND_MAX_IMAGES}
                       </span>
                     </div>
                     <div
@@ -298,7 +232,7 @@ export function RefundModal({
                           <p className="text-sm font-medium text-neutral-600">
                             {isDragging ? "Thả ảnh vào đây ✓" : "Kéo & thả, hoặc click để chọn"}
                           </p>
-                          <p className="text-xs text-neutral-400">JPG, PNG, WEBP — tối đa {MAX_IMAGES} ảnh</p>
+                          <p className="text-xs text-neutral-400">JPG, PNG, WEBP — tối đa {REFUND_MAX_IMAGES} ảnh</p>
                         </button>
                       ) : (
                         <div className="p-3">
@@ -316,7 +250,7 @@ export function RefundModal({
                                 </button>
                               </div>
                             ))}
-                            {refundImages.length < MAX_IMAGES && (
+                            {refundImages.length < REFUND_MAX_IMAGES && (
                               <button
                                 type="button"
                                 onClick={() => imageInputRef.current?.click()}
@@ -341,7 +275,7 @@ export function RefundModal({
                         Video bằng chứng
                       </label>
                       <span className="text-xs text-neutral-400 bg-neutral-100 px-2 py-0.5 rounded-full font-medium">
-                        {refundVideos.length}/{MAX_VIDEOS}
+                        {refundVideos.length}/{REFUND_MAX_VIDEOS}
                       </span>
                     </div>
                     {refundVideos.length > 0 && (
@@ -367,7 +301,7 @@ export function RefundModal({
                         ))}
                       </ul>
                     )}
-                    {refundVideos.length < MAX_VIDEOS && (
+                    {refundVideos.length < REFUND_MAX_VIDEOS && (
                       <>
                         <input ref={videoInputRef} type="file" accept="video/*" multiple className="hidden" onChange={handleVideoInput} />
                         <button
@@ -377,7 +311,7 @@ export function RefundModal({
                           className="flex items-center justify-center gap-2 w-full px-4 py-3 border-2 border-dashed border-neutral-200/80 rounded-xl text-sm text-neutral-500 hover:border-neutral-300 hover:bg-neutral-100/50 transition-all disabled:opacity-50"
                         >
                           <IconUpload className="w-4 h-4" />
-                          Thêm video{refundVideos.length > 0 ? ` (còn ${MAX_VIDEOS - refundVideos.length} slot)` : ""}
+                          Thêm video{refundVideos.length > 0 ? ` (còn ${REFUND_MAX_VIDEOS - refundVideos.length} slot)` : ""}
                         </button>
                       </>
                     )}

@@ -48,4 +48,37 @@ export const AuthService = {
   }): Promise<{ message: string }> => {
     return axiosClient.put("/accounts/change-password", data);
   },
+
+  /**
+   * Thiết lập mật khẩu cho tài khoản Google (chưa có mật khẩu).
+   * PUT /accounts/set-password
+   */
+  setPassword: async (data: { newPassword: string }): Promise<{ message: string }> => {
+    return axiosClient.put("/accounts/set-password", data);
+  },
+
+  /**
+   * Xác thực OTP email sau đăng nhập Google.
+   * POST /auth/verify-google-email — body: { pending, code }
+   */
+  verifyGoogleEmail: async (data: {
+    pending: string;
+    code: string;
+  }): Promise<{ status: string; message?: string; token?: string }> => {
+    const res = await axiosClient.post("/auth/verify-google-email", data);
+    return res as unknown as { status: string; message?: string; token?: string };
+  },
+
+  /**
+   * Gửi khiếu nại khi tài khoản bị khóa (không cần token).
+   * POST /auth/appeal — body: { email, fullName?, message }
+   */
+  submitAppeal: async (data: {
+    email: string;
+    fullName?: string;
+    message: string;
+  }): Promise<{ success: boolean; message: string }> => {
+    const res = await axiosClient.post("/auth/appeal", data);
+    return res as unknown as { success: boolean; message: string };
+  },
 };

@@ -13,15 +13,23 @@ export function useAdminUsers() {
   const [statusFilter, setStatusFilterState] = useState<
     "active" | "inactive" | "banned" | ""
   >("");
+  const [roleFilter, setRoleFilterState] = useState<
+    "buyer" | "seller" | "admin" | "all"
+  >("all");
+  const [startDate, setStartDate] = useState<string | undefined>(undefined);
+  const [endDate, setEndDate] = useState<string | undefined>(undefined);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: [...ACCOUNTS_QUERY_KEY, { page, search, statusFilter }],
+    queryKey: [...ACCOUNTS_QUERY_KEY, { page, search, statusFilter, roleFilter, startDate, endDate }],
     queryFn: () =>
       AdminService.getAccounts({
         page,
         limit: PAGE_LIMIT,
         search: search || undefined,
         status: statusFilter || undefined,
+        role: roleFilter === "all" ? "" : roleFilter,
+        startDate,
+        endDate,
       }),
   });
 
@@ -35,7 +43,11 @@ export function useAdminUsers() {
       status: "active" | "banned";
       reason?: string;
     }) => AdminService.updateAccountStatus(accountId, status, reason),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ACCOUNTS_QUERY_KEY }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ACCOUNTS_QUERY_KEY });
+      // Keep admin sellers screen in sync when banning/unbanning accounts
+      qc.invalidateQueries({ queryKey: ["admin", "sellers"] });
+    },
   });
 
   const accounts: AdminAccount[] = data?.accounts ?? [];
@@ -55,6 +67,14 @@ export function useAdminUsers() {
   const setStatusFilter = useCallback(
     (s: "active" | "inactive" | "banned" | "") => {
       setStatusFilterState(s);
+      setPageState(1);
+    },
+    [],
+  );
+
+  const setRoleFilter = useCallback(
+    (r: "buyer" | "seller" | "admin" | "all") => {
+      setRoleFilterState(r);
       setPageState(1);
     },
     [],
@@ -93,6 +113,15 @@ export function useAdminUsers() {
     totalItems,
     statusFilter,
     setStatusFilter,
+    roleFilter,
+    setRoleFilter,
+    startDate,
+    endDate,
+    setDateRange: (from?: string, to?: string) => {
+      setStartDate(from);
+      setEndDate(to);
+      setPageState(1);
+    },
     handleBan,
     handleUnban,
     isUpdating: updateStatusMutation.isPending,

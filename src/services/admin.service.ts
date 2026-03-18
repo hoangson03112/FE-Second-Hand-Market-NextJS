@@ -5,6 +5,7 @@ import type {
   AdminAccount,
   AdminSeller,
   AdminReport,
+  AdminAuditLog,
   AdminCategory,
   GetAdminSellersParams,
   GetAdminSellersResponse,
@@ -15,7 +16,8 @@ import type { RefundRequest, SellerPayout, GHNTrackingData } from "@/types/order
 export const AdminService = {
   getDashboardStats: async (): Promise<DashboardStats> => {
     const res = await axiosClient.get("/admin/dashboard");
-    return res as unknown as DashboardStats;
+    const body = res as unknown as { success: boolean; data: DashboardStats };
+    return body.data;
   },
 
   getOrders: async (params?: {
@@ -23,12 +25,24 @@ export const AdminService = {
     limit?: number;
     status?: string;
     search?: string;
+    paymentMethod?: "cod" | "bank_transfer" | "all";
+    payoutStatus?: "pending" | "paid" | "all";
+    startDate?: string;
+    endDate?: string;
   }): Promise<{ orders: AdminOrder[]; pagination: PaginationMeta }> => {
     const qs = new URLSearchParams();
     if (params?.page) qs.set("page", String(params.page));
     if (params?.limit) qs.set("limit", String(params.limit));
     if (params?.status && params.status !== "all") qs.set("status", params.status);
     if (params?.search?.trim()) qs.set("search", params.search.trim());
+    if (params?.paymentMethod && params.paymentMethod !== "all") {
+      qs.set("paymentMethod", params.paymentMethod);
+    }
+    if (params?.payoutStatus && params.payoutStatus !== "all") {
+      qs.set("payoutStatus", params.payoutStatus);
+    }
+    if (params?.startDate) qs.set("startDate", params.startDate);
+    if (params?.endDate) qs.set("endDate", params.endDate);
     const query = qs.toString();
     const res = await axiosClient.get(`/orders/admin/all${query ? `?${query}` : ""}`);
     return res as unknown as { orders: AdminOrder[]; pagination: PaginationMeta };
@@ -39,12 +53,18 @@ export const AdminService = {
     limit?: number;
     search?: string;
     status?: "active" | "inactive" | "banned";
+    role?: "buyer" | "seller" | "admin" | "";
+    startDate?: string;
+    endDate?: string;
   }): Promise<{ accounts: AdminAccount[]; pagination: PaginationMeta }> => {
     const qs = new URLSearchParams();
     if (params?.page) qs.set("page", String(params.page));
     if (params?.limit) qs.set("limit", String(params.limit));
     if (params?.search?.trim()) qs.set("search", params.search.trim());
     if (params?.status) qs.set("status", params.status);
+    if (params?.role) qs.set("role", params.role);
+    if (params?.startDate) qs.set("startDate", params.startDate);
+    if (params?.endDate) qs.set("endDate", params.endDate);
     const res = await axiosClient.get(`/accounts/admin/list?${qs.toString()}`);
     return res as unknown as { accounts: AdminAccount[]; pagination: PaginationMeta };
   },
@@ -66,6 +86,8 @@ export const AdminService = {
     if (params?.status) search.set("status", params.status);
     if (params?.page) search.set("page", String(params.page));
     if (params?.limit) search.set("limit", String(params.limit));
+    if (params?.startDate) search.set("startDate", params.startDate);
+    if (params?.endDate) search.set("endDate", params.endDate);
     const res = await axiosClient.get(`/sellers/admin/all?${search.toString()}`);
     return res as unknown as GetAdminSellersResponse;
   },
@@ -84,12 +106,38 @@ export const AdminService = {
   getReports: async (params?: {
     page?: number;
     limit?: number;
+    status?: string;
+    startDate?: string;
+    endDate?: string;
   }): Promise<{ reports?: AdminReport[]; pagination?: PaginationMeta }> => {
     const qs = new URLSearchParams();
     if (params?.page) qs.set("page", String(params.page));
     if (params?.limit) qs.set("limit", String(params.limit));
+    if (params?.status) qs.set("status", params.status);
+    if (params?.startDate) qs.set("startDate", params.startDate);
+    if (params?.endDate) qs.set("endDate", params.endDate);
     const res = await axiosClient.get(`/reports?${qs.toString()}`);
     return res as unknown as { reports?: AdminReport[]; pagination?: PaginationMeta };
+  },
+
+  getAuditLogs: async (params?: {
+    page?: number;
+    limit?: number;
+    action?: string;
+    targetType?: string;
+    startDate?: string;
+    endDate?: string;
+  }): Promise<{ data: AdminAuditLog[]; pagination: PaginationMeta }> => {
+    const qs = new URLSearchParams();
+    if (params?.page) qs.set("page", String(params.page));
+    if (params?.limit) qs.set("limit", String(params.limit));
+    if (params?.action && params.action !== "all") qs.set("action", params.action);
+    if (params?.targetType && params.targetType !== "all") qs.set("targetType", params.targetType);
+    if (params?.startDate) qs.set("startDate", params.startDate);
+    if (params?.endDate) qs.set("endDate", params.endDate);
+    const query = qs.toString();
+    const res = await axiosClient.get(`/admin/audit-logs${query ? `?${query}` : ""}`);
+    return res as unknown as { data: AdminAuditLog[]; pagination: PaginationMeta };
   },
 
   getCategories: async (): Promise<{ data: AdminCategory[] }> => {
@@ -152,9 +200,15 @@ export const AdminService = {
 
   // ── Refund Management ────────────────────────────────────────────
   /** Get all refunds (admin view) — from the refund module */
-  getRefunds: async (params?: { status?: string }): Promise<{ refunds: RefundRequest[] }> => {
+  getRefunds: async (params?: {
+    page?: number;
+    limit?: number;
+    status?: string;
+    startDate?: string;
+    endDate?: string;
+  }): Promise<{ refunds: RefundRequest[]; pagination?: PaginationMeta }> => {
     const res = await axiosClient.get("/refunds/admin/all", { params });
-    return res as unknown as { refunds: RefundRequest[] };
+    return res as unknown as { refunds: RefundRequest[]; pagination?: PaginationMeta };
   },
 
   /** Get refund detail (admin/buyer/seller) — full info including evidence, order */
@@ -250,6 +304,7 @@ export type {
   AdminAccount,
   AdminSeller,
   AdminReport,
+  AdminAuditLog,
   AdminCategory,
   GetAdminSellersParams,
   GetAdminSellersResponse,
