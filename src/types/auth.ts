@@ -6,7 +6,7 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  status: "success" | "password" | "login" | "inactive" | "error";
+  status: "success" | "password" | "login" | "inactive" | "banned" | "error";
   message: string;
   token?: string;
 }

@@ -15,6 +15,7 @@ import { getProductImage } from "../utils/orderUtils";
 import OrderActions from "./OrderActions";
 import { cn } from "@/lib/utils";
 import { formatTimeAgo } from "@/utils/format/date";
+import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
 
 const REFUND_REASON_LABELS: Record<string, string> = {
   damaged: "Hàng bị hỏng",
@@ -101,9 +102,11 @@ export default function OrderCard({
 
           {/* Buyer */}
           <div className="flex items-center gap-1.5">
-            <span className="w-5 h-5 rounded-full bg-muted border border-border flex items-center justify-center shrink-0 text-[9px] font-bold text-muted-foreground uppercase">
-              {order.buyerId?.fullName?.charAt(0) ?? "?"}
-            </span>
+            <AvatarOrInitials
+              avatar={(order.buyerId as { avatar?: { url?: string } })?.avatar}
+              fullName={order.buyerId?.fullName}
+              size={20}
+            />
             <span className="text-[12px] text-muted-foreground font-medium truncate">
               {order.buyerId?.fullName || "—"}
             </span>

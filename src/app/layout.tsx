@@ -4,10 +4,14 @@ import { ToastProvider } from "@/components/ui/Toast";
 import { ConfirmDialogProvider } from "@/components/ui/ConfirmDialog";
 import SiteLayout from "@/components/layout/SiteLayout";
 import { RealtimeNotificationToast } from "@/components/common/RealtimeNotificationToast";
+import { BannedOverlay } from "@/components/common/BannedOverlay";
 import type { Metadata } from "next";
 import { inter } from "@/lib/fonts";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://eco-marketplace.vn";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
   title: {
     default: "Eco Marketplace - Sàn thương mại điện tử đồ cũ",
     template: "%s | Eco Marketplace",
@@ -87,6 +91,7 @@ export default function RootLayout({
         <Providers>
           <ToastProvider>
             <RealtimeNotificationToast />
+            <BannedOverlay />
             <ConfirmDialogProvider>
               <SiteLayout>{children}</SiteLayout>
             </ConfirmDialogProvider>

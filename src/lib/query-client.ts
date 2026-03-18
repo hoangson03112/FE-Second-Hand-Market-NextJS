@@ -101,7 +101,15 @@ export const queryKeys = {
     all: ["orders"] as const,
     myOrders: () => [...queryKeys.orders.all, "my"] as const,
     sellerOrders: () => [...queryKeys.orders.all, "seller"] as const,
-    adminOrders: (params?: { page?: number; status?: string; search?: string }) =>
+    adminOrders: (params?: {
+      page?: number;
+      status?: string;
+      search?: string;
+      paymentMethod?: "all" | "cod" | "bank_transfer";
+      payoutStatus?: "all" | "pending" | "paid";
+      startDate?: string;
+      endDate?: string;
+    }) =>
       [...queryKeys.orders.all, "admin", params] as const,
     detail: (id: string) => [...queryKeys.orders.all, "detail", id] as const,
     tracking: (id: string) => [...queryKeys.orders.all, "tracking", id] as const,

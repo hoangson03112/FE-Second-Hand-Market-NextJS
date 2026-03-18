@@ -1,6 +1,6 @@
 "use client";
 
-import { IconLayoutDashboard, IconPackage, IconShieldCheck, IconChevronRight, IconShoppingCart, IconUsers, IconBuildingStore, IconFolders, IconFlag, IconRobot, IconHome, IconCoinOff, IconCash } from "@tabler/icons-react";
+import { IconLayoutDashboard, IconPackage, IconShieldCheck, IconChevronRight, IconShoppingCart, IconUsers, IconBuildingStore, IconFolders, IconFlag, IconRobot, IconHome, IconCoinOff, IconCash, IconHistory } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
@@ -54,6 +54,7 @@ export default function AdminLayout({
     { href: "/admin/sellers", label: "Seller", icon: IconBuildingStore },
     { href: "/admin/categories", label: "Danh mục", icon: IconFolders },
     { href: "/admin/reports", label: "Báo cáo", icon: IconFlag },
+    { href: "/admin/audit-logs", label: "Audit Logs", icon: IconHistory },
     { href: "/admin/moderation", label: "Kiểm duyệt AI", icon: IconRobot },
   ];
 

@@ -29,5 +29,9 @@ export const PROFILE_MESSAGES = {
   PROFILE_UPDATE_ERROR: "Không thể cập nhật thông tin",
   PASSWORD_CHANGE_SUCCESS: "Đổi mật khẩu thành công",
   PASSWORD_CHANGE_ERROR: "Không thể đổi mật khẩu",
+  SET_PASSWORD_SUCCESS: "Thiết lập mật khẩu thành công. Bạn có thể đăng nhập bằng email và mật khẩu.",
+  SET_PASSWORD_ERROR: "Không thể thiết lập mật khẩu",
+  BANK_UPDATE_SUCCESS: "Cập nhật thông tin ngân hàng thành công",
+  BANK_UPDATE_ERROR: "Không thể cập nhật thông tin ngân hàng",
   LOADING: "Đang tải...",
 } as const;

@@ -16,7 +16,7 @@ export function useAdminProducts() {
   );
   const [page, setPage] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
-  const [rejectProduct, setRejectProduct] = useState<IProduct | null>(null); // Sản phẩm đang được reject
+  const [rejectProduct, setRejectProduct] = useState<IProduct | null>(null);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["admin", "products", statusFilter, page],
@@ -35,22 +35,31 @@ export function useAdminProducts() {
       reason,
     }: {
       productId: string;
-      status: "approved" | "rejected";
+      status:
+        | "approved"
+        | "rejected"
+        | "pending"
+        | "under_review"
+        | "active"
+        | "inactive";
       reason?: string;
     }) => ProductService.updateStatus(productId, status, reason),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["admin", "products"] });
       setSelectedProduct(null);
       setRejectProduct(null);
-      toast.success(
-        variables.status === "approved"
-          ? "Đã duyệt sản phẩm thành công"
-          : "Đã từ chối sản phẩm"
-      );
+      let msg = "Đã cập nhật trạng thái sản phẩm";
+      if (variables.status === "approved") msg = "Đã duyệt sản phẩm thành công";
+      else if (variables.status === "rejected") msg = "Đã từ chối sản phẩm";
+      else if (variables.status === "active") msg = "Đã bật hiển thị sản phẩm";
+      else if (variables.status === "inactive") msg = "Đã ẩn sản phẩm";
+      toast.success(msg);
     },
     onError: (err: unknown) => {
       const message =
-        (isAxiosError(err) ? (err.response?.data as { message?: string } | undefined)?.message : undefined) ||
+        (isAxiosError(err)
+          ? (err.response?.data as { message?: string } | undefined)?.message
+          : undefined) ||
         "Không thể cập nhật trạng thái sản phẩm. Vui lòng thử lại.";
       toast.error(message);
     },
@@ -67,7 +76,6 @@ export function useAdminProducts() {
   );
 
   const handleRejectClick = useCallback((product: IProduct) => {
-    // Mở modal nhập lý do
     setRejectProduct(product);
   }, []);
 
@@ -81,6 +89,18 @@ export function useAdminProducts() {
       });
     },
     [rejectProduct, updateStatusMutation]
+  );
+
+  const handleToggleVisibility = useCallback(
+    (product: IProduct) => {
+      const nextStatus =
+        product.status === "inactive" ? "active" : "inactive";
+      updateStatusMutation.mutate({
+        productId: product._id,
+        status: nextStatus,
+      });
+    },
+    [updateStatusMutation]
   );
 
   const totalPages = data
@@ -104,6 +124,6 @@ export function useAdminProducts() {
     rejectProduct,
     setRejectProduct,
     handleRejectConfirm,
+    handleToggleVisibility,
   };
 }
-

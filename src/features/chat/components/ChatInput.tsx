@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { type ReactNode, useEffect, useMemo } from "react";
 import Image from "next/image";
 import {
   IconLoader2,
@@ -12,6 +12,7 @@ interface ChatInputProps {
   sending: boolean;
   errorMessage?: string | null;
   selectedFiles: File[];
+  extraActions?: ReactNode;
   onChange: (value: string) => void;
   onFilesChange: (files: File[]) => void;
   onRemoveFile: (index: number) => void;
@@ -24,6 +25,7 @@ export function ChatInput({
   sending,
   errorMessage,
   selectedFiles,
+  extraActions,
   onChange,
   onFilesChange,
   onRemoveFile,
@@ -113,7 +115,7 @@ export function ChatInput({
         </div>
       )}
 
-      <div className="flex gap-4">
+      <div className="flex gap-3">
         <label className="cursor-pointer border-2 border-border px-4 py-3.5 rounded-xl hover:bg-muted/50 transition-all">
           <input
             type="file"
@@ -141,6 +143,8 @@ export function ChatInput({
           className="flex-1 px-5 py-3.5 border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base transition-all"
           disabled={sending}
         />
+
+        {extraActions && <div className="shrink-0">{extraActions}</div>}
 
         <button
           type="submit"

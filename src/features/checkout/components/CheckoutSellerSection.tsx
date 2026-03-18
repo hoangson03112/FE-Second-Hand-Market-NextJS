@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { IconBuildingStore, IconPackage, IconTruck, IconClock, IconMapPin } from "@tabler/icons-react";
+import { IconPackage, IconTruck, IconClock, IconMapPin, IconInfoCircle } from "@tabler/icons-react";
+import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
+import { FEATURE_INFO } from "@/constants/messages";
 import { formatPrice } from "@/utils/format/price";
 import { formatCondition } from "@/utils/format";
 import type { SellerGroup } from "../hooks/useCheckout";
@@ -31,13 +33,7 @@ export default function CheckoutSellerSection({
     <div className="bg-white rounded-lg border border-gray-200 shadow-md overflow-hidden">
       {/* Seller header */}
       <div className="flex items-center gap-3 px-5 py-3.5 bg-gray-50 border-b border-gray-200">
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
-          {sellerAvatar ? (
-            <Image src={sellerAvatar} alt={sellerName} width={32} height={32} className="object-cover" />
-          ) : (
-            <IconBuildingStore className="w-4 h-4 text-primary" />
-          )}
-        </div>
+        <AvatarOrInitials avatar={sellerAvatar} fullName={sellerName} size={32} className="flex-shrink-0" />
         <span className="text-sm font-semibold text-gray-900">{sellerName}</span>
         <span className="ml-auto text-xs text-gray-500">{items.length} sản phẩm</span>
       </div>
@@ -165,6 +161,12 @@ export default function CheckoutSellerSection({
           />
           {deliveryMethod === "local_pickup" && (
             <p className="text-xs text-gray-500 mt-1.5">Gặp mặt trực tiếp — thanh toán khi nhận hàng</p>
+          )}
+          {!isBankTransferAvailable && deliveryMethod !== "local_pickup" && (
+            <div className="mt-2 flex items-start gap-2 p-2.5 rounded-lg bg-amber-50 border border-amber-100">
+              <IconInfoCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <p className="text-xs text-amber-800">{FEATURE_INFO.PAYMENT_COD_ONLY}</p>
+            </div>
           )}
         </div>
 

@@ -3,6 +3,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { AuthService } from "@/services/auth.service";
 import { useTokenStore } from "@/store/useTokenStore";
+import { useBannedStore } from "@/store/useBannedStore";
 import { queryKeys } from "@/lib/query-client";
 import type { LoginRequest } from "@/types/auth";
 import { loginSchema } from "@/features/auth/schemas/auth.schema";
@@ -14,6 +15,7 @@ export function useLogin() {
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const { setAccessToken } = useTokenStore();
+  const setBanned = useBannedStore((s) => s.setBanned);
   const [formData, setFormData] = useState<LoginRequest>({
     username: "",
     password: "",
@@ -37,11 +39,18 @@ export function useLogin() {
       return;
     }
     if (errorParam) {
+      // Nếu login Google trả về account_banned → bật overlay banned + đưa về Home
+      if (errorParam === "account_banned") {
+        setBanned(true);
+        router.replace("/");
+        router.refresh();
+        return;
+      }
       const messages: Record<string, string> = {
         google_failed: "Đăng nhập Google thất bại. Vui lòng thử lại.",
         google_no_user: "Không lấy được thông tin tài khoản Google.",
         google_not_configured: "Chức năng đăng nhập Google chưa được cấu hình.",
-        account_banned: "Tài khoản đã bị khóa bởi quản trị viên. Vui lòng liên hệ hỗ trợ.",
+        google_verify_invalid: "Phiên xác minh không hợp lệ. Vui lòng đăng nhập lại bằng Google.",
       };
       setError(messages[errorParam] || "Có lỗi xảy ra.");
     }
@@ -85,6 +94,11 @@ export function useLogin() {
           ? redirect
           : "/";
         router.push(target);
+        router.refresh();
+      } else if (response.status === "banned") {
+        // Tài khoản bị khóa: bật overlay và đưa user về Home
+        setBanned(true);
+        router.push("/");
         router.refresh();
       } else {
         setError(response.message || "Đăng nhập thất bại");

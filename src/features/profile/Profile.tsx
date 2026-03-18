@@ -6,17 +6,16 @@ import {
   ProfileSidebar,
   ProfileForm,
   PasswordForm,
+  BankInfoForm,
   LoadingState,
 } from "./components";
-import { useProfile, usePasswordChange } from "./hooks";
+import { useProfile, usePasswordChange, useSellerBank } from "./hooks";
 import { getAvatarUrl } from "@/utils";
-import { PageContainer, Container, Section } from "@/components/layout/Container";
 import type { TabId } from "./types";
 
 export default function Profile() {
   const [activeTab, setActiveTab] = useState<TabId>("profile");
 
-  // Profile hook
   const {
     account,
     isLoading,
@@ -27,13 +26,20 @@ export default function Profile() {
     handleSubmit: handleProfileSubmit,
   } = useProfile();
 
-  // Password change hook
   const {
     formData: passwordFormData,
     isSubmitting: isPasswordSubmitting,
     handleChange: handlePasswordChange,
     handleSubmit: handlePasswordSubmit,
-  } = usePasswordChange();
+  } = usePasswordChange(isGoogleUser);
+
+  const {
+    formData: bankFormData,
+    isSubmitting: isBankSubmitting,
+    isLoading: isBankLoading,
+    handleChange: handleBankChange,
+    handleSubmit: handleBankSubmit,
+  } = useSellerBank();
 
   if (isLoading) {
     return <LoadingState />;
@@ -44,22 +50,23 @@ export default function Profile() {
   const avatarUrl = getAvatarUrl(account.avatar);
 
   return (
-    <PageContainer>
-      <Breadcrumb />
+    <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <Breadcrumb />
 
-      <Container maxWidth="7xl" paddingX="md" paddingY="lg">
-        <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           <ProfileSidebar
             activeTab={activeTab}
             onTabChange={setActiveTab}
             avatarUrl={avatarUrl}
             fullName={account.fullName || ""}
             email={account.email || ""}
+            role={account.role}
             isGoogleUser={isGoogleUser}
           />
 
           <main className="flex-1 min-w-0">
-            <Section withBackground withBorder>
+            <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm">
               {activeTab === "profile" && (
                 <ProfileForm
                   formData={profileFormData}
@@ -74,14 +81,25 @@ export default function Profile() {
                 <PasswordForm
                   formData={passwordFormData}
                   isSubmitting={isPasswordSubmitting}
+                  isGoogleUser={isGoogleUser}
                   onSubmit={handlePasswordSubmit}
                   onChange={handlePasswordChange}
                 />
               )}
-            </Section>
+
+              {activeTab === "bank" && account.role === "seller" && (
+                <BankInfoForm
+                  formData={bankFormData}
+                  isSubmitting={isBankSubmitting}
+                  isLoading={isBankLoading}
+                  onSubmit={handleBankSubmit}
+                  onChange={handleBankChange}
+                />
+              )}
+            </div>
           </main>
         </div>
-      </Container>
-    </PageContainer>
+      </div>
+    </div>
   );
 }

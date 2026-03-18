@@ -13,11 +13,8 @@ interface OrderState {
   buyerFilters: OrderFilters;
   sellerFilters: OrderFilters;
   adminFilters: OrderFilters;
-
-  // Currently focused order (for detail view)
   currentOrderId: string | null;
 
-  // Refund modal state
   refundModal: {
     isOpen: boolean;
     orderId: string | null;
@@ -28,7 +25,6 @@ interface OrderState {
     isSubmitting: boolean;
   };
 
-  // Cancel dialog state
   cancelDialog: {
     isOpen: boolean;
     orderId: string | null;

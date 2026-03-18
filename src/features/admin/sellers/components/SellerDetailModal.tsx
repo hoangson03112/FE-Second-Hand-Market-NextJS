@@ -1,10 +1,12 @@
 import {
   IconX,
   IconUser,
-  IconMapPin,
   IconCreditCard,
   IconId,
-  IconChartBar,
+  IconPackage,
+  IconShoppingCart,
+  IconStar,
+  IconMessageCircle,
   IconCircleCheck,
   IconCircleX,
   IconClock,
@@ -23,7 +25,7 @@ const STATUS_CONFIG: Record<string, { label: string; icon: React.ElementType; cl
 
 function Section({ icon: Icon, title, children }: { icon: React.ElementType; title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-border bg-background p-4 space-y-3">
+    <div className="rounded-xl border border-border bg-background p-5 space-y-3">
       <div className="flex items-center gap-2">
         <Icon className="w-4 h-4 text-muted-foreground shrink-0" />
         <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{title}</span>
@@ -63,9 +65,11 @@ export default function SellerDetailModal({
   onBan,
   onClose,
 }: SellerDetailModalProps) {
-  const statusCfg = STATUS_CONFIG[seller.verificationStatus] ?? STATUS_CONFIG.pending;
+  const effectiveStatus =
+    seller.accountId?.status === "banned" ? "banned" : seller.verificationStatus;
+  const statusCfg = STATUS_CONFIG[effectiveStatus] ?? STATUS_CONFIG.pending;
   const StatusIcon = statusCfg.icon;
-  const fullAddress = [seller.ward, seller.district, seller.province].filter(Boolean).join(", ");
+  const stats = seller.stats;
 
   return (
     <div
@@ -73,31 +77,31 @@ export default function SellerDetailModal({
       onClick={onClose}
     >
       <div
-        className="w-full sm:max-w-2xl max-h-[92dvh] sm:max-h-[90vh] overflow-hidden rounded-t-2xl sm:rounded-2xl border border-border bg-card shadow-2xl flex flex-col"
+        className="w-full sm:max-w-4xl xl:max-w-5xl max-h-[92dvh] sm:max-h-[90vh] overflow-hidden rounded-t-2xl sm:rounded-2xl border border-border bg-card shadow-2xl flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-border px-4 py-3 shrink-0">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between border-b border-border px-5 py-4 shrink-0">
+          <div className="flex items-center gap-4">
             {seller.accountId?.avatar?.url ? (
               <Image
                 src={seller.accountId.avatar.url}
                 alt={seller.accountId.fullName}
-                width={36}
-                height={36}
-                className="w-9 h-9 rounded-full object-cover border border-border"
+                width={44}
+                height={44}
+                className="w-11 h-11 rounded-full object-cover border border-border"
               />
             ) : (
-              <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm shrink-0">
+              <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-base shrink-0">
                 {seller.accountId?.fullName?.[0]?.toUpperCase() ?? "?"}
               </div>
             )}
             <div>
-              <p className="text-sm font-semibold text-foreground leading-tight">
+              <p className="text-base font-semibold text-foreground leading-tight">
                 {seller.accountId?.fullName ?? "—"}
               </p>
-              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium mt-0.5 ${statusCfg.className}`}>
-                <StatusIcon className="w-3 h-3" />
+              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium mt-1 ${statusCfg.className}`}>
+                <StatusIcon className="w-3.5 h-3.5" />
                 {statusCfg.label}
               </span>
             </div>
@@ -107,118 +111,120 @@ export default function SellerDetailModal({
             onClick={onClose}
             className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
           >
-            <IconX className="h-4 w-4" />
+            <IconX className="h-5 w-5" />
           </button>
         </div>
 
         {/* Body */}
-        <div className="overflow-y-auto p-4 space-y-3">
-          {/* Account Info */}
-          <Section icon={IconUser} title="Thông tin tài khoản">
-            <Row label="Seller ID" value={<span className="font-mono text-xs">{seller._id}</span>} />
-            <Row label="Họ tên" value={seller.accountId?.fullName} />
-            <Row label="Email" value={seller.accountId?.email} />
-            <Row label="Số điện thoại" value={seller.accountId?.phoneNumber} />
-            <Row label="Ngày tạo tài khoản" value={seller.accountId?.createdAt ? format(seller.accountId.createdAt) : undefined} />
-            <Row label="Ngày đăng ký seller" value={seller.createdAt ? format(seller.createdAt) : undefined} />
-            <Row label="Cập nhật lần cuối" value={seller.updatedAt ? format(seller.updatedAt) : undefined} />
-            <Row
-              label="Đồng ý điều khoản"
-              value={
-                seller.agreeTerms !== undefined ? (
-                  <span className={seller.agreeTerms ? "text-emerald-600" : "text-destructive"}>
-                    {seller.agreeTerms ? "Đã đồng ý" : "Chưa đồng ý"}
-                  </span>
-                ) : undefined
-              }
-            />
-            <Row
-              label="Đồng ý chính sách"
-              value={
-                seller.agreePolicy !== undefined ? (
-                  <span className={seller.agreePolicy ? "text-emerald-600" : "text-destructive"}>
-                    {seller.agreePolicy ? "Đã đồng ý" : "Chưa đồng ý"}
-                  </span>
-                ) : undefined
-              }
-            />
-            {seller.approvedDate && (
-              <Row label="Ngày duyệt" value={format(seller.approvedDate)} />
-            )}
-            {seller.approvedBy && (
-              <Row label="Admin duyệt" value={`${seller.approvedBy.fullName} (${seller.approvedBy.email})`} />
-            )}
-            {seller.rejectedReason && (
-              <Row label="Lý do từ chối" value={<span className="text-destructive">{seller.rejectedReason}</span>} />
-            )}
-          </Section>
-
-          {/* Address */}
-          <Section icon={IconMapPin} title="Địa chỉ kinh doanh">
-            <Row label="Tỉnh/Thành phố" value={seller.province} />
-            <Row label="Quận/Huyện" value={seller.district} />
-            <Row label="Xã/Phường" value={seller.ward} />
-            <Row label="Địa chỉ chi tiết" value={seller.businessAddress} />
-            {fullAddress && <Row label="Địa chỉ đầy đủ" value={fullAddress} />}
-          </Section>
-
-          {/* Bank Info */}
-          <Section icon={IconCreditCard} title="Thông tin ngân hàng">
-            <Row label="Ngân hàng" value={seller.bankInfo?.bankName} />
-            <Row label="Số tài khoản" value={seller.bankInfo?.accountNumber} />
-            <Row label="Chủ tài khoản" value={seller.bankInfo?.accountHolder} />
-            <Row label="Mã BIN" value={seller.bankInfo?.bankBin} />
-          </Section>
-
-          {/* Stats */}
-          <Section icon={IconChartBar} title="Thống kê hoạt động">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {[
-                { label: "Đang bán",      value: seller.stats?.totalProductsActive ?? 0 },
-                { label: "Đã bán",        value: seller.stats?.totalSold ?? 0 },
-                { label: "Đánh giá TB",   value: (seller.stats?.avgRating ?? 0) > 0 ? (seller.stats!.avgRating.toFixed(1) + " ★") : "—" },
-                { label: "Lượt đánh giá", value: seller.stats?.totalReviews ?? 0 },
-              ].map(({ label, value }) => (
-                <div key={label} className="rounded-lg border border-border bg-muted/40 p-3 text-center">
-                  <p className="text-base font-bold text-foreground">{value}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{label}</p>
-                </div>
-              ))}
+        <div className="overflow-y-auto p-5 sm:p-6 space-y-5">
+          {/* Thống kê - full width */}
+          <div className="rounded-xl border border-primary/20 bg-primary/5 p-5">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-4">Thống kê hoạt động</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="flex flex-col items-center rounded-xl bg-background border border-border py-4 px-3">
+                <IconPackage className="w-6 h-6 text-primary mb-1.5" />
+                <span className="text-xl font-bold text-foreground">{stats?.totalProductsActive ?? 0}</span>
+                <span className="text-xs text-muted-foreground mt-0.5">Đang bán</span>
+              </div>
+              <div className="flex flex-col items-center rounded-xl bg-background border border-border py-4 px-3">
+                <IconShoppingCart className="w-6 h-6 text-primary mb-1.5" />
+                <span className="text-xl font-bold text-foreground">{stats?.totalSold ?? 0}</span>
+                <span className="text-xs text-muted-foreground mt-0.5">Đã bán</span>
+              </div>
+              <div className="flex flex-col items-center rounded-xl bg-background border border-border py-4 px-3">
+                <IconStar className="w-6 h-6 text-amber-500 mb-1.5" />
+                <span className="text-xl font-bold text-foreground">
+                  {(stats?.avgRating ?? 0) > 0 ? `${Number(stats!.avgRating).toFixed(1)} ★` : "0"}
+                </span>
+                <span className="text-xs text-muted-foreground mt-0.5">Đánh giá TB</span>
+              </div>
+              <div className="flex flex-col items-center rounded-xl bg-background border border-border py-4 px-3">
+                <IconMessageCircle className="w-6 h-6 text-primary mb-1.5" />
+                <span className="text-xl font-bold text-foreground">{stats?.totalReviews ?? 0}</span>
+                <span className="text-xs text-muted-foreground mt-0.5">Lượt đánh giá</span>
+              </div>
             </div>
-          </Section>
+          </div>
 
-          {/* ID Cards */}
-          <Section icon={IconId} title="CCCD / CMND">
-            <div className="grid grid-cols-2 gap-3">
-              {[{ label: "Mặt trước", file: seller.idCardFront }, { label: "Mặt sau", file: seller.idCardBack }].map(({ label, file }) => (
-                <div key={label}>
-                  <p className="text-xs text-muted-foreground mb-1.5">{label}</p>
-                  {file?.url ? (
-                    <a href={file.url} target="_blank" rel="noopener noreferrer">
-                      <Image
-                        src={file.url}
-                        alt={`CCCD ${label}`}
-                        width={300}
-                        height={190}
-                        className="w-full rounded-lg border border-border object-cover hover:opacity-90 transition-opacity cursor-zoom-in"
-                      />
-                    </a>
-                  ) : (
-                    <div className="w-full h-24 rounded-lg border border-border bg-muted/40 flex items-center justify-center text-xs text-muted-foreground">
-                      Chưa có ảnh
-                    </div>
+          {/* 2 cột: Trái = Tài khoản + Ngân hàng, Phải = CCCD */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <div className="lg:col-span-5 space-y-5">
+              <Section icon={IconUser} title="Thông tin tài khoản">
+                <div className="space-y-2">
+                  <Row label="Seller ID" value={<span className="font-mono text-xs">{seller._id}</span>} />
+                  <Row label="Họ tên" value={seller.accountId?.fullName} />
+                  <Row label="Email" value={seller.accountId?.email} />
+                  <Row label="Số điện thoại" value={seller.accountId?.phoneNumber} />
+                  <Row label="Ngày tạo TK" value={seller.accountId?.createdAt ? format(seller.accountId.createdAt) : undefined} />
+                  <Row label="Ngày đăng ký seller" value={seller.createdAt ? format(seller.createdAt) : undefined} />
+                </div>
+                <div className="pt-3 border-t border-border mt-3 space-y-2">
+                  <Row
+                    label="Đồng ý điều khoản"
+                    value={
+                      seller.agreeTerms !== undefined ? (
+                        <span className={seller.agreeTerms ? "text-emerald-600" : "text-destructive"}>
+                          {seller.agreeTerms ? "Đã đồng ý" : "Chưa đồng ý"}
+                        </span>
+                      ) : undefined
+                    }
+                  />
+                  <Row
+                    label="Đồng ý chính sách"
+                    value={
+                      seller.agreePolicy !== undefined ? (
+                        <span className={seller.agreePolicy ? "text-emerald-600" : "text-destructive"}>
+                          {seller.agreePolicy ? "Đã đồng ý" : "Chưa đồng ý"}
+                        </span>
+                      ) : undefined
+                    }
+                  />
+                  {seller.approvedDate && <Row label="Ngày duyệt" value={format(seller.approvedDate)} />}
+                  {seller.approvedBy && <Row label="Admin duyệt" value={`${seller.approvedBy.fullName}`} />}
+                  {seller.rejectedReason && (
+                    <Row label="Lý do từ chối" value={<span className="text-destructive">{seller.rejectedReason}</span>} />
                   )}
-                  {file?.originalName && <p className="text-xs text-muted-foreground mt-1 truncate">{file.originalName}</p>}
-                  {file?.size && <p className="text-xs text-muted-foreground">{(file.size / 1024).toFixed(0)} KB</p>}
-                  {file?.uploadedAt && <p className="text-xs text-muted-foreground">{format(file.uploadedAt)}</p>}
                 </div>
-              ))}
-            </div>
-          </Section>
+              </Section>
 
-          {/* Reject/Ban reason input */}
+              <Section icon={IconCreditCard} title="Thông tin ngân hàng">
+                <Row label="Ngân hàng" value={seller.bankInfo?.bankName} />
+                <Row label="Số tài khoản" value={seller.bankInfo?.accountNumber} />
+                <Row label="Chủ tài khoản" value={seller.bankInfo?.accountHolder.toUpperCase()} />
+              </Section>
+            </div>
+
+            <div className="lg:col-span-7">
+              <Section icon={IconId} title="CCCD / CMND">
+                <div className="grid grid-cols-2 gap-4">
+                  {[{ label: "Mặt trước", file: seller.idCardFront }, { label: "Mặt sau", file: seller.idCardBack }].map(({ label, file }) => (
+                    <div key={label}>
+                      <p className="text-xs font-medium text-muted-foreground mb-2">{label}</p>
+                      {file?.url ? (
+                        <a href={file.url} target="_blank" rel="noopener noreferrer" className="block rounded-xl border border-border overflow-hidden bg-muted/30 hover:opacity-95 transition-opacity">
+                          <Image
+                            src={file.url}
+                            alt={`CCCD ${label}`}
+                            width={400}
+                            height={250}
+                            className="w-full h-auto object-contain max-h-[280px]"
+                          />
+                        </a>
+                      ) : (
+                        <div className="w-full h-32 rounded-xl border border-border bg-muted/40 flex items-center justify-center text-sm text-muted-foreground">
+                          Chưa có ảnh
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </Section>
+            </div>
+          </div>
+
+          {/* Lý do từ chối / khóa - full width */}
           {(seller.verificationStatus === "pending" || seller.verificationStatus === "approved") && (
-            <div className="rounded-xl border border-border bg-background p-4">
+            <div className="rounded-xl border border-border bg-background p-5">
               <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
                 {seller.verificationStatus === "pending"
                   ? "Lý do từ chối (nếu từ chối)"
@@ -227,7 +233,7 @@ export default function SellerDetailModal({
               <textarea
                 value={rejectReason}
                 onChange={(e) => onRejectReasonChange(e.target.value)}
-                className="w-full rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"
+                className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"
                 rows={2}
                 placeholder={
                   seller.verificationStatus === "pending"
@@ -240,11 +246,11 @@ export default function SellerDetailModal({
         </div>
 
         {/* Footer */}
-        <div className="flex gap-2 justify-end border-t border-border px-4 py-3 shrink-0">
+        <div className="flex gap-3 justify-end border-t border-border px-5 py-4 shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors"
+            className="rounded-xl border border-border px-5 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors"
           >
             Đóng
           </button>
@@ -254,7 +260,7 @@ export default function SellerDetailModal({
                 type="button"
                 onClick={onReject}
                 disabled={isUpdating}
-                className="rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-2 text-sm font-medium text-destructive hover:bg-destructive/10 dark:bg-destructive/10 disabled:opacity-50 transition-colors"
+                className="rounded-xl border border-destructive/30 bg-destructive/5 px-5 py-2.5 text-sm font-medium text-destructive hover:bg-destructive/10 dark:bg-destructive/10 disabled:opacity-50 transition-colors"
               >
                 Từ chối
               </button>
@@ -262,7 +268,7 @@ export default function SellerDetailModal({
                 type="button"
                 onClick={onApprove}
                 disabled={isUpdating}
-                className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
               >
                 Duyệt seller
               </button>
@@ -273,7 +279,7 @@ export default function SellerDetailModal({
               type="button"
               onClick={onBan}
               disabled={isUpdating || !rejectReason.trim()}
-              className="rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-2 text-sm font-medium text-destructive hover:bg-destructive/10 disabled:opacity-50 transition-colors"
+              className="rounded-xl border border-destructive/30 bg-destructive/5 px-5 py-2.5 text-sm font-medium text-destructive hover:bg-destructive/10 disabled:opacity-50 transition-colors"
             >
               Khóa tài khoản
             </button>

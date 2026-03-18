@@ -1,8 +1,8 @@
-import { IconPackage, IconCalendar, IconEdit, IconTrash, IconAlertCircle, IconEye, IconTag, IconRefresh } from "@tabler/icons-react";
+import { IconPackage, IconCalendar, IconEdit, IconTrash, IconAlertCircle, IconEye, IconTag, IconRefresh, IconTicket, IconX } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
 import { formatPrice } from "@/utils/format/price";
-import { format } from "@/utils/format/date";
+import { format, formatDateOnly } from "@/utils/format";
 import { cn } from "@/lib/utils";
 import { PRODUCT_STATUS_CONFIG } from "@/constants";
 import type { MyListingProduct } from "@/types/myProducts";
@@ -12,6 +12,8 @@ interface ProductCardProps {
   product: MyListingProduct;
   onDelete: (productId: string, productName: string) => void;
   isDeleting: boolean;
+  onDeleteDiscount?: (discountId: string) => void;
+  isDeletingDiscount?: string | null;
   onRequestReview?: (productId: string) => void;
   isRequestingReview?: boolean;
   viewMode?: "list" | "grid";
@@ -21,10 +23,13 @@ export function ProductCard({
   product,
   onDelete,
   isDeleting,
+  onDeleteDiscount,
+  isDeletingDiscount = null,
   onRequestReview,
   isRequestingReview = false,
   viewMode = "list",
 }: ProductCardProps) {
+  const discounts = product.personalDiscounts ?? [];
   const statusCfg =
     PRODUCT_STATUS_CONFIG[product.status as ProductStatusFilter] ??
     PRODUCT_STATUS_CONFIG.pending;
@@ -113,6 +118,44 @@ export function ProductCard({
               </span>
             )}
           </div>
+
+          {discounts.length > 0 && (
+            <div className="mb-3 space-y-1.5">
+              <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1">
+                <IconTicket className="w-3 h-3" />
+                Ưu đãi ({discounts.length})
+              </p>
+              {discounts.map((d) => (
+                <div
+                  key={d._id}
+                  className="flex items-center justify-between gap-2 py-1.5 px-2 rounded-lg bg-primary/5 border border-primary/15 text-xs"
+                >
+                  <div className="min-w-0 flex-1">
+                    <span className="font-medium text-primary">{formatPrice(d.price)}</span>
+                    {d.buyerId?.fullName && (
+                      <span className="text-muted-foreground ml-1 truncate block">
+                        → {d.buyerId.fullName}
+                      </span>
+                    )}
+                    <span className="text-muted-foreground text-[10px]">
+                      Hết hạn: {formatDateOnly(d.endDate)}
+                    </span>
+                  </div>
+                  {onDeleteDiscount && (
+                    <button
+                      type="button"
+                      onClick={() => onDeleteDiscount(d._id)}
+                      disabled={isDeletingDiscount === d._id}
+                      className="p-1 rounded text-destructive hover:bg-destructive/10 disabled:opacity-50 shrink-0"
+                      title="Xóa ưu đãi"
+                    >
+                      <IconX className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="flex gap-1.5">
             {canEdit && (
@@ -233,6 +276,44 @@ export function ProductCard({
                 </div>
               </div>
             )}
+
+          {discounts.length > 0 && (
+            <div className="mb-2 space-y-1">
+              <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1">
+                <IconTicket className="w-3 h-3" />
+                Ưu đãi ({discounts.length})
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {discounts.map((d) => (
+                  <div
+                    key={d._id}
+                    className="inline-flex items-center gap-2 py-1 px-2 rounded-lg bg-primary/5 border border-primary/15 text-xs"
+                  >
+                    <span className="font-medium text-primary">{formatPrice(d.price)}</span>
+                    {d.buyerId?.fullName && (
+                      <span className="text-muted-foreground truncate max-w-[80px]">
+                        {d.buyerId.fullName}
+                      </span>
+                    )}
+                    <span className="text-muted-foreground text-[10px]">
+                      {formatDateOnly(d.endDate)}
+                    </span>
+                    {onDeleteDiscount && (
+                      <button
+                        type="button"
+                        onClick={() => onDeleteDiscount(d._id)}
+                        disabled={isDeletingDiscount === d._id}
+                        className="p-0.5 rounded text-destructive hover:bg-destructive/10 disabled:opacity-50"
+                        title="Xóa ưu đãi"
+                      >
+                        <IconX className="w-3 h-3" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="flex items-center justify-between">
             <span className="text-xl font-bold text-foreground tabular-nums">

@@ -10,11 +10,32 @@ export function useAdminOrders() {
   const [statusFilter, setStatusFilterState] = useState<string>("all");
   const [searchState, setSearchState] = useState("");
   const [page, setPageState] = useState(1);
+  const [paymentMethod, setPaymentMethod] = useState<"all" | "cod" | "bank_transfer">("all");
+  const [payoutStatus, setPayoutStatus] = useState<"all" | "pending" | "paid">("all");
+  const [startDate, setStartDate] = useState<string | undefined>(undefined);
+  const [endDate, setEndDate] = useState<string | undefined>(undefined);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: queryKeys.orders.adminOrders({ page, status: statusFilter, search: searchState }),
+    queryKey: queryKeys.orders.adminOrders({
+      page,
+      status: statusFilter,
+      search: searchState,
+      paymentMethod,
+      payoutStatus,
+      startDate,
+      endDate,
+    }),
     queryFn: () =>
-      AdminService.getOrders({ page, limit: 20, status: statusFilter, search: searchState }),
+      AdminService.getOrders({
+        page,
+        limit: 20,
+        status: statusFilter,
+        search: searchState,
+        paymentMethod,
+        payoutStatus,
+        startDate,
+        endDate,
+      }),
   });
 
   const totalPages = data?.pagination?.totalPages ?? 1;
@@ -38,6 +59,28 @@ export function useAdminOrders() {
 
   const setSearch = useCallback((q: string) => {
     setSearchState(q);
+    setPageState(1);
+  }, []);
+
+  const setPaymentMethodFilter = useCallback(
+    (pm: "all" | "cod" | "bank_transfer") => {
+      setPaymentMethod(pm);
+      setPageState(1);
+    },
+    [],
+  );
+
+  const setPayoutStatusFilter = useCallback(
+    (ps: "all" | "pending" | "paid") => {
+      setPayoutStatus(ps);
+      setPageState(1);
+    },
+    [],
+  );
+
+  const setDateRange = useCallback((from?: string, to?: string) => {
+    setStartDate(from);
+    setEndDate(to);
     setPageState(1);
   }, []);
 
@@ -68,6 +111,13 @@ export function useAdminOrders() {
     toggleExpanded,
     statusFilter,
     setStatusFilter,
+    paymentMethod,
+    setPaymentMethod: setPaymentMethodFilter,
+    payoutStatus,
+    setPayoutStatus: setPayoutStatusFilter,
+    startDate,
+    endDate,
+    setDateRange,
     search: searchState,
     setSearch,
     page,

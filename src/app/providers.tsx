@@ -6,6 +6,8 @@ import { createQueryClient } from "@/lib/query-client";
 import { useUser } from "@/hooks/useUser";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { useNotificationStore } from "@/store/useNotificationStore";
+import { useBannedStore } from "@/store/useBannedStore";
+import { useTokenStore } from "@/store/useTokenStore";
 import { NotificationService } from "@/services/notification.service";
 // import { Analytics } from '@vercel/analytics/react';
 
@@ -81,6 +83,9 @@ function NotificationListener() {
         dedupeKey: undefined,
         metadata: { senderId: data.senderId, conversationId },
       });
+    } else if (lastMessage.type === "account:banned") {
+      useBannedStore.getState().setBanned(true);
+      useTokenStore.getState().clearAuth();
     }
   }, [lastMessage, addNotification]);
 

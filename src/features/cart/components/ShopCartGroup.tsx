@@ -1,6 +1,7 @@
 "use client";
 
-import { IconChevronRight, IconUser } from "@tabler/icons-react";
+import { IconChevronRight } from "@tabler/icons-react";
+import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
 import Link from "next/link";
 import Image from "next/image";
 import CartItem from "./CartItem";
@@ -52,19 +53,12 @@ export default function ShopCartGroup({
           href="#"
           className="flex-1 flex items-center gap-2.5 min-w-0 group"
         >
-          {sellerAvatar ? (
-            <Image
-              src={sellerAvatar}
-              alt={sellerName}
-              width={24}
-              height={24}
-              className="w-6 h-6 object-cover flex-shrink-0"
-            />
-          ) : (
-            <span className="w-6 h-6 bg-gradient-to-br from-taupe-100 to-taupe-200 rounded-full flex items-center justify-center flex-shrink-0">
-              <IconUser className="h-3.5 w-3.5 text-taupe-500" />
-            </span>
-          )}
+          <AvatarOrInitials
+            avatar={sellerAvatar}
+            fullName={sellerName}
+            size={24}
+            className="w-6 h-6"
+          />
           <span className="text-sm font-medium text-taupe-900 truncate group-hover:text-primary">{sellerName}</span>
         </Link>
         <IconChevronRight className="h-4 w-4 text-taupe-400 flex-shrink-0" />

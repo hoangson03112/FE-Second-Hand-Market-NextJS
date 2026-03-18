@@ -73,7 +73,7 @@ export interface Conversation {
   _id: string;
   conversationId?: string;
   participants: string[];
-  avatar?: string;
+  avatar?: string | { url?: string | null } | null;
   name: string;
   lastMessage?: string;
   lastMessageType?: string;

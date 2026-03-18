@@ -1,4 +1,5 @@
 import { IconStar } from "@tabler/icons-react";
+import { FEATURE_INFO } from "@/constants/messages";
 
 interface OrderSellerReviewSectionProps {
   existingReview: { _id: string; rating: number; comment?: string } | null;
@@ -23,9 +24,12 @@ export function OrderSellerReviewSection({
 }: OrderSellerReviewSectionProps) {
   return (
     <div id="seller-review-section" className="bg-cream-50 border border-border rounded-2xl overflow-hidden">
-      <div className="px-5 py-3 border-b border-border flex items-center gap-2">
-        <IconStar className="w-4 h-4 text-primary" />
-        <span className="text-sm font-semibold text-foreground">Đánh giá người bán</span>
+      <div className="px-5 py-3 border-b border-border">
+        <div className="flex items-center gap-2">
+          <IconStar className="w-4 h-4 text-primary" />
+          <span className="text-sm font-semibold text-foreground">Đánh giá người bán</span>
+        </div>
+        <p className="text-xs text-muted-foreground mt-1">{FEATURE_INFO.REVIEW_SELLER_TIP}</p>
       </div>
       <div className="p-5">
         {existingReview ? (

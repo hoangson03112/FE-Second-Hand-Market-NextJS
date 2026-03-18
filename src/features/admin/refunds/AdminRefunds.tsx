@@ -5,7 +5,6 @@ import {
   IconLoader2,
   IconCircleCheck,
   IconCircleX,
-  IconAlertCircle,
   IconShield,
   IconClock,
   IconEye,
@@ -18,6 +17,7 @@ import { useAdminRefunds, useRefundDetail } from "./hooks/useAdminRefunds";
 import { AdminDisputeDetailModal } from "./components/AdminDisputeDetailModal";
 import type { RefundRequest } from "@/types/order";
 import { ADMIN_MESSAGES } from "@/constants/messages";
+import Pagination from "@/components/ui/Pagination";
 
 const REASON_LABELS: Record<string, string> = {
   damaged: "Hàng bị hỏng",
@@ -55,6 +55,11 @@ function getOrderTotal(r: RefundRequest): number {
 export default function AdminRefunds() {
   const {
     refunds,
+    page,
+    setPage,
+    totalPages,
+    statusFilter,
+    setStatusFilter,
     isLoading,
     error,
     approveDispute,
@@ -74,12 +79,13 @@ export default function AdminRefunds() {
 
   const { refund: selectedRefund, isLoading: isLoadingDetail } = useRefundDetail(selectedRefundId);
 
-  const disputes = refunds.filter((r: RefundRequest) => r.status === "disputed");
-  const pending = refunds.filter((r: RefundRequest) => r.status === "pending");
-  const approved = refunds.filter((r: RefundRequest) => r.status === "approved");
-  const processed = refunds.filter((r: RefundRequest) =>
-    ["rejected", "completed"].includes(r.status)
-  );
+  const tabs: Array<{ value: string; label: string; icon: React.ElementType }> = [
+    { value: "", label: "Tất cả", icon: IconEye },
+    { value: "disputed", label: "Khiếu nại", icon: IconShield },
+    { value: "pending", label: "Chờ seller", icon: IconClock },
+    { value: "approved", label: "Chờ hoàn", icon: IconCircleCheck },
+    { value: "completed", label: "Đã xử lý", icon: IconCircleX },
+  ];
 
   const handleConfirmApprove = async () => {
     if (!approveModal) return;
@@ -165,94 +171,90 @@ export default function AdminRefunds() {
         </p>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="rounded-xl border border-purple-200 bg-purple-50/50 p-4 text-center">
-          <p className="text-2xl font-bold text-purple-700">{disputes.length}</p>
-          <p className="text-xs text-purple-600 mt-1">Khiếu nại cần xử lý</p>
-        </div>
-        <div className="rounded-xl border border-border bg-card p-4 text-center">
-          <p className="text-2xl font-bold text-foreground">{pending.length}</p>
-          <p className="text-xs text-muted-foreground mt-1">Chờ người bán</p>
-        </div>
-        <div className="rounded-xl border border-primary/20 bg-primary/8 p-4 text-center">
-          <p className="text-2xl font-bold text-primary">{approved.length}</p>
-          <p className="text-xs text-primary/70 mt-1">Đã duyệt, chờ hoàn</p>
-        </div>
-        <div className="rounded-xl border border-border bg-secondary/60 p-4 text-center">
-          <p className="text-2xl font-bold text-foreground">{processed.length}</p>
-          <p className="text-xs text-muted-foreground mt-1">Đã xử lý</p>
-        </div>
+      {/* Filters */}
+      <div className="flex gap-2 overflow-x-auto pb-1">
+        {tabs.map((t) => {
+          const Icon = t.icon;
+          const active = statusFilter === t.value;
+          return (
+            <button
+              key={t.value || "all"}
+              type="button"
+              onClick={() => setStatusFilter(t.value)}
+              className={
+                active
+                  ? "inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-semibold border border-primary shrink-0"
+                  : "inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-card text-foreground text-xs font-semibold border border-border hover:bg-muted shrink-0"
+              }
+            >
+              <Icon className="w-4 h-4" />
+              {t.label}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Disputes — buyer escalated, admin must handle */}
-      {disputes.length > 0 && (
-        <section>
-          <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-            <IconShield className="w-4 h-4 text-purple-600" />
-            Khiếu nại cần xử lý ({disputes.length})
-          </h2>
-          <p className="text-xs text-muted-foreground mb-3">
-            Người mua không đồng ý với quyết định từ chối của người bán. Admin xem xét và quyết định cuối.
-          </p>
-          <div className="rounded-xl border border-purple-200 bg-purple-50/30 overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-purple-200 bg-purple-100/50">
-                    <th className="text-left px-4 py-3 font-medium">Đơn hàng</th>
-                    <th className="text-left px-4 py-3 font-medium">Người mua</th>
-                    <th className="text-left px-4 py-3 font-medium">Người bán</th>
-                    <th className="text-left px-4 py-3 font-medium">Lý do / Mô tả</th>
-                    <th className="text-left px-4 py-3 font-medium">Số tiền</th>
-                    <th className="text-right px-4 py-3 font-medium">Thao tác</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {disputes.map((refund: RefundRequest) => (
-                    <tr key={refund._id} className="border-b border-purple-100 last:border-0 hover:bg-purple-50/50">
-                      <td className="px-4 py-3">
-                        <span className="font-mono text-xs text-muted-foreground">
-                          #{getOrderId(refund)}
-                        </span>
-                        <br />
-                        <span className="text-xs text-muted-foreground">{format(refund.createdAt)}</span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className="text-foreground">{getBuyerName(refund)}</span>
-                        <br />
-                        <span className="text-xs text-muted-foreground">
-                          {(refund.buyerId as { email?: string })?.email ?? ""}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className="text-foreground">{getSellerName(refund)}</span>
-                      </td>
-                      <td className="px-4 py-3 max-w-[200px]">
-                        <p className="text-xs font-medium text-foreground">
-                          {REASON_LABELS[refund.reason] ?? refund.reason}
-                        </p>
-                        <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
-                          {refund.description}
-                        </p>
-                        {refund.sellerResponse?.comment && (
-                          <p className="text-xs text-red-600 mt-1 line-clamp-2">
-                            Seller: &ldquo;{refund.sellerResponse.comment}&rdquo;
-                          </p>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 font-medium text-foreground">
-                        {formatPrice(refund.refundAmount ?? getOrderTotal(refund))}
-                      </td>
-                      <td className="px-4 py-3 text-right">
-                        <div className="flex justify-end gap-2 flex-wrap">
-                          <button
-                            onClick={() => setSelectedRefundId(refund._id)}
-                            className="flex items-center gap-1 px-3 py-1.5 border border-border text-foreground rounded-lg text-xs font-semibold hover:bg-muted disabled:opacity-50 transition-colors"
-                          >
-                            <IconEye className="w-3.5 h-3.5" />
-                            Xem chi tiết
-                          </button>
+      {/* Table */}
+      <div className="rounded-xl border border-border bg-card overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border bg-muted/50">
+                <th className="text-left px-4 py-3 font-medium">Đơn hàng</th>
+                <th className="text-left px-4 py-3 font-medium">Người mua</th>
+                <th className="text-left px-4 py-3 font-medium hidden md:table-cell">Người bán</th>
+                <th className="text-left px-4 py-3 font-medium">Trạng thái</th>
+                <th className="text-left px-4 py-3 font-medium hidden lg:table-cell">Lý do</th>
+                <th className="text-right px-4 py-3 font-medium">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              {refunds.map((refund: RefundRequest) => (
+                <tr key={refund._id} className="border-b border-border last:border-0 hover:bg-muted/30">
+                  <td className="px-4 py-3">
+                    <span className="font-mono text-xs text-muted-foreground">#{getOrderId(refund)}</span>
+                    <br />
+                    <span className="text-xs text-muted-foreground">{format(refund.createdAt)}</span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className="text-foreground">{getBuyerName(refund)}</span>
+                    <br />
+                    <span className="text-xs text-muted-foreground">
+                      {(refund.buyerId as { email?: string })?.email ?? ""}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 hidden md:table-cell">
+                    <span className="text-foreground">{getSellerName(refund)}</span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <StatusBadge
+                      status={
+                        refund.status === "completed"
+                          ? "refund_approved"
+                          : refund.status === "rejected"
+                            ? "cancelled"
+                            : refund.status
+                      }
+                    />
+                  </td>
+                  <td className="px-4 py-3 hidden lg:table-cell text-xs text-muted-foreground max-w-[240px]">
+                    <div className="line-clamp-2">
+                      {REASON_LABELS[refund.reason] ?? refund.reason}
+                      {refund.description ? ` — ${refund.description}` : ""}
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    <div className="flex justify-end gap-2 flex-wrap">
+                      <button
+                        onClick={() => setSelectedRefundId(refund._id)}
+                        className="flex items-center gap-1 px-3 py-1.5 border border-border text-foreground rounded-lg text-xs font-semibold hover:bg-muted disabled:opacity-50 transition-colors"
+                      >
+                        <IconEye className="w-3.5 h-3.5" />
+                        Chi tiết
+                      </button>
+
+                      {refund.status === "disputed" && (
+                        <>
                           <button
                             onClick={() => setApproveModal({ refundId: refund._id })}
                             disabled={processingId === refund._id || isApprovingDispute || isRejectingDispute}
@@ -263,7 +265,7 @@ export default function AdminRefunds() {
                             ) : (
                               <IconCircleCheck className="w-3.5 h-3.5" />
                             )}
-                            Duyệt hoàn tiền
+                            Duyệt
                           </button>
                           <button
                             onClick={() => setRejectModal({ refundId: refund._id })}
@@ -271,182 +273,48 @@ export default function AdminRefunds() {
                             className="flex items-center gap-1 px-3 py-1.5 border border-destructive/30 text-destructive rounded-lg text-xs font-semibold hover:bg-destructive/5 disabled:opacity-50 transition-colors"
                           >
                             <IconCircleX className="w-3.5 h-3.5" />
-                            Bác bỏ khiếu nại
+                            Bác bỏ
                           </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-      )}
+                        </>
+                      )}
 
-      {/* Pending — waiting for seller */}
-      {pending.length > 0 && (
-        <section>
-          <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-            <IconClock className="w-4 h-4 text-amber-600" />
-            Chờ người bán xử lý ({pending.length})
-          </h2>
-          <div className="rounded-xl border border-border bg-card overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border bg-muted/50">
-                    <th className="text-left px-4 py-3 font-medium">Đơn hàng</th>
-                    <th className="text-left px-4 py-3 font-medium hidden md:table-cell">Người mua</th>
-                    <th className="text-left px-4 py-3 font-medium">Lý do</th>
-                    <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">Số tiền</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pending.map((refund: RefundRequest) => (
-                    <tr key={refund._id} className="border-b border-border last:border-0 hover:bg-muted/30">
-                      <td className="px-4 py-3">
-                        <span className="font-mono text-xs text-muted-foreground">#{getOrderId(refund)}</span>
-                        <br />
-                        <span className="text-xs text-muted-foreground">{format(refund.createdAt)}</span>
-                      </td>
-                      <td className="px-4 py-3 hidden md:table-cell">{getBuyerName(refund)}</td>
-                      <td className="px-4 py-3 max-w-xs">
-                        <p className="text-sm text-foreground line-clamp-2">{refund.reason}</p>
-                      </td>
-                      <td className="px-4 py-3 hidden sm:table-cell font-medium text-foreground">
-                        {formatPrice(refund.refundAmount ?? getOrderTotal(refund))}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-      )}
+                      {refund.status === "approved" && (
+                        <button
+                          onClick={() => {
+                            const orderId =
+                              typeof refund.orderId === "object" && refund.orderId
+                                ? (refund.orderId as { _id?: string })._id ?? ""
+                                : typeof refund.orderId === "string"
+                                  ? refund.orderId
+                                  : "";
+                            if (!orderId) return;
+                            handleCompleteRefund(orderId);
+                          }}
+                          disabled={isApprovingRefund}
+                          className="flex items-center gap-1 px-3 py-1.5 bg-primary text-primary-foreground rounded-lg text-xs font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                        >
+                          <IconCircleCheck className="w-3.5 h-3.5" />
+                          Hoàn tiền
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
 
-      {/* Approved — ready to complete refund */}
-      {approved.length > 0 && (
-        <section>
-          <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-            <IconAlertCircle className="w-4 h-4 text-primary" />
-            Đã duyệt, chờ hoàn tiền ({approved.length})
-          </h2>
-          <div className="rounded-xl border border-border bg-card overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border bg-muted/50">
-                    <th className="text-left px-4 py-3 font-medium">Đơn hàng</th>
-                    <th className="text-left px-4 py-3 font-medium hidden md:table-cell">Người mua</th>
-                    <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">Số tiền</th>
-                    <th className="text-right px-4 py-3 font-medium">Thao tác</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {approved.map((refund: RefundRequest) => {
-                    const orderId =
-                      typeof refund.orderId === "object" && refund.orderId
-                        ? (refund.orderId as { _id?: string })._id ?? ""
-                        : typeof refund.orderId === "string"
-                          ? refund.orderId
-                          : "";
-                    return (
-                      <tr key={refund._id} className="border-b border-border last:border-0 hover:bg-muted/30">
-                        <td className="px-4 py-3">
-                          <span className="font-mono text-xs text-muted-foreground">#{getOrderId(refund)}</span>
-                          <br />
-                          <span className="text-xs text-muted-foreground">{format(refund.updatedAt)}</span>
-                        </td>
-                        <td className="px-4 py-3 hidden md:table-cell">{getBuyerName(refund)}</td>
-                        <td className="px-4 py-3 hidden sm:table-cell font-medium text-foreground">
-                          {formatPrice(refund.refundAmount ?? getOrderTotal(refund))}
-                        </td>
-                        <td className="px-4 py-3 text-right">
-                          <button
-                            onClick={() => handleCompleteRefund(orderId)}
-                            disabled={processingId === orderId || isApprovingRefund}
-                            className="flex items-center gap-1 px-3 py-1.5 bg-primary text-primary-foreground rounded-lg text-xs font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
-                          >
-                            {processingId === orderId ? (
-                              <IconLoader2 className="w-3.5 h-3.5 animate-spin" />
-                            ) : (
-                              <IconCircleCheck className="w-3.5 h-3.5" />
-                            )}
-                            Hoàn tiền
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Processed */}
-      {processed.length > 0 && (
-        <section>
-          <h2 className="text-sm font-semibold text-foreground mb-3">Đã xử lý ({processed.length})</h2>
-          <div className="rounded-xl border border-border bg-card overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border bg-muted/50">
-                    <th className="text-left px-4 py-3 font-medium">Đơn hàng</th>
-                    <th className="text-left px-4 py-3 font-medium hidden md:table-cell">Người mua</th>
-                    <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">Số tiền</th>
-                    <th className="text-left px-4 py-3 font-medium">Trạng thái</th>
-                    <th className="text-left px-4 py-3 font-medium hidden lg:table-cell">Ghi chú</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {processed.map((refund: RefundRequest) => (
-                    <tr key={refund._id} className="border-b border-border last:border-0 hover:bg-muted/30">
-                      <td className="px-4 py-3">
-                        <span className="font-mono text-xs text-muted-foreground">#{getOrderId(refund)}</span>
-                        <br />
-                        <span className="text-xs text-muted-foreground">{format(refund.updatedAt)}</span>
-                      </td>
-                      <td className="px-4 py-3 hidden md:table-cell text-foreground">
-                        {getBuyerName(refund)}
-                      </td>
-                      <td className="px-4 py-3 hidden sm:table-cell font-medium text-foreground">
-                        {formatPrice(refund.refundAmount ?? getOrderTotal(refund))}
-                      </td>
-                      <td className="px-4 py-3">
-                        <StatusBadge
-                          status={
-                            refund.status === "completed"
-                              ? "refund_approved"
-                              : "cancelled"
-                          }
-                        />
-                      </td>
-                      <td className="px-4 py-3 hidden lg:table-cell text-xs text-muted-foreground">
-                        {refund.adminIntervention?.comment ??
-                          refund.adminNote ??
-                          "—"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {refunds.length === 0 && (
-        <div className="rounded-xl border border-border bg-card p-12 text-center">
-          <IconCircleCheck className="w-10 h-10 text-primary mx-auto mb-3" />
-          <p className="text-sm font-medium text-foreground">Không có yêu cầu hoàn tiền</p>
-          <p className="text-xs text-muted-foreground mt-1">Tất cả yêu cầu đã được xử lý</p>
+              {refunds.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-4 py-10 text-center text-sm text-muted-foreground">
+                    Không có dữ liệu
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
-      )}
+      </div>
+
+      <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
 
       {/* Dispute detail modal — xem bằng chứng, thông tin đơn, chat với buyer/seller */}
       <AdminDisputeDetailModal

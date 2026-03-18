@@ -1,3 +1,4 @@
+export { BankInfoForm } from "./BankInfoForm";
 export { Breadcrumb } from "./Breadcrumb";
 export { LoadingState } from "./LoadingState";
 export { PasswordForm } from "./PasswordForm";

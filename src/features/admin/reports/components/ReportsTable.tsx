@@ -49,17 +49,25 @@ export default function ReportsTable({
                       email?: string;
                     })
                   : null;
+              const typeLabel =
+                report.type === "account_appeal"
+                  ? "Khiếu nại (TK khóa)"
+                  : report.type ?? "—";
+              const reporterDisplay = reporter
+                ? reporter.fullName ?? "—"
+                : report.reporterFullName || report.reporterEmail || "—";
+              const reporterSub = reporter?.email ?? (reporter ? null : report.reporterEmail);
               return (
                 <Fragment key={report._id}>
                   <tr className="border-b border-border last:border-0 hover:bg-muted/30">
                     <td className="px-4 py-3 font-medium text-foreground">
-                      {report.type ?? "—"}
+                      {typeLabel}
                     </td>
                     <td className="px-4 py-3 hidden sm:table-cell text-muted-foreground">
-                      {reporter?.fullName ?? "—"}
-                      {reporter?.email && (
+                      {reporterDisplay}
+                      {reporterSub && (
                         <span className="block text-xs">
-                          {reporter.email}
+                          {reporterSub}
                         </span>
                       )}
                     </td>

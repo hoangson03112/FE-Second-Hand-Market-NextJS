@@ -6,6 +6,7 @@ import axios, {
 import { captureException } from "@/infrastructure/monitoring/sentry";
 import { logger } from "@/infrastructure/monitoring/logger";
 import { useTokenStore } from "@/store/useTokenStore";
+import { useBannedStore } from "@/store/useBannedStore";
 import { AuthService } from "@/services/auth.service";
 
 const axiosClient = axios.create({
@@ -179,16 +180,25 @@ axiosClient.interceptors.response.use(
         }
       }
 
-      // Handle other errors
-      switch (status) {
-        case 403:
+      // 403 account_banned: tài khoản bị khóa → hiện overlay, chặn mọi thao tác, chỉ cho khiếu nại
+      if (status === 403) {
+        const data = error.response?.data as { code?: string; message?: string } | undefined;
+        if (data?.code === "account_banned") {
+          if (typeof window !== "undefined") {
+            useBannedStore.getState().setBanned(true);
+            useTokenStore.getState().clearAuth();
+          }
+        } else {
           console.error("Bạn không có quyền truy cập");
-          break;
-        case 500:
-          console.error("Lỗi Server");
-          break;
-        default:
-          console.error("Lỗi hệ thống:", error.message);
+        }
+      } else {
+        switch (status) {
+          case 500:
+            console.error("Lỗi Server");
+            break;
+          default:
+            console.error("Lỗi hệ thống:", error.message);
+        }
       }
     } else if (error.request) {
       // Network error

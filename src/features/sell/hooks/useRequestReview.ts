@@ -1,14 +1,24 @@
 import { useState } from "react";
 import { ProductService } from "@/services/product.service";
 import { useToast } from "@/components/ui/Toast";
+import { useConfirm } from "@/components/ui/ConfirmDialog";
 import { PRODUCT_UI_MESSAGES } from "@/constants/messages";
 
 export function useRequestReview(onSuccess?: () => void) {
   const toast = useToast();
+  const { confirm } = useConfirm();
   const [isRequesting, setIsRequesting] = useState(false);
 
   const handleRequestReview = async (productId: string) => {
-    if (!window.confirm("Bạn muốn yêu cầu admin xem xét lại sản phẩm này?")) {
+    const ok = await confirm({
+      title: "Yêu cầu duyệt lại sản phẩm",
+      message:
+        "Bạn muốn gửi yêu cầu để admin xem xét lại sản phẩm này? Admin sẽ kiểm tra trong vòng 24 giờ.",
+      confirmText: "Gửi yêu cầu",
+      cancelText: "Hủy",
+      variant: "warning",
+    });
+    if (!ok) {
       return;
     }
 
