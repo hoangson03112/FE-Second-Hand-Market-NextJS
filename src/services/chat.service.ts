@@ -6,11 +6,18 @@ import type {
   SendMessageResponse,
   UploadChatMediaResponse,
 } from "@/types/chat";
+import type { IProduct } from "@/types/product";
 
 export interface FindOrCreateWithProductResponse {
   success: boolean;
   data: { conversationId: string };
   partner: { _id: string; name: string; avatar: string | null };
+}
+
+export interface AIProductSearchResponse {
+  success: boolean;
+  mode: "vector" | "text";
+  data: IProduct[];
 }
 
 export const ChatService = {
@@ -58,5 +65,12 @@ export const ChatService = {
 
   deleteMessage: async (messageId: string) => {
     return axiosClient.delete(`/chat/messages/${messageId}`);
+  },
+
+  searchProductsByAI: async (
+    query: string,
+    limit = 5,
+  ): Promise<AIProductSearchResponse> => {
+    return axiosClient.post("/chat/ai/search-products", { query, limit });
   },
 };

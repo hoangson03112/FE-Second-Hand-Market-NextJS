@@ -18,7 +18,7 @@ export function CategoryNav({
   onMouseLeaveCategory,
 }: CategoryNavProps) {
   return (
-    <nav className="hidden lg:flex flex-1 items-center gap-0 xl:gap-0.5 min-w-0">
+    <nav className="hidden 2xl:flex flex-1 items-center gap-0.5 min-w-0">
       {isLoading ? (
         <div className="flex items-center gap-1.5 px-2 text-muted-foreground">
           <div

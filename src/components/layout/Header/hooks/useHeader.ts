@@ -56,9 +56,9 @@ export function useHeader() {
   }, []);
 
   const visibleCategoryLimit = useMemo(() => {
-    if (viewportWidth >= 1536) return 8;
-    if (viewportWidth >= 1280) return 6;
-    if (viewportWidth >= 1024) return 4;
+    if (viewportWidth >= 1536) return 7;
+    if (viewportWidth >= 1280) return 4;
+    if (viewportWidth >= 1024) return 0;
     return 0;
   }, [viewportWidth]);
 

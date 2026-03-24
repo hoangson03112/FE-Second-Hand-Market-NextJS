@@ -20,6 +20,13 @@ export function useAllPublicProducts(filters?: IProductFilters) {
   });
 }
 
+export function useFeaturedProducts(limit = 4) {
+  return useQuery({
+    queryKey: [...queryKeys.products.all, "featured", limit],
+    queryFn: async () => ProductService.getFeatured(limit),
+  });
+}
+
 export function useProductsByCategory(
   categorySlug: string,
   filters?: IProductFilters

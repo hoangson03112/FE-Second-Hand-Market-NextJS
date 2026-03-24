@@ -13,6 +13,8 @@ interface ChatInputProps {
   errorMessage?: string | null;
   selectedFiles: File[];
   extraActions?: ReactNode;
+  placeholder?: string;
+  showAttachment?: boolean;
   onChange: (value: string) => void;
   onFilesChange: (files: File[]) => void;
   onRemoveFile: (index: number) => void;
@@ -26,6 +28,8 @@ export function ChatInput({
   errorMessage,
   selectedFiles,
   extraActions,
+  placeholder = "Nhập tin nhắn...",
+  showAttachment = true,
   onChange,
   onFilesChange,
   onRemoveFile,
@@ -116,30 +120,32 @@ export function ChatInput({
       )}
 
       <div className="flex gap-3">
-        <label className="cursor-pointer border-2 border-border px-4 py-3.5 rounded-xl hover:bg-muted/50 transition-all">
-          <input
-            type="file"
-            accept="image/*,video/*"
-            multiple
-            className="hidden"
-            disabled={sending}
-            onChange={(event) => {
-              const fileList = event.target.files;
-              if (!fileList || fileList.length === 0) return;
-              onFilesChange(Array.from(fileList));
-              event.currentTarget.value = "";
-            }}
-          />
-          <span className="flex items-center gap-2 text-sm font-medium text-foreground">
-            <IconPaperclip className="w-5 h-5" />
-          </span>
-        </label>
+        {showAttachment && (
+          <label className="cursor-pointer border-2 border-border px-4 py-3.5 rounded-xl hover:bg-muted/50 transition-all">
+            <input
+              type="file"
+              accept="image/*,video/*"
+              multiple
+              className="hidden"
+              disabled={sending}
+              onChange={(event) => {
+                const fileList = event.target.files;
+                if (!fileList || fileList.length === 0) return;
+                onFilesChange(Array.from(fileList));
+                event.currentTarget.value = "";
+              }}
+            />
+            <span className="flex items-center gap-2 text-sm font-medium text-foreground">
+              <IconPaperclip className="w-5 h-5" />
+            </span>
+          </label>
+        )}
 
         <input
           type="text"
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          placeholder="Nhập tin nhắn..."
+          placeholder={placeholder}
           className="flex-1 px-5 py-3.5 border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base transition-all"
           disabled={sending}
         />

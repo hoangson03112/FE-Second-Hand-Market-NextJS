@@ -17,7 +17,7 @@ export function CategoryMegaMenu({
 }: CategoryMegaMenuProps) {
   return (
     <div
-      className="relative shrink-0 hidden md:block"
+      className="relative shrink-0 hidden xl:block"
       onMouseEnter={onShowAllCategories}
       onMouseLeave={onHideAllCategories}
     >
@@ -26,7 +26,7 @@ export function CategoryMegaMenu({
         className={`flex items-center gap-1.5 h-8 px-3 text-[12.5px] font-semibold focus:outline-none transition-all duration-150 select-none text-foreground rounded-full ${showAllCategories ? "bg-primary/15" : "bg-primary/8 hover:bg-primary/15"}`}
       >
         <IconAlignLeft className="w-3.5 h-3.5 shrink-0" strokeWidth={2.5} />
-        <span className="hidden lg:inline">Danh mục</span>
+        <span className="inline">Danh mục</span>
         <IconChevronDown
           className={`w-3 h-3 shrink-0 transition-transform duration-200 ${showAllCategories ? "rotate-180" : ""}`}
           strokeWidth={2.5}
