@@ -12,6 +12,7 @@ export function useAdminCategories() {
   const toast = useToast();
 
   // Category editing
+  const [newCategoryName, setNewCategoryName] = useState("");
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
   const [categoryNameDraft, setCategoryNameDraft] = useState("");
 
@@ -63,6 +64,35 @@ export function useAdminCategories() {
       const message =
         (err as { response?: { data?: { message?: string } } })?.response
           ?.data?.message ?? "Không cập nhật được danh mục.";
+      toast.error(message);
+    },
+  });
+
+  const createCategoryMutation = useMutation({
+    mutationFn: (params: { name: string }) =>
+      AdminService.createCategory({
+        name: params.name,
+        status: "active",
+      }),
+    onSuccess: (response: unknown) => {
+      queryClient.invalidateQueries({ queryKey: ["admin", "categories"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      setNewCategoryName("");
+      const createdId =
+        (response as { data?: { _id?: string } })?.data?._id ??
+        (response as { _id?: string })?._id;
+      if (createdId) {
+        setSelectedCategoryId(createdId);
+      }
+      toast.success(ADMIN_MESSAGES.CATEGORY_CREATE_SUCCESS);
+    },
+    onError: (err: unknown) => {
+      const message =
+        (err as { response?: { data?: { message?: string; error?: string } } })
+          ?.response?.data?.message ||
+        (err as { response?: { data?: { message?: string; error?: string } } })
+          ?.response?.data?.error ||
+        "Không tạo được danh mục.";
       toast.error(message);
     },
   });
@@ -157,6 +187,13 @@ export function useAdminCategories() {
     });
   }, [editingCategoryId, categoryNameDraft, updateCategoryMutation, categories]);
 
+  const addCategory = useCallback(() => {
+    if (!newCategoryName.trim()) return;
+    createCategoryMutation.mutate({
+      name: newCategoryName.trim(),
+    });
+  }, [createCategoryMutation, newCategoryName]);
+
   const selectCategory = useCallback((id: string) => {
     setSelectedCategoryId((prev) => (prev === id ? null : id));
     setSubError(null);
@@ -229,6 +266,10 @@ export function useAdminCategories() {
     isLoading,
     error,
     // category
+    newCategoryName,
+    setNewCategoryName,
+    addCategory,
+    isCreatingCategory: createCategoryMutation.isPending,
     selectedCategory,
     selectCategory,
     editingCategoryId,

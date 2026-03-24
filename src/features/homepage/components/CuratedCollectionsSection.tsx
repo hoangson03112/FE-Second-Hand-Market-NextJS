@@ -1,26 +1,13 @@
 "use client";
 
 import Link from "next/link";
-
-const collections = [
-  {
-    title: "Không gian tối giản",
-    description: "Những món đồ gọn gàng, phù hợp nhà ở hiện đại.",
-    gradient: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1774026122/spacejoy-umAXneH4GhA-unsplash_s4q4i0.jpg",
-  },
-  {
-    title: "Nâng cấp công nghệ",
-    description: "Thiết bị công nghệ đã qua sử dụng, sẵn sàng cho vòng đời mới.",
-    gradient: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1774026123/ales-nesetril-Im7lZjxeLhg-unsplash_rako3c.jpg",
-  },
-  {
-    title: "Đồ vintage tuyển chọn",
-    description: "Những món đồ mang dấu ấn thời gian và câu chuyện riêng.",
-    gradient: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1774026121/abe-b-ryokan-7Uk-DPd0fZY-unsplash_y7cyko.jpg",
-  },
-];
+import { cn } from "@/lib/utils";
+import { CURATED_COLLECTIONS } from "../constants";
+import { useScrollReveal } from "../hooks";
 
 export default function CuratedCollectionsSection() {
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.08, delay: 140 });
+
   return (
     <section
       style={{
@@ -29,7 +16,13 @@ export default function CuratedCollectionsSection() {
       }}
       className="border-y border-taupe-200/60 py-10 md:py-12"
     >
-      <div className="mx-auto w-full max-w-[100rem] px-4 sm:px-6 lg:px-8">
+      <div
+        ref={ref}
+        className={cn(
+          "mx-auto w-full max-w-[100rem] px-4 sm:px-6 lg:px-8 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+        )}
+      >
         <div className="mb-5 flex items-end justify-between">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-taupe-400">
@@ -48,13 +41,18 @@ export default function CuratedCollectionsSection() {
         </div>
 
         <div className="grid gap-3 md:grid-cols-3">
-          {collections.map((item) => (
-            <article
+          {CURATED_COLLECTIONS.map((item, index) => (
+            <Link
               key={item.title}
-              className="group relative overflow-hidden rounded-lg border border-taupe-200/70 shadow-[0_10px_22px_rgba(0,0,0,0.14)]"
+              href={item.href}
+              className={cn(
+                "group relative overflow-hidden rounded-lg border border-taupe-200/70 shadow-[0_10px_22px_rgba(0,0,0,0.14)] transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+              )}
+              style={{ transitionDelay: `${220 + index * 120}ms` }}
             >
               <div
-                className="h-[300px] w-full transition-transform duration-500 group-hover:scale-[1.03]"
+                className="h-[300px] w-full transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                 style={{
                   backgroundImage: `url(${item.gradient})`,
                   backgroundSize: "cover",
@@ -66,8 +64,11 @@ export default function CuratedCollectionsSection() {
               <div className="absolute inset-x-0 bottom-0 p-4 text-white">
                 <h3 className="text-lg font-semibold leading-tight">{item.title}</h3>
                 <p className="mt-1 text-xs text-white/80">{item.description}</p>
+                <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/85">
+                  Bấm để khám phá
+                </p>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </div>

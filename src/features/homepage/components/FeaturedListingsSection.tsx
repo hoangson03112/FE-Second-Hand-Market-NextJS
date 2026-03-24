@@ -5,8 +5,10 @@ import Image from "next/image";
 import { IconMapPin } from "@tabler/icons-react";
 import { useFeaturedProducts } from "@/hooks/useProducts";
 import { useProvinces } from "@/hooks/useGHNLocation";
+import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
 import type { IProduct } from "@/types/product";
+import { useScrollReveal } from "../hooks";
 
 const CARD_GRADIENTS = [
   "linear-gradient(145deg, #f4f1ed 0%, #d8d2ca 45%, #9ea4ae 100%)",
@@ -18,6 +20,7 @@ const CARD_GRADIENTS = [
 export default function FeaturedListingsSection() {
   const { data, isLoading } = useFeaturedProducts(4);
   const { data: provinces = [] } = useProvinces();
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.1, delay: 160 });
   const featuredProducts = data?.data ?? [];
 
   const renderCard = (
@@ -44,7 +47,7 @@ export default function FeaturedListingsSection() {
       >
         <div className="flex h-full flex-col">
           <div
-            className={`relative w-full overflow-hidden rounded-xl ${isCompact ? "h-[196px]" : "h-[252px]"}`}
+            className={`relative w-full overflow-hidden rounded-xl ${isCompact ? "h-[236px]" : "h-[252px]"}`}
             style={!imageUrl ? { background: fallbackGradient } : undefined}
           >
             {imageUrl && (
@@ -72,12 +75,16 @@ export default function FeaturedListingsSection() {
               <p className="mt-1 line-clamp-1 text-xs text-taupe-500">
                 {item.description?.trim() || "Sản phẩm đang được người dùng quan tâm nhiều."}
               </p>
-              <p className="mt-1 flex items-center gap-1 text-xs text-taupe-500">
-                <IconMapPin className="h-3.5 w-3.5 shrink-0" />
-                <span className="line-clamp-1">{provinceName}</span>
-              </p>
+
             </div>
-            <p className="mt-2 text-sm font-semibold text-taupe-700">{formatPrice(item.price)}</p>
+            <div className="flex justify-between">            <p className="mt-2 text-sm font-semibold text-taupe-700">{formatPrice(item.price)}</p>
+            <p className="mt-1 flex items-center gap-1 text-xs text-taupe-500 text-end">
+                <IconMapPin className="h-3.5 w-3.5 shrink-0 text-red-500" />
+                <span className="line-clamp-1">
+                   <span className="font-medium text-taupe-700">{provinceName}</span>
+                </span>
+              </p></div>
+
           </div>
         </div>
       </Link>
@@ -92,7 +99,13 @@ export default function FeaturedListingsSection() {
       }}
       className="border-b border-taupe-200/60 py-12 md:py-16"
     >
-      <div className="mx-auto w-full max-w-[100rem] px-4 sm:px-6 lg:px-8">
+      <div
+        ref={ref}
+        className={cn(
+          "mx-auto w-full max-w-[100rem] px-4 sm:px-6 lg:px-8 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+        )}
+      >
         <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-taupe-500">
@@ -107,7 +120,13 @@ export default function FeaturedListingsSection() {
           </p>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-12 lg:grid-rows-[386px_386px]">
+        <div
+          className={cn(
+            "grid gap-4 lg:grid-cols-12 lg:grid-rows-[386px_386px] transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+          )}
+          style={{ transitionDelay: "240ms" }}
+        >
           {isLoading ? (
             <>
               <div className="h-full animate-pulse rounded-2xl bg-cream-100 lg:col-span-6 lg:row-start-1" />

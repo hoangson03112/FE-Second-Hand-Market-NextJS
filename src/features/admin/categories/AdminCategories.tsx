@@ -5,6 +5,7 @@ import type { AdminCategory } from "@/types/admin";
 import { useAdminCategories } from "./hooks/useAdminCategories";
 import EmptyState from "./components/EmptyState";
 import CategoryHeader from "./components/CategoryHeader";
+import AddCategoryForm from "./components/AddCategoryForm";
 import AddSubcategoryForm from "./components/AddSubcategoryForm";
 import SubcategoryList from "./components/SubcategoryList";
 
@@ -18,6 +19,10 @@ export default function AdminCategories() {
     editingCategoryId,
     categoryNameDraft,
     setCategoryNameDraft,
+    newCategoryName,
+    setNewCategoryName,
+    addCategory,
+    isCreatingCategory,
     isSavingCategory,
     startEditCategory,
     cancelEditCategory,
@@ -63,6 +68,12 @@ export default function AdminCategories() {
             Quản lý danh mục và danh mục con
           </p>
         </div>
+        <AddCategoryForm
+          newCategoryName={newCategoryName}
+          isSaving={isCreatingCategory}
+          onNameChange={setNewCategoryName}
+          onSubmit={addCategory}
+        />
         <EmptyState />
       </div>
     );
@@ -76,6 +87,13 @@ export default function AdminCategories() {
           Quản lý cây danh mục và danh mục con cho toàn bộ hệ thống
         </p>
       </div>
+
+      <AddCategoryForm
+        newCategoryName={newCategoryName}
+        isSaving={isCreatingCategory}
+        onNameChange={setNewCategoryName}
+        onSubmit={addCategory}
+      />
 
       <div className="space-y-3">
         {categories.map((cat: AdminCategory) => {

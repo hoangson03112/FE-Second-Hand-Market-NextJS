@@ -1,6 +1,6 @@
 "use client";
 
-import { IconShoppingCart, IconBolt, IconLock } from "@tabler/icons-react";
+import { IconShoppingCart, IconBolt, IconLock, IconChevronRight } from "@tabler/icons-react";
 import type { AccountInfo } from "@/types/auth";
 
 interface ProductActionButtonsProps {
@@ -24,10 +24,18 @@ export default function ProductActionButtons({
     return (
       <button
         onClick={onBuyNow}
-        className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-secondary text-muted-foreground border-2 border-border font-semibold text-sm hover:bg-secondary/80 transition-all duration-200"
+        className="group w-full flex items-center justify-between rounded-2xl border border-taupe-300/80 bg-white px-4 py-3.5 text-left shadow-[0_8px_20px_rgba(60,42,24,0.06)] transition-all duration-200 hover:-translate-y-0.5 hover:border-taupe-500/70 hover:shadow-[0_12px_24px_rgba(60,42,24,0.12)]"
       >
-        <IconLock className="w-4 h-4" />
-        Đăng nhập để mua hàng
+        <span className="flex items-center gap-3">
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-taupe-300 bg-taupe-50 text-taupe-700 transition-colors group-hover:bg-taupe-100">
+            <IconLock className="h-4 w-4" />
+          </span>
+          <span className="flex flex-col">
+            <span className="text-sm font-semibold text-taupe-900">Đăng nhập để mua hàng</span>
+            <span className="text-xs text-taupe-500">Mở giỏ hàng và đặt mua nhanh hơn</span>
+          </span>
+        </span>
+        <IconChevronRight className="h-4 w-4 text-taupe-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-taupe-600" />
       </button>
     );
   }
