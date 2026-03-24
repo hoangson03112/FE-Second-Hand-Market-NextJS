@@ -43,7 +43,7 @@ export function CategoryMegaMenu({
               boxShadow: "0 20px 56px rgba(26,23,20,0.13), 0 4px 16px rgba(26,23,20,0.06)",
             }}
           >
-            <div className="py-8 px-8 lg:px-10">
+            <div className="py-8 ps-8">
               <p
                 className="text-[10px] font-semibold tracking-[0.18em] uppercase mb-1.5 text-primary"
               >

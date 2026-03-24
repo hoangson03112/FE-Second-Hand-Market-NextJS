@@ -145,6 +145,13 @@ export const AdminService = {
     return res as unknown as { data: AdminCategory[] };
   },
 
+  createCategory: async (payload: {
+    name: string;
+    status?: "active" | "inactive";
+  }) => {
+    return axiosClient.post("/categories", payload);
+  },
+
   updateCategory: async (
     categoryId: string,
     data: { name: string; status?: "active" | "inactive" }

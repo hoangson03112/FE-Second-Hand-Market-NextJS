@@ -134,6 +134,7 @@ export const SELLER_MESSAGES = {
 // Admin messages
 // ============================================================================
 export const ADMIN_MESSAGES = {
+  CATEGORY_CREATE_SUCCESS: "Đã tạo danh mục thành công",
   CATEGORY_UPDATE_SUCCESS: "Cập nhật danh mục thành công",
   SUBCATEGORY_CREATE_SUCCESS: "Đã tạo danh mục con thành công",
   SUBCATEGORY_UPDATE_SUCCESS: "Cập nhật danh mục con thành công",
