@@ -6,7 +6,6 @@ import { useUser } from "@/hooks/useUser";
 import { useToast } from "@/components/ui/Toast";
 import { useConfirm } from "@/components/ui/ConfirmDialog";
 import { OrderService } from "@/services/order.service";
-import { RefundService } from "@/services/refund.service";
 import { SellerReviewService } from "@/services/sellerReview.service";
 import { ProductReviewService } from "@/services/productReview.service";
 import type { Order } from "@/types/order";
@@ -48,7 +47,6 @@ export function useOrderDetail({ orderId, autoOpenRefund, autoOpenReview }: UseO
   const [accountNumber, setAccountNumber] = useState("");
   const [accountHolder, setAccountHolder] = useState("");
   const [isSubmittingBankInfo, setIsSubmittingBankInfo] = useState(false);
-  const [isEscalatingToAdmin, setIsEscalatingToAdmin] = useState(false);
   const [productReviews, setProductReviews] = useState<
     Record<string, { rating: number; comment?: string }>
   >({});
@@ -100,12 +98,13 @@ export function useOrderDetail({ orderId, autoOpenRefund, autoOpenReview }: UseO
     const fetchProductReviews = async () => {
       const reviews: Record<string, { rating: number; comment?: string }> = {};
       for (const item of order.products) {
-        const pid = item.productId?._id ?? (typeof item.productId === "string" ? item.productId : null);
-        if (!pid) continue;
         try {
-          const res = await ProductReviewService.getByOrderAndProduct(orderId, pid);
+          const res = await ProductReviewService.getByOrderAndProduct(
+            orderId,
+            item.productId._id,
+          );
           if (res?.review) {
-            reviews[String(pid)] = {
+            reviews[item.productId._id] = {
               rating: res.review.rating,
               comment: res.review.comment,
             };
@@ -275,28 +274,6 @@ export function useOrderDetail({ orderId, autoOpenRefund, autoOpenReview }: UseO
     }
   };
 
-  const handleEscalateToAdmin = async () => {
-    const refundId =
-      order?.refundRequestId && typeof order.refundRequestId === "object"
-        ? order.refundRequestId._id
-        : null;
-    if (!order || !refundId || order.refundRequestId?.status !== "rejected") return;
-
-    setIsEscalatingToAdmin(true);
-    try {
-      await RefundService.escalateToAdmin(refundId);
-      const refreshed = await OrderService.getById(order._id);
-      setOrder(refreshed.order ?? null);
-      toast.success(REFUND_MESSAGES.DISPUTE_ESCALATE_SUCCESS);
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : REFUND_MESSAGES.DISPUTE_ESCALATE_ERROR,
-      );
-    } finally {
-      setIsEscalatingToAdmin(false);
-    }
-  };
-
   const handleOpenProductReview = (productId: string, productName: string) => {
     setSelectedProduct({ id: productId, name: productName });
     setProductReviewRating(5);
@@ -382,8 +359,6 @@ export function useOrderDetail({ orderId, autoOpenRefund, autoOpenReview }: UseO
     handleOpenProductReview,
     handleSubmitProductReview,
     handleSubmitBankInfo,
-    handleEscalateToAdmin,
-    isEscalatingToAdmin,
     isSubmittingBankInfo,
     bankName,
     setBankName,

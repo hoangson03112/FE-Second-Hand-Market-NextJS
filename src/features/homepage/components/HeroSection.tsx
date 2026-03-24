@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import Link from "next/link";
@@ -9,6 +9,15 @@ export default function HeroSection() {
       style={{ background: "#FDFAF6" }}
       className="relative overflow-hidden"
     >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(243,232,220,0.42) 0%, rgba(253,250,246,0.2) 42%, rgba(232,216,198,0.34) 100%)",
+        }}
+      />
+
       {/* Subtle warm gradient blob */}
       <div
         aria-hidden
@@ -33,7 +42,7 @@ export default function HeroSection() {
         }}
       />
 
-      <div className="relative z-10 w-full container mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
+      <div className="relative z-10 mx-auto w-full max-w-[100rem] px-4 sm:px-7 lg:px-10 py-14 lg:py-20">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
           {/* LEFT: Content */}
@@ -110,27 +119,7 @@ export default function HeroSection() {
               </Link>
             </div>
 
-            {/* Stats row */}
-            <div
-              className="opacity-0-init animate-fade-in-up flex gap-8"
-              style={{
-                animationDelay: "460ms",
-                animationFillMode: "forwards",
-                paddingTop: "24px",
-                borderTop: "1px solid #EDE0D4",
-              }}
-            >
-              {[
-                { value: "10k+", label: "Sản phẩm" },
-                { value: "5k+", label: "Người dùng" },
-                { value: "98%", label: "Hài lòng" },
-              ].map((s) => (
-                <div key={s.label}>
-                  <div className="text-2xl font-semibold tracking-tight" style={{ color: "#1A1714" }}>{s.value}</div>
-                  <div className="text-xs font-medium mt-0.5" style={{ color: "#A89280" }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
+   
           </div>
 
           {/* RIGHT: Floating vintage objects illustration */}
@@ -171,155 +160,188 @@ export default function HeroSection() {
 
             {/* Soft glow backdrop */}
             <div aria-hidden style={{
-              position: "absolute", width: "320px", height: "320px", borderRadius: "50%",
-              background: "radial-gradient(circle, #F0E0CC 0%, transparent 70%)",
+              position: "absolute", width: "340px", height: "340px", borderRadius: "50%",
+              background: "radial-gradient(circle, #E8D5C2 0%, transparent 72%)",
               top: "50%", left: "50%", transform: "translate(-50%,-50%)", pointerEvents: "none",
             }} />
 
             {/* -- CAMERA (top-left) -- */}
-            <div style={{ position: "absolute", top: "18px", left: "40px", animation: "floatA 5s ease-in-out infinite" }}>
+            <div style={{ position: "absolute", top: "26px", left: "34px", animation: "floatA 5s ease-in-out infinite" }}>
               <svg width="80" height="68" viewBox="0 0 80 68" fill="none">
                 {/* body */}
-                <rect x="6" y="18" width="68" height="46" rx="7" fill="#2C1F14"/>
+                <rect x="6" y="18" width="68" height="46" rx="7" fill="#24180F"/>
                 {/* top bump / viewfinder area */}
-                <rect x="18" y="10" width="20" height="12" rx="4" fill="#2C1F14"/>
+                <rect x="18" y="10" width="20" height="12" rx="4" fill="#24180F"/>
                 {/* flash */}
-                <rect x="46" y="12" width="14" height="10" rx="3" fill="#736045"/>
+                <rect x="46" y="12" width="14" height="10" rx="3" fill="#5D4A38"/>
                 {/* lens outer */}
-                <circle cx="40" cy="41" r="16" fill="#1A1714" stroke="#736045" strokeWidth="2"/>
+                <circle cx="40" cy="41" r="16" fill="#14110E" stroke="#5D4A38" strokeWidth="2"/>
                 {/* lens inner */}
-                <circle cx="40" cy="41" r="10" fill="#3A2A1E"/>
+                <circle cx="40" cy="41" r="10" fill="#2D2118"/>
                 {/* lens shine */}
                 <circle cx="35" cy="36" r="3" fill="white" opacity="0.25"/>
                 {/* shutter button */}
-                <circle cx="60" cy="20" r="4" fill="#736045"/>
+                <circle cx="60" cy="20" r="4" fill="#5D4A38"/>
                 {/* strap lug left */}
-                <rect x="2" y="28" width="7" height="10" rx="2" fill="#736045"/>
+                <rect x="2" y="28" width="7" height="10" rx="2" fill="#5D4A38"/>
                 {/* strap lug right */}
-                <rect x="71" y="28" width="7" height="10" rx="2" fill="#736045"/>
+                <rect x="71" y="28" width="7" height="10" rx="2" fill="#5D4A38"/>
               </svg>
             </div>
 
             {/* -- VINYL RECORD (top-right) -- */}
-            <div style={{ position: "absolute", top: "10px", right: "50px", animation: "floatB 6s ease-in-out infinite 0.8s" }}>
+            <div style={{ position: "absolute", top: "18px", right: "42px", animation: "floatB 6s ease-in-out infinite 0.8s" }}>
               <svg width="76" height="76" viewBox="0 0 76 76" fill="none">
                 <g style={{ animation: "vinyl-spin 8s linear infinite", transformOrigin: "38px 38px" }}>
-                  <circle cx="38" cy="38" r="36" fill="#1A1714"/>
-                  <circle cx="38" cy="38" r="28" fill="none" stroke="#2E2018" strokeWidth="3"/>
-                  <circle cx="38" cy="38" r="22" fill="none" stroke="#2E2018" strokeWidth="2"/>
-                  <circle cx="38" cy="38" r="16" fill="none" stroke="#2E2018" strokeWidth="2"/>
+                  <circle cx="38" cy="38" r="36" fill="#14110E"/>
+                  <circle cx="38" cy="38" r="28" fill="none" stroke="#261B14" strokeWidth="3"/>
+                  <circle cx="38" cy="38" r="22" fill="none" stroke="#261B14" strokeWidth="2"/>
+                  <circle cx="38" cy="38" r="16" fill="none" stroke="#261B14" strokeWidth="2"/>
                 </g>
                 {/* label (doesn't spin) */}
-                <circle cx="38" cy="38" r="12" fill="#736045"/>
-                <circle cx="38" cy="38" r="3" fill="#1A1714"/>
+                <circle cx="38" cy="38" r="12" fill="#5D4A38"/>
+                <circle cx="38" cy="38" r="3" fill="#14110E"/>
                 <text x="38" y="35" textAnchor="middle" fontSize="4" fontWeight="700" fill="white" fontFamily="sans-serif">ECO</text>
                 <text x="38" y="41" textAnchor="middle" fontSize="3.5" fill="rgba(255,255,255,0.7)" fontFamily="sans-serif">VINTAGE</text>
               </svg>
             </div>
 
             {/* -- STACK OF BOOKS (middle-left) -- */}
-            <div style={{ position: "absolute", top: "160px", left: "20px", animation: "floatE 4.5s ease-in-out infinite 0.3s" }}>
+            <div style={{ position: "absolute", top: "162px", left: "12px", animation: "floatE 4.5s ease-in-out infinite 0.3s" }}>
               <svg width="72" height="58" viewBox="0 0 72 58" fill="none">
                 {/* bottom book */}
-                <rect x="4" y="40" width="64" height="14" rx="2" fill="#736045"/>
-                <rect x="4" y="40" width="6" height="14" rx="2" fill="#A05A38"/>
+                <rect x="4" y="40" width="64" height="14" rx="2" fill="#5D4A38"/>
+                <rect x="4" y="40" width="6" height="14" rx="2" fill="#8A4B2E"/>
                 <line x1="16" y1="43" x2="62" y2="43" stroke="rgba(255,255,255,0.2)" strokeWidth="1"/>
                 {/* middle book */}
-                <rect x="8" y="24" width="58" height="14" rx="2" fill="#EDE0D4"/>
-                <rect x="8" y="24" width="5" height="14" rx="2" fill="#D0C0A8"/>
+                <rect x="8" y="24" width="58" height="14" rx="2" fill="#E3D1BE"/>
+                <rect x="8" y="24" width="5" height="14" rx="2" fill="#BAA487"/>
                 <line x1="18" y1="27" x2="60" y2="27" stroke="rgba(0,0,0,0.08)" strokeWidth="1"/>
                 {/* top book */}
-                <rect x="12" y="8" width="52" height="14" rx="2" fill="#2C1F14"/>
-                <rect x="12" y="8" width="5" height="14" rx="2" fill="#1A1008"/>
+                <rect x="12" y="8" width="52" height="14" rx="2" fill="#24180F"/>
+                <rect x="12" y="8" width="5" height="14" rx="2" fill="#120B06"/>
                 <line x1="22" y1="11" x2="58" y2="11" stroke="rgba(255,255,255,0.1)" strokeWidth="1"/>
               </svg>
             </div>
 
             {/* -- VINTAGE TABLE LAMP (center-ish) -- */}
-            <div style={{ position: "absolute", top: "110px", left: "50%", transform: "translateX(-30%)", animation: "floatC 5.5s ease-in-out infinite 0.5s" }}>
+            <div style={{ position: "absolute", top: "106px", left: "51%", transform: "translateX(-36%)", animation: "floatC 5.5s ease-in-out infinite 0.5s" }}>
               <svg width="70" height="90" viewBox="0 0 70 90" fill="none">
                 {/* shade */}
-                <path d="M10 38 L22 8 L48 8 L60 38 Z" fill="#736045"/>
-                <path d="M10 38 L22 8 L22 12 L12 38 Z" fill="#A05A38"/>
+                <path d="M10 38 L22 8 L48 8 L60 38 Z" fill="#5D4A38"/>
+                <path d="M10 38 L22 8 L22 12 L12 38 Z" fill="#8A4B2E"/>
                 {/* shade rim bottom */}
-                <rect x="8" y="36" width="54" height="5" rx="2" fill="#8A4828"/>
+                <rect x="8" y="36" width="54" height="5" rx="2" fill="#723C22"/>
                 {/* shade rim top */}
-                <rect x="20" y="6" width="30" height="5" rx="2" fill="#8A4828"/>
+                <rect x="20" y="6" width="30" height="5" rx="2" fill="#723C22"/>
                 {/* bulb glow */}
                 <ellipse cx="35" cy="36" rx="8" ry="5" fill="#FFF8E1" opacity="0.5"/>
                 {/* stem */}
-                <rect x="32" y="41" width="6" height="28" rx="2" fill="#2C1F14"/>
+                <rect x="32" y="41" width="6" height="28" rx="2" fill="#24180F"/>
                 {/* base */}
-                <ellipse cx="35" cy="70" rx="18" ry="6" fill="#2C1F14"/>
-                <ellipse cx="35" cy="68" rx="14" ry="4" fill="#3E2A1A"/>
+                <ellipse cx="35" cy="70" rx="18" ry="6" fill="#24180F"/>
+                <ellipse cx="35" cy="68" rx="14" ry="4" fill="#322214"/>
                 {/* cord */}
-                <path d="M35 69 Q28 78 25 84" stroke="#3E2A1A" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+                <path d="M35 69 Q28 78 25 84" stroke="#322214" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
               </svg>
             </div>
 
             {/* -- COFFEE MUG (right-middle) -- */}
-            <div style={{ position: "absolute", top: "200px", right: "30px", animation: "floatD 4s ease-in-out infinite 1.2s" }}>
+            <div style={{ position: "absolute", top: "198px", right: "18px", animation: "floatD 4s ease-in-out infinite 1.2s" }}>
               <svg width="60" height="62" viewBox="0 0 60 62" fill="none">
                 {/* saucer */}
-                <ellipse cx="28" cy="56" rx="24" ry="5" fill="#EDE0D4"/>
-                <ellipse cx="28" cy="54" rx="18" ry="3" fill="#D8C8B0"/>
+                <ellipse cx="28" cy="56" rx="24" ry="5" fill="#E3D1BE"/>
+                <ellipse cx="28" cy="54" rx="18" ry="3" fill="#CBB296"/>
                 {/* mug body */}
-                <path d="M10 20 Q10 50 28 50 Q46 50 46 20 Z" fill="#FAF7F2"/>
-                <rect x="10" y="18" width="36" height="6" rx="1" fill="#EDE0D4"/>
+                <path d="M10 20 Q10 50 28 50 Q46 50 46 20 Z" fill="#F1E7DC"/>
+                <rect x="10" y="18" width="36" height="6" rx="1" fill="#E3D1BE"/>
                 {/* mug pattern */}
-                <path d="M18 30 Q23 26 28 30 Q33 34 38 30" stroke="#736045" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                <path d="M18 30 Q23 26 28 30 Q33 34 38 30" stroke="#5D4A38" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
                 {/* handle */}
-                <path d="M46 24 Q58 24 58 34 Q58 44 46 44" stroke="#D8C8B0" strokeWidth="4" fill="none" strokeLinecap="round"/>
+                <path d="M46 24 Q58 24 58 34 Q58 44 46 44" stroke="#CBB296" strokeWidth="4" fill="none" strokeLinecap="round"/>
                 {/* steam */}
-                <path d="M20 14 Q22 8 20 2" stroke="#D8C8B0" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.7"/>
-                <path d="M28 12 Q30 6 28 0" stroke="#D8C8B0" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.7"/>
-                <path d="M36 14 Q38 8 36 2" stroke="#D8C8B0" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.7"/>
+                <path d="M20 14 Q22 8 20 2" stroke="#CBB296" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.75"/>
+                <path d="M28 12 Q30 6 28 0" stroke="#CBB296" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.75"/>
+                <path d="M36 14 Q38 8 36 2" stroke="#CBB296" strokeWidth="1.5" strokeLinecap="round" fill="none" opacity="0.75"/>
               </svg>
             </div>
 
             {/* -- VINTAGE GLASSES (bottom-left) -- */}
-            <div style={{ position: "absolute", bottom: "50px", left: "55px", animation: "floatF 5s ease-in-out infinite 0.2s" }}>
+            <div style={{ position: "absolute", bottom: "42px", left: "48px", animation: "floatF 5s ease-in-out infinite 0.2s" }}>
               <svg width="78" height="36" viewBox="0 0 78 36" fill="none">
                 {/* left arm */}
-                <line x1="0" y1="10" x2="12" y2="12" stroke="#2C1F14" strokeWidth="3" strokeLinecap="round"/>
+                <line x1="0" y1="10" x2="12" y2="12" stroke="#24180F" strokeWidth="3" strokeLinecap="round"/>
                 {/* right arm */}
-                <line x1="78" y1="10" x2="66" y2="12" stroke="#2C1F14" strokeWidth="3" strokeLinecap="round"/>
+                <line x1="78" y1="10" x2="66" y2="12" stroke="#24180F" strokeWidth="3" strokeLinecap="round"/>
                 {/* left lens */}
-                <rect x="10" y="4" width="24" height="22" rx="11" fill="none" stroke="#736045" strokeWidth="2.5"/>
-                <rect x="10" y="4" width="24" height="22" rx="11" fill="#736045" opacity="0.12"/>
+                <rect x="10" y="4" width="24" height="22" rx="11" fill="none" stroke="#5D4A38" strokeWidth="2.5"/>
+                <rect x="10" y="4" width="24" height="22" rx="11" fill="#5D4A38" opacity="0.16"/>
                 {/* right lens */}
-                <rect x="44" y="4" width="24" height="22" rx="11" fill="none" stroke="#736045" strokeWidth="2.5"/>
-                <rect x="44" y="4" width="24" height="22" rx="11" fill="#736045" opacity="0.12"/>
+                <rect x="44" y="4" width="24" height="22" rx="11" fill="none" stroke="#5D4A38" strokeWidth="2.5"/>
+                <rect x="44" y="4" width="24" height="22" rx="11" fill="#5D4A38" opacity="0.16"/>
                 {/* bridge */}
-                <path d="M34 14 Q39 10 44 14" stroke="#2C1F14" strokeWidth="2" fill="none" strokeLinecap="round"/>
+                <path d="M34 14 Q39 10 44 14" stroke="#24180F" strokeWidth="2" fill="none" strokeLinecap="round"/>
                 {/* lens shine */}
                 <ellipse cx="18" cy="12" rx="5" ry="3" fill="white" opacity="0.3" transform="rotate(-20 18 12)"/>
                 <ellipse cx="52" cy="12" rx="5" ry="3" fill="white" opacity="0.3" transform="rotate(-20 52 12)"/>
               </svg>
             </div>
 
-            {/* -- SMALL KEY (floating, top center) -- */}
-            <div style={{ position: "absolute", top: "70px", left: "48%", animation: "floatA 3.8s ease-in-out infinite 1.5s" }}>
-              <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
-                <circle cx="14" cy="14" r="11" fill="none" stroke="#736045" strokeWidth="3"/>
-                <circle cx="14" cy="14" r="5" fill="#736045" opacity="0.3"/>
-                <line x1="22" y1="22" x2="40" y2="38" stroke="#736045" strokeWidth="3" strokeLinecap="round"/>
-                <line x1="32" y1="30" x2="32" y2="36" stroke="#736045" strokeWidth="2.5" strokeLinecap="round"/>
-                <line x1="36" y1="34" x2="36" y2="38" stroke="#736045" strokeWidth="2.5" strokeLinecap="round"/>
+            {/* -- BACKPACK (floating, top center) -- */}
+            <div style={{ position: "absolute", top: "64px", left: "45%", animation: "floatA 3.8s ease-in-out infinite 1.5s" }}>
+              <svg width="58" height="58" viewBox="0 0 58 58" fill="none">
+                {/* handle */}
+                <path d="M22 14 Q29 6 36 14" stroke="#24180F" strokeWidth="3" strokeLinecap="round" fill="none"/>
+                {/* body */}
+                <rect x="12" y="16" width="34" height="34" rx="10" fill="#5D4A38"/>
+                {/* top flap */}
+                <rect x="14" y="20" width="30" height="10" rx="5" fill="#705843"/>
+                {/* pocket */}
+                <rect x="19" y="33" width="20" height="12" rx="4" fill="#4E3E30"/>
+                {/* zipper line */}
+                <line x1="19" y1="29" x2="39" y2="29" stroke="#CDB8A2" strokeWidth="1.4" strokeLinecap="round"/>
+                {/* straps */}
+                <rect x="9" y="20" width="4" height="24" rx="2" fill="#24180F" opacity="0.8"/>
+                <rect x="45" y="20" width="4" height="24" rx="2" fill="#24180F" opacity="0.8"/>
+                {/* buckle */}
+                <rect x="27" y="36" width="4" height="6" rx="1.5" fill="#CDB8A2"/>
               </svg>
             </div>
 
-            {/* -- PRICE TAG (bottom-right) -- */}
-            <div style={{ position: "absolute", bottom: "35px", right: "45px", animation: "floatB 6.5s ease-in-out infinite 0.7s" }}>
-              <svg width="52" height="64" viewBox="0 0 52 64" fill="none">
-                <path d="M4 8 L48 8 L48 54 L26 64 L4 54 Z" fill="#EDE0D4" stroke="#736045" strokeWidth="1.5"/>
-                <circle cx="26" cy="8" r="4" fill="none" stroke="#736045" strokeWidth="1.5"/>
-                <line x1="14" y1="24" x2="38" y2="24" stroke="#C8B098" strokeWidth="1"/>
-                <line x1="14" y1="30" x2="34" y2="30" stroke="#C8B098" strokeWidth="1"/>
-                <line x1="14" y1="36" x2="30" y2="36" stroke="#C8B098" strokeWidth="1"/>
-                <text x="26" y="50" textAnchor="middle" fontSize="8" fontWeight="700" fill="#736045" fontFamily="sans-serif">? CU</text>
+            {/* -- DESK FAN (household item) -- */}
+            <div style={{ position: "absolute", bottom: "126px", right: "104px", animation: "floatE 5.4s ease-in-out infinite 1.1s" }}>
+              <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+                {/* stand */}
+                <rect x="34" y="46" width="4" height="10" rx="2" fill="#5A4939"/>
+                <ellipse cx="36" cy="61" rx="16" ry="4" fill="#CDB8A2"/>
+                {/* grill */}
+                <circle cx="36" cy="30" r="20" fill="#EBDED0" stroke="#5A4939" strokeWidth="2"/>
+                <circle cx="36" cy="30" r="14" fill="none" stroke="#5A4939" strokeWidth="1.5"/>
+                <line x1="16" y1="30" x2="56" y2="30" stroke="#5A4939" strokeWidth="1.2"/>
+                <line x1="36" y1="10" x2="36" y2="50" stroke="#5A4939" strokeWidth="1.2"/>
+                {/* blades */}
+                <path d="M36 30 L42 22 Q46 26 42 30 Z" fill="#705843"/>
+                <path d="M36 30 L30 22 Q26 26 30 30 Z" fill="#705843"/>
+                <path d="M36 30 L42 38 Q38 42 36 36 Z" fill="#705843"/>
+                <circle cx="36" cy="30" r="3.5" fill="#24180F"/>
               </svg>
             </div>
+
+            {/* -- POTTED PLANT (household item) -- */}
+            <div style={{ position: "absolute", bottom: "18px", left: "176px", animation: "floatC 4.8s ease-in-out infinite 0.9s" }}>
+              <svg width="54" height="64" viewBox="0 0 54 64" fill="none">
+                {/* pot */}
+                <path d="M12 34 H42 L38 54 H16 Z" fill="#8E603F"/>
+                <rect x="10" y="30" width="34" height="6" rx="2" fill="#744C33"/>
+                {/* leaves */}
+                <ellipse cx="20" cy="22" rx="6" ry="11" fill="#6E8D58" transform="rotate(-22 20 22)"/>
+                <ellipse cx="34" cy="21" rx="6" ry="11" fill="#62804E" transform="rotate(22 34 21)"/>
+                <ellipse cx="27" cy="16" rx="5" ry="10" fill="#79995F"/>
+                <path d="M27 30 V20" stroke="#4D663E" strokeWidth="1.6" strokeLinecap="round"/>
+              </svg>
+            </div>
+
+   
 
           </div>
 

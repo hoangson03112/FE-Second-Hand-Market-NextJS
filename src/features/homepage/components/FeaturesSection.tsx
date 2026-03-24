@@ -3,6 +3,14 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "../hooks";
+import Link from "next/link";
+import {
+  IconArrowRight,
+  IconBolt,
+  IconHeadset,
+  IconLeaf,
+  IconShieldCheck,
+} from "@tabler/icons-react";
 
 interface Feature {
   icon: string;
@@ -16,113 +24,167 @@ interface FeaturesSectionProps {
 
 export default function FeaturesSection({ features }: FeaturesSectionProps) {
   const { ref, isVisible } = useScrollReveal({ threshold: 0.05 });
+  const featureCards = features.slice(0, 4);
+  const featureIcons = [IconShieldCheck, IconBolt, IconLeaf, IconHeadset];
 
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden border-b-2 border-taupe-200 py-12 md:py-16"
-      style={{
-        background: "linear-gradient(135deg, var(--cream-50) 0%, var(--taupe-50) 50%, var(--cream-100) 100%)",
-      }}
+      className="relative overflow-hidden border-b border-taupe-200/70 bg-gradient-to-br from-cream-50 via-taupe-50 to-cream-100 py-14 md:py-20"
     >
-      {/* Dot grid decoration */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-0 opacity-[0.15]"
-        style={{
-          backgroundImage: "radial-gradient(circle, var(--taupe-300) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-        }}
-      />
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute -bottom-52 -right-52 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+      </div>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* Header */}
-        <div className="mb-8 md:mb-12 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-          <div className="max-w-lg">
-            <div className="flex items-center gap-3 mb-3">
-              <p className="text-[11px] font-black uppercase tracking-[0.2em] text-taupe-400">
-                LỢI THẾ
-              </p>
-              <div
-                className={cn(
-                  "h-px bg-taupe-300 transition-all duration-700",
-                  isVisible ? "w-12 opacity-100" : "w-0 opacity-0"
-                )}
-              />
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
+          <div className="lg:col-span-5">
+            <div
+              className={cn(
+                "inline-flex items-center gap-2 rounded-full border border-border/70 bg-white/60 px-3 py-1 text-xs font-semibold tracking-wide text-taupe-700 backdrop-blur",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+              )}
+              style={{ transition: "all 380ms ease-out" }}
+            >
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <IconShieldCheck className="h-4 w-4" />
+              </span>
+              Lợi thế
             </div>
+
             <h2
               className={cn(
-                "text-3xl md:text-4xl lg:text-5xl font-medium text-taupe-900 leading-[1.1] tracking-tight",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                "mt-4 text-3xl font-semibold tracking-tight text-taupe-950 sm:text-4xl lg:text-5xl",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
               )}
-              style={{ transition: "all 420ms ease-out" }}
+              style={{ transition: "all 420ms ease-out 60ms" }}
             >
-              Tại sao chọn
-              <br />
-              <span className="text-primary">nền tảng này.</span>
+              Không chỉ đẹp,
+              <span className="block text-primary">mà còn đúng nghiệp vụ.</span>
             </h2>
-          </div>
 
-          <p
-            className={cn(
-              "max-w-sm text-sm text-taupe-600 leading-relaxed",
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
-            )}
-            style={{ transition: "all 420ms ease-out 60ms" }}
-          >
-            Được xây dựng với trọng tâm là sự tin tưởng, tốc độ và trải nghiệm
-            người dùng thực sự.
-          </p>
-        </div>
-
-        {/* Feature grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t-2 border-taupe-200">
-          {features.map((feature, index) => (
-            <div
-              key={index}
+            <p
               className={cn(
-                "group relative flex flex-col gap-5 pt-7 pb-8",
-                "border-b-2 border-taupe-200 sm:border-b-0",
-                "sm:border-r-2 border-taupe-200 last:border-r-0",
-                "px-0 sm:px-6 first:pl-0 last:pr-0",
-                "cursor-default overflow-hidden",
-                "transition-all duration-200",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                "mt-3 max-w-xl text-sm leading-relaxed text-taupe-600 sm:text-base",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
               )}
-              style={{
-                transition: `opacity 420ms ease-out ${isVisible ? index * 70 + 150 : 0}ms,
-                             transform 420ms ease-out ${isVisible ? index * 70 + 150 : 0}ms`,
-              }}
+              style={{ transition: "all 420ms ease-out 120ms" }}
             >
-              {/* Bottom hover fill */}
-              <div className="absolute inset-0 bg-blush-50 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+              Nền tảng được xây dựng xoay quanh ba thứ cốt lõi: tin tưởng, tốc độ xử lý và
+              trải nghiệm giao dịch minh bạch từ đầu đến cuối.
+            </p>
 
-              {/* Numeric prefix + line */}
-              <div className="relative z-10 flex items-end gap-2">
-                <span className="text-3xl font-medium leading-none text-blush-300 tabular-nums group-hover:text-blush-500 transition-colors duration-200">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div className="mb-0.5 h-px flex-1 bg-taupe-200 group-hover:bg-blush-300 transition-colors duration-200" />
+            <div
+              className={cn(
+                "mt-6 flex flex-col gap-3 sm:flex-row sm:items-center",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+              )}
+              style={{ transition: "all 420ms ease-out 180ms" }}
+            >
+              <Link
+                href="/products"
+                className="group inline-flex h-11 items-center justify-center gap-2 rounded-2xl bg-taupe-900 px-5 text-sm font-semibold text-cream-50 shadow-lg shadow-black/10 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-taupe-900/95"
+              >
+                Khám phá ngay
+                <IconArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+              </Link>
+              <Link
+                href="/become-seller"
+                className="inline-flex h-11 items-center justify-center rounded-2xl border border-border bg-white/70 px-5 text-sm font-semibold text-taupe-800 backdrop-blur transition-colors hover:bg-white"
+              >
+                Trở thành người bán
+              </Link>
+            </div>
+
+            <div
+              className={cn(
+                "mt-6 rounded-3xl border border-border/70 bg-white/70 p-5 backdrop-blur",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+              )}
+              style={{ transition: "all 420ms ease-out 240ms" }}
+            >
+              <div className="text-xs font-semibold tracking-wide text-taupe-500">
+                NIỀM TIN LÀ MẶC ĐỊNH
               </div>
-
-              {/* Icon */}
-              <div className="relative z-10">
-                <span className="inline-flex items-center justify-center w-10 h-10 bg-blush-100 group-hover:bg-blush-200 text-xl transition-colors duration-200">
-                  {feature.icon}
-                </span>
-              </div>
-
-              <div className="relative z-10 space-y-2">
-                <h3 className="text-sm md:text-base font-medium text-taupe-900 leading-tight group-hover:text-taupe-900">
-                  {feature.title}
-                </h3>
-                <p className="text-sm text-taupe-600 leading-relaxed group-hover:text-taupe-700 transition-colors duration-200">
-                  {feature.description}
-                </p>
+              <div className="mt-2 grid grid-cols-3 gap-3">
+                {[
+                  { value: "24/7", label: "Hỗ trợ" },
+                  { value: "Realtime", label: "Thông báo" },
+                  { value: "Minh bạch", label: "Trạng thái" },
+                ].map((kpi) => (
+                  <div key={kpi.label} className="rounded-2xl border border-border/70 bg-white p-3">
+                    <div className="text-sm font-semibold text-taupe-950">{kpi.value}</div>
+                    <div className="mt-0.5 text-xs text-taupe-500">{kpi.label}</div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
+
+          <div className="lg:col-span-7">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {featureCards.map((feature, index) => {
+                const FeatureIcon = featureIcons[index] || IconShieldCheck;
+                return (
+                <div
+                  key={index}
+                  className={cn(
+                    "group relative overflow-hidden rounded-3xl border border-border/70 bg-white/80 p-6 backdrop-blur",
+                    "shadow-2xl shadow-black/5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/35",
+                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  )}
+                  style={{
+                    transition: `opacity 420ms ease-out ${isVisible ? 200 + index * 80 : 0}ms,
+                                 transform 420ms ease-out ${isVisible ? 200 + index * 80 : 0}ms`,
+                  }}
+                >
+                  <div aria-hidden className="pointer-events-none absolute inset-0">
+                    <div className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-primary/10 blur-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
+                  </div>
+
+                  <div className="relative">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0">
+                        <div className="text-xs font-semibold tracking-wide text-taupe-500">
+                          {String(index + 1).padStart(2, "0")}
+                        </div>
+                        <div className="mt-1 text-lg font-semibold text-taupe-950">
+                          {feature.title}
+                        </div>
+                      </div>
+                      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                        <FeatureIcon className="h-5 w-5" />
+                      </div>
+                    </div>
+
+                    <p className="mt-3 text-sm leading-relaxed text-taupe-600 min-h-[44px]">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              )})}
+            </div>
+
+            <div
+              className={cn(
+                "mt-4 rounded-3xl border border-border/70 bg-white/50 p-5 backdrop-blur",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              )}
+              style={{ transition: "all 420ms ease-out 520ms" }}
+            >
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div className="text-sm font-semibold text-taupe-950">
+                  Một nền tảng cho cả mua, bán và quản trị
+                </div>
+                <div className="text-xs text-taupe-600">
+                  Quy trình • Trạng thái • Hoàn tiền • Khiếu nại • Hệ thống thông báo
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>

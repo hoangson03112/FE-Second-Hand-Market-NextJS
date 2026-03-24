@@ -1,20 +1,21 @@
 "use client";
 
 import HeroSection from "./components/HeroSection";
-import HowItWorksSection from "./components/HowItWorksSection";
-import FeaturesSection from "./components/FeaturesSection";
+import CuratedCollectionsSection from "./components/CuratedCollectionsSection";
+import FeaturedListingsSection from "./components/FeaturedListingsSection";
+import PhilosophySection from "./components/PhilosophySection";
 import ScrollToTopButton from "./components/ScrollToTopButton";
-import { steps, features } from "@/constants";
 import { useScrollToTop } from "./hooks";
+import { beVietnamPro } from "@/lib/fonts";
 
 export default function HomePage() {
   const { showScrollTop, scrollToTop } = useScrollToTop();
   return (
-    <div className="min-h-screen bg-taupe-900">
+    <div className={`min-h-screen bg-taupe-900 ${beVietnamPro.className}`}>
       <HeroSection />
-      {/* <CategoriesSection categories={categories} /> */}
-      <HowItWorksSection steps={steps} />
-      <FeaturesSection features={features} />
+      <CuratedCollectionsSection />
+      <FeaturedListingsSection />
+      <PhilosophySection />
       <ScrollToTopButton show={showScrollTop} onClick={scrollToTop} />
     </div>
   );

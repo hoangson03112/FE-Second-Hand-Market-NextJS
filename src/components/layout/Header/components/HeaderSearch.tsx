@@ -8,7 +8,11 @@ interface HeaderSearchProps {
 
 export function HeaderSearch({ query, setQuery, submitSearch }: HeaderSearchProps) {
   return (
-    <form onSubmit={submitSearch} role="search" className="hidden md:flex shrink-0 w-44 lg:w-48 xl:w-56 2xl:w-64">
+    <form
+      onSubmit={submitSearch}
+      role="search"
+      className="hidden xl:flex min-w-0 flex-1 max-w-[320px] 2xl:max-w-[420px]"
+    >
       <div className="relative w-full">
         <IconSearch
           className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-muted-foreground"

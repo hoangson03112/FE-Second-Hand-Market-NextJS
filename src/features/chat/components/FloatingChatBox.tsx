@@ -14,6 +14,7 @@ import { ChatHeader } from "./ChatHeader";
 import { ChatConversationList } from "./ChatConversationList";
 import { ChatMessages } from "./ChatMessages";
 import { ChatInput } from "./ChatInput";
+import { AIProductAssistantPanel } from "./AIProductAssistantPanel";
 import SellerDiscountInline from "./SellerDiscountInline";
 import { buildProductMessage, buildOrderMessage } from "../utils/productMessage";
 
@@ -43,6 +44,7 @@ interface OpenChatEventDetail {
 
 export default function FloatingChatBox() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAIChatOpen, setIsAIChatOpen] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversation, setSelectedConversation] =
     useState<Conversation | null>(null);
@@ -115,6 +117,8 @@ export default function FloatingChatBox() {
       };
 
       setIsOpen(true);
+      setIsAIChatOpen(false);
+      setIsDealMode(false);
       setSelectedConversation(conversation);
       setNewMessage(draftByConversation[userId] || "");
       await loadMessages(userId);
@@ -291,10 +295,11 @@ export default function FloatingChatBox() {
   }, [selectedConversation?._id]);
 
   const handleSelectConversation = (conversation: Conversation) => {
+    setIsAIChatOpen(false);
+    setIsDealMode(false);
     setSelectedConversation(conversation);
     setNewMessage(draftByConversation[conversation._id] || "");
     setChatError(null);
-    setIsDealMode(false);
     loadMessages(conversation._id);
   };
 
@@ -371,9 +376,10 @@ export default function FloatingChatBox() {
   };
 
   const handleBackToList = () => {
+    setIsAIChatOpen(false);
+    setIsDealMode(false);
     setSelectedConversation(null);
     setMessages([]);
-    setIsDealMode(false);
   };
 
   if (!account) return null;
@@ -412,6 +418,8 @@ export default function FloatingChatBox() {
             onBack={handleBackToList}
             onClose={() => {
               setIsOpen(false);
+              setIsAIChatOpen(false);
+              setIsDealMode(false);
               setSelectedConversation(null);
             }}
           />
@@ -424,8 +432,28 @@ export default function FloatingChatBox() {
           )}
 
           <div className="flex-1 overflow-hidden">
-            {!selectedConversation ? (
+            {isAIChatOpen ? (
+              <AIProductAssistantPanel onBackToConversations={handleBackToList} />
+            ) : !selectedConversation ? (
               <div className="h-full overflow-y-auto">
+                <div className="p-4 border-b border-border/70 bg-primary/5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsAIChatOpen(true);
+                      setIsDealMode(false);
+                      setSelectedConversation(null);
+                    }}
+                    className="w-full rounded-2xl border border-primary/25 bg-white px-4 py-3.5 text-left hover:border-primary/45 hover:bg-primary/5 transition-colors"
+                  >
+                    <p className="text-sm font-semibold text-primary">
+                      Trợ lý AI tìm sản phẩm
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Mô tả nhu cầu để AI gợi ý sản phẩm phù hợp ngay trong chat.
+                    </p>
+                  </button>
+                </div>
                 <ChatConversationList
                   loading={loading}
                   conversations={conversations}
@@ -450,8 +478,15 @@ export default function FloatingChatBox() {
                   <SellerDiscountInline
                     buyerId={selectedConversation._id}
                     buyerName={selectedConversation.name}
+                    sellerId={account.accountID}
                     onCancel={() => setIsDealMode(false)}
-                    onCreated={async ({ product, discountedPrice }) => {
+                    onCreated={async ({
+                      product,
+                      discountedPrice,
+                    }: {
+                      product: { _id: string; name: string; imageUrl?: string; slug?: string };
+                      discountedPrice: number;
+                    }) => {
                       try {
                         const productUrl =
                           typeof window !== "undefined"

@@ -1,8 +1,8 @@
 "use client";
 
+import { IconSearch } from "@tabler/icons-react";
 import { HeaderLogo } from "./components/HeaderLogo";
 import { CategoryMegaMenu } from "./components/CategoryMegaMenu";
-import { CategoryNav } from "./components/CategoryNav";
 import { HeaderSearch } from "./components/HeaderSearch";
 import { HeaderGuestActions } from "./components/HeaderGuestActions";
 import { HeaderAccountActions } from "./components/HeaderAccountActions";
@@ -12,17 +12,12 @@ export default function Header() {
   const {
     account,
     categories,
-    isLoading,
-    visibleCategories,
-    activeCategory,
     showAllCategories,
     cartItemCount,
     query,
     setQuery,
     showUserDropdown,
     dropdownRef,
-    handleMouseEnterCategory,
-    handleMouseLeaveCategory,
     handleShowAllCategories,
     handleHideAllCategories,
     submitSearch,
@@ -46,8 +41,8 @@ export default function Header() {
           boxShadow: "0 2px 12px rgba(26,23,20,0.06)",
         }}
       >
-        <div className="container mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center h-[56px] sm:h-[60px] gap-1.5 sm:gap-2.5">
+        <div className="mx-auto w-full max-w-[100rem] px-3 sm:px-6 lg:px-10">
+          <div className="flex h-[58px] min-w-0 items-center gap-1 sm:h-[62px] sm:gap-2">
             <HeaderLogo />
 
             <CategoryMegaMenu
@@ -57,38 +52,44 @@ export default function Header() {
               onHideAllCategories={handleHideAllCategories}
             />
 
-          {/* Divider */}
-          <div className="w-px h-4 shrink-0 hidden lg:block bg-border" />
-
-            <CategoryNav
-              isLoading={isLoading}
-              categories={visibleCategories}
-              activeCategory={activeCategory}
-              onMouseEnterCategory={handleMouseEnterCategory}
-              onMouseLeaveCategory={handleMouseLeaveCategory}
-            />
-
-            <HeaderSearch query={query} setQuery={setQuery} submitSearch={submitSearch} />
-
-          {/* Actions */}
-          <div className="flex items-center gap-0.5 sm:gap-1.5 shrink-0 ml-auto">
-            {!account ? (
-              <HeaderGuestActions />
-            ) : (
-              <HeaderAccountActions
-                account={account}
-                sellButtonHref={sellButtonHref}
-                sellButtonText={sellButtonText}
-                cartItemCount={cartItemCount}
-                showUserDropdown={showUserDropdown}
-                dropdownRef={dropdownRef}
-                toggleUserDropdown={toggleUserDropdown}
-                closeUserDropdown={closeUserDropdown}
-                handleLogout={handleLogout}
-                getInitials={getInitials}
-              />
-            )}
+            <div className="ml-auto flex min-w-0 items-center gap-1 sm:gap-2">
+              <div className="flex shrink-0 items-center gap-0 sm:gap-1">
+                {!account ? (
+                  <HeaderGuestActions />
+                ) : (
+                  <HeaderAccountActions
+                    account={account}
+                    sellButtonHref={sellButtonHref}
+                    sellButtonText={sellButtonText}
+                    cartItemCount={cartItemCount}
+                    showUserDropdown={showUserDropdown}
+                    dropdownRef={dropdownRef}
+                    toggleUserDropdown={toggleUserDropdown}
+                    closeUserDropdown={closeUserDropdown}
+                    handleLogout={handleLogout}
+                    getInitials={getInitials}
+                  />
+                )}
+              </div>
+              <div className="min-w-0">
+                <HeaderSearch query={query} setQuery={setQuery} submitSearch={submitSearch} />
+              </div>
+            </div>
           </div>
+
+          <div className="pb-3 xl:hidden">
+            <form onSubmit={submitSearch} role="search" className="relative">
+              <IconSearch className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-taupe-500" />
+              <input
+                id="header-mobile-search"
+                name="search"
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Tìm kiếm sản phẩm..."
+                className="h-10 w-full rounded-full border border-taupe-200 bg-white pl-10 pr-4 text-sm text-taupe-900 placeholder:text-taupe-400 focus:outline-none"
+              />
+            </form>
 
           </div>
         </div>

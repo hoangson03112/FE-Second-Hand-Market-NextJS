@@ -129,6 +129,13 @@ export const ProductService = {
     return response as unknown as IProductListResponse;
   },
 
+  /** Lấy danh sách sản phẩm nổi bật cho Home */
+  getFeatured: async (limit = 4): Promise<IProductListResponse> => {
+    const safeLimit = Math.min(Math.max(limit, 1), 20);
+    const response = await axiosClient.get(`/products/featured?limit=${safeLimit}`);
+    return response as unknown as IProductListResponse;
+  },
+
   /** Chi tiết sản phẩm đầy đủ – dùng khi xem trang chi tiết hoặc mở form Edit */
   getById: async (id: string): Promise<IProduct> => {
     const response = await axiosClient.get<{

@@ -1,25 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import DiscountForm from "./DiscountForm";
-import { IconCheck, IconX } from "@tabler/icons-react";
-import { ProductService } from "@/services/product.service";
-import type { MyListingProduct } from "@/types/myProducts";
+import { IconPaperclip, IconCheck, IconX } from "@tabler/icons-react";
 
 interface SellerDiscountInlineProps {
   buyerId: string;
   buyerName?: string;
-  onCreated?: (payload: {
-    deal: any;
-    product: {
-      _id: string;
-      name: string;
-      price: number;
-      imageUrl?: string;
-      slug?: string;
-    };
-    discountedPrice: number;
-    endDate: string;
-  }) => void;
+  sellerId: string;
+  onCreated?: (discount: any) => void;
   onCancel?: () => void;
 }
 
@@ -29,30 +17,12 @@ interface Product {
   price: number;
   imageUrl?: string;
   category?: string;
-  stock?: number;
-  status?: string;
-  slug?: string;
 }
 
-function mapListingToDiscountProduct(item: MyListingProduct): Product {
-  return {
-    _id: item._id,
-    name: item.name,
-    price: item.price,
-    imageUrl: item.avatar?.url || undefined,
-    category: item.categoryId?.name,
-    stock: item.stock,
-    status: item.status,
-    slug: item.slug,
-  };
-}
-
-async function fetchSellerProducts(): Promise<Product[]> {
-  const res = await ProductService.getMyListings({ page: 1, limit: 100 });
-  const listings = Array.isArray(res?.data) ? res.data : [];
-  return listings
-    .map(mapListingToDiscountProduct)
-    .filter((p) => ["active", "approved"].includes(String(p.status)) && (p.stock ?? 0) > 0);
+async function fetchSellerProducts(sellerId: string): Promise<Product[]> {
+  const res = await fetch(`/eco-market/seller/products?sellerId=${sellerId}`);
+  const data = await res.json();
+  return data.products || [];
 }
 
 
@@ -62,9 +32,7 @@ function ProductCard({ product, selected, onSelect }: { product: Product; select
     <button
       type="button"
       onClick={onSelect}
-      className={`flex w-full items-center gap-3 rounded-xl border p-2.5 shadow-sm transition-all hover:border-primary/40 hover:bg-primary/5 ${
-        selected ? "border-primary/60 ring-2 ring-primary/20 bg-primary/5" : "border-slate-200 bg-white"
-      }`}
+      className={`flex items-center gap-3 w-full p-2 rounded-lg border transition-all shadow-sm hover:border-violet-300 bg-white ${selected ? "border-violet-400 ring-2 ring-violet-200" : "border-slate-200"}`}
       style={{ fontFamily: "'DM Sans', sans-serif" }}
     >
       {product.imageUrl ? (
@@ -72,128 +40,148 @@ function ProductCard({ product, selected, onSelect }: { product: Product; select
       ) : (
         <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-300 font-bold text-lg">?</div>
       )}
-      <div className="min-w-0 flex-1 text-left">
+      <div className="flex-1 min-w-0 text-left">
         <div className="font-medium text-slate-800 truncate">{product.name}</div>
         <div className="text-xs text-slate-400 truncate">{product.category}</div>
         <div className="text-violet-600 font-semibold text-sm">{product.price.toLocaleString("vi-VN")}₫</div>
       </div>
-      {selected && <IconCheck className="w-4 h-4 text-primary" />}
+      {selected && <IconCheck className="w-4 h-4 text-violet-500" />}
     </button>
   );
 }
 
 // ─── Main Component ─────────────────────────────────────────────────────────
 
-export default function SellerDiscountInline({ buyerId, buyerName, onCreated, onCancel }: SellerDiscountInlineProps) {
+export default function SellerDiscountInline({ buyerId, buyerName, sellerId, onCreated, onCancel }: SellerDiscountInlineProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<string>("");
-  const [search, setSearch] = useState("");
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [created, setCreated] = useState(false);
-  const [createdProductName, setCreatedProductName] = useState("");
+  const popoverRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setLoading(true);
-    fetchSellerProducts()
-      .then(setProducts)
-      .catch(() => setProducts([]))
-      .finally(() => setLoading(false));
-  }, []);
+    if (sellerId && open) {
+      setLoading(true);
+      fetchSellerProducts(sellerId).finally(() => setLoading(false)).then(setProducts);
+    }
+  }, [sellerId, open]);
 
-  const handleCreated = (payload: {
-    deal: any;
-    product: {
-      _id: string;
-      name: string;
-      price: number;
-      imageUrl?: string;
-      slug?: string;
+  // Close popover when clicking outside
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) setOpen(false);
     };
-    discountedPrice: number;
-    endDate: string;
-  }) => {
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  const handleCreated = (discount: any) => {
     setCreated(true);
-    setCreatedProductName(payload.product.name);
     setTimeout(() => {
       setCreated(false);
+      setOpen(false);
       setSelectedProduct("");
-      onCreated?.(payload);
+      onCreated?.(discount);
     }, 1800);
   };
 
   const handleCancel = () => {
+    setOpen(false);
     setSelectedProduct("");
-    setSearch("");
     onCancel?.();
   };
 
-  const filteredProducts = products.filter((p) =>
-    p.name.toLowerCase().includes(search.trim().toLowerCase()),
-  );
-
-  const selectedProductData = products.find((p) => p._id === selectedProduct);
-
+  // ── Trigger icon button ──
   return (
-    <div className="border-t-2 border-border bg-white p-4">
-      <div className="mb-3 flex items-center justify-between">
-        <div className="text-sm font-semibold text-foreground">
-          Tạo ưu đãi riêng {buyerName ? `cho ${buyerName}` : ""}
-        </div>
+    <div className="relative inline-block">
+      <label className="cursor-pointer border-2 border-border px-4 py-3.5 rounded-xl hover:bg-muted/50 transition-all flex items-center justify-center" title={`Tạo ưu đãi riêng cho ${buyerName ?? "người mua này"}`}
+        style={{ fontFamily: "'DM Sans', sans-serif" }}>
         <button
           type="button"
-          onClick={handleCancel}
-          className="rounded-lg px-2 py-1 text-muted-foreground transition hover:bg-muted hover:text-foreground"
+          onClick={() => setOpen((v) => !v)}
+          className="flex items-center justify-center"
         >
-          <IconX className="h-4 w-4" />
+          <IconPaperclip className="w-5 h-5 text-violet-600" />
         </button>
-      </div>
+      </label>
 
-      {created ? (
-        <div className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-700">
-          <IconCheck className="h-4 w-4" />
-          Đã tạo ưu đãi cho {createdProductName}
-        </div>
-      ) : (
-        <>
-          <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Chọn sản phẩm
-          </div>
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Tìm sản phẩm..."
-            className="mb-2 w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/25"
-          />
-          {loading ? (
-            <div className="rounded-xl border border-border bg-muted/40 px-3 py-2 text-sm text-muted-foreground">
-              Đang tải sản phẩm...
+      {/* Popover Panel */}
+      {open && (
+        <div
+          ref={popoverRef}
+          className="absolute z-50 left-1/2 -translate-x-1/2 mt-2 min-w-[320px] max-w-[95vw] bg-white border border-violet-100 rounded-2xl shadow-2xl p-0 animate-in fade-in slide-in-from-top-2"
+          style={{ fontFamily: "'DM Sans', sans-serif", width: 340 }}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-violet-100 bg-gradient-to-r from-violet-50 to-indigo-50">
+            <div className="font-semibold text-slate-800 text-sm leading-tight">
+              Tạo ưu đãi riêng {buyerName && <span className="text-violet-600">cho {buyerName}</span>}
             </div>
-          ) : filteredProducts.length === 0 ? (
-            <div className="rounded-xl border border-border bg-muted/20 px-3 py-2 text-sm text-muted-foreground">
-              Không có sản phẩm phù hợp để tạo ưu đãi.
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="w-7 h-7 rounded-full hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-400 hover:text-slate-600"
+            >
+              <IconX className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Success state */}
+          {created ? (
+            <div className="px-6 py-6 flex flex-col items-center justify-center gap-2 bg-emerald-50 border-b border-emerald-100">
+              <span className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                <IconCheck className="w-7 h-7 text-emerald-600" />
+              </span>
+              <div className="text-emerald-700 font-semibold text-base">Ưu đãi đã được tạo thành công!</div>
             </div>
           ) : (
-            <div className="mb-3 flex max-h-40 flex-col gap-2 overflow-y-auto">
-              {filteredProducts.map((p) => (
-                <ProductCard
-                  key={p._id}
-                  product={p}
-                  selected={selectedProduct === p._id}
-                  onSelect={() => setSelectedProduct(p._id)}
-                />
-              ))}
+            <div className="px-4 py-4">
+              {/* Step 1: Product cards */}
+              <div className="mb-3">
+                <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Chọn sản phẩm áp dụng</div>
+                {loading ? (
+                  <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-400">
+                    <span className="w-4 h-4 border-2 border-violet-300 border-t-violet-600 rounded-full animate-spin" />
+                    Đang tải sản phẩm…
+                  </div>
+                ) : products.length === 0 ? (
+                  <div className="text-xs text-center text-slate-400 py-2">Bạn chưa có sản phẩm nào để tạo ưu đãi.</div>
+                ) : (
+                  <div className="flex flex-col gap-2 max-h-48 overflow-y-auto">
+                    {products.map((p) => (
+                      <ProductCard
+                        key={p._id}
+                        product={p}
+                        selected={selectedProduct === p._id}
+                        onSelect={() => setSelectedProduct(p._id)}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Step 2: Discount form */}
+              {selectedProduct && (
+                <div className="mt-2 animate-in fade-in slide-in-from-top-1 duration-200">
+                  <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Cấu hình ưu đãi</div>
+                  <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-3">
+                    <DiscountForm
+                      products={products.filter((p) => p._id === selectedProduct)}
+                      buyerId={buyerId}
+                      onCreated={handleCreated}
+                      onCancel={handleCancel}
+                    />
+                  </div>
+                </div>
+              )}
+              {!selectedProduct && products.length > 0 && (
+                <p className="text-xs text-slate-400 text-center pb-1 mt-2">Chọn sản phẩm để tiếp tục cấu hình ưu đãi</p>
+              )}
             </div>
           )}
-
-          {selectedProductData ? (
-            <DiscountForm
-              product={selectedProductData}
-              buyerId={buyerId}
-              onCreated={handleCreated}
-              onCancel={handleCancel}
-            />
-          ) : null}
-        </>
+        </div>
       )}
     </div>
   );
