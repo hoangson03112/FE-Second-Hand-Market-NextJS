@@ -64,8 +64,7 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 				<div className="space-y-3">
 					{order.products?.map((item, idx) => {
 						const product = item.productId;
-						const productHref =
-							product?._id ? `/products/${product._id}/${product.slug || "product"}` : null;
+						const productHref = product?._id ? `/products/${product._id}/product` : null;
 						const avatar =
 							typeof product?.avatar === "string"
 								? product.avatar

@@ -8,7 +8,11 @@ interface SellerDiscountInlineProps {
   buyerId: string;
   buyerName?: string;
   sellerId: string;
-  onCreated?: (discount: unknown) => void;
+  onCreated?: (payload: {
+    product: { _id: string; name: string; imageUrl?: string; slug?: string };
+    discountedPrice: number;
+    deal: unknown;
+  }) => void;
   onCancel?: () => void;
 }
 
@@ -85,12 +89,16 @@ export default function SellerDiscountInline({ buyerId, buyerName, sellerId, onC
     }
   }, [sellerId]);
 
-  const handleCreated = (discount: any) => {
+  const handleCreated = (payload: {
+    product: { _id: string; name: string; imageUrl?: string; slug?: string };
+    discountedPrice: number;
+    deal: unknown;
+  }) => {
     setCreated(true);
     setTimeout(() => {
       setCreated(false);
       setSelectedProduct("");
-      onCreated?.(discount);
+      onCreated?.(payload);
     }, 1800);
   };
 

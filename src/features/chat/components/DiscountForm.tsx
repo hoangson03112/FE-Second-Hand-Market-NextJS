@@ -14,7 +14,11 @@ function formatPercentForInput(value: number) {
 interface DiscountFormProps {
   product: { _id: string; name: string; price: number } | null;
   buyerId: string;
-  onCreated?: (discount: any) => void;
+  onCreated?: (payload: {
+    product: { _id: string; name: string; imageUrl?: string; slug?: string };
+    discountedPrice: number;
+    deal: unknown;
+  }) => void;
   onCancel?: () => void;
 }
 
@@ -55,7 +59,14 @@ export default function DiscountForm({ product, buyerId, onCreated, onCancel }: 
         price: priceNumber,
         endDate,
       });
-      onCreated?.(res.deal);
+      onCreated?.({
+        product: {
+          _id: product._id,
+          name: product.name,
+        },
+        discountedPrice: priceNumber,
+        deal: res.deal,
+      });
     } catch (err: unknown) {
       const message =
         err && typeof err === "object" && "message" in err

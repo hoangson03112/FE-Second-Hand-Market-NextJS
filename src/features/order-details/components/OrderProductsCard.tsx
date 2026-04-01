@@ -33,9 +33,7 @@ export function OrderProductsCard({
         {order.products?.map((item, idx) => {
           const product = item.productId;
           const productId = product?._id ?? (typeof item.productId === "string" ? item.productId : null);
-          const productHref = productId
-            ? `/products/${productId}/${product?.slug || "product"}`
-            : null;
+          const productHref = productId ? `/products/${productId}/product` : null;
           const avatar =
             typeof product?.avatar === "object" && product.avatar?.url
               ? product.avatar.url
