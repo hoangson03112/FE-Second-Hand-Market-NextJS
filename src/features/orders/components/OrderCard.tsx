@@ -64,6 +64,8 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 				<div className="space-y-3">
 					{order.products?.map((item, idx) => {
 						const product = item.productId;
+						const productHref =
+							product?._id ? `/products/${product._id}/${product.slug || "product"}` : null;
 						const avatar =
 							typeof product?.avatar === "string"
 								? product.avatar
@@ -71,19 +73,43 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 
 						return (
 							<div key={idx} className="flex gap-4 p-3 rounded-2xl hover:bg-cream-50/50 transition-colors">
-								<div className="w-20 h-20 rounded-xl overflow-hidden bg-neutral-100 shrink-0 ring-1 ring-neutral-200">
-									<Image
-										src={avatar}
-										alt={product?.name || "Sản phẩm"}
-										width={80}
-										height={80}
-										className="w-full h-full object-cover"
-									/>
-								</div>
+								{productHref ? (
+									<Link
+										href={productHref}
+										className="w-20 h-20 rounded-xl overflow-hidden bg-neutral-100 shrink-0 ring-1 ring-neutral-200 hover:ring-primary/50 transition-colors"
+									>
+										<Image
+											src={avatar}
+											alt={product?.name || "Sản phẩm"}
+											width={80}
+											height={80}
+											className="w-full h-full object-cover"
+										/>
+									</Link>
+								) : (
+									<div className="w-20 h-20 rounded-xl overflow-hidden bg-neutral-100 shrink-0 ring-1 ring-neutral-200">
+										<Image
+											src={avatar}
+											alt={product?.name || "Sản phẩm"}
+											width={80}
+											height={80}
+											className="w-full h-full object-cover"
+										/>
+									</div>
+								)}
 								<div className="flex-1 min-w-0">
-									<h4 className="font-semibold text-neutral-900 line-clamp-2 mb-1">
-										{product?.name || "Sản phẩm"}
-									</h4>
+									{productHref ? (
+										<Link
+											href={productHref}
+											className="font-semibold text-neutral-900 line-clamp-2 mb-1 hover:text-primary transition-colors"
+										>
+											{product?.name || "Sản phẩm"}
+										</Link>
+									) : (
+										<h4 className="font-semibold text-neutral-900 line-clamp-2 mb-1">
+											{product?.name || "Sản phẩm"}
+										</h4>
+									)}
 									<p className="text-sm text-neutral-600 mb-2">Số lượng: ×{item.quantity}</p>
 									<p className="text-base font-bold text-primary">
 										{formatPrice(item.price || product?.price || 0)}

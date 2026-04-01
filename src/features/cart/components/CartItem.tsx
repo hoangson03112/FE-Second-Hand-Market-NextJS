@@ -34,7 +34,7 @@ export default function CartItem({
   const imageUrl = getImageUrl(product.avatar);
   const stock = product.stock ?? 999;
   const maxQty = Math.max(1, Math.min(stock, 99));
-  const productHref = `/products/${product._id}/${product.slug}`;
+  const productHref = `/products/${product._id}/${product.slug || "product"}`;
 
   return (
     <div className="flex gap-3 py-4 px-5 items-start bg-card hover:bg-cream-50/30 transition-colors lg:items-center">

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { IconMessage, IconPackage, IconPhone, IconStar, IconUser } from "@tabler/icons-react";
 import { formatPrice } from "@/utils/format/price";
 import { getConditionBadgeColor, getConditionLabel } from "@/utils/format";
@@ -32,6 +33,9 @@ export function OrderProductsCard({
         {order.products?.map((item, idx) => {
           const product = item.productId;
           const productId = product?._id ?? (typeof item.productId === "string" ? item.productId : null);
+          const productHref = productId
+            ? `/products/${productId}/${product?.slug || "product"}`
+            : null;
           const avatar =
             typeof product?.avatar === "object" && product.avatar?.url
               ? product.avatar.url
@@ -46,19 +50,43 @@ export function OrderProductsCard({
 
           return (
             <div key={idx} className="flex gap-3 sm:gap-4 p-4 sm:p-5">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-muted shrink-0 border border-border">
-                <Image
-                  src={avatar}
-                  alt={product?.name || "Sản phẩm"}
-                  width={80}
-                  height={80}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              {productHref ? (
+                <Link
+                  href={productHref}
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-muted shrink-0 border border-border hover:border-primary/50 transition-colors"
+                >
+                  <Image
+                    src={avatar}
+                    alt={product?.name || "Sản phẩm"}
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                  />
+                </Link>
+              ) : (
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-muted shrink-0 border border-border">
+                  <Image
+                    src={avatar}
+                    alt={product?.name || "Sản phẩm"}
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground line-clamp-2 leading-snug">
-                  {product?.name || "Sản phẩm đã ngừng kinh doanh"}
-                </p>
+                {productHref ? (
+                  <Link
+                    href={productHref}
+                    className="text-sm font-medium text-foreground line-clamp-2 leading-snug hover:text-primary transition-colors"
+                  >
+                    {product?.name || "Sản phẩm đã ngừng kinh doanh"}
+                  </Link>
+                ) : (
+                  <p className="text-sm font-medium text-foreground line-clamp-2 leading-snug">
+                    {product?.name || "Sản phẩm đã ngừng kinh doanh"}
+                  </p>
+                )}
                 {conditionLabel && badgeColorClass && (
                   <span
                     className={`inline-block mt-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${badgeColorClass}`}

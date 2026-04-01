@@ -16,6 +16,7 @@ interface AIMessage {
   sender: "user" | "ai";
   text: string;
   products?: IProduct[];
+  searchLogId?: string | null;
 }
 
 function getProductImage(product: IProduct): string {
@@ -70,6 +71,7 @@ export function AIProductAssistantPanel({
         sender: "ai",
         text: aiText,
         products,
+        searchLogId: response?.meta?.searchLogId || null,
       };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
@@ -132,6 +134,15 @@ export function AIProductAssistantPanel({
                       <a
                         key={product._id}
                         href={`/products/${product._id}/${product.slug || "product"}`}
+                        onClick={() => {
+                          if (!message.searchLogId) return;
+                          const rank = message.products?.findIndex((p) => p._id === product._id);
+                          void ChatService.trackSearchProductClick({
+                            searchLogId: message.searchLogId,
+                            productId: String(product._id),
+                            rank: rank != null && rank >= 0 ? rank + 1 : undefined,
+                          }).catch(() => {});
+                        }}
                         className="flex items-center gap-3 p-2 rounded-xl border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors bg-background"
                       >
                         <Image

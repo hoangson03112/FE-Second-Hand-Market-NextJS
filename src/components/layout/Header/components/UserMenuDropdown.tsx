@@ -107,7 +107,6 @@ export function UserMenuDropdown({
             {[
               { href: "/profile", icon: <IconUser className="w-4 h-4 shrink-0" />, label: "Thông tin tài khoản", show: true },
               { href: "/admin", icon: <IconSettings className="w-4 h-4 shrink-0" />, label: "Quản trị", show: account.role === "admin" },
-              { href: "/chat", icon: <IconMessageCircle className="w-4 h-4 shrink-0" />, label: "Tin nhắn", show: true },
               { href: "/my/listings", icon: <IconPackage className="w-4 h-4 shrink-0" />, label: "Sản phẩm đã đăng", show: true },
               {
                 href: "/orders",

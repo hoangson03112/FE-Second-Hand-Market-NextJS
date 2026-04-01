@@ -55,6 +55,13 @@ class WebSocketService {
         logger.info("Socket connected", { userId });
       });
 
+      this.socket.on("reconnect", () => {
+        if (this.userId) {
+          this.socket?.emit("join-room", this.userId);
+          logger.info("Socket reconnected, re-joined room", { userId: this.userId });
+        }
+      });
+
       this.socket.on("receive-message", (data: unknown) => {
         const message: WebSocketMessage = {
           type: "chat:message",
@@ -95,6 +102,16 @@ class WebSocketService {
         this.messageHandlers.forEach((handler) => handler(message));
       });
 
+      this.socket.on("system-notification", (data: unknown) => {
+        const message: WebSocketMessage = {
+          type: "system:notification",
+          userId,
+          data,
+          timestamp: new Date().toISOString(),
+        };
+        this.messageHandlers.forEach((handler) => handler(message));
+      });
+
       this.socket.on("account-banned", (data: unknown) => {
         const message: WebSocketMessage = {
           type: "account:banned",
@@ -113,10 +130,10 @@ class WebSocketService {
         logger.error("Socket connection error", error);
       });
 
-      this.socket.on("disconnect", () => {
+      this.socket.on("disconnect", (reason) => {
         this.isConnecting = false;
-        this.socket = null;
-        logger.info("Socket disconnected");
+        // Do not set this.socket = null: the client may auto-reconnect and keeps the same instance.
+        logger.info("Socket disconnected", { reason });
       });
     } catch (error) {
       this.isConnecting = false;
