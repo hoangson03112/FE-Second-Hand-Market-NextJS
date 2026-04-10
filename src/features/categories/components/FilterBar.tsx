@@ -207,7 +207,7 @@ export default function FilterBar({
           )}
           {totalProducts !== undefined && (
             <span className="text-sm text-taupe-400 shrink-0">
-              <span className="font-semibold text-taupe-700">{totalProducts.toLocaleString()}</span> SP
+              <span className="font-semibold text-taupe-700">{totalProducts.toLocaleString("vi-VN")}</span> SP
             </span>
           )}
         </div>

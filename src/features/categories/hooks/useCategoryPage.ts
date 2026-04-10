@@ -22,9 +22,10 @@ export function useCategoryPage({ slug }: UseCategoryPageProps) {
     queryKey: ["category", slug],
     queryFn: async () => {
       const response = await CategoryService.getAll();
-      return response.data.find(
+      const category = response.data.find(
         (cat: ICategory) => cat.slug === slug
       );
+      return category ?? null;
     },
   });
 
