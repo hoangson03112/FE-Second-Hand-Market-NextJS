@@ -53,22 +53,22 @@ export default function Login() {
 
         <AuthFormContainer
           title="Đăng nhập"
-          subtitle="Nhập tên đăng nhập và mật khẩu để tiếp tục"
+          subtitle="Nhập email hoặc tên đăng nhập và mật khẩu để tiếp tục"
         >
           <form className="space-y-6" onSubmit={handleSubmit}>
             <ErrorMessage message={error} />
 
             <div className="space-y-5">
               <InputField
-                id="username"
-                name="username"
-                label="Tên đăng nhập"
-                value={formData.username}
+                id="email"
+                name="email"
+                label="Email hoặc tên đăng nhập"
+                value={formData.email}
                 onChange={handleChange}
-                placeholder="VD: nguyen_van_a"
-                required
+                placeholder="VD: nguyen_van_a hoặc user@example.com"
+                required={false}
                 icon={<UserIcon />}
-                error={errors.username}
+                error={errors.email}
               />
               <PasswordField
                 id="password"
@@ -77,7 +77,7 @@ export default function Login() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Tối thiểu 6 ký tự"
-                required
+                required={false}
                 error={errors.password}
               />
             </div>

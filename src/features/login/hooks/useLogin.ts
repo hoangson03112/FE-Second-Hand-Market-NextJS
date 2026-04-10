@@ -17,10 +17,10 @@ export function useLogin() {
   const { setAccessToken } = useTokenStore();
   const setBanned = useBannedStore((s) => s.setBanned);
   const [formData, setFormData] = useState<LoginRequest>({
-    username: "",
+    email: "",
     password: "",
   });
-  const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -72,10 +72,10 @@ export function useLogin() {
     const normalizedData = sanitizeFormValues(formData);
     const result = loginSchema.safeParse(normalizedData);
     if (!result.success) {
-      const fieldErrors: { username?: string; password?: string } = {};
+      const fieldErrors: { email?: string; password?: string } = {};
       result.error.issues.forEach((issue) => {
         const path = issue.path[0] as string;
-        if (path && (path === "username" || path === "password")) {
+        if (path === "email" || path === "password") {
           fieldErrors[path] = issue.message;
         }
       });
@@ -85,7 +85,11 @@ export function useLogin() {
     setErrors({});
     setIsLoading(true);
     try {
-      const response = await AuthService.login(normalizedData);
+      const response = await AuthService.login({
+        email: normalizedData.email,
+        username: normalizedData.email,
+        password: normalizedData.password,
+      });
       if (response.status === "success" && response.token) {
         setAccessToken(response.token);
         queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });

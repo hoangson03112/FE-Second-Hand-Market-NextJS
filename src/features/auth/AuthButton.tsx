@@ -20,7 +20,7 @@ export default function AuthButton({
       type={type}
       onClick={onClick}
       disabled={disabled || isLoading}
-      className="w-full flex justify-center items-center gap-2 py-4 px-6 bg-primary text-primary-foreground font-semibold text-[15px] rounded-xl hover:bg-primary/90 focus:outline-none focus:ring-4 focus:ring-primary/30 active:scale-[0.98] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40"
+      className="btn-auth-primary w-full flex justify-center items-center gap-2 py-4 px-6 font-semibold text-[15px] rounded-xl focus:outline-none active:scale-[0.98] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
     >
       {isLoading ? (
         <>

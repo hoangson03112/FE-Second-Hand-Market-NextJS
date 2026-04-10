@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
+import { useTokenStore } from "@/store/useTokenStore";
 import { OrderService } from "@/services/order.service";
 import { useToast } from "@/components/ui/Toast";
 import type { Order } from "@/types/order";
@@ -27,8 +28,10 @@ export const ORDER_TABS = [
 export function useOrders() {
   const router = useRouter();
   const { data: account, isLoading: userLoading } = useUser();
+  const accessToken = useTokenStore((state) => state.accessToken);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRedirectingAuth, setIsRedirectingAuth] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
   const [cancellingId, setCancellingId] = useState<string | null>(null);
   const [cancelTargetOrderId, setCancelTargetOrderId] = useState<string | null>(null);
@@ -89,10 +92,21 @@ export function useOrders() {
   };
 
   useEffect(() => {
-    if (!userLoading && !account) {
-      router.push("/login");
+    if (!userLoading && !accessToken) {
+      setIsRedirectingAuth(true);
+      setIsLoading(false);
+      router.replace("/login?redirect=%2Forders");
       return;
     }
+
+    if (!userLoading && accessToken && !account) {
+      // Token exists but account cannot be resolved (expired/invalid session).
+      setIsRedirectingAuth(true);
+      setIsLoading(false);
+      router.replace("/login?redirect=%2Forders");
+      return;
+    }
+
     if (!account) return;
 
     const fetchOrders = async () => {
@@ -106,7 +120,7 @@ export function useOrders() {
       }
     };
     fetchOrders();
-  }, [account, userLoading, router]);
+  }, [account, userLoading, accessToken, router]);
 
   const openRefundModal = (orderId: string) => {
     const order = orders.find((o) => o._id === orderId) ?? null;
@@ -165,6 +179,7 @@ export function useOrders() {
   return {
     account,
     userLoading,
+    isRedirectingAuth,
     orders,
     filteredOrders,
     paginatedOrders,

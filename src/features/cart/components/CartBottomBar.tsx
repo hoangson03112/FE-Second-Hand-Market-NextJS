@@ -65,7 +65,7 @@ export default function CartBottomBar({
                 type="button"
                 onClick={onGoToCheckout}
                 disabled={isBusy || isGoingToCheckout}
-                className="h-10 sm:h-11 px-6 sm:px-12 bg-gradient-to-r from-primary to-accent text-primary-foreground text-sm font-bold uppercase tracking-wider rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed whitespace-nowrap"
+                className="btn-auth-primary h-10 sm:h-11 px-6 sm:px-12 text-sm font-bold uppercase tracking-wider rounded-xl hover:scale-105 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed whitespace-nowrap"
               >
                 {isGoingToCheckout ? "Đang xử lý..." : "Mua Hàng"}
               </button>

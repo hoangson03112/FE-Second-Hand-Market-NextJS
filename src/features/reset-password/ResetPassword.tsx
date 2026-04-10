@@ -39,7 +39,10 @@ export default function ResetPassword() {
             description="Link reset mật khẩu không đúng hoặc đã hết hạn."
             features={resetPasswordFeatures}
           />
-          <AuthFormContainer title="Link không hợp lệ" subtitle="Vui lòng thử lại">
+          <AuthFormContainer
+            title="Liên kết đặt lại đã hết hạn"
+            subtitle="Bạn có thể yêu cầu một liên kết mới để tiếp tục đổi mật khẩu."
+          >
             <InvalidTokenError message={invalidTokenMessage} />
           </AuthFormContainer>
         </div>

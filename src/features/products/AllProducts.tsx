@@ -72,7 +72,7 @@ export default function AllProducts() {
                 products={products}
                 isLoading={isLoading}
                 emptyMessage="Không tìm thấy sản phẩm nào"
-                pagination={{ currentPage, totalPages, total, limit: filters.limit || 12 }}
+                pagination={{ currentPage, totalPages, total, limit: filters.limit || 15 }}
                 onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
               />
             )}

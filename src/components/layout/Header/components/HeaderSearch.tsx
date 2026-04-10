@@ -24,18 +24,7 @@ export function HeaderSearch({ query, setQuery, submitSearch }: HeaderSearchProp
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Tìm kiếm..."
-          className="w-full h-9 pl-9 pr-4 text-[13px] font-medium text-taupe-900 placeholder:text-taupe-400 focus:outline-none transition-all duration-200"
-          style={{ background: "var(--secondary)", border: "1.5px solid transparent", borderRadius: "9999px" }}
-          onFocus={(event) => {
-            event.target.style.background = "var(--card)";
-            event.target.style.borderColor = "var(--primary)";
-            event.target.style.boxShadow = "0 0 0 3px color-mix(in oklch, var(--primary) 13%, transparent)";
-          }}
-          onBlur={(event) => {
-            event.target.style.background = "var(--secondary)";
-            event.target.style.borderColor = "transparent";
-            event.target.style.boxShadow = "none";
-          }}
+          className="h-9 w-full rounded-full border border-taupe-200 bg-white pl-9 pr-4 text-[13px] font-medium text-taupe-900 placeholder:text-taupe-400 transition-all duration-200 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/15"
         />
       </div>
     </form>
