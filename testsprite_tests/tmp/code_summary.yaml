@@ -1,0 +1,322 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - Next.js 15 (App Router)
+  - React 19
+  - Tailwind CSS
+  - TanStack Query
+  - Zustand
+routes:
+  - path: /
+    file: src/app/page.tsx
+    auth_required: false
+    description: Homepage with featured and curated listings
+  - path: /login
+    file: src/app/login/page.tsx
+    auth_required: false
+    description: User login page
+  - path: /register
+    file: src/app/register/page.tsx
+    auth_required: false
+    description: User registration page
+  - path: /verify-email
+    file: src/app/verify-email/page.tsx
+    auth_required: false
+    description: Email verification page
+  - path: /verify-google-email
+    file: src/app/verify-google-email/page.tsx
+    auth_required: false
+    description: Verify Google-linked email flow
+  - path: /forgot-password
+    file: src/app/forgot-password/page.tsx
+    auth_required: false
+    description: Request password reset
+  - path: /reset-password
+    file: src/app/reset-password/page.tsx
+    auth_required: false
+    description: Reset password with token
+  - path: /products
+    file: src/app/products/page.tsx
+    auth_required: false
+    description: Product catalog page
+  - path: /products/[id]/[slug]
+    file: src/app/products/[id]/[slug]/page.tsx
+    auth_required: false
+    description: Product details page
+  - path: /categories/[slug]
+    file: src/app/categories/[slug]/page.tsx
+    auth_required: false
+    description: Category listing page
+  - path: /categories/[slug]/sub/[subId]
+    file: src/app/categories/[slug]/sub/[subId]/page.tsx
+    auth_required: false
+    description: Sub-category listing page
+  - path: /search
+    file: src/app/search/page.tsx
+    auth_required: false
+    description: Search results page
+  - path: /cart
+    file: src/app/cart/page.tsx
+    auth_required: true
+    description: Shopping cart page
+  - path: /checkout
+    file: src/app/checkout/page.tsx
+    auth_required: true
+    description: Checkout page
+  - path: /checkout/success
+    file: src/app/checkout/success/page.tsx
+    auth_required: true
+    description: Checkout success page
+  - path: /payment
+    file: src/app/payment/page.tsx
+    auth_required: true
+    description: Payment processing page
+  - path: /orders
+    file: src/app/orders/page.tsx
+    auth_required: true
+    description: Buyer orders list
+  - path: /orders/[id]
+    file: src/app/orders/[id]/page.tsx
+    auth_required: true
+    description: Buyer order detail
+  - path: /my/orders
+    file: src/app/my/orders/page.tsx
+    auth_required: true
+    description: User order history alias page
+  - path: /my/orders/[id]
+    file: src/app/my/orders/[id]/page.tsx
+    auth_required: true
+    description: User order detail alias page
+  - path: /profile
+    file: src/app/profile/page.tsx
+    auth_required: true
+    description: User profile and account settings
+  - path: /notifications
+    file: src/app/notifications/page.tsx
+    auth_required: true
+    description: Notification center
+  - path: /sell
+    file: src/app/sell/page.tsx
+    auth_required: true
+    description: Create product listing
+  - path: /my/listings
+    file: src/app/my/listings/page.tsx
+    auth_required: true
+    description: Manage seller listings
+  - path: /become-seller
+    file: src/app/become-seller/page.tsx
+    auth_required: true
+    description: Seller registration flow
+  - path: /become-seller/success
+    file: src/app/become-seller/success/page.tsx
+    auth_required: true
+    description: Seller registration success page
+  - path: /seller
+    file: src/app/seller/page.tsx
+    auth_required: true
+    description: Seller dashboard page
+  - path: /seller/orders
+    file: src/app/seller/orders/page.tsx
+    auth_required: true
+    description: Seller order management
+  - path: /seller/payouts
+    file: src/app/seller/payouts/page.tsx
+    auth_required: true
+    description: Seller payout and wallet page
+  - path: /admin
+    file: src/app/admin/page.tsx
+    auth_required: true
+    description: Admin dashboard page
+  - path: /admin/categories
+    file: src/app/admin/categories/page.tsx
+    auth_required: true
+    description: Admin category management
+  - path: /admin/moderation
+    file: src/app/admin/moderation/page.tsx
+    auth_required: true
+    description: Admin moderation dashboard
+  - path: /admin/notifications
+    file: src/app/admin/notifications/page.tsx
+    auth_required: true
+    description: Admin notifications page
+  - path: /admin/orders
+    file: src/app/admin/orders/page.tsx
+    auth_required: true
+    description: Admin order management
+  - path: /admin/payouts
+    file: src/app/admin/payouts/page.tsx
+    auth_required: true
+    description: Admin payout management
+  - path: /admin/products
+    file: src/app/admin/products/page.tsx
+    auth_required: true
+    description: Admin product moderation
+  - path: /admin/refunds
+    file: src/app/admin/refunds/page.tsx
+    auth_required: true
+    description: Admin refund management
+  - path: /admin/reports
+    file: src/app/admin/reports/page.tsx
+    auth_required: true
+    description: Admin reports page
+  - path: /admin/sellers
+    file: src/app/admin/sellers/page.tsx
+    auth_required: true
+    description: Admin seller management
+  - path: /admin/users
+    file: src/app/admin/users/page.tsx
+    auth_required: true
+    description: Admin user management
+  - path: /admin/audit-logs
+    file: src/app/admin/audit-logs/page.tsx
+    auth_required: true
+    description: Admin audit logs page
+features:
+  - name: Authentication and Account Recovery
+    description: Email/password auth, email verification, Google email verification, and password recovery
+    files:
+      - src/app/login/page.tsx
+      - src/app/register/page.tsx
+      - src/app/forgot-password/page.tsx
+      - src/app/reset-password/page.tsx
+      - src/services/auth.service.ts
+    entry_route: /login
+    user_interactions:
+      - Enter credentials and submit login form
+      - Register account and verify email token
+      - Request reset link and set a new password
+      - Complete Google email verification when required
+    api_calls:
+      - method: POST
+        endpoint: /eco-market/auth/login
+      - method: POST
+        endpoint: /eco-market/auth/register
+      - method: POST
+        endpoint: /eco-market/auth/forgot-password
+      - method: POST
+        endpoint: /eco-market/auth/reset-password
+    auth_required: false
+  - name: Product Discovery and Search
+    description: Browse products by category, sub-category, search query, and product detail
+    files:
+      - src/app/page.tsx
+      - src/app/products/page.tsx
+      - src/app/categories/[slug]/page.tsx
+      - src/app/categories/[slug]/sub/[subId]/page.tsx
+      - src/app/products/[id]/[slug]/page.tsx
+      - src/services/product.service.ts
+    entry_route: /
+    user_interactions:
+      - Browse featured and latest listings on homepage
+      - Filter products by category and sub-category
+      - Search by keywords
+      - Open a product detail page
+    api_calls:
+      - method: GET
+        endpoint: /eco-market/products/featured
+      - method: GET
+        endpoint: /eco-market/products/all
+      - method: GET
+        endpoint: /eco-market/products/search
+      - method: GET
+        endpoint: /eco-market/products/:productID
+    auth_required: false
+  - name: Cart, Checkout, and Payment
+    description: Manage cart items, place order, and complete payment flow
+    files:
+      - src/app/cart/page.tsx
+      - src/app/checkout/page.tsx
+      - src/app/payment/page.tsx
+      - src/services/cart.service.ts
+      - src/services/order.service.ts
+    entry_route: /cart
+    user_interactions:
+      - Add or remove cart items and update quantity
+      - Select shipping and checkout details
+      - Submit order and proceed to payment
+      - View checkout success state
+    api_calls:
+      - method: GET
+        endpoint: /eco-market/cart
+      - method: POST
+        endpoint: /eco-market/orders
+      - method: POST
+        endpoint: /eco-market/orders/:id/confirm-bank-transfer
+    auth_required: true
+  - name: Buyer Order Management
+    description: View orders, tracking, and perform post-purchase actions
+    files:
+      - src/app/orders/page.tsx
+      - src/app/orders/[id]/page.tsx
+      - src/features/order-details/OrderDetail.tsx
+      - src/services/order.service.ts
+    entry_route: /orders
+    user_interactions:
+      - View order history
+      - Open order detail timeline and tracking
+      - Cancel order when eligible
+      - Confirm received and request refund
+    api_calls:
+      - method: GET
+        endpoint: /eco-market/orders/my-orders
+      - method: GET
+        endpoint: /eco-market/orders/order-details/:id
+      - method: POST
+        endpoint: /eco-market/orders/:id/cancel
+      - method: PATCH
+        endpoint: /eco-market/orders/:id/confirm-received
+    auth_required: true
+  - name: Seller Operations
+    description: Become seller, create/manage listings, and process seller orders and payouts
+    files:
+      - src/app/become-seller/page.tsx
+      - src/app/sell/page.tsx
+      - src/app/my/listings/page.tsx
+      - src/app/seller/orders/page.tsx
+      - src/app/seller/payouts/page.tsx
+    entry_route: /become-seller
+    user_interactions:
+      - Submit seller onboarding form
+      - Create and update product listings
+      - Update seller order statuses
+      - Review wallet and payout records
+    api_calls:
+      - method: POST
+        endpoint: /eco-market/sellers/register
+      - method: POST
+        endpoint: /eco-market/products
+      - method: PATCH
+        endpoint: /eco-market/orders/seller/update/:orderId
+      - method: GET
+        endpoint: /eco-market/orders/seller/payouts
+    auth_required: true
+  - name: Admin Backoffice
+    description: Moderate products, manage users/sellers/orders/refunds, and monitor operations
+    files:
+      - src/app/admin/page.tsx
+      - src/app/admin/products/page.tsx
+      - src/app/admin/users/page.tsx
+      - src/app/admin/orders/page.tsx
+      - src/app/admin/refunds/page.tsx
+      - src/services/admin.service.ts
+    entry_route: /admin
+    user_interactions:
+      - View admin dashboard metrics
+      - Review and update product moderation status
+      - Manage user and seller account status
+      - Process order, payout, and refund operations
+    api_calls:
+      - method: GET
+        endpoint: /eco-market/admin/dashboard
+      - method: PATCH
+        endpoint: /eco-market/products/:productId/status
+      - method: GET
+        endpoint: /eco-market/accounts/admin/list
+      - method: GET
+        endpoint: /eco-market/orders/admin/all
+    auth_required: true
+known_limitations:
+  - issue: Frontend requires backend APIs and valid environment values for full flows
+    location: src/lib/axios.ts
+    impact: End-to-end flows fail if backend service or env configuration is unavailable

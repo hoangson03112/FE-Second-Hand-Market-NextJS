@@ -17,6 +17,7 @@ export default function Orders() {
   const {
     account,
     userLoading,
+    isRedirectingAuth,
     orders,
     filteredOrders,
     paginatedOrders,
@@ -59,7 +60,16 @@ export default function Orders() {
     );
   }
 
-  if (!account) return null;
+  if (isRedirectingAuth || !account) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-neutral-700 font-medium">Vui long dang nhap de xem don hang</p>
+          <p className="text-sm text-neutral-500 mt-2">Dang chuyen huong toi trang dang nhap...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

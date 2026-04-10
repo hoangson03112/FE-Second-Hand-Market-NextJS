@@ -187,7 +187,7 @@ export function SellerActionButtons({
         <div className="bg-card rounded-2xl border border-border shadow-sm p-4 flex flex-col gap-3">
           {showMarkDelivered && (
             <>
-              <div className="flex items-start gap-2 p-3 bg-emerald-50 rounded-xl border border-emerald-200">
+              <div className="flex items-center gap-2 p-3 bg-emerald-50 rounded-xl border border-emerald-200">
                 <span className="text-base">🤝</span>
                 <p className="text-xs text-emerald-700">
                   Sau khi gặp mặt và trao hàng cho người mua, nhấn nút bên dưới để xác nhận.

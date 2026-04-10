@@ -19,8 +19,18 @@ const phoneSchema = z
   .refine((s) => /^(0|\+84)?[0-9]{9,10}$/.test(s), "Số điện thoại không đúng định dạng");
 
 // Login
+const loginIdentifierSchema = z
+  .string()
+  .min(1, "Vui lòng nhập email hoặc tên đăng nhập")
+  .trim()
+  .refine((value) => {
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    const isUsername = /^[a-zA-Z0-9._]{3,30}$/.test(value);
+    return isEmail || isUsername;
+  }, "Nhập email hợp lệ hoặc tên đăng nhập (3-30 ký tự)");
+
 export const loginSchema = z.object({
-  username: usernameSchema,
+  email: loginIdentifierSchema,
   password: z
     .string()
     .min(1, "Vui lòng nhập mật khẩu")

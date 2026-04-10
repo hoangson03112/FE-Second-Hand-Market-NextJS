@@ -113,9 +113,9 @@
   --card-foreground: oklch(0.15 0.03 270);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.15 0.03 270);
-  --primary: oklch(0.5 0.08 35);
+  --primary: #86503c;
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.88 0.05 65);
+  --secondary: #e97a6b;
   --secondary-foreground: oklch(0.15 0.03 270);
   --muted: oklch(0.94 0.02 60);
   --muted-foreground: oklch(0.55 0.02 260);
@@ -125,9 +125,9 @@
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.92 0.01 70);
   --input: oklch(0.97 0.005 70);
-  --ring: oklch(0.5 0.08 35);
-  --chart-1: oklch(0.5 0.08 35);
-  --chart-2: oklch(0.68 0.1 10);
+  --ring: #e97a6b;
+  --chart-1: #86503c;
+  --chart-2: #e97a6b;
   --chart-3: oklch(0.7 0.08 80);
   --chart-4: oklch(0.5 0.06 200);
   --chart-5: oklch(0.65 0.1 120);
@@ -157,10 +157,10 @@
   --taupe-100: #ede8e0;
   --taupe-200: #d9d0c2;
   --taupe-300: #c2b5a0;
-  --taupe-400: #a8957a;
-  --taupe-500: #8d7756;
-  --taupe-600: #736045;
-  --taupe-700: #5a4b35;
+  --taupe-400: #9b624d;
+  --taupe-500: #86503c;
+  --taupe-600: #734432;
+  --taupe-700: #5f3626;
   --taupe-800: #403528;
   --taupe-900: #2a221b;
 
@@ -181,9 +181,9 @@
   --blush-100: #fdece9;
   --blush-200: #fbd9d3;
   --blush-300: #f7bbb1;
-  --blush-400: #f19587;
-  --blush-500: #e97463;
-  --blush-600: #d65a47;
+  --blush-400: #ed8779;
+  --blush-500: #e97a6b;
+  --blush-600: #d96557;
   --blush-700: #b34836;
   --blush-800: #953e2e;
   --blush-900: #7d3628;
@@ -238,6 +238,13 @@
   --info: var(--taupe-500);
   --info-light: var(--taupe-100);
   --info-dark: var(--taupe-700);
+
+  /* Auth CTA palette (from Login/Register pills) */
+  --cta-coral: #e97a6b;
+  --cta-coral-hover: #ed8779;
+  --cta-cocoa: #86503c;
+  --cta-cocoa-hover: #965a44;
+  --color-shadow-cta: rgba(134, 80, 60, 0.35);
 }
 
 .dark {
@@ -248,9 +255,9 @@
   --popover: oklch(0.18 0.02 250);
   --popover-foreground: oklch(0.95 0.01 70);
 
-  --primary: oklch(0.72 0.08 35);
+  --primary: #b97860;
   --primary-foreground: oklch(0.12 0.02 250);
-  --secondary: oklch(0.3 0.02 260);
+  --secondary: #e9a094;
   --secondary-foreground: oklch(0.95 0.01 70);
   --muted: oklch(0.28 0.02 250);
   --muted-foreground: oklch(0.75 0.02 70);
@@ -958,6 +965,36 @@ body::-webkit-scrollbar-thumb:active {
 .shadow-secondary-lg {
   box-shadow: 0 10px 15px -3px var(--color-shadow-secondary),
     0 4px 6px -2px var(--color-shadow-secondary);
+}
+
+/* Auth CTA Utilities */
+.btn-auth-primary {
+  background-color: var(--cta-cocoa);
+  color: #fff;
+  box-shadow: 0 10px 15px -3px var(--color-shadow-cta),
+    0 4px 6px -2px var(--color-shadow-cta);
+}
+
+.btn-auth-primary:hover:not(:disabled) {
+  background-color: var(--cta-cocoa-hover);
+}
+
+.btn-auth-primary:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--cta-coral) 32%, transparent),
+    0 10px 15px -3px var(--color-shadow-cta),
+    0 4px 6px -2px var(--color-shadow-cta);
+}
+
+.btn-auth-secondary {
+  border: 1px solid color-mix(in srgb, var(--cta-coral) 35%, transparent);
+  background-color: color-mix(in srgb, var(--cta-coral) 12%, white);
+  color: var(--cta-cocoa);
+}
+
+.btn-auth-secondary:hover {
+  border-color: color-mix(in srgb, var(--cta-coral) 55%, transparent);
+  background-color: color-mix(in srgb, var(--cta-coral) 16%, white);
 }
 
 /* ============================================

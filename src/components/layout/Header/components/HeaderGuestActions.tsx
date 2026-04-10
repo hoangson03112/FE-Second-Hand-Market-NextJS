@@ -11,12 +11,9 @@ export function HeaderGuestActions() {
       </Link>
       <Link
         href="/register"
-        className="hidden md:inline-flex items-center justify-center h-9 px-4 text-[13px] font-semibold transition-all duration-150 hover:opacity-90"
+        className="hidden md:inline-flex items-center justify-center h-9 px-4 text-[13px] font-semibold text-white bg-primary rounded-full shadow-sm transition-all duration-150 hover:bg-primary/90"
         style={{
-          background: "linear-gradient(135deg, var(--primary) 0%, oklch(0.43 0.08 35) 100%)",
-          color: "var(--background)",
-          borderRadius: "9999px",
-          boxShadow: "0 2px 8px color-mix(in oklch, var(--primary) 32%, transparent)",
+          boxShadow: "0 2px 8px color-mix(in srgb, var(--primary) 32%, transparent)",
         }}
       >
         Đăng ký

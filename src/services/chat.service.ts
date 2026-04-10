@@ -15,9 +15,12 @@ export interface FindOrCreateWithProductResponse {
 }
 
 export interface AIProductSearchResponse {
-  success: boolean;
-  mode: "vector" | "text";
+  answer?: string;
+  products?: IProduct[];
   data: IProduct[];
+  meta?: {
+    searchLogId?: string | null;
+  };
 }
 
 export const ChatService = {
@@ -72,5 +75,13 @@ export const ChatService = {
     limit = 5,
   ): Promise<AIProductSearchResponse> => {
     return axiosClient.post("/chat/ai/search-products", { query, limit });
+  },
+
+  trackSearchProductClick: async (payload: {
+    searchLogId: string;
+    productId: string;
+    rank?: number;
+  }): Promise<{ success: boolean }> => {
+    return axiosClient.post("/chat/ai/search-products/click", payload);
   },
 };

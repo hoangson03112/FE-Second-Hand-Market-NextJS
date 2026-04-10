@@ -1,0 +1,20 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "loginUser": "viet1",
+  "loginPassword": "12345678nM",
+  "executionArgs": {
+    "projectName": "eco",
+    "projectPath": "D:\\Git\\Eco-NextJS\\eco",
+    "testIds": [],
+    "additionalInstruction": "Execute the full frontend plan based on current PRD and project state.",
+    "serverMode": "production",
+    "envs": {
+      "API_KEY": "sk-user-6oUXn7XciAzw74V6ZpxH2TmZthPDk3GA9xN5kfs-wqzUZ4kZHsQSStQ6xzKP8DpmsWcG8zk7xBSsF_YOMU0PV_eoZmextorm9j_bhfUphA1GQ0mZbPEQ-QPiXl2gLRzYZJU"
+    }
+  },
+  "serverPort": 51105,
+  "proxy": "http://4c9050d3-e7f5-4bc6-a39a-dd6db0e39a41:hcCkZujqfeyxYemLAqeohvpDyAfrQYU0@tun.testsprite.com:8080"
+}

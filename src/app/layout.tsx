@@ -8,7 +8,7 @@ import { BannedOverlay } from "@/components/common/BannedOverlay";
 import type { Metadata } from "next";
 import { inter } from "@/lib/fonts";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://eco-marketplace.vn";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.ecomarket.io.vn";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
       "Mua bán đồ cũ uy tín, chất lượng. Tiết kiệm chi phí, bảo vệ môi trường.",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
         width: 1200,
         height: 630,
         alt: "Eco Marketplace",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     title: "Eco Marketplace - Sàn thương mại điện tử đồ cũ",
     description:
       "Mua bán đồ cũ uy tín, chất lượng. Tiết kiệm chi phí, bảo vệ môi trường.",
-    images: ["/og-image.jpg"],
+    images: ["https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png"],
     creator: "@ecomarketplace",
   },
   verification: {

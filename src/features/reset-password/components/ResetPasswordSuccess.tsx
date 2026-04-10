@@ -20,7 +20,7 @@ export default function ResetPasswordSuccess() {
       <div className="pt-4">
         <Link
           href="/login"
-          className="flex w-full py-3 px-4 bg-primary text-white rounded-xl font-semibold hover:bg-primary/90 transition-colors items-center justify-center gap-2"
+          className="btn-auth-primary flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold transition-all"
         >
           <span>Đăng nhập ngay</span>
           <ArrowRightIcon className="w-5 h-5" />

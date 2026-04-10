@@ -72,16 +72,15 @@ function NotificationListener() {
         dedupeKey: data.productId ? `product-${data.productId}-${data.title}` : undefined,
         metadata: data.productId ? { productId: String(data.productId) } : undefined,
       });
-    } else if (lastMessage.type === "chat:notification") {
-      const senderName = data.senderName ? String(data.senderName) : "Người dùng";
-      const conversationId = data.conversationId ? String(data.conversationId) : undefined;
+    } else if (lastMessage.type === "system:notification") {
+      if (!data?.title || !data?.message) return;
       addNotification({
-        type: "chat",
-        title: `Tin nhắn mới từ ${senderName}`,
-        message: data.message ? String(data.message) : "Đã gửi một tệp đính kèm",
-        link: conversationId ? `/my/messages?conversation=${conversationId}` : `/my/messages`,
-        dedupeKey: undefined,
-        metadata: { senderId: data.senderId, conversationId },
+        id: data._id ? String(data._id) : undefined,
+        type: "system",
+        title: String(data.title),
+        message: String(data.message),
+        link: data.link ? String(data.link) : undefined,
+        dedupeKey: data._id ? `db-${data._id}` : `system-${data.title}`,
       });
     } else if (lastMessage.type === "account:banned") {
       useBannedStore.getState().setBanned(true);

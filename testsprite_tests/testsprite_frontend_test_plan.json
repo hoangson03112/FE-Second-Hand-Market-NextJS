@@ -1,0 +1,1138 @@
+[
+  {
+    "id": "TC001",
+    "title": "Complete checkout flow to success confirmation",
+    "description": "Verifies a buyer can proceed from cart through checkout and payment screens and lands on a success confirmation page.",
+    "category": "Cart, Checkout, and Payment",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view all products"
+      },
+      {
+        "type": "action",
+        "description": "Click a product card from the listing"
+      },
+      {
+        "type": "action",
+        "description": "Add the product to the cart"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the cart"
+      },
+      {
+        "type": "action",
+        "description": "Proceed from cart to checkout"
+      },
+      {
+        "type": "action",
+        "description": "Select a shipping option"
+      },
+      {
+        "type": "action",
+        "description": "Fill valid checkout details into the required fields"
+      },
+      {
+        "type": "action",
+        "description": "Submit the order to proceed to payment"
+      },
+      {
+        "type": "action",
+        "description": "Complete the payment step available in the UI"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an order success confirmation is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Log in and land in signed-in experience",
+    "description": "Verifies a user can sign in with valid credentials and sees the app in an authenticated state.",
+    "category": "Authentication and Account Recovery",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is signed in and the signed-in navigation options are visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Protected cart route requires login",
+    "description": "Verifies an unauthenticated visitor is blocked from the cart page and is prompted to log in.",
+    "category": "Cart, Checkout, and Payment",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /cart"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is redirected into the login flow"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Accessing orders requires authentication",
+    "description": "Verifies an unauthenticated visitor is redirected to login when attempting to access the orders page.",
+    "category": "Buyer Order Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /orders"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is prompted to log in or lands on the login page"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Accessing admin area requires authentication",
+    "description": "Verifies an unauthenticated visitor is redirected to login when attempting to access the admin dashboard.",
+    "category": "Admin Backoffice",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is prompted to log in or lands on the login page"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Add a product to cart and view it in cart",
+    "description": "Verifies a buyer can add a product to the cart from product detail and sees it present in the cart.",
+    "category": "Cart, Checkout, and Payment",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view all products"
+      },
+      {
+        "type": "action",
+        "description": "Click a product card from the listing"
+      },
+      {
+        "type": "action",
+        "description": "Add the product to the cart"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the cart"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the cart displays at least one line item"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Accessing seller operations requires authentication",
+    "description": "Verifies an unauthenticated visitor is redirected to login when attempting to access a seller-protected page.",
+    "category": "Seller Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /sell"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is prompted to log in or lands on the login page"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Open a product detail from catalog and see seller summary",
+    "description": "Verifies a visitor can open a product from the catalog and see product details along with seller summary information.",
+    "category": "Product Discovery and Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /products"
+      },
+      {
+        "type": "action",
+        "description": "Click a product card from the listing"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify product details are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify seller summary information is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Update cart item quantity and see totals change",
+    "description": "Verifies a buyer can change an item quantity in the cart and sees cart totals update accordingly.",
+    "category": "Cart, Checkout, and Payment",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view all products"
+      },
+      {
+        "type": "action",
+        "description": "Click a product card from the listing"
+      },
+      {
+        "type": "action",
+        "description": "Add the product to the cart"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the cart"
+      },
+      {
+        "type": "action",
+        "description": "Increase the quantity for the cart line item to a higher valid number"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the cart subtotal updates to reflect the new quantity"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Request a password reset link",
+    "description": "Verifies a user can request a password reset and sees a confirmation that the reset request was sent.",
+    "category": "Authentication and Account Recovery",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /forgot-password"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid email into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the password reset request form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a reset request confirmation is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Browse from homepage to full catalog",
+    "description": "Verifies a visitor can browse featured/latest listings on the homepage and navigate to the full product catalog.",
+    "category": "Product Discovery and Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to browse featured and latest product sections"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view all products"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a product catalog list is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "View buyer orders list",
+    "description": "Verifies a signed-in buyer can open the orders page and see a list of orders with high-level statuses.",
+    "category": "Buyer Order Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view orders"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a list of orders is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Search for products by keyword",
+    "description": "Verifies a visitor can search with keywords and sees a results list for the query.",
+    "category": "Product Discovery and Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /search"
+      },
+      {
+        "type": "action",
+        "description": "Fill a common keyword into the search field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the search"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify search results are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Open an order to view details and timeline",
+    "description": "Verifies a signed-in buyer can open an order from the orders list and see order details including a timeline/tracking section.",
+    "category": "Buyer Order Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view orders"
+      },
+      {
+        "type": "action",
+        "description": "Click an order from the list to open its details"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order detail view shows order items and a timeline or tracking updates section"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC015",
+    "title": "Filter product catalog by category or sub-category",
+    "description": "Verifies a visitor can apply a category or sub-category filter and the product list updates accordingly.",
+    "category": "Product Discovery and Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /products"
+      },
+      {
+        "type": "action",
+        "description": "Select a category filter option"
+      },
+      {
+        "type": "action",
+        "description": "Select a sub-category filter option if available"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product list updates to reflect the selected filter"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC016",
+    "title": "Remove the last item from cart and see empty cart state",
+    "description": "Verifies a buyer can remove the only item in the cart and then sees an empty cart state.",
+    "category": "Cart, Checkout, and Payment",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view all products"
+      },
+      {
+        "type": "action",
+        "description": "Click a product card from the listing"
+      },
+      {
+        "type": "action",
+        "description": "Add the product to the cart"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the cart"
+      },
+      {
+        "type": "action",
+        "description": "Remove the cart line item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an empty cart state is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC017",
+    "title": "Register a new account",
+    "description": "Verifies a visitor can create a new account and receives an on-screen confirmation of account creation.",
+    "category": "Authentication and Account Recovery",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /register"
+      },
+      {
+        "type": "action",
+        "description": "Fill a unique email into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid password into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Fill matching password into the confirm password field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid name into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the registration form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an account creation confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC018",
+    "title": "Complete seller onboarding to success confirmation",
+    "description": "Verifies a signed-in user can complete seller onboarding and reach a success confirmation page.",
+    "category": "Seller Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to become a seller"
+      },
+      {
+        "type": "action",
+        "description": "Fill required seller onboarding fields with valid details"
+      },
+      {
+        "type": "action",
+        "description": "Submit the seller onboarding form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a seller registration success confirmation is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC019",
+    "title": "View admin dashboard metrics",
+    "description": "Verifies an authenticated admin can open the admin dashboard and see operational metrics or summaries displayed.",
+    "category": "Admin Backoffice",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to open the admin area"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify admin dashboard metrics or operational summaries are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC020",
+    "title": "Confirm receipt for an order from order details",
+    "description": "Verifies a signed-in buyer can confirm an order as received from the order detail view and see the status updated.",
+    "category": "Buyer Order Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view orders"
+      },
+      {
+        "type": "action",
+        "description": "Click an order from the list to open its details"
+      },
+      {
+        "type": "action",
+        "description": "Click the action to confirm the order was received"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order status is shown as received in the order detail view"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC021",
+    "title": "Create a listing and see it in My Listings",
+    "description": "Verifies a signed-in seller can create a product listing and then see it appear in their listings.",
+    "category": "Seller Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to create a listing"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Reusable Bottle TC\" into the product title field"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"25\" into the price field"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Test description for seller listing\" into the description field"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid category for the listing"
+      },
+      {
+        "type": "action",
+        "description": "Submit the new listing form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view your listings"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a listing titled \"Reusable Bottle TC\" appears in the listings list"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC022",
+    "title": "Cancel an eligible order from the orders list",
+    "description": "Verifies a signed-in buyer can cancel an eligible order and see the cancellation reflected in the orders list.",
+    "category": "Buyer Order Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view orders"
+      },
+      {
+        "type": "action",
+        "description": "Select an order that shows a cancel option"
+      },
+      {
+        "type": "action",
+        "description": "Submit the cancel action for the selected order"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a cancellation confirmation is visible or the order shows a cancelled status in the list"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC023",
+    "title": "Moderate a product status from admin products",
+    "description": "Verifies an authenticated admin can change a product's moderation status and see the updated status reflected in the admin products list.",
+    "category": "Admin Backoffice",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to open admin product moderation"
+      },
+      {
+        "type": "action",
+        "description": "Select a product row from the moderation list"
+      },
+      {
+        "type": "action",
+        "description": "Select a different moderation status for the product"
+      },
+      {
+        "type": "action",
+        "description": "Save the moderation status change"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product shows the updated moderation status in the admin products list"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC024",
+    "title": "Edit a listing and see updates reflected",
+    "description": "Verifies a signed-in seller can edit an existing listing and see the updated details reflected in the listings view.",
+    "category": "Seller Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to create a listing"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Vintage Lamp TC\" into the product title field"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"40\" into the price field"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Initial description\" into the description field"
+      },
+      {
+        "type": "action",
+        "description": "Select a valid category for the listing"
+      },
+      {
+        "type": "action",
+        "description": "Submit the new listing form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view your listings"
+      },
+      {
+        "type": "action",
+        "description": "Open the listing titled \"Vintage Lamp TC\" for editing"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Vintage Lamp TC Updated\" into the product title field"
+      },
+      {
+        "type": "action",
+        "description": "Save the listing changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a listing titled \"Vintage Lamp TC Updated\" appears in the listings list"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC025",
+    "title": "Search and disable a user account from admin users",
+    "description": "Verifies an authenticated admin can search for a user and disable the account with a visible confirmation of the update.",
+    "category": "Admin Backoffice",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to open admin user management"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"test\" into the user search field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the user search"
+      },
+      {
+        "type": "action",
+        "description": "Select a user from the results"
+      },
+      {
+        "type": "action",
+        "description": "Change the account status to disabled and save"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an account update confirmation is visible or the user shows as disabled in the results"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC026",
+    "title": "Ineligible order cannot be cancelled",
+    "description": "Verifies that for an order not eligible for cancellation, the buyer is not offered the cancel action.",
+    "category": "Buyer Order Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view orders"
+      },
+      {
+        "type": "action",
+        "description": "Open an order that does not appear eligible for cancellation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the cancel action is not available for this order"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC027",
+    "title": "Update seller order status from seller orders",
+    "description": "Verifies a signed-in seller can change the status of an order in the seller orders page and see the updated status reflected.",
+    "category": "Seller Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view seller orders"
+      },
+      {
+        "type": "action",
+        "description": "Select an order from the seller orders list"
+      },
+      {
+        "type": "action",
+        "description": "Select a new valid status for the order"
+      },
+      {
+        "type": "action",
+        "description": "Save the order status update"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the order shows the newly selected status in the seller orders list"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC028",
+    "title": "View seller payouts records",
+    "description": "Verifies a signed-in seller can open the payouts page and see wallet or payout records or an empty state.",
+    "category": "Seller Operations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view seller payouts"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify payout records are displayed or an empty state is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC029",
+    "title": "Orders empty state is shown when there are no orders",
+    "description": "Verifies the orders page shows an empty state message when the signed-in buyer has no orders.",
+    "category": "Buyer Order Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation link to view orders"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an empty state message is visible when no orders are available"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC030",
+    "title": "Search with no results shows empty state",
+    "description": "Verifies searching with a rare query shows a clear empty state when no products match.",
+    "category": "Product Discovery and Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /search"
+      },
+      {
+        "type": "action",
+        "description": "Fill a highly specific keyword unlikely to exist into the search field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the search"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a no-results empty state is visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC031",
+    "title": "Login validation blocks empty credentials",
+    "description": "Verifies the login form prevents submission when required fields are empty and shows validation feedback.",
+    "category": "Authentication and Account Recovery",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify required-field validation errors are visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC032",
+    "title": "Login validation blocks invalid credentials format",
+    "description": "Verifies the login form shows validation feedback when credentials are in an invalid format.",
+    "category": "Authentication and Account Recovery",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill an invalid email format into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a short or otherwise invalid password into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify credential validation errors are visible"
+      }
+    ],
+    "priority": "Low"
+  }
+]

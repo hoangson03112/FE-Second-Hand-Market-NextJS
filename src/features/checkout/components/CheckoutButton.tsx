@@ -19,7 +19,7 @@ export default function CheckoutButton({
     <button
       onClick={onClick}
       disabled={isSubmitting || isDisabled}
-      className="w-full btn btn-primary btn-lg py-3 font-medium rounded-lg hover:shadow-md disabled:opacity-40 disabled:cursor-not-allowed"
+      className="btn-auth-primary w-full btn btn-lg py-3 font-medium rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"
     >
       {isSubmitting ? (
         <span className="flex items-center justify-center gap-2">

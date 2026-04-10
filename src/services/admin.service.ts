@@ -303,6 +303,60 @@ export const AdminService = {
   ): Promise<{ message: string }> => {
     return axiosClient.patch(`/orders/admin/update-status/${orderId}`, { status, reason });
   },
+
+  broadcastSystemNotification: async (payload: {
+    title: string;
+    message: string;
+    link?: string;
+    targetRoles?: Array<"buyer" | "seller" | "admin">;
+  }): Promise<{ success: boolean; message: string; sentCount: number }> => {
+    const res = await axiosClient.post("/notifications/admin/broadcast", payload);
+    return res as unknown as { success: boolean; message: string; sentCount: number };
+  },
+
+  getBroadcastHistory: async (params?: {
+    page?: number;
+    limit?: number;
+    startDate?: string;
+    endDate?: string;
+  }): Promise<{
+    success: boolean;
+    data: Array<{
+      _id: string;
+      title: string;
+      message: string;
+      link?: string;
+      targetRoles: string[];
+      sentCount: number;
+      createdAt: string;
+      createdBy?: { fullName?: string; email?: string };
+    }>;
+    pagination: { page: number; limit: number; total: number; totalPages: number };
+  }> => {
+    const qs = new URLSearchParams();
+    if (params?.page) qs.set("page", String(params.page));
+    if (params?.limit) qs.set("limit", String(params.limit));
+    if (params?.startDate) qs.set("startDate", params.startDate);
+    if (params?.endDate) qs.set("endDate", params.endDate);
+    const query = qs.toString();
+    const res = await axiosClient.get(
+      `/notifications/admin/broadcast-history${query ? `?${query}` : ""}`,
+    );
+    return res as unknown as {
+      success: boolean;
+      data: Array<{
+        _id: string;
+        title: string;
+        message: string;
+        link?: string;
+        targetRoles: string[];
+        sentCount: number;
+        createdAt: string;
+        createdBy?: { fullName?: string; email?: string };
+      }>;
+      pagination: { page: number; limit: number; total: number; totalPages: number };
+    };
+  },
 };
 
 export type {

@@ -1,8 +1,9 @@
 import { Address } from "./address";
 
 export interface LoginRequest {
-  username: string;
+  email: string;
   password: string;
+  username?: string;
 }
 
 export interface LoginResponse {

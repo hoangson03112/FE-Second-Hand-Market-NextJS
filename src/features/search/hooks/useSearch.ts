@@ -16,7 +16,13 @@ interface SearchResponse {
 
 export function useSearch() {
   const searchParams = useSearchParams();
-  const q = searchParams.get("q") || "";
+  // Accept multiple query param aliases used by manual tests and automation tools.
+  const q =
+    searchParams.get("q") ||
+    searchParams.get("query") ||
+    searchParams.get("keyword") ||
+    searchParams.get("search") ||
+    "";
 
   const [filters, setFilters] = useState<IProductFilters>({
     search: q,
@@ -26,10 +32,12 @@ export function useSearch() {
   });
 
   useEffect(() => {
-    setFilters((prev) => ({ ...prev, search: q, page: 1 }));
+    setFilters((prev) => ({ ...prev, search: q.trim(), page: 1 }));
   }, [q]);
 
-  const { data: productsData, isLoading, error } = useProductsSearch(q, {
+  const normalizedQuery = q.trim();
+
+  const { data: productsData, isLoading, error } = useProductsSearch(normalizedQuery, {
     sortBy: filters.sortBy,
     minPrice: filters.minPrice,
     maxPrice: filters.maxPrice,
@@ -40,7 +48,7 @@ export function useSearch() {
   const response = productsData as SearchResponse | undefined;
 
   return {
-    q,
+    q: normalizedQuery,
     filters,
     setFilters,
     products: response?.data || [],
