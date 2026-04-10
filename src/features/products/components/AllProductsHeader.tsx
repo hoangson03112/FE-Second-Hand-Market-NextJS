@@ -39,7 +39,7 @@ export default function AllProductsHeader({
         </h1>
         <p className="text-sm text-taupe-400 mb-5">
           {total !== undefined
-            ? `Khám phá ${total.toLocaleString()} sản phẩm second-hand chất lượng`
+            ? `Khám phá ${total.toLocaleString("vi-VN")} sản phẩm second-hand chất lượng`
             : "Khám phá hàng ngàn sản phẩm second-hand chất lượng"}
         </p>
 

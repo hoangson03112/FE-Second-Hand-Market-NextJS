@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { IconStar, IconChevronRight, IconStarFilled } from "@tabler/icons-react";
 import Link from "next/link";
 import ShareButton from "@/components/common/ShareButton";
@@ -31,11 +32,11 @@ export default function ProductHeader({
   category,
   subcategory,
 }: ProductHeaderProps) {
-  // Generate share URL
-  const shareUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/products/${productId}/${productSlug || "product"}`
-      : "";
+  // Keep SSR/CSR first render deterministic to avoid hydration mismatch.
+  const shareUrl = useMemo(
+    () => `/products/${productId}/${productSlug || "product"}`,
+    [productId, productSlug],
+  );
 
   return (
     <div className="relative bg-gradient-to-br from-cream-50 via-white to-cream-50/50 p-6 md:p-8 mb-4 border border-taupe-200 rounded-3xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">

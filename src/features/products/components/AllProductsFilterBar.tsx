@@ -148,7 +148,7 @@ export default function AllProductsFilterBar({
             )}
             {totalProducts !== undefined && (
               <span className="text-sm text-taupe-400 font-medium whitespace-nowrap">
-                <span className="text-taupe-700 font-bold">{totalProducts.toLocaleString()}</span> sản phẩm
+                <span className="text-taupe-700 font-bold">{totalProducts.toLocaleString("vi-VN")}</span> sản phẩm
               </span>
             )}
           </div>

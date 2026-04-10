@@ -72,7 +72,7 @@ export default function ProductList({
           />
           <p className="text-sm text-taupe-500">
             Trang {pagination.currentPage} / {Math.max(1, pagination.totalPages)}
-            {pagination.total > 0 && ` · ${pagination.total.toLocaleString()} sản phẩm`}
+            {pagination.total > 0 && ` · ${pagination.total.toLocaleString("vi-VN")} sản phẩm`}
           </p>
         </div>
       )}

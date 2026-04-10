@@ -78,7 +78,7 @@ export default function ShopCartGroup({
       <div className="divide-y divide-border/50">
         {items.map((item) => (
           <CartItem
-            key={item.productId?._id ?? String(Math.random())}
+            key={item.productId._id}
             item={item}
             checked={selectedIds.has(item.productId?._id ?? "")}
             onToggle={onToggle}

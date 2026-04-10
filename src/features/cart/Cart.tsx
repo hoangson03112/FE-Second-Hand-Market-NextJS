@@ -61,7 +61,7 @@ export default function Cart() {
     return (
       <PageContainer withBackground={false}>
         <CartHeader onBack={onBack} />
-        <Container as="main" maxWidth="4xl" paddingX="md" paddingY="lg">
+        <Container as="main" maxWidth="7xl" paddingX="md" paddingY="lg">
           <CartEmpty />
         </Container>
       </PageContainer>
