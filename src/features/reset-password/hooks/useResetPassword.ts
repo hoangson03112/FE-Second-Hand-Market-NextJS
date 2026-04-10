@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/Toast";
 import { AUTH_MESSAGES } from "@/constants/messages";
+import axiosClient from "@/lib/axios";
 
 interface UseResetPasswordParams {
   token: string | null;
@@ -15,6 +16,9 @@ interface UseResetPasswordReturn {
   error: string;
   isLoading: boolean;
   isSuccess: boolean;
+  isCheckingToken: boolean;
+  isTokenInvalid: boolean;
+  invalidTokenMessage: string;
   handleSubmit: (e: React.FormEvent) => Promise<void>;
 }
 
@@ -27,6 +31,61 @@ export function useResetPassword({ token }: UseResetPasswordParams): UseResetPas
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isCheckingToken, setIsCheckingToken] = useState(Boolean(token));
+  const [isTokenInvalid, setIsTokenInvalid] = useState(false);
+  const [invalidTokenMessage, setInvalidTokenMessage] = useState("");
+  const validatedTokenRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (!token) {
+      setIsCheckingToken(false);
+      setIsTokenInvalid(true);
+      setInvalidTokenMessage(AUTH_MESSAGES.RESET_PASSWORD_INVALID_TOKEN);
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    if (validatedTokenRef.current === token) {
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    validatedTokenRef.current = token;
+
+    const validateToken = async () => {
+      setIsCheckingToken(true);
+      try {
+        await axiosClient.post("/auth/validate-reset-token", { token });
+        if (!isMounted) return;
+        setIsTokenInvalid(false);
+        setInvalidTokenMessage("");
+      } catch (err: unknown) {
+        const message =
+          (err as { response?: { data?: { message?: string } } })?.response?.data
+            ?.message || AUTH_MESSAGES.RESET_PASSWORD_INVALID_TOKEN;
+
+        if (!isMounted) return;
+        setIsTokenInvalid(true);
+        setInvalidTokenMessage(message);
+        setError(message);
+        toast.error(message, "Link không hợp lệ");
+      } finally {
+        if (isMounted) {
+          setIsCheckingToken(false);
+        }
+      }
+    };
+
+    validateToken();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [token, toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,28 +107,25 @@ export function useResetPassword({ token }: UseResetPasswordParams): UseResetPas
       return;
     }
 
+    if (isCheckingToken || isTokenInvalid) {
+      setError(invalidTokenMessage || AUTH_MESSAGES.RESET_PASSWORD_INVALID_TOKEN);
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/account/reset-password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, newPassword }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setIsSuccess(true);
-        toast.success(AUTH_MESSAGES.RESET_PASSWORD_SUCCESS);
-        setTimeout(() => {
-          router.push("/login");
-        }, 2000);
-      } else {
-        setError(data.message || "Có lỗi xảy ra");
-      }
-    } catch {
-      setError("Không thể kết nối đến server");
+      await axiosClient.post("/auth/reset-password", { token, newPassword });
+      setIsSuccess(true);
+      toast.success(AUTH_MESSAGES.RESET_PASSWORD_SUCCESS);
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+    } catch (err: unknown) {
+      const message =
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message || AUTH_MESSAGES.GENERAL_ERROR;
+      setError(message);
     } finally {
       setIsLoading(false);
     }
@@ -83,6 +139,9 @@ export function useResetPassword({ token }: UseResetPasswordParams): UseResetPas
     error,
     isLoading,
     isSuccess,
+    isCheckingToken,
+    isTokenInvalid,
+    invalidTokenMessage,
     handleSubmit,
   };
 }

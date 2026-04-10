@@ -22,11 +22,14 @@ export default function ResetPassword() {
     error,
     isLoading,
     isSuccess,
+    isCheckingToken,
+    isTokenInvalid,
+    invalidTokenMessage,
     handleSubmit,
   } = useResetPassword({ token });
 
-  // Invalid token state
-  if (!token) {
+  // Invalid token state (missing / expired / malformed)
+  if (!token || isTokenInvalid) {
     return (
       <AuthLayout>
         <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-center">
@@ -37,7 +40,7 @@ export default function ResetPassword() {
             features={resetPasswordFeatures}
           />
           <AuthFormContainer title="Link không hợp lệ" subtitle="Vui lòng thử lại">
-            <InvalidTokenError />
+            <InvalidTokenError message={invalidTokenMessage} />
           </AuthFormContainer>
         </div>
       </AuthLayout>
@@ -61,10 +64,18 @@ export default function ResetPassword() {
         <AuthFormContainer
           title={isSuccess ? "Đổi mật khẩu thành công" : "Đặt mật khẩu mới"}
           subtitle={
-            isSuccess ? "Bạn có thể đăng nhập với mật khẩu mới" : "Nhập mật khẩu mới cho tài khoản của bạn"
+            isSuccess
+              ? "Bạn có thể đăng nhập với mật khẩu mới"
+              : isCheckingToken
+                ? "Đang kiểm tra tính hợp lệ của liên kết..."
+                : "Nhập mật khẩu mới cho tài khoản của bạn"
           }
         >
-          {isSuccess ? (
+          {isCheckingToken ? (
+            <div className="py-8 text-center text-taupe-600">
+              Đang xác thực liên kết đặt lại mật khẩu...
+            </div>
+          ) : isSuccess ? (
             <ResetPasswordSuccess />
           ) : (
             <ResetPasswordForm

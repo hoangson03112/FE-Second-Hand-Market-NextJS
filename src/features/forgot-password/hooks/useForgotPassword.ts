@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useToast } from "@/components/ui/Toast";
 import { AUTH_MESSAGES } from "@/constants/messages";
+import axiosClient from "@/lib/axios";
 
 interface UseForgotPasswordReturn {
   email: string;
@@ -25,22 +26,15 @@ export function useForgotPassword(): UseForgotPasswordReturn {
     setIsLoading(true);
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/account/forgot-password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setIsSuccess(true);
-        toast.success(data.message || AUTH_MESSAGES.FORGOT_PASSWORD_EMAIL_SENT);
-      } else {
-        setError(data.message || "Có lỗi xảy ra");
-      }
-    } catch {
-      setError("Không thể kết nối đến server");
+      // Use unified axios client + correct backend route.
+      const data = await axiosClient.post("/auth/forgot-password", { email });
+      setIsSuccess(true);
+      toast.success( AUTH_MESSAGES.FORGOT_PASSWORD_EMAIL_SENT);
+    } catch (err: unknown) {
+      const message =
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message || "Không thể kết nối đến server";
+      setError(message);
     } finally {
       setIsLoading(false);
     }

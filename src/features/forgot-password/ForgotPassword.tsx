@@ -15,12 +15,12 @@ export default function ForgotPassword() {
     <AuthLayout>
       <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-center">
         <BrandingSection
-          title={isSuccess ? "KiỒm tra" : "Quên"}
-          titleHighlight={isSuccess ? "email của bạn!" : "mật khẩu?"}
+          title={isSuccess ? "Kiểm tra" : "Quên"}
+          titleHighlight={isSuccess ? "email của bạn" : "mật khẩu?"}
           description={
             isSuccess
-              ? "Chúng tôi �ã gửi link reset mật khẩu �ến email của bạn."
-              : "Đừng lo! Chúng tôi sẽ giúp bạn khôi phục lại tài khoản."
+              ? "Chúng tôi đã gửi liên kết đặt lại mật khẩu đến email của bạn."
+              : "Đừng lo, chúng tôi sẽ giúp bạn lấy lại quyền truy cập tài khoản."
           }
           features={forgotPasswordFeatures}
         />

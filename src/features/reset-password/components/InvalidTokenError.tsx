@@ -1,6 +1,10 @@
 import Link from "next/link";
 
-export default function InvalidTokenError() {
+interface InvalidTokenErrorProps {
+  message?: string;
+}
+
+export default function InvalidTokenError({ message }: InvalidTokenErrorProps) {
   return (
     <div className="text-center space-y-6">
       <div className="w-20 h-20 mx-auto bg-destructive/10 rounded-full flex items-center justify-center">
@@ -10,7 +14,7 @@ export default function InvalidTokenError() {
       <div className="space-y-3">
         <h3 className="text-xl font-semibold text-foreground">Link không hợp lệ</h3>
         <p className="text-taupe-600 leading-relaxed">
-          Link reset mật khẩu không đúng hoặc đã hết hạn (15 phút).
+          {message || "Link reset mật khẩu không đúng hoặc đã hết hạn (15 phút)."}
         </p>
       </div>
 
