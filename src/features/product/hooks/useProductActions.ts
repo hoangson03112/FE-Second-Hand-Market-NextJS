@@ -45,7 +45,7 @@ export function useProductActions({
     try {
       setActionLoading(true);
       const freshProduct = await ProductService.getById(product._id);
-      setCheckoutItems([{ product: freshProduct as IProduct, quantity }]);
+      setCheckoutItems([{ product: freshProduct as IProduct, quantity }], "buy_now");
       router.push("/checkout");
     } catch (error) {
       console.error("Lỗi khi xử lý mua ngay:", error);

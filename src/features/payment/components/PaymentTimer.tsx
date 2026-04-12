@@ -20,8 +20,8 @@ export function PaymentTimer({
         isExpired
           ? "bg-destructive/8 border-destructive/20 shadow-lg shadow-destructive/10"
           : isWarning
-            ? "bg-primary/8 border-primary/20 shadow-lg shadow-primary/10 animate-pulse"
-            : "bg-secondary/60 border-border shadow-md"
+            ? "bg-amber-50 border-amber-200 shadow-lg shadow-amber-100 animate-pulse"
+            : "bg-sky-50 border-sky-200 shadow-md"
       }`}
     >
       <div
@@ -29,8 +29,8 @@ export function PaymentTimer({
           isExpired
             ? "bg-destructive/10"
             : isWarning
-              ? "bg-primary/10"
-              : "bg-secondary"
+              ? "bg-amber-100"
+              : "bg-sky-100"
         }`}
       >
         <IconClock
@@ -38,8 +38,8 @@ export function PaymentTimer({
             isExpired
               ? "text-destructive"
               : isWarning
-                ? "text-primary"
-                : "text-muted-foreground"
+                ? "text-amber-700"
+                : "text-sky-700"
           }`}
         />
       </div>
@@ -49,8 +49,8 @@ export function PaymentTimer({
             isExpired
               ? "text-destructive"
               : isWarning
-                ? "text-primary"
-                : "text-muted-foreground"
+                ? "text-amber-700"
+                : "text-sky-700"
           }`}
         >
           {isExpired ? "Đã hết hạn" : "Thời gian còn lại"}
@@ -60,8 +60,8 @@ export function PaymentTimer({
             isExpired
               ? "text-destructive"
               : isWarning
-                ? "text-primary"
-                : "text-foreground"
+                ? "text-amber-800"
+                : "text-sky-900"
           }`}
         >
           {formatCountdown(secondsLeft)}

@@ -151,7 +151,6 @@ export function useOrderDetail({ orderId, autoOpenRefund, autoOpenReview }: UseO
       await OrderService.cancelOrder(order._id, reason);
       setOrder((prev) => (prev ? { ...prev, status: "cancelled" } : null));
       setShowCancelDialog(false);
-      toast.success(ORDER_MESSAGES.CANCEL_SUCCESS);
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Không thể hủy đơn hàng",

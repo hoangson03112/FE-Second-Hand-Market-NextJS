@@ -8,7 +8,6 @@ import { OrderTracking } from "@/components/order";
 import { OrderDetailHeader } from "./OrderDetailHeader";
 import { OrderStatusHero } from "./OrderStatusHero";
 import { OrderProductsCard } from "./OrderProductsCard";
-import { OrderProgressCard } from "./OrderProgressCard";
 import { OrderSellerReviewSection } from "./OrderSellerReviewSection";
 import { OrderMetaCard } from "./OrderMetaCard";
 import { OrderShippingCard } from "./OrderShippingCard";
@@ -186,15 +185,24 @@ export function OrderDetailView({
                 productReviews={productReviews}
                 onOpenProductReview={handleOpenProductReview}
               />
-              {!showSellerReview && !isTerminal && (
-                <OrderProgressCard
-                  progressSteps={progressSteps}
-                  effectiveStepIdx={effectiveStepIdx}
-                  orderId={order._id}
-                  status={order.status}
-                  statusDescription={statusDescription}
-                />
-              )}
+              <OrderPriceSummary
+                productAmount={order.productAmount ?? 0}
+                shippingFee={order.shippingFee ?? 0}
+                insuranceFee={order.insuranceFee}
+                codFee={order.codFee}
+                totalAmount={order.totalAmount}
+                isLocalPickup={isLocalPickup}
+              />
+              <OrderActionButtons
+                status={order.status}
+                orderId={order._id}
+                statusPayment={order.statusPayment}
+                isCancelling={isCancelling}
+                isConfirmingReceived={isConfirmingReceived}
+                onCancelOrder={handleCancelOrder}
+                onConfirmReceived={handleConfirmReceived}
+                onOpenRefundModal={() => setShowRefundModal(true)}
+              />
               {showSellerReview && (
                 <>
                   <div className="flex items-start gap-3 p-3 rounded-xl border border-primary/20 bg-primary/8">
@@ -249,24 +257,6 @@ export function OrderDetailView({
                     onSubmitBankInfo={handleSubmitBankInfo}
                   />
                 )}
-                <OrderPriceSummary
-                  productAmount={order.productAmount ?? 0}
-                  shippingFee={order.shippingFee ?? 0}
-                  insuranceFee={order.insuranceFee}
-                  codFee={order.codFee}
-                  totalAmount={order.totalAmount}
-                  isLocalPickup={isLocalPickup}
-                />
-                <OrderActionButtons
-                  status={order.status}
-                  orderId={order._id}
-                  statusPayment={order.statusPayment}
-                  isCancelling={isCancelling}
-                  isConfirmingReceived={isConfirmingReceived}
-                  onCancelOrder={handleCancelOrder}
-                  onConfirmReceived={handleConfirmReceived}
-                  onOpenRefundModal={() => setShowRefundModal(true)}
-                />
               </div>
             </div>
           </div>

@@ -65,7 +65,7 @@ export function PaymentBankInfo({
           <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
             <span className="text-sm text-muted-foreground">Chủ tài khoản:</span>
             <span className="font-medium text-right max-w-[200px] truncate">
-              {displayBankInfo.accountHolder}
+              {displayBankInfo.accountHolder.toUpperCase()}
             </span>
           </div>
           <div className="flex items-center justify-between p-3 bg-muted rounded-lg">

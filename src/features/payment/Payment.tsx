@@ -47,7 +47,7 @@ export default function Payment() {
 
   return (
     <div className="min-h-screen bg-background py-8">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         <PaymentHeader
           orderId={orderId}
           secondsLeft={secondsLeft}
@@ -55,38 +55,40 @@ export default function Payment() {
           formatCountdown={formatCountdown}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-start">
+          <div className="lg:col-span-7 space-y-4 lg:space-y-5">
             <PaymentQrSection
               bankInfoLoading={bankInfoLoading}
               bankInfoError={bankInfoError}
               bankInfo={bankInfo}
               qrCodeImageUrl={qrCodeImageUrl}
             />
-            <PaymentOrderSummary totalAmount={order.totalAmount} />
-          </div>
-
-          <div className="space-y-6">
             <PaymentBankInfo
               bankInfoLoading={bankInfoLoading}
               bankInfoError={bankInfoError}
               displayBankInfo={displayBankInfo}
               onCopy={handleCopy}
             />
-            <PaymentProofUpload
-              proofPreviewUrl={proofPreviewUrl}
-              isExpired={isExpired}
-              isConfirmingPayment={isConfirmingPayment}
-              paymentError={paymentError}
-              paymentSuccess={paymentSuccess}
-              onFileChange={setProofFile}
-            />
-            <PaymentNotes />
-            <PaymentActions
-              isExpired={isExpired}
-              isConfirmingPayment={isConfirmingPayment}
-              onConfirmPayment={handleConfirmPayment}
-            />
+          </div>
+
+          <div className="lg:col-span-5">
+            <div className="space-y-4 lg:space-y-5 lg:sticky lg:top-6">
+              <PaymentOrderSummary totalAmount={order.totalAmount} />
+              <PaymentProofUpload
+                proofPreviewUrl={proofPreviewUrl}
+                isExpired={isExpired}
+                isConfirmingPayment={isConfirmingPayment}
+                paymentError={paymentError}
+                paymentSuccess={paymentSuccess}  
+                onFileChange={setProofFile}
+              />
+              <PaymentActions
+                isExpired={isExpired}
+                isConfirmingPayment={isConfirmingPayment}
+                onConfirmPayment={handleConfirmPayment}
+              />
+              <PaymentNotes />
+            </div>
           </div>
         </div>
       </div>

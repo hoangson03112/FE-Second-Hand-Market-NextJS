@@ -231,15 +231,16 @@ export default function FloatingChatBox() {
       const myId = account?.accountID;
       if (!myId) return;
 
-      // Safety: ignore messages not addressed to / sent by current user
-      // (prevents cross-user leakage if socket routing misbehaves)
+      const hasReceiverId =
+        typeof newMsg.receiverId === "string" && newMsg.receiverId.length > 0;
+      // Fallback: some backend payloads may omit receiverId for room-targeted events.
       const isRelevant =
-        newMsg.senderId === myId || newMsg.receiverId === myId;
+        newMsg.senderId === myId || (hasReceiverId ? newMsg.receiverId === myId : true);
       if (!isRelevant) return;
 
       const otherPartyId =
         newMsg.senderId === myId
-          ? newMsg.receiverId
+          ? newMsg.receiverId || selectedConversation?._id
           : newMsg.senderId;
       if (!otherPartyId) return;
 
