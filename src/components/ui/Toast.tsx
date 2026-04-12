@@ -41,6 +41,27 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 const TOAST_DURATION = 5000;
 
+function normalizeErrorMessage(message: string): string {
+  const trimmed = message.trim();
+  if (!trimmed) return "Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.";
+
+  const technicalPatterns = [
+    /request failed with status code \d+/i,
+    /network error/i,
+    /timeout/i,
+    /axioserror/i,
+    /failed to fetch/i,
+    /ecconnrefused|econnrefused/i,
+    /cors/i,
+  ];
+
+  if (technicalPatterns.some((pattern) => pattern.test(trimmed))) {
+    return "Đã xảy ra lỗi hệ thống. Vui lòng thử lại sau.";
+  }
+
+  return trimmed;
+}
+
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
@@ -51,9 +72,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const showToast = useCallback((message: string, type: ToastType = "info", opts?: { title?: string; onClick?: () => void; duration?: number }) => {
     const id = Math.random().toString(36).substring(7);
     const duration = opts?.duration ?? TOAST_DURATION;
+    const safeMessage = type === "error" ? normalizeErrorMessage(message) : message;
     setToasts((prev) => [
       ...prev,
-      { id, message, type, title: opts?.title, onClick: opts?.onClick, duration },
+      { id, message: safeMessage, type, title: opts?.title, onClick: opts?.onClick, duration },
     ]);
     setTimeout(() => removeToast(id), duration);
   }, [removeToast]);

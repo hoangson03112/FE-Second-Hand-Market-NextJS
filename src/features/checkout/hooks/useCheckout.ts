@@ -62,7 +62,7 @@ function canGroupLocalPickup(items: CheckoutItem[]): boolean {
 
 export function useCheckout() {
   const router = useRouter();
-  const { items: checkoutItems, clearCheckout } = useCheckoutStore();
+  const { items: checkoutItems, source: checkoutSource, clearCheckout } = useCheckoutStore();
   const { data: account } = useUser();
   const { removeItems } = useCart();
   const [paymentMethods, setPaymentMethods] = useState<Record<string, PaymentMethodType>>({});
@@ -342,7 +342,17 @@ export function useCheckout() {
       }
 
       const productIds = checkoutItems.map((item) => item.product._id);
-      await removeItems(productIds);
+      if (checkoutSource === "cart" && productIds.length > 0) {
+        try {
+          await removeItems(productIds);
+        } catch (error) {
+          // Cart cleanup failure should not block a successfully created order.
+          logger.warn("Failed to sync cart items after checkout", {
+            productIds,
+            error: error instanceof Error ? error.message : String(error),
+          });
+        }
+      }
       clearCheckout();
 
       if (bankTransferOrderIds.length > 0) {

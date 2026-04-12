@@ -26,5 +26,5 @@ export async function moveSelectedCartToCheckout(
       };
     })
   );
-  setCheckoutItems(checkoutItems);
+  setCheckoutItems(checkoutItems, "cart");
 }

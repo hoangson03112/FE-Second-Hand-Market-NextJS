@@ -99,6 +99,17 @@ axiosClient.interceptors.response.use(
     if (error.response) {
       const status = error.response.status;
       const url = error.config?.url || "";
+      const responseData = error.response.data as
+        | { message?: string; error?: string }
+        | undefined;
+
+      // Prefer backend-provided business message over Axios default
+      // ("Request failed with status code ...") for user-facing flows.
+      if (typeof responseData?.message === "string" && responseData.message.trim()) {
+        error.message = responseData.message;
+      } else if (typeof responseData?.error === "string" && responseData.error.trim()) {
+        error.message = responseData.error;
+      }
 
       // Log error
       logger.apiResponse(

@@ -43,7 +43,6 @@ export function useOrders() {
   const [refundVideos, setRefundVideos] = useState<File[]>([]);
   const [isSubmittingRefund, setIsSubmittingRefund] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const PAGE_SIZE = 5;
   const toast = useToast();
 
   const openCancelDialog = (orderId: string) => {
@@ -65,7 +64,6 @@ export function useOrders() {
       setOrders((prev) =>
         prev.map((o) => (o._id === orderId ? { ...o, status: "cancelled" } : o)),
       );
-      toast.success(ORDER_MESSAGES.CANCEL_SUCCESS);
       setCancelTargetOrderId(null);
     } catch (err) {
       console.error("Cancel order error:", err);

@@ -7,9 +7,12 @@ export interface CheckoutItem {
   quantity: number;
 }
 
+export type CheckoutSource = "cart" | "buy_now" | null;
+
 interface CheckoutState {
   items: CheckoutItem[];
-  setCheckoutItems: (items: CheckoutItem[]) => void;
+  source: CheckoutSource;
+  setCheckoutItems: (items: CheckoutItem[], source?: CheckoutSource) => void;
   clearCheckout: () => void;
   addItem: (item: CheckoutItem) => void;
 }
@@ -17,10 +20,11 @@ interface CheckoutState {
 export const useCheckoutStore = createClientStore<CheckoutState>(
   (set) => ({
     items: [],
-    setCheckoutItems: (items) => {
-      set({ items });
+    source: null,
+    setCheckoutItems: (items, source = null) => {
+      set({ items, source });
     },
-    clearCheckout: () => set({ items: [] }),
+    clearCheckout: () => set({ items: [], source: null }),
     addItem: (item) =>
       set((state: CheckoutState) => {
         // Check if product already exists
@@ -32,11 +36,11 @@ export const useCheckoutStore = createClientStore<CheckoutState>(
           // Update quantity
           const newItems = [...state.items];
           newItems[existingIndex] = item;
-          return { items: newItems };
+          return { items: newItems, source: state.source };
         }
 
         // Add new item
-        return { items: [...state.items, item] };
+        return { items: [...state.items, item], source: state.source };
       }),
   }),
   {
