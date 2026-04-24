@@ -1,0 +1,120 @@
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+  }
+
+  /*
+   * Force a single app-wide font family (cart baseline).
+   * This prevents accidental fallback to mono/serif stacks in feature screens.
+   */
+  :where(*, *::before, *::after) {
+    font-family: inherit;
+  }
+
+  :where(.font-sans, .font-serif, .font-mono) {
+    font-family: var(--font-sans) !important;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font-family: inherit;
+  }
+
+  input,
+  textarea,
+  select {
+    border-radius: 0.75rem;
+  }
+
+  /* Keep legacy radii behavior consistent with existing UI */
+  .rounded,
+  .rounded-lg {
+    border-radius: 0.75rem;
+  }
+
+  .rounded-xl {
+    border-radius: 1rem;
+  }
+
+  .rounded-2xl {
+    border-radius: 1.25rem;
+  }
+}
+
+/* Scrollbar styling (kept lightweight, with dark mode support) */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+  border: 2px solid #f5f5f5;
+  transition: background-color 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--taupe-300) var(--cream-50);
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border: 2px solid #fafafa;
+  border-radius: 5px;
+}
+
+.dark *::-webkit-scrollbar-track {
+  background: var(--charcoal-900);
+}
+
+.dark *::-webkit-scrollbar-thumb {
+  background: var(--charcoal-600);
+  border-color: var(--charcoal-900);
+}
+
+.dark * {
+  scrollbar-color: var(--charcoal-600) var(--charcoal-900);
+}
+
+[data-lenis-prevent] {
+  scroll-behavior: auto !important;
+}

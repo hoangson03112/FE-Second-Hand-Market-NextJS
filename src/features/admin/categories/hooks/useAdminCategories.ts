@@ -2,8 +2,8 @@ import { useCallback, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminService } from "@/services/admin.service";
 import type { AdminCategory } from "@/types/admin";
-import { useConfirm } from "@/components/ui/ConfirmDialog";
-import { useToast } from "@/components/ui/Toast";
+import { useConfirm } from "@/components/shared";
+import { useToast } from "@/components/shared";
 import { ADMIN_MESSAGES } from "@/constants/messages";
 
 export function useAdminCategories() {

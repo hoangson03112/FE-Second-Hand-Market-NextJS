@@ -1,7 +1,7 @@
 "use client";
 
 import { IconLoader2 } from "@tabler/icons-react";
-import Pagination from "@/components/ui/Pagination";
+import { Pagination } from "@/components/shared";
 import { useAdminSellers } from "./hooks/useAdminSellers";
 import StatsBadges from "./components/StatsBadges";
 import StatusTabs from "./components/StatusTabs";

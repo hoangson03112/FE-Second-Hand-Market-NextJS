@@ -66,6 +66,9 @@ export const queryKeys = {
         subCategorySlug,
         filters,
       ] as const,
+    /** Đánh giá sản phẩm (theo productId) */
+    reviews: (productId: string) =>
+      [...queryKeys.products.all, "reviews", productId] as const,
   },
 
   // Users

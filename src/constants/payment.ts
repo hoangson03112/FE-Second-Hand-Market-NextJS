@@ -96,6 +96,25 @@ export function generateVietQRImageUrl(bankInfo: SellerBankInfo): string {
   return `https://img.vietqr.io/image/${bankIdentifier}-${cleanAccountNumber}-compact2.png?amount=${amount}&addInfo=${content}`;
 }
 
+/** VietQR để admin chuyển khoản hoàn tiền cho buyer (img.vietqr.io). */
+export function generateBuyerRefundVietQRImageUrl(params: {
+  bankName: string;
+  accountNumber: string;
+  accountHolder?: string;
+  amountVnd: number;
+  transferContent: string;
+}): string {
+  return generateVietQRImageUrl({
+    bankName: params.bankName.trim(),
+    accountNumber: params.accountNumber.trim(),
+    accountHolder: (params.accountHolder ?? "").trim(),
+    bankBin: null,
+    amount: Math.round(params.amountVnd),
+    content: params.transferContent.trim(),
+    orderId: "",
+  });
+}
+
 /**
  * Format countdown timer
  * @param secondsLeft - Seconds remaining

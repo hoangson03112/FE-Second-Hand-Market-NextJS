@@ -123,7 +123,8 @@ export const SELLER_MESSAGES = {
   SELLER_ORDER_CANCEL_SUCCESS: "Đã hủy đơn hàng",
   SELLER_ORDER_ACTION_ERROR: "Không thể xử lý đơn hàng",
   SELLER_ORDER_LOAD_ERROR: "Không thể tải đơn hàng",
-  SELLER_REFUND_AGREED: "Đã đồng ý hoàn tiền, admin sẽ xử lý tiếp",
+  SELLER_REFUND_AGREED:
+    "Đã chấp nhận hoàn. Phí ship đơn hoàn về (GHN) do shop của bạn chịu; người mua không trả cước hoàn.",
   SELLER_REFUND_ERROR: "Không thể xử lý yêu cầu hoàn tiền",
   SELLER_STATUS_UPDATE_ERROR: "Không thể cập nhật trạng thái seller. Vui lòng thử lại.",
   CONTACT_SELLER_ERROR: "Không thể liên hệ người bán",

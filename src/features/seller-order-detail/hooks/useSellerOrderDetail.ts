@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
-import { useToast } from "@/components/ui/Toast";
-import { useConfirm } from "@/components/ui/ConfirmDialog";
+import { useToast } from "@/components/shared";
+import { useConfirm } from "@/components/shared";
 import { OrderService } from "@/services/order.service";
 import type { Order } from "@/types/order";
 

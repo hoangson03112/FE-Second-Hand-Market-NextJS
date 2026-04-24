@@ -1,4 +1,4 @@
-import { IconMessageCircle, IconMinus, IconX } from "@tabler/icons-react";
+import { IconMessageCircle, IconX } from "@tabler/icons-react";
 import type { Conversation } from "@/types/chat";
 
 interface ChatHeaderProps {

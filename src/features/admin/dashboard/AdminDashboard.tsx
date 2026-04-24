@@ -16,7 +16,6 @@ import Link from "next/link";
 import { formatPrice } from "@/utils/format/price";
 import { useAdminDashboard } from "./hooks/useAdminDashboard";
 import StatCard from "./components/StatCard";
-import ActivityTable from "./components/ActivityTable";
 
 export default function AdminDashboard() {
   const { stats, isLoading, error } = useAdminDashboard();

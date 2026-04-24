@@ -20,8 +20,9 @@ import {
   QuantitySelector,
   ProductActionButtons,
   ReportProductModal,
+  ProductReviewsSection,
 } from "./components";
-import { useProduct } from "@/hooks";
+import { useProduct, useProductReviews } from "@/hooks";
 import { useProductActions } from "./hooks/useProductActions";
 import type { ProductProps } from "./Product.types";
 import { PageContainer, Container } from "@/components/layout/Container";
@@ -30,6 +31,7 @@ export default function Product({ id }: ProductProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { data: product, isLoading, error } = useProduct(id);
+  const { data: productReviewsData } = useProductReviews(product?._id ?? "");
 
   // Invalidate product list khi vào detail → quay lại list sẽ refetch stock mới nhất
   useEffect(() => {
@@ -96,8 +98,9 @@ export default function Product({ id }: ProductProps) {
     );
   }
 
-  const averageRating = product.avgRating ?? 0;
-  const totalReviews = product.totalReviews ?? 0;
+  const reviewSummary = productReviewsData?.pages[0];
+  const averageRating = reviewSummary?.avgRating ?? product.avgRating ?? 0;
+  const totalReviews = reviewSummary?.totalReviews ?? product.totalReviews ?? 0;
 
   // Convert attributes to details format
   const productDetails =
@@ -210,6 +213,8 @@ export default function Product({ id }: ProductProps) {
         </div>
 
         <ProductDescription description={product.description} />
+
+        <ProductReviewsSection productId={product._id} />
 
         {account && (
           <div className="mt-6 text-center">

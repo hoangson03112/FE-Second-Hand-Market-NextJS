@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { useTokenStore } from "@/store/useTokenStore";
 import { OrderService } from "@/services/order.service";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import type { Order } from "@/types/order";
 import { ORDER_MESSAGES, REFUND_MESSAGES } from "@/constants/messages";
 
@@ -41,6 +41,9 @@ export function useOrders() {
   const [refundDescription, setRefundDescription] = useState("");
   const [refundImages, setRefundImages] = useState<File[]>([]);
   const [refundVideos, setRefundVideos] = useState<File[]>([]);
+  const [bankName, setBankName] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [accountHolder, setAccountHolder] = useState("");
   const [isSubmittingRefund, setIsSubmittingRefund] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const toast = useToast();
@@ -127,16 +130,27 @@ export function useOrders() {
     setRefundDescription("");
     setRefundImages([]);
     setRefundVideos([]);
+    setBankName("");
+    setAccountNumber("");
+    setAccountHolder("");
   };
 
   const closeRefundModal = () => {
     if (isSubmittingRefund) return;
     setRefundTargetOrder(null);
+    setRefundReason("");
+    setRefundDescription("");
+    setRefundImages([]);
+    setRefundVideos([]);
+    setBankName("");
+    setAccountNumber("");
+    setAccountHolder("");
   };
 
   const handleSubmitRefund = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!refundTargetOrder || !refundReason.trim()) return;
+    if (!bankName.trim() || !accountNumber.trim() || !accountHolder.trim()) return;
     setIsSubmittingRefund(true);
     try {
       await OrderService.requestRefund(
@@ -145,11 +159,17 @@ export function useOrders() {
         refundDescription || undefined,
         refundImages.length ? refundImages : undefined,
         refundVideos.length ? refundVideos : undefined,
+        bankName.trim(),
+        accountNumber.trim(),
+        accountHolder.trim(),
       );
       setOrders((prev) =>
         prev.map((o) => o._id === refundTargetOrder._id ? { ...o, status: "refund_requested" } : o),
       );
       setRefundTargetOrder(null);
+      setBankName("");
+      setAccountNumber("");
+      setAccountHolder("");
       toast.success(REFUND_MESSAGES.REQUEST_SUCCESS);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Không thể gửi yêu cầu hoàn tiền");
@@ -207,5 +227,11 @@ export function useOrders() {
     setRefundDescription,
     setRefundImages,
     setRefundVideos,
+    bankName,
+    setBankName,
+    accountNumber,
+    setAccountNumber,
+    accountHolder,
+    setAccountHolder,
   };
 }

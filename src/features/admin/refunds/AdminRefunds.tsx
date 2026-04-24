@@ -8,16 +8,16 @@ import {
   IconShield,
   IconClock,
   IconEye,
+  IconTruck,
 } from "@tabler/icons-react";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import { format } from "@/utils/format/date";
-import { formatPrice } from "@/utils/format/price";
-import { StatusBadge } from "@/components/ui/StatusBadge";
+import { StatusBadge } from "@/components/shared";
 import { useAdminRefunds, useRefundDetail } from "./hooks/useAdminRefunds";
 import { AdminDisputeDetailModal } from "./components/AdminDisputeDetailModal";
 import type { RefundRequest } from "@/types/order";
 import { ADMIN_MESSAGES } from "@/constants/messages";
-import Pagination from "@/components/ui/Pagination";
+import { Pagination } from "@/components/shared";
 
 const REASON_LABELS: Record<string, string> = {
   damaged: "Hàng bị hỏng",
@@ -46,12 +46,6 @@ function getOrderId(r: RefundRequest): string {
   return "—";
 }
 
-function getOrderTotal(r: RefundRequest): number {
-  const o = r.orderId;
-  if (typeof o === "object") return (o as { totalPrice?: number; totalAmount?: number }).totalPrice ?? (o as { totalAmount?: number }).totalAmount ?? 0;
-  return 0;
-}
-
 export default function AdminRefunds() {
   const {
     refunds,
@@ -75,6 +69,7 @@ export default function AdminRefunds() {
   const [approveComment, setApproveComment] = useState("");
   const [rejectModal, setRejectModal] = useState<{ refundId: string } | null>(null);
   const [rejectNote, setRejectNote] = useState("");
+  const [completeRefundModal, setCompleteRefundModal] = useState<{ orderId: string } | null>(null);
   const [selectedRefundId, setSelectedRefundId] = useState<string | null>(null);
 
   const { refund: selectedRefund, isLoading: isLoadingDetail } = useRefundDetail(selectedRefundId);
@@ -83,7 +78,9 @@ export default function AdminRefunds() {
     { value: "", label: "Tất cả", icon: IconEye },
     { value: "disputed", label: "Khiếu nại", icon: IconShield },
     { value: "pending", label: "Chờ seller", icon: IconClock },
-    { value: "approved", label: "Chờ hoàn", icon: IconCircleCheck },
+    { value: "return_shipping", label: "Hoàn GHN", icon: IconTruck },
+    { value: "returned", label: "Chờ STK buyer", icon: IconClock },
+    { value: "processing", label: "Chờ CK admin", icon: IconCircleCheck },
     { value: "completed", label: "Đã xử lý", icon: IconCircleX },
   ];
 
@@ -133,12 +130,14 @@ export default function AdminRefunds() {
     }
   };
 
-  const handleCompleteRefund = async (orderId: string) => {
-    if (!window.confirm("Xác nhận hoàn tiền cho đơn hàng này?")) return;
+  const handleConfirmCompleteRefund = async () => {
+    if (!completeRefundModal) return;
+    const { orderId } = completeRefundModal;
     setProcessingId(orderId);
     try {
       await approveRefund({ orderId });
       toast.success(ADMIN_MESSAGES.REFUND_APPROVE_SUCCESS);
+      setCompleteRefundModal(null);
     } catch {
       toast.error(ADMIN_MESSAGES.REFUND_APPROVE_ERROR);
     } finally {
@@ -167,7 +166,8 @@ export default function AdminRefunds() {
       <div>
         <h1 className="text-lg font-bold text-foreground">Quản lý hoàn tiền & khiếu nại</h1>
         <p className="text-xs text-muted-foreground mt-0.5">
-          Xử lý khiếu nại từ người mua (seller từ chối) và duyệt hoàn tiền
+          Khiếu nại → sau khi seller nhận hàng hoàn, buyer gửi STK → tại đây admin xác nhận đã chuyển khoản
+          (POST complete-refund).
         </p>
       </div>
 
@@ -230,7 +230,7 @@ export default function AdminRefunds() {
                     <StatusBadge
                       status={
                         refund.status === "completed"
-                          ? "refund_approved"
+                          ? "refunded"
                           : refund.status === "rejected"
                             ? "cancelled"
                             : refund.status
@@ -278,7 +278,7 @@ export default function AdminRefunds() {
                         </>
                       )}
 
-                      {refund.status === "approved" && (
+                      {refund.status === "processing" && (
                         <button
                           onClick={() => {
                             const orderId =
@@ -288,14 +288,19 @@ export default function AdminRefunds() {
                                   ? refund.orderId
                                   : "";
                             if (!orderId) return;
-                            handleCompleteRefund(orderId);
+                            setCompleteRefundModal({ orderId });
                           }}
                           disabled={isApprovingRefund}
                           className="flex items-center gap-1 px-3 py-1.5 bg-primary text-primary-foreground rounded-lg text-xs font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
                         >
                           <IconCircleCheck className="w-3.5 h-3.5" />
-                          Hoàn tiền
+                          Đã chuyển khoản
                         </button>
+                      )}
+                      {refund.status === "returned" && (
+                        <span className="text-[11px] text-muted-foreground max-w-[140px] text-right">
+                          Chờ buyer gửi STK
+                        </span>
                       )}
                     </div>
                   </td>
@@ -366,6 +371,40 @@ export default function AdminRefunds() {
                   <IconLoader2 className="w-4 h-4 animate-spin mx-auto" />
                 ) : (
                   "Chấp thuận"
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Complete refund (đã chuyển khoản) */}
+      {completeRefundModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-card rounded-2xl shadow-2xl max-w-md w-full p-6">
+            <h3 className="text-base font-bold text-foreground mb-4">Xác nhận đã chuyển khoản</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Bạn đã chuyển hoàn tiền cho người mua theo STK họ gửi? Hệ thống sẽ đóng yêu cầu hoàn.
+            </p>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => setCompleteRefundModal(null)}
+                disabled={processingId !== null}
+                className="flex-1 py-2 px-4 border border-border text-foreground rounded-xl text-sm font-medium hover:bg-muted transition-colors disabled:opacity-50"
+              >
+                Hủy
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmCompleteRefund}
+                disabled={processingId !== null}
+                className="flex-1 py-2 px-4 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
+              >
+                {processingId === completeRefundModal.orderId ? (
+                  <IconLoader2 className="w-4 h-4 animate-spin mx-auto" />
+                ) : (
+                  "Xác nhận"
                 )}
               </button>
             </div>

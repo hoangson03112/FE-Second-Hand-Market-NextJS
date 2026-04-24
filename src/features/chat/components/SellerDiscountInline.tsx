@@ -41,7 +41,6 @@ function ProductCard({ product, selected, onSelect }: { product: Product; select
       type="button"
       onClick={onSelect}
       className={`flex items-center gap-3 w-full p-2 rounded-lg border transition-all shadow-sm hover:border-violet-300 bg-white ${selected ? "border-violet-400 ring-2 ring-violet-200" : "border-slate-200"}`}
-      style={{ fontFamily: "'DM Sans', sans-serif" }}
     >
       {product.imageUrl ? (
         <img src={product.imageUrl} alt={product.name} className="w-10 h-10 rounded-lg object-cover border border-slate-100" />
@@ -108,10 +107,7 @@ export default function SellerDiscountInline({ buyerId, buyerName, sellerId, onC
   };
 
   return (
-    <div
-      className="border-t border-border bg-white p-4"
-      style={{ fontFamily: "'DM Sans', sans-serif" }}
-    >
+    <div className="border-t border-border bg-white p-4">
       <div className="flex items-center justify-between pb-3 border-b border-violet-100">
         <div className="font-semibold text-slate-800 text-sm leading-tight">
           Tạo ưu đãi riêng {buyerName && <span className="text-violet-600">cho {buyerName}</span>}

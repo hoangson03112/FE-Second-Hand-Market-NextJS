@@ -39,7 +39,7 @@ export default function PhilosophySection() {
       <div
         ref={ref}
         className={cn(
-          "mx-auto w-full max-w-[100rem] px-4 sm:px-6 lg:px-8 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
         )}
       >

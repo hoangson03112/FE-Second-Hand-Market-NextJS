@@ -9,7 +9,7 @@ import { ShippingService } from "@/services/shipping.service";
 import { OrderService } from "@/services/order.service";
 import type { CreateOrderRequest } from "@/types/order";
 import { logger } from "@/infrastructure/monitoring/logger";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import { CHECKOUT_MESSAGES } from "@/constants/messages";
 import { getAvatarUrl } from "@/utils";
 

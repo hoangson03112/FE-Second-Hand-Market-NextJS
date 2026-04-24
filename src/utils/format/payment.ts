@@ -22,10 +22,8 @@ export function formatPaymentMethod(
     (options?.shippingMethod?.trim().toLowerCase() === "local_pickup");
 
   if (isLocal) return "Giao dịch trực tiếp";
-
-  // Giao hàng GHN
-  if (pay === "cod") return "Giao hàng GHN — Thanh toán khi nhận hàng (COD)";
-  if (pay === "bank_transfer") return "Giao hàng GHN — Chuyển khoản ngân hàng";
+  if (pay === "cod") return "Thanh toán khi nhận hàng (COD)";
+  if (pay === "bank_transfer") return "Chuyển khoản ngân hàng";
   return `Giao hàng GHN — ${formatPaymentOnly(paymentMethod)}`;
 }
 
@@ -38,8 +36,6 @@ function formatPaymentOnly(method: string | null | undefined): string {
   const map: Record<string, string> = {
     cod: "Thanh toán khi nhận hàng (COD)",
     bank_transfer: "Chuyển khoản ngân hàng",
-    momo: "Ví MoMo",
-    vnpay: "VNPay",
   };
   return map[m] ?? method;
 }

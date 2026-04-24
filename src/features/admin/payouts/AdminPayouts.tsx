@@ -6,7 +6,7 @@ import {
   IconCash,
   IconClock,
 } from "@tabler/icons-react";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import { format } from "@/utils/format/date";
 import { formatPrice } from "@/utils/format/price";
 import { useAdminPayouts } from "./hooks/useAdminPayouts";

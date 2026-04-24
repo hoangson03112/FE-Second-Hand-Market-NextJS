@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
 import type { IProduct } from "@/types/product";
 import { useScrollReveal } from "../hooks";
+import { Skeleton } from "@/components/shared";
 
 const CARD_GRADIENTS = [
   "linear-gradient(145deg, #f4f1ed 0%, #d8d2ca 45%, #9ea4ae 100%)",
@@ -102,7 +103,7 @@ export default function FeaturedListingsSection() {
       <div
         ref={ref}
         className={cn(
-          "mx-auto w-full max-w-[100rem] px-4 sm:px-6 lg:px-8 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
         )}
       >
@@ -129,10 +130,10 @@ export default function FeaturedListingsSection() {
         >
           {isLoading ? (
             <>
-              <div className="h-full animate-pulse rounded-2xl bg-cream-100 lg:col-span-6 lg:row-start-1" />
-              <div className="h-full animate-pulse rounded-2xl bg-cream-100 lg:col-span-3 lg:row-start-1" />
-              <div className="h-full animate-pulse rounded-2xl bg-cream-100 lg:col-span-3 lg:row-start-1" />
-              <div className="h-full animate-pulse rounded-2xl bg-cream-100 lg:col-span-6 lg:row-start-2" />
+              <Skeleton className="h-full rounded-2xl bg-cream-100 lg:col-span-6 lg:row-start-1" />
+              <Skeleton className="h-full rounded-2xl bg-cream-100 lg:col-span-3 lg:row-start-1" />
+              <Skeleton className="h-full rounded-2xl bg-cream-100 lg:col-span-3 lg:row-start-1" />
+              <Skeleton className="h-full rounded-2xl bg-cream-100 lg:col-span-6 lg:row-start-2" />
             </>
           ) : (
             <>

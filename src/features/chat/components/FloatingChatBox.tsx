@@ -8,6 +8,7 @@ import { useWebSocket } from "@/hooks/useWebSocket";
 import { ChatService } from "@/services/chat.service";
 import { SellerService } from "@/services/seller.service";
 import type { Message, Conversation } from "@/types/chat";
+import { useNotificationStore } from "@/store/useNotificationStore";
 import { useTokenStore } from "@/store/useTokenStore";
 import { ChatHeader } from "./ChatHeader";
 import { ChatConversationList } from "./ChatConversationList";
@@ -41,26 +42,6 @@ interface OpenChatEventDetail {
   order?: OrderInfo;
 }
 
-function lastMessagePreview(msg: Message): string {
-  const t = msg.text?.trim();
-  if (t) return t;
-  if (Array.isArray(msg.media) && msg.media.length > 0) {
-    return "Đã gửi tin nhắn đính kèm";
-  }
-  return "";
-}
-
-function conversationTimeMs(c: Conversation): number {
-  const raw = c.lastMessageAt ?? c.updatedAt ?? c.createdAt;
-  if (!raw) return 0;
-  const t = new Date(raw).getTime();
-  return Number.isFinite(t) ? t : 0;
-}
-
-function sortConversationsByRecent(convs: Conversation[]): Conversation[] {
-  return [...convs].sort((a, b) => conversationTimeMs(b) - conversationTimeMs(a));
-}
-
 export default function FloatingChatBox() {
   const [isOpen, setIsOpen] = useState(false);
   const [isAIChatOpen, setIsAIChatOpen] = useState(false);
@@ -83,6 +64,9 @@ export default function FloatingChatBox() {
   const { data: account } = useUser();
   const accessToken = useTokenStore((state) => state.accessToken);
   const { lastMessage, isConnected } = useWebSocket(account?.accountID);
+  const addNotification = useNotificationStore(
+    (state) => state.addNotification,
+  );
 
   const { data: productLimit } = useQuery({
     queryKey: ["seller", "product-limit"],
@@ -231,70 +215,58 @@ export default function FloatingChatBox() {
       const myId = account?.accountID;
       if (!myId) return;
 
-      const hasReceiverId =
-        typeof newMsg.receiverId === "string" && newMsg.receiverId.length > 0;
-      // Fallback: some backend payloads may omit receiverId for room-targeted events.
+      // Safety: ignore messages not addressed to / sent by current user
+      // (prevents cross-user leakage if socket routing misbehaves)
       const isRelevant =
-        newMsg.senderId === myId || (hasReceiverId ? newMsg.receiverId === myId : true);
+        newMsg.senderId === myId || newMsg.receiverId === myId;
       if (!isRelevant) return;
 
-      const otherPartyId =
-        newMsg.senderId === myId
-          ? newMsg.receiverId || selectedConversation?._id
-          : newMsg.senderId;
-      if (!otherPartyId) return;
-
+      const otherPartyId = newMsg.senderId === myId ? newMsg.receiverId : newMsg.senderId;
       const isCurrentThread =
-        !!selectedConversation?._id &&
-        selectedConversation._id === otherPartyId;
+        !!selectedConversation?._id && selectedConversation._id === otherPartyId;
 
       if (isCurrentThread) {
         setMessages((prev) => [...prev, newMsg]);
       }
 
-      const preview = lastMessagePreview(newMsg);
-      const createdRaw = newMsg.createdAt as string | Date | undefined;
-      const lastAt =
-        typeof createdRaw === "string"
-          ? createdRaw
-          : createdRaw
-            ? new Date(createdRaw).toISOString()
-            : new Date().toISOString();
+      const isConversationOpen =
+        isOpen &&
+        selectedConversation?._id &&
+        selectedConversation._id === newMsg.senderId;
 
-      setConversations((prev) => {
-        const idx = prev.findIndex((c) => c._id === otherPartyId);
-        if (idx >= 0) {
-          const updated = prev.map((c, i) =>
-            i === idx
-              ? {
-                  ...c,
-                  lastMessage: preview,
-                  lastMessageAt: lastAt,
-                  lastMessageType: newMsg.type,
-                  lastMessageSenderId: newMsg.senderId,
-                }
-              : c,
-          );
-          return sortConversationsByRecent(updated);
-        }
+      if (!isConversationOpen && newMsg.senderId !== account?.accountID) {
+        addNotification({
+          type: "chat",
+          title: newMsg.senderName
+            ? `Tin nhắn mới từ ${newMsg.senderName}`
+            : "Bạn có tin nhắn mới",
+          message: newMsg.text || "Bạn nhận được một tin nhắn mới",
+          link: "/chat",
+          dedupeKey: `chat:${newMsg._id}`,
+          metadata: {
+            conversationId: newMsg.conversationId,
+            senderId: newMsg.senderId,
+            senderName: newMsg.senderName,
+            senderAvatar: newMsg.senderAvatar,
+          },
+        });
+      }
 
-        const isIncoming = newMsg.senderId !== myId;
-        const newConv: Conversation = {
-          _id: otherPartyId,
-          name: isIncoming
-            ? newMsg.senderName || "Người dùng"
-            : "Người dùng",
-          participants: [otherPartyId],
-          avatar: isIncoming ? newMsg.senderAvatar : undefined,
-          lastMessage: preview,
-          lastMessageAt: lastAt,
-          lastMessageType: newMsg.type,
-          lastMessageSenderId: newMsg.senderId,
-        };
-        return sortConversationsByRecent([newConv, ...prev]);
-      });
+      setConversations((prev) =>
+        prev.map((conv) =>
+          conv._id === newMsg.senderId || conv._id === newMsg.receiverId
+            ? { ...conv, lastMessage: newMsg.text || "" }
+            : conv,
+        ),
+      );
     }
-  }, [account?.accountID, isOpen, lastMessage, selectedConversation?._id]);
+  }, [
+    account?.accountID,
+    addNotification,
+    isOpen,
+    lastMessage,
+    selectedConversation?._id,
+  ]);
 
   useEffect(() => {
     if (!isOpen || !selectedConversation || loading) return;

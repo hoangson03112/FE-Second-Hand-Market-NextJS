@@ -17,7 +17,7 @@ import { useUser } from "@/hooks/useUser";
 import { useNotificationStore } from "@/store/useNotificationStore";
 import { NotificationService } from "@/services/notification.service";
 import { usePagination } from "@/hooks/usePagination";
-import Pagination from "@/components/ui/Pagination";
+import { Pagination } from "@/components/shared";
 import type { NotificationType } from "@/store/useNotificationStore";
 import { formatTimeAgo } from "@/utils/format/date";
 
@@ -81,7 +81,7 @@ export default function NotificationsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="max-w-2xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto w-full px-4 py-8 sm:px-6">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-primary hover:underline mb-8 font-medium"

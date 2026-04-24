@@ -15,6 +15,7 @@ import {
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { OrderService } from "@/services/order.service";
+import { useToast } from "@/components/shared";
 import type { Order } from "@/types/order";
 import { formatPrice } from "@/utils/format/price";
 import Link from "next/link";
@@ -49,6 +50,8 @@ function CheckoutSuccessContent() {
   const orderId = searchParams.get("orderId");
   const [order, setOrder] = useState<Order | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isConfirmingReceived, setIsConfirmingReceived] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     if (!orderId) { router.push("/checkout"); return; }
@@ -102,9 +105,23 @@ function CheckoutSuccessContent() {
       })
     : null;
 
+  const handleConfirmReceived = async () => {
+    if (!order || order.status !== "delivered") return;
+    setIsConfirmingReceived(true);
+    try {
+      await OrderService.confirmReceived(order._id);
+      setOrder((prev) => (prev ? { ...prev, status: "completed" } : prev));
+      toast.success("Đã xác nhận nhận hàng thành công.");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Không thể xác nhận nhận hàng.");
+    } finally {
+      setIsConfirmingReceived(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background py-6 sm:py-8 px-3 sm:px-4">
-      <div className="max-w-6xl mx-auto space-y-4 sm:space-y-5">
+      <div className="max-w-7xl mx-auto w-full space-y-4 sm:space-y-5">
         <div className="bg-cream-50 border border-border rounded-2xl p-4 sm:p-6 lg:p-7">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div className="flex items-start sm:items-center gap-3 sm:gap-4">
@@ -119,6 +136,16 @@ function CheckoutSuccessContent() {
               </div>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
+              {order.status === "delivered" && (
+                <button
+                  type="button"
+                  onClick={handleConfirmReceived}
+                  disabled={isConfirmingReceived}
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-primary text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+                >
+                  {isConfirmingReceived ? "Đang xử lý..." : "Đã nhận được hàng"}
+                </button>
+              )}
               <Link
                 href="/"
                 className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl border border-border bg-card text-sm font-medium text-muted-foreground hover:bg-cream-50 transition-colors"
@@ -335,6 +362,16 @@ function CheckoutSuccessContent() {
         </div>
 
         <div className="lg:hidden flex gap-3 pb-4">
+          {order.status === "delivered" && (
+            <button
+              type="button"
+              onClick={handleConfirmReceived}
+              disabled={isConfirmingReceived}
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-primary text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+            >
+              {isConfirmingReceived ? "Đang xử lý..." : "Đã nhận hàng"}
+            </button>
+          )}
           <Link
             href="/"
             className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-border bg-card text-sm font-medium text-muted-foreground hover:bg-cream-50 transition-colors"

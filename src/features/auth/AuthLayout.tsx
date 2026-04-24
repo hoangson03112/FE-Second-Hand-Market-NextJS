@@ -1,4 +1,4 @@
-import Background from "@/components/ui/Background";
+import { Background } from "@/components/shared";
 import React from "react";
 
 interface AuthLayoutProps {
@@ -12,7 +12,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <Background >
       <div className="flex-1 flex items-center justify-center py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-6xl mx-auto">{children}</div>
+        <div className="w-full max-w-7xl mx-auto">{children}</div>
       </div>
     </Background>
   );

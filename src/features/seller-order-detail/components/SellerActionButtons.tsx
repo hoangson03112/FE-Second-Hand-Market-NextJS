@@ -13,8 +13,8 @@ import {
   IconHandStop,
 } from "@tabler/icons-react";
 import { createPortal } from "react-dom";
-import { CancelOrderReasonDialog } from "@/components/ui/CancelOrderReasonDialog";
-import { ConfirmWithReasonDialog } from "@/components/ui/ConfirmWithReasonDialog";
+import { CancelOrderReasonDialog } from "@/components/shared";
+import { ConfirmWithReasonDialog } from "@/components/shared";
 import type { Order } from "@/types/order";
 
 interface SellerActionButtonsProps {

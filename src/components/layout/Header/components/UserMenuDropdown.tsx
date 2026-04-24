@@ -1,4 +1,4 @@
-import { IconChevronDown, IconMessageCircle, IconSettings, IconPackage, IconTruck, IconUser, IconLogout } from "@tabler/icons-react";
+import { IconChevronDown, IconSettings, IconPackage, IconTruck, IconUser, IconLogout } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
 import { RefObject } from "react";

@@ -6,7 +6,7 @@ import type { Address, CreateAddressRequest } from "@/types/address";
 import { AddressService } from "@/services/address.service";
 import { enrichAddresses } from "@/utils/addressTransform";
 import { useTokenStore } from "@/store/useTokenStore";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 
 const PICKUP_QUERY_KEY = ["addresses", "list", "pickup"] as const;
 

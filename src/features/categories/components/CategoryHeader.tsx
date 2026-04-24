@@ -21,7 +21,7 @@ export default function CategoryHeader({ category, subCategory }: CategoryHeader
       <div className="absolute -top-10 -right-10 w-64 h-64 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
       <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-full bg-accent/5 blur-2xl pointer-events-none" />
 
-      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+      <div className="relative max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-10">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs text-taupe-400 mb-5">
           <Link href="/" className="flex items-center gap-1 hover:text-primary transition-colors">

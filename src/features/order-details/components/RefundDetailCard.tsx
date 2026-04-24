@@ -17,6 +17,7 @@ import {
   IconTool,
   IconVideo,
 } from "@tabler/icons-react";
+import { REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER } from "@/constants/refund";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import type { Order } from "@/types/order";
@@ -33,7 +34,19 @@ const REASON_LABELS: Record<string, { label: string; Icon: React.ElementType }> 
   other:            { label: "Lý do khác",           Icon: IconDots },
 };
 
-type StatusKey = "pending" | "approved" | "rejected" | "completed" | "disputed" | "cancelled";
+type StatusKey =
+  | "pending"
+  | "approved"
+  | "return_shipping"
+  | "returning"
+  | "returned"
+  | "bank_info_required"
+  | "processing"
+  | "completed"
+  | "failed"
+  | "rejected"
+  | "disputed"
+  | "cancelled";
 
 interface StatusStyle {
   label: string;
@@ -42,7 +55,6 @@ interface StatusStyle {
   headerBorder: string;
   textColor: string;
   Icon: React.ElementType;
-  progressStep: number; // last completed step (0=none, 1=sent, 2=reviewed, 3=done)
 }
 
 const STATUS_STYLES: Record<StatusKey, StatusStyle> = {
@@ -53,16 +65,54 @@ const STATUS_STYLES: Record<StatusKey, StatusStyle> = {
     headerBorder: "border-amber-200",
     textColor: "text-amber-700",
     Icon: IconClock,
-    progressStep: 1,
   },
   approved: {
     label: "Yêu cầu được chấp thuận",
-    sublabel: "Quản trị viên đang xử lý hoàn tiền, vui lòng chờ",
+    sublabel: `Người bán đã chấp thuận, vui lòng gửi hàng hoàn theo hướng dẫn. ${REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}`,
     headerBg: "bg-blue-50",
     headerBorder: "border-blue-200",
     textColor: "text-blue-700",
     Icon: IconCircleCheck,
-    progressStep: 2,
+  },
+  return_shipping: {
+    label: "Đã tạo đơn hoàn trả",
+    sublabel: `Vui lòng gửi hàng hoàn theo vận đơn để tiếp tục xử lý hoàn tiền. ${REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}`,
+    headerBg: "bg-sky-50",
+    headerBorder: "border-sky-200",
+    textColor: "text-sky-700",
+    Icon: IconPackage,
+  },
+  returning: {
+    label: "Hàng hoàn đang vận chuyển",
+    sublabel: `Đơn vị vận chuyển đang chuyển hàng hoàn về cho người bán. ${REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}`,
+    headerBg: "bg-sky-50",
+    headerBorder: "border-sky-200",
+    textColor: "text-sky-700",
+    Icon: IconPackage,
+  },
+  returned: {
+    label: "Người bán đã nhận hàng hoàn",
+    sublabel: "Đang chờ xử lý bước hoàn tiền cuối cùng",
+    headerBg: "bg-blue-50",
+    headerBorder: "border-blue-200",
+    textColor: "text-blue-700",
+    Icon: IconCircleCheck,
+  },
+  bank_info_required: {
+    label: "Cần bổ sung thông tin nhận tiền",
+    sublabel: "Vui lòng cung cấp thông tin tài khoản để hoàn tất hoàn tiền",
+    headerBg: "bg-amber-50",
+    headerBorder: "border-amber-200",
+    textColor: "text-amber-700",
+    Icon: IconAlertTriangle,
+  },
+  processing: {
+    label: "Admin đang xử lý hoàn tiền",
+    sublabel: "Hệ thống đang xử lý giao dịch hoàn tiền cho bạn",
+    headerBg: "bg-blue-50",
+    headerBorder: "border-blue-200",
+    textColor: "text-blue-700",
+    Icon: IconLoader2,
   },
   completed: {
     label: "Đã hoàn tiền thành công",
@@ -71,7 +121,6 @@ const STATUS_STYLES: Record<StatusKey, StatusStyle> = {
     headerBorder: "border-green-200",
     textColor: "text-green-700",
     Icon: IconCircleCheck,
-    progressStep: 3,
   },
   rejected: {
     label: "Người bán từ chối hoàn tiền",
@@ -80,7 +129,6 @@ const STATUS_STYLES: Record<StatusKey, StatusStyle> = {
     headerBorder: "border-red-200",
     textColor: "text-red-700",
     Icon: IconCircleX,
-    progressStep: 1,
   },
   disputed: {
     label: "Đang tranh chấp · Admin xem xét",
@@ -89,7 +137,14 @@ const STATUS_STYLES: Record<StatusKey, StatusStyle> = {
     headerBorder: "border-purple-200",
     textColor: "text-purple-700",
     Icon: IconShield,
-    progressStep: 2,
+  },
+  failed: {
+    label: "Hoàn tiền tạm thời thất bại",
+    sublabel: "Hệ thống đang yêu cầu xử lý lại giao dịch hoàn tiền",
+    headerBg: "bg-red-50",
+    headerBorder: "border-red-200",
+    textColor: "text-red-700",
+    Icon: IconAlertTriangle,
   },
   cancelled: {
     label: "Yêu cầu đã bị hủy",
@@ -98,15 +153,8 @@ const STATUS_STYLES: Record<StatusKey, StatusStyle> = {
     headerBorder: "border-border",
     textColor: "text-muted-foreground",
     Icon: IconCircleX,
-    progressStep: 0,
   },
 };
-
-const PROGRESS_STEPS = [
-  { label: "Đã gửi", sublabel: "yêu cầu" },
-  { label: "Đang xem xét" , sublabel: "người bán / admin" },
-  { label: "Hoàn tất", sublabel: "hoàn tiền" },
-];
 
 interface RefundDetailCardProps {
   refund: RefundDoc;
@@ -121,8 +169,11 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
   const reasonInfo = REASON_LABELS[refund.reason] ?? { label: refund.reason, Icon: IconAlertTriangle };
   const ReasonIcon = reasonInfo.Icon;
 
-  const isStepDone   = (n: number) => n < style.progressStep;
-  const isStepActive = (n: number) => n === style.progressStep;
+  const showApprovedSellerBannerDupe =
+    refund.sellerResponse?.decision === "approved" &&
+    ["approved", "return_shipping", "returning", "returned", "bank_info_required", "processing", "completed", "failed"].includes(
+      refund.status,
+    );
 
   return (
     <div className={cn("rounded-2xl overflow-hidden border", style.headerBorder)}>
@@ -155,47 +206,7 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
         </div>
       </div>
 
-      {/* ── PROGRESS ──────────────────────────────────────────────────── */}
-      <div className="px-5 py-4 border-b border-border bg-background">
-        <div className="flex items-start">
-          {PROGRESS_STEPS.map(({ label, sublabel }, idx) => {
-            const n = idx + 1;
-            const done   = isStepDone(n);
-            const active = isStepActive(n);
-            return (
-              <div key={n} className="flex items-start flex-1">
-                <div className="flex flex-col items-center gap-1.5 w-full">
-                  <div className={cn(
-                    "w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-all",
-                    done   ? "bg-primary text-primary-foreground"
-                    : active ? "ring-2 ring-primary bg-primary/10 text-primary"
-                    : "bg-muted text-muted-foreground",
-                  )}>
-                    {done ? <IconCircleCheck className="w-4 h-4" /> : n}
-                  </div>
-                  <div className="text-center">
-                    <p className={cn(
-                      "text-[12px] font-semibold leading-tight",
-                      done || active ? "text-primary" : "text-muted-foreground",
-                    )}>
-                      {label}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground leading-tight mt-0.5">
-                      {sublabel}
-                    </p>
-                  </div>
-                </div>
-                {idx < PROGRESS_STEPS.length - 1 && (
-                  <div className={cn(
-                    "flex-shrink-0 w-full h-px mt-4 transition-all max-w-[80px] mx-1",
-                    done ? "bg-primary" : "bg-border",
-                  )} />
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      {/* Tiến trình tổng thể: chỉ hiển thị ở OrderStatusHero (tránh 2 stepper trùng ý). */}
 
       {/* ── BODY ──────────────────────────────────────────────────────── */}
       <div className="p-5 bg-background space-y-4">
@@ -296,8 +307,8 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
           </div>
         )}
 
-        {/* Seller response */}
-        {refund.sellerResponse && (
+        {/* Seller response — ẩn bản “đã chấp thuận” khi đã sang phase sau (tránh trùng với header thẻ). */}
+        {refund.sellerResponse && !showApprovedSellerBannerDupe && (
           <div className={cn(
             "p-4 rounded-xl border",
             refund.sellerResponse.decision === "approved"

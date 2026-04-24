@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ProductService } from "@/services/product.service";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import { PRODUCT_MESSAGES } from "@/constants";
 
 export function useDeleteProduct(onSuccess: () => void) {

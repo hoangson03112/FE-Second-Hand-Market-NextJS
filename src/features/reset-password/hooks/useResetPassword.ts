@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import { AUTH_MESSAGES } from "@/constants/messages";
 import axiosClient from "@/lib/axios";
 
@@ -13,7 +13,6 @@ interface UseResetPasswordReturn {
   setNewPassword: (password: string) => void;
   confirmPassword: string;
   setConfirmPassword: (password: string) => void;
-  error: string;
   isLoading: boolean;
   isSuccess: boolean;
   isCheckingToken: boolean;
@@ -28,7 +27,6 @@ export function useResetPassword({ token }: UseResetPasswordParams): UseResetPas
   
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isCheckingToken, setIsCheckingToken] = useState(Boolean(token));
@@ -71,7 +69,6 @@ export function useResetPassword({ token }: UseResetPasswordParams): UseResetPas
         if (!isMounted) return;
         setIsTokenInvalid(true);
         setInvalidTokenMessage(message);
-        setError(message);
         toast.error(message, "Link không hợp lệ");
       } finally {
         if (isMounted) {
@@ -89,26 +86,25 @@ export function useResetPassword({ token }: UseResetPasswordParams): UseResetPas
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     // Validation
     if (newPassword.length < 6) {
-      setError("Mật khẩu phải có ít nhất 6 ký tự");
+      toast.error("Mật khẩu phải có ít nhất 6 ký tự");
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setError("Mật khẩu xác nhận không khớp");
+      toast.error("Mật khẩu xác nhận không khớp");
       return;
     }
 
     if (!token) {
-      setError("Token không hợp lệ");
+      toast.error("Token không hợp lệ");
       return;
     }
 
     if (isCheckingToken || isTokenInvalid) {
-      setError(invalidTokenMessage || AUTH_MESSAGES.RESET_PASSWORD_INVALID_TOKEN);
+      toast.error(invalidTokenMessage || AUTH_MESSAGES.RESET_PASSWORD_INVALID_TOKEN);
       return;
     }
 
@@ -125,7 +121,7 @@ export function useResetPassword({ token }: UseResetPasswordParams): UseResetPas
       const message =
         (err as { response?: { data?: { message?: string } } })?.response?.data
           ?.message || AUTH_MESSAGES.GENERAL_ERROR;
-      setError(message);
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }
@@ -136,7 +132,6 @@ export function useResetPassword({ token }: UseResetPasswordParams): UseResetPas
     setNewPassword,
     confirmPassword,
     setConfirmPassword,
-    error,
     isLoading,
     isSuccess,
     isCheckingToken,

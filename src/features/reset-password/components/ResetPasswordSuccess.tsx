@@ -2,7 +2,7 @@ import Link from "next/link";
 import { IconCircleCheck } from "@tabler/icons-react";
 import SuccessMessage from "@/components/common/auth/SuccessMessage";
 import InfoBox from "@/components/common/auth/InfoBox";
-import { ArrowRightIcon } from "@/components/ui/icons/ArrowRightIcon";
+import { ArrowRightIcon } from "@/components/shared";
 
 export default function ResetPasswordSuccess() {
   return (
@@ -20,7 +20,7 @@ export default function ResetPasswordSuccess() {
       <div className="pt-4">
         <Link
           href="/login"
-          className="btn-auth-primary flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold transition-all"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-semibold text-primary-foreground transition-all hover:bg-primary/90"
         >
           <span>Đăng nhập ngay</span>
           <ArrowRightIcon className="w-5 h-5" />

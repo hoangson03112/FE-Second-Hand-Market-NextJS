@@ -1,0 +1,58 @@
+/* ==========================================================================
+   Component-Level CSS
+   ========================================================================== */
+
+.ui-shell {
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-secondary) 0%,
+    var(--color-bg-primary) 65%
+  );
+}
+
+.ui-section {
+  background: var(--color-bg-secondary);
+}
+
+.ui-section-alt {
+  background: var(--color-bg-primary-tint);
+}
+
+.ui-card {
+  background: var(--card);
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.06);
+}
+
+.ui-text-muted {
+  color: var(--color-text-secondary);
+}
+
+.ui-eyebrow {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.ui-heading {
+  letter-spacing: -0.015em;
+}
+
+.ui-divider {
+  height: 1px;
+  background: color-mix(in srgb, var(--border) 65%, transparent);
+}
+
+/* Navigation dropdown motion helper */
+.dropdown-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.2s ease, transform 0.5s ease;
+}
+
+.group:hover .dropdown-wrapper {
+  max-height: 800px;
+  opacity: 1;
+  transform: translateY(0);
+}

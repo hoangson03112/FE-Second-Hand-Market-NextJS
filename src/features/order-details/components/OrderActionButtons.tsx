@@ -5,6 +5,7 @@ interface OrderActionButtonsProps {
   status: string;
   orderId: string;
   statusPayment: boolean;
+  isLocalPickup: boolean;
   isCancelling: boolean;
   isConfirmingReceived: boolean;
   onCancelOrder: () => void;
@@ -16,6 +17,7 @@ export function OrderActionButtons({
   status,
   orderId,
   statusPayment,
+  isLocalPickup,
   isCancelling,
   isConfirmingReceived,
   onCancelOrder,
@@ -49,16 +51,18 @@ export function OrderActionButtons({
             <IconCircleCheck className="w-4 h-4" />
             {isConfirmingReceived ? "Đang xử lý..." : "Xác nhận đã nhận hàng"}
           </button>
-          <button
-            type="button"
-            onClick={onOpenRefundModal}
-            className="w-full py-2.5 border border-orange-400 text-orange-600 rounded-xl text-sm font-semibold hover:bg-orange-50 transition-all"
-          >
-            Yêu cầu hoàn tiền
-          </button>
+          {!isLocalPickup && (
+            <button
+              type="button"
+              onClick={onOpenRefundModal}
+              className="w-full py-2.5 border border-orange-400 text-orange-600 rounded-xl text-sm font-semibold hover:bg-orange-50 transition-all"
+            >
+              Yêu cầu hoàn tiền
+            </button>
+          )}
         </>
       )}
-      {status === "delivered" && !statusPayment && (
+      {status === "delivered" && !statusPayment && !isLocalPickup && (
         <Link
           href={`/payment?orderId=${orderId}`}
           className="w-full py-2.5 bg-foreground text-background rounded-xl text-sm font-semibold text-center block hover:bg-foreground/90 transition-all"

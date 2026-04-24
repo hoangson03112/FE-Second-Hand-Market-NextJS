@@ -2,7 +2,7 @@
 
 import { IconLoader2 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import { useAdminUsers } from "./hooks/useAdminUsers";
 import StatsCards from "./components/StatsCards";
 import SearchBar from "./components/SearchBar";
@@ -10,7 +10,7 @@ import AccountStatusTabs from "./components/AccountStatusTabs";
 import RoleTabs from "./components/RoleTabs";
 import UsersTable from "./components/UsersTable";
 import EmptyState from "./components/EmptyState";
-import Pagination from "@/components/ui/Pagination";
+import { Pagination } from "@/components/shared";
 import type { AdminAccount } from "@/types/admin";
 
 export default function AdminUsers() {

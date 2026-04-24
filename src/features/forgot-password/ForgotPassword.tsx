@@ -9,7 +9,7 @@ import ForgotPasswordSuccess from "./components/ForgotPasswordSuccess";
 import { forgotPasswordFeatures } from "@/constants/auth.features";
 
 export default function ForgotPassword() {
-  const { email, setEmail, error, isLoading, isSuccess, handleSubmit, resetForm } = useForgotPassword();
+  const { email, setEmail, isLoading, isSuccess, handleSubmit, resetForm } = useForgotPassword();
 
   return (
     <AuthLayout>
@@ -34,7 +34,6 @@ export default function ForgotPassword() {
           ) : (
             <ForgotPasswordForm
               email={email}
-              error={error}
               isLoading={isLoading}
               onEmailChange={setEmail}
               onSubmit={handleSubmit}

@@ -11,6 +11,7 @@ export type OrderStatus =
   | "returning"
   | "return_shipping"
   | "returned"
+  | "refund"
   | "refund_requested"
   | "refund_approved"
   | "refunded";
@@ -71,6 +72,8 @@ export interface Order {
   ghnOrderCode?: string;
   ghnReturnOrderCode?: string;
   ghnReturnTrackingUrl?: string;
+  /** Snapshot GHN API `data` after creating return shipment (optional, for ops/debug). */
+  ghnReturnOrderInfo?: Record<string, unknown>;
   products: Array<{
     productId: {
       _id: string;
@@ -112,7 +115,6 @@ export interface Order {
   status: OrderStatus;
   statusPayment: boolean;
   expectedDeliveryTime?: string;
-  refundReason?: string;
   cancelReason?: string;
   refundRequestedAt?: string;
   refundApprovedAt?: string;
@@ -121,7 +123,19 @@ export interface Order {
     _id: string;
     reason: string;
     description: string;
-    status: "pending" | "approved" | "rejected" | "completed" | "disputed" | "cancelled";
+    status:
+      | "pending"
+      | "approved"
+      | "rejected"
+      | "return_shipping"
+      | "returning"
+      | "returned"
+      | "bank_info_required"
+      | "processing"
+      | "completed"
+      | "failed"
+      | "disputed"
+      | "cancelled";
     evidence?: {
       images?: Array<{ url: string; publicId?: string; originalName?: string; type?: string; size?: number }>;
       videos?: Array<{ url: string; publicId?: string; originalName?: string; type?: string; size?: number }>;
@@ -172,8 +186,14 @@ export interface RefundRequest {
   reason: string;
   description?: string;
   refundAmount: number;
-  status: "pending" | "approved" | "rejected" | "disputed" | "completed";
+  status: NonNullable<Order["refundRequestId"]>["status"];
   adminNote?: string;
+  buyerRefundBankInfo?: {
+    buyerBankName?: string;
+    buyerAccountNumber?: string;
+    buyerAccountHolder?: string;
+    submittedAt?: string;
+  } | null;
   sellerResponse?: {
     decision: string;
     comment?: string;

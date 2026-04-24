@@ -114,7 +114,7 @@ export default function FilterBar({
       className="sticky top-[60px] z-[45] border-b border-taupe-100 bg-white"
       style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-4 py-3 overflow-x-auto">
           {/* Province - compact */}
           {provinces.length > 0 && (
@@ -146,8 +146,8 @@ export default function FilterBar({
                   className={cn(
                     "h-9 px-4 rounded-full text-sm font-medium whitespace-nowrap transition-colors",
                     isActive
-                      ? "bg-[#1A1714] text-white"
-                      : "bg-taupe-50 text-taupe-600 hover:bg-taupe-100"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
                   )}
                 >
                   {opt.label}
@@ -167,8 +167,8 @@ export default function FilterBar({
                   className={cn(
                     "h-9 px-4 rounded-full text-sm font-medium whitespace-nowrap transition-colors",
                     isActive
-                      ? "bg-[#1A1714] text-white"
-                      : "bg-taupe-50 text-taupe-600 hover:bg-taupe-100"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
                   )}
                 >
                   {opt.label}
@@ -183,8 +183,8 @@ export default function FilterBar({
             className={cn(
               "h-9 px-4 rounded-full text-sm font-medium flex items-center gap-1.5 shrink-0 transition-colors",
               showFilters || activeFilterCount > 0
-                ? "bg-[#1A1714] text-white"
-                : "bg-taupe-50 text-taupe-600 hover:bg-taupe-100"
+                ? "bg-primary text-primary-foreground"
+                : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
             )}
           >
             Lọc
@@ -263,7 +263,9 @@ export default function FilterBar({
                         onClick={() => handlePriceRangeChange(isActive ? undefined : preset.min, isActive ? undefined : preset.max)}
                         className={cn(
                           "h-8 px-3 rounded-full text-xs font-medium transition-colors",
-                          isActive ? "bg-[#1A1714] text-white" : "bg-taupe-50 text-taupe-600 hover:bg-taupe-100"
+                          isActive
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
                         )}
                       >
                         {preset.label}
@@ -297,7 +299,9 @@ export default function FilterBar({
                       onClick={() => handleConditionChange(value)}
                       className={cn(
                         "h-8 px-3 rounded-full text-xs font-medium transition-colors",
-                        filters.condition === value ? "bg-[#1A1714] text-white" : "bg-taupe-50 text-taupe-600 hover:bg-taupe-100"
+                        filters.condition === value
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
                       )}
                     >
                       {label}

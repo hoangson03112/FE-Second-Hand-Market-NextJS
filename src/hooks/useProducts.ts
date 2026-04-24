@@ -1,7 +1,29 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import { ProductService } from "@/services/product.service";
+import { ProductReviewService } from "@/services/productReview.service";
 import type { IProduct, IProductFilters } from "@/types/product";
 import { queryKeys } from "@/lib/query-client";
+
+const PRODUCT_REVIEWS_PAGE_SIZE = 10;
+
+/** Đánh giá sản phẩm trên trang chi tiết (infinite scroll / xem thêm) */
+export function useProductReviews(productId: string) {
+  return useInfiniteQuery({
+    queryKey: queryKeys.products.reviews(productId),
+    queryFn: async ({ pageParam }) => {
+      return ProductReviewService.getByProduct(productId, {
+        page: pageParam as number,
+        limit: PRODUCT_REVIEWS_PAGE_SIZE,
+      });
+    },
+    initialPageParam: 1,
+    getNextPageParam: (last) =>
+      last.pagination.page < last.pagination.totalPages
+        ? last.pagination.page + 1
+        : undefined,
+    enabled: !!productId,
+  });
+}
 
 export function useProducts(filters?: IProductFilters) {
   return useQuery({

@@ -3,7 +3,7 @@
 import { IconX } from "@tabler/icons-react";
 import { useState } from "react";
 import { ReportService } from "@/services/report.service";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import { PRODUCT_UI_MESSAGES } from "@/constants/messages";
 
 interface ReportProductModalProps {

@@ -20,14 +20,14 @@ import {
   IconCopy,
   IconCalendar,
 } from "@tabler/icons-react";
-import { StatusBadge } from "@/components/ui/StatusBadge";
-import { OrderTracking } from "@/components/order";
+import { StatusBadge } from "@/components/shared";
+import { OrderTracking } from "@/components/shared";
 import { SellerProductsCard } from "./components/SellerProductsCard";
 import { SellerRefundCard } from "./components/SellerRefundCard";
 import { SellerActionButtons } from "./components/SellerActionButtons";
 import { useSellerOrderDetail } from "./hooks/useSellerOrderDetail";
 import { formatPrice } from "@/utils/format/price";
-import { format, formatTimeAgo } from "@/utils/format/date";
+import { format } from "@/utils/format/date";
 import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
 import { formatShippingMethod, getShippingMethodType, formatPaymentMethod } from "@/utils/format";
 import { openChatWithOrder } from "@/utils/chat";
@@ -338,7 +338,10 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                         <span className="text-blue-600 dark:text-blue-400">Mã hoàn:</span>
                         <span className="font-mono font-semibold text-blue-700 dark:text-blue-300">{order.ghnReturnOrderCode}</span>
                         <a
-                          href={`https://tracking.ghn.dev/?order_code=${order.ghnReturnOrderCode}`}
+                          href={
+                            order.ghnReturnTrackingUrl?.trim() ||
+                            `https://tracking.ghn.dev/?order_code=${order.ghnReturnOrderCode}`
+                          }
                           target="_blank"
                           rel="noopener noreferrer"
                           className="ml-auto flex items-center gap-1 text-blue-600 hover:underline shrink-0"

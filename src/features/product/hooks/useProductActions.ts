@@ -5,7 +5,7 @@ import { IProduct } from "@/types/product";
 import { useCheckoutStore } from "@/store/useCheckoutStore";
 import { AccountInfo } from "@/types/auth";
 import { CartService, ProductService } from "@/services";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import { queryKeys } from "@/lib/query-client";
 import { openChatWithSeller } from "@/utils/chat";
 import { getAvatarUrl } from "@/utils";

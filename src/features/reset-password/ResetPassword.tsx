@@ -19,7 +19,6 @@ export default function ResetPassword() {
     setNewPassword,
     confirmPassword,
     setConfirmPassword,
-    error,
     isLoading,
     isSuccess,
     isCheckingToken,
@@ -84,7 +83,6 @@ export default function ResetPassword() {
             <ResetPasswordForm
               newPassword={newPassword}
               confirmPassword={confirmPassword}
-              error={error}
               isLoading={isLoading}
               onNewPasswordChange={setNewPassword}
               onConfirmPasswordChange={setConfirmPassword}

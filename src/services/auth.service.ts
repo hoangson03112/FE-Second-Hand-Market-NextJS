@@ -69,6 +69,13 @@ export const AuthService = {
     return res as unknown as { status: string; message?: string; token?: string };
   },
 
+  resendGoogleEmailCode: async (data: {
+    pending: string;
+  }): Promise<{ status: string; message?: string }> => {
+    const res = await axiosClient.post("/auth/resend-google-email-code", data);
+    return res as unknown as { status: string; message?: string };
+  },
+
   /**
    * Gửi khiếu nại khi tài khoản bị khóa (không cần token).
    * POST /auth/appeal — body: { email, fullName?, message }

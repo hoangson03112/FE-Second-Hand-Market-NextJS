@@ -3,6 +3,7 @@ export { default as ProductDescription } from "./ProductDescription";
 export { default as ProductGalleryNew } from "./ProductGalleryNew";
 export { default as ProductGuarantees } from "./ProductGuarantees";
 export { default as ProductHeader } from "./ProductHeader";
+export { default as ProductReviewsSection } from "./ProductReviewsSection";
 export { default as ProductPrice } from "./ProductPrice";
 export { default as ProductSpecifications } from "./ProductSpecifications";
 export { default as QuantitySelector } from "./QuantitySelector";

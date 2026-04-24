@@ -101,7 +101,9 @@ export default function FilterSidebar({
             onClick={() => update({ transactionMethod: undefined })}
             className={cn(
               "w-full text-left px-3 py-2 rounded-full text-sm transition-colors",
-              !filters.transactionMethod ? "bg-[#1A1714] text-white font-medium" : "text-taupe-600 hover:bg-taupe-50"
+              !filters.transactionMethod
+                ? "bg-primary text-primary-foreground font-medium"
+                : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
             )}
           >
             Tất cả
@@ -114,7 +116,9 @@ export default function FilterSidebar({
                 onClick={() => update({ transactionMethod: isActive ? undefined : opt.value })}
                 className={cn(
                   "w-full text-left px-3 py-2 rounded-full text-sm transition-colors",
-                  isActive ? "bg-[#1A1714] text-white font-medium" : "text-taupe-600 hover:bg-taupe-50"
+                  isActive
+                    ? "bg-primary text-primary-foreground font-medium"
+                    : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                 )}
               >
                 {opt.label}
@@ -135,7 +139,9 @@ export default function FilterSidebar({
                 onClick={() => update({ condition: isActive ? undefined : opt.value })}
                 className={cn(
                   "w-full text-left px-3 py-2 rounded-full text-sm transition-colors",
-                  isActive ? "bg-[#1A1714] text-white font-medium" : "text-taupe-600 hover:bg-taupe-50"
+                  isActive
+                    ? "bg-primary text-primary-foreground font-medium"
+                    : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                 )}
               >
                 {opt.label}
@@ -162,7 +168,9 @@ export default function FilterSidebar({
                 }
                 className={cn(
                   "h-8 px-2 rounded-full text-xs font-medium transition-colors",
-                  isActive ? "bg-[#1A1714] text-white" : "bg-taupe-50 text-taupe-600 hover:bg-taupe-100"
+                  isActive
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
                 )}
               >
                 {preset.label}

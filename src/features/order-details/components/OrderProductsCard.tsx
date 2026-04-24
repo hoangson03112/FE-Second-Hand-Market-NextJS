@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { IconMessage, IconPackage, IconPhone, IconStar, IconUser } from "@tabler/icons-react";
 import { formatPrice } from "@/utils/format/price";
-import { getConditionBadgeColor, getConditionLabel } from "@/utils/format";
+import { getConditionBadgeColor, getConditionLabel, getShippingMethodType } from "@/utils/format";
 import { openChatWithOrder } from "@/utils/chat";
 import { getAvatarUrl } from "@/utils";
 import type { Order } from "@/types/order";
@@ -18,7 +18,9 @@ export function OrderProductsCard({
   productReviews,
   onOpenProductReview,
 }: OrderProductsCardProps) {
-  const canReview = ["completed", "delivered"].includes(order.status);
+  const isLocalPickup = getShippingMethodType(order.shippingMethod) === "local_pickup";
+  const canReview =
+    order.status === "completed" || (!isLocalPickup && order.status === "delivered");
 
   return (
     <div className="bg-cream-50 border border-border rounded-2xl overflow-hidden">
@@ -44,7 +46,9 @@ export function OrderProductsCard({
           const conditionLabel = condition ? getConditionLabel(condition) : null;
           const badgeColorClass = condition ? getConditionBadgeColor(condition) : null;
           const hasReview = productId ? productReviews[productId] : undefined;
-          const canReviewProduct = canReview && product && (product.stock ?? 0) >= 1;
+          // Cho phép đánh giá theo đơn đã giao/hoàn thành — không gắn với tồn kho hiện tại
+          // (sau khi mua hết, stock có thể = 0 nhưng đánh giá vẫn cần để người mua sau xem trên trang SP).
+          const canReviewProduct = canReview && Boolean(productId);
 
           return (
             <div key={idx} className="flex gap-3 sm:gap-4 p-4 sm:p-5">
