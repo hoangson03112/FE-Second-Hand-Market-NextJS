@@ -1,7 +1,19 @@
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
-type MaxWidth = "sm" | "md" | "lg" | "xl" | "2xl" | "4xl" | "5xl" | "6xl" | "7xl" | "full";
+type MaxWidth =
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "2xl"
+  | "4xl"
+  | "5xl"
+  | "6xl"
+  | "7xl"
+  | "8xl"
+  | "9xl"
+  | "full";
 type Padding = "none" | "sm" | "md" | "lg";
 
 interface ContainerProps {
@@ -23,6 +35,8 @@ const maxWidthClasses: Record<MaxWidth, string> = {
   "5xl": "max-w-5xl",
   "6xl": "max-w-6xl",
   "7xl": "max-w-7xl",
+  "8xl": "max-w-8xl",
+  "9xl": "max-w-9xl",
   full: "max-w-full",
 };
 
