@@ -1,6 +1,7 @@
 "use client";
 
 import { formatPrice } from "@/utils/format/price";
+import { Button } from "@/components/shared";
 
 interface CheckoutButtonProps {
   total: number;
@@ -16,10 +17,13 @@ export default function CheckoutButton({
   onClick,
 }: CheckoutButtonProps) {
   return (
-    <button
+    <Button
+      type="button"
       onClick={onClick}
       disabled={isSubmitting || isDisabled}
-      className="btn-auth-primary w-full btn btn-lg py-3 font-medium rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"
+      fullWidth
+      size="lg"
+      className="bg-primary text-primary-foreground hover:bg-primary/90 py-3 rounded-lg disabled:opacity-40"
     >
       {isSubmitting ? (
         <span className="flex items-center justify-center gap-2">
@@ -44,6 +48,6 @@ export default function CheckoutButton({
       ) : (
         `Đặt hàng - ${total > 0 ? formatPrice(total) : "0₫"}`
       )}
-    </button>
+    </Button>
   );
 }

@@ -77,7 +77,7 @@ export default function SellerDetailModal({
       onClick={onClose}
     >
       <div
-        className="w-full sm:max-w-4xl xl:max-w-5xl max-h-[92dvh] sm:max-h-[90vh] overflow-hidden rounded-t-2xl sm:rounded-2xl border border-border bg-card shadow-2xl flex flex-col"
+        className="w-full max-w-7xl max-h-[92dvh] sm:max-h-[90vh] overflow-hidden rounded-t-2xl sm:rounded-2xl border border-border bg-card shadow-2xl flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

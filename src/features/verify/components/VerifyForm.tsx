@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { ErrorIcon } from "@/components/ui/icons/ErrorIcon";
-import { SuccessIcon } from "@/components/ui/icons/SuccessIcon";
-import { ArrowRightIcon } from "@/components/ui/icons/ArrowRightIcon";
+import { ErrorIcon } from "@/components/shared";
+import { SuccessIcon } from "@/components/shared";
+import { ArrowRightIcon } from "@/components/shared";
 import VerifyCodeInput from "./VerifyCodeInput";
 
 interface VerifyFormProps {

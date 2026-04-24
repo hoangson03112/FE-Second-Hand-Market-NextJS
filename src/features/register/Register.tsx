@@ -7,13 +7,12 @@ import AuthLayout from "@/features/auth/AuthLayout";
 import BrandingSection from "@/features/auth/BrandingSection";
 import InputField from "@/features/auth/InputField";
 import PasswordField from "@/features/auth/PasswordField";
-import ErrorMessage from "@/features/auth/ErrorMessage";
 import AuthButton from "@/features/auth/AuthButton";
 import AuthFormContainer from "@/features/auth/AuthFormContainer";
-import { UserIcon } from "@/components/ui/icons/UserIcon";
-import { EmailIcon } from "@/components/ui/icons/EmailIcon";
-import { PhoneIcon } from "@/components/ui/icons/PhoneIcon";
-import { ArrowRightIcon } from "@/components/ui/icons/ArrowRightIcon";
+import { UserIcon } from "@/components/shared";
+import { EmailIcon } from "@/components/shared";
+import { PhoneIcon } from "@/components/shared";
+import { ArrowRightIcon } from "@/components/shared";
 import { useRegister } from "./hooks/useRegister";
 import { registerFeatures } from "@/constants";
 import { useUser } from "@/hooks/useUser";
@@ -23,8 +22,6 @@ export default function Register() {
   const { data: account } = useUser();
   const {
     formData,
-    errors,
-    error,
     isLoading,
     handleChange,
     handleConfirmPasswordChange,
@@ -59,8 +56,6 @@ export default function Register() {
           maxHeight="max-h-[calc(100vh-8rem)]"
         >
           <form className="space-y-6" onSubmit={handleSubmit}>
-            <ErrorMessage message={error} />
-
             <div className="space-y-5">
               <InputField
                 id="fullName"
@@ -72,7 +67,6 @@ export default function Register() {
                 placeholder="VD: Nguyễn Văn A"
                 required
                 icon={<UserIcon />}
-                error={errors.fullName}
               />
 
               <InputField
@@ -85,7 +79,6 @@ export default function Register() {
                 placeholder="VD: nguyen_van_a"
                 required
                 icon={<UserIcon />}
-                error={errors.username}
               />
 
               <InputField
@@ -99,7 +92,6 @@ export default function Register() {
                 placeholder="VD: email@example.com"
                 required
                 icon={<EmailIcon />}
-                error={errors.email}
               />
 
               <InputField
@@ -113,7 +105,6 @@ export default function Register() {
                 placeholder="VD: 0912345678"
                 required
                 icon={<PhoneIcon />}
-                error={errors.phoneNumber}
               />
 
               <PasswordField
@@ -125,7 +116,6 @@ export default function Register() {
                 onBlur={handleBlur}
                 placeholder="Tối thiểu 6 ký tự"
                 required
-                error={errors.password}
               />
 
               <PasswordField
@@ -137,7 +127,6 @@ export default function Register() {
                 onBlur={handleBlur}
                 placeholder="Nhập lại mật khẩu"
                 required
-                error={errors.confirmPassword}
               />
             </div>
 

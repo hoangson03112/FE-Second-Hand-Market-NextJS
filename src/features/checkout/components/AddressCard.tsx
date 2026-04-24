@@ -3,8 +3,8 @@
 import { IconPhone, IconUser, IconHome, IconEdit, IconTrash } from "@tabler/icons-react";
 import { Address } from "@/types/address";
 import { useState } from "react";
-import { useConfirm } from "@/components/ui/ConfirmDialog";
-import { useToast } from "@/components/ui/Toast";
+import { useConfirm } from "@/components/shared";
+import { useToast } from "@/components/shared";
 import { ADDRESS_MESSAGES } from "@/constants/messages";
 
 interface AddressCardProps {

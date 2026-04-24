@@ -1,4 +1,6 @@
-﻿export interface ParsedProductMessage {
+﻿import { getOrderStatusLabel } from "@/constants/orderStatus";
+
+export interface ParsedProductMessage {
   isProductMessage: boolean;
   productId?: string;
   productName?: string;
@@ -33,19 +35,6 @@ export function buildProductMessage({
 
 // ─── Order message ────────────────────────────────────────────────────────────
 
-const ORDER_STATUS_LABELS: Record<string, string> = {
-  pending: "Chờ xác nhận",
-  confirmed: "Đã xác nhận",
-  picked_up: "Đã lấy hàng",
-  shipping: "Đang giao",
-  out_for_delivery: "Đang giao tận nơi",
-  delivered: "Đã giao",
-  completed: "Hoàn thành",
-  failed: "Giao thất bại",
-  returned: "Đã hoàn hàng",
-  cancelled: "Đã hủy",
-};
-
 export interface BuildOrderMessageInput {
   orderId: string;
   status: string;
@@ -64,7 +53,7 @@ export function buildOrderMessage({
   const fmt = (v: number) =>
     new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(v);
 
-  const statusLabel = ORDER_STATUS_LABELS[status] || status;
+  const statusLabel = getOrderStatusLabel(status);
   const orderCode = ghnOrderCode ? `\nMã vận đơn GHN: ${ghnOrderCode}` : "";
   const productLines = products
     .map((p) => `  • ${p.name} ×${p.quantity} — ${fmt(p.price)}`)

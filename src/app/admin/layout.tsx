@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useUser } from "@/hooks/useUser";
+import { Spinner } from "@/components/shared";
 
 export default function AdminLayout({
   children,
@@ -37,9 +38,7 @@ export default function AdminLayout({
   if (!authCheckReady || isLoading || !account || account.role !== "admin") {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted/30">
-        <div className="animate-pulse text-muted-foreground text-sm">
-          Đang kiểm tra quyền...
-        </div>
+        <Spinner label="Đang kiểm tra quyền..." />
       </div>
     );
   }

@@ -1,6 +1,7 @@
 "use client";
 
 import { IconPackage, IconClock, IconAlertCircle } from "@tabler/icons-react";
+import { Button } from "@/components/shared";
 import { ShippingServiceOption } from "@/types/address";
 import { formatPrice } from "@/utils/format/price";
 
@@ -49,9 +50,9 @@ export default function ShippingInfo({
           </div>
         </div>
         {onAddAddress && (
-          <button type="button" onClick={onAddAddress} className="btn btn-secondary btn-sm w-fit">
+          <Button type="button" onClick={onAddAddress} variant="secondary" size="sm">
             Chọn lại địa chỉ
-          </button>
+          </Button>
         )}
       </div>
     );
@@ -63,9 +64,9 @@ export default function ShippingInfo({
         <IconPackage className="h-8 w-8 mx-auto mb-2 opacity-50" />
         <p className="text-sm mb-3">Vui lòng chọn địa chỉ giao hàng ở trên để xem phí vận chuyển</p>
         {onAddAddress && (
-          <button type="button" onClick={onAddAddress} className="btn btn-secondary btn-sm">
+          <Button type="button" onClick={onAddAddress} variant="secondary" size="sm">
             Thêm / Chọn địa chỉ
-          </button>
+          </Button>
         )}
       </div>
     );

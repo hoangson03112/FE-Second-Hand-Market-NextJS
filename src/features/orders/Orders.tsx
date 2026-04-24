@@ -8,9 +8,9 @@ import { OrdersHeader } from "./components/OrdersHeader";
 import { OrdersTabs } from "./components/OrdersTabs";
 import { OrdersEmpty } from "./components/OrdersEmpty";
 import { OrderCard } from "./components/OrderCard";
-import { CancelOrderReasonDialog } from "@/components/ui/CancelOrderReasonDialog";
-import { RefundModal } from "./components/RefundModal";
-import Pagination from "@/components/ui/Pagination";
+import { CancelOrderReasonDialog } from "@/components/shared";
+import { RefundModal } from "@/features/refunds";
+import { Pagination } from "@/components/shared";
 
 export default function Orders() {
   const router = useRouter();
@@ -47,6 +47,12 @@ export default function Orders() {
     setRefundDescription,
     setRefundImages,
     setRefundVideos,
+    bankName,
+    setBankName,
+    accountNumber,
+    setAccountNumber,
+    accountHolder,
+    setAccountHolder,
   } = useOrders();
 
   if (userLoading) {
@@ -145,11 +151,11 @@ export default function Orders() {
         orderCode={cancelTargetOrder?._id.slice(-8).toUpperCase()}
       />
       <RefundModal
-        show={Boolean(refundTargetOrder)}
-        refundReason={refundReason}
-        refundDescription={refundDescription}
-        refundImages={refundImages}
-        refundVideos={refundVideos}
+        open={Boolean(refundTargetOrder)}
+        reason={refundReason}
+        description={refundDescription}
+        images={refundImages}
+        videos={refundVideos}
         isSubmitting={isSubmittingRefund}
         onReasonChange={setRefundReason}
         onDescriptionChange={setRefundDescription}
@@ -157,6 +163,12 @@ export default function Orders() {
         onVideosChange={setRefundVideos}
         onSubmit={handleSubmitRefund}
         onClose={closeRefundModal}
+        bankName={bankName}
+        setBankName={setBankName}
+        accountNumber={accountNumber}
+        setAccountNumber={setAccountNumber}
+        accountHolder={accountHolder}
+        setAccountHolder={setAccountHolder}
       />
     </>
   );

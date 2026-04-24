@@ -2,29 +2,22 @@ import { useCallback, useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { OrderService } from "@/services/order.service";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import { usePagination } from "@/hooks/usePagination";
 import type { Order } from "@/types/order";
 import { ORDER_MESSAGES, SELLER_MESSAGES } from "@/constants/messages";
 
-const PAGE_SIZE = 8;
+export const PAGE_SIZE = 6;
 
 // Maps individual tab keys → matching order statuses
 export const SELLER_TAB_STATUSES: Record<string, string[]> = {
-  all:              [],
-  pending:          ["pending"],
-  confirmed:        ["confirmed"],
-  picked_up:        ["picked_up"],
-  shipping:         ["shipping"],
-  out_for_delivery: ["out_for_delivery"],
-  delivered:        ["delivered"],
-  completed:        ["completed"],
-  refund_requested: ["refund_requested"],
-  refund_approved:  ["refund_approved"],
-  cancelled:        ["cancelled"],
-  delivery_failed:  ["delivery_failed"],
-  returned:         ["returned"],
-  refunded:         ["refunded"],
+  all: [],
+  pending: ["pending"],
+  processing: ["confirmed", "picked_up"],
+  shipped: ["shipping", "out_for_delivery"],
+  delivered: ["delivered", "completed"],
+  refund: ["refund", "refund_requested", "refund_approved", "returned", "refunded"],
+  cancelled: ["cancelled", "delivery_failed"],
 };
 
 function isToday(dateStr: string) {
@@ -74,6 +67,15 @@ export function useSellerOrders() {
     fetchOrders();
   }, [account, userLoading, router, toast]);
 
+  const refreshOrders = useCallback(async () => {
+    try {
+      const res = await OrderService.getSellerOrders();
+      setOrders(res.orders || []);
+    } catch (error) {
+      console.error("Error refreshing seller orders:", error);
+    }
+  }, []);
+
   // Dashboard summary stats
   const stats = useMemo(() => {
     const todayOrders = orders.filter((o) => isToday(o.createdAt));
@@ -86,7 +88,7 @@ export function useSellerOrders() {
       shipping: orders.filter((o) =>
         ["confirmed", "picked_up", "shipping", "out_for_delivery"].includes(o.status)
       ).length,
-      returnRequests: orders.filter((o) => o.status === "refund_requested").length,
+      returnRequests: orders.filter((o) => ["refund", "refund_requested"].includes(o.status)).length,
       todayRevenue,
     };
   }, [orders]);
@@ -194,13 +196,41 @@ export function useSellerOrders() {
     setUpdatingId(orderId);
     try {
       await OrderService.approveRefund(orderId);
-      setOrders((prev) =>
-        prev.map((o) => (o._id === orderId ? { ...o, status: "refund_approved" } : o))
-      );
+      await refreshOrders();
       toast.success(SELLER_MESSAGES.SELLER_REFUND_AGREED);
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Không thể xử lý yêu cầu hoàn tiền"
+      );
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
+  const handleRejectRefund = async (orderId: string, reason: string) => {
+    setUpdatingId(orderId);
+    try {
+      await OrderService.rejectRefund(orderId, reason);
+      await refreshOrders();
+      toast.success("Đã từ chối yêu cầu hoàn tiền");
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Không thể từ chối yêu cầu hoàn tiền"
+      );
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
+  const handleConfirmReturnReceived = async (orderId: string) => {
+    setUpdatingId(orderId);
+    try {
+      await OrderService.confirmReturnReceived(orderId);
+      await refreshOrders();
+      toast.success("Đã xác nhận nhận lại hàng. Admin sẽ xử lý hoàn tiền cho buyer.");
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Không thể xác nhận nhận lại hàng"
       );
     } finally {
       setUpdatingId(null);
@@ -244,6 +274,8 @@ export function useSellerOrders() {
     handleImageError,
     handleUpdateStatus,
     handleApproveRefund,
+    handleRejectRefund,
+    handleConfirmReturnReceived,
     filteredOrders,
     paginatedOrders,
     page,

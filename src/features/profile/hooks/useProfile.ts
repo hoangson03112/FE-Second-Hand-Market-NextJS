@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUser } from "@/hooks/useUser";
 import { AuthService } from "@/services/auth.service";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import { queryKeys } from "@/lib/query-client";
 import type { ProfileFormData } from "../types";
 import { PROFILE_MESSAGES } from "@/constants";

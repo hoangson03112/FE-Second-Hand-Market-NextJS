@@ -9,7 +9,7 @@ import {
   IconTruck,
   IconEye,
 } from "@tabler/icons-react";
-import { CancelOrderReasonDialog } from "@/components/ui/CancelOrderReasonDialog";
+import { CancelOrderReasonDialog } from "@/components/shared";
 import { getShippingMethodType } from "@/utils/format";
 import type { Order } from "@/types/order";
 
@@ -33,6 +33,13 @@ export default function OrderActions({
   const isUpdating = updatingId === order._id;
   const [cancelOpen, setCancelOpen] = useState(false);
   const isLocalPickup = getShippingMethodType(order.shippingMethod) === "local_pickup";
+  const refundDoc =
+    order.refundRequestId && typeof order.refundRequestId === "object"
+      ? order.refundRequestId
+      : null;
+  const needsSellerRefundDecision =
+    (order.status === "refund_requested" || order.status === "refund") &&
+    (refundDoc == null || refundDoc.status === "pending");
 
   // ── Chờ xác nhận ──────────────────────────────────────────────────────────
   if (order.status === "pending") {
@@ -91,8 +98,8 @@ export default function OrderActions({
     );
   }
 
-  // ── Yêu cầu hoàn tiền ─────────────────────────────────────────────────────
-  if (order.status === "refund_requested") {
+  // ── Yêu cầu hoàn tiền (BE thường dùng order.status === "refund") ───────────
+  if (needsSellerRefundDecision) {
     return (
       <div className="px-3 pb-3">
         <div className="flex gap-1.5">

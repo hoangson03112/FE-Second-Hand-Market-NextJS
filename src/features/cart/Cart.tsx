@@ -6,7 +6,7 @@ import ShopCartGroup from "./components/ShopCartGroup";
 import CartBottomBar from "./components/CartBottomBar";
 import CartEmpty from "./components/CartEmpty";
 import CartLoginPrompt from "./components/CartLoginPrompt";
-import { LoadingSpinner } from "@/components/common/LoadingSpinner";
+import { LoadingBlock } from "@/components/shared";
 import { useCartPage } from "./hooks/useCartPage";
 import { useTokenStore } from "@/store/useTokenStore";
 import { PageContainer, Container } from "@/components/layout/Container";
@@ -39,7 +39,7 @@ export default function Cart() {
     return (
       <PageContainer withBackground={false}>
         <CartHeader onBack={onBack} />
-        <Container as="main" maxWidth="4xl" paddingX="md" paddingY="md">
+        <Container as="main" maxWidth="7xl" paddingX="md" paddingY="md">
           <CartLoginPrompt />
         </Container>
       </PageContainer>
@@ -50,8 +50,12 @@ export default function Cart() {
     return (
       <PageContainer withBackground={false}>
         <CartHeader onBack={onBack} />
-        <Container as="main" maxWidth="4xl" paddingX="md" paddingY="lg" className="flex items-center justify-center min-h-[40vh]">
-          <LoadingSpinner size="lg" message="Đang tải giỏ hàng..." />
+        <Container as="main" maxWidth="7xl" paddingX="md" paddingY="lg" className="flex items-center justify-center min-h-[40vh]">
+          <LoadingBlock
+            text="Đang tải giỏ hàng..."
+            spinnerSize="lg"
+            className="w-full max-w-md"
+          />
         </Container>
       </PageContainer>
     );
@@ -69,7 +73,7 @@ export default function Cart() {
   }
 
   return (
-    <PageContainer withBackground={false} className="pb-24 bg-taupe-50 min-h-screen">
+    <PageContainer withBackground className="pb-24">
       <CartHeader onBack={onBack} />
       <Container as="main" maxWidth="7xl" paddingX="md" paddingY="md">
         {groups.map((group) => (

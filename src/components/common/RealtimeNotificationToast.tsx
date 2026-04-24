@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useNotificationStore } from "@/store/useNotificationStore";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import type { NotificationType } from "@/store/useNotificationStore";
 
 const TYPE_LABELS: Record<NotificationType, string> = {

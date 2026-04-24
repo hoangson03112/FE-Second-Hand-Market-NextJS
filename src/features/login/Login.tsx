@@ -7,12 +7,11 @@ import AuthLayout from "@/features/auth/AuthLayout";
 import BrandingSection from "@/features/auth/BrandingSection";
 import InputField from "@/features/auth/InputField";
 import PasswordField from "@/features/auth/PasswordField";
-import ErrorMessage from "@/features/auth/ErrorMessage";
 import AuthButton from "@/features/auth/AuthButton";
 import AuthFormContainer from "@/features/auth/AuthFormContainer";
 import Divider from "@/features/auth/Divider";
-import { UserIcon } from "@/components/ui/icons/UserIcon";
-import { ArrowRightIcon } from "@/components/ui/icons/ArrowRightIcon";
+import { UserIcon } from "@/components/shared";
+import { ArrowRightIcon } from "@/components/shared";
 import { useLogin } from "./hooks/useLogin";
 import { loginFeatures } from "@/constants";
 import { GoogleLoginButton } from "./components";
@@ -21,8 +20,15 @@ import { useUser } from "@/hooks/useUser";
 export default function Login() {
   const router = useRouter();
   const { data: account } = useUser();
-  const { formData, errors, error, isLoading, handleChange, handleSubmit, handleGoogleLogin } =
-    useLogin();
+  const {
+    formData,
+    isLoading,
+    rememberMe,
+    handleChange,
+    setRememberMe,
+    handleSubmit,
+    handleGoogleLogin,
+  } = useLogin();
 
   // Nếu đã đăng nhập thì chuyển về trang trước đó (redirect) hoặc Home
   const searchParams = useSearchParams();
@@ -56,8 +62,6 @@ export default function Login() {
           subtitle="Nhập email hoặc tên đăng nhập và mật khẩu để tiếp tục"
         >
           <form className="space-y-6" onSubmit={handleSubmit}>
-            <ErrorMessage message={error} />
-
             <div className="space-y-5">
               <InputField
                 id="email"
@@ -68,7 +72,6 @@ export default function Login() {
                 placeholder="VD: nguyen_van_a hoặc user@example.com"
                 required={false}
                 icon={<UserIcon />}
-                error={errors.email}
               />
               <PasswordField
                 id="password"
@@ -78,7 +81,6 @@ export default function Login() {
                 onChange={handleChange}
                 placeholder="Tối thiểu 6 ký tự"
                 required={false}
-                error={errors.password}
               />
             </div>
 
@@ -86,6 +88,8 @@ export default function Login() {
               <label className="flex items-center gap-2.5 cursor-pointer text-taupe-600 hover:text-taupe-900 transition-colors group">
                 <input
                   type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
                   className="w-4 h-4 border-2 border-taupe-300 text-primary focus:ring-2 focus:ring-primary/30 focus:ring-offset-0 cursor-pointer"
                 />
                 <span className="font-medium">Ghi nhớ đăng nhập</span>

@@ -1,6 +1,6 @@
 import { IconShoppingBag, IconClock } from "@tabler/icons-react";
 import { format } from "@/utils/format/date";
-import { StatusBadge } from "@/components/ui/StatusBadge";
+import { StatusBadge } from "@/components/shared";
 import type { Order } from "@/types/order";
 
 interface OrderInfoCardProps {

@@ -4,20 +4,13 @@ import { useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 const SELLER_TABS = [
-  { key: "all",               label: "Tất cả" },
-  { key: "pending",           label: "Chờ xác nhận" },
-  { key: "confirmed",         label: "Đã xác nhận" },
-  { key: "picked_up",         label: "Đã lấy hàng" },
-  { key: "shipping",          label: "Đang vận chuyển" },
-  { key: "out_for_delivery",  label: "Đang giao hàng" },
-  { key: "delivered",         label: "Đã giao" },
-  { key: "completed",         label: "Hoàn thành" },
-  { key: "refund_requested",  label: "Yêu cầu hoàn" },
-  { key: "refund_approved",   label: "Đã duyệt hoàn" },
-  { key: "cancelled",         label: "Đã hủy" },
-  { key: "delivery_failed",   label: "Giao thất bại" },
-  { key: "returned",          label: "Đã hoàn hàng" },
-  { key: "refunded",          label: "Đã hoàn tiền" },
+  { key: "all", label: "Tất cả đơn" },
+  { key: "pending", label: "Chờ xác nhận" },
+  { key: "processing", label: "Đang xử lý" },
+  { key: "shipped", label: "Đang giao" },
+  { key: "delivered", label: "Đã giao" },
+  { key: "refund", label: "Hoàn tiền" },
+  { key: "cancelled", label: "Đã hủy" },
 ] as const;
 
 interface OrderTabsProps {
@@ -38,13 +31,12 @@ export default function OrderTabs({ activeTab, onTabChange, tabCounts }: OrderTa
   }, [activeTab]);
 
   return (
-    <div className="bg-background border border-border rounded-2xl mb-5 overflow-hidden">
-      {/* overflow on this wrapper, no padding — trailing padding is swallowed by browsers */}
+    <div className="mb-5 overflow-hidden rounded-xl border border-border bg-muted/20 p-1">
       <div className="overflow-x-auto scrollbar-hide">
         <div
           role="tablist"
           aria-label="Lọc đơn hàng theo trạng thái"
-          className="inline-flex min-w-full border-b border-border"
+          className="inline-flex min-w-full items-center gap-1"
         >
           {SELLER_TABS.map(({ key, label }) => {
             const count = tabCounts[key] ?? 0;
@@ -58,14 +50,13 @@ export default function OrderTabs({ activeTab, onTabChange, tabCounts }: OrderTa
                 aria-selected={isActive}
                 onClick={() => onTabChange(key)}
                 className={cn(
-                  "relative flex shrink-0 items-center gap-2 px-4 py-3",
+                  "relative flex shrink-0 items-center gap-2 rounded-lg px-3 py-1.5",
                   "text-sm whitespace-nowrap",
-                  "border-b-2 -mb-px",
                   "transition-colors duration-150",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-inset",
                   isActive
-                    ? "border-foreground font-semibold text-foreground"
-                    : "border-transparent font-medium text-muted-foreground hover:text-foreground hover:border-border",
+                    ? "bg-primary text-primary-foreground font-semibold"
+                    : "bg-transparent font-medium text-muted-foreground hover:bg-background hover:text-foreground",
                 )}
               >
                 {label}
@@ -78,8 +69,8 @@ export default function OrderTabs({ activeTab, onTabChange, tabCounts }: OrderTa
                       "text-xs font-semibold tabular-nums",
                       "transition-colors duration-150",
                       isActive
-                        ? "bg-foreground/[0.08] text-foreground"
-                        : "bg-muted text-muted-foreground/70",
+                        ? "bg-primary-foreground/20 text-primary-foreground"
+                        : "bg-background text-muted-foreground/70",
                     )}
                   >
                     {count}

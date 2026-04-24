@@ -1,7 +1,7 @@
 "use client";
 
 import { IconLoader2 } from "@tabler/icons-react";
-import Pagination from "@/components/ui/Pagination";
+import { Pagination } from "@/components/shared";
 import { format } from "@/utils/format/date";
 import { useAdminAuditLogs } from "./hooks/useAdminAuditLogs";
 

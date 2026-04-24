@@ -9,6 +9,7 @@ import type { LoginRequest } from "@/types/auth";
 import { loginSchema } from "@/features/auth/schemas/auth.schema";
 import { getGoogleLoginUrl } from "@/constants";
 import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
+import { useToast } from "@/components/shared";
 
 export function useLogin() {
   const router = useRouter();
@@ -16,19 +17,21 @@ export function useLogin() {
   const searchParams = useSearchParams();
   const { setAccessToken } = useTokenStore();
   const setBanned = useBannedStore((s) => s.setBanned);
+  const toast = useToast();
   const [formData, setFormData] = useState<LoginRequest>({
     email: "",
     password: "",
   });
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   useEffect(() => {
     const token = searchParams.get("token");
     const errorParam = searchParams.get("error");
     if (token) {
-      setAccessToken(token);
+      // Google login keeps the long-lived behavior.
+      setAccessToken(token, { remember: true });
       queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });
       const redirect = searchParams.get("redirect");
       const target = redirect && redirect.startsWith("/") && !redirect.startsWith("//")
@@ -52,15 +55,14 @@ export function useLogin() {
         google_not_configured: "Chức năng đăng nhập Google chưa được cấu hình.",
         google_verify_invalid: "Phiên xác minh không hợp lệ. Vui lòng đăng nhập lại bằng Google.",
       };
-      setError(messages[errorParam] || "Có lỗi xảy ra.");
+      toast.error(messages[errorParam] || "Có lỗi xảy ra.");
     }
-  }, [searchParams, setAccessToken, queryClient, router]);
+  }, [searchParams, setAccessToken, queryClient, router, setBanned, toast]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const normalizedValue = sanitizeFieldInput(name, value);
     setFormData({ ...formData, [name]: normalizedValue });
-    setError("");
     if (errors[name as keyof typeof errors]) {
       setErrors({ ...errors, [name]: undefined });
     }
@@ -68,18 +70,12 @@ export function useLogin() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     const normalizedData = sanitizeFormValues(formData);
     const result = loginSchema.safeParse(normalizedData);
     if (!result.success) {
-      const fieldErrors: { email?: string; password?: string } = {};
-      result.error.issues.forEach((issue) => {
-        const path = issue.path[0] as string;
-        if (path === "email" || path === "password") {
-          fieldErrors[path] = issue.message;
-        }
-      });
-      setErrors(fieldErrors);
+      const firstMessage = result.error.issues[0]?.message || "Thông tin đăng nhập không hợp lệ";
+      toast.error(firstMessage);
+      setErrors({});
       return;
     }
     setErrors({});
@@ -91,7 +87,7 @@ export function useLogin() {
         password: normalizedData.password,
       });
       if (response.status === "success" && response.token) {
-        setAccessToken(response.token);
+        setAccessToken(response.token, { remember: rememberMe });
         queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });
         const redirect = searchParams.get("redirect");
         const target = redirect && redirect.startsWith("/") && !redirect.startsWith("//")
@@ -105,11 +101,11 @@ export function useLogin() {
         router.push("/");
         router.refresh();
       } else {
-        setError(response.message || "Đăng nhập thất bại");
+        toast.error(response.message || "Đăng nhập thất bại");
       }
     } catch (err: unknown) {
       const errObj = err as { response?: { data?: { message?: string } } };
-      setError(errObj.response?.data?.message || "Có lỗi xảy ra, vui lòng thử lại");
+      toast.error(errObj.response?.data?.message || "Có lỗi xảy ra, vui lòng thử lại");
     } finally {
       setIsLoading(false);
     }
@@ -122,9 +118,10 @@ export function useLogin() {
   return {
     formData,
     errors,
-    error,
     isLoading,
+    rememberMe,
     handleChange,
+    setRememberMe,
     handleSubmit,
     handleGoogleLogin,
   };

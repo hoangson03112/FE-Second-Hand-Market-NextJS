@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ProductService } from "@/services/product.service";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import type { MyListingsResponse } from "@/types/myProducts";
 import { PRODUCT_UI_MESSAGES } from "@/constants/messages";
 

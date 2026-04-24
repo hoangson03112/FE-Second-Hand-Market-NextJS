@@ -93,6 +93,11 @@ function NotificationListener() {
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => createQueryClient());
+  const hydrateAccessToken = useTokenStore((s) => s.hydrateAccessToken);
+
+  useEffect(() => {
+    hydrateAccessToken();
+  }, [hydrateAccessToken]);
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -123,7 +123,7 @@ export default function CartItem({
                 type="text"
                 value={item.quantity}
                 readOnly
-                className="w-10 h-7 text-center text-sm text-taupe-900 border-0 focus:outline-none bg-card"
+                className="w-10 h-7 text-center text-sm font-normal tabular-nums text-foreground border-0 focus:outline-none bg-card"
               />
               <button
                 type="button"
@@ -172,7 +172,7 @@ export default function CartItem({
               type="text"
               value={item.quantity}
               readOnly
-              className="w-12 h-8 text-center text-sm text-taupe-900 border-0 focus:outline-none bg-card"
+              className="w-12 h-8 text-center text-sm font-normal tabular-nums text-foreground border-0 focus:outline-none bg-card"
             />
             <button
               type="button"

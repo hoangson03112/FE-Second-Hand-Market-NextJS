@@ -42,7 +42,7 @@ export default function HeroSection() {
         }}
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-[100rem] px-4 sm:px-7 lg:px-10 py-14 lg:py-20">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-14 lg:py-20">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
 
           {/* LEFT: Content */}

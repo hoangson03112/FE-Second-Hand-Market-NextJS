@@ -3,7 +3,8 @@
 import React from "react";
 import { IProduct } from "@/types/product";
 import ProductCard from "./ProductCard";
-import Pagination from "@/components/ui/Pagination";
+import { Pagination } from "@/components/shared";
+import { Skeleton } from "@/components/shared";
 
 interface PaginationInfo {
   currentPage: number;
@@ -31,12 +32,12 @@ export default function ProductList({
     return (
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {[...Array(10)].map((_, index) => (
-          <div key={index} className="bg-white rounded-2xl overflow-hidden border border-border/60 animate-pulse">
-            <div className="aspect-square bg-taupe-100" />
+          <div key={index} className="bg-white rounded-2xl overflow-hidden border border-border/60">
+            <Skeleton className="aspect-square rounded-none bg-taupe-100" />
             <div className="p-3 space-y-2">
-              <div className="h-3.5 bg-taupe-100 rounded-md w-full" />
-              <div className="h-3.5 bg-taupe-100 rounded-md w-2/3" />
-              <div className="h-5 bg-taupe-100 rounded-md w-1/2 mt-1" />
+              <Skeleton className="h-3.5 rounded-md w-full bg-taupe-100" />
+              <Skeleton className="h-3.5 rounded-md w-2/3 bg-taupe-100" />
+              <Skeleton className="h-5 rounded-md w-1/2 mt-1 bg-taupe-100" />
             </div>
           </div>
         ))}

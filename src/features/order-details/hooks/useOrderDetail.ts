@@ -2,12 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/query-client";
 import { useUser } from "@/hooks/useUser";
-import { useToast } from "@/components/ui/Toast";
-import { useConfirm } from "@/components/ui/ConfirmDialog";
+import { useToast } from "@/components/shared";
+import { useConfirm } from "@/components/shared";
 import { OrderService } from "@/services/order.service";
 import { SellerReviewService } from "@/services/sellerReview.service";
 import { ProductReviewService } from "@/services/productReview.service";
+import { getShippingMethodType } from "@/utils/format";
 import type { Order } from "@/types/order";
 import { ORDER_MESSAGES, REVIEW_MESSAGES, REFUND_MESSAGES } from "@/constants/messages";
 
@@ -19,6 +22,7 @@ interface UseOrderDetailParams {
 
 export function useOrderDetail({ orderId, autoOpenRefund, autoOpenReview }: UseOrderDetailParams) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const toast = useToast();
   const { confirm } = useConfirm();
   const { data: account, isLoading: userLoading } = useUser();
@@ -83,7 +87,11 @@ export function useOrderDetail({ orderId, autoOpenRefund, autoOpenReview }: UseO
   }, [account, userLoading, orderId, router]);
 
   useEffect(() => {
-    if (!order || !["completed", "delivered"].includes(order.status)) return;
+    if (!order) return;
+    const isLocalPickup = getShippingMethodType(order.shippingMethod) === "local_pickup";
+    const canReviewOrder =
+      order.status === "completed" || (!isLocalPickup && order.status === "delivered");
+    if (!canReviewOrder) return;
 
     const fetchReview = async () => {
       try {
@@ -123,9 +131,17 @@ export function useOrderDetail({ orderId, autoOpenRefund, autoOpenReview }: UseO
   // Auto-open refund or review modal when navigated from order list with query params
   useEffect(() => {
     if (!order || isLoading) return;
-    if (autoOpenRefund && (order.status === "delivered" || order.status === "completed")) {
+    const isLocalPickup = getShippingMethodType(order.shippingMethod) === "local_pickup";
+    const canReviewOrder =
+      order.status === "completed" || (!isLocalPickup && order.status === "delivered");
+
+    if (
+      autoOpenRefund &&
+      !isLocalPickup &&
+      (order.status === "delivered" || order.status === "completed")
+    ) {
       setShowRefundModal(true);
-    } else if (autoOpenReview && (order.status === "completed" || order.status === "delivered")) {
+    } else if (autoOpenReview && canReviewOrder) {
       // Scroll to review section
       setTimeout(() => {
         document.getElementById("seller-review-section")?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -299,6 +315,12 @@ export function useOrderDetail({ orderId, autoOpenRefund, autoOpenReview }: UseO
           comment: productReviewComment,
         },
       }));
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.products.reviews(selectedProduct.id),
+      });
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.products.detail(selectedProduct.id),
+      });
       setShowProductReviewModal(false);
       toast.success(REVIEW_MESSAGES.PRODUCT_REVIEW_SUCCESS);
     } catch (error) {

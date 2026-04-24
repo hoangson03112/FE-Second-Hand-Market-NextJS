@@ -16,7 +16,7 @@ import dynamic from "next/dynamic";
 
 // Confirmation dialogs
 export const LazyConfirmDialog = dynamic(
-  () => import("@/components/ui/ConfirmDialog").then(m => ({ default: m.ConfirmDialogProvider })),
+  () => import("@/components/shared").then(m => ({ default: m.ConfirmDialogProvider })),
   {
     loading: () => null,
     ssr: false,
@@ -24,7 +24,7 @@ export const LazyConfirmDialog = dynamic(
 );
 
 // Toast notifications
-export const LazyToast = dynamic(() => import("@/components/ui/Toast").then(m => ({ default: m.ToastProvider })), {
+export const LazyToast = dynamic(() => import("@/components/shared").then(m => ({ default: m.ToastProvider })), {
   loading: () => null,
   ssr: false,
 });

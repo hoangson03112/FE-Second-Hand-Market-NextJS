@@ -7,7 +7,7 @@ import type {
   CreateProductPayload,
   UpdateProductPayload,
 } from "@/types/productPayload";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import { useUser } from "@/hooks/useUser";
 import { useRouter, useSearchParams } from "next/navigation";
 import type {

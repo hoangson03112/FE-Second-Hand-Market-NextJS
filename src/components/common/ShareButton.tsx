@@ -20,7 +20,7 @@ import {
   isNativeShareSupported,
   type ShareData 
 } from "@/utils/share";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 
 interface ShareButtonProps {
   shareData: ShareData;

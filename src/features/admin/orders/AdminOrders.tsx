@@ -4,7 +4,7 @@ import { IconLoader2, IconSearch } from "@tabler/icons-react";
 import { useAdminOrders } from "./hooks/useAdminOrders";
 import EmptyState from "./components/EmptyState";
 import OrdersTable from "./components/OrdersTable";
-import Pagination from "@/components/ui/Pagination";
+import { Pagination } from "@/components/shared";
 import { ORDER_TABS } from "@/constants/orderStatus";
 
 export default function AdminOrders() {

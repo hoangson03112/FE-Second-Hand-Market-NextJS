@@ -1,6 +1,7 @@
 "use client";
 
 import { formatPrice } from "@/utils/format/price";
+import { Button } from "@/components/shared";
 
 interface CartBottomBarProps {
   allSelected: boolean;
@@ -61,14 +62,14 @@ export default function CartBottomBar({
             </div>
 
             {canCheckout ? (
-              <button
+              <Button
                 type="button"
                 onClick={onGoToCheckout}
                 disabled={isBusy || isGoingToCheckout}
-                className="btn-auth-primary h-10 sm:h-11 px-6 sm:px-12 text-sm font-bold uppercase tracking-wider rounded-xl hover:scale-105 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed whitespace-nowrap"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 sm:h-11 px-6 sm:px-12 text-sm font-semibold rounded-xl hover:scale-105 duration-300 disabled:opacity-70 whitespace-nowrap"
               >
                 {isGoingToCheckout ? "Đang xử lý..." : "Mua Hàng"}
-              </button>
+              </Button>
             ) : (
               <button
                 type="button"

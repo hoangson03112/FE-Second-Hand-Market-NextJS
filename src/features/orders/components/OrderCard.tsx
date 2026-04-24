@@ -6,7 +6,6 @@ import {
 	IconLoader2,
 	IconMapPin,
 	IconMessage,
-	IconPackage,
 	IconRefresh,
 	IconShoppingBag,
 	IconStar,
@@ -17,11 +16,11 @@ import Image from "next/image";
 import type { Order } from "@/types/order";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
-import { formatShippingMethod } from "@/utils/format";
+import { formatShippingMethod, getShippingMethodType } from "@/utils/format";
 import { openChatWithOrder } from "@/utils/chat";
 import { getAvatarUrl } from "@/utils";
-import { STATUS_CONFIG } from "@/constants/orderStatus";
-import { StatusBadge } from "@/components/ui/StatusBadge";
+import { getRefundStatusNotice } from "@/constants/orderStatus";
+import { StatusBadge } from "@/components/shared";
 import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
 
 interface OrderCardProps {
@@ -33,7 +32,26 @@ interface OrderCardProps {
 	onOpenRefund: (orderId: string) => void;
 }
 
+const REFUND_RETURN_TRACKING_STATUSES = new Set([
+	"refund",
+	"returning",
+	"return_shipping",
+	"returned",
+	"refunded",
+]);
+
 export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfirmReceived, onOpenRefund }: OrderCardProps) {
+	const isLocalPickup = getShippingMethodType(order.shippingMethod) === "local_pickup";
+	const refundNotice = getRefundStatusNotice(order.status, "buyer");
+	const showGhnReturnOnCard =
+		Boolean(order.ghnReturnOrderCode) && REFUND_RETURN_TRACKING_STATUSES.has(order.status);
+	const refundNoticeClass =
+		refundNotice?.tone === "success"
+			? "border-emerald-200 bg-emerald-50 text-emerald-800"
+			: refundNotice?.tone === "warning"
+				? "border-amber-200 bg-amber-50 text-amber-800"
+				: "border-sky-200 bg-sky-50 text-sky-800";
+
 	return (
 		<div className="bg-cream-50/90 backdrop-blur-md rounded-3xl border-2 border-neutral-200/60 shadow-lg shadow-neutral-200/50 overflow-hidden hover:shadow-xl hover:shadow-neutral-200/60 transition-all duration-300 group">
 			<div className="bg-cream-50/50 px-5 py-4 border-b-2 border-neutral-200/60 flex items-center justify-between">
@@ -57,7 +75,9 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 						</div>
 					</div>
 				</div>
-				<StatusBadge status={order.status} />
+				<div className="flex flex-col items-end gap-1.5">
+					<StatusBadge status={order.status} />
+				</div>
 			</div>
 
 			<div className="p-5">
@@ -194,6 +214,31 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 						<span className="font-medium text-neutral-900">{formatShippingMethod(order.shippingMethod)}</span>
 					</div>
 				)}
+				{refundNotice && (
+					<div className={`mt-3 rounded-xl border px-3 py-2.5 ${refundNoticeClass}`}>
+						<p className="text-xs font-semibold">{refundNotice.title}</p>
+						<p className="mt-1 text-xs">{refundNotice.description}</p>
+					</div>
+				)}
+				{showGhnReturnOnCard && (
+					<div className="mt-3 rounded-xl border border-sky-200 bg-sky-50/80 px-3 py-2.5 text-sky-900">
+						<p className="text-xs font-semibold">Vận đơn hoàn trả GHN</p>
+						<p className="mt-1 font-mono text-xs">{order.ghnReturnOrderCode}</p>
+						{(order.ghnReturnTrackingUrl?.trim() || order.ghnReturnOrderCode) && (
+							<a
+								href={
+									order.ghnReturnTrackingUrl?.trim() ||
+									`https://tracking.ghn.dev/?order_code=${order.ghnReturnOrderCode}`
+								}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="mt-1.5 inline-block text-xs font-semibold text-primary hover:underline"
+							>
+								Theo dõi vận đơn hoàn →
+							</a>
+						)}
+					</div>
+				)}
 
 				<div className="mt-4 pt-4 border-t-2 border-neutral-200/60 flex items-center justify-between">
 					<div className="flex flex-col">
@@ -226,7 +271,7 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 								Đã nhận hàng
 							</button>
 						)}
-						{(order.status === "delivered" || order.status === "completed") && (
+						{!isLocalPickup && (order.status === "delivered" || order.status === "completed") && (
 							<button
 								type="button"
 								onClick={() => onOpenRefund(order._id)}

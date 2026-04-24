@@ -9,6 +9,7 @@ interface OrderMetaCardProps {
   shippingMethod: string;
   statusPayment: boolean;
   isLocalPickup: boolean;
+  hideExpectedDelivery?: boolean;
 }
 
 export function OrderMetaCard({
@@ -18,6 +19,7 @@ export function OrderMetaCard({
   shippingMethod,
   statusPayment,
   isLocalPickup,
+  hideExpectedDelivery = false,
 }: OrderMetaCardProps) {
   return (
     <div className="bg-cream-50 border border-border rounded-2xl overflow-hidden">
@@ -29,7 +31,7 @@ export function OrderMetaCard({
             <p className="text-sm font-medium text-foreground">{format(createdAt)}</p>
           </div>
         </div>
-        {expectedDeliveryTime && !isLocalPickup && (
+        {expectedDeliveryTime && !isLocalPickup && !hideExpectedDelivery && (
           <div className="flex items-center gap-3 px-5 py-3.5">
             <IconClockHour4 className="w-4 h-4 text-primary shrink-0" />
             <div className="flex-1">

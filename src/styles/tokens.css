@@ -1,0 +1,259 @@
+/* ==========================================================================
+   Design Tokens
+   - Canonical palette and semantic tokens.
+   - Tailwind v4 @theme mappings.
+   ========================================================================== */
+
+:root {
+  /* Core surfaces */
+  --background: oklch(0.975 0.005 70);
+  --foreground: oklch(0.15 0.03 270);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.03 270);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.03 270);
+
+  /* Semantic brand */
+  --primary: #86503c;
+  --primary-foreground: oklch(1 0 0);
+  --secondary: #e97a6b;
+  --secondary-foreground: oklch(0.15 0.03 270);
+  --muted: oklch(0.94 0.02 60);
+  --muted-foreground: oklch(0.55 0.02 260);
+  --accent: oklch(0.68 0.1 10);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.92 0.01 70);
+  --input: oklch(0.97 0.005 70);
+  --ring: #e97a6b;
+
+  /* Charts & radius */
+  --chart-1: #86503c;
+  --chart-2: #e97a6b;
+  --chart-3: oklch(0.7 0.08 80);
+  --chart-4: oklch(0.5 0.06 200);
+  --chart-5: oklch(0.65 0.1 120);
+  --radius: 0.75rem;
+
+  /* Sidebar */
+  --sidebar: oklch(0.975 0.005 70);
+  --sidebar-foreground: oklch(0.15 0.03 270);
+  --sidebar-primary: oklch(0.5 0.08 35);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.88 0.05 65);
+  --sidebar-accent-foreground: oklch(0.15 0.03 270);
+  --sidebar-border: oklch(0.92 0.01 70);
+  --sidebar-ring: oklch(0.5 0.08 35);
+
+  /* Palette: cream/taupe/blush/neutral/charcoal */
+  --cream-50: #fefcf9;
+  --cream-100: #fdf9f3;
+  --cream-200: #faf3e6;
+  --cream-300: #f6e9d1;
+  --beige-50: #f7f2ea;
+  --beige-100: #f0e8dc;
+
+  --taupe-50: #f7f5f2;
+  --taupe-100: #ede8e0;
+  --taupe-200: #d9d0c2;
+  --taupe-300: #c2b5a0;
+  --taupe-400: #9b624d;
+  --taupe-500: #86503c;
+  --taupe-600: #734432;
+  --taupe-700: #5f3626;
+  --taupe-800: #403528;
+  --taupe-900: #2a221b;
+
+  --charcoal-50: #f5f5f6;
+  --charcoal-100: #e5e5e8;
+  --charcoal-200: #ccccd1;
+  --charcoal-300: #a8a8b0;
+  --charcoal-400: #7d7d89;
+  --charcoal-500: #62626f;
+  --charcoal-600: #4f4f5a;
+  --charcoal-700: #3f3f48;
+  --charcoal-800: #2a2a30;
+  --charcoal-900: #1a1a1e;
+
+  --blush-50: #fef6f5;
+  --blush-100: #fdece9;
+  --blush-200: #fbd9d3;
+  --blush-300: #f7bbb1;
+  --blush-400: #ed8779;
+  --blush-500: #e97a6b;
+  --blush-600: #d96557;
+  --blush-700: #b34836;
+  --blush-800: #953e2e;
+  --blush-900: #7d3628;
+
+  --neutral-50: var(--cream-50);
+  --neutral-100: var(--cream-100);
+  --neutral-200: var(--charcoal-100);
+  --neutral-300: var(--charcoal-200);
+  --neutral-400: var(--charcoal-400);
+  --neutral-500: var(--charcoal-500);
+  --neutral-600: var(--charcoal-600);
+  --neutral-700: var(--charcoal-700);
+  --neutral-800: var(--charcoal-800);
+  --neutral-900: var(--charcoal-900);
+  --neutral-950: var(--charcoal-900);
+
+  /* Semantic feedback */
+  --success: #10b981;
+  --success-light: #d1fae5;
+  --success-dark: #047857;
+  --error: #ef4444;
+  --error-light: #fee2e2;
+  --error-dark: #b91c1c;
+  --warning: #f59e0b;
+  --warning-light: #fef3c7;
+  --warning-dark: #d97706;
+  --info: var(--taupe-500);
+  --info-light: var(--taupe-100);
+  --info-dark: var(--taupe-700);
+
+  /* UI semantic aliases */
+  --color-bg-primary: var(--background);
+  --color-bg-secondary: var(--neutral-50);
+  --color-bg-primary-tint: var(--taupe-50);
+  --color-bg-overlay: rgba(0, 0, 0, 0.5);
+  --color-text-primary: var(--neutral-900);
+  --color-text-secondary: var(--neutral-600);
+  --color-border: var(--neutral-200);
+  --color-shadow-primary: rgba(141, 119, 86, 0.2);
+  --color-shadow-secondary: rgba(233, 116, 99, 0.2);
+}
+
+.dark {
+  --background: oklch(0.12 0.02 250);
+  --foreground: oklch(0.95 0.01 70);
+  --card: oklch(0.18 0.02 250);
+  --card-foreground: oklch(0.95 0.01 70);
+  --popover: oklch(0.18 0.02 250);
+  --popover-foreground: oklch(0.95 0.01 70);
+  --primary: #b97860;
+  --primary-foreground: oklch(0.12 0.02 250);
+  --secondary: #e9a094;
+  --secondary-foreground: oklch(0.95 0.01 70);
+  --muted: oklch(0.28 0.02 250);
+  --muted-foreground: oklch(0.75 0.02 70);
+  --accent: oklch(0.8 0.1 10);
+  --accent-foreground: oklch(0.12 0.02 250);
+  --destructive: oklch(0.6 0.2 20);
+  --destructive-foreground: oklch(0.95 0.01 70);
+  --border: oklch(0.28 0.02 250);
+  --input: oklch(0.22 0.02 250);
+  --ring: oklch(0.72 0.08 35);
+  --chart-1: oklch(0.72 0.08 35);
+  --chart-2: oklch(0.8 0.1 10);
+  --chart-3: oklch(0.8 0.08 80);
+  --chart-4: oklch(0.7 0.06 200);
+  --chart-5: oklch(0.75 0.1 120);
+  --sidebar: oklch(0.18 0.02 250);
+  --sidebar-foreground: oklch(0.95 0.01 70);
+  --sidebar-primary: oklch(0.72 0.08 35);
+  --sidebar-primary-foreground: oklch(0.12 0.02 250);
+  --sidebar-accent: oklch(0.3 0.02 260);
+  --sidebar-accent-foreground: oklch(0.95 0.01 70);
+  --sidebar-border: oklch(0.28 0.02 250);
+  --sidebar-ring: oklch(0.72 0.08 35);
+}
+
+@theme {
+  --font-sans: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+  /* Breakpoints */
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  --breakpoint-3xl: 1920px;
+  --breakpoint-4xl: 2560px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-cream-50: var(--cream-50);
+  --color-cream-100: var(--cream-100);
+  --color-cream-200: var(--cream-200);
+  --color-cream-300: var(--cream-300);
+  --color-beige-50: var(--beige-50);
+  --color-beige-100: var(--beige-100);
+
+  --color-taupe-50: var(--taupe-50);
+  --color-taupe-100: var(--taupe-100);
+  --color-taupe-200: var(--taupe-200);
+  --color-taupe-300: var(--taupe-300);
+  --color-taupe-400: var(--taupe-400);
+  --color-taupe-500: var(--taupe-500);
+  --color-taupe-600: var(--taupe-600);
+  --color-taupe-700: var(--taupe-700);
+  --color-taupe-800: var(--taupe-800);
+  --color-taupe-900: var(--taupe-900);
+
+  --color-blush-50: var(--blush-50);
+  --color-blush-100: var(--blush-100);
+  --color-blush-200: var(--blush-200);
+  --color-blush-300: var(--blush-300);
+  --color-blush-400: var(--blush-400);
+  --color-blush-500: var(--blush-500);
+  --color-blush-600: var(--blush-600);
+  --color-blush-700: var(--blush-700);
+  --color-blush-800: var(--blush-800);
+  --color-blush-900: var(--blush-900);
+
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-600: var(--neutral-600);
+  --color-neutral-700: var(--neutral-700);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-900: var(--neutral-900);
+  --color-neutral-950: var(--neutral-950);
+}

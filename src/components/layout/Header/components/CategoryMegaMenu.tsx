@@ -23,6 +23,7 @@ export function CategoryMegaMenu({
     >
       <button
         type="button"
+        suppressHydrationWarning
         className={`flex items-center gap-1.5 h-8 px-3 text-[12.5px] font-semibold focus:outline-none transition-all duration-150 select-none text-foreground rounded-full ${showAllCategories ? "bg-primary/15" : "bg-primary/8 hover:bg-primary/15"}`}
       >
         <IconAlignLeft className="w-3.5 h-3.5 shrink-0" strokeWidth={2.5} />

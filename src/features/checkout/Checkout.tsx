@@ -15,7 +15,7 @@ import {
 import { useAddress } from "@/hooks";
 import { useCheckout } from "./hooks/useCheckout";
 import { PageContainer, Container } from "@/components/layout/Container";
-import { useConfirm } from "@/components/ui/ConfirmDialog";
+import { useConfirm } from "@/components/shared";
 
 export default function Checkout() {
   const router = useRouter();

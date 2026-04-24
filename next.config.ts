@@ -4,6 +4,11 @@ const isProd = process.env.NODE_ENV === "production";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  experimental: {
+    // Work around Next.js dev runtime crash:
+    // "Could not find ... segment-explorer-node.js#SegmentViewNode"
+    devtoolSegmentExplorer: false,
+  },
 
   // ESLint is run separately (eslint-config-next + @rushstack/eslint-patch
   // are incompatible with ESLint v9 flat config when invoked by next build).
@@ -18,6 +23,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
       { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
       { protocol: "https", hostname: "lh3.googleusercontent.com", pathname: "/**" },
+      { protocol: "https", hostname: "img.vietqr.io", pathname: "/**" },
     ],
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days

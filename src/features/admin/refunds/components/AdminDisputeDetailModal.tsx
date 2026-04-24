@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useMemo, type ReactNode } from "react";
 import {
   IconLoader2,
   IconMessage,
@@ -15,11 +16,13 @@ import {
   IconX,
   IconChevronRight,
   IconReceiptRefund,
+  IconQrcode,
 } from "@tabler/icons-react";
+import { generateBuyerRefundVietQRImageUrl } from "@/constants/payment";
 import { format } from "@/utils/format/date";
 import { formatPrice } from "@/utils/format/price";
 import { openChat } from "@/utils/chat";
-import { StatusBadge } from "@/components/ui/StatusBadge";
+import { StatusBadge } from "@/components/shared";
 
 const REASON_LABELS: Record<string, string> = {
   damaged: "Hàng bị hỏng",
@@ -65,6 +68,12 @@ interface RefundDetail {
   refundedAt?: string;
   buyerId?: { _id: string; fullName?: string; email?: string; phoneNumber?: string };
   sellerId?: { _id: string; fullName?: string; email?: string; phoneNumber?: string };
+  buyerRefundBankInfo?: {
+    buyerBankName?: string;
+    buyerAccountNumber?: string;
+    buyerAccountHolder?: string;
+    submittedAt?: string;
+  } | null;
   orderId?: {
     _id: string;
     totalAmount?: number;
@@ -103,11 +112,17 @@ interface AdminDisputeDetailModalProps {
   isProcessing: boolean;
 }
 
+function SectionLabel({ children }: { children: ReactNode }) {
+  return (
+    <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">{children}</p>
+  );
+}
+
 function TimelineDot({ filled }: { filled?: boolean }) {
   return (
     <div
-      className={`shrink-0 w-3 h-3 rounded-full border-2 ${
-        filled ? "border-primary bg-primary" : "border-border bg-muted/50"
+      className={`shrink-0 w-2.5 h-2.5 rounded-full ${
+        filled ? "bg-primary" : "bg-muted-foreground/25"
       }`}
     />
   );
@@ -122,6 +137,27 @@ export function AdminDisputeDetailModal({
   onReject,
   isProcessing,
 }: AdminDisputeDetailModalProps) {
+  const buyerRefundQr = useMemo(() => {
+    const b = refund?.buyerRefundBankInfo;
+    if (!refund || !b?.buyerBankName?.trim() || !b?.buyerAccountNumber?.trim()) return null;
+    const oid =
+      refund.orderId && typeof refund.orderId === "object" && "_id" in refund.orderId
+        ? String((refund.orderId as { _id: string })._id)
+        : String(refund._id);
+    const orderRef = oid.slice(-8).toUpperCase();
+    const transferContent = `Hoan tien don ${orderRef}`;
+    return {
+      url: generateBuyerRefundVietQRImageUrl({
+        bankName: b.buyerBankName,
+        accountNumber: b.buyerAccountNumber,
+        accountHolder: b.buyerAccountHolder,
+        amountVnd: refund.refundAmount,
+        transferContent,
+      }),
+      transferContent,
+    };
+  }, [refund]);
+
   if (!open) return null;
 
   const order = refund?.orderId;
@@ -160,56 +196,55 @@ export function AdminDisputeDetailModal({
   ].filter(Boolean) as { label: string; value: string }[];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-md overflow-y-auto">
-      <div className="bg-card rounded-3xl shadow-2xl max-w-5xl w-full max-h-[95vh] overflow-hidden border border-border flex flex-col">
-        {/* ─── HERO STRIP ─── */}
-        <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/15 via-primary/10 to-transparent" />
-          <div className="absolute right-0 top-0 w-64 h-64 rounded-full bg-primary/5 -translate-y-1/2 translate-x-1/2" />
-          <div className="relative px-6 py-5 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center">
-                  <IconReceiptRefund className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">
-                    Khiếu nại
-                  </p>
-                  <h2 className="text-xl font-bold text-foreground font-mono">
-                    #{refund?._id?.slice(-8).toUpperCase() ?? "—"}
-                  </h2>
-                </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm overflow-y-auto">
+      <div className="bg-card rounded-2xl shadow-xl max-w-7xl w-full max-h-[92vh] overflow-hidden border border-border flex flex-col">
+        {/* Header: trạng thái khiếu nại + số tiền (một lần, rõ ràng) */}
+        <header className="shrink-0 border-b border-border bg-muted/20 px-5 py-4 sm:px-6">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex min-w-0 items-start gap-3">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/12 text-primary">
+                <IconReceiptRefund className="h-5 w-5" stroke={1.75} />
               </div>
-              <div className="h-10 w-px bg-border hidden sm:block" />
-              <div>
-                <p className="text-xs text-muted-foreground">Số tiền yêu cầu</p>
-                <p className="text-2xl font-bold text-primary tabular-nums">
-                  {refund ? formatPrice(refund.refundAmount) : "—"}
+              <div className="min-w-0 space-y-1">
+                <div className="flex flex-wrap items-center gap-2 gap-y-1">
+                  <h2 className="text-base font-semibold tracking-tight text-foreground sm:text-lg">
+                    Khiếu nại{" "}
+                    <span className="font-mono text-muted-foreground">
+                      #{refund?._id?.slice(-8).toUpperCase() ?? "—"}
+                    </span>
+                  </h2>
+                  {refund?.status && <StatusBadge status={refund.status} size="sm" />}
+                </div>
+                <p className="text-xs text-muted-foreground sm:text-sm">
+                  {refund?.createdAt && <span>Tạo {format(refund.createdAt)}</span>}
+                  {refund?.updatedAt && (
+                    <span className={refund?.createdAt ? " · " : ""}>
+                      Cập nhật {format(refund.updatedAt)}
+                    </span>
+                  )}
                 </p>
               </div>
-              {(refund?.createdAt || refund?.updatedAt) && (
-                <div className="text-sm text-muted-foreground">
-                  <span>Tạo {refund?.createdAt && format(refund.createdAt)}</span>
-                  {refund?.updatedAt && (
-                    <span className="ml-2">· Cập nhật {format(refund.updatedAt)}</span>
-                  )}
-                </div>
-              )}
             </div>
-            <div className="flex items-center gap-3">
-              {order && <StatusBadge status={order.status ?? "pending"} size="md" />}
-              <button
-                onClick={onClose}
-                className="p-2.5 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <IconX className="w-5 h-5" />
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="shrink-0 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              aria-label="Đóng"
+            >
+              <IconX className="h-5 w-5" />
+            </button>
           </div>
-        </div>
+          {refund && (
+            <div className="mt-4 flex flex-col gap-0.5 border-t border-border/80 pt-4 sm:flex-row sm:items-end sm:justify-between">
+              <SectionLabel>Số tiền hoàn</SectionLabel>
+              <p className="text-2xl font-semibold tabular-nums tracking-tight text-foreground sm:text-3xl">
+                {formatPrice(refund.refundAmount)}
+              </p>
+            </div>
+          )}
+        </header>
 
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto px-5 py-5 sm:px-6">
           {isLoading ? (
             <div className="flex items-center justify-center py-24">
               <IconLoader2 className="w-12 h-12 animate-spin text-primary" />
@@ -217,312 +252,352 @@ export function AdminDisputeDetailModal({
           ) : !refund ? (
             <p className="text-muted-foreground text-center py-16">Không tải được dữ liệu.</p>
           ) : (
-            <div className="space-y-6">
-              {/* ─── BENTO: Parties + Request ─── */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-                {/* Buyer vs Seller — 2 cols */}
-                <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-                  <div className="p-4 rounded-2xl border border-border bg-gradient-to-br from-blue-500/5 to-transparent hover:border-blue-500/30 transition-colors">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                        <IconUser className="w-4 h-4 text-blue-600" />
-                      </div>
-                      <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-                        Người mua
-                      </span>
+            <div className="space-y-5">
+              {/* Người tham gia — một hàng gọn */}
+              <div className="grid gap-3 sm:grid-cols-2">
+                {[
+                  {
+                    role: "Người mua",
+                    u: refund.buyerId,
+                    fallback: "Người mua",
+                    accent: "text-sky-600 dark:text-sky-400",
+                    bg: "bg-sky-500/10",
+                  },
+                  {
+                    role: "Người bán",
+                    u: refund.sellerId,
+                    fallback: "Người bán",
+                    accent: "text-amber-700 dark:text-amber-400",
+                    bg: "bg-amber-500/10",
+                  },
+                ].map(({ role, u, fallback, accent, bg }) => (
+                  <div
+                    key={role}
+                    className="flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-3"
+                  >
+                    <div
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${bg}`}
+                    >
+                      <IconUser className={`h-5 w-5 ${accent}`} stroke={1.5} />
                     </div>
-                    <p className="font-bold text-foreground truncate">
-                      {refund.buyerId?.fullName ?? "—"}
-                    </p>
-                    {refund.buyerId?.phoneNumber && (
-                      <p className="text-sm text-muted-foreground mt-0.5 font-mono">
-                        {refund.buyerId.phoneNumber}
+                    <div className="min-w-0 flex-1">
+                      <SectionLabel>{role}</SectionLabel>
+                      <p className="truncate font-medium text-foreground">{u?.fullName ?? "—"}</p>
+                      <p className="truncate text-xs text-muted-foreground">
+                        {u?.phoneNumber ?? u?.email ?? "—"}
                       </p>
-                    )}
-                    {refund.buyerId?.email && (
-                      <p className="text-xs text-muted-foreground truncate mt-1">
-                        {refund.buyerId.email}
-                      </p>
-                    )}
+                    </div>
                     <button
+                      type="button"
                       onClick={() =>
-                        refund.buyerId?._id &&
+                        u?._id &&
                         openChat({
-                          userId: refund.buyerId._id,
-                          userName: refund.buyerId.fullName ?? "Người mua",
+                          userId: u._id,
+                          userName: u.fullName ?? fallback,
                           order: orderInfo,
                         })
                       }
-                      className="mt-3 w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-primary/10 text-primary text-sm font-semibold hover:bg-primary/20 transition-colors"
+                      className="shrink-0 rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
                     >
-                      <IconMessage className="w-4 h-4" />
-                      Nhắn tin
+                      <IconMessage className="mr-1 inline h-3.5 w-3.5 align-text-bottom" />
+                      Chat
                     </button>
                   </div>
-                  <div className="p-4 rounded-2xl border border-border bg-gradient-to-br from-amber-500/5 to-transparent hover:border-amber-500/30 transition-colors">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center">
-                        <IconUser className="w-4 h-4 text-amber-600" />
-                      </div>
-                      <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-                        Người bán
-                      </span>
-                    </div>
-                    <p className="font-bold text-foreground truncate">
-                      {refund.sellerId?.fullName ?? "—"}
-                    </p>
-                    {refund.sellerId?.phoneNumber && (
-                      <p className="text-sm text-muted-foreground mt-0.5 font-mono">
-                        {refund.sellerId.phoneNumber}
-                      </p>
-                    )}
-                    {refund.sellerId?.email && (
-                      <p className="text-xs text-muted-foreground truncate mt-1">
-                        {refund.sellerId.email}
-                      </p>
-                    )}
-                    <button
-                      onClick={() =>
-                        refund.sellerId?._id &&
-                        openChat({
-                          userId: refund.sellerId._id,
-                          userName: refund.sellerId.fullName ?? "Người bán",
-                          order: orderInfo,
-                        })
-                      }
-                      className="mt-3 w-full flex items-center justify-center gap-2 py-2 rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-400 text-sm font-semibold hover:bg-amber-500/20 transition-colors"
-                    >
-                      <IconMessage className="w-4 h-4" />
-                      Nhắn tin
-                    </button>
-                  </div>
-                </div>
+                ))}
+              </div>
 
-                {/* Request summary — 1 col */}
-                <div className="lg:col-span-7 p-5 rounded-2xl border border-border bg-card">
-                  <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
-                    <IconPackage className="w-4 h-4" />
-                    Yêu cầu hoàn tiền
-                  </h3>
-                  <div className="flex flex-wrap gap-6 mb-4">
-                    <div>
-                      <p className="text-xs text-muted-foreground">Lý do</p>
-                      <p className="font-semibold text-foreground">
-                        {REASON_LABELS[refund.reason] ?? refund.reason}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Số tiền</p>
-                      <p className="font-bold text-primary text-lg">{formatPrice(refund.refundAmount)}</p>
-                    </div>
+              {/* Nội dung khiếu nại — không lặp số tiền */}
+              <section className="rounded-xl border border-border bg-card">
+                <div className="flex items-center gap-2 border-b border-border px-4 py-3">
+                  <IconPackage className="h-4 w-4 text-muted-foreground" />
+                  <h3 className="text-sm font-semibold text-foreground">Yêu cầu hoàn tiền</h3>
+                </div>
+                <div className="space-y-4 px-4 py-4">
+                  <div>
+                    <SectionLabel>Lý do</SectionLabel>
+                    <p className="mt-1 text-sm font-medium text-foreground">
+                      {REASON_LABELS[refund.reason] ?? refund.reason}
+                    </p>
                   </div>
                   {refund.description && (
-                    <div className="p-4 rounded-xl bg-muted/40 border border-border">
-                      <p className="text-sm text-foreground leading-relaxed">{refund.description}</p>
+                    <div>
+                      <SectionLabel>Ghi chú từ người mua</SectionLabel>
+                      <p className="mt-1.5 rounded-lg bg-muted/50 px-3 py-2.5 text-sm leading-relaxed text-foreground">
+                        {refund.description}
+                      </p>
                     </div>
                   )}
                   {refund.sellerResponse && (
                     <div
-                      className={`mt-4 p-4 rounded-xl border-2 flex items-start gap-3 ${
+                      className={`flex gap-3 rounded-lg px-3 py-3 ${
                         refund.sellerResponse.decision === "rejected"
-                          ? "bg-red-500/5 border-red-500/30 dark:border-red-500/20"
-                          : "bg-emerald-500/5 border-emerald-500/30 dark:border-emerald-500/20"
+                          ? "bg-destructive/5"
+                          : "bg-emerald-500/10 dark:bg-emerald-500/15"
                       }`}
                     >
                       {refund.sellerResponse.decision === "rejected" ? (
-                        <IconCircleX className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+                        <IconCircleX className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
                       ) : (
-                        <IconCircleCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                        <IconCircleCheck className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
                       )}
-                      <div>
-                        <p className="font-semibold">
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-foreground">
                           Seller {refund.sellerResponse.decision === "rejected" ? "từ chối" : "chấp thuận"}
                           {refund.sellerResponse.respondedAt && (
-                            <span className="text-muted-foreground font-normal font-mono text-sm ml-2">
-                              {format(refund.sellerResponse.respondedAt)}
+                            <span className="ml-2 font-normal text-muted-foreground">
+                              · {format(refund.sellerResponse.respondedAt)}
                             </span>
                           )}
                         </p>
                         {refund.sellerResponse.comment && (
-                          <p className="mt-1 text-sm text-foreground/90">
-                            &ldquo;{refund.sellerResponse.comment}&rdquo;
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            {refund.sellerResponse.comment}
                           </p>
                         )}
                       </div>
                     </div>
                   )}
                 </div>
-              </div>
+              </section>
 
-              {/* ─── ORDER + EVIDENCE SIDE BY SIDE ─── */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Order card */}
+              {refund.buyerRefundBankInfo?.buyerAccountNumber && (
+                <section className="overflow-hidden rounded-xl border border-primary/20 bg-primary/[0.03] dark:bg-primary/[0.06]">
+                  <div className="border-b border-primary/15 bg-primary/5 px-4 py-3 sm:flex sm:items-center sm:justify-between sm:gap-4">
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-primary">
+                        <IconQrcode className="h-5 w-5" stroke={1.5} />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-semibold text-foreground">Bước tiếp theo: chuyển khoản</h3>
+                        <p className="mt-0.5 text-xs text-muted-foreground">
+                          Quét VietQR — app sẽ điền sẵn số tiền và nội dung. Chuyển đúng{" "}
+                          <span className="font-medium text-foreground">{formatPrice(refund.refundAmount)}</span>
+                          {buyerRefundQr?.transferContent ? " và nội dung bên dưới." : "."}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="grid gap-6 p-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start lg:gap-8">
+                    <dl className="space-y-3 text-sm">
+                      <div className="grid gap-0.5 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-x-4">
+                        <dt className="text-muted-foreground">Ngân hàng</dt>
+                        <dd className="font-medium text-foreground">
+                          {refund.buyerRefundBankInfo.buyerBankName ?? "—"}
+                        </dd>
+                      </div>
+                      <div className="grid gap-0.5 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-x-4">
+                        <dt className="text-muted-foreground">Số tài khoản</dt>
+                        <dd className="font-mono font-medium tracking-wide text-foreground">
+                          {refund.buyerRefundBankInfo.buyerAccountNumber}
+                        </dd>
+                      </div>
+                      <div className="grid gap-0.5 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-x-4">
+                        <dt className="text-muted-foreground">Chủ TK</dt>
+                        <dd className="font-medium text-foreground">
+                          {refund.buyerRefundBankInfo.buyerAccountHolder ?? "—"}
+                        </dd>
+                      </div>
+                      {buyerRefundQr?.transferContent && (
+                        <div className="border-t border-border/80 pt-3">
+                          <dt className="text-muted-foreground">Nội dung CK</dt>
+                          <dd className="mt-1 break-all font-mono text-sm font-medium text-foreground">
+                            {buyerRefundQr.transferContent}
+                          </dd>
+                        </div>
+                      )}
+                      {refund.buyerRefundBankInfo.submittedAt && (
+                        <p className="text-xs text-muted-foreground pt-1">
+                          Người mua gửi STK lúc {format(refund.buyerRefundBankInfo.submittedAt)}
+                        </p>
+                      )}
+                    </dl>
+                    {buyerRefundQr?.url && (
+                      <div className="flex flex-col items-center lg:items-end">
+                        <div className="rounded-xl border border-border bg-white p-3 shadow-sm">
+                          <Image
+                            src={buyerRefundQr.url}
+                            alt="Mã VietQR hoàn tiền"
+                            width={216}
+                            height={216}
+                            className="h-[200px] w-[200px] object-contain sm:h-[216px] sm:w-[216px]"
+                            unoptimized
+                          />
+                        </div>
+                        <p className="mt-2 max-w-[220px] text-center text-[11px] leading-snug text-muted-foreground lg:text-right">
+                          Lỗi QR? Chuyển thủ công theo thông tin bên trái.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </section>
+              )}
+
+              <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
                 {order && (
-                  <div className="p-5 rounded-2xl border border-border bg-card">
-                    <div className="flex items-center justify-between gap-3 mb-4">
-                      <h3 className="text-sm font-bold text-foreground uppercase tracking-wider flex items-center gap-2">
-                        <IconPackage className="w-4 h-4" />
-                        Đơn hàng #{order._id?.slice(-8).toUpperCase()}
+                  <section className="rounded-xl border border-border bg-card">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-3">
+                      <h3 className="text-sm font-semibold text-foreground">
+                        Đơn #{order._id?.slice(-8).toUpperCase()}
                       </h3>
                       <StatusBadge status={order.status ?? "pending"} size="sm" />
                     </div>
-                    {(order.createdAt || order.updatedAt) && (
-                      <div className="flex flex-wrap gap-4 text-xs text-muted-foreground mb-4">
-                        {order.createdAt && <span>Đặt: {format(order.createdAt)}</span>}
-                        {order.updatedAt && <span>Cập nhật: {format(order.updatedAt)}</span>}
-                      </div>
-                    )}
-                    {order.shippingAddress && typeof order.shippingAddress === "object" && (
-                      <div className="mb-4 p-4 rounded-xl bg-muted/30 border border-border">
-                        <p className="text-xs font-semibold text-muted-foreground mb-2 flex items-center gap-1.5">
-                          <IconMapPin className="w-4 h-4" /> Địa chỉ giao hàng
+                    <div className="space-y-3 px-4 py-3">
+                      {(order.createdAt || order.updatedAt) && (
+                        <p className="text-xs text-muted-foreground">
+                          {order.createdAt && <>Đặt {format(order.createdAt)}</>}
+                          {order.createdAt && order.updatedAt && " · "}
+                          {order.updatedAt && <>Cập nhật {format(order.updatedAt)}</>}
                         </p>
-                        <p className="font-medium">{order.shippingAddress.fullName}</p>
-                        {order.shippingAddress.phoneNumber && (
-                          <p className="text-sm text-muted-foreground font-mono">
-                            {order.shippingAddress.phoneNumber}
+                      )}
+                      {order.shippingAddress && typeof order.shippingAddress === "object" && (
+                        <div className="rounded-lg bg-muted/40 px-3 py-2.5 text-sm">
+                          <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                            <IconMapPin className="h-3.5 w-3.5" /> Giao hàng
                           </p>
-                        )}
-                        <p className="text-sm text-foreground mt-1">
-                          {[
-                            order.shippingAddress.specificAddress,
-                            order.shippingAddress.ward,
-                            order.shippingAddress.district,
-                            order.shippingAddress.province,
-                          ]
-                            .filter(Boolean)
-                            .join(", ")}
-                        </p>
+                          <p className="mt-1 font-medium">{order.shippingAddress.fullName}</p>
+                          {order.shippingAddress.phoneNumber && (
+                            <p className="text-xs text-muted-foreground font-mono">
+                              {order.shippingAddress.phoneNumber}
+                            </p>
+                          )}
+                          <p className="mt-1 text-xs leading-relaxed text-foreground">
+                            {[
+                              order.shippingAddress.specificAddress,
+                              order.shippingAddress.ward,
+                              order.shippingAddress.district,
+                              order.shippingAddress.province,
+                            ]
+                              .filter(Boolean)
+                              .join(", ")}
+                          </p>
+                        </div>
+                      )}
+                      <div className="divide-y divide-border">
+                        {orderProducts.map((item, i) => {
+                          const prod = item.productId as {
+                            name?: string;
+                            avatar?: string | { url?: string };
+                          };
+                          const avatar = prod?.avatar;
+                          const imgUrl =
+                            typeof avatar === "string"
+                              ? avatar
+                              : typeof avatar === "object" && avatar?.url
+                                ? avatar.url
+                                : null;
+                          return (
+                            <div key={i} className="flex items-center gap-3 py-2.5 first:pt-0">
+                              {imgUrl && (
+                                <div className="h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-muted">
+                                  <Image
+                                    src={imgUrl}
+                                    alt=""
+                                    width={44}
+                                    height={44}
+                                    className="h-full w-full object-cover"
+                                  />
+                                </div>
+                              )}
+                              <span className="min-w-0 flex-1 truncate text-sm">
+                                {prod?.name ?? "Sản phẩm"}{" "}
+                                <span className="text-muted-foreground">×{item.quantity}</span>
+                              </span>
+                              <span className="shrink-0 text-sm font-medium tabular-nums">
+                                {formatPrice((item.price ?? 0) * (item.quantity ?? 1))}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
-                    )}
-                    <div className="space-y-2">
-                      {orderProducts.map((item, i) => {
-                        const prod = item.productId as { name?: string; avatar?: string | { url?: string } };
-                        const avatar = prod?.avatar;
-                        const imgUrl =
-                          typeof avatar === "string"
-                            ? avatar
-                            : typeof avatar === "object" && avatar?.url
-                              ? avatar.url
-                              : null;
-                        return (
-                          <div
-                            key={i}
-                            className="flex items-center gap-3 py-2 border-b border-border/50 last:border-0"
-                          >
-                            {imgUrl && (
-                              <div className="w-12 h-12 rounded-xl overflow-hidden bg-muted shrink-0">
-                                <Image
-                                  src={imgUrl}
-                                  alt=""
-                                  width={48}
-                                  height={48}
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                            )}
-                            <span className="text-sm truncate flex-1">
-                              {prod?.name ?? "Sản phẩm"} ×{item.quantity}
-                            </span>
-                            <span className="text-sm font-semibold shrink-0 tabular-nums">
-                              {formatPrice((item.price ?? 0) * (item.quantity ?? 1))}
-                            </span>
-                          </div>
-                        );
-                      })}
-                      <div className="flex justify-between font-bold text-base pt-3 border-t-2 border-border">
-                        <span>Tổng cộng</span>
-                        <span className="text-primary tabular-nums">
+                      <div className="flex items-center justify-between border-t border-border pt-3 text-sm font-semibold">
+                        <span className="text-muted-foreground">Tổng đơn</span>
+                        <span className="tabular-nums text-foreground">
                           {formatPrice(order.totalAmount ?? 0)}
                         </span>
                       </div>
                     </div>
-                  </div>
+                  </section>
                 )}
 
-                {/* Evidence */}
                 {((refund.evidence?.images?.length ?? 0) > 0 ||
                   (refund.evidence?.videos?.length ?? 0) > 0) && (
-                  <div className="p-5 rounded-2xl border border-border bg-card">
-                    <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
-                      <IconPhoto className="w-4 h-4" />
-                      Bằng chứng từ người mua
-                    </h3>
-                    {refund.evidence?.images && refund.evidence.images.length > 0 && (
-                      <div className="mb-4">
-                        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                          {refund.evidence.images.map((img, i) => (
+                  <section className="rounded-xl border border-border bg-card">
+                    <div className="flex items-center gap-2 border-b border-border px-4 py-3">
+                      <IconPhoto className="h-4 w-4 text-muted-foreground" />
+                      <h3 className="text-sm font-semibold text-foreground">Bằng chứng</h3>
+                    </div>
+                    <div className="px-4 py-3">
+                      {refund.evidence?.images && refund.evidence.images.length > 0 && (
+                        <div className="mb-3 last:mb-0">
+                          <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+                            {refund.evidence.images.map((img, i) => (
+                              <a
+                                key={i}
+                                href={img.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group block aspect-square overflow-hidden rounded-lg border border-border transition-colors hover:border-primary"
+                              >
+                                <Image
+                                  src={img.url}
+                                  alt={img.originalName ?? `Bằng chứng ${i + 1}`}
+                                  width={120}
+                                  height={120}
+                                  className="h-full w-full object-cover transition-transform group-hover:scale-[1.02]"
+                                />
+                              </a>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {refund.evidence?.videos && refund.evidence.videos.length > 0 && (
+                        <div className="space-y-2">
+                          {refund.evidence.videos.map((v, i) => (
                             <a
                               key={i}
-                              href={img.url}
+                              href={v.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="block aspect-square rounded-xl overflow-hidden border border-border hover:border-primary hover:ring-2 hover:ring-primary/20 transition-all group"
+                              className="flex items-center gap-3 rounded-lg border border-border p-2.5 transition-colors hover:bg-muted/60"
                             >
-                              <Image
-                                src={img.url}
-                                alt={img.originalName ?? `Bằng chứng ${i + 1}`}
-                                width={120}
-                                height={120}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                              />
+                              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-primary/10">
+                                <IconVideo className="h-4 w-4 text-primary" />
+                              </div>
+                              <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                                {v.originalName ?? `Video ${i + 1}`}
+                              </span>
+                              <IconChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
                             </a>
                           ))}
                         </div>
-                      </div>
-                    )}
-                    {refund.evidence?.videos && refund.evidence.videos.length > 0 && (
-                      <div className="space-y-2">
-                        {refund.evidence.videos.map((v, i) => (
-                          <a
-                            key={i}
-                            href={v.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-3 p-3 rounded-xl border border-border hover:bg-muted/50 hover:border-primary/50 transition-colors"
-                          >
-                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                              <IconVideo className="w-5 h-5 text-primary" />
-                            </div>
-                            <span className="text-sm font-medium truncate flex-1">
-                              {v.originalName ?? `Video ${i + 1}`}
-                            </span>
-                            <IconChevronRight className="w-5 h-5 text-muted-foreground shrink-0" />
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                      )}
+                    </div>
+                  </section>
                 )}
               </div>
 
-              {/* ─── TIMELINE (horizontal on desktop, vertical on mobile) ─── */}
               {timelineItems.length > 0 && (
-                <div className="p-5 rounded-2xl border border-border bg-card">
-                  <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
-                    <IconClock className="w-4 h-4" />
-                    Mốc thời gian
-                  </h3>
-                  <div className="relative">
-                    {/* Vertical line */}
-                    <div className="absolute left-[5px] top-2 bottom-2 w-px bg-border hidden sm:block" />
-                    <div className="space-y-0">
-                      {timelineItems.map((item, i) => (
-                        <div key={i} className="relative flex items-start gap-4 py-3 sm:py-2">
-                          <div className="relative z-10 mt-1 sm:mt-1.5">
-                            <TimelineDot filled />
-                          </div>
-                          <div className="flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                            <span className="text-sm text-muted-foreground">{item.label}</span>
-                            <span className="text-sm font-semibold text-foreground font-mono tabular-nums">
-                              {format(item.value)}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                <section className="rounded-xl border border-border bg-card">
+                  <div className="flex items-center gap-2 border-b border-border px-4 py-3">
+                    <IconClock className="h-4 w-4 text-muted-foreground" />
+                    <h3 className="text-sm font-semibold text-foreground">Mốc thời gian</h3>
                   </div>
-                </div>
+                  <ul className="divide-y divide-border px-2 py-1">
+                    {timelineItems.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 px-2 py-2.5">
+                        <span className="mt-1.5">
+                          <TimelineDot filled />
+                        </span>
+                        <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between sm:gap-4">
+                          <span className="text-sm text-muted-foreground">{item.label}</span>
+                          <time className="text-sm font-medium tabular-nums text-foreground">
+                            {format(item.value)}
+                          </time>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
               )}
             </div>
           )}
@@ -530,24 +605,26 @@ export function AdminDisputeDetailModal({
 
         {/* ─── STICKY ACTION BAR ─── */}
         {refund?.status === "disputed" && (
-          <div className="sticky bottom-0 border-t border-border bg-card/95 backdrop-blur px-6 py-4 flex flex-wrap items-center justify-end gap-3">
+          <div className="flex flex-wrap items-center justify-end gap-2 border-t border-border bg-muted/20 px-5 py-3 sm:px-6">
             <button
+              type="button"
               onClick={onReject}
               disabled={isProcessing}
-              className="flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-destructive text-destructive font-semibold hover:bg-destructive/5 disabled:opacity-50 transition-colors"
+              className="flex items-center gap-2 rounded-lg border border-destructive/50 px-4 py-2.5 text-sm font-semibold text-destructive transition-colors hover:bg-destructive/5 disabled:opacity-50"
             >
-              <IconCircleX className="w-5 h-5" />
+              <IconCircleX className="h-4 w-4" />
               Bác bỏ khiếu nại
             </button>
             <button
+              type="button"
               onClick={onApprove}
               disabled={isProcessing}
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-lg shadow-primary/20"
+              className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
             >
               {isProcessing ? (
-                <IconLoader2 className="w-5 h-5 animate-spin" />
+                <IconLoader2 className="h-4 w-4 animate-spin" />
               ) : (
-                <IconCircleCheck className="w-5 h-5" />
+                <IconCircleCheck className="h-4 w-4" />
               )}
               Duyệt hoàn tiền
             </button>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useVerify } from "./hooks/useVerify";
-import { EmailVerifyIcon } from "@/components/ui/icons/EmailVerifyIcon";
+import { EmailVerifyIcon } from "@/components/shared";
 import VerifyForm from "./components/VerifyForm";
 
 export default function Verify() {

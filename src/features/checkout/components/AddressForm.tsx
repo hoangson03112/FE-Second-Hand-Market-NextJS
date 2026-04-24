@@ -2,6 +2,7 @@
 
 import { useProvinces, useDistricts, useWards } from "@/hooks/useGHNLocation";
 import { useForm } from "@/hooks/useForm";
+import { Button, Input } from "@/components/shared";
 import type { CreateAddressRequest, Address } from "@/types/address";
 
 interface AddressFormProps {
@@ -76,7 +77,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-7xl mx-auto w-full">
       {provincesError && (
         <div className="p-4 mb-4 bg-destructive/8 text-destructive rounded-lg">
           Không thể tải dữ liệu tỉnh/thành phố. Vui lòng thử lại sau.
@@ -181,41 +182,48 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
 
         <div>
           <label className="block text-sm font-medium mb-2">Địa chỉ cụ thể <span className="text-destructive">*</span></label>
-          <input
+          <Input
             type="text"
             name="specificAddress"
             value={values.specificAddress}
             onChange={handleChange}
             placeholder="Số nhà, tên đường..."
-            className="bg-cream-50 w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
+            className="bg-cream-50"
             required
           />
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-2">Họ và tên <span className="text-destructive">*</span></label>
-          <input
+          <Input
             type="text"
             name="fullName"
             value={values.fullName}
             onChange={handleChange}
             placeholder="Nguyễn Văn A"
-            className="bg-cream-50 w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
+            className="bg-cream-50"
             required
           />
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-2">Số điện thoại <span className="text-destructive">*</span></label>
-          <input
+          <Input
             type="tel"
             name="phoneNumber"
             value={values.phoneNumber}
             onChange={handleChange}
-            placeholder="0912345678"
-            className="bg-cream-50 w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary"
+            placeholder="0332454556"
+            className="bg-cream-50"
+            pattern="0[0-9]{9}"
+            title="Số điện thoại phải gồm 10 chữ số và bắt đầu bằng số 0 (ví dụ: 0332454556)"
+            minLength={10}
+            maxLength={10}
             required
           />
+          <p className="mt-1 text-xs text-muted-foreground">
+            Định dạng hợp lệ: 10 số và bắt đầu bằng 0 (ví dụ: 0332454556).
+          </p>
         </div>
 
         <div className="flex items-center gap-2">
@@ -234,17 +242,23 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
 
         <div className="flex gap-3 justify-end">
           {onCancel && (
-            <button type="button" onClick={onCancel} className="btn btn-secondary py-3 px-6 rounded-xl" disabled={isSubmitting}>
+            <Button
+              type="button"
+              onClick={onCancel}
+              variant="secondary"
+              className="py-3 px-6"
+              disabled={isSubmitting}
+            >
               Hủy
-            </button>
+            </Button>
           )}
-          <button
+          <Button
             type="submit"
-            className="btn btn-primary py-3 px-6 rounded-xl"
+            className="py-3 px-6"
             disabled={!values.wardCode || isSubmitting}
           >
             {isSubmitting ? (isEditMode ? "Đang cập nhật..." : "Đang lưu...") : (isEditMode ? "Cập nhật" : "Lưu địa chỉ")}
-          </button>
+          </Button>
         </div>
       </form>
     </div>

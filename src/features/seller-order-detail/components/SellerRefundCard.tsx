@@ -12,6 +12,7 @@ import {
   IconTool,
   IconVideo,
 } from "@tabler/icons-react";
+import { REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER } from "@/constants/refund";
 import type { Order } from "@/types/order";
 
 const REASON_LABELS: Record<string, { label: string; Icon: React.ElementType }> = {
@@ -135,6 +136,10 @@ export function SellerRefundCard({ refund }: SellerRefundCardProps) {
             </div>
           </div>
         )}
+
+        <p className="text-xs text-muted-foreground leading-relaxed border-t border-border pt-3 mt-1">
+          {REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}
+        </p>
       </div>
     </div>
   );

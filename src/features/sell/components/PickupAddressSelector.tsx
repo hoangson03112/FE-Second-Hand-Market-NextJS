@@ -9,7 +9,7 @@ import {
   IconPhone,
 } from "@tabler/icons-react";
 import type { Address } from "@/types/address";
-import { useConfirm } from "@/components/ui/ConfirmDialog";
+import { useConfirm } from "@/components/shared";
 import { SectionCard } from "./SectionCard";
 
 interface PickupAddressSelectorProps {

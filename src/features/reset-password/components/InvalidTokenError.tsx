@@ -38,14 +38,14 @@ export default function InvalidTokenError({ message }: InvalidTokenErrorProps) {
       <div className="space-y-3 pt-1">
         <Link
           href="/forgot-password"
-          className="btn-auth-primary block w-full rounded-xl px-4 py-3 text-center text-[15px] font-semibold transition-all"
+          className="block w-full rounded-xl bg-primary px-4 py-3 text-center text-[15px] font-semibold text-primary-foreground transition-all hover:bg-primary/90"
         >
           Yêu cầu liên kết mới
         </Link>
 
         <Link
           href="/login"
-          className="btn-auth-secondary block w-full rounded-xl px-4 py-3 text-center text-[15px] font-semibold transition-colors"
+          className="block w-full rounded-xl border border-border bg-background px-4 py-3 text-center text-[15px] font-semibold text-foreground transition-colors hover:bg-muted/60"
         >
           Quay lại đăng nhập
         </Link>

@@ -72,7 +72,7 @@ export default function AllProductsFilterBar({
   return (
     <div className="bg-white/90 backdrop-blur-md border-b border-taupe-200/70 shadow-sm sticky top-28 z-40">
       {/* Main bar */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3 py-3 overflow-x-auto scrollbar-none">
 
           {/* Search input */}
@@ -101,7 +101,7 @@ export default function AllProductsFilterBar({
             className={cn(
               "shrink-0 h-9 px-3.5 rounded-xl border-2 text-sm font-semibold flex items-center gap-2 transition-all duration-200",
               showFilters || activeFilterCount > 0
-                ? "border-primary bg-primary text-white shadow-sm"
+                ? "border-primary bg-primary text-primary-foreground shadow-sm"
                 : "border-taupe-200 bg-white text-taupe-700 hover:border-primary/60 hover:text-primary"
             )}
           >
@@ -126,7 +126,7 @@ export default function AllProductsFilterBar({
               className={cn(
                 "shrink-0 h-9 px-3.5 rounded-xl border text-sm font-medium transition-all duration-200",
                 filters.sortBy === opt.value
-                  ? "border-primary bg-primary/15 text-foreground font-semibold"
+                  ? "border-primary bg-primary text-primary-foreground font-semibold"
                   : "border-taupe-200 bg-white text-taupe-600 hover:border-taupe-300 hover:text-taupe-900"
               )}
             >
@@ -192,7 +192,7 @@ export default function AllProductsFilterBar({
       {/* Expanded filter panel */}
       {showFilters && (
         <div className="border-t border-taupe-100 bg-gradient-to-b from-taupe-50/60 to-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-5 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-5 grid grid-cols-1 md:grid-cols-3 gap-6">
 
             {/* Category */}
             {categories.length > 0 && (
@@ -204,7 +204,7 @@ export default function AllProductsFilterBar({
                     className={cn(
                       "h-8 px-3 rounded-lg text-xs font-semibold border transition-all duration-200",
                       !filters.categorySlug
-                        ? "border-primary bg-primary text-white shadow-sm"
+                        ? "border-primary bg-primary text-primary-foreground shadow-sm"
                         : "border-taupe-200 bg-white text-taupe-600 hover:border-primary/50 hover:text-primary hover:bg-primary/5"
                     )}
                   >
@@ -217,7 +217,7 @@ export default function AllProductsFilterBar({
                       className={cn(
                         "h-8 px-3 rounded-lg text-xs font-semibold border transition-all duration-200",
                         cat.slug === filters.categorySlug
-                          ? "border-primary bg-primary text-white shadow-sm"
+                          ? "border-primary bg-primary text-primary-foreground shadow-sm"
                           : "border-taupe-200 bg-white text-taupe-600 hover:border-primary/50 hover:text-primary hover:bg-primary/5"
                       )}
                     >
@@ -241,7 +241,7 @@ export default function AllProductsFilterBar({
                       className={cn(
                         "h-8 px-3 rounded-lg text-xs font-semibold border transition-all duration-200",
                         isActive
-                          ? "border-primary bg-primary text-white shadow-sm"
+                          ? "border-primary bg-primary text-primary-foreground shadow-sm"
                           : "border-taupe-200 bg-white text-taupe-600 hover:border-primary/50 hover:text-primary hover:bg-primary/5"
                       )}
                     >
@@ -282,7 +282,7 @@ export default function AllProductsFilterBar({
                       className={cn(
                         "h-8 px-3 rounded-lg text-xs font-semibold border transition-all duration-200",
                         isActive
-                          ? "border-primary bg-primary text-white shadow-sm"
+                          ? "border-primary bg-primary text-primary-foreground shadow-sm"
                           : "border-taupe-200 bg-white text-taupe-600 hover:border-primary/50 hover:text-primary hover:bg-primary/5"
                       )}
                     >

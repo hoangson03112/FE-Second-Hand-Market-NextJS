@@ -56,7 +56,7 @@ export default function SellerPayouts() {
   if (!account) return null;
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-8">
+    <main className="max-w-7xl mx-auto w-full px-4 py-8 sm:px-6">
       <Link href="/seller" className="inline-flex items-center gap-2 text-primary hover:underline font-medium text-sm mb-6">
         <IconArrowLeft className="h-4 w-4" />
         Quay lại

@@ -1,6 +1,7 @@
 "use client";
 
 import { IconMapPin, IconEdit } from "@tabler/icons-react";
+import { Button } from "@/components/shared";
 import { Address } from "@/types/address";
 
 interface AddressSectionProps {
@@ -36,9 +37,14 @@ export default function AddressSection({
               <p className="text-xs text-taupe-600">Vui lòng thêm địa chỉ để tiếp tục</p>
             </div>
           </div>
-          <button onClick={onChangeAddress} className="btn btn-primary btn-sm text-sm px-4 py-2">
+          <Button
+            type="button"
+            onClick={onChangeAddress}
+            size="sm"
+            className="text-sm px-4 py-2"
+          >
             Thêm địa chỉ
-          </button>
+          </Button>
         </div>
       </div>
     );
@@ -60,13 +66,16 @@ export default function AddressSection({
           </div>
           <p className="text-sm text-taupe-600">{formatAddress(selectedAddress)}</p>
         </div>
-        <button
+        <Button
+          type="button"
           onClick={onChangeAddress}
-          className="btn btn-secondary btn-sm flex items-center gap-2 text-sm px-3 py-1.5"
+          variant="secondary"
+          size="sm"
+          className="text-sm px-3 py-1.5"
         >
           <IconEdit className="h-3.5 w-3.5" />
           Thay đổi
-        </button>
+        </Button>
       </div>
     </div>
   );

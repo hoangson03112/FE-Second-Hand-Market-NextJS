@@ -18,12 +18,6 @@ import { OrderService } from "@/services/order.service";
 import { formatPrice } from "@/utils/format/price";
 import type { Order } from "@/types/order";
 
-function isToday(dateStr: string) {
-  const d = new Date(dateStr);
-  const now = new Date();
-  return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate();
-}
-
 function isWithinDays(dateStr: string, days: number) {
   return new Date(dateStr).getTime() > Date.now() - days * 24 * 60 * 60 * 1000;
 }
@@ -75,7 +69,6 @@ export default function SellerDashboard() {
   if (!account) return null;
 
   const paidOrders = orders.filter((o) => o.paymentStatus === "paid");
-  const todayRevenue = paidOrders.filter((o) => isToday(o.createdAt)).reduce((s, o) => s + o.totalAmount, 0);
   const weekRevenue = paidOrders.filter((o) => isWithinDays(o.createdAt, 7)).reduce((s, o) => s + o.totalAmount, 0);
   const monthRevenue = paidOrders.filter((o) => isWithinDays(o.createdAt, 30)).reduce((s, o) => s + o.totalAmount, 0);
   const pending = orders.filter((o) => o.status === "pending").length;
@@ -97,7 +90,7 @@ export default function SellerDashboard() {
   ];
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-8">
+    <main className="max-w-7xl mx-auto w-full px-4 py-8 sm:px-6">
       <div className="flex items-center justify-between mb-6">
         <Link href="/" className="inline-flex items-center gap-2 text-primary hover:underline font-medium text-sm">
           <IconArrowLeft className="h-4 w-4" />

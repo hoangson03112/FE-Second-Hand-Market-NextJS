@@ -1,6 +1,6 @@
 import { IconArrowLeft } from "@tabler/icons-react";
 import { Container } from "@/components/layout/Container";
-import { StatusBadge } from "@/components/ui/StatusBadge";
+import { StatusBadge } from "@/components/shared";
 
 interface OrderDetailHeaderProps {
   orderId: string;
@@ -11,7 +11,7 @@ interface OrderDetailHeaderProps {
 export function OrderDetailHeader({ orderId, status, onBack }: OrderDetailHeaderProps) {
   return (
     <div className="bg-background/95 backdrop-blur-md border-b border-border sticky top-0 z-10">
-      <Container maxWidth="6xl" paddingX="md">
+      <Container maxWidth="7xl" paddingX="md">
         <div className="py-3 flex items-center gap-3">
           <button
             onClick={onBack}

@@ -1,7 +1,7 @@
 import "./globals.css";
 import Providers from "./providers";
-import { ToastProvider } from "@/components/ui/Toast";
-import { ConfirmDialogProvider } from "@/components/ui/ConfirmDialog";
+import { ToastProvider } from "@/components/shared";
+import { ConfirmDialogProvider } from "@/components/shared";
 import SiteLayout from "@/components/layout/SiteLayout";
 import { RealtimeNotificationToast } from "@/components/common/RealtimeNotificationToast";
 import { BannedOverlay } from "@/components/common/BannedOverlay";
@@ -86,8 +86,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className={`h-full ${inter.variable}`}>
-      <body className={`min-h-screen flex flex-col antialiased ${inter.className}`}>
+    <html lang="vi" className={`h-full ${inter.variable}`} suppressHydrationWarning>
+      <body
+        className={`min-h-screen flex flex-col antialiased ${inter.className}`}
+        suppressHydrationWarning
+      >
         <Providers>
           <ToastProvider>
             <RealtimeNotificationToast />

@@ -1,14 +1,12 @@
 import Link from "next/link";
 import InputField from "@/features/auth/InputField";
-import ErrorMessage from "@/features/auth/ErrorMessage";
 import AuthButton from "@/features/auth/AuthButton";
 import InfoBox from "@/components/common/auth/InfoBox";
-import { EmailIcon } from "@/components/ui/icons/EmailIcon";
-import { ArrowRightIcon } from "@/components/ui/icons/ArrowRightIcon";
+import { EmailIcon } from "@/components/shared";
+import { ArrowRightIcon } from "@/components/shared";
 
 interface ForgotPasswordFormProps {
   email: string;
-  error: string;
   isLoading: boolean;
   onEmailChange: (email: string) => void;
   onSubmit: (e: React.FormEvent) => void;
@@ -16,15 +14,12 @@ interface ForgotPasswordFormProps {
 
 export default function ForgotPasswordForm({
   email,
-  error,
   isLoading,
   onEmailChange,
   onSubmit,
 }: ForgotPasswordFormProps) {
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
-      <ErrorMessage message={error} />
-
       <div className="rounded-2xl border border-taupe-200/70 bg-gradient-to-r from-cream-50 to-taupe-50 p-4 sm:p-5">
         <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-taupe-500">Bảo mật tài khoản</p>
         <p className="mt-2 text-[14px] leading-relaxed text-taupe-700">

@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ProductService } from "@/services/product.service";
 import type { IProduct, ProductStatusFilter } from "@/types/product";
-import { useToast } from "@/components/ui/Toast";
+import { useToast } from "@/components/shared";
 import { isAxiosError } from "axios";
 
 const LIMIT = 10;

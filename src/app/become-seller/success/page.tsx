@@ -16,7 +16,7 @@ export default function BecomeSellerSuccessPage() {
     <div className="min-h-screen bg-background">
       {/* Top bar */}
       <div className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center gap-3">
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 h-14 flex items-center gap-3">
           <button
             type="button"
             onClick={() => router.push("/")}
@@ -30,7 +30,7 @@ export default function BecomeSellerSuccessPage() {
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-8 space-y-4">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 space-y-4">
         {/* Success card */}
         <div className="rounded-2xl border border-border bg-card p-6 flex items-start gap-4">
           <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">

@@ -6,12 +6,12 @@ import {
   IconPackage,
   IconTruck,
 } from "@tabler/icons-react";
-import { useConfirm } from "@/components/ui/ConfirmDialog";
+import { useConfirm } from "@/components/shared";
 import { Fragment } from "react";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import type { AdminOrder } from "@/types/admin";
-import { StatusBadge } from "@/components/ui/StatusBadge";
+import { StatusBadge } from "@/components/shared";
 import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
 
 const GHN_TRACKING_URL = "https://tracking.ghn.dev/?order_code=";

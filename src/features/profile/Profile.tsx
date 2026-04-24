@@ -51,7 +51,7 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto w-full px-4 py-8 sm:px-6">
         <Breadcrumb />
 
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">

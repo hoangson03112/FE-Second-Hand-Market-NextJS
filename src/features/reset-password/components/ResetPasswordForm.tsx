@@ -1,14 +1,12 @@
 import Link from "next/link";
 import PasswordField from "@/features/auth/PasswordField";
-import ErrorMessage from "@/features/auth/ErrorMessage";
 import AuthButton from "@/features/auth/AuthButton";
 import InfoBox from "@/components/common/auth/InfoBox";
-import { ArrowRightIcon } from "@/components/ui/icons/ArrowRightIcon";
+import { ArrowRightIcon } from "@/components/shared";
 
 interface ResetPasswordFormProps {
   newPassword: string;
   confirmPassword: string;
-  error: string;
   isLoading: boolean;
   onNewPasswordChange: (password: string) => void;
   onConfirmPasswordChange: (password: string) => void;
@@ -18,7 +16,6 @@ interface ResetPasswordFormProps {
 export default function ResetPasswordForm({
   newPassword,
   confirmPassword,
-  error,
   isLoading,
   onNewPasswordChange,
   onConfirmPasswordChange,
@@ -26,8 +23,6 @@ export default function ResetPasswordForm({
 }: ResetPasswordFormProps) {
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
-      <ErrorMessage message={error} />
-
       <div className="rounded-2xl border border-taupe-200/70 bg-gradient-to-r from-cream-50 to-taupe-50 p-4 sm:p-5">
         <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-taupe-500">Cập nhật bảo mật</p>
         <p className="mt-2 text-[14px] leading-relaxed text-taupe-700">

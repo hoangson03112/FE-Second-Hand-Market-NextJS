@@ -4,9 +4,11 @@ import { AuthService } from "@/services/auth.service";
 import type { RegisterRequest } from "@/types/auth";
 import { registerSchema, RegisterInput } from "@/features/auth/schemas/auth.schema";
 import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
+import { useToast } from "@/components/shared";
 
 export function useRegister() {
   const router = useRouter();
+  const toast = useToast();
   const [formData, setFormData] = useState<RegisterInput>({
     username: "",
     email: "",
@@ -16,14 +18,12 @@ export function useRegister() {
     fullName: "",
   });
   const [errors, setErrors] = useState<Partial<Record<keyof RegisterInput, string>>>({});
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const normalizedValue = sanitizeFieldInput(name, value);
     setFormData({ ...formData, [name]: normalizedValue });
-    setError("");
     if (errors[name as keyof RegisterInput]) {
       setErrors({ ...errors, [name]: undefined });
     }
@@ -55,17 +55,12 @@ export function useRegister() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     setErrors({});
     const normalizedData = sanitizeFormValues(formData);
     const result = registerSchema.safeParse(normalizedData);
     if (!result.success) {
-      const fieldErrors: Partial<Record<keyof RegisterInput, string>> = {};
-      result.error.issues.forEach((issue) => {
-        const fieldName = issue.path[0] as keyof RegisterInput;
-        if (fieldName) fieldErrors[fieldName] = issue.message;
-      });
-      setErrors(fieldErrors);
+      const firstMessage = result.error.issues[0]?.message || "Thông tin đăng ký không hợp lệ";
+      toast.error(firstMessage);
       return;
     }
     setIsLoading(true);
@@ -76,18 +71,18 @@ export function useRegister() {
       if (response.status === "success") {
         router.push(`/verify-email?accountID=${response.accountID}`);
       } else {
-        if (response.type === "username") setError("Tên đăng nhập đã được sử dụng");
-        else if (response.type === "email") setError("Email đã được sử dụng");
-        else if (response.type === "phoneNumber") setError("Số điện thoại đã được sử dụng");
-        else setError(response.message || "Đăng ký thất bại");
+        if (response.type === "username") toast.error("Tên đăng nhập đã được sử dụng");
+        else if (response.type === "email") toast.error("Email đã được sử dụng");
+        else if (response.type === "phoneNumber") toast.error("Số điện thoại đã được sử dụng");
+        else toast.error(response.message || "Đăng ký thất bại");
       }
     } catch (err: unknown) {
       const error = err as { response?: { data?: { type?: string; message?: string } } };
       const errorData = error.response?.data;
-      if (errorData?.type === "username") setError("Tên đăng nhập đã được sử dụng");
-      else if (errorData?.type === "email") setError("Email đã được sử dụng");
-      else if (errorData?.type === "phoneNumber") setError("Số điện thoại đã được sử dụng");
-      else setError(errorData?.message || "Có lỗi xảy ra, vui lòng thử lại");
+      if (errorData?.type === "username") toast.error("Tên đăng nhập đã được sử dụng");
+      else if (errorData?.type === "email") toast.error("Email đã được sử dụng");
+      else if (errorData?.type === "phoneNumber") toast.error("Số điện thoại đã được sử dụng");
+      else toast.error(errorData?.message || "Có lỗi xảy ra, vui lòng thử lại");
     } finally {
       setIsLoading(false);
     }
@@ -97,7 +92,6 @@ export function useRegister() {
     formData,
     confirmPassword: formData.confirmPassword,
     errors,
-    error,
     isLoading,
     handleChange,
     handleConfirmPasswordChange,

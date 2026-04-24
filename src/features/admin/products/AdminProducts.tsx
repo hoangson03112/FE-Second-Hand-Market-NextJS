@@ -2,12 +2,12 @@
 
 import { IconLoader2, IconPackage } from "@tabler/icons-react";
 import type { ProductStatusFilter } from "@/types/product";
-import Pagination from "@/components/ui/Pagination";
+import { Pagination } from "@/components/shared";
 import { useAdminProducts } from "./hooks/useAdminProducts";
 import { ProductDetailDrawer } from "./components/ProductDetailDrawer";
 import { ProductTable } from "./components/ProductTable";
 import { STATUS_TABS } from "./constants";
-import { RejectReasonDialog } from "@/components/ui/RejectReasonDialog";
+import { RejectReasonDialog } from "@/components/shared";
 
 export default function AdminProducts() {
   const {

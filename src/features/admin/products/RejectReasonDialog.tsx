@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { ConfirmWithReasonDialog } from "@/components/ui/ConfirmWithReasonDialog";
+import { ConfirmWithReasonDialog } from "@/components/shared";
 
 interface RejectReasonDialogProps {
   isOpen: boolean;

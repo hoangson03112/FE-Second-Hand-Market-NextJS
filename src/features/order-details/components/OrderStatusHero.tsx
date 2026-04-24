@@ -14,27 +14,32 @@ interface OrderStatusHeroProps {
   status: string;
   statusConfig: { label: string; color: string; icon: string; bgColor: string };
   statusDescription: Record<string, string>;
+  /** When set (e.g. refund flow + Refund.status), overrides statusDescription[status]. */
+  descriptionOverride?: string;
   progressSteps: readonly ProgressStep[];
   effectiveStepIdx: number;
   isTerminal: boolean;
   updatedAt: string;
   ghnOrderCode?: string | null;
   ghnReturnOrderCode?: string | null;
+  ghnReturnTrackingUrl?: string | null;
 }
 
 export function OrderStatusHero({
   status,
   statusConfig,
   statusDescription,
+  descriptionOverride,
   progressSteps,
   effectiveStepIdx,
   isTerminal,
   updatedAt,
   ghnOrderCode,
   ghnReturnOrderCode,
+  ghnReturnTrackingUrl,
 }: OrderStatusHeroProps) {
   const showGhnOrder = ghnOrderCode && ["confirmed", "picked_up", "shipping", "out_for_delivery", "delivered"].includes(status);
-  const showGhnReturn = ghnReturnOrderCode && ["returning", "return_shipping", "returned", "refunded"].includes(status);
+  const showGhnReturn = ghnReturnOrderCode && ["refund", "returning", "return_shipping", "returned", "refunded"].includes(status);
 
   return (
     <div className="bg-cream-50 border border-border rounded-2xl overflow-hidden">
@@ -46,7 +51,7 @@ export function OrderStatusHero({
         <div className="flex-1 min-w-0">
           <p className={`text-sm font-bold ${statusConfig.color}`}>{statusConfig.label}</p>
           <p className="text-xs text-muted-foreground mt-0.5 leading-snug">
-            {statusDescription[status] ?? "Đang xử lý đơn hàng."}
+            {descriptionOverride ?? statusDescription[status] ?? "Đang xử lý đơn hàng."}
           </p>
         </div>
         <span className="text-xs text-muted-foreground shrink-0 hidden sm:block">{format(updatedAt)}</span>
@@ -74,7 +79,10 @@ export function OrderStatusHero({
               Vận đơn hoàn trả:
               <span className="font-semibold text-primary">{ghnReturnOrderCode}</span>
               <a
-                href={`https://tracking.ghn.dev/?order_code=${ghnReturnOrderCode}`}
+                href={
+                  ghnReturnTrackingUrl?.trim() ||
+                  `https://tracking.ghn.dev/?order_code=${ghnReturnOrderCode}`
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"

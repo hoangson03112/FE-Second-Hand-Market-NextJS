@@ -7,9 +7,9 @@ import Link from "next/link";
 import { AuthService } from "@/services/auth.service";
 import { useTokenStore } from "@/store/useTokenStore";
 import { queryKeys } from "@/lib/query-client";
-import { EmailVerifyIcon } from "@/components/ui/icons/EmailVerifyIcon";
-import { ErrorIcon } from "@/components/ui/icons/ErrorIcon";
-import { ArrowRightIcon } from "@/components/ui/icons/ArrowRightIcon";
+import { EmailVerifyIcon } from "@/components/shared";
+import { ErrorIcon } from "@/components/shared";
+import { ArrowRightIcon } from "@/components/shared";
 import VerifyCodeInput from "@/features/verify/components/VerifyCodeInput";
 
 export default function VerifyGoogleEmail() {
@@ -24,6 +24,8 @@ export default function VerifyGoogleEmail() {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [resendMessage, setResendMessage] = useState("");
 
   useEffect(() => {
     if (!pending) {
@@ -64,6 +66,28 @@ export default function VerifyGoogleEmail() {
     }
   };
 
+  const handleResendCode = async () => {
+    if (!pending || resendLoading) return;
+    setError("");
+    setResendMessage("");
+    setResendLoading(true);
+    try {
+      const response = await AuthService.resendGoogleEmailCode({ pending });
+      if (response.status === "success") {
+        setResendMessage(
+          response.message || "Đã gửi lại mã xác minh. Vui lòng kiểm tra cả hộp thư Spam."
+        );
+      } else {
+        setError(response.message || "Không thể gửi lại mã. Vui lòng thử lại.");
+      }
+    } catch (err: unknown) {
+      const errData = err as { response?: { data?: { message?: string } } };
+      setError(errData.response?.data?.message || "Không thể gửi lại mã. Vui lòng thử lại.");
+    } finally {
+      setResendLoading(false);
+    }
+  };
+
   if (!pending) {
     return null;
   }
@@ -94,6 +118,12 @@ export default function VerifyGoogleEmail() {
               </div>
             )}
 
+            {resendMessage && (
+              <div className="bg-success/10 border-l-4 border-success rounded-lg p-3">
+                <p className="text-sm text-success-dark">{resendMessage}</p>
+              </div>
+            )}
+
             <VerifyCodeInput
               code={code}
               onCodeChange={setCode}
@@ -119,6 +149,17 @@ export default function VerifyGoogleEmail() {
             </button>
 
             <p className="text-center text-sm text-tertiary pt-4 border-t border-neutral-200">
+              <button
+                type="button"
+                onClick={handleResendCode}
+                disabled={resendLoading}
+                className="font-semibold text-primary hover:text-primary-dark transition-colors disabled:opacity-60"
+              >
+                {resendLoading ? "Đang gửi lại mã..." : "Không nhận được mã? Gửi lại"}
+              </button>
+            </p>
+
+            <p className="text-center text-sm text-tertiary">
               <Link
                 href="/login"
                 className="font-semibold text-primary hover:text-primary-dark transition-colors"
