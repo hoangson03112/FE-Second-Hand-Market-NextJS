@@ -71,8 +71,8 @@ export default function CategoryHeader({
         <span
           className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
             isCategoryInactive
-              ? "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200"
-              : "bg-secondary text-foreground dark:bg-secondary/70"
+              ? "bg-slate-100 text-slate-700"
+              : "bg-secondary text-foreground"
           }`}
         >
           {isCategoryInactive ? "Inactive" : "Active"}

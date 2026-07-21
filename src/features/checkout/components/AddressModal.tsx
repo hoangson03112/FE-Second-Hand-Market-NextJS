@@ -77,7 +77,7 @@ export default function AddressModal({
       />
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="relative bg-background rounded-2xl shadow-xl w-full max-w-7xl max-h-[90vh] flex flex-col overflow-hidden"
+          className="relative bg-background rounded-2xl shadow-xl w-full max-w-8xl max-h-[90vh] flex flex-col overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex justify-between p-6 border-b border-border">
@@ -98,14 +98,14 @@ export default function AddressModal({
                   <h2 className="text-xl font-bold text-foreground">
                     {showNewAddressForm
                       ? editingAddress
-                        ? "Chỉnh sửa địa chỉ"
-                        : "Thêm địa chỉ mới"
-                      : "Địa Chỉ Giao Hàng"}
+                        ? "Chá»‰nh sá»­a Ä‘á»‹a chá»‰"
+                        : "ThÃªm Ä‘á»‹a chá»‰ má»›i"
+                      : "Äá»‹a Chá»‰ Giao HÃ ng"}
                   </h2>
                   <p className="text-sm text-muted-foreground">
                     {showNewAddressForm
-                      ? "Điền thông tin địa chỉ của bạn"
-                      : `${addresses.length} địa chỉ`}
+                      ? "Äiá»n thÃ´ng tin Ä‘á»‹a chá»‰ cá»§a báº¡n"
+                      : `${addresses.length} Ä‘á»‹a chá»‰`}
                   </p>
                 </div>
               </div>
@@ -140,7 +140,7 @@ export default function AddressModal({
                       <IconPlus className="h-4 w-4 text-primary" />
                     </div>
                     <span className="font-semibold text-foreground">
-                      Thêm địa chỉ mới
+                      ThÃªm Ä‘á»‹a chá»‰ má»›i
                     </span>
                   </div>
                 </button>

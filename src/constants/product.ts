@@ -22,7 +22,7 @@ export const PRODUCT_STATUS_CONFIG: Record<
   under_review: {
     label: "Đang xem xét",
     dot: "bg-blue-400",
-    text: "text-blue-700 dark:text-blue-400",
+    text: "text-blue-700",
     color: "var(--color-blue-400, #60a5fa)",
   },
   rejected: {
@@ -58,7 +58,7 @@ export const PRODUCT_STATUS_CONFIG: Record<
   sold: {
     label: "Đã bán",
     dot: "bg-foreground",
-    text: "text-zinc-600 dark:text-zinc-400",
+    text: "text-zinc-600",
     color: "var(--taupe-400)",
   },
 };

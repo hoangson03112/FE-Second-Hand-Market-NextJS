@@ -57,7 +57,7 @@ const paddingYClasses: Record<Padding, string> = {
 
 export function Container({
   children,
-  maxWidth = "7xl",
+  maxWidth = "8xl",
   paddingX = "md",
   paddingY = "lg",
   className,

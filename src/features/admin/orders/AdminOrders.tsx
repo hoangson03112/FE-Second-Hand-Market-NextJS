@@ -1,8 +1,8 @@
 "use client";
 
-import { IconLoader2, IconSearch } from "@tabler/icons-react";
+import { IconLoader2, IconSearch, IconShoppingCart } from "@tabler/icons-react";
 import { useAdminOrders } from "./hooks/useAdminOrders";
-import EmptyState from "./components/EmptyState";
+import { NoData } from "@/components/shared";
 import OrdersTable from "./components/OrdersTable";
 import { Pagination } from "@/components/shared";
 import { ORDER_TABS } from "@/constants/orderStatus";
@@ -132,7 +132,7 @@ export default function AdminOrders() {
       </div>
 
       {orders.length === 0 ? (
-        <EmptyState />
+        <NoData icon={<IconShoppingCart />} title="Chưa có đơn hàng nào." size="sm" />
       ) : (
         <>
           <OrdersTable
@@ -153,4 +153,5 @@ export default function AdminOrders() {
     </div>
   );
 }
+
 

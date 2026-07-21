@@ -8,13 +8,20 @@ const FAILURE_THRESHOLD = 3;
 const CIRCUIT_RESET_TIME = 30000;
 const pendingRequests = new Map<string, Promise<unknown>>();
 
+// GHN is proxied through our own Route Handler (`/api/ghn`) so the secret GHN
+// Token stays server-side and never ships to the browser. On the server (SSR /
+// prefetch) a relative URL has no origin, so fall back to an absolute one.
+const GHN_PROXY_BASE_URL =
+  typeof window === "undefined"
+    ? `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/ghn`
+    : "/api/ghn";
+
 export const externalApiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_GHN_API_URL,
+  baseURL: GHN_PROXY_BASE_URL,
   timeout: 15000,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
-    Token: process.env.NEXT_PUBLIC_GHN_TOKEN,
   },
 });
 

@@ -21,7 +21,7 @@ import { openChatWithOrder } from "@/utils/chat";
 import { getAvatarUrl } from "@/utils";
 import { getRefundStatusNotice } from "@/constants/orderStatus";
 import { StatusBadge } from "@/components/shared";
-import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
+import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
 
 interface OrderCardProps {
 	order: Order;
@@ -317,4 +317,5 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 		</div>
 	);
 }
+
 

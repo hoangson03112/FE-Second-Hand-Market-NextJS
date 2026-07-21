@@ -1,9 +1,9 @@
 "use client";
 
-import { IconLoader2 } from "@tabler/icons-react";
+import { IconFolders, IconLoader2 } from "@tabler/icons-react";
 import type { AdminCategory } from "@/types/admin";
 import { useAdminCategories } from "./hooks/useAdminCategories";
-import EmptyState from "./components/EmptyState";
+import { NoData } from "@/components/shared";
 import CategoryHeader from "./components/CategoryHeader";
 import AddCategoryForm from "./components/AddCategoryForm";
 import AddSubcategoryForm from "./components/AddSubcategoryForm";
@@ -74,7 +74,7 @@ export default function AdminCategories() {
           onNameChange={setNewCategoryName}
           onSubmit={addCategory}
         />
-        <EmptyState />
+        <NoData icon={<IconFolders />} title="Chưa có danh mục nào." size="sm" />
       </div>
     );
   }
@@ -161,4 +161,5 @@ export default function AdminCategories() {
     </div>
   );
 }
+
 

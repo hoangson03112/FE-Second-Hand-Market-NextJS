@@ -115,11 +115,11 @@ export function OrderBankInfoCard({
 
         {showBankSubmitted && refundBankInfo && (
           <div
-            className={`bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-xl p-3 ${
+            className={`bg-emerald-50 border border-emerald-200 rounded-xl p-3 ${
               showGhnSection ? "mt-4" : ""
             }`}
           >
-            <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 mb-2">
+            <p className="text-xs font-semibold text-emerald-700 mb-2">
               {rs === "processing"
                 ? "Đã gửi STK — Admin sẽ chuyển khoản hoàn tiền"
                 : "Đã gửi — Chờ admin xử lý hoàn tiền"}

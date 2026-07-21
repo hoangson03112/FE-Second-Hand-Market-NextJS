@@ -40,7 +40,7 @@ export function ProductDrawerHeader({ product, onClose }: Props) {
             {statusInfo.label}
           </span>
           {ai?.rejectionReason && product.status === "review_requested" && (
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-destructive/10 text-destructive dark:bg-destructive/20" title={ai.rejectionReason}>
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-destructive/10 text-destructive" title={ai.rejectionReason}>
               Lý do từ chối trước: {ai.rejectionReason.length > 40 ? ai.rejectionReason.slice(0, 40) + "…" : ai.rejectionReason}
             </span>
           )}

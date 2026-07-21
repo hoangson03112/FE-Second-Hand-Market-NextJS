@@ -12,7 +12,7 @@ import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import type { AdminOrder } from "@/types/admin";
 import { StatusBadge } from "@/components/shared";
-import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
+import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
 
 const GHN_TRACKING_URL = "https://tracking.ghn.dev/?order_code=";
 
@@ -266,5 +266,6 @@ export default function OrdersTable({
     </div>
   );
 }
+
 
 

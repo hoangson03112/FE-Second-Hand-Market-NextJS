@@ -61,7 +61,7 @@ export function DeliveryOptions({
       </div>
 
       {!value.localPickup && !value.codShipping && (
-        <p className="text-xs text-amber-600 dark:text-amber-400 mt-2">
+        <p className="text-xs text-amber-600 mt-2">
           Vui lòng chọn ít nhất một hình thức giao hàng.
         </p>
       )}

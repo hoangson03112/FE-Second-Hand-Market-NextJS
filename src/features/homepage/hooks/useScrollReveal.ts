@@ -10,7 +10,7 @@ interface UseScrollRevealOptions {
 export function useScrollReveal(options: UseScrollRevealOptions = {}) {
   const {
     threshold = 0.1,
-    rootMargin = "0px 0px -50px 0px",
+    rootMargin = "0px 0px -20% 0px",
     triggerOnce = true,
     delay = 0,
   } = options;
@@ -25,30 +25,28 @@ export function useScrollReveal(options: UseScrollRevealOptions = {}) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Thêm delay nhẹ để animation mượt hơn
-          setTimeout(() => {
+          const timer = window.setTimeout(() => {
             setIsVisible(true);
           }, delay);
-          
+
           if (triggerOnce) {
             observer.unobserve(element);
           }
-        } else if (!triggerOnce) {
+
+          return () => window.clearTimeout(timer);
+        }
+
+        if (!triggerOnce) {
           setIsVisible(false);
         }
       },
-      {
-        threshold,
-        rootMargin,
-      }
+      { threshold, rootMargin }
     );
 
     observer.observe(element);
 
     return () => {
-      if (element) {
-        observer.unobserve(element);
-      }
+      observer.disconnect();
     };
   }, [threshold, rootMargin, triggerOnce, delay]);
 

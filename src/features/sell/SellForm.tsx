@@ -84,12 +84,12 @@ export default function SellForm() {
 
   if (isLoadingProduct) {
     return (
-      <div className="w-full max-w-7xl mx-auto px-4 py-6 lg:py-8">
+      <div className="w-full max-w-8xl mx-auto px-4 py-6 lg:py-8">
         <div className="flex items-center justify-center min-h-[50vh]">
           <div className="text-center">
             <div className="w-10 h-10 rounded-full border-2 border-primary border-t-transparent animate-spin mx-auto mb-4" />
             <p className="text-sm text-muted-foreground">
-              Đang tải thông tin sản phẩm...
+              Äang táº£i thÃ´ng tin sáº£n pháº©m...
             </p>
           </div>
         </div>
@@ -99,7 +99,7 @@ export default function SellForm() {
 
   return (
     <>
-      <div className="w-full max-w-7xl mx-auto px-4 py-6 lg:py-8">
+      <div className="w-full max-w-8xl mx-auto px-4 py-6 lg:py-8">
         <SellFormHeader
           isEditMode={isEditMode}
           showBecomeSellerLink={showPickupSection && !isEditMode}
@@ -112,7 +112,7 @@ export default function SellForm() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <ErrorMessage message={apiError} />
 
-          {/* Địa chỉ lấy hàng – hiển thị cho tất cả users */}
+          {/* Äá»‹a chá»‰ láº¥y hÃ ng â€“ hiá»ƒn thá»‹ cho táº¥t cáº£ users */}
           <PickupAddressSelector
             addresses={pickupAddresses}
             selectedId={pickupAddressId}
@@ -124,7 +124,7 @@ export default function SellForm() {
             error={pickupAddressError}
           />
 
-          {/* Hình thức giao hàng */}
+          {/* HÃ¬nh thá»©c giao hÃ ng */}
           <DeliveryOptions
             value={deliveryOptions}
             onChange={handleDeliveryOptionsChange}
@@ -132,9 +132,9 @@ export default function SellForm() {
           />
 
           <div className="grid lg:grid-cols-2 gap-4 lg:gap-6 lg:items-stretch">
-            {/* Cột trái: thông tin + danh mục + mô tả */}
+            {/* Cá»™t trÃ¡i: thÃ´ng tin + danh má»¥c + mÃ´ táº£ */}
             <div className="flex flex-col gap-4">
-              <SectionCard icon={IconPackage} title="Thông tin cơ bản">
+              <SectionCard icon={IconPackage} title="ThÃ´ng tin cÆ¡ báº£n">
                 <ProductBasicInfo
                   values={{
                     name: values.name,
@@ -151,7 +151,7 @@ export default function SellForm() {
                 />
               </SectionCard>
 
-              <SectionCard icon={IconFolders} title="Danh mục">
+              <SectionCard icon={IconFolders} title="Danh má»¥c">
                 <ProductCategory
                   categoryId={values.categoryId}
                   subcategoryId={values.subcategoryId}
@@ -166,7 +166,7 @@ export default function SellForm() {
 
               <SectionCard
                 icon={IconFileText}
-                title="Mô tả"
+                title="MÃ´ táº£"
                 className="flex-1 min-h-0"
               >
                 <ProductDescription
@@ -176,11 +176,11 @@ export default function SellForm() {
               </SectionCard>
             </div>
 
-            {/* Cột phải: Thuộc tính + Ảnh & IconVideo — chia đều với cột trái */}
+            {/* Cá»™t pháº£i: Thuá»™c tÃ­nh + áº¢nh & IconVideo â€” chia Ä‘á»u vá»›i cá»™t trÃ¡i */}
             <div className="flex flex-col gap-4">
               <SectionCard
                 icon={IconListDetails}
-                title="Thuộc tính"
+                title="Thuá»™c tÃ­nh"
                 className="min-h-0 shrink-0"
               >
                 <ProductAttributes
@@ -193,7 +193,7 @@ export default function SellForm() {
 
               <SectionCard
                 icon={IconPhoto}
-                title="Ảnh & Video"
+                title="áº¢nh & Video"
                 className="flex-1 min-h-0 flex flex-col"
               >
                 <ProductMedia
@@ -226,7 +226,7 @@ export default function SellForm() {
         </form>
       </div>
 
-      {/* Modal thêm/sửa địa chỉ lấy hàng */}
+      {/* Modal thÃªm/sá»­a Ä‘á»‹a chá»‰ láº¥y hÃ ng */}
       <AddressFormModal
         isOpen={showModal}
         editingAddress={editingAddress}

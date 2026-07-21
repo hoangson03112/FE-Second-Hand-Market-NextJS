@@ -32,8 +32,7 @@ const sizeClasses: Record<ButtonSize, string> = {
   icon: "h-10 w-10 p-0",
 };
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   loading?: boolean;
@@ -56,7 +55,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       ...props
     },
-    ref
+    ref,
   ) => {
     return (
       <button
@@ -69,7 +68,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           sizeClasses[size],
           fullWidth && "w-full",
           loading && "pointer-events-none",
-          className
+          className,
         )}
         disabled={disabled || loading}
         {...props}
@@ -83,7 +82,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {!loading && rightIcon}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";

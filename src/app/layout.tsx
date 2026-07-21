@@ -3,13 +3,21 @@ import Providers from "./providers";
 import { ToastProvider } from "@/components/shared";
 import { ConfirmDialogProvider } from "@/components/shared";
 import SiteLayout from "@/components/layout/SiteLayout";
-import { RealtimeNotificationToast } from "@/components/common/RealtimeNotificationToast";
-import { BannedOverlay } from "@/components/common/BannedOverlay";
+import { RealtimeNotificationToast } from "@/components/shared/RealtimeNotificationToast";
+import { BannedOverlay } from "@/components/shared/BannedOverlay";
 import type { Metadata } from "next";
-import { inter } from "@/lib/fonts";
+import { geist } from "@/lib/fonts";
+import localFont from "next/font/local";
+const baseUrl =
+  process.env.NEXT_PUBLIC_BASE_URL || "https://www.ecomarket.io.vn";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.ecomarket.io.vn";
-
+const droidSerifWGL = localFont({
+  src: "./fonts/DroidSerif.woff2",
+  weight: "400",
+  style: "normal",
+  variable: "--font-droid-serif",
+  display: "swap",
+});
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
@@ -64,7 +72,9 @@ export const metadata: Metadata = {
     title: "Eco Marketplace - Sàn thương mại điện tử đồ cũ",
     description:
       "Mua bán đồ cũ uy tín, chất lượng. Tiết kiệm chi phí, bảo vệ môi trường.",
-    images: ["https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png"],
+    images: [
+      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
+    ],
     creator: "@ecomarketplace",
   },
   verification: {
@@ -75,8 +85,10 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
-    shortcut: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
-    apple: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
+    shortcut:
+      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
+    apple:
+      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
   },
 };
 
@@ -86,10 +98,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className={`h-full ${inter.variable}`} suppressHydrationWarning>
+    <html lang="vi" className={`h-full   ${geist.variable}`}>
       <body
-        className={`min-h-screen flex flex-col antialiased ${inter.className}`}
-        suppressHydrationWarning
+        className={`h-dvh overflow-hidden ${droidSerifWGL.variable}  antialiased`}
       >
         <Providers>
           <ToastProvider>

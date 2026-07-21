@@ -36,14 +36,14 @@ export function OrdersTabs({
   return (
     <div className="sticky top-[73px] z-10 bg-background/95 backdrop-blur-sm border-b border-border">
       {/*
-        Scroll happens on this wrapper (no px here — trailing padding would
+        Scroll happens on this wrapper (no px here â€” trailing padding would
         be swallowed by the browser and the last tab would be clipped).
         The inner flex row carries the px so padding is part of scroll width.
       */}
-      <div className="max-w-7xl mx-auto overflow-x-auto scrollbar-hide -mb-px">
+      <div className="max-w-8xl mx-auto overflow-x-auto scrollbar-hide -mb-px">
         <div
           role="tablist"
-          aria-label="Trạng thái đơn hàng"
+          aria-label="Tráº¡ng thÃ¡i Ä‘Æ¡n hÃ ng"
           className="inline-flex min-w-full pl-4 sm:pl-6"
         >
           {tabs.map((tab) => {
@@ -97,7 +97,7 @@ export function OrdersTabs({
               </button>
             );
           })}
-          {/* Trailing spacer — guarantees right padding is part of scroll width */}
+          {/* Trailing spacer â€” guarantees right padding is part of scroll width */}
           <div className="shrink-0 w-4 sm:w-6" aria-hidden="true" />
         </div>
       </div>

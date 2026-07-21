@@ -14,21 +14,21 @@ export default function CuratedCollectionsSection() {
         background:
           "linear-gradient(180deg, #FCF8F2 0%, #F9F3EB 100%)",
       }}
-      className="border-y border-taupe-200/60 py-10 md:py-12"
+      className="border-y border-taupe-200/60 py-16 md:py-20"
     >
       <div
         ref={ref}
         className={cn(
-          "mx-auto w-full max-w-9xl px-4 sm:px-6 lg:px-8 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+          "mx-auto w-full max-w-9xl px-4 sm:px-6 lg:px-8 transition-[opacity,transform] duration-700 ease-out",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
         )}
       >
-        <div className="mb-5 flex items-end justify-between">
+        <div className="mb-8 flex items-end justify-between">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-taupe-400">
               Gợi ý chọn lọc
             </p>
-            <h2 className="mt-1 text-[2rem] font-semibold tracking-tight text-taupe-900">
+            <h2 className="font-ny mt-2 text-[2.2rem] font-semibold tracking-tight text-taupe-900 md:text-[2.6rem]">
               Bộ sưu tập nổi bật
             </h2>
           </div>
@@ -46,8 +46,8 @@ export default function CuratedCollectionsSection() {
               key={item.title}
               href={item.href}
               className={cn(
-                "group relative overflow-hidden rounded-lg border border-taupe-200/70 shadow-[0_10px_22px_rgba(0,0,0,0.14)] transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+                "group relative overflow-hidden rounded-lg border border-taupe-200/70 shadow-[0_10px_22px_rgba(0,0,0,0.14)] transition-transform duration-500 ease-out hover:-translate-y-0.5",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
               )}
               style={{ transitionDelay: `${220 + index * 120}ms` }}
             >
@@ -62,7 +62,7 @@ export default function CuratedCollectionsSection() {
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-4 text-white">
-                <h3 className="text-lg font-semibold leading-tight">{item.title}</h3>
+                <h3 className="font-ny text-xl font-semibold leading-tight">{item.title}</h3>
                 <p className="mt-1 text-xs text-white/80">{item.description}</p>
                 <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/85">
                   Bấm để khám phá

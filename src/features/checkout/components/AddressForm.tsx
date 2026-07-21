@@ -77,17 +77,17 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
   };
 
   return (
-    <div className="max-w-7xl mx-auto w-full">
+    <div className="max-w-8xl mx-auto w-full">
       {provincesError && (
         <div className="p-4 mb-4 bg-destructive/8 text-destructive rounded-lg">
-          Không thể tải dữ liệu tỉnh/thành phố. Vui lòng thử lại sau.
+          KhÃ´ng thá»ƒ táº£i dá»¯ liá»‡u tá»‰nh/thÃ nh phá»‘. Vui lÃ²ng thá»­ láº¡i sau.
         </div>
       )}
 
       <form onSubmit={submitForm} className="space-y-6 flex flex-col">
         <div>
           <label className="block text-sm font-medium mb-2">
-            Tỉnh/Thành phố <span className="text-destructive">*</span>
+            Tá»‰nh/ThÃ nh phá»‘ <span className="text-destructive">*</span>
           </label>
           <div className="relative">
             <select
@@ -99,7 +99,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
               required
             >
               <option value="">
-                {provincesLoading ? "Đang tải..." : "Chọn Tỉnh/Thành phố"}
+                {provincesLoading ? "Äang táº£i..." : "Chá»n Tá»‰nh/ThÃ nh phá»‘"}
               </option>
               {provinces.map((province) => (
                 <option key={province.ProvinceID} value={province.ProvinceID}>
@@ -114,13 +114,13 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
             </div>
           </div>
           {provincesLoading && (
-            <p className="text-sm text-muted-foreground mt-1">⏳ Đang tải danh sách tỉnh/thành phố từ GHN...</p>
+            <p className="text-sm text-muted-foreground mt-1">â³ Äang táº£i danh sÃ¡ch tá»‰nh/thÃ nh phá»‘ tá»« GHN...</p>
           )}
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-2">
-            Quận/Huyện <span className="text-destructive">*</span>
+            Quáº­n/Huyá»‡n <span className="text-destructive">*</span>
           </label>
           <div className="relative">
             <select
@@ -132,7 +132,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
               required
             >
               <option value="">
-                {districtsLoading ? "Đang tải..." : values.provinceId ? "Chọn Quận/Huyện" : "Vui lòng chọn Tỉnh/Thành phố trước"}
+                {districtsLoading ? "Äang táº£i..." : values.provinceId ? "Chá»n Quáº­n/Huyá»‡n" : "Vui lÃ²ng chá»n Tá»‰nh/ThÃ nh phá»‘ trÆ°á»›c"}
               </option>
               {districts.map((district) => (
                 <option key={district.DistrictID} value={district.DistrictID}>
@@ -146,12 +146,12 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
               </svg>
             </div>
           </div>
-          {districtsLoading && <p className="text-sm text-muted-foreground mt-1">⏳ Đang tải danh sách quận/huyện...</p>}
+          {districtsLoading && <p className="text-sm text-muted-foreground mt-1">â³ Äang táº£i danh sÃ¡ch quáº­n/huyá»‡n...</p>}
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-2">
-            Phường/Xã <span className="text-destructive">*</span>
+            PhÆ°á»ng/XÃ£ <span className="text-destructive">*</span>
           </label>
           <div className="relative">
             <select
@@ -163,7 +163,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
               required
             >
               <option value="">
-                {wardsLoading ? "Đang tải..." : values.districtId ? "Chọn Phường/Xã" : "Vui lòng chọn Quận/Huyện trước"}
+                {wardsLoading ? "Äang táº£i..." : values.districtId ? "Chá»n PhÆ°á»ng/XÃ£" : "Vui lÃ²ng chá»n Quáº­n/Huyá»‡n trÆ°á»›c"}
               </option>
               {wards.map((ward) => (
                 <option key={ward.WardCode} value={ward.WardCode}>
@@ -177,37 +177,37 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
               </svg>
             </div>
           </div>
-          {wardsLoading && <p className="text-sm text-muted-foreground mt-1">⏳ Đang tải danh sách phường/xã...</p>}
+          {wardsLoading && <p className="text-sm text-muted-foreground mt-1">â³ Äang táº£i danh sÃ¡ch phÆ°á»ng/xÃ£...</p>}
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Địa chỉ cụ thể <span className="text-destructive">*</span></label>
+          <label className="block text-sm font-medium mb-2">Äá»‹a chá»‰ cá»¥ thá»ƒ <span className="text-destructive">*</span></label>
           <Input
             type="text"
             name="specificAddress"
             value={values.specificAddress}
             onChange={handleChange}
-            placeholder="Số nhà, tên đường..."
+            placeholder="Sá»‘ nhÃ , tÃªn Ä‘Æ°á»ng..."
             className="bg-cream-50"
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Họ và tên <span className="text-destructive">*</span></label>
+          <label className="block text-sm font-medium mb-2">Há» vÃ  tÃªn <span className="text-destructive">*</span></label>
           <Input
             type="text"
             name="fullName"
             value={values.fullName}
             onChange={handleChange}
-            placeholder="Nguyễn Văn A"
+            placeholder="Nguyá»…n VÄƒn A"
             className="bg-cream-50"
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Số điện thoại <span className="text-destructive">*</span></label>
+          <label className="block text-sm font-medium mb-2">Sá»‘ Ä‘iá»‡n thoáº¡i <span className="text-destructive">*</span></label>
           <Input
             type="tel"
             name="phoneNumber"
@@ -216,13 +216,13 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
             placeholder="0332454556"
             className="bg-cream-50"
             pattern="0[0-9]{9}"
-            title="Số điện thoại phải gồm 10 chữ số và bắt đầu bằng số 0 (ví dụ: 0332454556)"
+            title="Sá»‘ Ä‘iá»‡n thoáº¡i pháº£i gá»“m 10 chá»¯ sá»‘ vÃ  báº¯t Ä‘áº§u báº±ng sá»‘ 0 (vÃ­ dá»¥: 0332454556)"
             minLength={10}
             maxLength={10}
             required
           />
           <p className="mt-1 text-xs text-muted-foreground">
-            Định dạng hợp lệ: 10 số và bắt đầu bằng 0 (ví dụ: 0332454556).
+            Äá»‹nh dáº¡ng há»£p lá»‡: 10 sá»‘ vÃ  báº¯t Ä‘áº§u báº±ng 0 (vÃ­ dá»¥: 0332454556).
           </p>
         </div>
 
@@ -236,7 +236,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
             className="w-4 h-4 text-primary border-border rounded focus:ring-2 focus:ring-primary cursor-pointer"
           />
           <label htmlFor="isDefault" className="text-sm font-medium cursor-pointer select-none">
-            Đặt làm địa chỉ mặc định
+            Äáº·t lÃ m Ä‘á»‹a chá»‰ máº·c Ä‘á»‹nh
           </label>
         </div>
 
@@ -249,7 +249,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
               className="py-3 px-6"
               disabled={isSubmitting}
             >
-              Hủy
+              Há»§y
             </Button>
           )}
           <Button
@@ -257,7 +257,7 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
             className="py-3 px-6"
             disabled={!values.wardCode || isSubmitting}
           >
-            {isSubmitting ? (isEditMode ? "Đang cập nhật..." : "Đang lưu...") : (isEditMode ? "Cập nhật" : "Lưu địa chỉ")}
+            {isSubmitting ? (isEditMode ? "Äang cáº­p nháº­t..." : "Äang lÆ°u...") : (isEditMode ? "Cáº­p nháº­t" : "LÆ°u Ä‘á»‹a chá»‰")}
           </Button>
         </div>
       </form>

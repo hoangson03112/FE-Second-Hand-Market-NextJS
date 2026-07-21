@@ -39,7 +39,7 @@ export default function Cart() {
     return (
       <PageContainer withBackground={false}>
         <CartHeader onBack={onBack} />
-        <Container as="main" maxWidth="7xl" paddingX="md" paddingY="md">
+        <Container as="main" maxWidth="8xl" paddingX="md" paddingY="md">
           <CartLoginPrompt />
         </Container>
       </PageContainer>
@@ -50,9 +50,9 @@ export default function Cart() {
     return (
       <PageContainer withBackground={false}>
         <CartHeader onBack={onBack} />
-        <Container as="main" maxWidth="7xl" paddingX="md" paddingY="lg" className="flex items-center justify-center min-h-[40vh]">
+        <Container as="main" maxWidth="8xl" paddingX="md" paddingY="lg" className="flex items-center justify-center min-h-[40vh]">
           <LoadingBlock
-            text="Đang tải giỏ hàng..."
+            text="Äang táº£i giá» hÃ ng..."
             spinnerSize="lg"
             className="w-full max-w-md"
           />
@@ -65,7 +65,7 @@ export default function Cart() {
     return (
       <PageContainer withBackground={false}>
         <CartHeader onBack={onBack} />
-        <Container as="main" maxWidth="7xl" paddingX="md" paddingY="lg">
+        <Container as="main" maxWidth="8xl" paddingX="md" paddingY="lg">
           <CartEmpty />
         </Container>
       </PageContainer>
@@ -75,7 +75,7 @@ export default function Cart() {
   return (
     <PageContainer withBackground className="pb-24">
       <CartHeader onBack={onBack} />
-      <Container as="main" maxWidth="7xl" paddingX="md" paddingY="md">
+      <Container as="main" maxWidth="8xl" paddingX="md" paddingY="md">
         {groups.map((group) => (
           <ShopCartGroup
             key={group.sellerId}

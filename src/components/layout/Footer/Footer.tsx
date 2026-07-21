@@ -9,28 +9,28 @@ export default function Footer() {
 
   const footerLinks = {
     about: [
-      { name: "Về chúng tôi", href: "/about" },
-      { name: "Câu chuyện", href: "/story" },
-      { name: "Đội ngũ", href: "/team" },
-      { name: "Tuyển dụng", href: "/careers" },
+      { name: "Vá» chÃºng tÃ´i", href: "/about" },
+      { name: "CÃ¢u chuyá»‡n", href: "/story" },
+      { name: "Äá»™i ngÅ©", href: "/team" },
+      { name: "Tuyá»ƒn dá»¥ng", href: "/careers" },
     ],
     support: [
-      { name: "Trung tâm trợ giúp", href: "/help" },
-      { name: "Câu hỏi thường gặp", href: "/faq" },
-      { name: "Liên hệ", href: "/contact" },
-      { name: "Phản hồi", href: "/feedback" },
+      { name: "Trung tÃ¢m trá»£ giÃºp", href: "/help" },
+      { name: "CÃ¢u há»i thÆ°á»ng gáº·p", href: "/faq" },
+      { name: "LiÃªn há»‡", href: "/contact" },
+      { name: "Pháº£n há»“i", href: "/feedback" },
     ],
     legal: [
-      { name: "Điều khoản sử dụng", href: "/terms" },
-      { name: "Chính sách bảo mật", href: "/privacy" },
-      { name: "Chính sách vận chuyển", href: "/shipping" },
-      { name: "Chính sách đổi trả", href: "/return" },
+      { name: "Äiá»u khoáº£n sá»­ dá»¥ng", href: "/terms" },
+      { name: "ChÃ­nh sÃ¡ch báº£o máº­t", href: "/privacy" },
+      { name: "ChÃ­nh sÃ¡ch váº­n chuyá»ƒn", href: "/shipping" },
+      { name: "ChÃ­nh sÃ¡ch Ä‘á»•i tráº£", href: "/return" },
     ],
     categories: [
-      { name: "Đồ điện tử", href: "/categories/electronics" },
-      { name: "Thời trang", href: "/categories/fashion" },
-      { name: "Nội thất", href: "/categories/furniture" },
-      { name: "Sách & Văn phòng", href: "/categories/books" },
+      { name: "Äá»“ Ä‘iá»‡n tá»­", href: "/categories/electronics" },
+      { name: "Thá»i trang", href: "/categories/fashion" },
+      { name: "Ná»™i tháº¥t", href: "/categories/furniture" },
+      { name: "SÃ¡ch & VÄƒn phÃ²ng", href: "/categories/books" },
     ],
   };
 
@@ -77,11 +77,10 @@ export default function Footer() {
     <footer className="bg-taupe-900 border-t-2 border-taupe-800 relative">
       {/* Top accent line with gradient */}
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent" />
-      
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+
+      <div className="max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8">
         {/* Main content */}
         <div className="py-16 md:py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-16">
-
           {/* Brand column */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-block mb-6 group">
@@ -95,8 +94,9 @@ export default function Footer() {
               />
             </Link>
             <p className="text-sm text-taupe-300 leading-relaxed max-w-sm mb-10 font-medium">
-              Nền tảng mua bán đồ cũ thông minh, kết nối người mua và người bán
-              một cách an toàn, tiện lợi và thân thiện với môi trường.
+              Ná»n táº£ng mua bÃ¡n Ä‘á»“ cÅ© thÃ´ng minh, káº¿t ná»‘i ngÆ°á»i
+              mua vÃ  ngÆ°á»i bÃ¡n má»™t cÃ¡ch an toÃ n, tiá»‡n lá»£i vÃ  thÃ¢n
+              thiá»‡n vá»›i mÃ´i trÆ°á»ng.
             </p>
 
             {/* Social links */}
@@ -119,12 +119,15 @@ export default function Footer() {
           {/* About */}
           <div>
             <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-300 mb-6">
-              VỀ CHÚNG TÔI
+              Vá»€ CHÃšNG TÃ”I
             </h3>
             <ul className="space-y-3">
               {footerLinks.about.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-taupe-200 hover:text-cream-100 transition-colors duration-200 font-semibold">
+                  <Link
+                    href={link.href}
+                    className="text-sm text-taupe-200 hover:text-cream-100 transition-colors duration-200 font-semibold"
+                  >
                     {link.name}
                   </Link>
                 </li>
@@ -135,12 +138,15 @@ export default function Footer() {
           {/* Support */}
           <div>
             <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-300 mb-6">
-              HỖ TRỢ
+              Há»– TRá»¢
             </h3>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-taupe-200 hover:text-cream-100 transition-colors duration-200 font-semibold">
+                  <Link
+                    href={link.href}
+                    className="text-sm text-taupe-200 hover:text-cream-100 transition-colors duration-200 font-semibold"
+                  >
                     {link.name}
                   </Link>
                 </li>
@@ -151,12 +157,15 @@ export default function Footer() {
           {/* Legal + Categories */}
           <div>
             <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-300 mb-6">
-              CHÍNH SÁCH
+              CHÃNH SÃCH
             </h3>
             <ul className="space-y-3 mb-10">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-taupe-200 hover:text-cream-100 transition-colors duration-200 font-semibold">
+                  <Link
+                    href={link.href}
+                    className="text-sm text-taupe-200 hover:text-cream-100 transition-colors duration-200 font-semibold"
+                  >
                     {link.name}
                   </Link>
                 </li>
@@ -164,12 +173,15 @@ export default function Footer() {
             </ul>
 
             <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-taupe-300 mb-6">
-              DANH MỤC
+              DANH Má»¤C
             </h3>
             <ul className="space-y-3">
               {footerLinks.categories.map((link) => (
                 <li key={link.name}>
-                  <Link href={link.href} className="text-sm text-taupe-200 hover:text-cream-100 transition-colors duration-200 font-semibold">
+                  <Link
+                    href={link.href}
+                    className="text-sm text-taupe-200 hover:text-cream-100 transition-colors duration-200 font-semibold"
+                  >
                     {link.name}
                   </Link>
                 </li>
@@ -181,10 +193,11 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t-2 border-taupe-800 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-taupe-300 font-medium">
-            © {currentYear} Chợ Đồ Cũ Thông Minh. Tất cả quyền được bảo lưu.
+            Â© {currentYear} Chá»£ Äá»“ CÅ© ThÃ´ng Minh. Táº¥t cáº£ quyá»n
+            Ä‘Æ°á»£c báº£o lÆ°u.
           </p>
           <div className="flex items-center gap-8">
-            {["Điều khoản", "Bảo mật", "Sitemap"].map((label, i) => (
+            {["Äiá»u khoáº£n", "Báº£o máº­t", "Sitemap"].map((label, i) => (
               <Link
                 key={i}
                 href={`/${label.toLowerCase().replace(/\s/g, "-")}`}

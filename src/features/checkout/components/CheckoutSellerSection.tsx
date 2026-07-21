@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { IconPackage, IconTruck, IconClock, IconMapPin, IconInfoCircle } from "@tabler/icons-react";
-import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
+import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
 import { FEATURE_INFO } from "@/constants/messages";
 import { formatPrice } from "@/utils/format/price";
 import { formatCondition } from "@/utils/format";
@@ -191,3 +191,4 @@ export default function CheckoutSellerSection({
     </div>
   );
 }
+

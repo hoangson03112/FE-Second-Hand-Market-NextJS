@@ -25,12 +25,12 @@ import { openChat } from "@/utils/chat";
 import { StatusBadge } from "@/components/shared";
 
 const REASON_LABELS: Record<string, string> = {
-  damaged: "Hàng bị hỏng",
-  wrong_item: "Giao sai hàng",
-  not_as_described: "Không đúng mô tả",
-  missing_parts: "Thiếu phụ kiện",
-  quality_issue: "Chất lượng kém",
-  other: "Lý do khác",
+  damaged: "HÃ ng bá»‹ há»ng",
+  wrong_item: "Giao sai hÃ ng",
+  not_as_described: "KhÃ´ng Ä‘Ãºng mÃ´ táº£",
+  missing_parts: "Thiáº¿u phá»¥ kiá»‡n",
+  quality_issue: "Cháº¥t lÆ°á»£ng kÃ©m",
+  other: "LÃ½ do khÃ¡c",
 };
 
 interface EvidenceImage {
@@ -167,7 +167,7 @@ export function AdminDisputeDetailModal({
         _id: order._id,
         status: order.status ?? "",
         products: orderProducts.map((p) => ({
-          name: (p.productId as { name?: string })?.name ?? "Sản phẩm",
+          name: (p.productId as { name?: string })?.name ?? "Sáº£n pháº©m",
           quantity: p.quantity ?? 0,
           price: p.price ?? 0,
         })),
@@ -176,29 +176,29 @@ export function AdminDisputeDetailModal({
     : undefined;
 
   const timelineItems = [
-    { label: "Tạo yêu cầu hoàn tiền", value: refund?.createdAt },
-    order?.createdAt && { label: "Đặt hàng", value: order.createdAt },
-    order?.confirmedAt && { label: "Seller xác nhận", value: order.confirmedAt },
-    order?.deliveredAt && { label: "Đã giao hàng", value: order.deliveredAt },
+    { label: "Táº¡o yÃªu cáº§u hoÃ n tiá»n", value: refund?.createdAt },
+    order?.createdAt && { label: "Äáº·t hÃ ng", value: order.createdAt },
+    order?.confirmedAt && { label: "Seller xÃ¡c nháº­n", value: order.confirmedAt },
+    order?.deliveredAt && { label: "ÄÃ£ giao hÃ ng", value: order.deliveredAt },
     refund?.sellerResponse?.respondedAt && {
-      label: "Seller phản hồi",
+      label: "Seller pháº£n há»“i",
       value: refund.sellerResponse.respondedAt,
     },
     refund?.escalatedAt && {
-      label: "Khiếu nại lên Admin",
+      label: "Khiáº¿u náº¡i lÃªn Admin",
       value: refund.escalatedAt,
     },
     refund?.adminIntervention?.handledAt && {
-      label: "Admin xử lý",
+      label: "Admin xá»­ lÃ½",
       value: refund.adminIntervention.handledAt,
     },
-    refund?.refundedAt && { label: "Hoàn tiền hoàn tất", value: refund.refundedAt },
+    refund?.refundedAt && { label: "HoÃ n tiá»n hoÃ n táº¥t", value: refund.refundedAt },
   ].filter(Boolean) as { label: string; value: string }[];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm overflow-y-auto">
-      <div className="bg-card rounded-2xl shadow-xl max-w-7xl w-full max-h-[92vh] overflow-hidden border border-border flex flex-col">
-        {/* Header: trạng thái khiếu nại + số tiền (một lần, rõ ràng) */}
+      <div className="bg-card rounded-2xl shadow-xl max-w-8xl w-full max-h-[92vh] overflow-hidden border border-border flex flex-col">
+        {/* Header: tráº¡ng thÃ¡i khiáº¿u náº¡i + sá»‘ tiá»n (má»™t láº§n, rÃµ rÃ ng) */}
         <header className="shrink-0 border-b border-border bg-muted/20 px-5 py-4 sm:px-6">
           <div className="flex items-start justify-between gap-3">
             <div className="flex min-w-0 items-start gap-3">
@@ -208,18 +208,18 @@ export function AdminDisputeDetailModal({
               <div className="min-w-0 space-y-1">
                 <div className="flex flex-wrap items-center gap-2 gap-y-1">
                   <h2 className="text-base font-semibold tracking-tight text-foreground sm:text-lg">
-                    Khiếu nại{" "}
+                    Khiáº¿u náº¡i{" "}
                     <span className="font-mono text-muted-foreground">
-                      #{refund?._id?.slice(-8).toUpperCase() ?? "—"}
+                      #{refund?._id?.slice(-8).toUpperCase() ?? "â€”"}
                     </span>
                   </h2>
                   {refund?.status && <StatusBadge status={refund.status} size="sm" />}
                 </div>
                 <p className="text-xs text-muted-foreground sm:text-sm">
-                  {refund?.createdAt && <span>Tạo {format(refund.createdAt)}</span>}
+                  {refund?.createdAt && <span>Táº¡o {format(refund.createdAt)}</span>}
                   {refund?.updatedAt && (
-                    <span className={refund?.createdAt ? " · " : ""}>
-                      Cập nhật {format(refund.updatedAt)}
+                    <span className={refund?.createdAt ? " Â· " : ""}>
+                      Cáº­p nháº­t {format(refund.updatedAt)}
                     </span>
                   )}
                 </p>
@@ -229,14 +229,14 @@ export function AdminDisputeDetailModal({
               type="button"
               onClick={onClose}
               className="shrink-0 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              aria-label="Đóng"
+              aria-label="ÄÃ³ng"
             >
               <IconX className="h-5 w-5" />
             </button>
           </div>
           {refund && (
             <div className="mt-4 flex flex-col gap-0.5 border-t border-border/80 pt-4 sm:flex-row sm:items-end sm:justify-between">
-              <SectionLabel>Số tiền hoàn</SectionLabel>
+              <SectionLabel>Sá»‘ tiá»n hoÃ n</SectionLabel>
               <p className="text-2xl font-semibold tabular-nums tracking-tight text-foreground sm:text-3xl">
                 {formatPrice(refund.refundAmount)}
               </p>
@@ -250,24 +250,24 @@ export function AdminDisputeDetailModal({
               <IconLoader2 className="w-12 h-12 animate-spin text-primary" />
             </div>
           ) : !refund ? (
-            <p className="text-muted-foreground text-center py-16">Không tải được dữ liệu.</p>
+            <p className="text-muted-foreground text-center py-16">KhÃ´ng táº£i Ä‘Æ°á»£c dá»¯ liá»‡u.</p>
           ) : (
             <div className="space-y-5">
-              {/* Người tham gia — một hàng gọn */}
+              {/* NgÆ°á»i tham gia â€” má»™t hÃ ng gá»n */}
               <div className="grid gap-3 sm:grid-cols-2">
                 {[
                   {
-                    role: "Người mua",
+                    role: "NgÆ°á»i mua",
                     u: refund.buyerId,
-                    fallback: "Người mua",
-                    accent: "text-sky-600 dark:text-sky-400",
+                    fallback: "NgÆ°á»i mua",
+                    accent: "text-sky-600",
                     bg: "bg-sky-500/10",
                   },
                   {
-                    role: "Người bán",
+                    role: "NgÆ°á»i bÃ¡n",
                     u: refund.sellerId,
-                    fallback: "Người bán",
-                    accent: "text-amber-700 dark:text-amber-400",
+                    fallback: "NgÆ°á»i bÃ¡n",
+                    accent: "text-amber-700",
                     bg: "bg-amber-500/10",
                   },
                 ].map(({ role, u, fallback, accent, bg }) => (
@@ -282,9 +282,9 @@ export function AdminDisputeDetailModal({
                     </div>
                     <div className="min-w-0 flex-1">
                       <SectionLabel>{role}</SectionLabel>
-                      <p className="truncate font-medium text-foreground">{u?.fullName ?? "—"}</p>
+                      <p className="truncate font-medium text-foreground">{u?.fullName ?? "â€”"}</p>
                       <p className="truncate text-xs text-muted-foreground">
-                        {u?.phoneNumber ?? u?.email ?? "—"}
+                        {u?.phoneNumber ?? u?.email ?? "â€”"}
                       </p>
                     </div>
                     <button
@@ -306,22 +306,22 @@ export function AdminDisputeDetailModal({
                 ))}
               </div>
 
-              {/* Nội dung khiếu nại — không lặp số tiền */}
+              {/* Ná»™i dung khiáº¿u náº¡i â€” khÃ´ng láº·p sá»‘ tiá»n */}
               <section className="rounded-xl border border-border bg-card">
                 <div className="flex items-center gap-2 border-b border-border px-4 py-3">
                   <IconPackage className="h-4 w-4 text-muted-foreground" />
-                  <h3 className="text-sm font-semibold text-foreground">Yêu cầu hoàn tiền</h3>
+                  <h3 className="text-sm font-semibold text-foreground">YÃªu cáº§u hoÃ n tiá»n</h3>
                 </div>
                 <div className="space-y-4 px-4 py-4">
                   <div>
-                    <SectionLabel>Lý do</SectionLabel>
+                    <SectionLabel>LÃ½ do</SectionLabel>
                     <p className="mt-1 text-sm font-medium text-foreground">
                       {REASON_LABELS[refund.reason] ?? refund.reason}
                     </p>
                   </div>
                   {refund.description && (
                     <div>
-                      <SectionLabel>Ghi chú từ người mua</SectionLabel>
+                      <SectionLabel>Ghi chÃº tá»« ngÆ°á»i mua</SectionLabel>
                       <p className="mt-1.5 rounded-lg bg-muted/50 px-3 py-2.5 text-sm leading-relaxed text-foreground">
                         {refund.description}
                       </p>
@@ -332,7 +332,7 @@ export function AdminDisputeDetailModal({
                       className={`flex gap-3 rounded-lg px-3 py-3 ${
                         refund.sellerResponse.decision === "rejected"
                           ? "bg-destructive/5"
-                          : "bg-emerald-500/10 dark:bg-emerald-500/15"
+                          : "bg-emerald-500/10"
                       }`}
                     >
                       {refund.sellerResponse.decision === "rejected" ? (
@@ -342,10 +342,10 @@ export function AdminDisputeDetailModal({
                       )}
                       <div className="min-w-0">
                         <p className="text-sm font-medium text-foreground">
-                          Seller {refund.sellerResponse.decision === "rejected" ? "từ chối" : "chấp thuận"}
+                          Seller {refund.sellerResponse.decision === "rejected" ? "tá»« chá»‘i" : "cháº¥p thuáº­n"}
                           {refund.sellerResponse.respondedAt && (
                             <span className="ml-2 font-normal text-muted-foreground">
-                              · {format(refund.sellerResponse.respondedAt)}
+                              Â· {format(refund.sellerResponse.respondedAt)}
                             </span>
                           )}
                         </p>
@@ -361,18 +361,18 @@ export function AdminDisputeDetailModal({
               </section>
 
               {refund.buyerRefundBankInfo?.buyerAccountNumber && (
-                <section className="overflow-hidden rounded-xl border border-primary/20 bg-primary/[0.03] dark:bg-primary/[0.06]">
+                <section className="overflow-hidden rounded-xl border border-primary/20 bg-primary/[0.03]">
                   <div className="border-b border-primary/15 bg-primary/5 px-4 py-3 sm:flex sm:items-center sm:justify-between sm:gap-4">
                     <div className="flex items-start gap-3">
                       <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-primary">
                         <IconQrcode className="h-5 w-5" stroke={1.5} />
                       </div>
                       <div>
-                        <h3 className="text-sm font-semibold text-foreground">Bước tiếp theo: chuyển khoản</h3>
+                        <h3 className="text-sm font-semibold text-foreground">BÆ°á»›c tiáº¿p theo: chuyá»ƒn khoáº£n</h3>
                         <p className="mt-0.5 text-xs text-muted-foreground">
-                          Quét VietQR — app sẽ điền sẵn số tiền và nội dung. Chuyển đúng{" "}
+                          QuÃ©t VietQR â€” app sáº½ Ä‘iá»n sáºµn sá»‘ tiá»n vÃ  ná»™i dung. Chuyá»ƒn Ä‘Ãºng{" "}
                           <span className="font-medium text-foreground">{formatPrice(refund.refundAmount)}</span>
-                          {buyerRefundQr?.transferContent ? " và nội dung bên dưới." : "."}
+                          {buyerRefundQr?.transferContent ? " vÃ  ná»™i dung bÃªn dÆ°á»›i." : "."}
                         </p>
                       </div>
                     </div>
@@ -380,26 +380,26 @@ export function AdminDisputeDetailModal({
                   <div className="grid gap-6 p-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start lg:gap-8">
                     <dl className="space-y-3 text-sm">
                       <div className="grid gap-0.5 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-x-4">
-                        <dt className="text-muted-foreground">Ngân hàng</dt>
+                        <dt className="text-muted-foreground">NgÃ¢n hÃ ng</dt>
                         <dd className="font-medium text-foreground">
-                          {refund.buyerRefundBankInfo.buyerBankName ?? "—"}
+                          {refund.buyerRefundBankInfo.buyerBankName ?? "â€”"}
                         </dd>
                       </div>
                       <div className="grid gap-0.5 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-x-4">
-                        <dt className="text-muted-foreground">Số tài khoản</dt>
+                        <dt className="text-muted-foreground">Sá»‘ tÃ i khoáº£n</dt>
                         <dd className="font-mono font-medium tracking-wide text-foreground">
                           {refund.buyerRefundBankInfo.buyerAccountNumber}
                         </dd>
                       </div>
                       <div className="grid gap-0.5 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-x-4">
-                        <dt className="text-muted-foreground">Chủ TK</dt>
+                        <dt className="text-muted-foreground">Chá»§ TK</dt>
                         <dd className="font-medium text-foreground">
-                          {refund.buyerRefundBankInfo.buyerAccountHolder ?? "—"}
+                          {refund.buyerRefundBankInfo.buyerAccountHolder ?? "â€”"}
                         </dd>
                       </div>
                       {buyerRefundQr?.transferContent && (
                         <div className="border-t border-border/80 pt-3">
-                          <dt className="text-muted-foreground">Nội dung CK</dt>
+                          <dt className="text-muted-foreground">Ná»™i dung CK</dt>
                           <dd className="mt-1 break-all font-mono text-sm font-medium text-foreground">
                             {buyerRefundQr.transferContent}
                           </dd>
@@ -407,7 +407,7 @@ export function AdminDisputeDetailModal({
                       )}
                       {refund.buyerRefundBankInfo.submittedAt && (
                         <p className="text-xs text-muted-foreground pt-1">
-                          Người mua gửi STK lúc {format(refund.buyerRefundBankInfo.submittedAt)}
+                          NgÆ°á»i mua gá»­i STK lÃºc {format(refund.buyerRefundBankInfo.submittedAt)}
                         </p>
                       )}
                     </dl>
@@ -416,7 +416,7 @@ export function AdminDisputeDetailModal({
                         <div className="rounded-xl border border-border bg-white p-3 shadow-sm">
                           <Image
                             src={buyerRefundQr.url}
-                            alt="Mã VietQR hoàn tiền"
+                            alt="MÃ£ VietQR hoÃ n tiá»n"
                             width={216}
                             height={216}
                             className="h-[200px] w-[200px] object-contain sm:h-[216px] sm:w-[216px]"
@@ -424,7 +424,7 @@ export function AdminDisputeDetailModal({
                           />
                         </div>
                         <p className="mt-2 max-w-[220px] text-center text-[11px] leading-snug text-muted-foreground lg:text-right">
-                          Lỗi QR? Chuyển thủ công theo thông tin bên trái.
+                          Lá»—i QR? Chuyá»ƒn thá»§ cÃ´ng theo thÃ´ng tin bÃªn trÃ¡i.
                         </p>
                       </div>
                     )}
@@ -437,22 +437,22 @@ export function AdminDisputeDetailModal({
                   <section className="rounded-xl border border-border bg-card">
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-3">
                       <h3 className="text-sm font-semibold text-foreground">
-                        Đơn #{order._id?.slice(-8).toUpperCase()}
+                        ÄÆ¡n #{order._id?.slice(-8).toUpperCase()}
                       </h3>
                       <StatusBadge status={order.status ?? "pending"} size="sm" />
                     </div>
                     <div className="space-y-3 px-4 py-3">
                       {(order.createdAt || order.updatedAt) && (
                         <p className="text-xs text-muted-foreground">
-                          {order.createdAt && <>Đặt {format(order.createdAt)}</>}
-                          {order.createdAt && order.updatedAt && " · "}
-                          {order.updatedAt && <>Cập nhật {format(order.updatedAt)}</>}
+                          {order.createdAt && <>Äáº·t {format(order.createdAt)}</>}
+                          {order.createdAt && order.updatedAt && " Â· "}
+                          {order.updatedAt && <>Cáº­p nháº­t {format(order.updatedAt)}</>}
                         </p>
                       )}
                       {order.shippingAddress && typeof order.shippingAddress === "object" && (
                         <div className="rounded-lg bg-muted/40 px-3 py-2.5 text-sm">
                           <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-                            <IconMapPin className="h-3.5 w-3.5" /> Giao hàng
+                            <IconMapPin className="h-3.5 w-3.5" /> Giao hÃ ng
                           </p>
                           <p className="mt-1 font-medium">{order.shippingAddress.fullName}</p>
                           {order.shippingAddress.phoneNumber && (
@@ -499,8 +499,8 @@ export function AdminDisputeDetailModal({
                                 </div>
                               )}
                               <span className="min-w-0 flex-1 truncate text-sm">
-                                {prod?.name ?? "Sản phẩm"}{" "}
-                                <span className="text-muted-foreground">×{item.quantity}</span>
+                                {prod?.name ?? "Sáº£n pháº©m"}{" "}
+                                <span className="text-muted-foreground">Ã—{item.quantity}</span>
                               </span>
                               <span className="shrink-0 text-sm font-medium tabular-nums">
                                 {formatPrice((item.price ?? 0) * (item.quantity ?? 1))}
@@ -510,7 +510,7 @@ export function AdminDisputeDetailModal({
                         })}
                       </div>
                       <div className="flex items-center justify-between border-t border-border pt-3 text-sm font-semibold">
-                        <span className="text-muted-foreground">Tổng đơn</span>
+                        <span className="text-muted-foreground">Tá»•ng Ä‘Æ¡n</span>
                         <span className="tabular-nums text-foreground">
                           {formatPrice(order.totalAmount ?? 0)}
                         </span>
@@ -524,7 +524,7 @@ export function AdminDisputeDetailModal({
                   <section className="rounded-xl border border-border bg-card">
                     <div className="flex items-center gap-2 border-b border-border px-4 py-3">
                       <IconPhoto className="h-4 w-4 text-muted-foreground" />
-                      <h3 className="text-sm font-semibold text-foreground">Bằng chứng</h3>
+                      <h3 className="text-sm font-semibold text-foreground">Báº±ng chá»©ng</h3>
                     </div>
                     <div className="px-4 py-3">
                       {refund.evidence?.images && refund.evidence.images.length > 0 && (
@@ -540,7 +540,7 @@ export function AdminDisputeDetailModal({
                               >
                                 <Image
                                   src={img.url}
-                                  alt={img.originalName ?? `Bằng chứng ${i + 1}`}
+                                  alt={img.originalName ?? `Báº±ng chá»©ng ${i + 1}`}
                                   width={120}
                                   height={120}
                                   className="h-full w-full object-cover transition-transform group-hover:scale-[1.02]"
@@ -580,7 +580,7 @@ export function AdminDisputeDetailModal({
                 <section className="rounded-xl border border-border bg-card">
                   <div className="flex items-center gap-2 border-b border-border px-4 py-3">
                     <IconClock className="h-4 w-4 text-muted-foreground" />
-                    <h3 className="text-sm font-semibold text-foreground">Mốc thời gian</h3>
+                    <h3 className="text-sm font-semibold text-foreground">Má»‘c thá»i gian</h3>
                   </div>
                   <ul className="divide-y divide-border px-2 py-1">
                     {timelineItems.map((item, i) => (
@@ -603,7 +603,7 @@ export function AdminDisputeDetailModal({
           )}
         </div>
 
-        {/* ─── STICKY ACTION BAR ─── */}
+        {/* â”€â”€â”€ STICKY ACTION BAR â”€â”€â”€ */}
         {refund?.status === "disputed" && (
           <div className="flex flex-wrap items-center justify-end gap-2 border-t border-border bg-muted/20 px-5 py-3 sm:px-6">
             <button
@@ -613,7 +613,7 @@ export function AdminDisputeDetailModal({
               className="flex items-center gap-2 rounded-lg border border-destructive/50 px-4 py-2.5 text-sm font-semibold text-destructive transition-colors hover:bg-destructive/5 disabled:opacity-50"
             >
               <IconCircleX className="h-4 w-4" />
-              Bác bỏ khiếu nại
+              BÃ¡c bá» khiáº¿u náº¡i
             </button>
             <button
               type="button"
@@ -626,7 +626,7 @@ export function AdminDisputeDetailModal({
               ) : (
                 <IconCircleCheck className="h-4 w-4" />
               )}
-              Duyệt hoàn tiền
+              Duyá»‡t hoÃ n tiá»n
             </button>
           </div>
         )}

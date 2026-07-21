@@ -1,13 +1,13 @@
 "use client";
 
-import { IconLoader2 } from "@tabler/icons-react";
+import { IconBuildingStore, IconLoader2 } from "@tabler/icons-react";
 import { Pagination } from "@/components/shared";
 import { useAdminSellers } from "./hooks/useAdminSellers";
 import StatsBadges from "./components/StatsBadges";
 import StatusTabs from "./components/StatusTabs";
 import SellersTable from "./components/SellersTable";
 import SellerDetailModal from "./components/SellerDetailModal";
-import EmptyState from "./components/EmptyState";
+import { NoData } from "@/components/shared";
 
 export default function AdminSellers() {
   const {
@@ -75,7 +75,7 @@ export default function AdminSellers() {
       />
 
       {sellers.length === 0 ? (
-        <EmptyState />
+        <NoData icon={<IconBuildingStore />} title="Không có seller nào." size="sm" />
       ) : (
         <>
           <SellersTable
@@ -113,5 +113,6 @@ export default function AdminSellers() {
     </div>
   );
 }
+
 
 

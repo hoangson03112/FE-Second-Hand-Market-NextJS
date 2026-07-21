@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { IconStar, IconChevronRight, IconStarFilled } from "@tabler/icons-react";
 import Link from "next/link";
-import ShareButton from "@/components/common/ShareButton";
+import ShareButton from "@/components/shared/ShareButton";
 
 interface ProductHeaderProps {
   name: string;
@@ -145,3 +145,4 @@ export default function ProductHeader({
     </div>
   );
 }
+

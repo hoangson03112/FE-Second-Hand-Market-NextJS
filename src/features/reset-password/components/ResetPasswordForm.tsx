@@ -1,7 +1,7 @@
 import Link from "next/link";
 import PasswordField from "@/features/auth/PasswordField";
 import AuthButton from "@/features/auth/AuthButton";
-import InfoBox from "@/components/common/auth/InfoBox";
+import InfoBox from "@/components/shared/auth/InfoBox";
 import { ArrowRightIcon } from "@/components/shared";
 
 interface ResetPasswordFormProps {
@@ -74,3 +74,4 @@ export default function ResetPasswordForm({
     </form>
   );
 }
+

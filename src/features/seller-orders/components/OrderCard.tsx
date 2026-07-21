@@ -15,7 +15,7 @@ import { getProductImage } from "../utils/orderUtils";
 import OrderActions from "./OrderActions";
 import { cn } from "@/lib/utils";
 import { formatTimeAgo } from "@/utils/format/date";
-import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
+import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
 import { REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER } from "@/constants/refund";
 
 const REFUND_PHASE_LABELS: Record<string, string> = {
@@ -231,3 +231,4 @@ export default function OrderCard({
     </div>
   );
 }
+

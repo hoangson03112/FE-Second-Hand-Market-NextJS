@@ -12,9 +12,9 @@ export function RejectedProductBanner({
   humanReviewRequested,
 }: RejectedProductBannerProps) {
   return (
-    <div className="rounded-xl border border-destructive/20 bg-destructive/8 dark:bg-destructive/15 p-4 mb-4">
+    <div className="rounded-xl border border-destructive/20 bg-destructive/8 p-4 mb-4">
       <div className="flex items-start gap-3">
-        <div className="shrink-0 w-10 h-10 rounded-full bg-destructive/10 dark:bg-destructive/20 flex items-center justify-center">
+        <div className="shrink-0 w-10 h-10 rounded-full bg-destructive/10 flex items-center justify-center">
           <IconAlertCircle className="w-5 h-5 text-destructive" />
         </div>
         <div className="flex-1 min-w-0">
@@ -27,7 +27,7 @@ export function RejectedProductBanner({
             </p>
           )}
           {humanReviewRequested ? (
-            <div className="flex items-center gap-2 text-xs text-blue-700 dark:text-blue-400">
+            <div className="flex items-center gap-2 text-xs text-blue-700">
               <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
               Đã yêu cầu duyệt lại. Admin sẽ xem xét trong 24h.
             </div>

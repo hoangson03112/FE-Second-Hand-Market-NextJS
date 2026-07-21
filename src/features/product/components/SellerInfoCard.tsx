@@ -2,7 +2,7 @@
 
 import { IconStar, IconTruck, IconMapPin, IconClock } from "@tabler/icons-react";
 import { ISeller } from "@/types/product";
-import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
+import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
 import { getProvinceName } from "@/utils";
 import { getMonthYear } from "@/utils/date";
 
@@ -81,3 +81,4 @@ export default function SellerInfoCard({
     </div>
   );
 }
+

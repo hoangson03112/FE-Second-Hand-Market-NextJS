@@ -70,22 +70,20 @@ export default function FeaturedListingsSection() {
 
           <div className="mt-3 flex flex-1 flex-col justify-between">
             <div>
-              <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-taupe-900">
+              <h3 className="line-clamp-2 text-[15px] font-semibold leading-snug text-taupe-900">
                 {item.name}
               </h3>
               <p className="mt-1 line-clamp-1 text-xs text-taupe-500">
                 {item.description?.trim() || "Sản phẩm đang được người dùng quan tâm nhiều."}
               </p>
-
             </div>
-            <div className="flex justify-between">            <p className="mt-2 text-sm font-semibold text-taupe-700">{formatPrice(item.price)}</p>
-            <p className="mt-1 flex items-center gap-1 text-xs text-taupe-500 text-end">
-                <IconMapPin className="h-3.5 w-3.5 shrink-0 text-red-500" />
-                <span className="line-clamp-1">
-                   <span className="font-medium text-taupe-700">{provinceName}</span>
-                </span>
-              </p></div>
-
+            <div className="mt-3 flex items-center justify-between gap-2">
+              <p className="text-sm font-semibold text-taupe-800">{formatPrice(item.price)}</p>
+              <p className="flex min-w-0 items-center gap-1 text-xs text-taupe-500">
+                <IconMapPin className="h-3.5 w-3.5 shrink-0 text-taupe-400" />
+                <span className="line-clamp-1 font-medium text-taupe-700">{provinceName}</span>
+              </p>
+            </div>
           </div>
         </div>
       </Link>
@@ -98,13 +96,13 @@ export default function FeaturedListingsSection() {
         background:
           "linear-gradient(180deg, #F5EFE7 0%, #F2E9DE 100%)",
       }}
-      className="border-b border-taupe-200/60 py-12 md:py-16"
+      className="border-b border-taupe-200/60 py-16 md:py-20"
     >
       <div
         ref={ref}
         className={cn(
-          "mx-auto w-full max-w-9xl px-4 sm:px-6 lg:px-8 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+          "mx-auto w-full max-w-9xl px-4 sm:px-6 lg:px-8 transition-[opacity,transform] duration-700 ease-out",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
         )}
       >
         <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
@@ -112,7 +110,7 @@ export default function FeaturedListingsSection() {
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-taupe-500">
               Chọn lọc mỗi tuần
             </p>
-            <h2 className="mt-2 text-[2rem] font-semibold tracking-tight text-taupe-900">
+            <h2 className="font-ny mt-2 text-[2.2rem] font-semibold tracking-tight text-taupe-900 md:text-[2.6rem]">
               Sản phẩm nổi bật
             </h2>
           </div>
@@ -123,8 +121,8 @@ export default function FeaturedListingsSection() {
 
         <div
           className={cn(
-            "grid gap-4 lg:grid-cols-12 lg:grid-rows-[386px_386px] transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+            "grid gap-4 lg:grid-cols-12 lg:grid-rows-[386px_386px] transition-[opacity,transform] duration-700 ease-out",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           )}
           style={{ transitionDelay: "240ms" }}
         >
@@ -149,7 +147,7 @@ export default function FeaturedListingsSection() {
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-taupe-500">
                 Gợi ý mua nhanh
               </p>
-              <h3 className="mt-2 text-xl font-semibold leading-tight text-taupe-900">
+              <h3 className="font-ny mt-2 text-2xl font-semibold leading-tight text-taupe-900">
                 Tìm món phù hợp với ngân sách của bạn
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-taupe-500">

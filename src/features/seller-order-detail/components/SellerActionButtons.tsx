@@ -95,7 +95,7 @@ export function SellerActionButtons({
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-start gap-4 p-6 border-b border-border">
-                <div className="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
                   <IconCircleCheck className="w-5 h-5 text-emerald-600" />
                 </div>
                 <div>
@@ -141,12 +141,12 @@ export function SellerActionButtons({
       <>
         {dialogs}
         <div className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
-          <div className="p-4 bg-amber-50 dark:bg-amber-950/20 border-b border-amber-200 dark:border-amber-900/40">
-            <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400">
+          <div className="p-4 bg-amber-50 border-b border-amber-200">
+            <div className="flex items-center gap-2 text-amber-700">
               <IconAlertTriangle className="w-4 h-4 shrink-0" />
               <p className="text-sm font-medium">Đơn hàng mới đang chờ xác nhận</p>
             </div>
-            <p className="text-xs text-amber-600 dark:text-amber-500 mt-1 ml-6">
+            <p className="text-xs text-amber-600 mt-1 ml-6">
               Vui lòng xác nhận hoặc hủy đơn trong thời gian sớm nhất.
             </p>
           </div>
@@ -233,12 +233,12 @@ export function SellerActionButtons({
       return (
         <>
           {dialogs}
-          <div className="bg-rose-50 dark:bg-rose-950/20 rounded-2xl border border-rose-200 dark:border-rose-900/40 shadow-sm p-4 flex items-center gap-3">
+          <div className="bg-rose-50 rounded-2xl border border-rose-200 shadow-sm p-4 flex items-center gap-3">
             <IconX className="w-5 h-5 text-rose-500 shrink-0" />
             <div>
-              <p className="text-sm font-medium text-rose-700 dark:text-rose-400">Đã từ chối yêu cầu hoàn tiền</p>
+              <p className="text-sm font-medium text-rose-700">Đã từ chối yêu cầu hoàn tiền</p>
               {order.refundRequestId.sellerResponse?.comment && (
-                <p className="text-xs text-rose-600 dark:text-rose-500 mt-0.5">
+                <p className="text-xs text-rose-600 mt-0.5">
                   Lý do: {order.refundRequestId.sellerResponse.comment}
                 </p>
               )}
@@ -251,13 +251,13 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-card rounded-2xl border border-orange-200 dark:border-orange-900/40 shadow-sm overflow-hidden">
-          <div className="p-4 bg-orange-50 dark:bg-orange-950/20 border-b border-orange-200 dark:border-orange-900/40">
-            <div className="flex items-center gap-2 text-orange-700 dark:text-orange-400">
+        <div className="bg-card rounded-2xl border border-orange-200 shadow-sm overflow-hidden">
+          <div className="p-4 bg-orange-50 border-b border-orange-200">
+            <div className="flex items-center gap-2 text-orange-700">
               <IconRefresh className="w-4 h-4 shrink-0" />
               <p className="text-sm font-medium">Người mua đã yêu cầu hoàn tiền</p>
             </div>
-            <p className="text-xs text-orange-600 dark:text-orange-500 mt-1 ml-6">
+            <p className="text-xs text-orange-600 mt-1 ml-6">
               Xem yêu cầu bên dưới và chọn hành động phù hợp.
             </p>
           </div>
@@ -313,9 +313,9 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-emerald-50 dark:bg-emerald-950/20 rounded-2xl border border-emerald-200 dark:border-emerald-900/40 shadow-sm p-4 flex items-center gap-3">
+        <div className="bg-emerald-50 rounded-2xl border border-emerald-200 shadow-sm p-4 flex items-center gap-3">
           <IconCircleCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-          <p className="text-sm font-medium text-emerald-700 dark:text-emerald-400">Đơn hàng đã hoàn thành thành công.</p>
+          <p className="text-sm font-medium text-emerald-700">Đơn hàng đã hoàn thành thành công.</p>
         </div>
       </>
     );
@@ -326,12 +326,12 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-rose-50 dark:bg-rose-950/20 rounded-2xl border border-rose-200 dark:border-rose-900/40 shadow-sm p-4 flex items-center gap-3">
+        <div className="bg-rose-50 rounded-2xl border border-rose-200 shadow-sm p-4 flex items-center gap-3">
           <IconBan className="w-5 h-5 text-rose-500 shrink-0" />
           <div>
-            <p className="text-sm font-medium text-rose-700 dark:text-rose-400">Đơn hàng đã bị hủy</p>
+            <p className="text-sm font-medium text-rose-700">Đơn hàng đã bị hủy</p>
             {order.cancelReason && (
-              <p className="text-xs text-rose-600 dark:text-rose-500 mt-0.5">Lý do: {order.cancelReason}</p>
+              <p className="text-xs text-rose-600 mt-0.5">Lý do: {order.cancelReason}</p>
             )}
           </div>
         </div>
@@ -344,15 +344,15 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-card rounded-2xl border border-blue-200 dark:border-blue-900/40 shadow-sm overflow-hidden">
-          <div className="p-4 bg-blue-50 dark:bg-blue-950/20 border-b border-blue-200 dark:border-blue-900/40">
-            <div className="flex items-center gap-2 text-blue-700 dark:text-blue-400">
+        <div className="bg-card rounded-2xl border border-blue-200 shadow-sm overflow-hidden">
+          <div className="p-4 bg-blue-50 border-b border-blue-200">
+            <div className="flex items-center gap-2 text-blue-700">
               <IconRefresh className="w-4 h-4 shrink-0" />
               <p className="text-sm font-medium">
                 {isLocalPickup ? "Người mua đang chuẩn bị trả hàng" : "Người mua đang gửi hàng hoàn"}
               </p>
             </div>
-            <p className="text-xs text-blue-600 dark:text-blue-500 mt-1 ml-6">
+            <p className="text-xs text-blue-600 mt-1 ml-6">
               {isLocalPickup
                 ? "Liên hệ người mua để thống nhất thời gian nhận lại hàng trực tiếp."
                 : "Theo dõi vận đơn hoàn để biết khi hàng đến nơi, rồi xác nhận nhận hàng."}
@@ -398,13 +398,13 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-card rounded-2xl border border-emerald-200 dark:border-emerald-900/40 shadow-sm overflow-hidden">
-          <div className="p-4 bg-emerald-50 dark:bg-emerald-950/20 border-b border-emerald-200 dark:border-emerald-900/40">
-            <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
+        <div className="bg-card rounded-2xl border border-emerald-200 shadow-sm overflow-hidden">
+          <div className="p-4 bg-emerald-50 border-b border-emerald-200">
+            <div className="flex items-center gap-2 text-emerald-700">
               <IconCircleCheck className="w-4 h-4 shrink-0" />
               <p className="text-sm font-medium">Đã nhận hàng hoàn — chờ admin xử lý hoàn tiền</p>
             </div>
-            <p className="text-xs text-emerald-600 dark:text-emerald-500 mt-1 ml-6">
+            <p className="text-xs text-emerald-600 mt-1 ml-6">
               Admin sẽ xử lý hoàn tiền cho người mua trong thời gian sớm nhất.
             </p>
           </div>
@@ -429,9 +429,9 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-blue-50 dark:bg-blue-950/20 rounded-2xl border border-blue-200 dark:border-blue-900/40 shadow-sm p-4 flex items-center gap-3">
+        <div className="bg-blue-50 rounded-2xl border border-blue-200 shadow-sm p-4 flex items-center gap-3">
           <IconRefresh className="w-5 h-5 text-blue-500 shrink-0" />
-          <p className="text-sm font-medium text-blue-700 dark:text-blue-400">
+          <p className="text-sm font-medium text-blue-700">
             {status === "refunded" ? "Đơn hàng đã được hoàn tiền." : "Yêu cầu hoàn tiền đã được chấp thuận."}
           </p>
         </div>

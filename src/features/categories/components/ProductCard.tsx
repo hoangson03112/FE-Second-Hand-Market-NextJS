@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { IProduct } from "@/types/product";
 import { formatPrice } from "@/utils/format/price";
 import { getProvinceName } from "@/utils";
-import { AvatarOrInitials } from "@/components/common/AvatarOrInitials";
+import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
 
 interface ProductCardProps {
   product: IProduct;
@@ -142,3 +142,4 @@ export default function ProductCard({ product }: ProductCardProps) {
     </Link>
   );
 }
+

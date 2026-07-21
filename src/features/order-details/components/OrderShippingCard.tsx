@@ -23,17 +23,17 @@ export function OrderShippingCard({ shippingMethod, shippingAddress }: OrderShip
     <div className="bg-cream-50 border border-border rounded-2xl overflow-hidden">
       <div
         className={`px-5 py-3 flex items-center gap-2.5 border-b border-border ${
-          isLP ? "bg-emerald-50 dark:bg-emerald-950/20" : "bg-blue-50 dark:bg-blue-950/20"
+          isLP ? "bg-emerald-50" : "bg-blue-50"
         }`}
       >
         {isLP ? (
-          <IconUsers className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+          <IconUsers className="w-4 h-4 text-emerald-600 shrink-0" />
         ) : (
-          <IconTruck className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
+          <IconTruck className="w-4 h-4 text-blue-600 shrink-0" />
         )}
         <span
           className={`text-sm font-semibold ${
-            isLP ? "text-emerald-700 dark:text-emerald-400" : "text-blue-700 dark:text-blue-400"
+            isLP ? "text-emerald-700" : "text-blue-700"
           }`}
         >
           {formatShippingMethod(shippingMethod)}

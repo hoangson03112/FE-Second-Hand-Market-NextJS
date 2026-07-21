@@ -34,19 +34,19 @@ export default function PhilosophySection() {
         background:
           "linear-gradient(180deg, #F8F2EA 0%, #F4ECE1 100%)",
       }}
-      className="border-b border-taupe-200/70 py-12 md:py-16"
+      className="border-b border-taupe-200/70 py-16 md:py-20"
     >
       <div
         ref={ref}
         className={cn(
-          "mx-auto w-full max-w-9xl px-4 sm:px-6 lg:px-8 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+          "mx-auto w-full max-w-9xl px-4 sm:px-6 lg:px-8 transition-[opacity,transform] duration-700 ease-out",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
         )}
       >
         <div
           className={cn(
-            "overflow-hidden rounded-2xl border border-taupe-200/80 bg-[#F8F4ED] shadow-[0_12px_32px_rgba(67,47,28,0.08)] transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+            "overflow-hidden rounded-2xl border border-taupe-200/80 bg-[#F8F4ED] shadow-[0_12px_32px_rgba(67,47,28,0.08)] transition-[opacity,transform] duration-700 ease-out",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           )}
           style={{ transitionDelay: "220ms" }}
         >
@@ -59,7 +59,7 @@ export default function PhilosophySection() {
                 <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-taupe-500">
                   Triết lý của chúng tôi
                 </p>
-                <h3 className="mt-3 text-[2rem] font-semibold leading-[1.1] tracking-tight text-taupe-900 md:text-[2.3rem]">
+                <h3 className="font-ny mt-3 text-[2.2rem] font-semibold leading-[1.08] tracking-tight text-taupe-900 md:text-[2.6rem]">
                   Mỗi món đồ cũ đều
                   <br />
                   xứng đáng một hành trình mới.
@@ -95,7 +95,7 @@ export default function PhilosophySection() {
                   key={item.title}
                   href={item.href}
                   className={cn(
-                    "rounded-xl border border-taupe-200/80 bg-white/80 p-5 shadow-[0_6px_16px_rgba(66,48,30,0.06)] transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-taupe-300 hover:bg-white",
+                    "rounded-xl border border-taupe-200/80 bg-white/80 p-5 shadow-[0_6px_16px_rgba(66,48,30,0.06)] transition-transform duration-500 ease-out hover:-translate-y-0.5 hover:border-taupe-300 hover:bg-white",
                     idx === 2 ? "md:col-span-2" : "",
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                   )}
