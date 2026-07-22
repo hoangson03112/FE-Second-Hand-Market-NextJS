@@ -98,9 +98,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className={`h-full   ${geist.variable}`}>
+    <html lang="vi" className={`h-full ${geist.variable}`}>
       <body
-        className={`h-dvh overflow-hidden ${droidSerifWGL.variable}  antialiased`}
+        className={`h-full bg-background text-foreground antialiased ${droidSerifWGL.variable} `}
       >
         <Providers>
           <ToastProvider>

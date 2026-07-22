@@ -6,10 +6,10 @@
 :root {
   /* Core Brand Colors */
   --background: #eef1f0;
-  --foreground: #1e1e1e;
+  --foreground: #303231;
   --primary: #333333;
   --primary-foreground: #ffffff;
-  --accent: #5fb160;
+  --accent: #5FB160;
 
   /* Color Palettes */
   --cream-50: #fefcf9;

@@ -35,9 +35,9 @@ export function CategoryMegaMenu({
       </button>
 
       {showAllCategories && (
-        <div className="absolute left-0 top-full pt-2 z-50 w-[min(1180px,calc(100vw-2rem))]">
+        <div className="bg-cream-100 absolute left-0 top-full  z-50 w-[min(1180px,calc(100vw-2rem))]">
           <div
-            className="bg-charcoal-200  rounded-xl"
+            className="rounded-xl"
             style={{
               boxShadow:
                 "0 20px 56px rgba(26,23,20,0.13), 0 4px 16px rgba(26,23,20,0.06)",
