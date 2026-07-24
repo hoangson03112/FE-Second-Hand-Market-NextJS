@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { HeaderLogo } from "./components/HeaderLogo";
 import { CategoryMegaMenu } from "./components/CategoryMegaMenu";
 import { HeaderSearch } from "./components/HeaderSearch";
@@ -30,6 +31,8 @@ export default function Header() {
   } = useHeader();
 
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHomeHero = pathname === "/" && !isScrolled;
 
   useEffect(() => {
     // 🟢 Tìm thẻ <main> đang chứa thanh cuộn
@@ -50,11 +53,12 @@ export default function Header() {
 
   return (
     <header
-      // 🟢 dùng absolute top-0 để đè lên đầu <main>
-      className={`absolute top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+      className={`absolute top-0 left-0 right-0 z-50 w-full transition-all duration-500 ${
         isScrolled
-          ? "bg-[#F8F9F7] border-b border-neutral-200/80 shadow-sm" /* Khi cuộn <main>: Đục 100% che nội dung bên dưới */
-          : "bg-transparent border-b border-transparent shadow-none" /* Khi ở đỉnh: Trong suốt hoàn toàn */
+          ? "border-b border-[#1A1816]/8 bg-[#F7F5F0]/95 shadow-[0_8px_30px_rgba(26,24,22,0.06)] backdrop-blur-md"
+          : isHomeHero
+            ? "border-b border-transparent bg-[#F7F5F0]/25 backdrop-blur-sm"
+            : "border-b border-transparent bg-transparent"
       }`}
     >
       <div className="mx-auto w-full max-w-8xl px-3 sm:px-6 lg:px-8">

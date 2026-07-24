@@ -32,3 +32,30 @@
 .animation-delay-300 { animation-delay: 300ms; }
 .animation-delay-500 { animation-delay: 500ms; }
 .animation-delay-1000 { animation-delay: 1000ms; }
+
+@keyframes marquee-luxury {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes scroll-hint {
+  0%, 100% { opacity: 0.35; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(8px); }
+}
+
+@keyframes hero-glow {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.04); }
+}
+
+.animate-marquee-luxury {
+  animation: marquee-luxury 38s linear infinite;
+}
+
+.animate-scroll-hint {
+  animation: scroll-hint 2.2s ease-in-out infinite;
+}
+
+.animate-hero-glow {
+  animation: hero-glow 8s ease-in-out infinite;
+}

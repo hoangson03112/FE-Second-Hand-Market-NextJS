@@ -2,12 +2,9 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-
-// -----------------------------------------------------------------------------
-// The Unified Fluid Current (Full-Bleed Immersive Hero)
-// Ultra-premium, mathematical HTML5 Canvas fluid simulation stretching 100% width.
-// Color Sync: #5FB160, #BFE0BD, #8A8F87, #1A1D1A, #EDF0EF
-// -----------------------------------------------------------------------------
+import { motion } from "motion/react";
+import { CharacterReveal, getCharacterRevealDuration } from "./CharacterReveal";
+import { usePrefersReducedMotion } from "../hooks";
 
 class SilkRibbon {
   points: { x: number; y: number; baseY: number; vy: number }[];
@@ -189,7 +186,6 @@ function FullBleedFluidCanvas({
         ),
       ];
     };
-
     resizeCanvas();
     initRibbons();
 
@@ -242,26 +238,29 @@ export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
   const [isHovered, setIsHovered] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const [textReady, setTextReady] = useState(false);
+  const reducedMotion = usePrefersReducedMotion();
   const frameRef = useRef<number | null>(null);
 
+  const heroLine1Part1 = "Nơi ";
+  const heroLine1Part2 = "mọi thứ";
+  const heroLine2 = "đều có thể bán";
+  const heroCharCount =
+    heroLine1Part1.length + heroLine1Part2.length + heroLine2.length;
+  const subtitleStartDelay = getCharacterRevealDuration(heroCharCount, 0.15);
+
   useEffect(() => {
-    if (
-      typeof window === "undefined" ||
-      typeof window.matchMedia !== "function"
-    )
+    if (reducedMotion) {
+      setTextReady(true);
       return;
+    }
 
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updatePreference = () => setReducedMotion(mediaQuery.matches);
+    const timer = window.setTimeout(() => {
+      setTextReady(true);
+    }, 1100);
 
-    updatePreference();
-    mediaQuery.addEventListener("change", updatePreference);
-
-    return () => {
-      mediaQuery.removeEventListener("change", updatePreference);
-    };
-  }, []);
+    return () => window.clearTimeout(timer);
+  }, [reducedMotion]);
 
   useEffect(() => {
     return () => {
@@ -293,24 +292,80 @@ export default function HeroSection() {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative w-full min-h-[85vh] flex items-center justify-center overflow-hidden"
+      className="relative w-full min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
+      {/* Ambient glow orbs */}
       <div
         aria-hidden
+        className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-[#BFE0BD]/30 blur-3xl animate-hero-glow"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-16 bottom-1/4 h-80 w-80 rounded-full bg-[#C4A574]/15 blur-3xl animate-hero-glow"
+        style={{ animationDelay: "2s" }}
+      />
+
+      <motion.div
+        aria-hidden
         className="pointer-events-none absolute inset-0 z-0"
+        initial={reducedMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
         style={{
           background:
-            "radial-gradient(120% 90% at 50% 0%, #F8F9F7 0%, #F1F2F0 55%, var(--background) 100%)",
+            "radial-gradient(ellipse 120% 80% at 50% -10%, #FAFAF8 0%, #F3F1EC 42%, #EBE8E1 100%)",
         }}
       />
-      <FullBleedFluidCanvas
-        mousePos={mousePos}
-        isHovered={isHovered}
-        reducedMotion={reducedMotion}
+      {/* Subtle vignette */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          background:
+            "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, rgba(26,24,22,0.04) 100%)",
+        }}
       />
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 lg:px-8 py-20 flex flex-col items-center text-center pointer-events-none drop-shadow-sm">
+      {/* Film grain */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.035] mix-blend-multiply"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+        }}
+      />
+      <motion.div
+        className="absolute inset-0 z-[2]"
+        initial={reducedMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <FullBleedFluidCanvas
+          mousePos={mousePos}
+          isHovered={isHovered}
+          reducedMotion={reducedMotion}
+        />
+      </motion.div>
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 lg:px-8 pt-28 pb-24 flex flex-col items-center text-center pointer-events-none">
+        <motion.div
+          className="mb-8 flex items-center gap-3"
+          initial={reducedMotion ? false : { opacity: 0, y: 12 }}
+          animate={textReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={{
+            duration: 0.6,
+            delay: reducedMotion ? 0 : 0.1,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <span className="h-px w-10 bg-[#C4A574]/90" aria-hidden />
+          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[#6B655B]">
+            Chợ second-hand cao cấp
+          </p>
+          <span className="h-px w-10 bg-[#C4A574]/90" aria-hidden />
+        </motion.div>
+
         <h1
-          className="mb-8 text-foreground"
+          className="mb-8 text-[#1A1816]"
           style={{
             fontFamily: "var(--font-droid-serif), serif",
             fontSize: "clamp(3rem, 7.5vw, 5.5rem)",
@@ -319,33 +374,89 @@ export default function HeroSection() {
             letterSpacing: "-0.03em",
           }}
         >
-          Nơi{" "}
-          <span className="text-accent" style={{ letterSpacing: "-0.02em" }}>
-            mọi thứ
+          <span className="block">
+            <CharacterReveal
+              text={heroLine1Part1}
+              baseCharIndex={0}
+              isActive={textReady}
+            />
+            <span className="text-accent" style={{ letterSpacing: "-0.02em" }}>
+              <CharacterReveal
+                text={heroLine1Part2}
+                baseCharIndex={heroLine1Part1.length}
+                isActive={textReady}
+              />
+            </span>
           </span>
-          <br />
-          <span style={{ display: "inline-block", marginTop: "8px" }}>
-            đều có thể bán
+          <span
+            className="block"
+            style={{ display: "inline-block", marginTop: "8px" }}
+          >
+            <CharacterReveal
+              text={heroLine2}
+              baseCharIndex={heroLine1Part1.length + heroLine1Part2.length}
+              isActive={textReady}
+            />
           </span>
         </h1>
-        <p className="text-lg md:text-xl leading-relaxed mb-12 max-w-2xl text-[#1A1D1A]/70 font-medium">
-          Tham gia mạng lưới chợ đồ cũ trực tuyến miễn phí — mua bán sản phẩm
-          second-hand chỉ với vài cú nhấp chuột.
-        </p>
+        <motion.p
+          className="text-base md:text-lg leading-relaxed mb-10 max-w-2xl text-[#4A453E]/85 font-normal"
+          initial={reducedMotion ? false : { opacity: 0, y: 24 }}
+          animate={textReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+          transition={{
+            duration: 0.7,
+            delay: reducedMotion ? 0 : subtitleStartDelay,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          Khám phá những món đồ được tuyển chọn kỹ lưỡng — mua bán an toàn, minh
+          bạch và bền vững trong không gian sang trọng.
+        </motion.p>
 
         {/* CTA */}
-        <div className="pointer-events-auto">
+        <motion.div
+          className="pointer-events-auto flex flex-col items-center gap-4 sm:flex-row sm:gap-5"
+          initial={reducedMotion ? false : { opacity: 0, y: 20 }}
+          animate={textReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{
+            duration: 0.65,
+            delay: reducedMotion ? 0 : subtitleStartDelay + 0.2,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <Link
+            href="/products"
+            className="group relative inline-flex min-w-[220px] items-center justify-center px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-white transition-all duration-300 hover:scale-[1.02]"
+            style={{ background: "#1A1816", borderRadius: "2px" }}
+          >
+            <div className="absolute inset-0 bg-[#5FB160] opacity-0 transition-opacity duration-300 group-hover:opacity-15 blur-md" />
+            <span className="relative z-10">Khám phá bộ sưu tập</span>
+          </Link>
           <Link
             href="/sell"
-            className="group relative inline-flex items-center justify-center px-12 py-5 text-sm font-medium uppercase tracking-[0.25em] text-white transition-all duration-300 hover:scale-105"
-            style={{ background: "#333333", borderRadius: "3px" }}
+            className="inline-flex min-w-[220px] items-center justify-center border border-[#1A1816]/20 bg-white/50 px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1A1816] backdrop-blur-sm transition-all duration-300 hover:border-[#1A1816]/40 hover:bg-white/80"
+            style={{ borderRadius: "2px" }}
           >
-            {/* Hover glow effect for the button */}
-            <div className="absolute inset-0 bg-[#5FB160] opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-md rounded-lg" />
-            <span className="relative z-10">Bắt đầu bán</span>
+            Bắt đầu bán
           </Link>
-        </div>
+        </motion.div>
       </div>
+
+      {/* Scroll hint */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
+        initial={reducedMotion ? false : { opacity: 0 }}
+        animate={textReady ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ delay: reducedMotion ? 0 : 2.8, duration: 0.8 }}
+      >
+        <div className="flex flex-col items-center gap-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#6B655B]/70">
+            Cuộn xuống
+          </span>
+          <div className="h-10 w-px bg-gradient-to-b from-[#C4A574]/80 to-transparent animate-scroll-hint" />
+        </div>
+      </motion.div>
     </section>
   );
 }

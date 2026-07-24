@@ -15,6 +15,7 @@ import { formatPrice } from "@/utils/format/price";
 import type { IProduct } from "@/types/product";
 import { useScrollReveal } from "../hooks";
 import { Skeleton } from "@/components/shared";
+import SectionHeader from "./SectionHeader";
 
 export default function FeaturedListingsSection() {
   const { data, isLoading } = useFeaturedProducts(5);
@@ -34,7 +35,7 @@ export default function FeaturedListingsSection() {
   };
 
   return (
-    <section className="relative w-full py-8 md:py-16">
+    <section className="relative w-full border-t border-[#1A1816]/6 py-20 md:py-28">
       <div
         ref={ref}
         className={cn(
@@ -42,31 +43,22 @@ export default function FeaturedListingsSection() {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
         )}
       >
-        {/* Header Section */}
-        <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end border-b border-neutral-200 pb-5">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-foreground">
-              Sản phẩm nổi bật
-            </p>
-            <h2
-              style={{
-                fontFamily: "var(--font-droid-serif), serif",
-                fontWeight: 400,
-                lineHeight: 1.05,
-              }}
-              className=" mt-2 text-sm font-semibold tracking-tight text-primary md:text-[2.6rem]"
-            >
-              Tuyển chọn <span className="text-accent">mới nhất</span>
-            </h2>
-          </div>
-
-          <Link
-            href="/products"
-            className="inline-flex items-center text-xs uppercase font-medium text-foreground  hover:text-taupe-700"
-          >
-            Xem tất cả
-            <IconArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
+        <div
+          className={cn(
+            "transition-all duration-700 ease-out",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
+          )}
+          style={{ transitionDelay: "80ms" }}
+        >
+          <SectionHeader
+            eyebrow="Sản phẩm nổi bật"
+            title={
+              <>
+                Tuyển chọn <span className="text-[#5FB160]">mới nhất</span>
+              </>
+            }
+            action={{ label: "Xem tất cả", href: "/products" }}
+          />
         </div>
 
         {/* Layout Grid 5 Cột */}
@@ -88,7 +80,7 @@ export default function FeaturedListingsSection() {
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-5 lg:gap-5">
-            {featuredProducts.map((item) => {
+            {featuredProducts.map((item, index) => {
               const imageUrl = item.avatar?.url ?? item.images?.[0]?.url;
               const provinceName = getProvinceName(item);
 
@@ -96,9 +88,18 @@ export default function FeaturedListingsSection() {
                 <Link
                   key={item._id}
                   href={`/products/${item._id}/${item.slug ?? "san-pham"}`}
-                  className="group flex flex-col overflow-hidden rounded-lg border border-neutral-200/80 bg-white p-2.5 shadow-2xs transition-all duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-md"
+                  className={cn(
+                    "group flex flex-col overflow-hidden border border-[#1A1816]/8 bg-white p-3 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-[#1A1816]/15 hover:shadow-[0_20px_40px_rgba(26,24,22,0.08)]",
+                    isVisible
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-8",
+                  )}
+                  style={{
+                    transitionDelay: `${160 + index * 90}ms`,
+                    borderRadius: "2px",
+                  }}
                 >
-                  <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-neutral-100">
+                  <div className="relative aspect-square w-full overflow-hidden bg-[#F3F1EC]" style={{ borderRadius: "1px" }}>
                     {imageUrl ? (
                       <>
                         <Image
@@ -127,28 +128,31 @@ export default function FeaturedListingsSection() {
                       </div>
                     )}
 
-                    <span className="absolute left-2 top-2 z-10 rounded-md bg-black/60 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white backdrop-blur-md">
+                    <span className="absolute left-2 top-2 z-10 bg-[#1A1816]/75 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-md">
                       {item.category?.name ?? "Mới"}
                     </span>
                   </div>
 
                   <div className="mt-2.5 flex flex-1 flex-col justify-between px-0.5 pb-0.5">
                     <div>
-                      <div className="flex items-center gap-1 text-[11px] font-medium text-neutral-400 uppercase tracking-wider">
+                      <div className="flex items-center gap-1 text-[10px] font-medium text-[#8C857B] uppercase tracking-[0.14em]">
                         <IconMapPin className="h-3 w-3 text-red-500 shrink-0" />
                         <span className="line-clamp-1">{provinceName}</span>
                       </div>
 
-                      <h3 className="mt-1 line-clamp-2 text-xs md:text-sm font-semibold text-foreground transition-colors group-hover:text-foreground leading-snug">
+                      <h3 className="mt-1.5 line-clamp-2 text-xs font-medium text-[#1A1816] leading-snug transition-colors group-hover:text-[#5FB160] md:text-sm">
                         {item.name}
                       </h3>
                     </div>
 
-                    <div className="mt-2.5 flex items-center justify-between border-t border-neutral-100 pt-2">
-                      <span className="text-sm md:text-base font-bold text-primary tracking-tight group-hover:text-red-700">
+                    <div className="mt-3 flex items-center justify-between border-t border-[#1A1816]/6 pt-3">
+                      <span
+                        style={{ fontFamily: "var(--font-droid-serif), serif" }}
+                        className="text-sm font-normal tracking-tight text-[#1A1816] md:text-base"
+                      >
                         {formatPrice(item.price)}
                       </span>
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors group-hover:bg-[#5FB160] group-hover:text-white">
+                      <div className="flex h-7 w-7 items-center justify-center border border-[#1A1816]/10 text-[#1A1816] transition-all duration-300 group-hover:border-[#1A1816] group-hover:bg-[#1A1816] group-hover:text-white" style={{ borderRadius: "999px" }}>
                         <IconArrowUpRight className="h-3.5 w-3.5" />
                       </div>
                     </div>
