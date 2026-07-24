@@ -51,7 +51,7 @@ export function ProductDrawerFooter({
           type="button"
           onClick={() => onReject(product)}
           disabled={isUpdating}
-          className="flex-1 px-4 py-2.5 rounded-xl bg-destructive/8 border border-destructive/20 text-destructive text-sm font-semibold hover:bg-destructive/12 dark:bg-destructive/15 dark:border-destructive/30 dark:hover:bg-destructive/20 disabled:opacity-50 transition-colors"
+          className="flex-1 px-4 py-2.5 rounded-xl bg-destructive/8 border border-destructive/20 text-destructive text-sm font-semibold hover:bg-destructive/12 disabled:opacity-50 transition-colors"
         >
           ✕ Từ chối
         </button>

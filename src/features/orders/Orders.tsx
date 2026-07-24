@@ -60,7 +60,7 @@ export default function Orders() {
       <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-4" />
-          <p className="text-neutral-600">Đang tải...</p>
+          <p className="text-neutral-600">Äang táº£i...</p>
         </div>
       </div>
     );
@@ -89,12 +89,12 @@ export default function Orders() {
         />
 
         {/* Content */}
-        <Container maxWidth="7xl" paddingX="md" paddingY="lg">
+        <Container maxWidth="8xl" paddingX="md" paddingY="lg">
           {isLoading ? (
             <div className="flex justify-center py-20">
               <div className="text-center">
                 <IconLoader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
-                <p className="text-neutral-600">Đang tải đơn hàng...</p>
+                <p className="text-neutral-600">Äang táº£i Ä‘Æ¡n hÃ ng...</p>
               </div>
             </div>
           ) : filteredOrders.length === 0 ? (
@@ -118,16 +118,16 @@ export default function Orders() {
                 <div className="flex flex-col items-center gap-4 pt-4 pb-2 border-t border-border/50">
                   {/* Page info */}
                   <p className="text-xs text-muted-foreground tabular-nums">
-                    Hiển thị{" "}
+                    Hiá»ƒn thá»‹{" "}
                     <span className="font-medium text-foreground">
-                      {(currentPage - 1) * PAGE_SIZE + 1}–
+                      {(currentPage - 1) * PAGE_SIZE + 1}â€“
                       {Math.min(currentPage * PAGE_SIZE, filteredOrders.length)}
                     </span>{" "}
                     trong{" "}
                     <span className="font-medium text-foreground">
                       {filteredOrders.length}
                     </span>{" "}
-                    đơn hàng
+                    Ä‘Æ¡n hÃ ng
                   </p>
 
                   {totalPages > 1 && (

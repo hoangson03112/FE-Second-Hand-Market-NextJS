@@ -56,13 +56,13 @@ export default function SellerPayouts() {
   if (!account) return null;
 
   return (
-    <main className="max-w-7xl mx-auto w-full px-4 py-8 sm:px-6">
+    <main className="max-w-8xl mx-auto w-full px-4 py-8 sm:px-6">
       <Link href="/seller" className="inline-flex items-center gap-2 text-primary hover:underline font-medium text-sm mb-6">
         <IconArrowLeft className="h-4 w-4" />
-        Quay lại
+        Quay láº¡i
       </Link>
 
-      <h1 className="text-2xl font-bold text-foreground mb-6">Ví & Thanh toán</h1>
+      <h1 className="text-2xl font-bold text-foreground mb-6">VÃ­ & Thanh toÃ¡n</h1>
 
       {loading ? (
         <div className="flex justify-center py-16">
@@ -74,31 +74,31 @@ export default function SellerPayouts() {
             <div className="bg-green-50 border border-green-100 rounded-2xl p-4">
               <IconCoins className="w-5 h-5 text-green-600 mb-2" />
               <div className="font-bold text-foreground">{formatPrice(wallet?.balance ?? 0)}</div>
-              <div className="text-xs text-muted-foreground">Số dư khả dụng</div>
+              <div className="text-xs text-muted-foreground">Sá»‘ dÆ° kháº£ dá»¥ng</div>
             </div>
             <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4">
               <IconClock className="w-5 h-5 text-amber-600 mb-2" />
               <div className="font-bold text-foreground">{formatPrice(wallet?.pendingBalance ?? 0)}</div>
-              <div className="text-xs text-muted-foreground">Chờ rút</div>
+              <div className="text-xs text-muted-foreground">Chá» rÃºt</div>
             </div>
             <div className="bg-primary/8 border border-primary/15 rounded-2xl p-4">
               <IconCoins className="w-5 h-5 text-primary mb-2" />
               <div className="font-bold text-foreground">{formatPrice(wallet?.totalEarned ?? 0)}</div>
-              <div className="text-xs text-muted-foreground">Tổng đã thu</div>
+              <div className="text-xs text-muted-foreground">Tá»•ng Ä‘Ã£ thu</div>
             </div>
             <div className="bg-muted/50 border border-border rounded-2xl p-4">
               <div className="font-bold text-foreground">{formatPrice(wallet?.totalWithdrawn ?? 0)}</div>
-              <div className="text-xs text-muted-foreground">Đã rút</div>
+              <div className="text-xs text-muted-foreground">ÄÃ£ rÃºt</div>
             </div>
           </div>
 
           <div className="rounded-xl border border-border bg-card p-4">
-            <h2 className="font-semibold text-foreground mb-3">Lịch sử thanh toán</h2>
+            <h2 className="font-semibold text-foreground mb-3">Lá»‹ch sá»­ thanh toÃ¡n</h2>
             {!payouts?.data?.length ? (
-              <p className="text-sm text-muted-foreground">Chưa có giao dịch nào</p>
+              <p className="text-sm text-muted-foreground">ChÆ°a cÃ³ giao dá»‹ch nÃ o</p>
             ) : (
               <p className="text-sm text-muted-foreground">
-                {payouts.total} giao dịch (hiển thị 20 mới nhất)
+                {payouts.total} giao dá»‹ch (hiá»ƒn thá»‹ 20 má»›i nháº¥t)
               </p>
             )}
           </div>

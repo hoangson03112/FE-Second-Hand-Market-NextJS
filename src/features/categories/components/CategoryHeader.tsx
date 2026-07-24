@@ -21,15 +21,15 @@ export default function CategoryHeader({ category, subCategory }: CategoryHeader
       <div className="absolute -top-10 -right-10 w-64 h-64 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
       <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-full bg-accent/5 blur-2xl pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+      <div className="relative max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-10">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs text-taupe-400 mb-5">
           <Link href="/" className="flex items-center gap-1 hover:text-primary transition-colors">
             <IconHome className="w-3.5 h-3.5" />
-            <span>Trang chủ</span>
+            <span>Trang chá»§</span>
           </Link>
           <IconChevronRight className="w-3 h-3 text-taupe-300" />
-          <Link href="/categories" className="hover:text-primary transition-colors">Danh mục</Link>
+          <Link href="/categories" className="hover:text-primary transition-colors">Danh má»¥c</Link>
           {category && (
             <>
               <IconChevronRight className="w-3 h-3 text-taupe-300" />
@@ -66,14 +66,14 @@ export default function CategoryHeader({ category, subCategory }: CategoryHeader
 
         {/* Title */}
         <h1 className="text-3xl md:text-4xl font-bold text-taupe-900 mb-1.5 leading-[1.1] tracking-tight">
-          {subCategory?.name || category?.name || "Danh mục"}
+          {subCategory?.name || category?.name || "Danh má»¥c"}
         </h1>
         <p className="text-sm text-taupe-400 mb-6">
           {isSubCategoryView
-            ? `Khám phá tất cả sản phẩm trong danh mục này`
+            ? `KhÃ¡m phÃ¡ táº¥t cáº£ sáº£n pháº©m trong danh má»¥c nÃ y`
             : category
-              ? `Tất cả sản phẩm trong danh mục ${category.name}`
-              : "Khám phá sản phẩm"}
+              ? `Táº¥t cáº£ sáº£n pháº©m trong danh má»¥c ${category.name}`
+              : "KhÃ¡m phÃ¡ sáº£n pháº©m"}
         </p>
 
         {/* Subcategory navigation chips */}
@@ -84,7 +84,7 @@ export default function CategoryHeader({ category, subCategory }: CategoryHeader
                 href={`/categories/${category.slug}`}
                 className="px-4 py-1.5 rounded-full border-2 border-primary bg-primary text-primary-foreground text-sm font-semibold shadow-sm"
               >
-                Tất cả
+                Táº¥t cáº£
               </Link>
             )}
             {category.subCategories.map((sub) => {

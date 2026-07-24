@@ -22,25 +22,25 @@ export default function AllProductsHeader({
       <div className="absolute -top-10 -right-10 w-64 h-64 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
       <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-full bg-accent/5 blur-2xl pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+      <div className="relative max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-10">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs text-taupe-400 mb-5">
           <Link href="/" className="flex items-center gap-1 hover:text-primary transition-colors">
             <IconHome className="w-3.5 h-3.5" />
-            <span>Trang chủ</span>
+            <span>Trang chá»§</span>
           </Link>
           <IconChevronRight className="w-3 h-3 text-taupe-300" />
-          <span className="text-taupe-700 font-medium">Tất cả sản phẩm</span>
+          <span className="text-taupe-700 font-medium">Táº¥t cáº£ sáº£n pháº©m</span>
         </nav>
 
         {/* Title */}
         <h1 className="text-3xl md:text-4xl font-bold text-taupe-900 mb-1.5 leading-[1.1] tracking-tight">
-          Tất cả sản phẩm
+          Táº¥t cáº£ sáº£n pháº©m
         </h1>
         <p className="text-sm text-taupe-400 mb-5">
           {total !== undefined
-            ? `Khám phá ${total.toLocaleString("vi-VN")} sản phẩm second-hand chất lượng`
-            : "Khám phá hàng ngàn sản phẩm second-hand chất lượng"}
+            ? `KhÃ¡m phÃ¡ ${total.toLocaleString("vi-VN")} sáº£n pháº©m second-hand cháº¥t lÆ°á»£ng`
+            : "KhÃ¡m phÃ¡ hÃ ng ngÃ n sáº£n pháº©m second-hand cháº¥t lÆ°á»£ng"}
         </p>
 
         {/* Search bar */}
@@ -57,14 +57,14 @@ export default function AllProductsHeader({
                 type="text"
                 value={searchValue}
                 onChange={(e) => onSearchChange?.(e.target.value)}
-                placeholder="Tìm kiếm sản phẩm..."
+                placeholder="TÃ¬m kiáº¿m sáº£n pháº©m..."
                 className="w-full h-11 pl-10 pr-28 rounded-2xl border-2 border-taupe-200 bg-white focus:border-primary focus:outline-none text-sm text-taupe-800 placeholder:text-taupe-300 shadow-sm transition-colors"
               />
               <button
                 type="submit"
                 className="absolute right-1.5 top-1.5 h-8 px-4 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary/90 transition-colors shadow-sm"
               >
-                Tìm kiếm
+                TÃ¬m kiáº¿m
               </button>
             </div>
           </form>

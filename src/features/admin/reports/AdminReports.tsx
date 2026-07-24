@@ -1,8 +1,8 @@
 "use client";
 
-import { IconLoader2 } from "@tabler/icons-react";
+import { IconFlag, IconLoader2 } from "@tabler/icons-react";
 import { useAdminReports } from "./hooks/useAdminReports";
-import EmptyState from "./components/EmptyState";
+import { NoData } from "@/components/shared";
 import ReportsTable from "./components/ReportsTable";
 import { Pagination } from "@/components/shared";
 
@@ -36,7 +36,7 @@ export default function AdminReports() {
       </div>
 
       {reports.length === 0 ? (
-        <EmptyState />
+        <NoData icon={<IconFlag />} title="Chưa có báo cáo nào." size="sm" />
       ) : (
         <>
           <ReportsTable
@@ -55,4 +55,5 @@ export default function AdminReports() {
     </div>
   );
 }
+
 

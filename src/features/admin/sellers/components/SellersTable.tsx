@@ -11,15 +11,15 @@ import { format } from "@/utils/format/date";
 const STATUS_BADGE: Record<string, { label: string; className: string }> = {
   pending: {
     label: "Chờ duyệt",
-    className: "bg-primary/10 text-primary dark:bg-primary/20",
+    className: "bg-primary/10 text-primary",
   },
   approved: {
     label: "Đã duyệt",
-    className: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+    className: "bg-emerald-500/10 text-emerald-600",
   },
   rejected: {
     label: "Từ chối",
-    className: "bg-destructive/10 text-destructive dark:bg-destructive/20",
+    className: "bg-destructive/10 text-destructive",
   },
   banned: {
     label: "Bị khóa",

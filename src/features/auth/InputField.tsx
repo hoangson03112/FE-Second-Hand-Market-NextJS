@@ -12,6 +12,7 @@ interface InputFieldProps {
   required?: boolean;
   icon?: ReactNode;
   error?: string;
+  className?: string; 
 }
 
 export default function InputField({
@@ -26,16 +27,20 @@ export default function InputField({
   required = false,
   icon,
   error,
+  className,
 }: InputFieldProps) {
   return (
     <div className="space-y-2">
-      <label htmlFor={id} className="block text-[14px] font-semibold text-taupe-900">
+      <label
+        htmlFor={id}
+        className="block text-[14px] font-semibold text-taupe-900"
+      >
         {label}
-          {required && <span className="text-destructive ml-1">*</span>}
+        {required && <span className="text-destructive ml-1">*</span>}
       </label>
       <div className="relative">
         {icon && (
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-taupe-400">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none ">
             {icon}
           </div>
         )}
@@ -47,13 +52,19 @@ export default function InputField({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          className={`block w-full ${icon ? "pl-12" : "pl-4"} pr-4 py-3.5 border bg-white text-taupe-900 text-[15px] rounded-xl placeholder:text-taupe-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all ${
-            error ? "border-destructive focus:ring-destructive/20" : "border-gray-200 hover:border-gray-300"
+          className={`${className} block w-full ${icon ? "pl-12" : "pl-4"} pr-4 py-3.5 border bg-white text-taupe-900 text-[15px] rounded-xl placeholder:text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all ${
+            error
+              ? "border-destructive focus:ring-destructive/20"
+              : "border-gray-200 hover:border-gray-300"
           }`}
           placeholder={placeholder}
         />
       </div>
-      {error && <p className="text-[13px] font-medium text-destructive mt-1.5">{error}</p>}
+      {error && (
+        <p className="text-[13px] font-medium text-destructive mt-1.5">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

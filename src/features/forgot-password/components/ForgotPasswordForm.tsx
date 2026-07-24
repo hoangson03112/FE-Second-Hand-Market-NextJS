@@ -1,7 +1,7 @@
 import Link from "next/link";
 import InputField from "@/features/auth/InputField";
 import AuthButton from "@/features/auth/AuthButton";
-import InfoBox from "@/components/common/auth/InfoBox";
+import InfoBox from "@/components/shared/auth/InfoBox";
 import { EmailIcon } from "@/components/shared";
 import { ArrowRightIcon } from "@/components/shared";
 
@@ -63,3 +63,4 @@ export default function ForgotPasswordForm({
     </form>
   );
 }
+

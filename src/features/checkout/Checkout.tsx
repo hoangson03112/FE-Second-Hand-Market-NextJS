@@ -63,10 +63,10 @@ export default function Checkout() {
 
   const handleBack = async () => {
     const confirmed = await confirm({
-      title: "Rời khỏi trang thanh toán?",
-      message: "Các thông tin bạn đã chọn sẽ được lưu lại. Bạn có chắc muốn quay lại?",
-      confirmText: "Quay lại",
-      cancelText: "Ở lại",
+      title: "Rá»i khá»i trang thanh toÃ¡n?",
+      message: "CÃ¡c thÃ´ng tin báº¡n Ä‘Ã£ chá»n sáº½ Ä‘Æ°á»£c lÆ°u láº¡i. Báº¡n cÃ³ cháº¯c muá»‘n quay láº¡i?",
+      confirmText: "Quay láº¡i",
+      cancelText: "á»ž láº¡i",
       variant: "warning",
     });
 
@@ -77,13 +77,13 @@ export default function Checkout() {
 
   const isMultiSeller = sellerGroups.length > 1;
 
-  // Hiện địa chỉ nếu có bất kỳ seller nào có thể ship COD (có thể cần địa chỉ giao hàng)
+  // Hiá»‡n Ä‘á»‹a chá»‰ náº¿u cÃ³ báº¥t ká»³ seller nÃ o cÃ³ thá»ƒ ship COD (cÃ³ thá»ƒ cáº§n Ä‘á»‹a chá»‰ giao hÃ ng)
   const showAddressSection = sellerGroups.some((g) => g.canCodShipping);
 
   return (
     <PageContainer withBackground={false}>
       <div className="min-h-screen bg-gray-50">
-        <Container as="main" maxWidth="7xl" paddingX="md" paddingY="lg">
+        <Container as="main" maxWidth="8xl" paddingX="md" paddingY="lg">
           <CheckoutHeader onBack={handleBack} />
 
           <AddressModal
@@ -99,11 +99,11 @@ export default function Checkout() {
             onDeleteAddress={handleDeleteAddress}
           />
 
-          {/* Delivery address - Ẩn khi toàn bộ sản phẩm giao dịch trực tiếp */}
+          {/* Delivery address - áº¨n khi toÃ n bá»™ sáº£n pháº©m giao dá»‹ch trá»±c tiáº¿p */}
           {showAddressSection && (
             <div className="bg-white rounded-lg border border-gray-200 shadow-md p-5 mb-4">
               <h2 className="text-lg font-medium text-gray-900 mb-4 pb-3 border-b border-gray-200">
-                Địa Chỉ Nhận Hàng
+                Äá»‹a Chá»‰ Nháº­n HÃ ng
               </h2>
               <AddressSection
                 selectedAddress={selectedAddress}
@@ -117,7 +117,7 @@ export default function Checkout() {
             <div className="flex items-start gap-3 p-4 mb-4 bg-primary/8 border border-primary/20 rounded-lg">
               <IconInfoCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
               <p className="text-sm text-primary/90">
-                Bạn đang đặt hàng từ <strong>{sellerGroups.length} người bán</strong>. Mỗi đơn hàng sẽ được xử lý riêng biệt và có thể được giao vào các thời điểm khác nhau. Bạn có thể chọn phương thức thanh toán khác nhau cho từng đơn.
+                Báº¡n Ä‘ang Ä‘áº·t hÃ ng tá»« <strong>{sellerGroups.length} ngÆ°á»i bÃ¡n</strong>. Má»—i Ä‘Æ¡n hÃ ng sáº½ Ä‘Æ°á»£c xá»­ lÃ½ riÃªng biá»‡t vÃ  cÃ³ thá»ƒ Ä‘Æ°á»£c giao vÃ o cÃ¡c thá»i Ä‘iá»ƒm khÃ¡c nhau. Báº¡n cÃ³ thá»ƒ chá»n phÆ°Æ¡ng thá»©c thanh toÃ¡n khÃ¡c nhau cho tá»«ng Ä‘Æ¡n.
               </p>
             </div>
           )}
@@ -127,7 +127,7 @@ export default function Checkout() {
             <div className="lg:col-span-2 space-y-4">
               {sellerGroups.length === 0 ? (
                 <div className="bg-white rounded-lg border border-gray-200 shadow-md p-10 text-center text-gray-500">
-                  Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi thanh toán.
+                  Giá» hÃ ng trá»‘ng. Vui lÃ²ng thÃªm sáº£n pháº©m trÆ°á»›c khi thanh toÃ¡n.
                 </div>
               ) : (
                 sellerGroups.map((group) => (
@@ -150,7 +150,7 @@ export default function Checkout() {
                 ))
               )}
 
-              {/* Global shipping error / loading - chỉ hiện khi có GHN */}
+              {/* Global shipping error / loading - chá»‰ hiá»‡n khi cÃ³ GHN */}
               {!allLocalPickup && shippingError && (
                 <div className="p-4 bg-destructive/8 border border-destructive/20 rounded-lg text-sm text-destructive">
                   {shippingError}
@@ -160,7 +160,7 @@ export default function Checkout() {
               {!allLocalPickup && isCalculatingShipping && (
                 <div className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200 shadow-md">
                   <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent" />
-                  <span className="text-sm text-gray-600">Đang tính phí vận chuyển...</span>
+                  <span className="text-sm text-gray-600">Äang tÃ­nh phÃ­ váº­n chuyá»ƒn...</span>
                 </div>
               )}
             </div>

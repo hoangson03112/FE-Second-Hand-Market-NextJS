@@ -111,8 +111,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     switch (type) {
       case "success":
         return {
-          container: "border-emerald-500/25 bg-emerald-500/10 text-emerald-900 dark:text-emerald-100",
-          iconWrap: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300",
+          container: "border-emerald-500/25 bg-emerald-500/10 text-emerald-900",
+          iconWrap: "bg-emerald-500/15 text-emerald-700",
           progress: "bg-emerald-500/70",
         };
       case "error":
@@ -123,8 +123,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         };
       case "warning":
         return {
-          container: "border-amber-500/30 bg-amber-500/10 text-amber-900 dark:text-amber-200",
-          iconWrap: "bg-amber-500/15 text-amber-700 dark:text-amber-300",
+          container: "border-amber-500/30 bg-amber-500/10 text-amber-900",
+          iconWrap: "bg-amber-500/15 text-amber-700",
           progress: "bg-amber-500/75",
         };
       default:
@@ -156,7 +156,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((toast) => (
           <div key={toast.id} className="group relative overflow-hidden rounded-2xl">
             <div
-              className={`backdrop-blur-sm shadow-xl ring-1 ring-black/5 dark:ring-white/5 flex items-start gap-3 rounded-2xl border px-4 py-3.5 animate-in slide-in-from-top-2 fade-in ${getStyles(toast.type).container} ${toast.onClick ? "cursor-pointer transition-transform hover:-translate-y-0.5" : ""}`}
+              className={`backdrop-blur-sm shadow-xl ring-1 ring-black/5 flex items-start gap-3 rounded-2xl border px-4 py-3.5 animate-in slide-in-from-top-2 fade-in ${getStyles(toast.type).container} ${toast.onClick ? "cursor-pointer transition-transform hover:-translate-y-0.5" : ""}`}
               onClick={toast.onClick}
             >
               <div
@@ -174,7 +174,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                   e.stopPropagation();
                   removeToast(toast.id);
                 }}
-                className="mt-0.5 rounded-lg p-1.5 text-current/70 transition-colors hover:bg-black/5 hover:text-current dark:hover:bg-white/10"
+                className="mt-0.5 rounded-lg p-1.5 text-current/70 transition-colors hover:bg-black/5 hover:text-current"
               >
                 <IconX className="h-4 w-4" />
               </button>

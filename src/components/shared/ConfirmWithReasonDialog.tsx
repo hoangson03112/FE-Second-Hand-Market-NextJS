@@ -21,11 +21,11 @@ interface ConfirmWithReasonDialogProps {
 
 const VARIANT = {
   danger: {
-    icon: "bg-destructive/10 dark:bg-destructive/20 text-destructive",
+    icon: "bg-destructive/10 text-destructive",
     confirm: "bg-destructive hover:bg-destructive/90 text-destructive-foreground",
   },
   warning: {
-    icon: "bg-primary/10 dark:bg-primary/20 text-primary",
+    icon: "bg-primary/10 text-primary",
     confirm: "bg-primary hover:bg-primary/90 text-primary-foreground",
   },
 };

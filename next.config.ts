@@ -95,14 +95,9 @@ const nextConfig: NextConfig = {
 
     return headers;
   },
-
-  env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
-    NEXT_PUBLIC_GHN_API_URL: process.env.NEXT_PUBLIC_GHN_API_URL,
-    NEXT_PUBLIC_GHN_CAL_FEE_URL: process.env.NEXT_PUBLIC_GHN_CAL_FEE_URL,
-    NEXT_PUBLIC_GHN_TOKEN: process.env.NEXT_PUBLIC_GHN_TOKEN, 
-    NEXT_PUBLIC_GHN_SHOP_ID: process.env.NEXT_PUBLIC_GHN_SHOP_ID,
-  },
+  // NOTE: no `env` block here. Next.js already exposes every `NEXT_PUBLIC_*`
+  // var to the client automatically, and the old block also leaked the secret
+  // GHN token into the browser bundle. GHN now goes through the /api/ghn proxy.
 };
 
 export default nextConfig;

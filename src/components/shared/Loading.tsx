@@ -12,7 +12,7 @@ const spinnerSizeClasses: Record<SpinnerSize, string> = {
 
 export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: SpinnerSize;
-  label?: string;
+  label?: React.ReactNode;
 }
 
 export function Spinner({
@@ -41,7 +41,7 @@ export function Spinner({
 
 interface LoadingBlockProps extends React.HTMLAttributes<HTMLDivElement> {
   fullScreen?: boolean;
-  text?: string;
+  text?: React.ReactNode;
   spinnerSize?: SpinnerSize;
 }
 
@@ -64,6 +64,10 @@ export function LoadingBlock({
       <Spinner size={spinnerSize} label={text} />
     </div>
   );
+}
+
+export function Loading(props: Omit<LoadingBlockProps, "text"> & { label?: React.ReactNode; fullscreen?: boolean }) {
+  return <LoadingBlock text={props.label} fullScreen={props.fullscreen} {...props} />;
 }
 
 interface LoadingStateProps<T> {

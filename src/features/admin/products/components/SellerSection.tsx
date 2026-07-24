@@ -7,8 +7,8 @@ import { IconStar, IconUser, IconMail, IconPhone, IconMapPin, IconBuildingStore,
 
 const ROLE_BADGE: Record<string, { label: string; className: string }> = {
   seller: { label: "Người bán", className: "bg-secondary text-foreground/80" },
-  admin: { label: "Quản trị viên", className: "bg-destructive/10 text-destructive dark:bg-destructive/20" },
-  user: { label: "Người dùng", className: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300" },
+  admin: { label: "Quản trị viên", className: "bg-destructive/10 text-destructive" },
+  user: { label: "Người dùng", className: "bg-blue-100 text-blue-800" },
 };
 
 type Props = {

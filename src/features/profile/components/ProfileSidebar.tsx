@@ -26,7 +26,7 @@ interface ProfileSidebarProps {
 const ROLE_CONFIG: Record<string, { label: string; className: string }> = {
   admin: {
     label: "Quản trị viên",
-    className: "bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-950/50 dark:text-amber-300 dark:border-amber-800",
+    className: "bg-amber-100 text-amber-800 border-amber-200",
   },
   seller: {
     label: "Seller",

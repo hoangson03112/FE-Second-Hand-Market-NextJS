@@ -11,7 +11,7 @@ interface OrderDetailHeaderProps {
 export function OrderDetailHeader({ orderId, status, onBack }: OrderDetailHeaderProps) {
   return (
     <div className="bg-background/95 backdrop-blur-md border-b border-border sticky top-0 z-10">
-      <Container maxWidth="7xl" paddingX="md">
+      <Container maxWidth="8xl" paddingX="md">
         <div className="py-3 flex items-center gap-3">
           <button
             onClick={onBack}
@@ -21,7 +21,7 @@ export function OrderDetailHeader({ orderId, status, onBack }: OrderDetailHeader
           </button>
           <div className="flex-1 min-w-0">
             <h1 className="text-base font-semibold text-foreground leading-tight">
-              Chi tiết đơn hàng
+              Chi tiáº¿t Ä‘Æ¡n hÃ ng
             </h1>
             <p className="text-xs text-muted-foreground font-mono">
               #{orderId.slice(-10).toUpperCase()}

@@ -18,9 +18,9 @@ import type {
 } from "../hooks/useBecomeSeller";
 
 const PERKS = [
-  { icon: IconPackageExport, text: "Đăng sản phẩm không giới hạn" },
-  { icon: IconCashBanknote, text: "Nhận thanh toán online an toàn" },
-  { icon: IconShieldCheck, text: "Huy hiệu Seller xác minh" },
+  { icon: IconPackageExport, text: "ÄÄƒng sáº£n pháº©m khÃ´ng giá»›i háº¡n" },
+  { icon: IconCashBanknote, text: "Nháº­n thanh toÃ¡n online an toÃ n" },
+  { icon: IconShieldCheck, text: "Huy hiá»‡u Seller xÃ¡c minh" },
 ];
 
 interface BecomeSellerViewProps {
@@ -65,33 +65,33 @@ export function BecomeSellerView({
   return (
     <div className="min-h-screen bg-background">
       <div className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 h-14 flex items-center gap-3">
+        <div className="max-w-8xl mx-auto w-full px-4 sm:px-6 h-14 flex items-center gap-3">
           <button
             type="button"
             onClick={onBack}
             className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <IconArrowLeft className="w-4 h-4" />
-            Quay lại
+            Quay láº¡i
           </button>
           <span className="text-muted-foreground/40 select-none">|</span>
-          <span className="text-sm font-medium text-foreground">Đăng ký làm Seller</span>
+          <span className="text-sm font-medium text-foreground">ÄÄƒng kÃ½ lÃ m Seller</span>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 space-y-6">
+      <div className="max-w-8xl mx-auto w-full px-4 sm:px-6 py-8 space-y-6">
         <div className="rounded-2xl border border-border bg-card p-6 flex items-start gap-4">
           <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
             <IconBuildingStore className="w-6 h-6 text-primary" />
           </div>
           <div className="flex-1 min-w-0">
             <h1 className="text-lg font-bold text-foreground mb-1">
-              {requiresVerification ? "Xác minh tài khoản Seller" : "Mở gian hàng của bạn"}
+              {requiresVerification ? "XÃ¡c minh tÃ i khoáº£n Seller" : "Má»Ÿ gian hÃ ng cá»§a báº¡n"}
             </h1>
             <p className="text-sm text-muted-foreground mb-4">
               {requiresVerification
-                ? "Hoàn tất xác minh để mở khóa đăng sản phẩm không giới hạn và nhận thanh toán online."
-                : "Điền thông tin để trở thành seller trên Eco Market và bắt đầu bán hàng ngay hôm nay."}
+                ? "HoÃ n táº¥t xÃ¡c minh Ä‘á»ƒ má»Ÿ khÃ³a Ä‘Äƒng sáº£n pháº©m khÃ´ng giá»›i háº¡n vÃ  nháº­n thanh toÃ¡n online."
+                : "Äiá»n thÃ´ng tin Ä‘á»ƒ trá»Ÿ thÃ nh seller trÃªn Eco Market vÃ  báº¯t Ä‘áº§u bÃ¡n hÃ ng ngay hÃ´m nay."}
             </p>
             <div className="flex flex-wrap gap-3">
               {PERKS.map(({ icon: Icon, text }) => (
@@ -105,14 +105,14 @@ export function BecomeSellerView({
         </div>
 
         {productLimit && requiresVerification && requestStatus !== "approved" && (
-          <div className="rounded-xl border border-primary/20 bg-primary/8 dark:bg-primary/15 px-4 py-3 flex items-start gap-3">
+          <div className="rounded-xl border border-primary/20 bg-primary/8 px-4 py-3 flex items-start gap-3">
             <IconClock className="w-4 h-4 text-primary mt-0.5 shrink-0" />
             <p className="text-xs text-primary/90">
-              Bạn đã đăng{" "}
+              Báº¡n Ä‘Ã£ Ä‘Äƒng{" "}
               <span className="font-semibold">
                 {productLimit.totalProducts}/{productLimit.limit}
               </span>{" "}
-              sản phẩm. Xác minh tài khoản để đăng không giới hạn.
+              sáº£n pháº©m. XÃ¡c minh tÃ i khoáº£n Ä‘á»ƒ Ä‘Äƒng khÃ´ng giá»›i háº¡n.
             </p>
           </div>
         )}
@@ -122,33 +122,33 @@ export function BecomeSellerView({
             <div className="animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent" />
           </div>
         ) : hasRequest && requestStatus === "pending" ? (
-          <div className="rounded-2xl border border-primary/20 bg-primary/8 dark:bg-primary/15 p-6 flex items-start gap-4">
+          <div className="rounded-2xl border border-primary/20 bg-primary/8 p-6 flex items-start gap-4">
             <IconClock className="w-6 h-6 text-primary shrink-0 mt-0.5" />
             <div>
               <h3 className="text-sm font-semibold text-primary mb-1">
-                Hồ sơ đang được xét duyệt
+                Há»“ sÆ¡ Ä‘ang Ä‘Æ°á»£c xÃ©t duyá»‡t
               </h3>
               <p className="text-xs text-primary/80">
-                Đội ngũ Eco Market đang kiểm duyệt hồ sơ của bạn trong vòng 24h. Bạn sẽ nhận
-                thông báo qua email khi có kết quả.
+                Äá»™i ngÅ© Eco Market Ä‘ang kiá»ƒm duyá»‡t há»“ sÆ¡ cá»§a báº¡n trong vÃ²ng 24h. Báº¡n sáº½ nháº­n
+                thÃ´ng bÃ¡o qua email khi cÃ³ káº¿t quáº£.
               </p>
               <Link
                 href="/"
                 className="mt-3 inline-flex items-center text-xs font-medium text-primary hover:underline"
               >
-                Về trang chủ
+                Vá» trang chá»§
               </Link>
             </div>
           </div>
         ) : hasRequest && requestStatus === "rejected" ? (
-          <div className="rounded-2xl border border-destructive/30 bg-destructive/8 dark:bg-destructive/15 p-6 flex items-start gap-4">
+          <div className="rounded-2xl border border-destructive/30 bg-destructive/8 p-6 flex items-start gap-4">
             <IconCircleX className="w-6 h-6 text-destructive shrink-0 mt-0.5" />
             <div>
               <h3 className="text-sm font-semibold text-destructive mb-1">
-                Yêu cầu đã bị từ chối
+                YÃªu cáº§u Ä‘Ã£ bá»‹ tá»« chá»‘i
               </h3>
               <p className="text-xs text-destructive/80">
-                {apiError || "Yêu cầu của bạn đã bị từ chối. Vui lòng liên hệ hỗ trợ để được giải đáp."}
+                {apiError || "YÃªu cáº§u cá»§a báº¡n Ä‘Ã£ bá»‹ tá»« chá»‘i. Vui lÃ²ng liÃªn há»‡ há»— trá»£ Ä‘á»ƒ Ä‘Æ°á»£c giáº£i Ä‘Ã¡p."}
               </p>
             </div>
           </div>
@@ -174,22 +174,22 @@ export function BecomeSellerView({
                 className="flex-1 h-11 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
               >
                 {isLoading
-                  ? "Đang gửi hồ sơ..."
+                  ? "Äang gá»­i há»“ sÆ¡..."
                   : requiresVerification
-                    ? "Xác minh tài khoản seller"
-                    : "Bắt đầu bán hàng"}
+                    ? "XÃ¡c minh tÃ i khoáº£n seller"
+                    : "Báº¯t Ä‘áº§u bÃ¡n hÃ ng"}
               </button>
               <button
                 type="button"
                 onClick={onBack}
                 className="flex-1 h-11 rounded-xl border border-border text-muted-foreground text-sm font-medium hover:bg-muted hover:text-foreground transition-colors"
               >
-                Hủy
+                Há»§y
               </button>
             </div>
 
             <p className="text-center text-xs text-muted-foreground pb-2">
-              Hồ sơ sẽ được đội ngũ Eco Market kiểm duyệt trong vòng 24h.
+              Há»“ sÆ¡ sáº½ Ä‘Æ°á»£c Ä‘á»™i ngÅ© Eco Market kiá»ƒm duyá»‡t trong vÃ²ng 24h.
             </p>
           </form>
         )}

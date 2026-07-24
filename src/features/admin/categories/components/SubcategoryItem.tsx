@@ -93,8 +93,8 @@ export default function SubcategoryItem({
           <span
             className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
               isSubInactive
-                ? "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200"
-                : "bg-secondary text-foreground dark:bg-secondary/70"
+                ? "bg-slate-100 text-slate-700"
+                : "bg-secondary text-foreground"
             }`}
           >
             {isSubInactive ? "Inactive" : "Active"}
@@ -110,7 +110,7 @@ export default function SubcategoryItem({
           <button
             type="button"
             onClick={onDelete}
-            className="rounded p-1 text-destructive hover:bg-destructive/5 dark:hover:bg-destructive/10"
+            className="rounded p-1 text-destructive hover:bg-destructive/5"
             title="Xóa"
           >
             <IconTrash className="h-3 w-3" />

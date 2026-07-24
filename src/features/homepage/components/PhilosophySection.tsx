@@ -1,121 +1,247 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import {
+  IconArrowUpRight,
+} from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "../hooks";
 
 const values = [
   {
+    number: "01",
+    tag: "Bền Vững",
     title: "Mua bán có trách nhiệm",
-    description:
-      "Mỗi giao dịch là một lựa chọn tiêu dùng bền vững, giảm lãng phí và kéo dài vòng đời sản phẩm.",
+    description: "Kéo dài vòng đời sản phẩm, giảm thiểu lãng phí tài nguyên.",
     href: "/sell",
+    type: "clean", // Thẻ kem tối giản
   },
   {
-    title: "Tin cậy và minh bạch",
+    number: "02",
+    tag: "Minh Bạch",
+    title: "Tin cậy & rõ ràng",
     description:
-      "Ưu tiên thông tin rõ ràng về tình trạng, xuất xứ và mức giá để người mua ra quyết định nhanh hơn.",
+      "Thông tin xuất xứ, tình trạng và mức giá luôn công khai 100%.",
     href: "/products",
+    type: "editorial", // Thẻ ảnh đốm tối theo style mẫu
+    image:
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop",
   },
   {
-    title: "Kết nối cộng đồng",
+    number: "03",
+    tag: "Cộng Đồng",
+    title: "Kết nối giá trị thực",
     description:
-      "Tạo không gian nơi người dùng chia sẻ đồ tốt, trao đổi thân thiện và giữ lại giá trị sử dụng.",
+      "Nơi trao đổi đồ cũ thân thiện, tôn trọng và giữ lại giá trị sử dụng nguyên bản.",
     href: "/register",
+    type: "clean-wide", // Thẻ rộng trải dài bên dưới
   },
 ];
 
 export default function PhilosophySection() {
-  const { ref, isVisible } = useScrollReveal({ threshold: 0.08, delay: 160 });
+  const { ref, isVisible } = useScrollReveal({ threshold: 0.1, delay: 150 });
 
   return (
-    <section
-      style={{
-        background:
-          "linear-gradient(180deg, #F8F2EA 0%, #F4ECE1 100%)",
-      }}
-      className="border-b border-taupe-200/70 py-12 md:py-16"
-    >
+    <section className="border-t border-[#1A1816]/6 bg-white/40 py-20 md:py-28">
       <div
         ref={ref}
         className={cn(
-          "mx-auto w-full max-w-9xl px-4 sm:px-6 lg:px-8 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+          "mx-auto w-full max-w-9xl px-4 sm:px-6 lg:px-8 transition-all duration-700 ease-out",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
         )}
       >
-        <div
-          className={cn(
-            "overflow-hidden rounded-2xl border border-taupe-200/80 bg-[#F8F4ED] shadow-[0_12px_32px_rgba(67,47,28,0.08)] transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
-          )}
-          style={{ transitionDelay: "220ms" }}
-        >
-          <div className="grid items-stretch lg:grid-cols-12">
-            <div className="relative p-7 md:p-10 lg:col-span-5 lg:p-12">
-              <div className="pointer-events-none absolute -left-10 -top-16 h-44 w-44 rounded-full bg-[#E9D7C0]/50 blur-2xl" />
-              <div className="pointer-events-none absolute -bottom-16 right-4 h-40 w-40 rounded-full bg-[#DFC5A2]/40 blur-2xl" />
-
-              <div className="relative">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-taupe-500">
-                  Triết lý của chúng tôi
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-14 items-stretch">
+          {/* CỘT TRÁI (5 Cols): Editorial Hero Story */}
+          <div className="flex flex-col justify-between lg:col-span-5 py-2">
+            <div
+              className={cn(
+                "transition-all duration-700 ease-out",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
+              )}
+              style={{ transitionDelay: "80ms" }}
+            >
+              <div className="flex items-center gap-3">
+                <span className="h-px w-8 bg-[#C4A574]/80" aria-hidden />
+                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6B655B]">
+                  Triết lí cốt lõi
                 </p>
-                <h3 className="mt-3 text-[2rem] font-semibold leading-[1.1] tracking-tight text-taupe-900 md:text-[2.3rem]">
-                  Mỗi món đồ cũ đều
-                  <br />
-                  xứng đáng một hành trình mới.
-                </h3>
-                <p className="mt-4 max-w-md text-sm leading-relaxed text-taupe-500">
-                  Chúng tôi xây dựng nền tảng để việc mua bán đồ đã qua sử dụng trở nên an tâm, tiện lợi và giàu ý nghĩa hơn mỗi ngày.
-                </p>
+              </div>
 
-                <div className="mt-7 flex flex-wrap gap-2">
-                  <span className="rounded-full border border-taupe-300 bg-cream-50 px-3 py-1 text-xs font-medium text-taupe-600">
-                    Bền vững
-                  </span>
-                  <span className="rounded-full border border-taupe-300 bg-cream-50 px-3 py-1 text-xs font-medium text-taupe-600">
-                    Minh bạch
-                  </span>
-                  <span className="rounded-full border border-taupe-300 bg-cream-50 px-3 py-1 text-xs font-medium text-taupe-600">
-                    Thân thiện
-                  </span>
-                </div>
+              <h2
+                style={{
+                  fontFamily: "var(--font-droid-serif), serif",
+                  fontWeight: 400,
+                  lineHeight: 1.08,
+                }}
+                className="mt-4 text-[clamp(1.75rem,3vw,2.5rem)] tracking-tight text-[#1A1816]"
+              >
+                Mỗi món đồ cũ đều xứng đáng{" "}
+                <span className="text-[#5FB160]">một hành trình mới.</span>
+              </h2>
+              <p className="mt-6 text-sm leading-relaxed text-[#5C564E] md:text-base">
+                Chúng tôi không chỉ trao đổi hàng hóa, mà cùng bạn kiến tạo lối
+                sống tiêu dùng thông minh, bền vững và đầy cảm hứng.
+              </p>
 
-                <Link
-                  href="/products"
-                  className="mt-7 inline-flex items-center rounded-full border border-taupe-400 bg-cream-50 px-5 py-2 text-xs font-semibold text-taupe-700 transition-colors hover:bg-[#F3ECE2]"
-                >
-                  Khám phá sản phẩm
-                </Link>
+              <div className="mt-8 flex flex-wrap gap-2">
+                {["Bền vững", "Minh bạch", "Thân thiện"].map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-[#E2DDD3] bg-[#FAF8F3] px-3.5 py-1 text-xs font-medium text-[#4A453E]"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
 
-            <div className="grid gap-3 border-t border-taupe-200/70 bg-[#FBF8F3] p-6 md:grid-cols-2 md:p-8 lg:col-span-7 lg:border-l lg:border-t-0 lg:p-10">
-              {values.map((item, idx) => (
-                <Link
-                  key={item.title}
-                  href={item.href}
-                  className={cn(
-                    "rounded-xl border border-taupe-200/80 bg-white/80 p-5 shadow-[0_6px_16px_rgba(66,48,30,0.06)] transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-taupe-300 hover:bg-white",
-                    idx === 2 ? "md:col-span-2" : "",
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                  )}
-                  style={{ transitionDelay: `${260 + idx * 120}ms` }}
-                >
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-taupe-400">
-                    Giá trị {idx + 1}
-                  </p>
-                  <h4 className="mt-2 text-base font-semibold text-taupe-900">
-                    {item.title}
-                  </h4>
-                  <p className="mt-2 text-sm leading-relaxed text-taupe-500">
-                    {item.description}
-                  </p>
-                  <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-taupe-500">
-                    Xem thêm
-                  </p>
-                </Link>
-              ))}
+            <div
+              className={cn(
+                "mt-10 pt-4 transition-all duration-700 ease-out",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
+              )}
+              style={{ transitionDelay: "220ms" }}
+            >
+              <Link
+                href="/products"
+                className="group inline-flex items-center gap-3 bg-[#1A1816] px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#F8F6F0] transition-all duration-300 hover:bg-[#2A2826]"
+                style={{ borderRadius: "2px" }}
+              >
+                <span>Khám phá sản phẩm</span>
+                <IconArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
             </div>
+          </div>
+
+          {/* CỘT PHẢI (7 Cols): Dynamic Cards Layout */}
+          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-5">
+            {/* Card 1: Clean Warm Surface */}
+            <Link
+              href={values[0].href}
+              className={cn(
+                "group relative flex flex-col justify-between border border-[#E5E0D8] bg-[#FAF8F3] p-7 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-[#C8C2B5] hover:shadow-[0_12px_32px_rgba(26,24,22,0.06)]",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+              )}
+              style={{ transitionDelay: "180ms" }}
+            >
+              <div>
+                <div className="flex items-center justify-between border-b border-[#EBE6DC] pb-4">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8C857B]">
+                    {values[0].tag}
+                  </span>
+                  <span className="font-ny text-xl italic text-[#1A1816]/40 group-hover:text-[#3F5E38] transition-colors">
+                    {values[0].number}
+                  </span>
+                </div>
+
+                <h3
+                  style={{ fontFamily: "var(--font-droid-serif), serif" }}
+                  className="mt-5 text-xl font-normal text-[#1A1816]"
+                >
+                  {values[0].title}
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-[#6B655B]">
+                  {values[0].description}
+                </p>
+              </div>
+
+              <div className="mt-8 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1A1816] transition-colors group-hover:text-[#3F5E38]">
+                <span>Tìm hiểu thêm</span>
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </div>
+            </Link>
+
+            {/* Card 2: Editorial Dark Photo Overlay (Lấy phong cách từ ảnh mẫu) */}
+            <Link
+              href={values[1].href}
+              className={cn(
+                "group relative flex flex-col justify-between overflow-hidden bg-[#1A1816] p-7 text-white transition-all duration-700 ease-out hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(0,0,0,0.2)]",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+              )}
+              style={{ transitionDelay: "280ms" }}
+            >
+              {/* Background Photo */}
+              <div className="absolute inset-0 z-0">
+                <Image
+                  src={values[1].image!}
+                  alt=""
+                  fill
+                  className="object-cover opacity-40 transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816] via-[#1A1816]/60 to-transparent" />
+              </div>
+
+              <div className="relative z-10">
+                <div className="flex items-center justify-between border-b border-white/15 pb-4">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60">
+                    {values[1].tag}
+                  </span>
+                  <span className="font-ny text-xl italic text-white/40 group-hover:text-white transition-colors">
+                    {values[1].number}
+                  </span>
+                </div>
+
+                <div className="mt-5 h-px w-6 bg-[#C4A574]" />
+
+                <h3
+                  style={{ fontFamily: "var(--font-droid-serif), serif" }}
+                  className="mt-3 text-xl font-normal text-white"
+                >
+                  {values[1].title}
+                </h3>
+                <p className="mt-2 text-xs leading-relaxed text-white/70">
+                  {values[1].description}
+                </p>
+              </div>
+
+              <div className="relative z-10 mt-8 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors">
+                <span>Tìm hiểu thêm</span>
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </div>
+            </Link>
+
+            {/* Card 3: Horizontal Full-width Accent */}
+            <Link
+              href={values[2].href}
+              className={cn(
+                "group relative flex flex-col justify-between border border-[#E5E0D8] bg-white p-7 md:col-span-2 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-[#C8C2B5] hover:shadow-[0_12px_32px_rgba(26,24,22,0.06)]",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+              )}
+              style={{ transitionDelay: "380ms" }}
+            >
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div className="max-w-md">
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8C857B]">
+                      {values[2].tag}
+                    </span>
+                    <span className="h-1 w-1 rounded-full bg-[#3F5E38]" />
+                    <span className="font-ny text-sm italic text-[#6B655B]">
+                      Giá trị {values[2].number}
+                    </span>
+                  </div>
+
+                  <h3
+                    style={{ fontFamily: "var(--font-droid-serif), serif" }}
+                    className="mt-3 text-xl font-normal text-[#1A1816]"
+                  >
+                    {values[2].title}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-[#6B655B]">
+                    {values[2].description}
+                  </p>
+                </div>
+
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F5F2EC] text-[#1A1816] transition-all duration-300 group-hover:bg-[#1A1816] group-hover:text-[#F8F6F0]">
+                  <IconArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </div>

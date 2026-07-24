@@ -3,20 +3,20 @@ import Link from "next/link";
 
 export function Breadcrumb() {
   return (
-    <div className="max-w-7xl mx-auto w-full px-4 mb-6 sm:px-6">
+    <div className="max-w-8xl mx-auto w-full px-4 mb-6 sm:px-6">
       <Link
         href="/"
         className="inline-flex items-center gap-2 text-primary hover:underline font-medium text-sm"
       >
         <IconArrowLeft className="h-4 w-4" />
-        Quay lại
+        Quay láº¡i
       </Link>
       <div className="flex items-center gap-2 text-sm mt-2 text-muted-foreground">
         <Link href="/" className="text-primary hover:underline">
-          Trang chủ
+          Trang chá»§
         </Link>
         <IconChevronRight className="w-4 h-4 shrink-0" />
-        <span className="text-foreground">Tài khoản của tôi</span>
+        <span className="text-foreground">TÃ i khoáº£n cá»§a tÃ´i</span>
       </div>
     </div>
   );

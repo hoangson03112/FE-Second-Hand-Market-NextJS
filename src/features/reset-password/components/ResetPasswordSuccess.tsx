@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { IconCircleCheck } from "@tabler/icons-react";
-import SuccessMessage from "@/components/common/auth/SuccessMessage";
-import InfoBox from "@/components/common/auth/InfoBox";
+import SuccessMessage from "@/components/shared/auth/SuccessMessage";
+import InfoBox from "@/components/shared/auth/InfoBox";
 import { ArrowRightIcon } from "@/components/shared";
 
 export default function ResetPasswordSuccess() {
@@ -29,3 +29,4 @@ export default function ResetPasswordSuccess() {
     </div>
   );
 }
+

@@ -18,11 +18,17 @@ export default function SiteLayout({
   }
 
   return (
-    <>
+    <div className="relative flex h-full flex-col overflow-hidden">
+      {" "}
       <Header />
-      <main className="flex-1 flex flex-col">{children}</main>
-      <Footer />
+      <main
+        id="main-scroll-container"
+        className="flex-1 min-h-0 overflow-y-auto"
+      >
+        {children}
+      </main>
+      {/* <Footer /> */}
       <FloatingChatBox />
-    </>
+    </div>
   );
 }

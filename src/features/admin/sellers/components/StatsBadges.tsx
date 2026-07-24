@@ -18,13 +18,13 @@ export default function StatsBadges({
       <span className="rounded-lg bg-muted px-2 py-1 text-muted-foreground">
         Tổng: {total}
       </span>
-      <span className="rounded-lg bg-primary/10 px-2 py-1 text-primary/90 dark:bg-primary/20">
+      <span className="rounded-lg bg-primary/10 px-2 py-1 text-primary/90">
         Chờ duyệt: {pending}
       </span>
       <span className="rounded-lg bg-secondary px-2 py-1 text-foreground/80">
         Đã duyệt: {approved}
       </span>
-      <span className="rounded-lg bg-destructive/10 px-2 py-1 text-destructive dark:bg-destructive/20">
+      <span className="rounded-lg bg-destructive/10 px-2 py-1 text-destructive">
         Từ chối: {rejected}
       </span>
       {banned > 0 && (

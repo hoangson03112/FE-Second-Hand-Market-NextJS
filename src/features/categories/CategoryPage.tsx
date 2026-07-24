@@ -31,14 +31,14 @@ export default function CategoryPage({ slug }: CategoryPageProps) {
         totalProducts={products?.total}
       />
 
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
         {error ? (
           <ErrorState />
         ) : (
           <ProductList
             products={products?.data || []}
             isLoading={isLoading}
-            emptyMessage="Không có sản phẩm nào trong danh mục này"
+            emptyMessage="KhÃ´ng cÃ³ sáº£n pháº©m nÃ o trong danh má»¥c nÃ y"
             pagination={{
               currentPage: products?.page || 1,
               totalPages: products?.totalPages || 1,

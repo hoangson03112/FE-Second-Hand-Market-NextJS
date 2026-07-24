@@ -33,7 +33,7 @@ function TypeIcon({ type }: { type: NotificationType }) {
   }
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
+// â”€â”€ Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export default function NotificationsPage() {
   const router = useRouter();
@@ -81,18 +81,18 @@ export default function NotificationsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="max-w-7xl mx-auto w-full px-4 py-8 sm:px-6">
+      <main className="max-w-8xl mx-auto w-full px-4 py-8 sm:px-6">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-primary hover:underline mb-8 font-medium"
         >
           <IconArrowLeft className="h-4 w-4" />
-          Quay lại
+          Quay láº¡i
         </Link>
 
         <h1 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
           <IconBell className="w-8 h-8" />
-          Thông báo
+          ThÃ´ng bÃ¡o
           {unreadCount > 0 && (
             <span className="ml-1 px-2 py-0.5 text-xs font-bold bg-primary text-primary-foreground rounded-full">
               {unreadCount}
@@ -102,7 +102,7 @@ export default function NotificationsPage() {
 
         <div className="flex items-center justify-between mb-4">
           <p className="text-sm text-muted-foreground">
-            {notifications.length} thông báo • {unreadCount} chưa đọc
+            {notifications.length} thÃ´ng bÃ¡o â€¢ {unreadCount} chÆ°a Ä‘á»c
           </p>
           <button
             onClick={handleMarkAllAsRead}
@@ -110,16 +110,16 @@ export default function NotificationsPage() {
             className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-border text-sm disabled:opacity-50 hover:bg-muted transition-colors"
           >
             <IconCheck className="w-4 h-4" />
-            Đọc tất cả
+            Äá»c táº¥t cáº£
           </button>
         </div>
 
         {notifications.length === 0 ? (
           <div className="bg-muted/30 rounded-2xl border border-border p-12 text-center">
             <IconBell className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground mb-2">Chưa có thông báo nào</p>
+            <p className="text-muted-foreground mb-2">ChÆ°a cÃ³ thÃ´ng bÃ¡o nÃ o</p>
             <p className="text-sm text-muted-foreground">
-              Bạn sẽ nhận được thông báo khi có cập nhật về đơn hàng, sản phẩm đã đăng và tin nhắn mới.
+              Báº¡n sáº½ nháº­n Ä‘Æ°á»£c thÃ´ng bÃ¡o khi cÃ³ cáº­p nháº­t vá» Ä‘Æ¡n hÃ ng, sáº£n pháº©m Ä‘Ã£ Ä‘Äƒng vÃ  tin nháº¯n má»›i.
             </p>
           </div>
         ) : (
@@ -161,7 +161,7 @@ export default function NotificationsPage() {
                 <button
                   onClick={(e) => handleDelete(e, item.id)}
                   className="absolute top-3 right-3 p-1.5 rounded-lg text-muted-foreground hover:bg-primary/10 hover:text-primary opacity-0 group-hover:opacity-100 transition-all"
-                  title="Xóa thông báo"
+                  title="XÃ³a thÃ´ng bÃ¡o"
                 >
                   <IconTrash className="w-3.5 h-3.5" />
                 </button>

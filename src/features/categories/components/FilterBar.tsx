@@ -6,23 +6,23 @@ import { IProductFilters } from "@/types/product";
 import type { Province } from "@/types/address";
 
 const SORT_OPTIONS = [
-  { value: "newest", label: "Mới nhất" },
-  { value: "price_low", label: "Giá tăng" },
-  { value: "price_high", label: "Giá giảm" },
-  { value: "popular", label: "Phổ biến" },
+  { value: "newest", label: "Má»›i nháº¥t" },
+  { value: "price_low", label: "GiÃ¡ tÄƒng" },
+  { value: "price_high", label: "GiÃ¡ giáº£m" },
+  { value: "popular", label: "Phá»• biáº¿n" },
 ] as const;
 
 const TRANSACTION_OPTIONS = [
-  { value: "meeting", label: "Gặp mặt" },
-  { value: "shipping", label: "Giao hàng" },
+  { value: "meeting", label: "Gáº·p máº·t" },
+  { value: "shipping", label: "Giao hÃ ng" },
 ] as const;
 
 const CONDITION_OPTIONS = [
-  { value: "new", label: "Mới" },
-  { value: "like_new", label: "Như mới" },
-  { value: "good", label: "Tốt" },
-  { value: "fair", label: "Khá" },
-  { value: "poor", label: "Cũ" },
+  { value: "new", label: "Má»›i" },
+  { value: "like_new", label: "NhÆ° má»›i" },
+  { value: "good", label: "Tá»‘t" },
+  { value: "fair", label: "KhÃ¡" },
+  { value: "poor", label: "CÅ©" },
 ];
 
 const PRICE_PRESETS = [
@@ -114,7 +114,7 @@ export default function FilterBar({
       className="sticky top-[60px] z-[45] border-b border-taupe-100 bg-white"
       style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}
     >
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+      <div className="max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-4 py-3 overflow-x-auto">
           {/* Province - compact */}
           {provinces.length > 0 && (
@@ -126,7 +126,7 @@ export default function FilterBar({
                 backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
               }}
             >
-              <option value="">Tỉnh thành</option>
+              <option value="">Tá»‰nh thÃ nh</option>
               {provinces.map((p) => (
                 <option key={p.ProvinceID} value={p.ProvinceID}>
                   {p.ProvinceName}
@@ -187,7 +187,7 @@ export default function FilterBar({
                 : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
             )}
           >
-            Lọc
+            Lá»c
             {activeFilterCount > 0 && (
               <span className="w-4 h-4 rounded-full bg-white/25 flex items-center justify-center text-[10px] font-bold">
                 {activeFilterCount}
@@ -202,7 +202,7 @@ export default function FilterBar({
               onClick={clearFilters}
               className="text-sm text-taupe-400 hover:text-taupe-700 shrink-0"
             >
-              Xóa lọc
+              XÃ³a lá»c
             </button>
           )}
           {totalProducts !== undefined && (
@@ -218,31 +218,31 @@ export default function FilterBar({
             {filters.search && (
               <span className="inline-flex items-center gap-1 h-6 pl-2.5 pr-1.5 rounded-full bg-taupe-100 text-taupe-700 text-xs">
                 {filters.search}
-                <button onClick={() => onFilterChange({ ...filters, search: undefined, page: 1 })} className="hover:bg-taupe-200 rounded-full p-0.5">×</button>
+                <button onClick={() => onFilterChange({ ...filters, search: undefined, page: 1 })} className="hover:bg-taupe-200 rounded-full p-0.5">Ã—</button>
               </span>
             )}
             {selectedProvince && (
               <span className="inline-flex items-center gap-1 h-6 pl-2.5 pr-1.5 rounded-full bg-taupe-100 text-taupe-700 text-xs">
                 {selectedProvince.ProvinceName}
-                <button onClick={() => handleProvinceChange("")} className="hover:bg-taupe-200 rounded-full p-0.5">×</button>
+                <button onClick={() => handleProvinceChange("")} className="hover:bg-taupe-200 rounded-full p-0.5">Ã—</button>
               </span>
             )}
             {filters.transactionMethod && (
               <span className="inline-flex items-center gap-1 h-6 pl-2.5 pr-1.5 rounded-full bg-taupe-100 text-taupe-700 text-xs">
                 {TRANSACTION_OPTIONS.find((o) => o.value === filters.transactionMethod)?.label}
-                <button onClick={() => handleTransactionChange(filters.transactionMethod!)} className="hover:bg-taupe-200 rounded-full p-0.5">×</button>
+                <button onClick={() => handleTransactionChange(filters.transactionMethod!)} className="hover:bg-taupe-200 rounded-full p-0.5">Ã—</button>
               </span>
             )}
             {filters.condition && (
               <span className="inline-flex items-center gap-1 h-6 pl-2.5 pr-1.5 rounded-full bg-taupe-100 text-taupe-700 text-xs">
                 {CONDITION_OPTIONS.find((c) => c.value === filters.condition)?.label}
-                <button onClick={() => handleConditionChange(filters.condition!)} className="hover:bg-taupe-200 rounded-full p-0.5">×</button>
+                <button onClick={() => handleConditionChange(filters.condition!)} className="hover:bg-taupe-200 rounded-full p-0.5">Ã—</button>
               </span>
             )}
             {(filters.minPrice || filters.maxPrice) && (
               <span className="inline-flex items-center gap-1 h-6 pl-2.5 pr-1.5 rounded-full bg-taupe-100 text-taupe-700 text-xs">
-                {activePricePreset?.label ?? `${filters.minPrice ? (filters.minPrice / 1000).toFixed(0) + "k" : "0"}-${filters.maxPrice ? (filters.maxPrice / 1000).toFixed(0) + "k" : "∞"}`}
-                <button onClick={() => handlePriceRangeChange(undefined, undefined)} className="hover:bg-taupe-200 rounded-full p-0.5">×</button>
+                {activePricePreset?.label ?? `${filters.minPrice ? (filters.minPrice / 1000).toFixed(0) + "k" : "0"}-${filters.maxPrice ? (filters.maxPrice / 1000).toFixed(0) + "k" : "âˆž"}`}
+                <button onClick={() => handlePriceRangeChange(undefined, undefined)} className="hover:bg-taupe-200 rounded-full p-0.5">Ã—</button>
               </span>
             )}
           </div>
@@ -253,7 +253,7 @@ export default function FilterBar({
           <div className="pb-4 pt-2 border-t border-taupe-100">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <p className="text-xs font-medium text-taupe-500 mb-2">Khoảng giá</p>
+                <p className="text-xs font-medium text-taupe-500 mb-2">Khoáº£ng giÃ¡</p>
                 <div className="flex flex-wrap gap-2 mb-2">
                   {PRICE_PRESETS.map((preset) => {
                     const isActive = preset.min === filters.minPrice && preset.max === filters.maxPrice;
@@ -276,14 +276,14 @@ export default function FilterBar({
                 <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   <input
                     type="number"
-                    placeholder="Từ (đ)"
+                    placeholder="Tá»« (Ä‘)"
                     value={filters.minPrice || ""}
                     onChange={(e) => handlePriceRangeChange(e.target.value ? Number(e.target.value) : undefined, filters.maxPrice)}
                     className="w-full min-w-0 h-8 px-3 rounded-full text-sm bg-taupe-50 border-0 focus:ring-2 focus:ring-taupe-200"
                   />
                   <input
                     type="number"
-                    placeholder="Đến (đ)"
+                    placeholder="Äáº¿n (Ä‘)"
                     value={filters.maxPrice || ""}
                     onChange={(e) => handlePriceRangeChange(filters.minPrice, e.target.value ? Number(e.target.value) : undefined)}
                     className="w-full min-w-0 h-8 px-3 rounded-full text-sm bg-taupe-50 border-0 focus:ring-2 focus:ring-taupe-200"
@@ -291,7 +291,7 @@ export default function FilterBar({
                 </div>
               </div>
               <div>
-                <p className="text-xs font-medium text-taupe-500 mb-2">Tình trạng</p>
+                <p className="text-xs font-medium text-taupe-500 mb-2">TÃ¬nh tráº¡ng</p>
                 <div className="flex flex-wrap gap-2">
                   {CONDITION_OPTIONS.map(({ value, label }) => (
                     <button

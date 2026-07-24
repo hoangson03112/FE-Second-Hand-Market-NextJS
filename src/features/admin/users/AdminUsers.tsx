@@ -1,16 +1,33 @@
 "use client";
 
-import { IconLoader2 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
-import { useToast } from "@/components/shared";
+import { IconSearch, IconUsers } from "@tabler/icons-react";
+
+import { useToast, Pagination } from "@/components/shared";
+import {
+  ErrorState,
+  Loading,
+  NoData,
+  PageHeader,
+  SearchInput,
+} from "@/components/shared";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useAdminUsers } from "./hooks/useAdminUsers";
 import StatsCards from "./components/StatsCards";
-import SearchBar from "./components/SearchBar";
 import AccountStatusTabs from "./components/AccountStatusTabs";
 import RoleTabs from "./components/RoleTabs";
 import UsersTable from "./components/UsersTable";
-import EmptyState from "./components/EmptyState";
-import { Pagination } from "@/components/shared";
 import type { AdminAccount } from "@/types/admin";
 
 export default function AdminUsers() {
@@ -55,14 +72,16 @@ export default function AdminUsers() {
   const hasNoAccounts = !totalItems && !isLoading;
   const hasNoFiltered = !accounts.length && !!search.trim();
 
-  const onBanClick = (acc: AdminAccount) => setBanModal(acc);
+  const closeBan = () => {
+    setBanModal(null);
+    setBanReason("");
+  };
   const onConfirmBan = async () => {
     if (!banModal) return;
     try {
       await handleBan(banModal._id, banReason.trim() || undefined);
       toast.success("Đã khóa tài khoản.");
-      setBanModal(null);
-      setBanReason("");
+      closeBan();
     } catch {
       toast.error("Không thể khóa tài khoản.");
     }
@@ -77,33 +96,32 @@ export default function AdminUsers() {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex min-h-[40vh] items-center justify-center">
-        <IconLoader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-      </div>
-    );
+    return <Loading fullscreen label="Đang tải danh sách người dùng..." />;
   }
 
   if (error) {
     return (
-      <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-        Không tải được danh sách người dùng.
-      </div>
+      <ErrorState
+        title="Không tải được danh sách người dùng."
+        description="Vui lòng thử lại sau."
+      />
     );
   }
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-lg font-bold text-foreground">Người dùng</h1>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            Danh sách tài khoản (Account). Lọc theo vai trò bên dưới.
-          </p>
-        </div>
-
-        <SearchBar value={search} onChange={setSearch} />
-      </div>
+      <PageHeader
+        title="Người dùng"
+        description="Danh sách tài khoản (Account). Lọc theo vai trò bên dưới."
+        actions={
+          <SearchInput
+            value={search}
+            onChange={setSearch}
+            placeholder="Tìm theo tên, email, SĐT..."
+            containerClassName="w-full sm:w-64"
+          />
+        }
+      />
 
       <StatsCards totalUsers={totalItems} recent7Days={recent7Days} />
 
@@ -114,15 +132,19 @@ export default function AdminUsers() {
       />
 
       {hasNoAccounts ? (
-        <EmptyState type="no-accounts" />
+        <NoData icon={<IconUsers />} title="Chưa có tài khoản nào." size="sm" />
       ) : hasNoFiltered ? (
-        <EmptyState type="no-results" />
+        <NoData
+          icon={<IconSearch />}
+          title="Không tìm thấy người dùng phù hợp."
+          size="sm"
+        />
       ) : (
         <>
           <UsersTable
             accounts={accounts}
             isUpdating={isUpdating}
-            onBan={onBanClick}
+            onBan={setBanModal}
             onUnban={onUnbanClick}
           />
           <Pagination
@@ -134,53 +156,51 @@ export default function AdminUsers() {
         </>
       )}
 
-      {banModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-card rounded-2xl shadow-2xl max-w-md w-full p-6">
-            <h3 className="text-base font-bold text-foreground mb-4">Khóa tài khoản</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Tài khoản <strong>{banModal.fullName ?? banModal.email}</strong> sẽ không thể đăng
-              nhập.
-            </p>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Lý do <span className="text-muted-foreground text-xs">(tùy chọn)</span>
-              </label>
-              <textarea
-                value={banReason}
-                onChange={(e) => setBanReason(e.target.value)}
-                rows={3}
-                className="w-full px-3 py-2 rounded-xl border border-border bg-muted/30 focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground resize-none"
-                placeholder="VD: Vi phạm chính sách cộng đồng"
-              />
-            </div>
-            <div className="flex gap-3">
-              <button
-                onClick={() => {
-                  setBanModal(null);
-                  setBanReason("");
-                }}
-                className="flex-1 py-2 px-4 border border-border text-foreground rounded-xl text-sm font-medium hover:bg-muted transition-colors"
-              >
-                Hủy
-              </button>
-              <button
-                onClick={onConfirmBan}
-                disabled={isUpdating}
-                className="flex-1 py-2 px-4 bg-destructive text-destructive-foreground rounded-xl text-sm font-semibold hover:bg-destructive/90 disabled:opacity-50 transition-colors"
-              >
-                {isUpdating ? (
-                  <IconLoader2 className="w-4 h-4 animate-spin mx-auto" />
-                ) : (
-                  "Khóa tài khoản"
-                )}
-              </button>
-            </div>
+      <Dialog
+        open={!!banModal}
+        onOpenChange={(open) => {
+          if (!open) closeBan();
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Khóa tài khoản</DialogTitle>
+            <DialogDescription>
+              Tài khoản{" "}
+              <strong className="text-foreground">
+                {banModal?.fullName ?? banModal?.email}
+              </strong>{" "}
+              sẽ không thể đăng nhập.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-2">
+            <Label>
+              Lý do{" "}
+              <span className="text-xs text-muted-foreground">(tùy chọn)</span>
+            </Label>
+            <Textarea
+              value={banReason}
+              onChange={(e) => setBanReason(e.target.value)}
+              rows={3}
+              placeholder="VD: Vi phạm chính sách cộng đồng"
+            />
           </div>
-        </div>
-      )}
+          <DialogFooter>
+            <Button variant="outline" onClick={closeBan}>
+              Hủy
+            </Button>
+            <Button
+              variant="destructive"
+              disabled={isUpdating}
+              onClick={onConfirmBan}
+            >
+              {isUpdating && <Loader2 className="size-4 animate-spin mr-2" />}
+              Khóa tài khoản
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
-
 

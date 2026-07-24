@@ -25,7 +25,7 @@ export default function Search() {
     <div className="min-h-screen bg-gradient-to-br from-background to-cream-50/40">
       <SearchHeader query={q} total={total} />
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-8xl mx-auto px-4 py-8">
         {!q ? (
           <SearchEmpty />
         ) : error ? (

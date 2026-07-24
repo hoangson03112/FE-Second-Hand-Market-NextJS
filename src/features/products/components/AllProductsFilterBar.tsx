@@ -13,25 +13,25 @@ export interface AllProductsFilterBarProps {
 }
 
 const SORT_OPTIONS = [
-  { value: "newest", label: "Mới nhất" },
-  { value: "price_low", label: "Giá thấp" },
-  { value: "price_high", label: "Giá cao" },
-  { value: "popular", label: "Phổ biến" },
+  { value: "newest", label: "Má»›i nháº¥t" },
+  { value: "price_low", label: "GiÃ¡ tháº¥p" },
+  { value: "price_high", label: "GiÃ¡ cao" },
+  { value: "popular", label: "Phá»• biáº¿n" },
 ] as const;
 
 const CONDITION_OPTIONS = [
-  { value: "new", label: "Mới", emoji: "✨" },
-  { value: "like_new", label: "Như mới", emoji: "🌟" },
-  { value: "good", label: "Tốt", emoji: "👍" },
-  { value: "fair", label: "Khá", emoji: "🙂" },
-  { value: "poor", label: "Cũ", emoji: "🔧" },
+  { value: "new", label: "Má»›i", emoji: "âœ¨" },
+  { value: "like_new", label: "NhÆ° má»›i", emoji: "ðŸŒŸ" },
+  { value: "good", label: "Tá»‘t", emoji: "ðŸ‘" },
+  { value: "fair", label: "KhÃ¡", emoji: "ðŸ™‚" },
+  { value: "poor", label: "CÅ©", emoji: "ðŸ”§" },
 ];
 
 const PRICE_PRESETS = [
-  { label: "Dưới 100k", min: undefined, max: 100000 },
-  { label: "100k – 500k", min: 100000, max: 500000 },
-  { label: "500k – 1tr", min: 500000, max: 1000000 },
-  { label: "Trên 1tr", min: 1000000, max: undefined },
+  { label: "DÆ°á»›i 100k", min: undefined, max: 100000 },
+  { label: "100k â€“ 500k", min: 100000, max: 500000 },
+  { label: "500k â€“ 1tr", min: 500000, max: 1000000 },
+  { label: "TrÃªn 1tr", min: 1000000, max: undefined },
 ];
 
 export default function AllProductsFilterBar({
@@ -72,7 +72,7 @@ export default function AllProductsFilterBar({
   return (
     <div className="bg-white/90 backdrop-blur-md border-b border-taupe-200/70 shadow-sm sticky top-28 z-40">
       {/* Main bar */}
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+      <div className="max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3 py-3 overflow-x-auto scrollbar-none">
 
           {/* Search input */}
@@ -82,7 +82,7 @@ export default function AllProductsFilterBar({
                 type="text"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                placeholder="Tìm sản phẩm..."
+                placeholder="TÃ¬m sáº£n pháº©m..."
                 className="w-full h-9 pl-9 pr-3 rounded-xl border-2 border-taupe-200 focus:border-primary focus:outline-none text-sm text-taupe-700 bg-white placeholder:text-taupe-300 transition-colors"
               />
               <button type="submit" className="absolute left-2.5 top-1/2 -translate-y-1/2 text-taupe-400 hover:text-primary transition-colors">
@@ -108,7 +108,7 @@ export default function AllProductsFilterBar({
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
             </svg>
-            Lọc
+            Lá»c
             {activeFilterCount > 0 && (
               <span className="w-4 h-4 rounded-full bg-white/30 text-[10px] font-black flex items-center justify-center">
                 {activeFilterCount}
@@ -143,12 +143,12 @@ export default function AllProductsFilterBar({
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                Xóa lọc
+                XÃ³a lá»c
               </button>
             )}
             {totalProducts !== undefined && (
               <span className="text-sm text-taupe-400 font-medium whitespace-nowrap">
-                <span className="text-taupe-700 font-bold">{totalProducts.toLocaleString("vi-VN")}</span> sản phẩm
+                <span className="text-taupe-700 font-bold">{totalProducts.toLocaleString("vi-VN")}</span> sáº£n pháº©m
               </span>
             )}
           </div>
@@ -157,32 +157,32 @@ export default function AllProductsFilterBar({
         {/* Active filter tags */}
         {(filters.condition || filters.minPrice || filters.maxPrice || filters.categorySlug || filters.search) && (
           <div className="flex items-center gap-2 pb-2.5 overflow-x-auto scrollbar-none">
-            <span className="text-xs text-taupe-400 shrink-0">Đang lọc:</span>
+            <span className="text-xs text-taupe-400 shrink-0">Äang lá»c:</span>
             {filters.search && (
               <span className="shrink-0 h-6 px-2.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold flex items-center gap-1">
-                🔍 {filters.search}
-                <button onClick={() => { setSearchInput(""); update({ search: undefined }); }} className="ml-1 opacity-60 hover:opacity-100">✕</button>
+                ðŸ” {filters.search}
+                <button onClick={() => { setSearchInput(""); update({ search: undefined }); }} className="ml-1 opacity-60 hover:opacity-100">âœ•</button>
               </span>
             )}
             {filters.categorySlug && activeCategory && (
               <span className="shrink-0 h-6 px-2.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold flex items-center gap-1">
-                📂 {activeCategory.name}
-                <button onClick={() => update({ categorySlug: undefined, subCategorySlug: undefined })} className="ml-1 opacity-60 hover:opacity-100">✕</button>
+                ðŸ“‚ {activeCategory.name}
+                <button onClick={() => update({ categorySlug: undefined, subCategorySlug: undefined })} className="ml-1 opacity-60 hover:opacity-100">âœ•</button>
               </span>
             )}
             {filters.condition && (
               <span className="shrink-0 h-6 px-2.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold flex items-center gap-1">
                 {CONDITION_OPTIONS.find((c) => c.value === filters.condition)?.emoji}{" "}
                 {CONDITION_OPTIONS.find((c) => c.value === filters.condition)?.label}
-                <button onClick={() => update({ condition: undefined })} className="ml-1 opacity-60 hover:opacity-100">✕</button>
+                <button onClick={() => update({ condition: undefined })} className="ml-1 opacity-60 hover:opacity-100">âœ•</button>
               </span>
             )}
             {(filters.minPrice || filters.maxPrice) && (
               <span className="shrink-0 h-6 px-2.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold flex items-center gap-1">
                 {activePricePreset
                   ? activePricePreset.label
-                  : `${filters.minPrice ? (filters.minPrice / 1000).toFixed(0) + "k" : "0"} – ${filters.maxPrice ? (filters.maxPrice / 1000).toFixed(0) + "k" : "∞"}`}
-                <button onClick={() => update({ minPrice: undefined, maxPrice: undefined })} className="ml-1 opacity-60 hover:opacity-100">✕</button>
+                  : `${filters.minPrice ? (filters.minPrice / 1000).toFixed(0) + "k" : "0"} â€“ ${filters.maxPrice ? (filters.maxPrice / 1000).toFixed(0) + "k" : "âˆž"}`}
+                <button onClick={() => update({ minPrice: undefined, maxPrice: undefined })} className="ml-1 opacity-60 hover:opacity-100">âœ•</button>
               </span>
             )}
           </div>
@@ -192,12 +192,12 @@ export default function AllProductsFilterBar({
       {/* Expanded filter panel */}
       {showFilters && (
         <div className="border-t border-taupe-100 bg-gradient-to-b from-taupe-50/60 to-white">
-          <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-5 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-5 grid grid-cols-1 md:grid-cols-3 gap-6">
 
             {/* Category */}
             {categories.length > 0 && (
               <div>
-                <p className="text-[11px] font-black uppercase tracking-[0.15em] text-taupe-400 mb-3">Danh mục</p>
+                <p className="text-[11px] font-black uppercase tracking-[0.15em] text-taupe-400 mb-3">Danh má»¥c</p>
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => update({ categorySlug: undefined, subCategorySlug: undefined })}
@@ -208,7 +208,7 @@ export default function AllProductsFilterBar({
                         : "border-taupe-200 bg-white text-taupe-600 hover:border-primary/50 hover:text-primary hover:bg-primary/5"
                     )}
                   >
-                    Tất cả
+                    Táº¥t cáº£
                   </button>
                   {categories.map((cat) => (
                     <button
@@ -230,7 +230,7 @@ export default function AllProductsFilterBar({
 
             {/* Price */}
             <div>
-              <p className="text-[11px] font-black uppercase tracking-[0.15em] text-taupe-400 mb-3">Khoảng giá</p>
+              <p className="text-[11px] font-black uppercase tracking-[0.15em] text-taupe-400 mb-3">Khoáº£ng giÃ¡</p>
               <div className="flex flex-wrap gap-2 mb-3">
                 {PRICE_PRESETS.map((preset) => {
                   const isActive = preset.min === filters.minPrice && preset.max === filters.maxPrice;
@@ -253,15 +253,15 @@ export default function AllProductsFilterBar({
               <div className="flex items-center gap-2">
                 <input
                   type="number"
-                  placeholder="Từ (đ)"
+                  placeholder="Tá»« (Ä‘)"
                   value={filters.minPrice || ""}
                   onChange={(e) => update({ minPrice: e.target.value ? Number(e.target.value) : undefined })}
                   className="flex-1 h-9 px-3 rounded-xl border-2 border-taupe-200 focus:border-primary focus:outline-none text-sm text-taupe-700 bg-white placeholder:text-taupe-300"
                 />
-                <span className="text-taupe-300 font-light">—</span>
+                <span className="text-taupe-300 font-light">â€”</span>
                 <input
                   type="number"
-                  placeholder="Đến (đ)"
+                  placeholder="Äáº¿n (Ä‘)"
                   value={filters.maxPrice || ""}
                   onChange={(e) => update({ maxPrice: e.target.value ? Number(e.target.value) : undefined })}
                   className="flex-1 h-9 px-3 rounded-xl border-2 border-taupe-200 focus:border-primary focus:outline-none text-sm text-taupe-700 bg-white placeholder:text-taupe-300"
@@ -271,7 +271,7 @@ export default function AllProductsFilterBar({
 
             {/* Condition */}
             <div>
-              <p className="text-[11px] font-black uppercase tracking-[0.15em] text-taupe-400 mb-3">Tình trạng</p>
+              <p className="text-[11px] font-black uppercase tracking-[0.15em] text-taupe-400 mb-3">TÃ¬nh tráº¡ng</p>
               <div className="flex flex-wrap gap-2">
                 {CONDITION_OPTIONS.map((opt) => {
                   const isActive = opt.value === filters.condition;

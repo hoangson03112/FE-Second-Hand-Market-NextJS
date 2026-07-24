@@ -113,7 +113,7 @@ export const ShippingService = {
         {
           method: "POST",
           data: {
-            shop_id: parseInt(process.env.NEXT_PUBLIC_GHN_SHOP_ID || "0"),
+            // shop_id is injected server-side by the /api/ghn proxy.
             from_district: from_district_id,
             to_district: to_district_id,
           },

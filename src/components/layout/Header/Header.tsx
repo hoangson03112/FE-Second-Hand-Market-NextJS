@@ -1,6 +1,7 @@
 "use client";
 
-import { IconSearch } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { HeaderLogo } from "./components/HeaderLogo";
 import { CategoryMegaMenu } from "./components/CategoryMegaMenu";
 import { HeaderSearch } from "./components/HeaderSearch";
@@ -29,72 +30,77 @@ export default function Header() {
     sellButtonText,
   } = useHeader();
 
+  const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHomeHero = pathname === "/" && !isScrolled;
+
+  useEffect(() => {
+    // 🟢 Tìm thẻ <main> đang chứa thanh cuộn
+    const mainContainer = document.getElementById("main-scroll-container");
+    if (!mainContainer) return;
+
+    const handleScroll = () => {
+      // Kiểm tra độ cuộn của <main> thay vì window
+      setIsScrolled(mainContainer.scrollTop > 10);
+    };
+
+    // Kiểm tra ngay khi vừa load
+    handleScroll();
+
+    mainContainer.addEventListener("scroll", handleScroll, { passive: true });
+    return () => mainContainer.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <>
-      <header
-        className="sticky top-0 z-50 w-full"
-        style={{
-          background: "rgba(253,250,246,0.97)",
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
-          borderBottom: "1px solid var(--border)",
-          boxShadow: "0 2px 12px rgba(26,23,20,0.06)",
-        }}
-      >
-        <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8">
-          <div className="flex h-[58px] min-w-0 items-center gap-1 sm:h-[62px] sm:gap-2">
-            <HeaderLogo />
+    <header
+      className={`absolute top-0 left-0 right-0 z-50 w-full transition-all duration-500 ${
+        isScrolled
+          ? "border-b border-[#1A1816]/8 bg-[#F7F5F0]/95 shadow-[0_8px_30px_rgba(26,24,22,0.06)] backdrop-blur-md"
+          : isHomeHero
+            ? "border-b border-transparent bg-[#F7F5F0]/25 backdrop-blur-sm"
+            : "border-b border-transparent bg-transparent"
+      }`}
+    >
+      <div className="mx-auto w-full max-w-8xl px-3 sm:px-6 lg:px-8">
+        <div className="flex h-[58px] min-w-0 items-center gap-1 sm:h-[62px] sm:gap-2">
+          <HeaderLogo />
 
-            <CategoryMegaMenu
-              categories={categories}
-              showAllCategories={showAllCategories}
-              onShowAllCategories={handleShowAllCategories}
-              onHideAllCategories={handleHideAllCategories}
-            />
+          <CategoryMegaMenu
+            categories={categories}
+            showAllCategories={showAllCategories}
+            onShowAllCategories={handleShowAllCategories}
+            onHideAllCategories={handleHideAllCategories}
+          />
 
-            <div className="ml-auto flex min-w-0 items-center gap-1 sm:gap-2">
-              <div className="flex shrink-0 items-center gap-0 sm:gap-1">
-                {!account ? (
-                  <HeaderGuestActions />
-                ) : (
-                  <HeaderAccountActions
-                    account={account}
-                    sellButtonHref={sellButtonHref}
-                    sellButtonText={sellButtonText}
-                    cartItemCount={cartItemCount}
-                    showUserDropdown={showUserDropdown}
-                    dropdownRef={dropdownRef}
-                    toggleUserDropdown={toggleUserDropdown}
-                    closeUserDropdown={closeUserDropdown}
-                    handleLogout={handleLogout}
-                    getInitials={getInitials}
-                  />
-                )}
-              </div>
-              <div className="min-w-0">
-                <HeaderSearch query={query} setQuery={setQuery} submitSearch={submitSearch} />
-              </div>
+          <div className="ml-auto flex min-w-0 items-center gap-1 sm:gap-2">
+            <div className="min-w-0">
+              <HeaderSearch
+                query={query}
+                submitSearch={submitSearch}
+                setQuery={setQuery}
+              />
+            </div>
+            <div className="flex shrink-0 items-center gap-0 sm:gap-1">
+              {!account ? (
+                <HeaderGuestActions />
+              ) : (
+                <HeaderAccountActions
+                  account={account}
+                  sellButtonHref={sellButtonHref}
+                  sellButtonText={sellButtonText}
+                  cartItemCount={cartItemCount}
+                  showUserDropdown={showUserDropdown}
+                  dropdownRef={dropdownRef}
+                  toggleUserDropdown={toggleUserDropdown}
+                  closeUserDropdown={closeUserDropdown}
+                  handleLogout={handleLogout}
+                  getInitials={getInitials}
+                />
+              )}
             </div>
           </div>
-
-          <div className="pb-3 xl:hidden">
-            <form onSubmit={submitSearch} role="search" className="relative">
-              <IconSearch className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-taupe-500" />
-              <input
-                id="header-mobile-search"
-                name="search"
-                type="search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Tìm kiếm sản phẩm..."
-                className="h-10 w-full rounded-full border border-taupe-200 bg-white pl-10 pr-4 text-sm text-taupe-900 placeholder:text-taupe-400 focus:outline-none"
-              />
-            </form>
-
-          </div>
         </div>
-      </header>
-
-    </>
+      </div>
+    </header>
   );
 }

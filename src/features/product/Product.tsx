@@ -33,7 +33,7 @@ export default function Product({ id }: ProductProps) {
   const { data: product, isLoading, error } = useProduct(id);
   const { data: productReviewsData } = useProductReviews(product?._id ?? "");
 
-  // Invalidate product list khi vào detail → quay lại list sẽ refetch stock mới nhất
+  // Invalidate product list khi vÃ o detail â†’ quay láº¡i list sáº½ refetch stock má»›i nháº¥t
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: queryKeys.products.lists() });
   }, [id, queryClient]);
@@ -67,14 +67,14 @@ export default function Product({ id }: ProductProps) {
       <PageContainer withBackground={false}>
         <Container
           as="main"
-          maxWidth="7xl"
+          maxWidth="8xl"
           paddingX="md"
           paddingY="lg"
           className="text-center"
         >
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-6"></div>
           <p className="text-neutral-600 text-lg">
-            Đang tải thông tin sản phẩm...
+            Äang táº£i thÃ´ng tin sáº£n pháº©m...
           </p>
         </Container>
       </PageContainer>
@@ -85,13 +85,13 @@ export default function Product({ id }: ProductProps) {
   if (error || !product) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
-        <main className="max-w-7xl mx-auto px-4 py-20 text-center">
-          <p className="text-neutral-600 text-lg">Không tìm thấy sản phẩm</p>
+        <main className="max-w-8xl mx-auto px-4 py-20 text-center">
+          <p className="text-neutral-600 text-lg">KhÃ´ng tÃ¬m tháº¥y sáº£n pháº©m</p>
           <Link
             href="/"
             className="text-primary hover:underline mt-4 inline-block"
           >
-            Quay lại trang chủ
+            Quay láº¡i trang chá»§
           </Link>
         </main>
       </div>
@@ -110,13 +110,13 @@ export default function Product({ id }: ProductProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cream-50 to-taupe-50/30">
-      <main className="max-w-7xl mx-auto px-4 py-6">
+      <main className="max-w-8xl mx-auto px-4 py-6">
         <button
           onClick={() => router.back()}
           className="inline-flex items-center gap-2 text-taupe-600 hover:text-primary mb-4 text-sm"
         >
           <IconArrowLeft className="h-4 w-4" />
-          Trở lại
+          Trá»Ÿ láº¡i
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
@@ -125,7 +125,7 @@ export default function Product({ id }: ProductProps) {
             <ProductGalleryNew
               images={product.images || [product.avatar]}
               productName={product.name}
-              condition={product.condition || "Đã sử dụng"}
+              condition={product.condition || "ÄÃ£ sá»­ dá»¥ng"}
             />
             <ProductSpecifications details={productDetails} />
           </div>
@@ -154,7 +154,7 @@ export default function Product({ id }: ProductProps) {
             <ProductPrice
               price={product.price}
               formattedPrice={
-                product.price ? formatPrice(product.price) : "Liên hệ"
+                product.price ? formatPrice(product.price) : "LiÃªn há»‡"
               }
               originalPrice={product.originalPrice}
               hasPersonalDiscount={product.hasPersonalDiscount}
@@ -162,17 +162,17 @@ export default function Product({ id }: ProductProps) {
 
             {(product.stock ?? 0) === 0 && (
               <div className="rounded-xl bg-destructive/8 text-destructive px-4 py-3 text-sm font-semibold my-3 border-2 border-destructive/20 shadow-sm">
-                Hết hàng
+                Háº¿t hÃ ng
               </div>
             )}
             {(product.stock ?? 0) === 1 && (
               <div className="rounded-xl bg-gradient-to-r from-orange-50 to-orange-100 text-orange-700 px-4 py-3 text-sm font-semibold my-3 border-2 border-orange-200 shadow-sm">
-                Chỉ còn 1 sản phẩm
+                Chá»‰ cÃ²n 1 sáº£n pháº©m
               </div>
             )}
             {(product.stock ?? 0) > 1 && (
               <div className="text-sm text-taupe-600 mb-3">
-                Còn {product.stock} sản phẩm
+                CÃ²n {product.stock} sáº£n pháº©m
               </div>
             )}
 
@@ -182,13 +182,13 @@ export default function Product({ id }: ProductProps) {
                 {product.deliveryOptions.codShipping && (
                   <div className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1.5 text-sm font-medium">
                     <IconTruck className="h-4 w-4" />
-                    Giao hàng tận nơi (COD)
+                    Giao hÃ ng táº­n nÆ¡i (COD)
                   </div>
                 )}
                 {product.deliveryOptions.localPickup && (
                   <div className="inline-flex items-center gap-1.5 rounded-lg bg-green-50 text-green-700 border border-green-200 px-3 py-1.5 text-sm font-medium">
                     <IconMapPin className="h-4 w-4" />
-                    Nhận hàng trực tiếp
+                    Nháº­n hÃ ng trá»±c tiáº¿p
                   </div>
                 )}
               </div>
@@ -223,7 +223,7 @@ export default function Product({ id }: ProductProps) {
               onClick={() => setShowReportModal(true)}
               className="text-sm text-muted-foreground hover:text-destructive underline"
             >
-              Báo cáo sản phẩm này
+              BÃ¡o cÃ¡o sáº£n pháº©m nÃ y
             </button>
           </div>
         )}
