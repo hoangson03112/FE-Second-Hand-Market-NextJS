@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AuthService } from "@/services/auth.service";
 import type { RegisterRequest } from "@/types/auth";
-import { registerSchema, RegisterInput } from "@/features/auth/schemas/auth.schema";
+import { registerSchema, RegisterInput } from "@/schemas/auth.schema";
 import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
 import { useToast } from "@/components/shared";
 

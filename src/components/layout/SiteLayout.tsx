@@ -18,16 +18,26 @@ export default function SiteLayout({
   }
 
   return (
-    <div className="relative flex h-full flex-col overflow-hidden">
-      {" "}
+    <div className="fixed inset-0 flex flex-col overflow-hidden bg-background">
+      
       <Header />
+
       <main
         id="main-scroll-container"
-        className="flex-1 min-h-0 overflow-y-auto"
+        className="flex-1 min-h-0 w-full overflow-y-auto overflow-x-hidden"
       >
-        {children}
+        <div className="flex min-h-full flex-col justify-between">
+          
+          {/* Nội dung các trang */}
+          <div className="w-full">
+            {children}
+          </div>
+          
+          <Footer />
+
+        </div>
       </main>
-      {/* <Footer /> */}
+
       <FloatingChatBox />
     </div>
   );

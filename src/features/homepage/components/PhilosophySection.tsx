@@ -43,7 +43,7 @@ export default function PhilosophySection() {
   const { ref, isVisible } = useScrollReveal({ threshold: 0.1, delay: 150 });
 
   return (
-    <section className="border-t border-[#1A1816]/6 bg-white/40 py-20 md:py-28">
+    <section className="border-t border-luxury-ink/6 bg-white/40 py-20 md:py-28">
       <div
         ref={ref}
         className={cn(
@@ -62,8 +62,8 @@ export default function PhilosophySection() {
               style={{ transitionDelay: "80ms" }}
             >
               <div className="flex items-center gap-3">
-                <span className="h-px w-8 bg-[#C4A574]/80" aria-hidden />
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6B655B]">
+                <span className="h-px w-8 bg-luxury-champagne/80" aria-hidden />
+                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-neutral-600">
                   Triết lí cốt lõi
                 </p>
               </div>
@@ -74,12 +74,12 @@ export default function PhilosophySection() {
                   fontWeight: 400,
                   lineHeight: 1.08,
                 }}
-                className="mt-4 text-[clamp(1.75rem,3vw,2.5rem)] tracking-tight text-[#1A1816]"
+                className="mt-4 text-[clamp(1.75rem,3vw,2.5rem)] tracking-tight text-luxury-ink"
               >
                 Mỗi món đồ cũ đều xứng đáng{" "}
-                <span className="text-[#5FB160]">một hành trình mới.</span>
+                <span className="text-accent">một hành trình mới.</span>
               </h2>
-              <p className="mt-6 text-sm leading-relaxed text-[#5C564E] md:text-base">
+              <p className="mt-6 text-sm leading-relaxed text-neutral-700 md:text-base">
                 Chúng tôi không chỉ trao đổi hàng hóa, mà cùng bạn kiến tạo lối
                 sống tiêu dùng thông minh, bền vững và đầy cảm hứng.
               </p>
@@ -88,7 +88,7 @@ export default function PhilosophySection() {
                 {["Bền vững", "Minh bạch", "Thân thiện"].map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-[#E2DDD3] bg-[#FAF8F3] px-3.5 py-1 text-xs font-medium text-[#4A453E]"
+                    className="rounded-full border border-neutral-200 bg-cream-50 px-3.5 py-1 text-xs font-medium text-neutral-700"
                   >
                     {tag}
                   </span>
@@ -105,7 +105,7 @@ export default function PhilosophySection() {
             >
               <Link
                 href="/products"
-                className="group inline-flex items-center gap-3 bg-[#1A1816] px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#F8F6F0] transition-all duration-300 hover:bg-[#2A2826]"
+                className="group inline-flex items-center gap-3 bg-luxury-ink px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
                 style={{ borderRadius: "2px" }}
               >
                 <span>Khám phá sản phẩm</span>
@@ -120,33 +120,33 @@ export default function PhilosophySection() {
             <Link
               href={values[0].href}
               className={cn(
-                "group relative flex flex-col justify-between border border-[#E5E0D8] bg-[#FAF8F3] p-7 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-[#C8C2B5] hover:shadow-[0_12px_32px_rgba(26,24,22,0.06)]",
+                "group relative flex flex-col justify-between border border-neutral-200 bg-cream-50 p-7 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-neutral-300 hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--luxury-ink)_6%,transparent)]",
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
               )}
               style={{ transitionDelay: "180ms" }}
             >
               <div>
-                <div className="flex items-center justify-between border-b border-[#EBE6DC] pb-4">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8C857B]">
+                <div className="flex items-center justify-between border-b border-neutral-200 pb-4">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
                     {values[0].tag}
                   </span>
-                  <span className="font-ny text-xl italic text-[#1A1816]/40 group-hover:text-[#3F5E38] transition-colors">
+                  <span className="font-ny text-xl italic text-luxury-ink/40 group-hover:text-taupe-700 transition-colors">
                     {values[0].number}
                   </span>
                 </div>
 
                 <h3
                   style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                  className="mt-5 text-xl font-normal text-[#1A1816]"
+                  className="mt-5 text-xl font-normal text-luxury-ink"
                 >
                   {values[0].title}
                 </h3>
-                <p className="mt-2 text-xs leading-relaxed text-[#6B655B]">
+                <p className="mt-2 text-xs leading-relaxed text-neutral-600">
                   {values[0].description}
                 </p>
               </div>
 
-              <div className="mt-8 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1A1816] transition-colors group-hover:text-[#3F5E38]">
+              <div className="mt-8 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-luxury-ink transition-colors group-hover:text-taupe-700">
                 <span>Tìm hiểu thêm</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-1">
                   →
@@ -158,7 +158,7 @@ export default function PhilosophySection() {
             <Link
               href={values[1].href}
               className={cn(
-                "group relative flex flex-col justify-between overflow-hidden bg-[#1A1816] p-7 text-white transition-all duration-700 ease-out hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(0,0,0,0.2)]",
+                "group relative flex flex-col justify-between overflow-hidden bg-luxury-ink p-7 text-white transition-all duration-700 ease-out hover:-translate-y-1 hover:shadow-[0_16px_36px_color-mix(in_srgb,var(--luxury-ink)_20%,transparent)]",
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
               )}
               style={{ transitionDelay: "280ms" }}
@@ -171,7 +171,7 @@ export default function PhilosophySection() {
                   fill
                   className="object-cover opacity-40 transition-transform duration-700 ease-out group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1816] via-[#1A1816]/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-luxury-ink via-luxury-ink/60 to-transparent" />
               </div>
 
               <div className="relative z-10">
@@ -184,7 +184,7 @@ export default function PhilosophySection() {
                   </span>
                 </div>
 
-                <div className="mt-5 h-px w-6 bg-[#C4A574]" />
+                <div className="mt-5 h-px w-6 bg-luxury-champagne" />
 
                 <h3
                   style={{ fontFamily: "var(--font-droid-serif), serif" }}
@@ -209,7 +209,7 @@ export default function PhilosophySection() {
             <Link
               href={values[2].href}
               className={cn(
-                "group relative flex flex-col justify-between border border-[#E5E0D8] bg-white p-7 md:col-span-2 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-[#C8C2B5] hover:shadow-[0_12px_32px_rgba(26,24,22,0.06)]",
+                "group relative flex flex-col justify-between border border-neutral-200 bg-white p-7 md:col-span-2 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-neutral-300 hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--luxury-ink)_6%,transparent)]",
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
               )}
               style={{ transitionDelay: "380ms" }}
@@ -217,27 +217,27 @@ export default function PhilosophySection() {
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div className="max-w-md">
                   <div className="flex items-center gap-3">
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#8C857B]">
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
                       {values[2].tag}
                     </span>
-                    <span className="h-1 w-1 rounded-full bg-[#3F5E38]" />
-                    <span className="font-ny text-sm italic text-[#6B655B]">
+                    <span className="h-1 w-1 rounded-full bg-taupe-700" />
+                    <span className="font-ny text-sm italic text-neutral-600">
                       Giá trị {values[2].number}
                     </span>
                   </div>
 
                   <h3
                     style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                    className="mt-3 text-xl font-normal text-[#1A1816]"
+                    className="mt-3 text-xl font-normal text-luxury-ink"
                   >
                     {values[2].title}
                   </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-[#6B655B]">
+                  <p className="mt-2 text-xs leading-relaxed text-neutral-600">
                     {values[2].description}
                   </p>
                 </div>
 
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F5F2EC] text-[#1A1816] transition-all duration-300 group-hover:bg-[#1A1816] group-hover:text-[#F8F6F0]">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cream-100 text-luxury-ink transition-all duration-300 group-hover:bg-luxury-ink group-hover:text-luxury-ivory">
                   <IconArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
               </div>

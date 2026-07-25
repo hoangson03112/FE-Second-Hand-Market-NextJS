@@ -35,16 +35,13 @@ export default function Header() {
   const isHomeHero = pathname === "/" && !isScrolled;
 
   useEffect(() => {
-    // 🟢 Tìm thẻ <main> đang chứa thanh cuộn
     const mainContainer = document.getElementById("main-scroll-container");
     if (!mainContainer) return;
 
     const handleScroll = () => {
-      // Kiểm tra độ cuộn của <main> thay vì window
       setIsScrolled(mainContainer.scrollTop > 10);
     };
 
-    // Kiểm tra ngay khi vừa load
     handleScroll();
 
     mainContainer.addEventListener("scroll", handleScroll, { passive: true });
@@ -53,7 +50,7 @@ export default function Header() {
 
   return (
     <header
-      className={`absolute top-0 left-0 right-0 z-50 w-full transition-all duration-500 ${
+      className={`relative z-50 w-full bg-luxury-ivory shrink-0 transition-all duration-500 ${
         isScrolled
           ? "border-b border-[#1A1816]/8 bg-[#F7F5F0]/95 shadow-[0_8px_30px_rgba(26,24,22,0.06)] backdrop-blur-md"
           : isHomeHero

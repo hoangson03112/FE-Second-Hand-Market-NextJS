@@ -1,22 +1,21 @@
 @layer base {
+  html, body {
+    height: 100%;
+    overflow: hidden !important;
+  }
+
   html {
     font-family: var(--font-sans);
-    scroll-behavior: smooth;
   }
 
   body {
     font-family: var(--font-sans);
     background: var(--background);
     color: var(--foreground);
-    overflow-x: hidden;
   }
 
   :where(*, *::before, *::after) {
     font-family: inherit;
-  }
-
-  :where(.font-sans, .font-serif, .font-mono) {
-    font-family: var(--font-sans) !important;
   }
 
   button {
@@ -35,8 +34,6 @@
     outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
-
-  /* Custom Scrollbar Defaults */
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--neutral-400) transparent;
@@ -47,7 +44,6 @@
   scroll-behavior: auto !important;
 }
 
-/* Accessibility: Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;

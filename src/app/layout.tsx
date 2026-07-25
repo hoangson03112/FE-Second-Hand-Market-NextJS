@@ -100,8 +100,7 @@ export default function RootLayout({
   return (
     <html lang="vi" className={`h-full ${geist.variable}`}>
       <body
-        className={`h-full bg-background text-foreground antialiased ${droidSerifWGL.variable} `}
-      >
+className={`h-full overflow-hidden bg-background text-foreground antialiased ${droidSerifWGL.variable}`}      >
         <Providers>
           <ToastProvider>
             <RealtimeNotificationToast />

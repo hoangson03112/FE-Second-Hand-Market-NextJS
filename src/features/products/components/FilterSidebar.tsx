@@ -64,11 +64,11 @@ export default function FilterSidebar({
     }));
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <span className="text-sm font-semibold text-taupe-800">Bộ lọc</span>
+    <div className="bg-white/60 backdrop-blur-md border border-taupe-200/60 rounded-3xl p-6 sm:p-8 space-y-8 shadow-sm">
+      <div className="flex items-end justify-between border-b border-taupe-200/50 pb-4">
+        <h2 className="text-xl font-bold text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif", letterSpacing: "-0.02em" }}>Bộ lọc</h2>
         {activeFilterCount > 0 && (
-          <button onClick={clearAll} className="text-xs text-taupe-500 hover:text-taupe-800">
+          <button onClick={clearAll} className="text-[13px] font-medium text-taupe-400 hover:text-luxury-ink underline underline-offset-4 transition-colors">
             Xóa tất cả
           </button>
         )}
@@ -76,37 +76,45 @@ export default function FilterSidebar({
 
       {provinces.length > 0 && (
         <div>
-          <p className="text-xs font-medium text-taupe-500 mb-2">Tỉnh thành</p>
-          <select
-            value={filters.provinceId != null ? String(filters.provinceId) : ""}
-            onChange={(e) =>
-              update({ provinceId: e.target.value === "" ? undefined : Number(e.target.value) })
-            }
-            className="w-full h-9 pl-3 pr-8 rounded-full text-sm bg-taupe-50 text-taupe-700 border-0 appearance-none cursor-pointer"
-          >
-            <option value="">Tất cả</option>
-            {provinces.map((p) => (
-              <option key={p.ProvinceID} value={p.ProvinceID}>
-                {p.ProvinceName}
-              </option>
-            ))}
-          </select>
+          <p className="text-[12px] font-semibold text-taupe-500 uppercase tracking-widest mb-3">Khu vực</p>
+          <div className="relative">
+            <select
+              value={filters.provinceId != null ? String(filters.provinceId) : ""}
+              onChange={(e) =>
+                update({ provinceId: e.target.value === "" ? undefined : Number(e.target.value) })
+              }
+              className="w-full h-11 pl-4 pr-10 rounded-xl text-sm font-medium bg-white border border-taupe-200 text-luxury-ink appearance-none cursor-pointer hover:border-luxury-ink/30 transition-all focus:outline-none focus:ring-1 focus:ring-luxury-ink shadow-sm"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230b0b0a'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "right 14px center",
+                backgroundSize: "16px"
+              }}
+            >
+              <option value="">Toàn quốc</option>
+              {provinces.map((p) => (
+                <option key={p.ProvinceID} value={p.ProvinceID}>
+                  {p.ProvinceName}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       )}
 
       <div>
-        <p className="text-xs font-medium text-taupe-500 mb-2">Giao dịch</p>
-        <div className="flex flex-col gap-1">
+        <p className="text-[12px] font-semibold text-taupe-500 uppercase tracking-widest mb-3">Hình thức giao dịch</p>
+        <div className="flex flex-col gap-1.5">
           <button
             onClick={() => update({ transactionMethod: undefined })}
             className={cn(
-              "w-full text-left px-3 py-2 rounded-full text-sm transition-colors",
+              "w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all",
               !filters.transactionMethod
-                ? "bg-primary text-primary-foreground font-medium"
-                : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                ? "bg-luxury-ink text-background font-medium shadow-md shadow-luxury-ink/10"
+                : "text-taupe-600 hover:bg-taupe-100 hover:text-luxury-ink"
             )}
           >
-            Tất cả
+            Tất cả hình thức
           </button>
           {TRANSACTION_OPTIONS.map((opt) => {
             const isActive = filters.transactionMethod === opt.value;
@@ -115,10 +123,10 @@ export default function FilterSidebar({
                 key={opt.value}
                 onClick={() => update({ transactionMethod: isActive ? undefined : opt.value })}
                 className={cn(
-                  "w-full text-left px-3 py-2 rounded-full text-sm transition-colors",
+                  "w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all",
                   isActive
-                    ? "bg-primary text-primary-foreground font-medium"
-                    : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                    ? "bg-luxury-ink text-background font-medium shadow-md shadow-luxury-ink/10"
+                    : "text-taupe-600 hover:bg-taupe-100 hover:text-luxury-ink"
                 )}
               >
                 {opt.label}
@@ -129,8 +137,8 @@ export default function FilterSidebar({
       </div>
 
       <div>
-        <p className="text-xs font-medium text-taupe-500 mb-2">Tình trạng</p>
-        <div className="flex flex-col gap-1">
+        <p className="text-[12px] font-semibold text-taupe-500 uppercase tracking-widest mb-3">Tình trạng sản phẩm</p>
+        <div className="flex flex-col gap-1.5">
           {CONDITION_OPTIONS.map((opt) => {
             const isActive = opt.value === filters.condition;
             return (
@@ -138,13 +146,16 @@ export default function FilterSidebar({
                 key={opt.value}
                 onClick={() => update({ condition: isActive ? undefined : opt.value })}
                 className={cn(
-                  "w-full text-left px-3 py-2 rounded-full text-sm transition-colors",
+                  "w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm transition-all",
                   isActive
-                    ? "bg-primary text-primary-foreground font-medium"
-                    : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                    ? "bg-luxury-ink text-background font-medium shadow-md shadow-luxury-ink/10"
+                    : "text-taupe-600 hover:bg-taupe-100 hover:text-luxury-ink"
                 )}
               >
                 {opt.label}
+                {isActive && (
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                )}
               </button>
             );
           })}
@@ -152,8 +163,8 @@ export default function FilterSidebar({
       </div>
 
       <div>
-        <p className="text-xs font-medium text-taupe-500 mb-2">Khoảng giá</p>
-        <div className="grid grid-cols-2 gap-1.5 mb-2">
+        <p className="text-[12px] font-semibold text-taupe-500 uppercase tracking-widest mb-3">Khoảng giá</p>
+        <div className="grid grid-cols-2 gap-2 mb-4">
           {PRICE_PRESETS.map((preset) => {
             const isActive =
               preset.min === filters.minPrice && preset.max === filters.maxPrice;
@@ -167,10 +178,10 @@ export default function FilterSidebar({
                   })
                 }
                 className={cn(
-                  "h-8 px-2 rounded-full text-xs font-medium transition-colors",
+                  "h-10 px-3 rounded-xl text-[13px] font-medium transition-all border",
                   isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
+                    ? "bg-luxury-ink border-luxury-ink text-background shadow-md shadow-luxury-ink/10"
+                    : "bg-white border-taupe-200 text-taupe-600 hover:border-luxury-ink/30 hover:text-luxury-ink"
                 )}
               >
                 {preset.label}
@@ -179,31 +190,38 @@ export default function FilterSidebar({
           })}
         </div>
         {(filters.minPrice || filters.maxPrice) && !activePricePreset && (
-          <div className="mb-2 px-3 py-2 rounded-full bg-taupe-100 text-taupe-700 text-xs flex justify-between items-center">
-            {filters.minPrice ? (filters.minPrice / 1000).toFixed(0) + "k" : "0"} –{" "}
-            {filters.maxPrice ? (filters.maxPrice / 1000).toFixed(0) + "k" : "∞"}
-            <button onClick={() => update({ minPrice: undefined, maxPrice: undefined })}>×</button>
+          <div className="mb-4 px-4 py-3 rounded-xl bg-taupe-100/50 text-luxury-ink text-[13px] font-medium border border-taupe-200 flex justify-between items-center">
+            <span>{filters.minPrice ? (filters.minPrice / 1000).toFixed(0) + "k" : "0"} – {filters.maxPrice ? (filters.maxPrice / 1000).toFixed(0) + "k" : "∞"}</span>
+            <button onClick={() => update({ minPrice: undefined, maxPrice: undefined })} className="hover:text-destructive transition-colors">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
           </div>
         )}
-        <div className="grid grid-cols-2 gap-2">
-          <input
-            type="number"
-            placeholder="Từ"
-            value={filters.minPrice || ""}
-            onChange={(e) =>
-              update({ minPrice: e.target.value ? Number(e.target.value) : undefined })
-            }
-            className="w-full min-w-0 h-8 px-3 rounded-full text-sm bg-taupe-50 border-0 focus:ring-2 focus:ring-taupe-200"
-          />
-          <input
-            type="number"
-            placeholder="Đến"
-            value={filters.maxPrice || ""}
-            onChange={(e) =>
-              update({ maxPrice: e.target.value ? Number(e.target.value) : undefined })
-            }
-            className="w-full min-w-0 h-8 px-3 rounded-full text-sm bg-taupe-50 border-0 focus:ring-2 focus:ring-taupe-200"
-          />
+        <div className="flex flex-col gap-2">
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-taupe-400 text-sm">Từ</span>
+            <input
+              type="number"
+              placeholder="0đ"
+              value={filters.minPrice || ""}
+              onChange={(e) =>
+                update({ minPrice: e.target.value ? Number(e.target.value) : undefined })
+              }
+              className="w-full h-11 pl-12 pr-4 rounded-xl text-sm bg-white border border-taupe-200 focus:border-luxury-ink focus:ring-0 transition-colors shadow-sm"
+            />
+          </div>
+          <div className="relative">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-taupe-400 text-sm">Đến</span>
+            <input
+              type="number"
+              placeholder="∞"
+              value={filters.maxPrice || ""}
+              onChange={(e) =>
+                update({ maxPrice: e.target.value ? Number(e.target.value) : undefined })
+              }
+              className="w-full h-11 pl-12 pr-4 rounded-xl text-sm bg-white border border-taupe-200 focus:border-luxury-ink focus:ring-0 transition-colors shadow-sm"
+            />
+          </div>
         </div>
       </div>
     </div>

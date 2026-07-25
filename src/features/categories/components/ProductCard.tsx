@@ -38,13 +38,13 @@ export default function ProductCard({ product }: ProductCardProps) {
       href={`/products/${product._id}/${product?.slug}`}
       className={cn(
         "group relative flex flex-col bg-white overflow-hidden",
-        "border border-border/50 hover:border-primary/30 rounded-2xl",
-        "hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300",
+        "border border-taupe-200/50 hover:border-luxury-ink/20 rounded-3xl",
+        "hover:shadow-xl hover:shadow-luxury-ink/5 hover:-translate-y-1 transition-all duration-300",
         "animate-scale-in",
       )}
     >
       {/* Image */}
-      <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-taupe-50 to-cream-50">
+      <div className="relative aspect-square overflow-hidden bg-taupe-50">
         {product.avatar?.url || product.images?.[0]?.url ? (
           <Image
             src={product.avatar?.url ?? product.images?.[0]?.url ?? "/file.svg"}
@@ -67,7 +67,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           {condition && (
             <span
               className={cn(
-                "px-2.5 py-1 rounded-lg border text-[11px] font-bold tracking-wide backdrop-blur-md bg-white/90 shadow-sm",
+                "px-2.5 py-1 rounded-xl border text-[11px] font-bold tracking-wide backdrop-blur-md shadow-sm",
                 condition.color,
               )}
             >
@@ -75,7 +75,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
           )}
           {(product.stock ?? 0) === 1 && (
-            <span className="px-2.5 py-1 rounded-lg bg-destructive text-destructive-foreground text-[11px] font-bold tracking-wide backdrop-blur-md shadow-sm">
+            <span className="px-2.5 py-1 rounded-xl bg-destructive text-destructive-foreground text-[11px] font-bold tracking-wide backdrop-blur-md shadow-sm">
               Còn 1
             </span>
           )}
@@ -83,8 +83,8 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
 
       {/* Info */}
-      <div className="flex flex-col flex-1 p-4">
-        <h3 className="text-[15px] font-semibold text-taupe-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors leading-[1.4] min-h-[42px]">
+      <div className="flex flex-col flex-1 p-5">
+        <h3 className="text-[15px] font-medium text-luxury-ink mb-2 line-clamp-2 group-hover:text-accent transition-colors leading-[1.4] min-h-[42px]">
           {product.name}
         </h3>
 
@@ -93,11 +93,11 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.hasPersonalDiscount && product.originalPrice ? (
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-2">
-                <span className="text-xl font-bold text-primary leading-none">
+                <span className="text-xl font-bold text-luxury-ink leading-none">
                   {formatPrice(product.price)}
                 </span>
-                <span className="px-2 py-0.5 text-[10px] font-bold text-accent-foreground bg-accent rounded-md">
-                  DEAL
+                <span className="px-2 py-0.5 text-[10px] font-bold text-accent-foreground bg-accent rounded-md uppercase tracking-wider">
+                  Deal
                 </span>
               </div>
               <span className="text-sm text-taupe-400 line-through leading-none">
@@ -105,14 +105,14 @@ export default function ProductCard({ product }: ProductCardProps) {
               </span>
             </div>
           ) : (
-            <span className="text-xl font-bold text-primary leading-none">
+            <span className="text-xl font-bold text-luxury-ink leading-none">
               {formatPrice(product.price)}
             </span>
           )}
         </div>
 
         {/* Meta info */}
-        <div className="flex items-center justify-between text-[12px] text-taupe-400 mt-auto pt-3 border-t border-taupe-100">
+        <div className="flex items-center justify-between text-[12px] text-taupe-500 mt-auto pt-4 border-t border-taupe-200/50">
           <div className="flex items-center gap-2 min-w-0">
             <AvatarOrInitials
               avatar={product.seller?.avatar as { url?: string } | undefined}

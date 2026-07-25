@@ -8,7 +8,7 @@ import {
   IconShieldCheck,
 } from "@tabler/icons-react";
 import Link from "next/link";
-import ErrorMessage from "@/features/auth/ErrorMessage";
+import ErrorMessage from "@/components/shared/ErrorMessage";
 import { BankInfoSection } from "./BankInfoSection";
 import { IdCardSection } from "./IdCardSection";
 import { TermsSection } from "./TermsSection";

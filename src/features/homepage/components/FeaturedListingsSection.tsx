@@ -35,7 +35,7 @@ export default function FeaturedListingsSection() {
   };
 
   return (
-    <section className="relative w-full border-t border-[#1A1816]/6 py-20 md:py-28">
+    <section className="relative w-full border-t border-luxury-ink/6 py-20 md:py-28">
       <div
         ref={ref}
         className={cn(
@@ -54,7 +54,7 @@ export default function FeaturedListingsSection() {
             eyebrow="Sản phẩm nổi bật"
             title={
               <>
-                Tuyển chọn <span className="text-[#5FB160]">mới nhất</span>
+                Tuyển chọn <span className="text-accent">mới nhất</span>
               </>
             }
             action={{ label: "Xem tất cả", href: "/products" }}
@@ -89,7 +89,7 @@ export default function FeaturedListingsSection() {
                   key={item._id}
                   href={`/products/${item._id}/${item.slug ?? "san-pham"}`}
                   className={cn(
-                    "group flex flex-col overflow-hidden border border-[#1A1816]/8 bg-white p-3 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-[#1A1816]/15 hover:shadow-[0_20px_40px_rgba(26,24,22,0.08)]",
+                    "group flex flex-col overflow-hidden border border-luxury-ink/8 bg-white p-3 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-luxury-ink/15 hover:shadow-[0_20px_40px_color-mix(in_srgb,var(--luxury-ink)_8%,transparent)]",
                     isVisible
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-8",
@@ -99,7 +99,10 @@ export default function FeaturedListingsSection() {
                     borderRadius: "2px",
                   }}
                 >
-                  <div className="relative aspect-square w-full overflow-hidden bg-[#F3F1EC]" style={{ borderRadius: "1px" }}>
+                  <div
+                    className="relative aspect-square w-full overflow-hidden bg-cream-100"
+                    style={{ borderRadius: "1px" }}
+                  >
                     {imageUrl ? (
                       <>
                         <Image
@@ -128,31 +131,31 @@ export default function FeaturedListingsSection() {
                       </div>
                     )}
 
-                    <span className="absolute left-2 top-2 z-10 bg-[#1A1816]/75 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-md">
+                    <span className="absolute left-2 top-2 z-10 bg-luxury-ink/75 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-md">
                       {item.category?.name ?? "Mới"}
                     </span>
                   </div>
 
                   <div className="mt-2.5 flex flex-1 flex-col justify-between px-0.5 pb-0.5">
                     <div>
-                      <div className="flex items-center gap-1 text-[10px] font-medium text-[#8C857B] uppercase tracking-[0.14em]">
-                        <IconMapPin className="h-3 w-3 text-red-500 shrink-0" />
+                      <div className="flex items-center gap-1 text-[10px] font-medium text-neutral-500 uppercase tracking-[0.14em]">
+                        <IconMapPin className="h-3 w-3 text-blush-500 shrink-0" />
                         <span className="line-clamp-1">{provinceName}</span>
                       </div>
 
-                      <h3 className="mt-1.5 line-clamp-2 text-xs font-medium text-[#1A1816] leading-snug transition-colors group-hover:text-[#5FB160] md:text-sm">
+                      <h3 className="mt-1.5 line-clamp-2 text-xs font-medium text-foreground leading-snug transition-colors group-hover:text-primary md:text-sm">
                         {item.name}
                       </h3>
                     </div>
 
-                    <div className="mt-3 flex items-center justify-between border-t border-[#1A1816]/6 pt-3">
-                      <span
-                        style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                        className="text-sm font-normal tracking-tight text-[#1A1816] md:text-base"
-                      >
+                    <div className="mt-3 flex items-center justify-between border-t border-luxury-ink/6 pt-3">
+                      <span className="text-sm font-normal tracking-tight text-primary md:text-base group-hover:text-blush-600">
                         {formatPrice(item.price)}
                       </span>
-                      <div className="flex h-7 w-7 items-center justify-center border border-[#1A1816]/10 text-[#1A1816] transition-all duration-300 group-hover:border-[#1A1816] group-hover:bg-[#1A1816] group-hover:text-white" style={{ borderRadius: "999px" }}>
+                      <div
+                        className="flex h-7 w-7 items-center justify-center border border-luxury-ink/10 text-luxury-ink transition-all duration-300 group-hover:border-luxury-ink group-hover:bg-luxury-ink group-hover:text-white"
+                        style={{ borderRadius: "999px" }}
+                      >
                         <IconArrowUpRight className="h-3.5 w-3.5" />
                       </div>
                     </div>

@@ -1,4 +1,4 @@
-export { Badge } from "./Badge";
+﻿export { Badge } from "./Badge";
 export { Button } from "./Button";
 export type { ButtonProps } from "./Button";
 export { ConfirmDialogProvider, useConfirm } from "./ConfirmDialog";
@@ -98,3 +98,4 @@ export * from "./Currency";
 export * from "./Rating";
 export * from "./CopyButton";
 
+export { default as ErrorMessage } from './ErrorMessage';

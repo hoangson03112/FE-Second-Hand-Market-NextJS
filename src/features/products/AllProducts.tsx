@@ -7,6 +7,7 @@ import AllProductsHeader from "./components/AllProductsHeader";
 import FilterBar from "@/features/categories/components/FilterBar";
 import FilterSidebar from "./components/FilterSidebar";
 import { ProductList } from "@/features/categories/components";
+import { Background } from "@/components/shared";
 
 export default function AllProducts() {
   const {
@@ -30,7 +31,7 @@ export default function AllProducts() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <AllProductsHeader
         total={total}
         searchValue={searchInput}
@@ -45,33 +46,31 @@ export default function AllProducts() {
         provinces={provinces}
       />
 
-      <div className="max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex gap-6 items-start">
+      <div className="flex-1 max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div className="flex flex-col lg:flex-row gap-8 items-start">
 
-          {/* â”€â”€ Left sidebar â”€â”€ */}
-          <aside className="hidden lg:block w-56 xl:w-64 shrink-0 sticky top-48">
-            <div className="rounded-2xl bg-white border border-taupe-100 p-5">
-              <FilterSidebar
-                filters={filters}
-                onFilterChange={setFilters}
-                provinces={provinces}
-              />
-            </div>
+          {/* ── Left sidebar ── */}
+          <aside className="hidden lg:block w-64 shrink-0 sticky top-28">
+            <FilterSidebar
+              filters={filters}
+              onFilterChange={setFilters}
+              provinces={provinces}
+            />
           </aside>
 
-          {/* â”€â”€ Product grid â”€â”€ */}
-          <main className="flex-1 min-w-0">
+          {/* ── Product grid ── */}
+          <main className="flex-1 min-w-0 w-full">
             {error ? (
               <div className="flex flex-col items-center justify-center py-24 text-center">
-                <div className="w-16 h-16 rounded-full bg-muted/60 flex items-center justify-center mx-auto mb-4 text-2xl">âš ï¸</div>
-                <h3 className="text-lg font-bold text-taupe-900 mb-1.5">KhÃ´ng thá»ƒ táº£i sáº£n pháº©m</h3>
-                <p className="text-sm text-taupe-500">Vui lÃ²ng thá»­ láº¡i sau</p>
+                <div className="w-16 h-16 rounded-full bg-taupe-100 flex items-center justify-center mx-auto mb-4 text-2xl">⚠️</div>
+                <h3 className="text-lg font-bold text-luxury-ink mb-1.5">Không thể tải sản phẩm</h3>
+                <p className="text-sm text-taupe-500">Vui lòng thử lại sau</p>
               </div>
             ) : (
               <ProductList
                 products={products}
                 isLoading={isLoading}
-                emptyMessage="KhÃ´ng tÃ¬m tháº¥y sáº£n pháº©m nÃ o"
+                emptyMessage="Không tìm thấy sản phẩm nào"
                 pagination={{ currentPage, totalPages, total, limit: filters.limit || 15 }}
                 onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
               />

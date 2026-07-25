@@ -7,7 +7,7 @@ import { usePickupAddresses } from "./hooks";
 import { useCategories } from "@/hooks/useCategories";
 import { useUser } from "@/hooks/useUser";
 import { SellerService } from "@/services/seller.service";
-import ErrorMessage from "@/features/auth/ErrorMessage";
+import ErrorMessage from "@/components/shared/ErrorMessage";
 import {
   DeliveryOptions,
   PickupAddressSelector,
