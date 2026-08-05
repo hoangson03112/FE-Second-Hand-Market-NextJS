@@ -6,6 +6,12 @@ import { motion } from "motion/react";
 import { CharacterReveal, getCharacterRevealDuration } from "./CharacterReveal";
 import { usePrefersReducedMotion } from "../hooks";
 
+const RIBBON_COLORS = {
+  taupe200: "191, 221, 188",
+  accent: "95, 177, 96",
+  neutral500: "98, 98, 111",
+} as const;
+
 class SilkRibbon {
   points: { x: number; y: number; baseY: number; vy: number }[];
   colorRGB: string;
@@ -155,7 +161,7 @@ function FullBleedFluidCanvas({
       const safeHeight = Math.max(320, logicalHeight);
       ribbonsRef.current = [
         new SilkRibbon(
-          "191, 224, 189",
+          RIBBON_COLORS.taupe200,
           18,
           safeHeight * 0.6,
           0.0006,
@@ -165,7 +171,7 @@ function FullBleedFluidCanvas({
           safeWidth,
         ),
         new SilkRibbon(
-          "95, 177, 96",
+          RIBBON_COLORS.accent,
           14,
           safeHeight * 0.5,
           0.0009,
@@ -175,7 +181,7 @@ function FullBleedFluidCanvas({
           safeWidth,
         ),
         new SilkRibbon(
-          "138, 143, 135",
+          RIBBON_COLORS.neutral500,
           8,
           safeHeight * 0.4,
           0.0013,
@@ -294,14 +300,13 @@ export default function HeroSection() {
       onMouseLeave={() => setIsHovered(false)}
       className="relative w-full min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
-      {/* Ambient glow orbs */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-[#BFE0BD]/30 blur-3xl animate-hero-glow"
+        className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-taupe-200/30 blur-3xl animate-hero-glow"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-16 bottom-1/4 h-80 w-80 rounded-full bg-[#C4A574]/15 blur-3xl animate-hero-glow"
+        className="pointer-events-none absolute -right-16 bottom-1/4 h-80 w-80 rounded-full bg-luxury-champagne/15 blur-3xl animate-hero-glow"
         style={{ animationDelay: "2s" }}
       />
 
@@ -313,19 +318,17 @@ export default function HeroSection() {
         transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
         style={{
           background:
-            "radial-gradient(ellipse 120% 80% at 50% -10%, #FAFAF8 0%, #F3F1EC 42%, #EBE8E1 100%)",
+            "radial-gradient(ellipse 120% 80% at 50% -10%, var(--cream-50) 0%, var(--cream-100) 42%, var(--cream-200) 100%)",
         }}
       />
-      {/* Subtle vignette */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           background:
-            "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, rgba(26,24,22,0.04) 100%)",
+            "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, color-mix(in srgb, var(--luxury-ink) 4%, transparent) 100%)",
         }}
       />
-      {/* Film grain */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-[1] opacity-[0.035] mix-blend-multiply"
@@ -346,7 +349,7 @@ export default function HeroSection() {
           reducedMotion={reducedMotion}
         />
       </motion.div>
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 lg:px-8 pt-28 pb-24 flex flex-col items-center text-center pointer-events-none">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 lg:px-8  pb-24 flex flex-col items-center text-center pointer-events-none">
         <motion.div
           className="mb-8 flex items-center gap-3"
           initial={reducedMotion ? false : { opacity: 0, y: 12 }}
@@ -357,15 +360,15 @@ export default function HeroSection() {
             ease: [0.22, 1, 0.36, 1],
           }}
         >
-          <span className="h-px w-10 bg-[#C4A574]/90" aria-hidden />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-[#6B655B]">
-            Chợ second-hand cao cấp
+          <span className="h-px w-10 bg-luxury-champagne/90" aria-hidden />
+          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-600">
+            Nền tảng đồ cũ cao cấp
           </p>
-          <span className="h-px w-10 bg-[#C4A574]/90" aria-hidden />
+          <span className="h-px w-10 bg-luxury-champagne/90" aria-hidden />
         </motion.div>
 
         <h1
-          className="mb-8 text-[#1A1816]"
+          className="mb-8 text-luxury-ink"
           style={{
             fontFamily: "var(--font-droid-serif), serif",
             fontSize: "clamp(3rem, 7.5vw, 5.5rem)",
@@ -374,7 +377,29 @@ export default function HeroSection() {
             letterSpacing: "-0.03em",
           }}
         >
-          <span className="block">
+          <span className="block relative">
+            <motion.span
+              aria-hidden
+              className="pointer-events-none absolute rounded-full bg-accent/35"
+              style={{
+                width: "clamp(8rem, 5vw, 9rem)",
+                height: "clamp(8rem, 5vw, 9rem)",
+                left: "clamp(-2rem, -2.5vw, -0rem)",
+                top: "clamp(-4.5rem, -6vw, -2rem)",
+                zIndex: -1,
+              }}
+              initial={reducedMotion ? false : { opacity: 0, scale: 0.6 }}
+              animate={
+                textReady
+                  ? { opacity: 1, scale: 1 }
+                  : { opacity: 0, scale: 0.6 }
+              }
+              transition={{
+                duration: 0.7,
+                delay: reducedMotion ? 0 : 0.05,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            />
             <CharacterReveal
               text={heroLine1Part1}
               baseCharIndex={0}
@@ -400,7 +425,7 @@ export default function HeroSection() {
           </span>
         </h1>
         <motion.p
-          className="text-base md:text-lg leading-relaxed mb-10 max-w-2xl text-[#4A453E]/85 font-normal"
+          className="text-base md:text-lg leading-relaxed mb-10 max-w-2xl text-neutral-700/85 font-normal"
           initial={reducedMotion ? false : { opacity: 0, y: 24 }}
           animate={textReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
           transition={{
@@ -426,16 +451,14 @@ export default function HeroSection() {
         >
           <Link
             href="/products"
-            className="group relative inline-flex min-w-[220px] items-center justify-center px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-white transition-all duration-300 hover:scale-[1.02]"
-            style={{ background: "#1A1816", borderRadius: "2px" }}
+            className="group relative inline-flex min-w-[220px] items-center justify-center rounded-[2px] bg-luxury-ink px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-white transition-all duration-300 hover:scale-[1.02]"
           >
-            <div className="absolute inset-0 bg-[#5FB160] opacity-0 transition-opacity duration-300 group-hover:opacity-15 blur-md" />
+            <div className="absolute inset-0 bg-accent opacity-0 transition-opacity duration-300 group-hover:opacity-15 blur-md" />
             <span className="relative z-10">Khám phá bộ sưu tập</span>
           </Link>
           <Link
             href="/sell"
-            className="inline-flex min-w-[220px] items-center justify-center border border-[#1A1816]/20 bg-white/50 px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1A1816] backdrop-blur-sm transition-all duration-300 hover:border-[#1A1816]/40 hover:bg-white/80"
-            style={{ borderRadius: "2px" }}
+            className="inline-flex min-w-[220px] items-center justify-center rounded-[2px] border border-luxury-ink/20 bg-white/50 px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-luxury-ink backdrop-blur-sm transition-all duration-300 hover:border-luxury-ink/40 hover:bg-white/80"
           >
             Bắt đầu bán
           </Link>
@@ -451,10 +474,10 @@ export default function HeroSection() {
         transition={{ delay: reducedMotion ? 0 : 2.8, duration: 0.8 }}
       >
         <div className="flex flex-col items-center gap-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-[#6B655B]/70">
+          <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-neutral-600/70">
             Cuộn xuống
           </span>
-          <div className="h-10 w-px bg-gradient-to-b from-[#C4A574]/80 to-transparent animate-scroll-hint" />
+          <div className="h-10 w-px bg-gradient-to-b from-luxury-champagne/80 to-transparent animate-scroll-hint" />
         </div>
       </motion.div>
     </section>

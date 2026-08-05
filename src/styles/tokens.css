@@ -124,6 +124,9 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-accent: var(--accent);
+  --color-luxury-champagne: var(--luxury-champagne);
+  --color-luxury-ivory: var(--luxury-ivory);
+  --color-luxury-ink: var(--luxury-ink);
 
   --color-taupe-50: var(--taupe-50);
   --color-taupe-100: var(--taupe-100);
@@ -151,6 +154,20 @@
   --color-cream-100: var(--cream-100);
   --color-cream-200: var(--cream-200);
   --color-cream-300: var(--cream-300);
+
+  --color-beige-50: var(--beige-50);
+  --color-beige-100: var(--beige-100);
+
+  --color-charcoal-50: var(--charcoal-50);
+  --color-charcoal-100: var(--charcoal-100);
+  --color-charcoal-200: var(--charcoal-200);
+  --color-charcoal-300: var(--charcoal-300);
+  --color-charcoal-400: var(--charcoal-400);
+  --color-charcoal-500: var(--charcoal-500);
+  --color-charcoal-600: var(--charcoal-600);
+  --color-charcoal-700: var(--charcoal-700);
+  --color-charcoal-800: var(--charcoal-800);
+  --color-charcoal-900: var(--charcoal-900);
 
   --color-neutral-50: var(--neutral-50);
   --color-neutral-100: var(--neutral-100);

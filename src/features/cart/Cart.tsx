@@ -37,9 +37,9 @@ export default function Cart() {
 
   if (!accessToken) {
     return (
-      <PageContainer withBackground={false}>
+      <PageContainer withBackground={false} className="bg-luxury-ivory min-h-screen">
         <CartHeader onBack={onBack} />
-        <Container as="main" maxWidth="8xl" paddingX="md" paddingY="md">
+        <Container as="main" maxWidth="9xl" paddingX="md" paddingY="md">
           <CartLoginPrompt />
         </Container>
       </PageContainer>
@@ -48,11 +48,11 @@ export default function Cart() {
 
   if (isLoadingCart) {
     return (
-      <PageContainer withBackground={false}>
+      <PageContainer withBackground={false} className="bg-luxury-ivory min-h-screen">
         <CartHeader onBack={onBack} />
-        <Container as="main" maxWidth="8xl" paddingX="md" paddingY="lg" className="flex items-center justify-center min-h-[40vh]">
+        <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg" className="flex items-center justify-center min-h-[40vh]">
           <LoadingBlock
-            text="Äang táº£i giá» hÃ ng..."
+            text="Ä ang táº£i giá»  hÃ ng..."
             spinnerSize="lg"
             className="w-full max-w-md"
           />
@@ -63,9 +63,9 @@ export default function Cart() {
 
   if (!cartItems.length) {
     return (
-      <PageContainer withBackground={false}>
+      <PageContainer withBackground={false} className="bg-luxury-ivory min-h-screen">
         <CartHeader onBack={onBack} />
-        <Container as="main" maxWidth="8xl" paddingX="md" paddingY="lg">
+        <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg">
           <CartEmpty />
         </Container>
       </PageContainer>
@@ -73,9 +73,9 @@ export default function Cart() {
   }
 
   return (
-    <PageContainer withBackground className="pb-24">
+    <PageContainer withBackground={false} className="pb-24 bg-luxury-ivory min-h-screen">
       <CartHeader onBack={onBack} />
-      <Container as="main" maxWidth="8xl" paddingX="md" paddingY="md">
+      <Container as="main" maxWidth="9xl" paddingX="md" paddingY="md">
         {groups.map((group) => (
           <ShopCartGroup
             key={group.sellerId}

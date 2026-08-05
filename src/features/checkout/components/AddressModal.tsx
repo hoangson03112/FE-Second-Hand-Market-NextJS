@@ -72,52 +72,52 @@ export default function AddressModal({
   return (
     <>
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity"
         onClick={onHide}
       />
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="relative bg-background rounded-2xl shadow-xl w-full max-w-8xl max-h-[90vh] flex flex-col overflow-hidden"
+          className="relative bg-white rounded-[2px] shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden border border-luxury-ink/10"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex justify-between p-6 border-b border-border">
+          <div className="flex justify-between p-6 border-b border-luxury-ink/10 bg-taupe-50/30">
             <div className="flex items-center gap-4">
               {showNewAddressForm && (
                 <button
                   onClick={handleBack}
-                  className="p-2 hover:bg-muted rounded-lg transition-colors"
+                  className="p-2 hover:bg-taupe-50 rounded-[2px] transition-colors"
                 >
-                  <IconArrowLeft className="h-5 w-5 text-muted-foreground" />
+                  <IconArrowLeft className="h-5 w-5 text-taupe-500" />
                 </button>
               )}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
-                  <IconMapPin className="h-5 w-5 text-primary" />
+              <div className="flex items-center gap-4 font-droid-serif">
+                <div className="w-12 h-12 rounded-[2px] bg-white border border-luxury-ink/10 flex items-center justify-center">
+                  <IconMapPin className="h-5 w-5 text-red-600" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-foreground">
+                  <h2 className="text-2xl text-luxury-ink mb-1" >
                     {showNewAddressForm
                       ? editingAddress
-                        ? "Chá»‰nh sá»­a Ä‘á»‹a chá»‰"
-                        : "ThÃªm Ä‘á»‹a chá»‰ má»›i"
-                      : "Äá»‹a Chá»‰ Giao HÃ ng"}
+                        ? "Chỉnh sửa địa chỉ"
+                        : "Thêm địa chỉ mới"
+                      : "Địa Chỉ Giao Hàng"}
                   </h2>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm tracking-[0.15em] font-medium text-luxury-ink">
                     {showNewAddressForm
-                      ? "Äiá»n thÃ´ng tin Ä‘á»‹a chá»‰ cá»§a báº¡n"
-                      : `${addresses.length} Ä‘á»‹a chá»‰`}
+                      ? "Điền thông tin địa chỉ của bạn"
+                      : `${addresses.length} Địa chỉ`}
                   </p>
                 </div>
               </div>
             </div>
             <button
               onClick={onHide}
-              className="p-2 hover:bg-muted rounded-lg transition-colors"
+              className="p-2 hover:bg-blush-50 rounded-[2px] transition-colors group"
             >
-              <IconX className="h-5 w-5 text-muted-foreground" />
+              <IconX className="h-5 w-5 text-taupe-400 group-hover:text-blush-600" />
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-6">
+          <div className="flex-1 overflow-y-auto p-6 bg-white">
             {!showNewAddressForm ? (
               <div className="space-y-4">
                 <AddressList
@@ -133,14 +133,14 @@ export default function AddressModal({
                     setEditingAddress(null);
                     onToggleNewAddressForm(true);
                   }}
-                  className="w-full p-4 border-2 border-dashed border-border rounded-xl hover:border-primary hover:bg-muted/50 transition-colors"
+                  className="w-full p-4 border border-dashed border-luxury-ink/20 rounded-[2px] hover:border-luxury-ink/50 hover:bg-taupe-50/50 transition-colors"
                 >
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
-                      <IconPlus className="h-4 w-4 text-primary" />
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="w-8 h-8 rounded-[2px] bg-taupe-50 border border-luxury-ink/10 flex items-center justify-center">
+                      <IconPlus className="h-4 w-4 text-luxury-ink" />
                     </div>
-                    <span className="font-semibold text-foreground">
-                      ThÃªm Ä‘á»‹a chá»‰ má»›i
+                    <span className="font-semibold text-[11px] uppercase tracking-[0.2em] text-luxury-ink">
+                      Thêm địa chỉ mới
                     </span>
                   </div>
                 </button>

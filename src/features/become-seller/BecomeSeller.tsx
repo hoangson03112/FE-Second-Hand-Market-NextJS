@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useBecomeSeller } from "./hooks";
 import { BecomeSellerView } from "./components/BecomeSellerView";
+import { useBecomeSeller } from "./hooks/useBecomeSeller";
 
 export default function BecomeSeller() {
   const router = useRouter();

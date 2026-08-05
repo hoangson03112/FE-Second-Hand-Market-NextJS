@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { IconHome, IconChevronRight } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 
 interface AllProductsHeaderProps {
   total?: number;
@@ -17,59 +17,56 @@ export default function AllProductsHeader({
   onSearchSubmit,
 }: AllProductsHeaderProps) {
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-taupe-50 via-cream-50 to-white border-b border-taupe-200/80">
-      {/* Decorative blobs */}
-      <div className="absolute -top-10 -right-10 w-64 h-64 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-full bg-accent/5 blur-2xl pointer-events-none" />
+    <header className="w-full max-w-[1800px] mx-auto px-4 sm:px-8 lg:px-12 py-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 border-b border-luxury-ink pb-8">
+        <div className="space-y-4">
+          <nav className="flex items-center gap-3 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.3em] text-taupe-500">
+            <Link href="/" className="hover:text-luxury-ink transition-colors">
+              Trang chủ
+            </Link>
+            <span className="w-4 h-[1px] bg-taupe-300"></span>
+            <span className="text-luxury-ink">Bộ sưu tập</span>
+          </nav>
+          <h1
+            className="text-3xl sm:text-3xl md:text-4xl font-normal text-luxury-ink"
+            style={{
+              fontFamily: "var(--font-droid-serif), serif",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            Tất cả sản phẩm.
+          </h1>
+          {typeof total === "number" && (
+            <p className="text-xs font-medium uppercase tracking-[0.15em] text-taupe-400">
+              {total} hiện vật
+            </p>
+          )}
+        </div>
 
-      <div className="relative max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-10">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 text-xs text-taupe-400 mb-5">
-          <Link href="/" className="flex items-center gap-1 hover:text-primary transition-colors">
-            <IconHome className="w-3.5 h-3.5" />
-            <span>Trang chá»§</span>
-          </Link>
-          <IconChevronRight className="w-3 h-3 text-taupe-300" />
-          <span className="text-taupe-700 font-medium">Táº¥t cáº£ sáº£n pháº©m</span>
-        </nav>
-
-        {/* Title */}
-        <h1 className="text-3xl md:text-4xl font-bold text-taupe-900 mb-1.5 leading-[1.1] tracking-tight">
-          Táº¥t cáº£ sáº£n pháº©m
-        </h1>
-        <p className="text-sm text-taupe-400 mb-5">
-          {total !== undefined
-            ? `KhÃ¡m phÃ¡ ${total.toLocaleString("vi-VN")} sáº£n pháº©m second-hand cháº¥t lÆ°á»£ng`
-            : "KhÃ¡m phÃ¡ hÃ ng ngÃ n sáº£n pháº©m second-hand cháº¥t lÆ°á»£ng"}
-        </p>
-
-        {/* Search bar */}
         {onSearchSubmit && (
-          <form onSubmit={onSearchSubmit} className="max-w-xl">
-            <div className="relative">
-              <svg
-                className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-taupe-300 pointer-events-none"
-                fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <input
-                type="text"
-                value={searchValue}
-                onChange={(e) => onSearchChange?.(e.target.value)}
-                placeholder="TÃ¬m kiáº¿m sáº£n pháº©m..."
-                className="w-full h-11 pl-10 pr-28 rounded-2xl border-2 border-taupe-200 bg-white focus:border-primary focus:outline-none text-sm text-taupe-800 placeholder:text-taupe-300 shadow-sm transition-colors"
-              />
+          <form
+            onSubmit={onSearchSubmit}
+            className="w-full md:max-w-md relative"
+          >
+            <input
+              type="text"
+              value={searchValue}
+              onChange={(e) => onSearchChange?.(e.target.value)}
+              placeholder="TÌM KIẾM..."
+              className="w-full bg-transparent border-b border-foreground py-3 pr-10 text-sm font-medium uppercase tracking-[0.1em] text-luxury-ink placeholder:text-foreground focus:outline-none focus:border-luxury-ink transition-colors rounded-none"
+            />
+            {searchValue && (
               <button
-                type="submit"
-                className="absolute right-1.5 top-1.5 h-8 px-4 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary/90 transition-colors shadow-sm"
+                type="button"
+                onClick={() => onSearchChange?.("")}
+                className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-taupe-400 hover:text-luxury-ink transition-colors"
               >
-                TÃ¬m kiáº¿m
+                <IconX className="w-4 h-4" stroke={1.5} />
               </button>
-            </div>
+            )}
           </form>
         )}
       </div>
-    </div>
+    </header>
   );
 }

@@ -35,8 +35,8 @@ export default function SectionHeader({
             align === "center" && "justify-center",
           )}
         >
-          <span className="h-px w-8 bg-[#C4A574]/80" aria-hidden />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6B655B]">
+          <span className="h-px w-8 bg-luxury-champagne/80" aria-hidden />
+          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-neutral-600">
             {eyebrow}
           </p>
         </div>
@@ -46,7 +46,7 @@ export default function SectionHeader({
             fontWeight: 400,
             lineHeight: 1.08,
           }}
-          className="mt-4 text-[clamp(1.75rem,3.5vw,2.75rem)] tracking-tight text-[#1A1816]"
+          className="mt-4 text-[clamp(1.75rem,3.5vw,2.75rem)] tracking-tight text-luxury-ink"
         >
           {title}
         </h2>
@@ -55,7 +55,7 @@ export default function SectionHeader({
       {action ? (
         <Link
           href={action.href}
-          className="group inline-flex shrink-0 items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#1A1816] transition-colors hover:text-[#5FB160]"
+          className="group inline-flex shrink-0 items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-accent"
         >
           {action.label}
           <IconArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

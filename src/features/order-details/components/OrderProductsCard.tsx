@@ -23,11 +23,11 @@ export function OrderProductsCard({
     order.status === "completed" || (!isLocalPickup && order.status === "delivered");
 
   return (
-    <div className="bg-cream-50 border border-border rounded-2xl overflow-hidden">
-      <div className="px-5 py-3 border-b border-border flex items-center gap-2">
+    <div className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl overflow-hidden shadow-md">
+      <div className="px-5 py-3 border-b-2 border-border flex items-center gap-2">
         <IconPackage className="w-4 h-4 text-primary" />
-        <span className="text-sm font-semibold text-foreground">Sản phẩm đã đặt</span>
-        <span className="ml-auto text-xs text-muted-foreground">
+        <span className="text-sm font-semibold text-taupe-900 uppercase tracking-wider">Sản phẩm đã đặt</span>
+        <span className="ml-auto text-xs text-taupe-500">
           {order.products?.length || 0} sản phẩm
         </span>
       </div>
@@ -55,7 +55,7 @@ export function OrderProductsCard({
               {productHref ? (
                 <Link
                   href={productHref}
-                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-muted shrink-0 border border-border hover:border-primary/50 transition-colors"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-taupe-100 shrink-0 border border-border hover:border-primary/50 transition-colors"
                 >
                   <Image
                     src={avatar}
@@ -66,7 +66,7 @@ export function OrderProductsCard({
                   />
                 </Link>
               ) : (
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-muted shrink-0 border border-border">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-taupe-100 shrink-0 border border-border">
                   <Image
                     src={avatar}
                     alt={product?.name || "Sản phẩm"}
@@ -80,12 +80,12 @@ export function OrderProductsCard({
                 {productHref ? (
                   <Link
                     href={productHref}
-                    className="text-sm font-medium text-foreground line-clamp-2 leading-snug hover:text-primary transition-colors"
+                    className="text-sm font-medium text-taupe-900 line-clamp-2 leading-snug hover:text-primary transition-colors"
                   >
                     {product?.name || "Sản phẩm đã ngừng kinh doanh"}
                   </Link>
                 ) : (
-                  <p className="text-sm font-medium text-foreground line-clamp-2 leading-snug">
+                  <p className="text-sm font-medium text-taupe-900 line-clamp-2 leading-snug">
                     {product?.name || "Sản phẩm đã ngừng kinh doanh"}
                   </p>
                 )}
@@ -97,8 +97,8 @@ export function OrderProductsCard({
                   </span>
                 )}
                 <div className="flex items-center gap-3 mt-2">
-                  <p className="text-xs text-muted-foreground">
-                    Số lượng: <span className="font-semibold text-foreground">×{item.quantity}</span>
+                  <p className="text-xs text-taupe-500">
+                    Số lượng: <span className="font-semibold text-taupe-900">×{item.quantity}</span>
                   </p>
                   <p className="text-sm font-semibold text-primary">
                     {formatPrice(item.price || product?.price || 0)}
@@ -107,13 +107,13 @@ export function OrderProductsCard({
                 {canReviewProduct && productId && (
                   <div className="mt-2">
                     {hasReview ? (
-                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-1.5 text-xs text-taupe-500">
                         <div className="flex">
                           {[1, 2, 3, 4, 5].map((i) => (
                             <IconStar
                               key={i}
                               className={`w-3.5 h-3.5 ${
-                                i <= hasReview.rating ? "fill-amber-400 text-amber-400" : "text-muted"
+                                i <= hasReview.rating ? "fill-primary/80 text-primary/80" : "text-taupe-200"
                               }`}
                             />
                           ))}
@@ -139,18 +139,18 @@ export function OrderProductsCard({
 
       {/* Seller row */}
       {order.sellerId && (
-        <div className="px-5 py-4 border-t border-border flex items-center justify-between bg-background/40">
+        <div className="px-5 py-4 border-t-2 border-border flex items-center justify-between bg-taupe-50/40">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
               <IconUser className="w-4 h-4 text-primary" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground">Người bán</p>
-              <p className="text-sm font-semibold text-foreground">
+              <p className="text-xs text-taupe-500">Người bán</p>
+              <p className="text-sm font-semibold text-taupe-900">
                 {order.sellerId.fullName || "—"}
               </p>
               {order.sellerId.phoneNumber && (
-                <p className="text-xs text-muted-foreground flex items-center gap-1">
+                <p className="text-xs text-taupe-500 flex items-center gap-1">
                   <IconPhone className="w-3 h-3" />
                   {order.sellerId.phoneNumber}
                 </p>
@@ -178,10 +178,10 @@ export function OrderProductsCard({
                 }
               )
             }
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-muted hover:bg-secondary transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 border-primary/30 text-primary hover:bg-primary/5 hover:border-primary/60 transition-all"
           >
-            <IconMessage className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-primary">Nhắn tin</span>
+            <IconMessage className="w-4 h-4" />
+            <span className="text-sm font-semibold">Nhắn tin</span>
           </button>
         </div>
       )}

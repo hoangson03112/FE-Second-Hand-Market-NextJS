@@ -53,28 +53,28 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
   onAddressChange,
 }) => {
   return (
-    <div className="rounded-xl border border-border bg-muted/40 p-3 lg:p-4 space-y-3">
+    <div className="rounded-2xl border-2 border-border bg-taupe-50/60 p-3 lg:p-4 space-y-3">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-sm font-semibold text-foreground">Địa chỉ kinh doanh / lấy hàng</h3>
-        <span className="text-[11px] font-medium text-primary">Bước 1</span>
+        <h3 className="text-sm font-semibold text-taupe-900">Địa chỉ kinh doanh / lấy hàng</h3>
+        <span className="text-[11px] font-semibold text-primary uppercase tracking-wide">Bước 1</span>
       </div>
       {selectedProvince && selectedDistrict && selectedWard && (
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-taupe-500">
           {selectedWard.WardName}, {selectedDistrict.DistrictName}, {selectedProvince.ProvinceName}
         </p>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div className="md:col-span-1">
-          <label className="block text-xs font-medium mb-1">
-            Tỉnh/Thành phố <span className="text-destructive">*</span>
+          <label className="block text-xs font-medium text-taupe-700 mb-1">
+            Tỉnh/Thành phố <span className="text-red-500">*</span>
           </label>
           <select
             name="provinceId"
             value={values.provinceId}
             onChange={onProvinceChange}
             disabled={provincesLoading}
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:bg-muted"
+            className="w-full rounded-lg border border-border bg-white text-taupe-900 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary disabled:bg-taupe-100"
           >
             <option value="">
               {provincesLoading ? "Đang tải..." : "Chọn Tỉnh/Thành phố"}
@@ -88,15 +88,15 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
         </div>
 
         <div className="md:col-span-1">
-          <label className="block text-xs font-medium mb-1">
-            Quận/Huyện <span className="text-destructive">*</span>
+          <label className="block text-xs font-medium text-taupe-700 mb-1">
+            Quận/Huyện <span className="text-red-500">*</span>
           </label>
           <select
             name="districtId"
             value={values.districtId}
             onChange={onDistrictChange}
             disabled={!values.provinceId || districtsLoading}
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:bg-muted"
+            className="w-full rounded-lg border border-border bg-white text-taupe-900 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary disabled:bg-taupe-100"
           >
             <option value="">
               {!values.provinceId
@@ -114,15 +114,15 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
         </div>
 
         <div className="md:col-span-1">
-          <label className="block text-xs font-medium mb-1">
-            Phường/Xã <span className="text-destructive">*</span>
+          <label className="block text-xs font-medium text-taupe-700 mb-1">
+            Phường/Xã <span className="text-red-500">*</span>
           </label>
           <select
             name="wardCode"
             value={values.wardCode}
             onChange={onWardChange}
             disabled={!values.districtId || wardsLoading}
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:bg-muted"
+            className="w-full rounded-lg border border-border bg-white text-taupe-900 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary disabled:bg-taupe-100"
           >
             <option value="">
               {!values.districtId
@@ -142,8 +142,8 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-medium mb-1">
-            Địa chỉ cụ thể (số nhà, đường) <span className="text-destructive">*</span>
+          <label className="block text-xs font-medium text-taupe-700 mb-1">
+            Địa chỉ cụ thể (số nhà, đường) <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -151,16 +151,16 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
             value={values.address}
             onChange={onAddressChange}
             placeholder="Ví dụ: 123 Nguyễn Trãi, phường 5..."
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="w-full rounded-lg border border-border bg-white text-taupe-900 placeholder:text-taupe-400 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary"
           />
           {errors.address && (
-            <p className="mt-1 text-xs text-destructive">{errors.address}</p>
+            <p className="mt-1 text-xs text-red-600">{errors.address}</p>
           )}
         </div>
 
         <div>
-          <label className="block text-xs font-medium mb-1">
-            Số điện thoại <span className="text-destructive">*</span>
+          <label className="block text-xs font-medium text-taupe-700 mb-1">
+            Số điện thoại <span className="text-red-500">*</span>
           </label>
           <input
             type="tel"
@@ -169,14 +169,13 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
             value={values.phoneNumber}
             onChange={onAddressChange}
             placeholder="VD: 0901234567"
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="w-full rounded-lg border border-border bg-white text-taupe-900 placeholder:text-taupe-400 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary"
           />
           {errors.phoneNumber && (
-            <p className="mt-1 text-xs text-destructive">{errors.phoneNumber}</p>
+            <p className="mt-1 text-xs text-red-600">{errors.phoneNumber}</p>
           )}
         </div>
       </div>
     </div>
   );
 };
-

@@ -36,10 +36,10 @@ export function OrderProgressCard({
   const tip = TIPS_BY_STATUS[status] || statusDescription[status] || "Đang xử lý đơn hàng.";
 
   return (
-    <div className="bg-cream-50 border border-border rounded-2xl overflow-hidden">
-      <div className="px-5 py-3 border-b border-border flex items-center justify-between">
-        <span className="text-sm font-semibold text-foreground">Tiến trình đơn hàng</span>
-        <span className="text-xs font-mono text-muted-foreground">#{orderCode}</span>
+    <div className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl overflow-hidden shadow-md">
+      <div className="px-5 py-3 border-b-2 border-border flex items-center justify-between">
+        <span className="text-sm font-semibold text-taupe-900 uppercase tracking-wider">Tiến trình đơn hàng</span>
+        <span className="text-xs font-mono text-taupe-500">#{orderCode}</span>
       </div>
       <div className="px-5 py-4">
         <ul className="space-y-0">
@@ -52,7 +52,7 @@ export function OrderProgressCard({
                 <div className="flex flex-col items-center shrink-0">
                   <div
                     className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                      isDone ? "bg-primary text-primary-foreground" : isActive ? "bg-primary/90 text-primary-foreground ring-2 ring-primary/30" : "bg-muted border border-border text-muted-foreground"
+                      isDone ? "bg-primary text-primary-foreground" : isActive ? "bg-primary/90 text-primary-foreground ring-2 ring-primary/30" : "bg-taupe-100 border border-border text-taupe-400"
                     }`}
                   >
                     {isDone ? (
@@ -66,7 +66,7 @@ export function OrderProgressCard({
                   )}
                 </div>
                 <div className={!isLast ? "pb-1" : ""}>
-                  <p className={`text-sm font-medium ${isDone || isActive ? "text-foreground" : "text-muted-foreground"}`}>
+                  <p className={`text-sm font-medium ${isDone || isActive ? "text-taupe-900" : "text-taupe-500"}`}>
                     {step.shortLabel}
                   </p>
                 </div>
@@ -74,9 +74,9 @@ export function OrderProgressCard({
             );
           })}
         </ul>
-        <div className="mt-4 pt-4 border-t border-border flex gap-2 rounded-xl bg-background/60 p-3">
+        <div className="mt-4 pt-4 border-t-2 border-border flex gap-2 rounded-xl bg-taupe-50/60 p-3">
           <IconInfoCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-          <p className="text-xs text-muted-foreground leading-snug">{tip}</p>
+          <p className="text-xs text-taupe-500 leading-snug">{tip}</p>
         </div>
       </div>
     </div>

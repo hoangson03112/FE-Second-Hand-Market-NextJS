@@ -39,21 +39,14 @@ export function HeaderAccountActions({
     <>
       <Link
         href={sellButtonHref}
-        className="hidden xl:inline-flex items-center gap-1.5 h-9 px-4 text-[12.5px] font-semibold transition-all duration-150 hover:opacity-90"
-        style={{
-          background: "linear-gradient(135deg, var(--primary) 0%, oklch(0.43 0.08 35) 100%)",
-          color: "var(--background)",
-          borderRadius: "9999px",
-          boxShadow: "0 2px 8px color-mix(in oklch, var(--primary) 32%, transparent)",
-        }}
+        className="gap-1 group relative inline-flex items-center justify-center h-8 sm:h-9 px-4 sm:px-5 text-xs font-medium uppercase tracking-[0.1em] text-white bg-primary rounded-[2px] transition-all duration-300 hover:scale-[1.03]"
       >
         <IconPlus className="w-3.5 h-3.5" strokeWidth={2.5} />
+
         {sellButtonText}
       </Link>
 
       <div className="flex items-center">
-
-
         <NotificationDropdown />
 
         <Link

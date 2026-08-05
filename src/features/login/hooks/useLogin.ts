@@ -6,7 +6,7 @@ import { useTokenStore } from "@/store/useTokenStore";
 import { useBannedStore } from "@/store/useBannedStore";
 import { queryKeys } from "@/lib/query-client";
 import type { LoginRequest } from "@/types/auth";
-import { loginSchema } from "@/features/auth/schemas/auth.schema";
+import { loginSchema } from "@/schemas/auth.schema";
 import { getGoogleLoginUrl } from "@/constants";
 import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
 import { useToast } from "@/components/shared";

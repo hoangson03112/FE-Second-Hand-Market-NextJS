@@ -20,9 +20,9 @@ export function OrderShippingCard({ shippingMethod, shippingAddress }: OrderShip
   const isLP = shippingType === "local_pickup";
 
   return (
-    <div className="bg-cream-50 border border-border rounded-2xl overflow-hidden">
+    <div className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl overflow-hidden shadow-md">
       <div
-        className={`px-5 py-3 flex items-center gap-2.5 border-b border-border ${
+        className={`px-5 py-3 flex items-center gap-2.5 border-b-2 border-border ${
           isLP ? "bg-emerald-50" : "bg-blue-50"
         }`}
       >
@@ -43,9 +43,9 @@ export function OrderShippingCard({ shippingMethod, shippingAddress }: OrderShip
         <div className="px-5 py-4 flex items-start gap-3">
           <IconMapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-foreground">{shippingAddress.fullName}</p>
-            <p className="text-xs text-muted-foreground">{shippingAddress.phoneNumber}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">
+            <p className="text-sm font-semibold text-taupe-900">{shippingAddress.fullName}</p>
+            <p className="text-xs text-taupe-500">{shippingAddress.phoneNumber}</p>
+            <p className="text-xs text-taupe-500 mt-0.5">
               {[
                 shippingAddress.specificAddress,
                 shippingAddress.ward,
@@ -60,7 +60,7 @@ export function OrderShippingCard({ shippingMethod, shippingAddress }: OrderShip
       ) : isLP ? (
         <div className="px-5 py-4 flex items-start gap-3">
           <IconMapPin className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-taupe-500">
             Người bán và người mua tự thỏa thuận địa điểm gặp mặt.
           </p>
         </div>

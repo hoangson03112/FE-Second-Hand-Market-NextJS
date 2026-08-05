@@ -16,23 +16,23 @@ export const IdCardSection: React.FC<IdCardSectionProps> = ({
   onFileChange,
 }) => {
   return (
-    <div className="rounded-xl border border-border bg-muted/40 p-3 lg:p-4 space-y-3">
+    <div className="rounded-2xl border-2 border-border bg-taupe-50/60 p-3 lg:p-4 space-y-3">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-sm font-semibold text-foreground">
-          Ảnh CCCD/CMND <span className="text-destructive">*</span>
+        <h3 className="text-sm font-semibold text-taupe-900">
+          Ảnh CCCD/CMND <span className="text-red-500">*</span>
         </h3>
-        <span className="text-[11px] font-medium text-primary">Bước 2</span>
+        <span className="text-[11px] font-semibold text-primary uppercase tracking-wide">Bước 2</span>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium mb-1">Mặt trước</label>
-          <div className="rounded-lg border border-dashed border-border bg-background px-3 py-2">
+          <label className="block text-xs font-medium text-taupe-700 mb-1">Mặt trước</label>
+          <div className="rounded-lg border border-dashed border-border bg-white px-3 py-2">
             <input
               type="file"
               accept="image/*"
               onChange={onFileChange("idCardFront")}
-              className="w-full text-xs text-muted-foreground file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-primary file:text-white"
+              className="w-full text-xs text-taupe-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-primary file:text-white"
             />
             {idCardFront && (
               <p className="mt-1 text-[11px] text-primary truncate">
@@ -40,19 +40,19 @@ export const IdCardSection: React.FC<IdCardSectionProps> = ({
               </p>
             )}
             {errors.idCardFront && (
-              <p className="mt-1 text-xs text-destructive">{errors.idCardFront}</p>
+              <p className="mt-1 text-xs text-red-600">{errors.idCardFront}</p>
             )}
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-medium mb-1">Mặt sau</label>
-          <div className="rounded-lg border border-dashed border-border bg-background px-3 py-2">
+          <label className="block text-xs font-medium text-taupe-700 mb-1">Mặt sau</label>
+          <div className="rounded-lg border border-dashed border-border bg-white px-3 py-2">
             <input
               type="file"
               accept="image/*"
               onChange={onFileChange("idCardBack")}
-              className="w-full text-xs text-muted-foreground file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-primary file:text-white"
+              className="w-full text-xs text-taupe-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-primary file:text-white"
             />
             {idCardBack && (
               <p className="mt-1 text-[11px] text-primary truncate">
@@ -60,24 +60,24 @@ export const IdCardSection: React.FC<IdCardSectionProps> = ({
               </p>
             )}
             {errors.idCardBack && (
-              <p className="mt-1 text-xs text-destructive">{errors.idCardBack}</p>
+              <p className="mt-1 text-xs text-red-600">{errors.idCardBack}</p>
             )}
           </div>
         </div>
       </div>
 
       <div>
-        <label className="block text-xs font-medium mb-1">
+        <label className="block text-xs font-medium text-taupe-700 mb-1">
           Ảnh đại diện (tùy chọn)
         </label>
-        <div className="rounded-lg border border-dashed border-border bg-background px-3 py-2">
+        <div className="rounded-lg border border-dashed border-border bg-white px-3 py-2">
           <input
             type="file"
             accept="image/*"
             onChange={onFileChange("avatar")}
-            className="w-full text-xs text-muted-foreground file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-primary file:text-white"
+            className="w-full text-xs text-taupe-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-primary file:text-white"
           />
-          <p className="mt-1 text-[11px] text-muted-foreground">
+          <p className="mt-1 text-[11px] text-taupe-500">
             Ảnh đại diện giúp người mua dễ nhận diện gian hàng của bạn hơn.
           </p>
         </div>
@@ -85,4 +85,3 @@ export const IdCardSection: React.FC<IdCardSectionProps> = ({
     </div>
   );
 };
-

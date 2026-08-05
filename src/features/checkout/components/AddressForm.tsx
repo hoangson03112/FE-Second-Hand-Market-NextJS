@@ -12,7 +12,12 @@ interface AddressFormProps {
   onSubmit: (data: CreateAddressRequest) => Promise<void>;
 }
 
-export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: AddressFormProps) {
+export function AddressForm({
+  initialData,
+  onSuccess,
+  onSubmit,
+  onCancel,
+}: AddressFormProps) {
   const isEditMode = !!initialData;
 
   const {
@@ -25,7 +30,8 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
     initialValues: {
       fullName: initialData?.fullName || "",
       phoneNumber: initialData?.phoneNumber || "",
-      specificAddress: initialData?.specificAddress || initialData?.address || "",
+      specificAddress:
+        initialData?.specificAddress || initialData?.address || "",
       provinceId: initialData?.provinceId || "",
       districtId: initialData?.districtId || "",
       wardCode: initialData?.wardCode || "",
@@ -36,7 +42,12 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
         await onSubmit(data);
         onSuccess?.();
       } catch (error) {
-        console.error(isEditMode ? "Failed to update address:" : "Failed to create address:", error);
+        console.error(
+          isEditMode
+            ? "Failed to update address:"
+            : "Failed to create address:",
+          error,
+        );
       }
     },
   });
@@ -47,15 +58,13 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
     error: provincesError,
   } = useProvinces();
 
-  const {
-    data: districts = [],
-    isLoading: districtsLoading,
-  } = useDistricts(values.provinceId);
+  const { data: districts = [], isLoading: districtsLoading } = useDistricts(
+    values.provinceId,
+  );
 
-  const {
-    data: wards = [],
-    isLoading: wardsLoading,
-  } = useWards(values.districtId);
+  const { data: wards = [], isLoading: wardsLoading } = useWards(
+    values.districtId,
+  );
 
   const handleProvinceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setMultipleValues({
@@ -77,187 +86,272 @@ export function AddressForm({ initialData, onSuccess, onSubmit, onCancel }: Addr
   };
 
   return (
-    <div className="max-w-8xl mx-auto w-full">
+    <div className="w-full max-w-4xl mx-auto bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-border/60">
+      {/* Thông báo lỗi nếu không tải được tỉnh thành */}
       {provincesError && (
-        <div className="p-4 mb-4 bg-destructive/8 text-destructive rounded-lg">
-          KhÃ´ng thá»ƒ táº£i dá»¯ liá»‡u tá»‰nh/thÃ nh phá»‘. Vui lÃ²ng thá»­ láº¡i sau.
+        <div className="p-4 mb-6 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm flex items-center gap-2">
+          <span>⚠️</span>
+          <span>
+            Không thể tải dữ liệu Tỉnh/Thành phố. Vui lòng thử lại sau.
+          </span>
         </div>
       )}
 
-      <form onSubmit={submitForm} className="space-y-6 flex flex-col">
+      <form onSubmit={submitForm} className="space-y-6">
+        {/* KHU VỰC 1: THÔNG TIN NGƯỜI NHẬN */}
         <div>
-          <label className="block text-sm font-medium mb-2">
-            Tá»‰nh/ThÃ nh phá»‘ <span className="text-destructive">*</span>
-          </label>
-          <div className="relative">
-            <select
-              name="provinceId"
-              value={values.provinceId}
-              onChange={handleProvinceChange}
-              disabled={provincesLoading}
-              className="w-full p-3 pr-10 border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed appearance-none bg-cream-50"
-              required
-            >
-              <option value="">
-                {provincesLoading ? "Äang táº£i..." : "Chá»n Tá»‰nh/ThÃ nh phá»‘"}
-              </option>
-              {provinces.map((province) => (
-                <option key={province.ProvinceID} value={province.ProvinceID}>
-                  {province.ProvinceName}
-                </option>
-              ))}
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-              <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
+          <h3 className="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            Thông tin người nhận
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-semibold uppercase text-muted-foreground mb-1.5">
+                Họ và tên <span className="text-destructive">*</span>
+              </label>
+              <Input
+                type="text"
+                name="fullName"
+                value={values.fullName}
+                onChange={handleChange}
+                placeholder="Ví dụ: Nguyễn Văn A"
+                className="bg-cream-50/50 focus:bg-white transition-all rounded-lg"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold uppercase text-muted-foreground mb-1.5">
+                Số điện thoại <span className="text-destructive">*</span>
+              </label>
+              <Input
+                type="tel"
+                name="phoneNumber"
+                value={values.phoneNumber}
+                onChange={handleChange}
+                placeholder="Ví dụ: 0912345678"
+                className="bg-cream-50/50 focus:bg-white transition-all rounded-lg"
+                pattern="0[0-9]{9}"
+                title="Số điện thoại gồm 10 chữ số bắt đầu bằng số 0"
+                minLength={10}
+                maxLength={10}
+                required
+              />
             </div>
           </div>
-          {provincesLoading && (
-            <p className="text-sm text-muted-foreground mt-1">â³ Äang táº£i danh sÃ¡ch tá»‰nh/thÃ nh phá»‘ tá»« GHN...</p>
-          )}
         </div>
 
+        <hr className="border-border/40" />
+
+        {/* KHU VỰC 2: ĐỊA CHỈ GIAO HÀNG */}
         <div>
-          <label className="block text-sm font-medium mb-2">
-            Quáº­n/Huyá»‡n <span className="text-destructive">*</span>
-          </label>
-          <div className="relative">
-            <select
-              name="districtId"
-              value={values.districtId}
-              onChange={handleDistrictChange}
-              disabled={!values.provinceId || districtsLoading}
-              className="w-full p-3 pr-10 border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed appearance-none bg-cream-50"
-              required
-            >
-              <option value="">
-                {districtsLoading ? "Äang táº£i..." : values.provinceId ? "Chá»n Quáº­n/Huyá»‡n" : "Vui lÃ²ng chá»n Tá»‰nh/ThÃ nh phá»‘ trÆ°á»›c"}
-              </option>
-              {districts.map((district) => (
-                <option key={district.DistrictID} value={district.DistrictID}>
-                  {district.DistrictName}
-                </option>
-              ))}
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-              <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
+          <h3 className="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            Địa chỉ giao hàng
+          </h3>
+
+          {/* Grid 3 cột cho Tỉnh / Quận / Xã */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            {/* Tỉnh / Thành phố */}
+            <div>
+              <label className="block text-xs font-semibold uppercase text-muted-foreground mb-1.5">
+                Tỉnh / Thành phố <span className="text-destructive">*</span>
+              </label>
+              <div className="relative">
+                <select
+                  name="provinceId"
+                  value={values.provinceId}
+                  onChange={handleProvinceChange}
+                  disabled={provincesLoading}
+                  className="w-full p-2.5 pr-8 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-muted/50 disabled:cursor-not-allowed appearance-none bg-cream-50/50 transition-all cursor-pointer"
+                  required
+                >
+                  <option value="">
+                    {provincesLoading
+                      ? "Đang tải..."
+                      : "-- Chọn Tỉnh / Thành --"}
+                  </option>
+                  {provinces.map((province) => (
+                    <option
+                      key={province.ProvinceID}
+                      value={province.ProvinceID}
+                    >
+                      {province.ProvinceName}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-muted-foreground">
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Quận / Huyện */}
+            <div>
+              <label className="block text-xs font-semibold uppercase text-muted-foreground mb-1.5">
+                Quận / Huyện <span className="text-destructive">*</span>
+              </label>
+              <div className="relative">
+                <select
+                  name="districtId"
+                  value={values.districtId}
+                  onChange={handleDistrictChange}
+                  disabled={!values.provinceId || districtsLoading}
+                  className="w-full p-2.5 pr-8 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-muted/50 disabled:cursor-not-allowed appearance-none bg-cream-50/50 transition-all cursor-pointer"
+                  required
+                >
+                  <option value="">
+                    {districtsLoading
+                      ? "Đang tải..."
+                      : values.provinceId
+                        ? "-- Chọn Quận / Huyện --"
+                        : "-- Chọn Tỉnh trước --"}
+                  </option>
+                  {districts.map((district) => (
+                    <option
+                      key={district.DistrictID}
+                      value={district.DistrictID}
+                    >
+                      {district.DistrictName}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-muted-foreground">
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Phường / Xã */}
+            <div>
+              <label className="block text-xs font-semibold uppercase text-muted-foreground mb-1.5">
+                Phường / Xã <span className="text-destructive">*</span>
+              </label>
+              <div className="relative">
+                <select
+                  name="wardCode"
+                  value={values.wardCode}
+                  onChange={handleWardChange}
+                  disabled={!values.districtId || wardsLoading}
+                  className="w-full p-2.5 pr-8 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-muted/50 disabled:cursor-not-allowed appearance-none bg-cream-50/50 transition-all cursor-pointer"
+                  required
+                >
+                  <option value="">
+                    {wardsLoading
+                      ? "Đang tải..."
+                      : values.districtId
+                        ? "-- Chọn Phường / Xã --"
+                        : "-- Chọn Huyện trước --"}
+                  </option>
+                  {wards.map((ward) => (
+                    <option key={ward.WardCode} value={ward.WardCode}>
+                      {ward.WardName}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-muted-foreground">
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
-          {districtsLoading && <p className="text-sm text-muted-foreground mt-1">â³ Äang táº£i danh sÃ¡ch quáº­n/huyá»‡n...</p>}
-        </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-2">
-            PhÆ°á»ng/XÃ£ <span className="text-destructive">*</span>
-          </label>
-          <div className="relative">
-            <select
-              name="wardCode"
-              value={values.wardCode}
-              onChange={handleWardChange}
-              disabled={!values.districtId || wardsLoading}
-              className="w-full p-3 pr-10 border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed appearance-none bg-cream-50"
+          {/* Địa chỉ cụ thể */}
+          <div>
+            <label className="block text-xs font-semibold uppercase text-muted-foreground mb-1.5">
+              Địa chỉ cụ thể <span className="text-destructive">*</span>
+            </label>
+            <Input
+              type="text"
+              name="specificAddress"
+              value={values.specificAddress}
+              onChange={handleChange}
+              placeholder="Ví dụ: Số 12, Ngõ 34, Đường Nguyễn Trãi..."
+              className="bg-cream-50/50 focus:bg-white transition-all rounded-lg"
               required
-            >
-              <option value="">
-                {wardsLoading ? "Äang táº£i..." : values.districtId ? "Chá»n PhÆ°á»ng/XÃ£" : "Vui lÃ²ng chá»n Quáº­n/Huyá»‡n trÆ°á»›c"}
-              </option>
-              {wards.map((ward) => (
-                <option key={ward.WardCode} value={ward.WardCode}>
-                  {ward.WardName}
-                </option>
-              ))}
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-              <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </div>
+            />
           </div>
-          {wardsLoading && <p className="text-sm text-muted-foreground mt-1">â³ Äang táº£i danh sÃ¡ch phÆ°á»ng/xÃ£...</p>}
         </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-2">Äá»‹a chá»‰ cá»¥ thá»ƒ <span className="text-destructive">*</span></label>
-          <Input
-            type="text"
-            name="specificAddress"
-            value={values.specificAddress}
-            onChange={handleChange}
-            placeholder="Sá»‘ nhÃ , tÃªn Ä‘Æ°á»ng..."
-            className="bg-cream-50"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-2">Há» vÃ  tÃªn <span className="text-destructive">*</span></label>
-          <Input
-            type="text"
-            name="fullName"
-            value={values.fullName}
-            onChange={handleChange}
-            placeholder="Nguyá»…n VÄƒn A"
-            className="bg-cream-50"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-2">Sá»‘ Ä‘iá»‡n thoáº¡i <span className="text-destructive">*</span></label>
-          <Input
-            type="tel"
-            name="phoneNumber"
-            value={values.phoneNumber}
-            onChange={handleChange}
-            placeholder="0332454556"
-            className="bg-cream-50"
-            pattern="0[0-9]{9}"
-            title="Sá»‘ Ä‘iá»‡n thoáº¡i pháº£i gá»“m 10 chá»¯ sá»‘ vÃ  báº¯t Ä‘áº§u báº±ng sá»‘ 0 (vÃ­ dá»¥: 0332454556)"
-            minLength={10}
-            maxLength={10}
-            required
-          />
-          <p className="mt-1 text-xs text-muted-foreground">
-            Äá»‹nh dáº¡ng há»£p lá»‡: 10 sá»‘ vÃ  báº¯t Ä‘áº§u báº±ng 0 (vÃ­ dá»¥: 0332454556).
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            id="isDefault"
-            name="isDefault"
-            checked={values.isDefault}
-            onChange={handleChange}
-            className="w-4 h-4 text-primary border-border rounded focus:ring-2 focus:ring-primary cursor-pointer"
-          />
-          <label htmlFor="isDefault" className="text-sm font-medium cursor-pointer select-none">
-            Äáº·t lÃ m Ä‘á»‹a chá»‰ máº·c Ä‘á»‹nh
+        {/* CẤU HÌNH MẶC ĐỊNH */}
+        <div className="pt-2">
+          <label className="inline-flex items-center gap-2 cursor-pointer select-none group">
+            <input
+              type="checkbox"
+              id="isDefault"
+              name="isDefault"
+              checked={values.isDefault}
+              onChange={handleChange}
+              className="w-4 h-4 text-primary border-border rounded focus:ring-primary/30 cursor-pointer accent-primary"
+            />
+            <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+              Đặt làm địa chỉ mặc định
+            </span>
           </label>
         </div>
 
-        <div className="flex gap-3 justify-end">
+        {/* NÚT THAO TÁC */}
+        <div className="flex items-center gap-3 justify-end pt-4 border-t border-border/40">
           {onCancel && (
             <Button
               type="button"
               onClick={onCancel}
               variant="secondary"
-              className="py-3 px-6"
+              className="px-5 py-2.5 rounded-lg text-sm font-medium transition-all"
               disabled={isSubmitting}
             >
-              Há»§y
+              Hủy
             </Button>
           )}
           <Button
             type="submit"
-            className="py-3 px-6"
+            className="px-6 py-2.5 rounded-lg text-sm font-medium shadow-sm transition-all"
             disabled={!values.wardCode || isSubmitting}
           >
-            {isSubmitting ? (isEditMode ? "Äang cáº­p nháº­t..." : "Äang lÆ°u...") : (isEditMode ? "Cáº­p nháº­t" : "LÆ°u Ä‘á»‹a chá»‰")}
+            {isSubmitting
+              ? isEditMode
+                ? "Đang cập nhật..."
+                : "Đang lưu..."
+              : isEditMode
+                ? "Cập nhật địa chỉ"
+                : "Lưu địa chỉ"}
           </Button>
         </div>
       </form>

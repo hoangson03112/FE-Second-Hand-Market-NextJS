@@ -5,15 +5,23 @@ import Link from "next/link";
 
 export default function CartLoginPrompt() {
   return (
-    <div className="flex flex-col items-center justify-center py-16 px-6 text-center bg-gradient-to-br from-white to-cream-50 rounded-2xl border-2 border-border shadow-xl max-w-md mx-auto">
-      <div className="w-24 h-24 mb-4 flex items-center justify-center bg-gradient-to-br from-taupe-50 to-taupe-100 rounded-full">
-        <IconLogin className="w-16 h-16 text-taupe-400" />
+    <div className="flex flex-col items-center justify-center py-20 px-8 text-center bg-white rounded-[2px] border border-luxury-ink/10 max-w-9xl mx-auto">
+      <div className="w-20 h-20 mb-6 flex items-center justify-center bg-taupe-50/50 rounded-[2px] border border-luxury-ink/10">
+        <IconLogin className="w-10 h-10 text-luxury-ink" />
       </div>
-      <h3 className="text-lg font-semibold text-taupe-900 mb-2">Đăng nhập để xem giỏ hàng</h3>
-      <p className="text-taupe-600 text-sm mb-6">Quản lý giỏ hàng và đơn hàng của bạn một cách dễ dàng</p>
+      <h3
+        className="text-2xl text-luxury-ink mb-3"
+        style={{ fontFamily: "var(--font-droid-serif), serif" }}
+      >
+        Đăng nhập để xem giỏ hàng
+      </h3>
+      <p className="text-charcoal-500 text-sm mb-8 leading-relaxed">
+        Quản lý giỏ hàng và đơn hàng của bạn một cách dễ dàng và tận hưởng trải
+        nghiệm mua sắm đẳng cấp.
+      </p>
       <Link
         href="/login"
-        className="inline-flex items-center justify-center h-11 px-8 bg-gradient-to-r from-primary to-accent text-primary-foreground text-sm font-bold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300"
+        className="inline-flex items-center justify-center h-12 px-10 bg-luxury-ink text-white uppercase tracking-[0.2em] text-[11px] font-semibold rounded-[2px] hover:bg-luxury-ink/90 transition-colors duration-300"
       >
         Đăng Nhập
       </Link>

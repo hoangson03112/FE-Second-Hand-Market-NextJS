@@ -27,56 +27,53 @@ export default function CartBottomBar({
   const canCheckout = selectedCount > 0;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-20 bg-card/95 backdrop-blur-lg border-t-2 border-border shadow-2xl">
-      <div className="max-w-8xl mx-auto px-3 sm:px-5 py-3 sm:py-4">
-        <div className="flex items-center justify-between gap-3">
+    <div className="fixed bottom-0 left-0 right-0 z-20 bg-luxury-ivory/95 backdrop-blur-lg border-t border-luxury-ink/10">
+      <div className="max-w-9xl mx-auto px-3 sm:px-6 py-4 sm:py-5">
+        <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 sm:gap-6">
-            <label className="flex items-center gap-2 cursor-pointer">
+            <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
                 checked={allSelected}
                 onChange={(e) => onSelectAll(e.target.checked)}
                 disabled={isBusy}
-                className="w-4 h-4 border-2 border-taupe-300 rounded-md text-primary focus:ring-2 focus:ring-primary/50 cursor-pointer disabled:opacity-50 transition-all"
+                className="w-4 h-4 border border-luxury-ink/20 rounded-[2px] text-luxury-ink focus:ring-1 focus:ring-luxury-ink cursor-pointer disabled:opacity-50 transition-all"
               />
-              <span className="text-sm text-taupe-900 hidden sm:inline">
-                Chá»n táº¥t cáº£ ({totalItemCount})
-              </span>
-              <span className="text-xs text-taupe-900 sm:hidden">
-                Táº¥t cáº£
+              <span className="text-sm tracking-wide font-medium text-luxury-ink hidden sm:inline mt-0.5">
+                Chọn tất cả ({totalItemCount})
               </span>
             </label>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-6">
+          <div className="flex items-center gap-3 sm:gap-6">
             <div className="flex flex-col items-end">
-              <span className="text-xs text-taupe-600 hidden sm:block">
-                Tá»•ng thanh toÃ¡n ({selectedCount} sáº£n pháº©m):
+              <span className="text-xs uppercase tracking-[0.13em] font-medium text-luxury-ink hidden sm:block">
+                Tổng thanh toán ({selectedCount} sản phẩm):
               </span>
-              <span className="text-xs text-taupe-600 sm:hidden">
-                Tá»•ng ({selectedCount}):
+              <span className="text-[10px] uppercase tracking-[0.2em] font-semibold  sm:hidden">
+                Tổng ({selectedCount}):
               </span>
-              <span className="text-lg sm:text-2xl font-medium text-primary">
+              <span className="text-xl sm:text-2xl font-medium text-luxury-ink mt-1">
                 {formatPrice(selectedSubtotal)}
               </span>
             </div>
 
             {canCheckout ? (
-              <Button
+              <button
                 type="button"
                 onClick={onGoToCheckout}
                 disabled={isBusy || isGoingToCheckout}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 sm:h-11 px-6 sm:px-12 text-sm font-semibold rounded-xl hover:scale-105 duration-300 disabled:opacity-70 whitespace-nowrap"
+                className="group relative inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-12 text-sm font-medium uppercase tracking-[0.1em] text-white bg-primary rounded-[2px] transition-all duration-300 hover:scale-[1.03]"
               >
-                {isGoingToCheckout ? "Äang xá»­ lÃ½..." : "Mua HÃ ng"}
-              </Button>
+                {isGoingToCheckout ? "Đang xử lý..." : "Mua Hàng"}
+              </button>
             ) : (
               <button
                 type="button"
                 disabled
-                className="h-10 sm:h-11 px-6 sm:px-12 bg-taupe-200 text-taupe-400 text-sm font-semibold rounded-xl cursor-not-allowed whitespace-nowrap"
+                className="h-11 sm:h-12 px-6 sm:px-12 bg-charcoal-400 text-charcoal-50 uppercase tracking-[0.1em] text-sm font-semibold rounded-[2px] cursor-not-allowed whitespace-nowrap"
               >
-                Mua HÃ ng
+                Mua Hàng
               </button>
             )}
           </div>

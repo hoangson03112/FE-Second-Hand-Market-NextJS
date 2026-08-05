@@ -11,7 +11,7 @@ import { plusJakarta } from "@/lib/fonts";
 export default function HomePage() {
   return (
     <div
-      className={`min-h-full bg-[#F7F5F0] ${plusJakarta.variable}`}
+      className={`min-h-full bg-luxury-ivory ${plusJakarta.variable}`}
       style={{ fontFamily: "var(--font-jakarta), sans-serif" }}
     >
       <HeroSection />

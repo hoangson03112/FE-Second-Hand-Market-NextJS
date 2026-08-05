@@ -1,22 +1,20 @@
-import { IconArrowLeft, IconChevronRight } from "@tabler/icons-react";
+import { IconChevronRight } from "@tabler/icons-react";
 import Link from "next/link";
 
 export function Breadcrumb() {
   return (
-    <div className="max-w-8xl mx-auto w-full px-4 mb-6 sm:px-6">
-      <Link
-        href="/"
-        className="inline-flex items-center gap-2 text-primary hover:underline font-medium text-sm"
-      >
-        <IconArrowLeft className="h-4 w-4" />
-        Quay láº¡i
-      </Link>
+    <div className="max-w-9xl mx-auto w-full px-4 mb-6 sm:px-6">
       <div className="flex items-center gap-2 text-sm mt-2 text-muted-foreground">
-        <Link href="/" className="text-primary hover:underline">
-          Trang chá»§
-        </Link>
-        <IconChevronRight className="w-4 h-4 shrink-0" />
-        <span className="text-foreground">TÃ i khoáº£n cá»§a tÃ´i</span>
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-charcoal-400 uppercase flex-wrap"
+        >
+          <Link href="/" className="hover:text-luxury-ink transition-colors">
+            Trang chủ
+          </Link>
+          <IconChevronRight className="h-3 w-3 text-taupe-300" />
+          <span className="text-luxury-ink">Thông tin tài khoản</span>
+        </nav>
       </div>
     </div>
   );

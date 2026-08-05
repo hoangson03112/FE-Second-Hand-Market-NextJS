@@ -34,17 +34,12 @@ export function OrdersTabs({
   }, [activeTab]);
 
   return (
-    <div className="sticky top-[73px] z-10 bg-background/95 backdrop-blur-sm border-b border-border">
-      {/*
-        Scroll happens on this wrapper (no px here â€” trailing padding would
-        be swallowed by the browser and the last tab would be clipped).
-        The inner flex row carries the px so padding is part of scroll width.
-      */}
-      <div className="max-w-8xl mx-auto overflow-x-auto scrollbar-hide -mb-px">
+    <div className="sticky top-[73px] z-10 bg-cream-50/95 backdrop-blur-sm border-b-2 border-border">
+      <div className="max-w-9xl mx-auto overflow-x-auto scrollbar-hide">
         <div
           role="tablist"
-          aria-label="Tráº¡ng thÃ¡i Ä‘Æ¡n hÃ ng"
-          className="inline-flex min-w-full pl-4 sm:pl-6"
+          aria-label="Trạng thái đơn hàng"
+          className="inline-flex min-w-full gap-2 px-4 sm:px-6 py-3"
         >
           {tabs.map((tab) => {
             const count =
@@ -61,34 +56,23 @@ export function OrdersTabs({
                 aria-selected={isActive}
                 onClick={() => onChange(tab.key)}
                 className={cn(
-                  // layout
-                  "relative flex shrink-0 items-center gap-2 px-4 py-3",
-                  // text
-                  "text-sm whitespace-nowrap",
-                  // bottom border acts as the underline indicator
-                  "border-b-2 transition-colors duration-150",
-                  // a11y
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-0 rounded-t-sm",
+                  "relative flex shrink-0 items-center gap-2 px-4 py-2 rounded-full border-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
                   isActive
-                    ? "border-foreground font-semibold text-foreground"
-                    : [
-                        "border-transparent font-medium text-muted-foreground",
-                        "hover:text-foreground hover:border-border",
-                      ],
+                    ? "bg-primary border-primary text-primary-foreground shadow-sm"
+                    : "border-border bg-white text-taupe-600 hover:border-primary/40 hover:text-taupe-900",
                 )}
               >
-                {tab.label}
+                <span className="text-xs font-semibold uppercase tracking-wide">
+                  {tab.label}
+                </span>
 
                 {count > 0 && (
                   <span
                     className={cn(
-                      "inline-flex items-center justify-center",
-                      "min-w-[20px] h-5 px-1.5 rounded-md",
-                      "text-xs font-semibold tabular-nums",
-                      "transition-colors duration-150",
+                      "inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-[11px] font-bold tabular-nums transition-colors duration-150",
                       isActive
-                        ? "bg-foreground/[0.08] text-foreground"
-                        : "bg-muted text-muted-foreground/70",
+                        ? "bg-white/25 text-primary-foreground"
+                        : "bg-taupe-100 text-taupe-600",
                     )}
                   >
                     {count}
@@ -97,8 +81,6 @@ export function OrdersTabs({
               </button>
             );
           })}
-          {/* Trailing spacer â€” guarantees right padding is part of scroll width */}
-          <div className="shrink-0 w-4 sm:w-6" aria-hidden="true" />
         </div>
       </div>
     </div>

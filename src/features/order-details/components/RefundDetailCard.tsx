@@ -149,9 +149,9 @@ const STATUS_STYLES: Record<StatusKey, StatusStyle> = {
   cancelled: {
     label: "Yêu cầu đã bị hủy",
     sublabel: "",
-    headerBg: "bg-muted",
+    headerBg: "bg-taupe-100",
     headerBorder: "border-border",
-    textColor: "text-muted-foreground",
+    textColor: "text-taupe-500",
     Icon: IconCircleX,
   },
 };
@@ -176,7 +176,7 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
     );
 
   return (
-    <div className={cn("rounded-2xl overflow-hidden border", style.headerBorder)}>
+    <div className={cn("rounded-2xl overflow-hidden border-2 shadow-md", style.headerBorder)}>
 
       {/* ── STATUS HEADER ─────────────────────────────────────────────── */}
       <div className={cn("flex items-start gap-4 px-5 py-4", style.headerBg)}>
@@ -209,43 +209,43 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
       {/* Tiến trình tổng thể: chỉ hiển thị ở OrderStatusHero (tránh 2 stepper trùng ý). */}
 
       {/* ── BODY ──────────────────────────────────────────────────────── */}
-      <div className="p-5 bg-background space-y-4">
+      <div className="p-5 bg-white space-y-4">
 
         {/* Reason + Date row */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="p-3.5 rounded-xl border border-border bg-muted/30">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
+          <div className="p-3.5 rounded-xl border border-border bg-taupe-50/60">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-taupe-500 mb-2">
               Lý do hoàn tiền
             </p>
             <div className="flex items-center gap-2">
-              <ReasonIcon className="w-4 h-4 text-foreground/60 shrink-0" />
-              <p className="text-sm font-semibold text-foreground">{reasonInfo.label}</p>
+              <ReasonIcon className="w-4 h-4 text-taupe-500 shrink-0" />
+              <p className="text-sm font-semibold text-taupe-900">{reasonInfo.label}</p>
             </div>
           </div>
-          <div className="p-3.5 rounded-xl border border-border bg-muted/30">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
+          <div className="p-3.5 rounded-xl border border-border bg-taupe-50/60">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-taupe-500 mb-2">
               Ngày gửi yêu cầu
             </p>
-            <p className="text-sm font-semibold text-foreground">
+            <p className="text-sm font-semibold text-taupe-900">
               {format(refund.createdAt)}
             </p>
           </div>
         </div>
 
         {/* Description */}
-        <div className="p-3.5 rounded-xl border border-border bg-muted/30">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
+        <div className="p-3.5 rounded-xl border border-border bg-taupe-50/60">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-taupe-500 mb-2">
             Mô tả vấn đề
           </p>
-          <p className="text-sm text-foreground leading-relaxed">{refund.description}</p>
+          <p className="text-sm text-taupe-900 leading-relaxed">{refund.description}</p>
         </div>
 
         {/* Evidence images */}
         {(refund.evidence?.images?.length ?? 0) > 0 && (
           <div>
             <div className="flex items-center gap-1.5 mb-2.5">
-              <IconPhoto className="w-3.5 h-3.5 text-muted-foreground" />
-              <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              <IconPhoto className="w-3.5 h-3.5 text-taupe-500" />
+              <p className="text-[11px] font-bold uppercase tracking-wider text-taupe-500">
                 Ảnh bằng chứng ({refund.evidence!.images!.length})
               </p>
             </div>
@@ -258,7 +258,7 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
                   rel="noopener noreferrer"
                   className="block group/img"
                 >
-                  <div className="aspect-square rounded-xl overflow-hidden border border-border bg-muted relative">
+                  <div className="aspect-square rounded-xl overflow-hidden border border-border bg-taupe-100 relative">
                     <Image
                       src={img.url}
                       alt={img.originalName ?? `Bằng chứng ${idx + 1}`}
@@ -277,8 +277,8 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
         {(refund.evidence?.videos?.length ?? 0) > 0 && (
           <div>
             <div className="flex items-center gap-1.5 mb-2.5">
-              <IconVideo className="w-3.5 h-3.5 text-muted-foreground" />
-              <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              <IconVideo className="w-3.5 h-3.5 text-taupe-500" />
+              <p className="text-[11px] font-bold uppercase tracking-wider text-taupe-500">
                 Video bằng chứng ({refund.evidence!.videos!.length})
               </p>
             </div>
@@ -289,16 +289,16 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
                   href={vid.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-xl border border-border bg-muted/30 hover:bg-muted transition-colors"
+                  className="flex items-center gap-3 p-3 rounded-xl border border-border bg-taupe-50/60 hover:bg-taupe-100 transition-colors"
                 >
                   <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                     <IconVideo className="w-4 h-4 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">
+                    <p className="text-sm font-medium text-taupe-900 truncate">
                       {vid.originalName ?? `Video ${idx + 1}`}
                     </p>
-                    <p className="text-xs text-muted-foreground">Video bằng chứng · Nhấn để xem</p>
+                    <p className="text-xs text-taupe-500">Video bằng chứng · Nhấn để xem</p>
                   </div>
                   <span className="text-xs text-primary font-semibold shrink-0">Xem →</span>
                 </a>
@@ -335,7 +335,7 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
               </p>
             </div>
             {refund.sellerResponse.comment && (
-              <p className="text-sm text-foreground/80 pl-6 leading-relaxed">
+              <p className="text-sm text-taupe-700 pl-6 leading-relaxed">
                 &ldquo;{refund.sellerResponse.comment}&rdquo;
               </p>
             )}
@@ -381,7 +381,7 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
               </p>
             </div>
             {refund.adminIntervention.comment && (
-              <p className="text-sm text-foreground/80 pl-6 leading-relaxed">
+              <p className="text-sm text-taupe-700 pl-6 leading-relaxed">
                 &ldquo;{refund.adminIntervention.comment}&rdquo;
               </p>
             )}

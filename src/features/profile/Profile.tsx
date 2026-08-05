@@ -50,8 +50,8 @@ export default function Profile() {
   const avatarUrl = getAvatarUrl(account.avatar);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
-      <div className="max-w-8xl mx-auto w-full px-4 py-8 sm:px-6">
+    <div className="min-h-screen bg-luxury-ivory">
+      <div className="max-w-9xl mx-auto w-full px-4 py-8 sm:px-6">
         <Breadcrumb />
 
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
@@ -66,7 +66,7 @@ export default function Profile() {
           />
 
           <main className="flex-1 min-w-0">
-            <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm">
+            <div className="rounded-[2px] border border-luxury-ink/10 bg-white overflow-hidden">
               {activeTab === "profile" && (
                 <ProfileForm
                   formData={profileFormData}
