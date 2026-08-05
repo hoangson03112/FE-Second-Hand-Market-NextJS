@@ -4,10 +4,8 @@ import { useState } from "react";
 import { useAllProducts } from "./hooks/useAllProducts";
 import { useProvinces } from "@/hooks/useGHNLocation";
 import AllProductsHeader from "./components/AllProductsHeader";
-import FilterBar from "@/features/categories/components/FilterBar";
 import FilterSidebar from "./components/FilterSidebar";
 import { ProductList } from "@/features/categories/components";
-import { Background } from "@/components/shared";
 
 export default function AllProducts() {
   const {
@@ -22,16 +20,19 @@ export default function AllProducts() {
   } = useAllProducts();
 
   const { data: provinces = [] } = useProvinces();
-
   const [searchInput, setSearchInput] = useState(filters.search || "");
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setFilters((prev) => ({ ...prev, search: searchInput || undefined, page: 1 }));
+    setFilters((prev) => ({
+      ...prev,
+      search: searchInput || undefined,
+      page: 1,
+    }));
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="max-w-9xl mx-auto flex-1 w-full min-h-screen bg-background text-luxury-ink selection:bg-luxury-ink selection:text-background flex flex-col font-sans">
       <AllProductsHeader
         total={total}
         searchValue={searchInput}
@@ -39,18 +40,10 @@ export default function AllProducts() {
         onSearchSubmit={handleSearchSubmit}
       />
 
-      <FilterBar
-        filters={filters}
-        onFilterChange={setFilters}
-        totalProducts={total}
-        provinces={provinces}
-      />
-
-      <div className="flex-1 max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
-
-          {/* ── Left sidebar ── */}
-          <aside className="hidden lg:block w-64 shrink-0 sticky top-28">
+      <div className="max-w-9xl flex-1 w-full mx-auto px-4 sm:px-8 lg:px-12">
+        <div className="flex flex-col lg:flex-row items-start relative">
+          {/* ── Editorial Sidebar ── */}
+          <aside className="hidden lg:block w-72 shrink-0 sticky top-12 pr-12 lg:border-r border-taupe-200/60 min-h-[80vh]">
             <FilterSidebar
               filters={filters}
               onFilterChange={setFilters}
@@ -58,25 +51,33 @@ export default function AllProducts() {
             />
           </aside>
 
-          {/* ── Product grid ── */}
-          <main className="flex-1 min-w-0 w-full">
+          <main className="flex-1 min-w-0 w-full lg:pl-12">
             {error ? (
-              <div className="flex flex-col items-center justify-center py-24 text-center">
-                <div className="w-16 h-16 rounded-full bg-taupe-100 flex items-center justify-center mx-auto mb-4 text-2xl">⚠️</div>
-                <h3 className="text-lg font-bold text-luxury-ink mb-1.5">Không thể tải sản phẩm</h3>
-                <p className="text-sm text-taupe-500">Vui lòng thử lại sau</p>
+              <div className="py-32 flex flex-col items-center justify-center text-center border-t border-b border-taupe-200/60 mt-8">
+                <span className="font-serif text-4xl mb-4 italic text-taupe-400">
+                  Lỗi Hệ Thống
+                </span>
+                <p className="text-xs uppercase tracking-[0.2em] text-taupe-500">
+                  Không thể truy xuất dữ liệu lúc này.
+                </p>
               </div>
             ) : (
               <ProductList
                 products={products}
                 isLoading={isLoading}
-                emptyMessage="Không tìm thấy sản phẩm nào"
-                pagination={{ currentPage, totalPages, total, limit: filters.limit || 15 }}
-                onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
+                emptyMessage="Không có vật phẩm nào được tìm thấy."
+                pagination={{
+                  currentPage,
+                  totalPages,
+                  total,
+                  limit: filters.limit || 15,
+                }}
+                onPageChange={(page) =>
+                  setFilters((prev) => ({ ...prev, page }))
+                }
               />
             )}
           </main>
-
         </div>
       </div>
     </div>

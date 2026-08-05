@@ -57,10 +57,10 @@ export default function Orders() {
 
   if (userLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background flex items-center justify-center">
+      <div className="min-h-screen bg-cream-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-4" />
-          <p className="text-neutral-600">Äang táº£i...</p>
+          <p className="text-taupe-600">Đang tải...</p>
         </div>
       </div>
     );
@@ -68,10 +68,10 @@ export default function Orders() {
 
   if (isRedirectingAuth || !account) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background flex items-center justify-center">
+      <div className="min-h-screen bg-cream-50 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-neutral-700 font-medium">Vui long dang nhap de xem don hang</p>
-          <p className="text-sm text-neutral-500 mt-2">Dang chuyen huong toi trang dang nhap...</p>
+          <p className="text-taupe-700 font-medium">Vui lòng đăng nhập để xem đơn hàng</p>
+          <p className="text-sm text-taupe-500 mt-2">Đang chuyển hướng tới trang đăng nhập...</p>
         </div>
       </div>
     );
@@ -79,7 +79,7 @@ export default function Orders() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
+      <div className="min-h-screen bg-cream-50">
         <OrdersHeader onBack={() => router.back()} />
         <OrdersTabs
           tabs={ORDER_TABS}
@@ -89,12 +89,12 @@ export default function Orders() {
         />
 
         {/* Content */}
-        <Container maxWidth="8xl" paddingX="md" paddingY="lg">
+        <Container maxWidth="9xl" paddingX="md" paddingY="lg">
           {isLoading ? (
             <div className="flex justify-center py-20">
               <div className="text-center">
                 <IconLoader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
-                <p className="text-neutral-600">Äang táº£i Ä‘Æ¡n hÃ ng...</p>
+                <p className="text-taupe-600">Đang tải đơn hàng...</p>
               </div>
             </div>
           ) : filteredOrders.length === 0 ? (
@@ -115,19 +115,19 @@ export default function Orders() {
 
               {/* Pagination footer */}
               {filteredOrders.length > 0 && (
-                <div className="flex flex-col items-center gap-4 pt-4 pb-2 border-t border-border/50">
+                <div className="flex flex-col items-center gap-4 pt-4 pb-2 border-t-2 border-border">
                   {/* Page info */}
-                  <p className="text-xs text-muted-foreground tabular-nums">
-                    Hiá»ƒn thá»‹{" "}
-                    <span className="font-medium text-foreground">
-                      {(currentPage - 1) * PAGE_SIZE + 1}â€“
+                  <p className="text-xs text-taupe-500 tabular-nums">
+                    Hiển thị{" "}
+                    <span className="font-medium text-taupe-900">
+                      {(currentPage - 1) * PAGE_SIZE + 1}–
                       {Math.min(currentPage * PAGE_SIZE, filteredOrders.length)}
                     </span>{" "}
                     trong{" "}
-                    <span className="font-medium text-foreground">
+                    <span className="font-medium text-taupe-900">
                       {filteredOrders.length}
                     </span>{" "}
-                    Ä‘Æ¡n hÃ ng
+                    đơn hàng
                   </p>
 
                   {totalPages > 1 && (

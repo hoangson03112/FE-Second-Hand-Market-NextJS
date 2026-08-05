@@ -21,22 +21,22 @@ function ReviewCard({ review }: { review: ProductReview }) {
   const initials = getUserInitials(name);
 
   return (
-    <article className="rounded-2xl border border-taupe-200/80 bg-white/80 p-4 sm:p-5 shadow-sm">
+    <article className="rounded-[2px] border border-luxury-ink/10 bg-white p-4 sm:p-5">
       <div className="flex gap-3">
         {avatarUrl ? (
-          <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border border-taupe-200">
+          <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-[2px] border border-luxury-ink/10">
             <Image
               src={avatarUrl}
               alt=""
-              width={40}
-              height={40}
+              width={36}
+              height={36}
               unoptimized
               className="h-full w-full object-cover"
             />
           </div>
         ) : (
           <div
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-taupe-50 text-xs font-bold text-luxury-ink"
             aria-hidden
           >
             {initials || "?"}
@@ -44,20 +44,20 @@ function ReviewCard({ review }: { review: ProductReview }) {
         )}
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2 gap-y-1">
-            <p className="text-sm font-semibold text-taupe-900">{name}</p>
-            <span className="text-xs text-taupe-500">{formatDateOnly(review.createdAt)}</span>
+            <p className="text-xs font-bold text-luxury-ink">{name}</p>
+            <span className="text-[10px] text-taupe-400">{formatDateOnly(review.createdAt)}</span>
           </div>
           <div className="mt-1 flex gap-0.5">
             {[1, 2, 3, 4, 5].map((i) =>
               i <= review.rating ? (
-                <IconStarFilled key={i} className="h-4 w-4 text-amber-400" />
+                <IconStarFilled key={i} className="h-3.5 w-3.5 text-luxury-ink" />
               ) : (
-                <IconStar key={i} className="h-4 w-4 text-taupe-200" />
+                <IconStar key={i} className="h-3.5 w-3.5 text-taupe-200" />
               ),
             )}
           </div>
           {review.comment?.trim() ? (
-            <p className="mt-2 text-sm leading-relaxed text-taupe-700 whitespace-pre-wrap break-words">
+            <p className="mt-2 text-xs leading-relaxed text-taupe-600 whitespace-pre-wrap break-words">
               {review.comment.trim()}
             </p>
           ) : null}
@@ -79,27 +79,33 @@ export default function ProductReviewsSection({ productId }: ProductReviewsSecti
 
   if (isPending) {
     return (
-      <section className="mt-10 rounded-3xl border border-taupe-200 bg-cream-50/50 p-6 md:p-8">
-        <h2 className="text-lg font-bold text-taupe-900">Đánh giá từ người mua</h2>
-        <p className="mt-4 text-sm text-taupe-500">Đang tải đánh giá...</p>
+      <section className="pt-6">
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-luxury-ink">
+          Đánh giá từ người mua
+        </h2>
+        <p className="mt-2 text-xs text-taupe-400">Đang tải đánh giá...</p>
       </section>
     );
   }
 
   if (isError) {
     return (
-      <section className="mt-10 rounded-3xl border border-taupe-200 bg-cream-50/50 p-6 md:p-8">
-        <h2 className="text-lg font-bold text-taupe-900">Đánh giá từ người mua</h2>
-        <p className="mt-4 text-sm text-destructive">Không tải được đánh giá. Vui lòng thử lại sau.</p>
+      <section className="pt-6">
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-luxury-ink">
+          Đánh giá từ người mua
+        </h2>
+        <p className="mt-2 text-xs text-blush-600">Không tải được đánh giá. Vui lòng thử lại sau.</p>
       </section>
     );
   }
 
   if (reviews.length === 0) {
     return (
-      <section className="mt-10 rounded-3xl border border-taupe-200 bg-cream-50/50 p-6 md:p-8">
-        <h2 className="text-lg font-bold text-taupe-900">Đánh giá từ người mua</h2>
-        <p className="mt-4 text-sm text-taupe-600">
+      <section className="pt-6">
+      <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-luxury-ink mb-5">
+          Đánh giá từ người mua
+        </h2>
+        <p className="mt-2 text-xs text-neutral-500">
           Chưa có đánh giá nào. Sau khi mua và hoàn thành đơn, bạn có thể đánh giá để giúp người mua khác.
         </p>
       </section>
@@ -107,18 +113,24 @@ export default function ProductReviewsSection({ productId }: ProductReviewsSecti
   }
 
   return (
-    <section className="mt-10 rounded-3xl border border-taupe-200 bg-cream-50/50 p-6 md:p-8">
-      <h2 className="text-lg font-bold text-taupe-900">Đánh giá từ người mua</h2>
-      <p className="mt-1 text-sm text-taupe-600">
-        {data.pages[0].totalReviews.toLocaleString("vi-VN")} đánh giá đã xác minh mua hàng
-      </p>
-      <ul className="mt-6 space-y-4">
+    <section className="pt-6">
+      <div className="mb-4">
+      <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-luxury-ink mb-5">
+          Đánh giá từ người mua
+        </h2>
+        <p className="mt-0.5 text-xs text-neutral-500">
+          {data.pages[0].totalReviews.toLocaleString("vi-VN")} đánh giá đã xác minh mua hàng
+        </p>
+      </div>
+
+      <ul className="space-y-3">
         {reviews.map((r) => (
           <li key={r._id}>
             <ReviewCard review={r} />
           </li>
         ))}
       </ul>
+
       {hasNextPage ? (
         <div className="mt-6 flex justify-center">
           <Button
@@ -126,7 +138,7 @@ export default function ProductReviewsSection({ productId }: ProductReviewsSecti
             variant="outline"
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="rounded-full"
+            className="rounded-[2px] text-[11px] font-semibold uppercase tracking-[0.2em] px-6 border-luxury-ink/20 text-luxury-ink hover:bg-taupe-50"
           >
             {isFetchingNextPage ? "Đang tải..." : "Xem thêm đánh giá"}
           </Button>

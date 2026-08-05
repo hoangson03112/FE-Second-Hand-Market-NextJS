@@ -300,7 +300,6 @@ export default function HeroSection() {
       onMouseLeave={() => setIsHovered(false)}
       className="relative w-full min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
-      {/* Ambient glow orbs */}
       <div
         aria-hidden
         className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-taupe-200/30 blur-3xl animate-hero-glow"
@@ -330,7 +329,6 @@ export default function HeroSection() {
             "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, color-mix(in srgb, var(--luxury-ink) 4%, transparent) 100%)",
         }}
       />
-      {/* Film grain */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-[1] opacity-[0.035] mix-blend-multiply"
@@ -379,7 +377,29 @@ export default function HeroSection() {
             letterSpacing: "-0.03em",
           }}
         >
-          <span className="block">
+          <span className="block relative">
+            <motion.span
+              aria-hidden
+              className="pointer-events-none absolute rounded-full bg-accent/35"
+              style={{
+                width: "clamp(8rem, 5vw, 9rem)",
+                height: "clamp(8rem, 5vw, 9rem)",
+                left: "clamp(-2rem, -2.5vw, -0rem)",
+                top: "clamp(-4.5rem, -6vw, -2rem)",
+                zIndex: -1,
+              }}
+              initial={reducedMotion ? false : { opacity: 0, scale: 0.6 }}
+              animate={
+                textReady
+                  ? { opacity: 1, scale: 1 }
+                  : { opacity: 0, scale: 0.6 }
+              }
+              transition={{
+                duration: 0.7,
+                delay: reducedMotion ? 0 : 0.05,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            />
             <CharacterReveal
               text={heroLine1Part1}
               baseCharIndex={0}

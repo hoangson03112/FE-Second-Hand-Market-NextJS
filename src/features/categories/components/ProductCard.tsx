@@ -1,145 +1,102 @@
 "use client";
 
-import { IconMapPin, IconEye, IconPackage } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  IconMapPin,
+  IconArrowUpRight,
+  IconSparkles,
+} from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
-import { IProduct } from "@/types/product";
 import { formatPrice } from "@/utils/format/price";
-import { getProvinceName } from "@/utils";
-import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
+import type { IProduct } from "@/types/product";
 
 interface ProductCardProps {
   product: IProduct;
+  className?: string;
+  provinceName?: string;
 }
+export default function ProductCard({
+  product,
+  className,
+  provinceName,
+}: ProductCardProps) {
+  const imageUrl = product.avatar?.url ?? product.images?.[0]?.url;
 
-const CONDITION_LABEL: Record<string, { label: string; color: string }> = {
-  new: {
-    label: "Mới",
-    color: "bg-primary/10 text-primary border-primary/20",
-  },
-  like_new: {
-    label: "Như mới",
-    color: "bg-secondary text-foreground/80 border-border",
-  },
-  good: { label: "Tốt", color: "bg-muted text-foreground/70 border-border" },
-  fair: { label: "Khá", color: "bg-muted/60 text-muted-foreground border-border" },
-  poor: { label: "Cũ", color: "bg-taupe-100 text-taupe-600 border-taupe-200" },
-};
-
-export default function ProductCard({ product }: ProductCardProps) {
-  const provinceDisplay = getProvinceName(product.seller?.from_province_id);
-  const condition = CONDITION_LABEL[product.condition ?? ""];
-  const sellerDisplayName =
-    product.seller?.fullName || product.seller?.account?.fullName || undefined;
+  const displayProvince =
+    provinceName || product.seller?.province || "Toàn quốc";
 
   return (
     <Link
-      href={`/products/${product._id}/${product?.slug}`}
+      href={`/products/${product._id}/${product.slug ?? "san-pham"}`}
       className={cn(
-        "group relative flex flex-col bg-white overflow-hidden",
-        "border border-taupe-200/50 hover:border-luxury-ink/20 rounded-3xl",
-        "hover:shadow-xl hover:shadow-luxury-ink/5 hover:-translate-y-1 transition-all duration-300",
-        "animate-scale-in",
+        "group flex flex-col overflow-hidden border border-luxury-ink/8 bg-white p-3 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-luxury-ink/15 hover:shadow-[0_20px_40px_color-mix(in_srgb,var(--luxury-ink)_8%,transparent)]",
+        className,
       )}
+      style={{ borderRadius: "2px" }}
     >
-      {/* Image */}
-      <div className="relative aspect-square overflow-hidden bg-taupe-50">
-        {product.avatar?.url || product.images?.[0]?.url ? (
-          <Image
-            src={product.avatar?.url ?? product.images?.[0]?.url ?? "/file.svg"}
-            alt={product.name}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <IconPackage
-              className="w-16 h-16 text-taupe-300"
-              strokeWidth={1.5}
+      <div
+        className="relative aspect-square w-full overflow-hidden bg-cream-100"
+        style={{ borderRadius: "1px" }}
+      >
+        {imageUrl ? (
+          <>
+            <Image
+              src={imageUrl}
+              alt=""
+              fill
+              className="object-cover opacity-30 blur-lg scale-125"
+              aria-hidden="true"
             />
+
+            <div className="absolute inset-0 p-2">
+              <div className="relative h-full w-full">
+                <Image
+                  src={imageUrl}
+                  alt={product.name}
+                  fill
+                  className="object-contain drop-shadow-xs transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 640px) 50vw, 20vw"
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="flex h-full items-center justify-center text-neutral-400">
+            <IconSparkles className="h-8 w-8 opacity-40" />
           </div>
         )}
 
-        {/* Badges top-left */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-          {condition && (
-            <span
-              className={cn(
-                "px-2.5 py-1 rounded-xl border text-[11px] font-bold tracking-wide backdrop-blur-md shadow-sm",
-                condition.color,
-              )}
-            >
-              {condition.label}
-            </span>
-          )}
-          {(product.stock ?? 0) === 1 && (
-            <span className="px-2.5 py-1 rounded-xl bg-destructive text-destructive-foreground text-[11px] font-bold tracking-wide backdrop-blur-md shadow-sm">
-              Còn 1
-            </span>
-          )}
-        </div>
+        <span className="absolute left-2 top-2 z-10 bg-luxury-ink/75 px-2 py-0.5 text-xs font-medium uppercase tracking-[0.16em] text-white backdrop-blur-md">
+          {product.category?.name ?? "Mới"}
+        </span>
       </div>
 
-      {/* Info */}
-      <div className="flex flex-col flex-1 p-5">
-        <h3 className="text-[15px] font-medium text-luxury-ink mb-2 line-clamp-2 group-hover:text-accent transition-colors leading-[1.4] min-h-[42px]">
-          {product.name}
-        </h3>
+      <div className="mt-2.5 flex flex-1 flex-col justify-between px-0.5 pb-0.5">
+        <div>
+          <div className="flex items-center gap-1 text-[10px] font-medium text-neutral-500 uppercase tracking-[0.14em]">
+            <IconMapPin className="h-3 w-3 text-blush-500 shrink-0" />
+            <span className="line-clamp-1">{displayProvince}</span>
+          </div>
 
-        {/* Price */}
-        <div className="mb-3">
-          {product.hasPersonalDiscount && product.originalPrice ? (
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center gap-2">
-                <span className="text-xl font-bold text-luxury-ink leading-none">
-                  {formatPrice(product.price)}
-                </span>
-                <span className="px-2 py-0.5 text-[10px] font-bold text-accent-foreground bg-accent rounded-md uppercase tracking-wider">
-                  Deal
-                </span>
-              </div>
-              <span className="text-sm text-taupe-400 line-through leading-none">
-                {formatPrice(product.originalPrice)}
-              </span>
-            </div>
-          ) : (
-            <span className="text-xl font-bold text-luxury-ink leading-none">
-              {formatPrice(product.price)}
-            </span>
-          )}
+          <h3 className="mt-1.5 line-clamp-2 text-xs font-medium text-foreground leading-snug transition-colors group-hover:text-primary md:text-sm">
+            {product.name}
+          </h3>
         </div>
 
-        {/* Meta info */}
-        <div className="flex items-center justify-between text-[12px] text-taupe-500 mt-auto pt-4 border-t border-taupe-200/50">
-          <div className="flex items-center gap-2 min-w-0">
-            <AvatarOrInitials
-              avatar={product.seller?.avatar as { url?: string } | undefined}
-              fullName={sellerDisplayName}
-              size={20}
-              className="flex-shrink-0"
-            />
-            {provinceDisplay ? (
-              <span className="flex items-center gap-1 truncate">
-                <IconMapPin className="w-3.5 h-3.5 shrink-0" strokeWidth={2} />
-                <span className="max-w-[80px] truncate">{provinceDisplay}</span>
-              </span>
-            ) : (
-              sellerDisplayName && (
-                <span className="truncate max-w-[100px]">{sellerDisplayName}</span>
-              )
-            )}
+        {/* Giá và nút bấm (Action)[cite: 15] */}
+        <div className="mt-3 flex items-center justify-between border-t border-luxury-ink/6 pt-3">
+          <span className="text-sm font-normal tracking-tight text-primary md:text-base group-hover:text-blush-600">
+            {formatPrice(product.price)}
+          </span>
+          <div
+            className="flex h-7 w-7 items-center justify-center border border-luxury-ink/10 text-luxury-ink transition-all duration-300 group-hover:border-luxury-ink group-hover:bg-luxury-ink group-hover:text-white"
+            style={{ borderRadius: "999px" }}
+          >
+            <IconArrowUpRight className="h-3.5 w-3.5" />
           </div>
-          {(product.views ?? 0) > 0 && (
-            <div className="flex items-center gap-1 ml-auto">
-              <IconEye className="w-3.5 h-3.5" strokeWidth={2} />
-              <span>{product.views}</span>
-            </div>
-          )}
         </div>
       </div>
     </Link>
   );
 }
-

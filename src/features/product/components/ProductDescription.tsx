@@ -4,15 +4,17 @@ interface ProductDescriptionProps {
   description: string;
 }
 
-export default function ProductDescription({ description }: ProductDescriptionProps) {
+export default function ProductDescription({
+  description,
+}: ProductDescriptionProps) {
   return (
-    <div className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl p-6 shadow-md">
-      <h2 className="text-lg font-semibold text-taupe-900 mb-4 pb-3 border-b-2 border-border uppercase tracking-wider">
-        Mô Tả Sản Phẩm
+    <div className="pt-2">
+      <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-luxury-ink mb-5">
+        Mô tả sản phẩm
       </h2>
-      <div>
-        <p className="text-taupe-700 leading-relaxed whitespace-pre-line text-sm">{description || "Không có mô tả"}</p>
-      </div>
+      <p className="text-sm text-neutral-500 leading-[1.8] whitespace-pre-line">
+        {description || "Chưa có mô tả cho sản phẩm này."}
+      </p>
     </div>
   );
 }

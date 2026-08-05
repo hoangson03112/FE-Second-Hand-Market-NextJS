@@ -60,7 +60,7 @@ export const metadata: Metadata = {
       "Mua bán đồ cũ uy tín, chất lượng. Tiết kiệm chi phí, bảo vệ môi trường.",
     images: [
       {
-        url: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
+        url: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1784993079/Gemini_Generated_Image_rg4xa9rg4xa9rg4x_1_mtjahn.png",
         width: 1200,
         height: 630,
         alt: "Eco Marketplace",
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     description:
       "Mua bán đồ cũ uy tín, chất lượng. Tiết kiệm chi phí, bảo vệ môi trường.",
     images: [
-      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
+      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1784993079/Gemini_Generated_Image_rg4xa9rg4xa9rg4x_1_mtjahn.png",
     ],
     creator: "@ecomarketplace",
   },
@@ -84,11 +84,11 @@ export const metadata: Metadata = {
     canonical: "https://www.ecomarket.io.vn",
   },
   icons: {
-    icon: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
+    icon: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1784993079/Gemini_Generated_Image_rg4xa9rg4xa9rg4x_1_mtjahn.png",
     shortcut:
-      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
+      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1784993079/Gemini_Generated_Image_rg4xa9rg4xa9rg4x_1_mtjahn.png",
     apple:
-      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png",
+      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1784993079/Gemini_Generated_Image_rg4xa9rg4xa9rg4x_1_mtjahn.png",
   },
 };
 
@@ -100,7 +100,8 @@ export default function RootLayout({
   return (
     <html lang="vi" className={`h-full ${geist.variable}`}>
       <body
-className={`h-full overflow-hidden bg-background text-foreground antialiased ${droidSerifWGL.variable}`}      >
+        className={`h-full overflow-hidden bg-background text-foreground antialiased ${droidSerifWGL.variable}`}
+      >
         <Providers>
           <ToastProvider>
             <RealtimeNotificationToast />

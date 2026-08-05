@@ -82,8 +82,8 @@ export default function Checkout() {
 
   return (
     <PageContainer withBackground={false}>
-      <div className="min-h-screen bg-gray-50">
-        <Container as="main" maxWidth="8xl" paddingX="md" paddingY="lg">
+      <div className="min-h-screen bg-luxury-ivory">
+        <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg">
           <CheckoutHeader onBack={handleBack} />
 
           <AddressModal
@@ -99,10 +99,10 @@ export default function Checkout() {
             onDeleteAddress={handleDeleteAddress}
           />
 
-          {/* Delivery address - áº¨n khi toÃ n bá»™ sáº£n pháº©m giao dá»‹ch trá»±c tiáº¿p */}
+          {/* Delivery address */}
           {showAddressSection && (
-            <div className="bg-white rounded-lg border border-gray-200 shadow-md p-5 mb-4">
-              <h2 className="text-lg font-medium text-gray-900 mb-4 pb-3 border-b border-gray-200">
+            <div className="bg-white rounded-[2px] border border-luxury-ink/10 p-6 mb-6">
+              <h2 className="text-xl text-luxury-ink mb-5 pb-4 border-b border-luxury-ink/10" style={{ fontFamily: "var(--font-droid-serif), serif" }}>
                 Äá»‹a Chá»‰ Nháº­n HÃ ng
               </h2>
               <AddressSection
@@ -114,19 +114,19 @@ export default function Checkout() {
 
           {/* Multi-seller notice */}
           {isMultiSeller && (
-            <div className="flex items-start gap-3 p-4 mb-4 bg-primary/8 border border-primary/20 rounded-lg">
-              <IconInfoCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-4 p-5 mb-6 bg-taupe-50/50 border border-luxury-ink/10 rounded-[2px]">
+              <IconInfoCircle className="w-5 h-5 text-luxury-ink flex-shrink-0 mt-0.5" />
               <p className="text-sm text-primary/90">
                 Báº¡n Ä‘ang Ä‘áº·t hÃ ng tá»« <strong>{sellerGroups.length} ngÆ°á»i bÃ¡n</strong>. Má»—i Ä‘Æ¡n hÃ ng sáº½ Ä‘Æ°á»£c xá»­ lÃ½ riÃªng biá»‡t vÃ  cÃ³ thá»ƒ Ä‘Æ°á»£c giao vÃ o cÃ¡c thá»i Ä‘iá»ƒm khÃ¡c nhau. Báº¡n cÃ³ thá»ƒ chá»n phÆ°Æ¡ng thá»©c thanh toÃ¡n khÃ¡c nhau cho tá»«ng Ä‘Æ¡n.
               </p>
             </div>
           )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left column: seller sections */}
-            <div className="lg:col-span-2 space-y-4">
+            <div className="lg:col-span-2 space-y-6">
               {sellerGroups.length === 0 ? (
-                <div className="bg-white rounded-lg border border-gray-200 shadow-md p-10 text-center text-gray-500">
+                <div className="bg-white rounded-[2px] border border-luxury-ink/10 p-12 text-center text-taupe-600 text-sm">
                   Giá» hÃ ng trá»‘ng. Vui lÃ²ng thÃªm sáº£n pháº©m trÆ°á»›c khi thanh toÃ¡n.
                 </div>
               ) : (
@@ -150,16 +150,16 @@ export default function Checkout() {
                 ))
               )}
 
-              {/* Global shipping error / loading - chá»‰ hiá»‡n khi cÃ³ GHN */}
+              {/* Global shipping error / loading */}
               {!allLocalPickup && shippingError && (
-                <div className="p-4 bg-destructive/8 border border-destructive/20 rounded-lg text-sm text-destructive">
+                <div className="p-4 bg-blush-50/50 border border-blush-200 rounded-[2px] text-[11px] uppercase tracking-wide font-semibold text-blush-600">
                   {shippingError}
                 </div>
               )}
 
               {!allLocalPickup && isCalculatingShipping && (
-                <div className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200 shadow-md">
-                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary border-t-transparent" />
+                <div className="flex items-center gap-4 p-5 bg-white rounded-[2px] border border-luxury-ink/10">
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-luxury-ink/20 border-t-luxury-ink" />
                   <span className="text-sm text-gray-600">Äang tÃ­nh phÃ­ váº­n chuyá»ƒn...</span>
                 </div>
               )}
@@ -167,8 +167,8 @@ export default function Checkout() {
 
             {/* Right column: summary + checkout */}
             <div className="lg:col-span-1">
-              <div className="sticky top-8 space-y-4">
-                <div className="bg-white rounded-lg border border-gray-200 shadow-md">
+              <div className="sticky top-8 space-y-6">
+                <div className="bg-white rounded-[2px] border border-luxury-ink/10">
                   <CheckoutSummary
                     sellerGroups={sellerGroups}
                     subtotal={subtotal}

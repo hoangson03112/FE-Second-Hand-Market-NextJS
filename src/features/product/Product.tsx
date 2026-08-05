@@ -1,6 +1,11 @@
 "use client";
 
-import { IconArrowLeft, IconTruck, IconMapPin } from "@tabler/icons-react";
+import {
+  IconArrowLeft,
+  IconTruck,
+  IconMapPin,
+  IconAlertCircle,
+} from "@tabler/icons-react";
 import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -24,8 +29,10 @@ import {
 } from "./components";
 import { useProduct, useProductReviews } from "@/hooks";
 import { useProductActions } from "./hooks/useProductActions";
-import type { ProductProps } from "./Product.types";
-import { PageContainer, Container } from "@/components/layout/Container";
+
+interface ProductProps {
+  id: string;
+}
 
 export default function Product({ id }: ProductProps) {
   const router = useRouter();
@@ -33,10 +40,10 @@ export default function Product({ id }: ProductProps) {
   const { data: product, isLoading, error } = useProduct(id);
   const { data: productReviewsData } = useProductReviews(product?._id ?? "");
 
-  // Invalidate product list khi vÃ o detail â†’ quay láº¡i list sáº½ refetch stock má»›i nháº¥t
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: queryKeys.products.lists() });
   }, [id, queryClient]);
+
   const { data: account } = useUser();
   const [quantity, setQuantity] = useState(1);
   const [showReportModal, setShowReportModal] = useState(false);
@@ -61,39 +68,42 @@ export default function Product({ id }: ProductProps) {
     [product?.stock],
   );
 
-  // Loading state
+  /* ── MÀN HÌNH LOADING ── */
   if (isLoading) {
     return (
-      <PageContainer withBackground={false}>
-        <Container
-          as="main"
-          maxWidth="8xl"
-          paddingX="md"
-          paddingY="lg"
-          className="text-center"
-        >
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-6"></div>
-          <p className="text-neutral-600 text-lg">
-            Äang táº£i thÃ´ng tin sáº£n pháº©m...
+      <div className="min-h-screen bg-luxury-ivory flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-8 h-8 border-2 border-luxury-ink/20 border-t-luxury-ink rounded-full animate-spin" />
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-taupe-500">
+            Đang tải thông tin sản phẩm...
           </p>
-        </Container>
-      </PageContainer>
+        </div>
+      </div>
     );
   }
 
-  // Error or not found
+  /* ── MÀN HÌNH LỖI / KHÔNG TÌM THẤY SẢN PHẨM ── */
   if (error || !product) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background via-cream-50/30 to-background">
-        <main className="max-w-8xl mx-auto px-4 py-20 text-center">
-          <p className="text-neutral-600 text-lg">KhÃ´ng tÃ¬m tháº¥y sáº£n pháº©m</p>
+      <div className="min-h-screen bg-luxury-ivory flex items-center justify-center p-4">
+        <div className="max-w-md w-full text-center py-12 px-8 rounded-[2px] border border-luxury-ink/10 bg-white">
+          <IconAlertCircle className="w-12 h-12 text-taupe-400 mx-auto mb-4 stroke-[1.5]" />
+          <h2
+            className="text-xl text-luxury-ink mb-2"
+            style={{ fontFamily: "var(--font-droid-serif), serif" }}
+          >
+            Không tìm thấy sản phẩm
+          </h2>
+          <p className="text-sm text-taupe-600 mb-8 leading-relaxed">
+            Sản phẩm này có thể đã bị xóa hoặc không tồn tại trên hệ thống.
+          </p>
           <Link
             href="/"
-            className="text-primary hover:underline mt-4 inline-block"
+            className="inline-flex items-center justify-center h-12 px-8 rounded-[2px] bg-luxury-ink text-white text-[11px] uppercase tracking-[0.2em] font-semibold hover:bg-luxury-ink/90 transition-colors"
           >
-            Quay láº¡i trang chá»§
+            Quay lại trang chủ
           </Link>
-        </main>
+        </div>
       </div>
     );
   }
@@ -102,36 +112,40 @@ export default function Product({ id }: ProductProps) {
   const averageRating = reviewSummary?.avgRating ?? product.avgRating ?? 0;
   const totalReviews = reviewSummary?.totalReviews ?? product.totalReviews ?? 0;
 
-  // Convert attributes to details format
+  // Chuyển đổi attributes thành dạng details
   const productDetails =
     product.attributes?.map(
       (attr: IAttribute) => `${attr.key}: ${attr.value}`,
     ) || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cream-50 to-taupe-50/30">
-      <main className="max-w-8xl mx-auto px-4 py-6">
+    <div className="min-h-screen bg-luxury-ivory text-luxury-ink font-sans selection:bg-luxury-ink selection:text-white">
+      <main className="max-w-9xl mx-auto px-4 md:px-8 py-10">
+        {/* NÚT QUAY LẠI */}
         <button
+                style={{ fontFamily: "var(--font-droid-serif), serif" }}
+
           onClick={() => router.back()}
-          className="inline-flex items-center gap-2 text-taupe-600 hover:text-primary mb-4 text-sm"
+          className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-foreground hover:text-luxury-ink transition-colors mb-8 group"
         >
-          <IconArrowLeft className="h-4 w-4" />
-          Trá»Ÿ láº¡i
+          <IconArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
+          Trở lại
         </button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-          <div className="gap-4 flex-col flex">
-            {/* Gallery Section */}
+        {/* LAYOUT CHÍNH: GALLERY & THÔNG TIN SẢN PHẨM */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 mb-14">
+          {/* CỘT TRÁI: Gallery Hình Ảnh & Thông Số Kỹ Thuật */}
+          <div className="lg:col-span-6 xl:col-span-5 space-y-8">
             <ProductGalleryNew
               images={product.images || [product.avatar]}
               productName={product.name}
-              condition={product.condition || "ÄÃ£ sá»­ dá»¥ng"}
+              condition={product.condition || "Đã sử dụng"}
             />
             <ProductSpecifications details={productDetails} />
           </div>
 
-          {/* Details Section */}
-          <div className="flex flex-col">
+          {/* CỘT PHẢI: Thông Tin Chi Tiết & Hành Động */}
+          <div className="lg:col-span-6 xl:col-span-7 flex flex-col space-y-6">
             <ProductHeader
               name={product.name}
               averageRating={averageRating}
@@ -154,41 +168,45 @@ export default function Product({ id }: ProductProps) {
             <ProductPrice
               price={product.price}
               formattedPrice={
-                product.price ? formatPrice(product.price) : "LiÃªn há»‡"
+                product.price ? formatPrice(product.price) : "Liên hệ"
               }
               originalPrice={product.originalPrice}
               hasPersonalDiscount={product.hasPersonalDiscount}
             />
 
+            {/* TRẠNG THÁI KHO HÀNG */}
             {(product.stock ?? 0) === 0 && (
-              <div className="rounded-xl bg-destructive/8 text-destructive px-4 py-3 text-sm font-semibold my-3 border-2 border-destructive/20 shadow-sm">
-                Háº¿t hÃ ng
+              <div className="inline-flex items-center justify-center rounded-[2px] bg-taupe-50/50 text-taupe-500 border border-luxury-ink/10 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.1em]">
+                Hết hàng
               </div>
             )}
             {(product.stock ?? 0) === 1 && (
-              <div className="rounded-xl bg-gradient-to-r from-orange-50 to-orange-100 text-orange-700 px-4 py-3 text-sm font-semibold my-3 border-2 border-orange-200 shadow-sm">
-                Chá»‰ cÃ²n 1 sáº£n pháº©m
+              <div className="inline-flex items-center justify-center rounded-[2px] bg-blush-50 text-blush-600 border border-blush-200 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.1em]">
+                ⚡ Chỉ còn 1 sản phẩm duy nhất
               </div>
             )}
             {(product.stock ?? 0) > 1 && (
-              <div className="text-sm text-taupe-600 mb-3">
-                CÃ²n {product.stock} sáº£n pháº©m
+              <div className="text-[11px] font-semibold uppercase tracking-wide text-taupe-500 mt-2">
+                Kho hàng:{" "}
+                <span className="font-bold text-luxury-ink">
+                  {product.stock} sản phẩm
+                </span>
               </div>
             )}
 
-            {/* Delivery Options */}
+            {/* HÌNH THỨC GIAO HÀNG */}
             {product.deliveryOptions && (
-              <div className="flex flex-wrap gap-2 mb-3">
+              <div className="flex flex-wrap gap-3 pt-2">
                 {product.deliveryOptions.codShipping && (
-                  <div className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1.5 text-sm font-medium">
-                    <IconTruck className="h-4 w-4" />
-                    Giao hÃ ng táº­n nÆ¡i (COD)
+                  <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-[11px] uppercase tracking-wide font-semibold">
+                    <IconTruck className="h-4 w-4 text-taupe-500" />
+                    Giao hàng tận nơi (COD)
                   </div>
                 )}
                 {product.deliveryOptions.localPickup && (
-                  <div className="inline-flex items-center gap-1.5 rounded-lg bg-green-50 text-green-700 border border-green-200 px-3 py-1.5 text-sm font-medium">
-                    <IconMapPin className="h-4 w-4" />
-                    Nháº­n hÃ ng trá»±c tiáº¿p
+                  <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-[11px] uppercase tracking-wide font-semibold">
+                    <IconMapPin className="h-4 w-4 text-taupe-500" />
+                    Nhận hàng trực tiếp
                   </div>
                 )}
               </div>
@@ -207,27 +225,29 @@ export default function Product({ id }: ProductProps) {
               onBuyNow={handlePurchaseNow}
               onAddToCart={handleAddToCart}
             />
-
-            {/* <ProductGuarantees /> */}
           </div>
         </div>
 
-        <ProductDescription description={product.description} />
+        {/* MÔ TẢ & ĐÁNH GIÁ SẢN PHẨM */}
+        <div className="space-y-12 border-t border-luxury-ink/10 pt-12">
+          <ProductDescription description={product.description} />
+          <ProductReviewsSection productId={product._id} />
+        </div>
 
-        <ProductReviewsSection productId={product._id} />
-
+        {/* NÚT BÁO CÁO */}
         {account && (
-          <div className="mt-6 text-center">
+          <div className="mt-14 text-center pb-8">
             <button
               type="button"
               onClick={() => setShowReportModal(true)}
-              className="text-sm text-muted-foreground hover:text-destructive underline"
+              className="text-[11px] uppercase tracking-[0.2em] font-semibold text-taupe-400 hover:text-blush-600 transition-colors underline underline-offset-4"
             >
-              BÃ¡o cÃ¡o sáº£n pháº©m nÃ y
+              Báo cáo sản phẩm này
             </button>
           </div>
         )}
 
+        {/* MODAL BÁO CÁO */}
         {showReportModal && (
           <ReportProductModal
             productId={product._id}

@@ -67,8 +67,8 @@ export default function Login() {
                 </h1>
 
                 <p className="text-lg md:text-xl mb-12 max-w-md text-foreground/70 font-medium">
-                  Đăng nhập để tiếp tục tham gia mạng lưới mua sắm xanh, tiết kiệm
-                  và bền vững cùng chúng tôi.
+                  Đăng nhập để tiếp tục tham gia mạng lưới mua sắm xanh, tiết
+                  kiệm và bền vững cùng chúng tôi.
                 </p>
 
                 {/* List tính năng thiết kế kiểu Minimalist Luxury */}
@@ -115,7 +115,7 @@ export default function Login() {
                 <div className="lg:hidden flex justify-center mb-8">
                   <Link href="/" className="inline-block">
                     <Image
-                      src="https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png"
+                      src="https://res.cloudinary.com/dqvtj4uxo/image/upload/v1784993079/Gemini_Generated_Image_rg4xa9rg4xa9rg4x_1_mtjahn.png"
                       alt="Eco Market"
                       width={100}
                       height={100}
@@ -137,7 +137,6 @@ export default function Login() {
                     >
                       Đăng nhập
                     </h2>
-                    <p className="text-taupe-600">Nhập email hoặc tên đăng nhập và mật khẩu để tiếp tục</p>
                   </div>
                   <LoginForm
                     formData={formData}

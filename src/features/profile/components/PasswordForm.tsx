@@ -40,9 +40,9 @@ export function PasswordForm({
     if (/\d/.test(password)) strength++;
     if (/[!@#$%^&*]/.test(password)) strength++;
 
-    if (strength <= 1) return { strength, label: "Yếu", color: "text-destructive" };
-    if (strength <= 3) return { strength, label: "Trung bình", color: "text-primary/70" };
-    return { strength, label: "Mạnh", color: "text-primary" };
+    if (strength <= 1) return { strength, label: "Yếu", color: "text-blush-600" };
+    if (strength <= 3) return { strength, label: "Trung bình", color: "text-luxury-ink/70" };
+    return { strength, label: "Mạnh", color: "text-luxury-ink" };
   };
 
   const passwordStrength = getPasswordStrength(formData.newPassword);
@@ -51,39 +51,39 @@ export function PasswordForm({
 
   return (
     <div>
-      <div className="px-6 py-5 border-b border-border">
-        <h2 className="text-xl font-bold text-foreground">{title}</h2>
-        <p className="text-sm text-muted-foreground mt-0.5">
+      <div className="px-6 py-6 border-b border-luxury-ink/10">
+        <h2 className="text-2xl text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif" }}>{title}</h2>
+        <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-taupe-500 mt-2">
           {description}
         </p>
       </div>
 
-      <div className="p-6 space-y-4">
-        <div className="p-4 rounded-xl bg-primary/5 border border-primary/10">
+      <div className="p-6 lg:p-8 space-y-4">
+        <div className="p-4 rounded-[2px] bg-taupe-50/50 border border-luxury-ink/10">
           <div className="flex gap-3">
-            <IconShieldCheck className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <IconShieldCheck className="w-5 h-5 text-luxury-ink shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-sm font-medium text-foreground">Mẹo bảo mật</h4>
-              <ul className="text-xs text-muted-foreground mt-1 space-y-0.5">
+              <h4 className="text-xs uppercase tracking-wide font-semibold text-luxury-ink">Mẹo bảo mật</h4>
+              <ul className="text-xs text-luxury-ink/80 mt-2 space-y-1">
                 <li>• Ít nhất {PASSWORD_MIN_LENGTH} ký tự; nên có chữ hoa, thường, số, ký tự đặc biệt</li>
                 <li>• Không dùng thông tin cá nhân dễ đoán, không chia sẻ mật khẩu</li>
               </ul>
             </div>
           </div>
         </div>
-        <p className="text-xs text-muted-foreground p-3 rounded-xl bg-muted/50 border border-border">
+        <p className="text-xs text-luxury-ink/80 p-3 rounded-[2px] bg-taupe-50/50 border border-luxury-ink/10">
           {isGoogleUser
             ? "Sau khi thiết lập, bạn vẫn có thể đăng nhập bằng Google. Mật khẩu dùng khi đăng nhập bằng email."
             : "Sau khi đổi mật khẩu bạn sẽ nhận email xác nhận. Nếu không phải bạn thực hiện, hãy liên hệ hỗ trợ."}
         </p>
       </div>
 
-      <form onSubmit={onSubmit} className="p-6 pt-0">
+      <form onSubmit={onSubmit} className="p-6 lg:p-8 pt-0 lg:pt-0">
         <div className="space-y-6 max-w-3xl">
           {!isGoogleUser && (
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Mật khẩu hiện tại <span className="text-destructive">*</span>
+              <label className="block text-[11px] uppercase tracking-wide font-semibold text-luxury-ink mb-2">
+                Mật khẩu hiện tại <span className="text-blush-600">*</span>
               </label>
               <div className="relative">
                 <input
@@ -91,15 +91,15 @@ export function PasswordForm({
                   name="oldPassword"
                   value={formData.oldPassword}
                   onChange={onChange}
-                  className="w-full h-11 pl-10 pr-16 rounded-xl border border-border bg-background text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                  className="w-full h-11 pl-10 pr-16 rounded-[2px] border border-luxury-ink/20 bg-transparent text-sm outline-none focus:border-luxury-ink focus:ring-1 focus:ring-luxury-ink transition-all"
                   placeholder="Nhập mật khẩu hiện tại"
                   required
                 />
-                <IconLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                <IconLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-taupe-400 pointer-events-none" />
                 <button
                   type="button"
                   onClick={() => setShowOldPassword(!showOldPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-primary hover:text-primary/80"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-wide font-semibold text-luxury-ink hover:text-luxury-ink/70"
                 >
                   {showOldPassword ? "Ẩn" : "Hiện"}
                 </button>
@@ -108,8 +108,8 @@ export function PasswordForm({
           )}
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              {isGoogleUser ? "Mật khẩu" : "Mật khẩu mới"} <span className="text-destructive">*</span>
+            <label className="block text-[11px] uppercase tracking-wide font-semibold text-luxury-ink mb-2">
+              {isGoogleUser ? "Mật khẩu" : "Mật khẩu mới"} <span className="text-blush-600">*</span>
             </label>
             <div className="relative">
               <input
@@ -117,34 +117,34 @@ export function PasswordForm({
                 name="newPassword"
                 value={formData.newPassword}
                 onChange={onChange}
-                className="w-full h-11 pl-10 pr-16 rounded-xl border border-border bg-background text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                className="w-full h-11 pl-10 pr-16 rounded-[2px] border border-luxury-ink/20 bg-transparent text-sm outline-none focus:border-luxury-ink focus:ring-1 focus:ring-luxury-ink transition-all"
                 placeholder={isGoogleUser ? `Chọn mật khẩu (tối thiểu ${PASSWORD_MIN_LENGTH} ký tự)` : `Tối thiểu ${PASSWORD_MIN_LENGTH} ký tự`}
                 required
                 minLength={PASSWORD_MIN_LENGTH}
               />
-              <IconLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+              <IconLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-taupe-400 pointer-events-none" />
               <button
                 type="button"
                 onClick={() => setShowNewPassword(!showNewPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-primary hover:text-primary/80"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-wide font-semibold text-luxury-ink hover:text-luxury-ink/70"
               >
                 {showNewPassword ? "Ẩn" : "Hiện"}
               </button>
             </div>
             {/* Password strength */}
             {formData.newPassword && (
-              <div className="mt-2 space-y-1.5">
+              <div className="mt-3 space-y-1.5">
                 <div className="flex items-center gap-2">
-                  <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
+                  <div className="flex-1 h-1 bg-taupe-200 rounded-[1px] overflow-hidden">
                     <div 
                       className={`h-full transition-all duration-300 ${
-                        passwordStrength.strength <= 1 ? "bg-destructive w-1/3" :
-                        passwordStrength.strength <= 3 ? "bg-primary/60 w-2/3" :
-                        "bg-primary w-full"
+                        passwordStrength.strength <= 1 ? "bg-blush-600 w-1/3" :
+                        passwordStrength.strength <= 3 ? "bg-luxury-ink/60 w-2/3" :
+                        "bg-luxury-ink w-full"
                       }`}
                     />
                   </div>
-                  <span className={`text-xs font-medium ${passwordStrength.color}`}>
+                  <span className={`text-[10px] uppercase tracking-wide font-medium ${passwordStrength.color}`}>
                     {passwordStrength.label}
                   </span>
                 </div>
@@ -153,8 +153,8 @@ export function PasswordForm({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              Xác nhận {isGoogleUser ? "mật khẩu" : "mật khẩu mới"} <span className="text-destructive">*</span>
+            <label className="block text-[11px] uppercase tracking-wide font-semibold text-luxury-ink mb-2">
+              Xác nhận {isGoogleUser ? "mật khẩu" : "mật khẩu mới"} <span className="text-blush-600">*</span>
             </label>
             <div className="relative">
               <input
@@ -162,44 +162,44 @@ export function PasswordForm({
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={onChange}
-                className="w-full h-11 pl-10 pr-16 rounded-xl border border-border bg-background text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                className="w-full h-11 pl-10 pr-16 rounded-[2px] border border-luxury-ink/20 bg-transparent text-sm outline-none focus:border-luxury-ink focus:ring-1 focus:ring-luxury-ink transition-all"
                 placeholder="Nhập lại mật khẩu mới"
                 required
               />
-              <IconLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+              <IconLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-taupe-400 pointer-events-none" />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-primary hover:text-primary/80"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-wide font-semibold text-luxury-ink hover:text-luxury-ink/70"
               >
                 {showConfirmPassword ? "Ẩn" : "Hiện"}
               </button>
             </div>
             {formData.confirmPassword && (
-              <div className="mt-2 flex items-center gap-1.5 text-xs">
+              <div className="mt-3 flex items-center gap-1.5 text-xs">
                 {passwordsMatch ? (
                   <>
-                    <IconCircleCheck className="w-3.5 h-3.5 text-primary" />
-                    <span className="text-primary">Mật khẩu khớp</span>
+                    <IconCircleCheck className="w-3.5 h-3.5 text-luxury-ink" />
+                    <span className="text-luxury-ink font-medium">Mật khẩu khớp</span>
                   </>
                 ) : (
                   <>
-                    <IconAlertTriangle className="w-3.5 h-3.5 text-destructive" />
-                    <span className="text-destructive">Mật khẩu không khớp</span>
+                    <IconAlertTriangle className="w-3.5 h-3.5 text-blush-600" />
+                    <span className="text-blush-600 font-medium">Mật khẩu không khớp</span>
                   </>
                 )}
               </div>
             )}
           </div>
 
-          <div className="border-t border-border pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <p className="text-sm text-muted-foreground">
-              <span className="text-destructive">*</span> Bắt buộc
+          <div className="border-t border-luxury-ink/10 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <p className="text-xs text-muted-foreground">
+              <span className="text-blush-600">*</span> Bắt buộc
             </p>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="h-11 px-6 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
+              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.2em] text-[11px] font-semibold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
             >
               {isSubmitting ? (
                 <>

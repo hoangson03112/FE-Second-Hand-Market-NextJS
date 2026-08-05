@@ -39,8 +39,6 @@ export default function Register() {
         <div className="w-full max-w-8xl mx-auto">
           <div className="relative min-h-[85vh] w-full flex items-center justify-center overflow-hidden">
             <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-24 items-center w-full max-w-6xl relative z-10">
-              
-              {/* BRANDING TƯƠNG TỰ MÀN LOGIN */}
               <div className="flex flex-col justify-center px-2 lg:px-0 pointer-events-none">
                 <h1
                   className="mb-8 text-luxury-ink drop-shadow-sm"
@@ -62,7 +60,8 @@ export default function Register() {
                 </h1>
 
                 <p className="text-lg md:text-xl mb-12 max-w-md text-foreground/70 font-medium">
-                  Đăng ký để bắt đầu mua bán đồ cũ thông minh và bảo vệ môi trường cùng chúng tôi.
+                  Đăng ký để bắt đầu mua bán đồ cũ thông minh và bảo vệ môi
+                  trường cùng chúng tôi.
                 </p>
 
                 <div className="space-y-6 hidden md:block">
@@ -117,7 +116,7 @@ export default function Register() {
                     />
                   </Link>
                 </div>
-                <div className="bg-white/90 backdrop-blur-md border border-gray-100 rounded-3xl shadow-2xl shadow-taupe-900/10 p-8 sm:p-10 lg:p-12 space-y-8 max-h-[calc(100vh-8rem)] overflow-y-auto">
+                <div className="bg-white/90 backdrop-blur-md border border-gray-100 shadow-2xl shadow-taupe-900/10 p-8 sm:p-10 lg:p-12 space-y-8 max-h-[calc(100vh-8rem)] overflow-y-auto">
                   <div className="space-y-1 text-center">
                     <h2
                       style={{
@@ -130,9 +129,8 @@ export default function Register() {
                     >
                       Đăng ký
                     </h2>
-                    <p className="text-taupe-600">Tạo tài khoản mới để bắt đầu</p>
                   </div>
-                  
+
                   <RegisterForm
                     formData={formData}
                     isLoading={isLoading}

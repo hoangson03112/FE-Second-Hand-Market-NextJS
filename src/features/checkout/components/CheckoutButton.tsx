@@ -22,11 +22,10 @@ export default function CheckoutButton({
       onClick={onClick}
       disabled={isSubmitting || isDisabled}
       fullWidth
-      size="lg"
-      className="bg-primary text-primary-foreground hover:bg-primary/90 py-3 rounded-lg disabled:opacity-40"
+      className="bg-luxury-ink text-white hover:bg-luxury-ink/90 rounded-[2px] disabled:opacity-40 uppercase tracking-[0.2em] text-[11px] font-semibold transition-colors h-14"
     >
       {isSubmitting ? (
-        <span className="flex items-center justify-center gap-2">
+        <span className="flex items-center justify-center gap-3">
           <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
             <circle
               className="opacity-25"

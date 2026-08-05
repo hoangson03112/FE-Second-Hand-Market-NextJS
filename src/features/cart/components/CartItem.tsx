@@ -37,20 +37,20 @@ export default function CartItem({
   const productHref = `/products/${product._id}/${product.slug || "product"}`;
 
   return (
-    <div className="flex gap-3 py-4 px-5 items-start bg-card hover:bg-cream-50/30 transition-colors lg:items-center">
+    <div className="flex gap-4 py-5 px-6 items-start bg-white hover:bg-luxury-ivory/50 transition-colors lg:items-center">
       <label className="flex-shrink-0 cursor-pointer pt-1 lg:pt-0">
         <input
           type="checkbox"
           checked={checked}
           onChange={() => onToggle(product._id)}
           disabled={isUpdating}
-          className="w-4 h-4 border-2 border-taupe-300 rounded-md text-primary focus:ring-2 focus:ring-primary/50 cursor-pointer disabled:opacity-50 transition-all"
+          className="w-4 h-4 border border-luxury-ink/20 rounded-[2px] text-luxury-ink focus:ring-1 focus:ring-luxury-ink cursor-pointer disabled:opacity-50 transition-all"
         />
       </label>
 
       <Link
         href={productHref}
-        className="flex-shrink-0 w-20 h-20 border-2 border-border overflow-hidden bg-gradient-to-br from-taupe-50 to-cream-50 rounded-xl hover:border-primary hover:shadow-md transition-all duration-300"
+        className="flex-shrink-0 w-20 h-20 border border-luxury-ink/10 overflow-hidden bg-taupe-50 rounded-[2px] hover:border-luxury-ink/30 transition-all duration-300"
       >
         {imageUrl ? (
           <Image
@@ -83,24 +83,24 @@ export default function CartItem({
       <div className="flex-1 min-w-0 flex flex-col lg:hidden">
         <Link
           href={productHref}
-          className="text-sm text-taupe-900 line-clamp-2 hover:text-primary transition-colors mb-2"
+          className="text-sm font-medium text-luxury-ink line-clamp-2 hover:text-taupe-600 transition-colors mb-2"
         >
           {product.name}
         </Link>
         
-        <div className="mt-auto space-y-2">
+        <div className="mt-auto space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-0.5">
-              <span className="text-base font-medium text-primary">{formatPrice(product.price)}</span>
+              <span className="text-base font-bold text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif" }}>{formatPrice(product.price)}</span>
               {product.hasPersonalDiscount && product.originalPrice != null && (
-                <span className="text-xs text-taupe-400 line-through">{formatPrice(product.originalPrice)}</span>
+                <span className="text-[10px] text-taupe-400 line-through">{formatPrice(product.originalPrice)}</span>
               )}
             </div>
             <button
               type="button"
               onClick={() => onRemove(product._id)}
               disabled={isUpdating}
-              className="text-taupe-400 hover:text-destructive hover:scale-110 transition-all duration-200 disabled:opacity-50"
+              className="text-taupe-400 hover:text-blush-600 hover:scale-110 transition-all duration-200 disabled:opacity-50"
             >
               <IconTrash className="h-4 w-4" />
             </button>
@@ -108,14 +108,14 @@ export default function CartItem({
 
           <div className="flex items-center justify-between gap-3">
             <div
-              className="flex items-center border-2 border-border overflow-hidden rounded-xl shadow-sm"
+              className="flex items-center border border-luxury-ink/20 overflow-hidden rounded-[2px]"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 type="button"
                 disabled={item.quantity <= 1 || isUpdating}
                 onClick={() => onQuantityChange(product._id, item.quantity - 1)}
-                className="w-7 h-7 flex items-center justify-center text-taupe-600 hover:bg-primary/10 hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed border-r border-border transition-colors"
+                className="w-7 h-7 flex items-center justify-center text-luxury-ink hover:bg-taupe-50 disabled:opacity-40 disabled:cursor-not-allowed border-r border-luxury-ink/10 transition-colors"
               >
                 −
               </button>
@@ -123,19 +123,19 @@ export default function CartItem({
                 type="text"
                 value={item.quantity}
                 readOnly
-                className="w-10 h-7 text-center text-sm font-normal tabular-nums text-foreground border-0 focus:outline-none bg-card"
+                className="w-10 h-7 text-center text-[13px] font-medium tabular-nums text-luxury-ink border-0 focus:outline-none bg-transparent"
               />
               <button
                 type="button"
                 disabled={item.quantity >= maxQty || isUpdating}
                 onClick={() => onQuantityChange(product._id, item.quantity + 1)}
-                className="w-7 h-7 flex items-center justify-center text-taupe-600 hover:bg-primary/10 hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed border-l border-border transition-colors"
+                className="w-7 h-7 flex items-center justify-center text-luxury-ink hover:bg-taupe-50 disabled:opacity-40 disabled:cursor-not-allowed border-l border-luxury-ink/10 transition-colors"
               >
                 +
               </button>
             </div>
 
-            <span className="text-base font-medium text-primary">
+            <span className="text-base font-bold text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif" }}>
               {formatPrice(product.price * item.quantity)}
             </span>
           </div>
@@ -143,28 +143,28 @@ export default function CartItem({
       </div>
 
       {/* Desktop layout */}
-      <div className="hidden lg:flex flex-1 items-center gap-3">
+      <div className="hidden lg:flex flex-1 items-center gap-4">
         <Link
           href={productHref}
-          className="flex-1 text-sm text-taupe-900 line-clamp-2 hover:text-primary transition-colors"
+          className="flex-1 text-sm font-medium text-luxury-ink line-clamp-2 hover:text-taupe-600 transition-colors"
         >
           {product.name}
         </Link>
 
-        <div className="w-24 text-center">
-          <div className="text-base font-medium text-primary">{formatPrice(product.price)}</div>
+        <div className="w-28 text-center">
+          <div className="text-base font-bold text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif" }}>{formatPrice(product.price)}</div>
           {product.hasPersonalDiscount && product.originalPrice != null && (
-            <div className="text-xs text-taupe-400 line-through">{formatPrice(product.originalPrice)}</div>
+            <div className="text-[10px] text-taupe-400 line-through">{formatPrice(product.originalPrice)}</div>
           )}
         </div>
 
-        <div className="w-28 flex justify-center" onClick={(e) => e.stopPropagation()}>
-          <div className="flex items-center border-2 border-border overflow-hidden rounded-xl shadow-sm">
+        <div className="w-32 flex justify-center" onClick={(e) => e.stopPropagation()}>
+          <div className="flex items-center border border-luxury-ink/20 overflow-hidden rounded-[2px]">
             <button
               type="button"
               disabled={item.quantity <= 1 || isUpdating}
               onClick={() => onQuantityChange(product._id, item.quantity - 1)}
-              className="w-8 h-8 flex items-center justify-center text-taupe-600 hover:bg-primary/10 hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed border-r border-border transition-colors"
+              className="w-8 h-8 flex items-center justify-center text-luxury-ink hover:bg-taupe-50 disabled:opacity-40 disabled:cursor-not-allowed border-r border-luxury-ink/10 transition-colors"
             >
               −
             </button>
@@ -172,20 +172,20 @@ export default function CartItem({
               type="text"
               value={item.quantity}
               readOnly
-              className="w-12 h-8 text-center text-sm font-normal tabular-nums text-foreground border-0 focus:outline-none bg-card"
+              className="w-10 h-8 text-center text-[13px] font-medium tabular-nums text-luxury-ink border-0 focus:outline-none bg-transparent"
             />
             <button
               type="button"
               disabled={item.quantity >= maxQty || isUpdating}
               onClick={() => onQuantityChange(product._id, item.quantity + 1)}
-              className="w-8 h-8 flex items-center justify-center text-taupe-600 hover:bg-primary/10 hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed border-l border-border transition-colors"
+              className="w-8 h-8 flex items-center justify-center text-luxury-ink hover:bg-taupe-50 disabled:opacity-40 disabled:cursor-not-allowed border-l border-luxury-ink/10 transition-colors"
             >
               +
             </button>
           </div>
         </div>
 
-        <div className="w-24 text-center text-base font-medium text-primary">
+        <div className="w-28 text-center text-base font-bold text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif" }}>
           {formatPrice(product.price * item.quantity)}
         </div>
 
@@ -194,7 +194,7 @@ export default function CartItem({
             type="button"
             onClick={() => onRemove(product._id)}
             disabled={isUpdating}
-            className="text-taupe-400 hover:text-destructive transition-colors disabled:opacity-50"
+            className="text-taupe-400 hover:text-blush-600 transition-colors disabled:opacity-50"
           >
             <IconTrash className="h-4 w-4" />
           </button>

@@ -7,23 +7,27 @@ interface OrdersHeaderProps {
 
 export function OrdersHeader({ onBack }: OrdersHeaderProps) {
   return (
-    <div className="bg-cream-50/95 backdrop-blur-md border-b-2 border-neutral-200/60 sticky top-0 z-10 shadow-sm">
-      <Container paddingX="md">
+    <div className="bg-cream-50/95 backdrop-blur-md border-b-2 border-border sticky top-0 z-10">
+      <Container maxWidth="9xl" paddingX="md" paddingY="none">
         <div className="py-4 flex items-center gap-4">
           <button
             onClick={onBack}
-            className="p-2 -ml-2 rounded-full hover:bg-cream-50 transition-colors"
+            className="p-2 -ml-2 rounded-full text-taupe-500 hover:bg-taupe-100 hover:text-taupe-900 transition-colors"
           >
-            <IconArrowLeft className="h-5 w-5 text-neutral-900" />
+            <IconArrowLeft className="h-5 w-5" />
           </button>
-          <div className="flex-1">
-            <h1 className="text-2xl font-bold text-neutral-900 flex items-center gap-2">
-              <IconShoppingBag className="w-7 h-7 text-primary" />
-              Đơn hàng của tôi
-            </h1>
-            <p className="text-sm text-neutral-600 mt-0.5">
-              Quản lý và theo dõi đơn hàng của bạn
-            </p>
+          <div className="flex-1 flex items-center gap-3">
+            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
+              <IconShoppingBag className="w-5 h-5" />
+            </span>
+            <div>
+              <h1 className="text-xl md:text-2xl font-bold text-taupe-900 leading-tight">
+                Đơn hàng của tôi
+              </h1>
+              <p className="text-xs text-taupe-500 font-medium uppercase tracking-[0.15em] mt-0.5">
+                Quản lý và theo dõi đơn hàng của bạn
+              </p>
+            </div>
           </div>
         </div>
       </Container>

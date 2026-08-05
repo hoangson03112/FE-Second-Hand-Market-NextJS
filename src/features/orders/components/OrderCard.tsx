@@ -53,25 +53,25 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 				: "border-sky-200 bg-sky-50 text-sky-800";
 
 	return (
-		<div className="bg-cream-50/90 backdrop-blur-md rounded-3xl border-2 border-neutral-200/60 shadow-lg shadow-neutral-200/50 overflow-hidden hover:shadow-xl hover:shadow-neutral-200/60 transition-all duration-300 group">
-			<div className="bg-cream-50/50 px-5 py-4 border-b-2 border-neutral-200/60 flex items-center justify-between">
-				<div className="flex items-center gap-3 flex-1">
-					<div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+		<div className="bg-white rounded-2xl border-2 border-border overflow-hidden hover:border-primary/40 hover:shadow-md transition-all duration-300 group">
+			<div className="bg-gradient-to-r from-taupe-50 to-cream-50 px-6 py-4 border-b-2 border-border flex items-center justify-between">
+				<div className="flex items-center gap-4 flex-1">
+					<div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
 						<IconShoppingBag className="w-5 h-5 text-primary" />
 					</div>
 					<div className="flex-1 min-w-0">
 						{order.ghnOrderCode ? (
-							<p className="font-semibold text-neutral-900 text-sm">
+							<p className="font-semibold text-taupe-900 text-sm">
 								Mã vận đơn GHN: <span className="font-mono">{order.ghnOrderCode}</span>
 							</p>
 						) : (
-							<p className="font-semibold text-neutral-900 text-sm">
-								Mã đơn nội bộ <span className="font-mono text-neutral-500">#{order._id.slice(-8).toUpperCase()}</span>
+							<p className="font-semibold text-taupe-900 text-sm">
+								Mã đơn nội bộ <span className="font-mono text-taupe-400">#{order._id.slice(-8).toUpperCase()}</span>
 							</p>
 						)}
-						<div className="flex items-center gap-2 mt-0.5">
-							<IconClock className="w-3.5 h-3.5 text-neutral-500" />
-							<p className="text-xs text-neutral-600">{format(order.createdAt)}</p>
+						<div className="flex items-center gap-2 mt-1">
+							<IconClock className="w-3.5 h-3.5 text-taupe-400" />
+							<p className="text-xs text-taupe-500 font-medium">{format(order.createdAt)}</p>
 						</div>
 					</div>
 				</div>
@@ -80,8 +80,8 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 				</div>
 			</div>
 
-			<div className="p-5">
-				<div className="space-y-3">
+			<div className="p-6">
+				<div className="space-y-4">
 					{order.products?.map((item, idx) => {
 						const product = item.productId;
 						const productHref = product?._id ? `/products/${product._id}/product` : null;
@@ -91,11 +91,11 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 								: product?.avatar?.url || "/placeholder.svg";
 
 						return (
-							<div key={idx} className="flex gap-4 p-3 rounded-2xl hover:bg-cream-50/50 transition-colors">
+							<div key={idx} className="flex gap-4 p-3 rounded-xl hover:bg-taupe-50/50 transition-colors">
 								{productHref ? (
 									<Link
 										href={productHref}
-										className="w-20 h-20 rounded-xl overflow-hidden bg-neutral-100 shrink-0 ring-1 ring-neutral-200 hover:ring-primary/50 transition-colors"
+										className="w-20 h-20 rounded-xl overflow-hidden bg-taupe-100 shrink-0 ring-1 ring-border hover:ring-primary/50 transition-colors"
 									>
 										<Image
 											src={avatar}
@@ -106,7 +106,7 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 										/>
 									</Link>
 								) : (
-									<div className="w-20 h-20 rounded-xl overflow-hidden bg-neutral-100 shrink-0 ring-1 ring-neutral-200">
+									<div className="w-20 h-20 rounded-xl overflow-hidden bg-taupe-100 shrink-0 ring-1 ring-border">
 										<Image
 											src={avatar}
 											alt={product?.name || "Sản phẩm"}
@@ -120,16 +120,16 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 									{productHref ? (
 										<Link
 											href={productHref}
-											className="font-semibold text-neutral-900 line-clamp-2 mb-1 hover:text-primary transition-colors"
+											className="font-semibold text-taupe-900 line-clamp-2 mb-1 hover:text-primary transition-colors"
 										>
 											{product?.name || "Sản phẩm"}
 										</Link>
 									) : (
-										<h4 className="font-semibold text-neutral-900 line-clamp-2 mb-1">
+										<h4 className="font-semibold text-taupe-900 line-clamp-2 mb-1">
 											{product?.name || "Sản phẩm"}
 										</h4>
 									)}
-									<p className="text-sm text-neutral-600 mb-2">Số lượng: ×{item.quantity}</p>
+									<p className="text-xs uppercase tracking-wide text-taupe-500 mb-2 font-medium">Số lượng: ×{item.quantity}</p>
 									<p className="text-base font-bold text-primary">
 										{formatPrice(item.price || product?.price || 0)}
 									</p>
@@ -140,16 +140,16 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 				</div>
 
 				{order.sellerId && (
-					<div className="mt-4 pt-4 border-t-2 border-neutral-200/60 flex items-center justify-between">
-						<div className="flex items-center gap-2">
+					<div className="mt-6 pt-5 border-t-2 border-border flex items-center justify-between">
+						<div className="flex items-center gap-3">
 							<AvatarOrInitials
 								avatar={(order.sellerId as { avatar?: { url?: string } })?.avatar}
 								fullName={order.sellerId.fullName}
-								size={32}
+								size={36}
 							/>
 							<div>
-								<p className="text-xs text-neutral-600">Người bán</p>
-								<p className="font-medium text-neutral-900 text-sm">{order.sellerId.fullName || "—"}</p>
+								<p className="text-[11px] uppercase tracking-[0.15em] font-semibold text-taupe-500">Người bán</p>
+								<p className="font-medium text-taupe-900 text-sm mt-0.5">{order.sellerId.fullName || "—"}</p>
 							</div>
 						</div>
 						<button
@@ -173,26 +173,26 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 									}
 								)
 							}
-							className="p-2 rounded-full hover:bg-cream-50 transition-colors group/chat">
-							<IconMessage className="w-5 h-5 text-neutral-600 group-hover/chat:text-primary transition-colors" />
+							className="p-2 rounded-full text-taupe-500 hover:bg-taupe-100 hover:text-primary transition-colors">
+							<IconMessage className="w-5 h-5" />
 						</button>
 					</div>
 				)}
 
 				{order.shippingAddress && (
-					<div className="mt-3 p-3 bg-blue-50/50 rounded-xl border border-blue-200/50">
-						<div className="flex items-start gap-2">
-							<IconMapPin className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
+					<div className="mt-4 p-4 bg-taupe-50/60 rounded-xl border border-border/60">
+						<div className="flex items-start gap-3">
+							<IconMapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
 							<div className="flex-1 min-w-0">
-								<p className="text-xs text-blue-800 font-medium mb-1">Địa chỉ nhận hàng</p>
-								<p className="text-sm font-semibold text-neutral-900">
+								<p className="text-[11px] uppercase tracking-[0.15em] font-semibold text-taupe-500 mb-1">Địa chỉ nhận hàng</p>
+								<p className="text-sm font-semibold text-taupe-900">
 									{order.shippingAddress.fullName} | {order.shippingAddress.phoneNumber}
 								</p>
-								<p className="text-sm text-neutral-700 mt-0.5">{order.shippingAddress.specificAddress}</p>
+								<p className="text-sm text-taupe-700 mt-1">{order.shippingAddress.specificAddress}</p>
 								{(order.shippingAddress.ward ||
 									order.shippingAddress.district ||
 									order.shippingAddress.province) && (
-									<p className="text-sm text-neutral-600 mt-0.5">
+									<p className="text-sm text-taupe-700 mt-0.5">
 										{[
 											order.shippingAddress.ward,
 											order.shippingAddress.district,
@@ -208,20 +208,20 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 				)}
 
 				{order.shippingMethod && (
-					<div className="mt-3 flex items-center gap-2 text-sm">
-						<IconTruck className="w-4 h-4 text-neutral-600" />
-						<span className="text-neutral-600">Vận chuyển:</span>
-						<span className="font-medium text-neutral-900">{formatShippingMethod(order.shippingMethod)}</span>
+					<div className="mt-4 flex items-center gap-2 text-sm px-1">
+						<IconTruck className="w-4 h-4 text-taupe-500" />
+						<span className="text-taupe-500">Vận chuyển:</span>
+						<span className="font-medium text-taupe-900">{formatShippingMethod(order.shippingMethod)}</span>
 					</div>
 				)}
 				{refundNotice && (
-					<div className={`mt-3 rounded-xl border px-3 py-2.5 ${refundNoticeClass}`}>
+					<div className={`mt-4 rounded-xl border-2 px-4 py-3 ${refundNoticeClass}`}>
 						<p className="text-xs font-semibold">{refundNotice.title}</p>
 						<p className="mt-1 text-xs">{refundNotice.description}</p>
 					</div>
 				)}
 				{showGhnReturnOnCard && (
-					<div className="mt-3 rounded-xl border border-sky-200 bg-sky-50/80 px-3 py-2.5 text-sky-900">
+					<div className="mt-4 rounded-xl border-2 border-sky-200 bg-sky-50/80 px-4 py-3 text-sky-900">
 						<p className="text-xs font-semibold">Vận đơn hoàn trả GHN</p>
 						<p className="mt-1 font-mono text-xs">{order.ghnReturnOrderCode}</p>
 						{(order.ghnReturnTrackingUrl?.trim() || order.ghnReturnOrderCode) && (
@@ -232,7 +232,7 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 								}
 								target="_blank"
 								rel="noopener noreferrer"
-								className="mt-1.5 inline-block text-xs font-semibold text-primary hover:underline"
+								className="mt-1.5 inline-block text-xs font-semibold hover:underline"
 							>
 								Theo dõi vận đơn hoàn →
 							</a>
@@ -240,28 +240,28 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 					</div>
 				)}
 
-				<div className="mt-4 pt-4 border-t-2 border-neutral-200/60 flex items-center justify-between">
+				<div className="mt-6 pt-5 border-t-2 border-border flex items-center justify-between flex-wrap gap-4">
 					<div className="flex flex-col">
 						<div className="flex items-baseline gap-2 mb-1">
-							<span className="text-sm text-neutral-600">Tiền hàng:</span>
-							<span className="font-semibold text-neutral-900">{formatPrice(order.productAmount || 0)}</span>
+							<span className="text-[11px] uppercase tracking-wide font-semibold text-taupe-500">Tiền hàng:</span>
+							<span className="font-semibold text-taupe-900">{formatPrice(order.productAmount || 0)}</span>
 						</div>
 						<div className="flex items-baseline gap-2 mb-2">
-							<span className="text-sm text-neutral-600">Phí vận chuyển:</span>
-							<span className="font-semibold text-neutral-900">{formatPrice(order.shippingFee || 0)}</span>
+							<span className="text-[11px] uppercase tracking-wide font-semibold text-taupe-500">Phí vận chuyển:</span>
+							<span className="font-semibold text-taupe-900">{formatPrice(order.shippingFee || 0)}</span>
 						</div>
-						<div className="flex items-baseline gap-2">
-							<span className="text-base font-bold text-neutral-900">Tổng cộng:</span>
+						<div className="flex items-baseline gap-2 mt-1">
+							<span className="text-xs uppercase tracking-wide font-bold text-taupe-900">Tổng cộng:</span>
 							<span className="text-xl font-bold text-primary">{formatPrice(order.totalAmount)}</span>
 						</div>
 					</div>
 
-					<div className="flex flex-wrap items-center justify-end gap-2">
+					<div className="flex flex-wrap items-center justify-end gap-3">
 						{order.status === "delivered" && (
 							<button
 								onClick={() => onConfirmReceived(order._id)}
 								disabled={confirmingId === order._id}
-								className="px-4 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1.5 shadow-sm hover:shadow-md"
+								className="px-6 py-2.5 rounded-xl bg-primary text-primary-foreground font-bold text-xs uppercase tracking-wide hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm hover:shadow-md flex items-center gap-2"
 							>
 								{confirmingId === order._id ? (
 									<IconLoader2 className="w-4 h-4 animate-spin" />
@@ -275,7 +275,7 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 							<button
 								type="button"
 								onClick={() => onOpenRefund(order._id)}
-								className="px-4 py-2.5 rounded-full border-2 border-orange-300 text-orange-600 font-semibold text-sm hover:bg-orange-50 transition-all flex items-center gap-1.5"
+								className="px-6 py-2.5 rounded-xl border-2 border-taupe-300/80 text-taupe-700 font-semibold text-xs uppercase tracking-wide hover:bg-taupe-50 hover:border-taupe-500/70 transition-all flex items-center gap-2"
 							>
 								<IconRefresh className="w-4 h-4" />
 								Yêu cầu hoàn
@@ -284,7 +284,7 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 						{order.status === "completed" && (
 							<Link
 								href={`/orders/${order._id}?review=1`}
-								className="px-4 py-2.5 rounded-full border-2 border-primary/30 text-primary font-semibold text-sm hover:bg-primary/5 transition-all flex items-center gap-1.5"
+								className="px-6 py-2.5 rounded-xl border-2 border-primary/30 text-primary font-semibold text-xs uppercase tracking-wide hover:bg-primary/5 hover:border-primary/60 transition-all flex items-center gap-2"
 							>
 								<IconStar className="w-4 h-4" />
 								Đánh giá
@@ -294,7 +294,7 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 							<button
 								onClick={() => onCancel(order._id)}
 								disabled={cancellingId === order._id}
-								className="px-4 py-2.5 rounded-full border-2 border-destructive/40 text-destructive font-semibold text-sm hover:bg-destructive/5 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1.5"
+								className="px-6 py-2.5 rounded-xl border-2 border-red-200 text-red-600 font-semibold text-xs uppercase tracking-wide hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
 							>
 								{cancellingId === order._id ? (
 									<IconLoader2 className="w-4 h-4 animate-spin" />
@@ -306,10 +306,10 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 						)}
 						<Link
 							href={`/orders/${order._id}`}
-							className="px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-semibold hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2 group/btn"
+							className="px-8 py-2.5 rounded-xl bg-taupe-900 text-white font-semibold text-xs uppercase tracking-wide hover:bg-taupe-800 transition-all flex items-center gap-2 group/btn"
 						>
 							<span>Xem chi tiết</span>
-							<IconChevronRight className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" />
+							<IconChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
 						</Link>
 					</div>
 				</div>
@@ -317,5 +317,3 @@ export function OrderCard({ order, cancellingId, onCancel, confirmingId, onConfi
 		</div>
 	);
 }
-
-

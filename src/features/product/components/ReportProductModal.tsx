@@ -46,25 +46,27 @@ export default function ReportProductModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-      <div className="bg-cream-50 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+      <div className="bg-white border border-zinc-200 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold text-foreground">Báo cáo sản phẩm</h2>
+          <div className="flex justify-between items-center mb-4 pb-3 border-b border-zinc-100">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-900">Báo cáo sản phẩm</h2>
             <button
               onClick={onClose}
-              className="p-2 rounded-full hover:bg-muted transition-colors"
+              className="p-1.5 rounded-full hover:bg-zinc-100 text-zinc-400 hover:text-zinc-900 transition-colors"
               aria-label="Đóng"
             >
-              <IconX className="w-5 h-5" />
+              <IconX className="w-4 h-4" />
             </button>
           </div>
-          <p className="text-sm text-muted-foreground mb-4">
-            Đang báo cáo: <span className="font-medium text-foreground">{productName}</span>
+
+          <p className="text-xs text-zinc-500 mb-4">
+            Đang báo cáo: <span className="font-semibold text-zinc-900">{productName}</span>
           </p>
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 mb-1.5">
                 Lý do báo cáo
               </label>
               <textarea
@@ -72,22 +74,22 @@ export default function ReportProductModal({
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Mô tả chi tiết vấn đề..."
                 rows={4}
-                className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                className="w-full px-3.5 py-2.5 text-xs text-zinc-900 rounded-xl border border-zinc-200 bg-white placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all"
                 required
               />
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-2.5 pt-2">
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 py-3 border border-border rounded-lg font-medium hover:bg-muted/50"
+                className="flex-1 py-2.5 border border-zinc-200 rounded-xl text-xs font-semibold text-zinc-700 hover:bg-zinc-50 transition-colors"
               >
                 Hủy
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex-1 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 disabled:opacity-50"
+                className="flex-1 py-2.5 bg-zinc-900 text-white rounded-xl text-xs font-semibold hover:bg-zinc-800 disabled:opacity-50 transition-colors"
               >
                 {isSubmitting ? "Đang gửi..." : "Gửi báo cáo"}
               </button>

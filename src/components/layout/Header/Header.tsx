@@ -58,7 +58,7 @@ export default function Header() {
             : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto w-full max-w-8xl px-3 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-9xl px-3 sm:px-6 lg:px-8">
         <div className="flex h-[58px] min-w-0 items-center gap-1 sm:h-[62px] sm:gap-2">
           <HeaderLogo />
 

@@ -42,26 +42,26 @@ export function OrderStatusHero({
   const showGhnReturn = ghnReturnOrderCode && ["refund", "returning", "return_shipping", "returned", "refunded"].includes(status);
 
   return (
-    <div className="bg-cream-50 border border-border rounded-2xl overflow-hidden">
+    <div className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl overflow-hidden shadow-md">
       {/* Status row */}
-      <div className="flex items-center gap-4 px-5 py-4 border-b border-border">
+      <div className="flex items-center gap-4 px-5 py-4 border-b-2 border-border">
         <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-xl shrink-0 ${statusConfig.bgColor}`}>
           {statusConfig.icon}
         </div>
         <div className="flex-1 min-w-0">
           <p className={`text-sm font-bold ${statusConfig.color}`}>{statusConfig.label}</p>
-          <p className="text-xs text-muted-foreground mt-0.5 leading-snug">
+          <p className="text-xs text-taupe-500 mt-0.5 leading-snug">
             {descriptionOverride ?? statusDescription[status] ?? "Đang xử lý đơn hàng."}
           </p>
         </div>
-        <span className="text-xs text-muted-foreground shrink-0 hidden sm:block">{format(updatedAt)}</span>
+        <span className="text-xs text-taupe-400 shrink-0 hidden sm:block">{format(updatedAt)}</span>
       </div>
 
       {/* GHN tracking codes */}
       {(ghnOrderCode || ghnReturnOrderCode) && (showGhnOrder || showGhnReturn) && (
-        <div className="px-5 py-3 border-b border-border flex flex-wrap gap-x-6 gap-y-1.5">
+        <div className="px-5 py-3 border-b-2 border-border flex flex-wrap gap-x-6 gap-y-1.5">
           {showGhnOrder && (
-            <p className="text-xs text-muted-foreground font-mono flex items-center gap-1.5">
+            <p className="text-xs text-taupe-500 font-mono flex items-center gap-1.5">
               Vận đơn GHN:
               <span className="font-semibold text-primary">{ghnOrderCode}</span>
               <a
@@ -75,7 +75,7 @@ export function OrderStatusHero({
             </p>
           )}
           {showGhnReturn && (
-            <p className="text-xs text-muted-foreground font-mono flex items-center gap-1.5">
+            <p className="text-xs text-taupe-500 font-mono flex items-center gap-1.5">
               Vận đơn hoàn trả:
               <span className="font-semibold text-primary">{ghnReturnOrderCode}</span>
               <a
@@ -97,7 +97,7 @@ export function OrderStatusHero({
       {/* Progress stepper */}
       {!isTerminal && (
         <div className="px-5 py-4">
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">
+          <p className="text-xs font-semibold text-taupe-500 uppercase tracking-wider mb-4">
             Tiến trình
           </p>
           <div className="flex items-center overflow-x-auto pb-1">
@@ -109,7 +109,7 @@ export function OrderStatusHero({
                   <div className="flex flex-col items-center gap-1">
                     <div
                       className={`w-7 h-7 rounded-full flex items-center justify-center border-2 transition-colors ${
-                        isDone || isActive ? "bg-primary border-primary" : "bg-card border-border"
+                        isDone || isActive ? "bg-primary border-primary" : "bg-white border-border"
                       }`}
                     >
                       {isDone ? (
@@ -117,12 +117,12 @@ export function OrderStatusHero({
                       ) : isActive ? (
                         <IconTruck className="w-3.5 h-3.5 text-white" strokeWidth={2} />
                       ) : (
-                        <IconPackage className="w-3.5 h-3.5 text-border" strokeWidth={2} />
+                        <IconPackage className="w-3.5 h-3.5 text-taupe-300" strokeWidth={2} />
                       )}
                     </div>
                     <span
                       className={`text-[10px] text-center leading-tight w-[60px] ${
-                        isDone || isActive ? "text-primary font-medium" : "text-muted-foreground"
+                        isDone || isActive ? "text-primary font-medium" : "text-taupe-500"
                       }`}
                     >
                       {step.shortLabel}

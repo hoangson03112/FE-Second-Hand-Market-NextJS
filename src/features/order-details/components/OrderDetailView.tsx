@@ -30,7 +30,7 @@ const REFUND_RELATED_STATUSES = [
   "refunded",
 ];
 
-/** MÃ´ táº£ hero theo phase Refund (order cÃ³ thá»ƒ váº«n lÃ  "refund" suá»‘t vÃ²ng Ä‘á»i â€” xem Order model BE). */
+/** Mô tả hero theo phase Refund (order có thể vẫn là "refund" suốt vòng đời — xem Order model BE). */
 function getBuyerRefundHeroDescription(params: {
   orderStatus: string;
   refundStatus: string | null;
@@ -48,13 +48,13 @@ function getBuyerRefundHeroDescription(params: {
   }
   if (rs === "pending") {
     return isLocalPickup
-      ? "YÃªu cáº§u Ä‘Ã£ gá»­i. NgÆ°á»i bÃ¡n sáº½ xem xÃ©t vÃ  pháº£n há»“i trong thá»i gian quy Ä‘á»‹nh."
-      : "YÃªu cáº§u Ä‘Ã£ gá»­i. NgÆ°á»i bÃ¡n sáº½ xem xÃ©t; khi Ä‘Æ°á»£c cháº¥p thuáº­n, báº¡n gá»­i hÃ ng hoÃ n theo váº­n Ä‘Æ¡n GHN.";
+      ? "Yêu cầu đã gửi. Người bán sẽ xem xét và phản hồi trong thời gian quy định."
+      : "Yêu cầu đã gửi. Người bán sẽ xem xét; khi được chấp thuận, bạn gửi hàng hoàn theo vận đơn GHN.";
   }
   if (rs === "approved") {
     return isLocalPickup
-      ? "NgÆ°á»i bÃ¡n Ä‘Ã£ cháº¥p thuáº­n hoÃ n tiá»n. LiÃªn há»‡ Ä‘á»ƒ tráº£ hÃ ng theo thá»a thuáº­n."
-      : `NgÆ°á»i bÃ¡n Ä‘Ã£ cháº¥p thuáº­n hoÃ n tiá»n. Tiáº¿p theo: váº­n Ä‘Æ¡n hoÃ n GHN vÃ  gá»­i hÃ ng Ä‘Ãºng quy Ä‘á»‹nh. ${REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}`;
+      ? "Người bán đã chấp thuận hoàn tiền. Liên hệ để trả hàng theo thỏa thuận."
+      : `Người bán đã chấp thuận hoàn tiền. Tiếp theo: vận đơn hoàn GHN và gửi hàng đúng quy định. ${REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}`;
   }
   if (rs === "return_shipping" || rs === "returning" || orderStatus === "return_shipping" || orderStatus === "returning") {
     return isLocalPickup ? local.returning : ghn.returning;
@@ -63,18 +63,18 @@ function getBuyerRefundHeroDescription(params: {
     return isLocalPickup ? local.returned : ghn.returned;
   }
   if (rs === "bank_info_required") {
-    return "Cáº§n bá»• sung thÃ´ng tin tÃ i khoáº£n ngÃ¢n hÃ ng Ä‘á»ƒ admin chuyá»ƒn khoáº£n hoÃ n tiá»n.";
+    return "Cần bổ sung thông tin tài khoản ngân hàng để admin chuyển khoản hoàn tiền.";
   }
   if (rs === "processing" || rs === "failed") {
     return rs === "failed"
-      ? "Giao dá»‹ch hoÃ n tiá»n gáº·p sá»± cá»‘. Há»‡ thá»‘ng sáº½ xá»­ lÃ½ láº¡i; vui lÃ²ng theo dÃµi hoáº·c liÃªn há»‡ há»— trá»£."
-      : "Há»‡ thá»‘ng Ä‘ang xá»­ lÃ½ chuyá»ƒn tiá»n hoÃ n vá» cho báº¡n.";
+      ? "Giao dịch hoàn tiền gặp sự cố. Hệ thống sẽ xử lý lại; vui lòng theo dõi hoặc liên hệ hỗ trợ."
+      : "Hệ thống đang xử lý chuyển tiền hoàn về cho bạn.";
   }
   if (rs === "rejected") {
-    return "NgÆ°á»i bÃ¡n Ä‘Ã£ tá»« chá»‘i yÃªu cáº§u hoÃ n tiá»n. Náº¿u khÃ´ng Ä‘á»“ng Ã½, báº¡n cÃ³ thá»ƒ khiáº¿u náº¡i Ä‘á»ƒ admin xem xÃ©t.";
+    return "Người bán đã từ chối yêu cầu hoàn tiền. Nếu không đồng ý, bạn có thể khiếu nại để admin xem xét.";
   }
   if (rs === "disputed") {
-    return "Khiáº¿u náº¡i Ä‘ang Ä‘Æ°á»£c admin xem xÃ©t. Báº¡n sáº½ nháº­n thÃ´ng bÃ¡o khi cÃ³ quyáº¿t Ä‘á»‹nh.";
+    return "Khiếu nại đang được admin xem xét. Bạn sẽ nhận thông báo khi có quyết định.";
   }
   if (orderStatus === "refund" || orderStatus === "refund_requested" || orderStatus === "refund_approved") {
     return isLocalPickup ? local.refund : ghn.refund;
@@ -94,33 +94,33 @@ function buildRefundTodoMessage(params: {
   if (orderStatus === "refunded" || rs === "completed") {
     return {
       tone: "success" as const,
-      title: "HoÃ n tiá»n Ä‘Ã£ hoÃ n táº¥t",
-      description: "Báº¡n Ä‘Ã£ nháº­n hoÃ n tiá»n thÃ nh cÃ´ng cho Ä‘Æ¡n hÃ ng nÃ y.",
+      title: "Hoàn tiền đã hoàn tất",
+      description: "Bạn đã nhận hoàn tiền thành công cho đơn hàng này.",
     };
   }
 
   if (rs === "rejected") {
     return {
       tone: "warning" as const,
-      title: "YÃªu cáº§u Ä‘Ã£ bá»‹ tá»« chá»‘i",
-      description: "Náº¿u báº¡n khÃ´ng Ä‘á»“ng Ã½, hÃ£y dÃ¹ng nÃºt khiáº¿u náº¡i trong pháº§n chi tiáº¿t hoÃ n tiá»n Ä‘á»ƒ admin xem xÃ©t.",
+      title: "Yêu cầu đã bị từ chối",
+      description: "Nếu bạn không đồng ý, hãy dùng nút khiếu nại trong phần chi tiết hoàn tiền để admin xem xét.",
     };
   }
 
   if (rs === "pending") {
     return {
       tone: "info" as const,
-      title: "Chá» ngÆ°á»i bÃ¡n xem xÃ©t",
-      description: "YÃªu cáº§u Ä‘Ã£ Ä‘Æ°á»£c gá»­i. NgÆ°á»i bÃ¡n sáº½ cháº¥p thuáº­n hoáº·c tá»« chá»‘i; báº¡n sáº½ tháº¥y cáº­p nháº­t táº¡i Ä‘Ã¢y.",
+      title: "Chờ người bán xem xét",
+      description: "Yêu cầu đã được gửi. Người bán sẽ chấp thuận hoặc từ chối; bạn sẽ thấy cập nhật tại đây.",
     };
   }
 
   if (rs === "approved") {
     return {
       tone: "info" as const,
-      title: "NgÆ°á»i bÃ¡n Ä‘Ã£ cháº¥p thuáº­n",
+      title: "Người bán đã chấp thuận",
       description:
-        "Tiáº¿p theo: lÃ m theo váº­n Ä‘Æ¡n hoÃ n tráº£ (GHN) hoáº·c hÆ°á»›ng dáº«n trÃªn Ä‘Æ¡n Ä‘á»ƒ gá»­i hÃ ng vá» ngÆ°á»i bÃ¡n. " +
+        "Tiếp theo: làm theo vận đơn hoàn trả (GHN) hoặc hướng dẫn trên đơn để gửi hàng về người bán. " +
         REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER,
     };
   }
@@ -128,9 +128,9 @@ function buildRefundTodoMessage(params: {
   if (rs === "return_shipping" || rs === "returning" || orderStatus === "returning" || orderStatus === "return_shipping") {
     return {
       tone: "warning" as const,
-      title: "Viá»‡c cáº§n lÃ m ngay",
+      title: "Việc cần làm ngay",
       description:
-        "Gá»­i hÃ ng hoÃ n theo váº­n Ä‘Æ¡n GHN vÃ  giá»¯ láº¡i biÃªn nháº­n Ä‘á»ƒ Ä‘á»‘i chiáº¿u khi cáº§n. " +
+        "Gửi hàng hoàn theo vận đơn GHN và giữ lại biên nhận để đối chiếu khi cần. " +
         REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER,
     };
   }
@@ -138,19 +138,19 @@ function buildRefundTodoMessage(params: {
   if (rs === "bank_info_required") {
     return {
       tone: "warning" as const,
-      title: "Viá»‡c cáº§n lÃ m ngay",
-      description: "Bá»• sung thÃ´ng tin tÃ i khoáº£n ngÃ¢n hÃ ng Ä‘á»ƒ admin cÃ³ thá»ƒ chuyá»ƒn khoáº£n hoÃ n tiá»n.",
+      title: "Việc cần làm ngay",
+      description: "Bổ sung thông tin tài khoản ngân hàng để admin có thể chuyển khoản hoàn tiền.",
     };
   }
 
   if (rs === "processing" || rs === "failed") {
     return {
       tone: "info" as const,
-      title: rs === "failed" ? "HoÃ n tiá»n cáº§n xá»­ lÃ½ láº¡i" : "Äang chuyá»ƒn khoáº£n hoÃ n tiá»n",
+      title: rs === "failed" ? "Hoàn tiền cần xử lý lại" : "Đang chuyển khoản hoàn tiền",
       description:
         rs === "failed"
-          ? "Giao dá»‹ch hoÃ n tiá»n chÆ°a thÃ nh cÃ´ng. Há»‡ thá»‘ng sáº½ thá»­ láº¡i; vui lÃ²ng theo dÃµi trang nÃ y."
-          : "NgÆ°á»i bÃ¡n Ä‘Ã£ nháº­n hÃ ng hoÃ n (náº¿u cÃ³). Tiá»n sáº½ Ä‘Æ°á»£c chuyá»ƒn theo thÃ´ng tin báº¡n Ä‘Ã£ cung cáº¥p.",
+          ? "Giao dịch hoàn tiền chưa thành công. Hệ thống sẽ thử lại; vui lòng theo dõi trang này."
+          : "Người bán đã nhận hàng hoàn (nếu có). Tiền sẽ được chuyển theo thông tin bạn đã cung cấp.",
     };
   }
 
@@ -158,31 +158,31 @@ function buildRefundTodoMessage(params: {
     if (!hasBankInfo) {
       return {
         tone: "warning" as const,
-        title: "Viá»‡c cáº§n lÃ m ngay",
-        description: "Cáº­p nháº­t thÃ´ng tin tÃ i khoáº£n ngÃ¢n hÃ ng Ä‘á»ƒ há»‡ thá»‘ng chuyá»ƒn tiá»n hoÃ n.",
+        title: "Việc cần làm ngay",
+        description: "Cập nhật thông tin tài khoản ngân hàng để hệ thống chuyển tiền hoàn.",
       };
     }
     return {
       tone: "info" as const,
-      title: "Äang chá» admin xá»­ lÃ½ hoÃ n tiá»n",
-      description: "NgÆ°á»i bÃ¡n Ä‘Ã£ nháº­n hÃ ng hoÃ n, há»‡ thá»‘ng Ä‘ang xá»­ lÃ½ bÆ°á»›c hoÃ n tiá»n cuá»‘i cÃ¹ng.",
+      title: "Đang chờ admin xử lý hoàn tiền",
+      description: "Người bán đã nhận hàng hoàn, hệ thống đang xử lý bước hoàn tiền cuối cùng.",
     };
   }
 
   if (rs === "disputed") {
     return {
       tone: "info" as const,
-      title: "Admin Ä‘ang xem xÃ©t khiáº¿u náº¡i",
-      description: "Báº¡n Ä‘Ã£ gá»­i khiáº¿u náº¡i. Vui lÃ²ng chá» quyáº¿t Ä‘á»‹nh tá»« quáº£n trá»‹ viÃªn.",
+      title: "Admin đang xem xét khiếu nại",
+      description: "Bạn đã gửi khiếu nại. Vui lòng chờ quyết định từ quản trị viên.",
     };
   }
 
   if (orderStatus === "refund" || orderStatus === "refund_requested" || orderStatus === "refund_approved") {
     return {
       tone: "info" as const,
-      title: "YÃªu cáº§u hoÃ n tiá»n Ä‘ang Ä‘Æ°á»£c xá»­ lÃ½",
+      title: "Yêu cầu hoàn tiền đang được xử lý",
       description:
-        "Theo dÃµi tráº¡ng thÃ¡i chi tiáº¿t bÃªn dÆ°á»›i. Náº¿u Ä‘Ã£ cÃ³ váº­n Ä‘Æ¡n hoÃ n tráº£, hÃ£y gá»­i hÃ ng Ä‘Ãºng háº¡n.",
+        "Theo dõi trạng thái chi tiết bên dưới. Nếu đã có vận đơn hoàn trả, hãy gửi hàng đúng hạn.",
     };
   }
 
@@ -352,7 +352,7 @@ export function OrderDetailView({
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-cream-50">
       <OrderDetailHeader orderId={order._id} status={order.status} onBack={onBack} />
 
       <Container maxWidth="8xl" paddingX="md" paddingY="lg">
@@ -372,7 +372,7 @@ export function OrderDetailView({
           />
 
           {isRefundFlow && refundTodo && (
-            <div className={`rounded-xl border px-4 py-3 ${refundTodoClass}`}>
+            <div className={`rounded-xl border-2 px-4 py-3 ${refundTodoClass}`}>
               <p className="text-sm font-semibold">{refundTodo.title}</p>
               <p className="mt-1 text-xs leading-relaxed">{refundTodo.description}</p>
             </div>
@@ -415,7 +415,7 @@ export function OrderDetailView({
               />
               {showSellerReview && (
                 <>
-                  <div className="flex items-start gap-3 p-3 rounded-xl border border-primary/20 bg-primary/8">
+                  <div className="flex items-start gap-3 p-3 rounded-xl border border-primary/20 bg-primary/5">
                     <IconInfoCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                     <p className="text-xs text-primary/90">{FEATURE_INFO.REVIEW_PRODUCT_RULE}</p>
                   </div>

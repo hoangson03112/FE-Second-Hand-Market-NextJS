@@ -8,17 +8,17 @@ interface CartHeaderProps {
 
 export default function CartHeader({ onBack }: CartHeaderProps) {
   return (
-    <header className="sticky top-0 z-10 bg-card border-b border-default shadow-sm">
-      <div className="max-w-8xl mx-auto px-4 h-14 flex items-center gap-3">
+    <header className="sticky top-0 z-10 bg-luxury-ivory/95 backdrop-blur-md border-b border-luxury-ink/10">
+      <div className="max-w-9xl mx-auto px-4 h-16 flex items-center gap-4">
         <button
           onClick={onBack}
-          className="p-2 -ml-2 hover:bg-taupe-100 rounded-lg transition-colors"
+          className="p-2 -ml-2 hover:bg-taupe-50 rounded-[2px] transition-colors"
           type="button"
-          aria-label="Quay láº¡i"
+          aria-label="Quay lại"
         >
-          <IconArrowLeft className="h-5 w-5 text-taupe-700" />
+          <IconArrowLeft className="h-5 w-5 text-luxury-ink" />
         </button>
-        <h1 className="text-lg font-semibold text-taupe-900 flex-1">Giá» HÃ ng</h1>
+        <h1 className="text-2xl text-luxury-ink flex-1" style={{ fontFamily: "var(--font-droid-serif), serif" }}>Giỏ Hàng</h1>
       </div>
     </header>
   );
