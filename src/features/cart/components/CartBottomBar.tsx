@@ -39,24 +39,21 @@ export default function CartBottomBar({
                 disabled={isBusy}
                 className="w-4 h-4 border border-luxury-ink/20 rounded-[2px] text-luxury-ink focus:ring-1 focus:ring-luxury-ink cursor-pointer disabled:opacity-50 transition-all"
               />
-              <span className="text-[11px] uppercase tracking-wide font-semibold text-luxury-ink hidden sm:inline mt-0.5">
+              <span className="text-sm tracking-wide font-medium text-luxury-ink hidden sm:inline mt-0.5">
                 Chọn tất cả ({totalItemCount})
-              </span>
-              <span className="text-[11px] uppercase tracking-wide font-semibold text-luxury-ink sm:hidden mt-0.5">
-                Tất cả
               </span>
             </label>
           </div>
 
           <div className="flex items-center gap-3 sm:gap-6">
             <div className="flex flex-col items-end">
-              <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-taupe-500 hidden sm:block">
+              <span className="text-xs uppercase tracking-[0.13em] font-medium text-luxury-ink hidden sm:block">
                 Tổng thanh toán ({selectedCount} sản phẩm):
               </span>
-              <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-taupe-500 sm:hidden">
+              <span className="text-[10px] uppercase tracking-[0.2em] font-semibold  sm:hidden">
                 Tổng ({selectedCount}):
               </span>
-              <span className="text-xl sm:text-2xl font-bold text-luxury-ink mt-1" style={{ fontFamily: "var(--font-droid-serif), serif" }}>
+              <span className="text-xl sm:text-2xl font-medium text-luxury-ink mt-1">
                 {formatPrice(selectedSubtotal)}
               </span>
             </div>
@@ -66,7 +63,7 @@ export default function CartBottomBar({
                 type="button"
                 onClick={onGoToCheckout}
                 disabled={isBusy || isGoingToCheckout}
-                className="bg-luxury-ink text-white hover:bg-luxury-ink/90 h-11 sm:h-12 px-6 sm:px-12 uppercase tracking-[0.2em] text-[11px] font-semibold rounded-[2px] disabled:opacity-70 whitespace-nowrap transition-colors"
+                className="group relative inline-flex items-center justify-center h-11 sm:h-12 px-6 sm:px-12 text-sm font-medium uppercase tracking-[0.1em] text-white bg-primary rounded-[2px] transition-all duration-300 hover:scale-[1.03]"
               >
                 {isGoingToCheckout ? "Đang xử lý..." : "Mua Hàng"}
               </button>
@@ -74,7 +71,7 @@ export default function CartBottomBar({
               <button
                 type="button"
                 disabled
-                className="h-11 sm:h-12 px-6 sm:px-12 bg-taupe-100 text-taupe-400 uppercase tracking-[0.2em] text-[11px] font-semibold rounded-[2px] cursor-not-allowed whitespace-nowrap"
+                className="h-11 sm:h-12 px-6 sm:px-12 bg-charcoal-400 text-charcoal-50 uppercase tracking-[0.1em] text-sm font-semibold rounded-[2px] cursor-not-allowed whitespace-nowrap"
               >
                 Mua Hàng
               </button>

@@ -1,30 +1,34 @@
 "use client";
 
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import Link from "next/link";
 
-import { IconArrowLeft, IconShoppingBag } from "@tabler/icons-react";
 interface CheckoutHeaderProps {
   onBack: () => void;
 }
 
 export default function CheckoutHeader({ onBack }: CheckoutHeaderProps) {
   return (
-    <>
-      <button
-        onClick={onBack}
-        className="inline-flex items-center gap-2 text-taupe-600 hover:text-luxury-ink mb-8 text-[11px] uppercase tracking-[0.2em] font-semibold transition-colors"
-      >
-        <IconArrowLeft className="h-4 w-4" />
-        Trở lại
-      </button>
-      <div className="flex items-center gap-4 mb-8">
-        <div className="w-12 h-12 rounded-[2px] bg-taupe-50/50 border border-luxury-ink/10 flex items-center justify-center">
-          <IconShoppingBag className="h-5 w-5 text-luxury-ink" />
-        </div>
-        <div>
-          <h1 className="text-3xl text-luxury-ink mb-1" style={{ fontFamily: "var(--font-droid-serif), serif" }}>Xác Nhận Đơn Hàng</h1>
-          <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-taupe-500 mt-2">Kiểm tra thông tin trước khi thanh toán</p>
-        </div>
+    <div className="max-w-9xl mx-auto w-full px-4 mb-6 sm:px-6">
+      <div className="flex items-center gap-2 text-sm mt-2 text-muted-foreground">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-charcoal-400 uppercase flex-wrap"
+        >
+          <button
+            type="button"
+            onClick={onBack}
+            className="group inline-flex items-center gap-1 text-xs font-semibold uppercase transition-colors hover:text-luxury-ink focus:outline-none"
+          >
+            <IconChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
+            <span>Trở lại</span>
+          </button>
+
+          <IconChevronRight className="h-3 w-3 text-taupe-300" />
+
+          <span className="text-luxury-ink">Xác nhận đơn hàng</span>
+        </nav>
       </div>
-    </>
+    </div>
   );
 }

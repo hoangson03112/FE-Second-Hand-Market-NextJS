@@ -90,22 +90,22 @@ export default function AddressModal({
                   <IconArrowLeft className="h-5 w-5 text-taupe-500" />
                 </button>
               )}
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 font-droid-serif">
                 <div className="w-12 h-12 rounded-[2px] bg-white border border-luxury-ink/10 flex items-center justify-center">
-                  <IconMapPin className="h-5 w-5 text-luxury-ink" />
+                  <IconMapPin className="h-5 w-5 text-red-600" />
                 </div>
                 <div>
-                  <h2 className="text-2xl text-luxury-ink mb-1" style={{ fontFamily: "var(--font-droid-serif), serif" }}>
+                  <h2 className="text-2xl text-luxury-ink mb-1" >
                     {showNewAddressForm
                       ? editingAddress
                         ? "Chỉnh sửa địa chỉ"
                         : "Thêm địa chỉ mới"
                       : "Địa Chỉ Giao Hàng"}
                   </h2>
-                  <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-taupe-500">
+                  <p className="text-sm tracking-[0.15em] font-medium text-luxury-ink">
                     {showNewAddressForm
                       ? "Điền thông tin địa chỉ của bạn"
-                      : `${addresses.length} địa chỉ`}
+                      : `${addresses.length} Địa chỉ`}
                   </p>
                 </div>
               </div>

@@ -29,8 +29,11 @@ export default function ShopCartGroup({
   onRemove,
   isUpdating = false,
 }: ShopCartGroupProps) {
-  const productIds = items.map((i) => i.productId?._id).filter(Boolean) as string[];
-  const allSelected = productIds.length > 0 && productIds.every((id) => selectedIds.has(id));
+  const productIds = items
+    .map((i) => i.productId?._id)
+    .filter(Boolean) as string[];
+  const allSelected =
+    productIds.length > 0 && productIds.every((id) => selectedIds.has(id));
 
   const handleSelectAll = (checked: boolean) => {
     onSelectAllInShop(productIds, checked);
@@ -48,29 +51,27 @@ export default function ShopCartGroup({
             className="w-4 h-4 border border-luxury-ink/20 rounded-[2px] text-luxury-ink focus:ring-1 focus:ring-luxury-ink cursor-pointer disabled:opacity-50 transition-all"
           />
         </label>
-        <Link
-          href="#"
-          className="flex-1 flex items-center gap-3 min-w-0 group"
-        >
+        <Link href="#" className="flex-1 flex items-center gap-3 min-w-0 group">
           <AvatarOrInitials
             avatar={sellerAvatar}
             fullName={sellerName}
             size={28}
             className="w-7 h-7"
           />
-          <span className="text-sm font-semibold text-luxury-ink truncate group-hover:text-taupe-600">{sellerName}</span>
+          <span className="text-sm font-semibold text-luxury-ink truncate group-hover:text-taupe-600">
+            {sellerName}
+          </span>
         </Link>
         <IconChevronRight className="h-4 w-4 text-taupe-400 flex-shrink-0" />
       </div>
 
-      {/* Header row - desktop only */}
-      <div className="hidden lg:flex items-center gap-4 px-6 py-3 bg-white border-b border-luxury-ink/10 text-[10px] uppercase tracking-[0.2em] font-semibold text-taupe-500">
+      <div className="hidden lg:flex items-center gap-4 px-6 py-3 bg-white border-b border-luxury-ink/10 text-xs uppercase tracking-[0.13em] font-semibold text-primary">
         <div className="w-4"></div>
         <div className="w-20"></div>
         <div className="flex-1">Sản phẩm</div>
-        <div className="w-28 text-center">Đơn giá</div>
-        <div className="w-32 text-center">Số lượng</div>
-        <div className="w-28 text-center">Số tiền</div>
+        <div className="w-40 text-center">Đơn giá</div>
+        <div className="w-40 text-center">Số lượng</div>
+        <div className="w-52 text-center">Số tiền</div>
         <div className="w-8"></div>
       </div>
 
@@ -90,4 +91,3 @@ export default function ShopCartGroup({
     </div>
   );
 }
-

@@ -34,7 +34,7 @@ export default function AddressSection({
             </div>
             <div>
               <p className="font-semibold text-luxury-ink text-sm">Chưa có địa chỉ giao hàng</p>
-              <p className="text-[11px] text-taupe-500 mt-0.5">Vui lòng thêm địa chỉ để tiếp tục</p>
+              <p className="text-xs text-taupe-500 mt-0.5">Vui lòng thêm địa chỉ để tiếp tục</p>
             </div>
           </div>
           <button
@@ -56,14 +56,14 @@ export default function AddressSection({
           <div className="flex items-center gap-3 mb-2.5">
             <span className="font-semibold text-luxury-ink">{selectedAddress.fullName}</span>
             <span className="h-3 w-px bg-luxury-ink/20" />
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-taupe-500">{selectedAddress.phoneNumber}</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-charcoal-600">{selectedAddress.phoneNumber}</span>
             {selectedAddress.isDefault && (
               <span className="px-2 py-0.5 bg-white border border-luxury-ink/10 text-luxury-ink text-[10px] uppercase tracking-wide font-semibold rounded-[2px]">
                 Mặc định
               </span>
             )}
           </div>
-          <p className="text-sm text-taupe-600 leading-relaxed">{formatAddress(selectedAddress)}</p>
+          <p className="text-sm text-charcoal-500 leading-relaxed">{formatAddress(selectedAddress)}</p>
         </div>
         <button
           type="button"

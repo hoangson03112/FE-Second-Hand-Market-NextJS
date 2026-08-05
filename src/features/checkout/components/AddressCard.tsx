@@ -1,6 +1,12 @@
 "use client";
 
-import { IconPhone, IconUser, IconHome, IconEdit, IconTrash } from "@tabler/icons-react";
+import {
+  IconPhone,
+  IconUser,
+  IconHome,
+  IconEdit,
+  IconTrash,
+} from "@tabler/icons-react";
 import { Address } from "@/types/address";
 import { useState } from "react";
 import { useConfirm } from "@/components/shared";
@@ -41,7 +47,8 @@ export default function AddressCard({
 
     const confirmed = await confirm({
       title: "Xóa địa chỉ",
-      message: "Bạn có chắc muốn xóa địa chỉ này? Hành động này không thể hoàn tác.",
+      message:
+        "Bạn có chắc muốn xóa địa chỉ này? Hành động này không thể hoàn tác.",
       confirmText: "Xóa",
       cancelText: "Hủy",
       variant: "danger",
@@ -81,22 +88,26 @@ export default function AddressCard({
               <div className="w-8 h-8 rounded-[2px] bg-taupe-50 border border-luxury-ink/10 flex items-center justify-center">
                 <IconUser className="h-4 w-4 text-luxury-ink" />
               </div>
-              <span className="font-semibold text-luxury-ink">{address.fullName}</span>
+              <span className="font-medium text-luxury-ink">
+                {address.fullName}
+              </span>
             </div>
             <div className="h-3 w-px bg-luxury-ink/20" />
             <div className="flex items-center gap-1.5 text-taupe-500">
-              <IconPhone className="h-3.5 w-3.5 text-taupe-400" />
-              <span className="text-[11px] font-semibold uppercase tracking-wide">{address.phoneNumber}</span>
+              <IconPhone className="h-3.5 w-3.5 text-foreground" />
+              <span className="text-xs font-medium tracking-wide text-charcoal-600">
+                {address.phoneNumber}
+              </span>
             </div>
             {address.isDefault && (
-              <span className="px-2 py-0.5 bg-luxury-ink text-white text-[10px] uppercase tracking-wide font-semibold rounded-[2px]">
+              <span className="px-2 py-0.5 bg-luxury-ink text-white text-2xs uppercase tracking-wide font-semibold rounded-[2px]">
                 Mặc định
               </span>
             )}
           </div>
-          <div className="flex items-start gap-2.5">
-            <IconHome className="h-4 w-4 text-taupe-400 mt-0.5" />
-            <p className="text-sm text-taupe-600 leading-relaxed flex-1">
+          <div className="flex items-start gap-2.5 text-charcoal-500">
+            <IconHome className="h-4 w-4  mt-0.5" />
+            <p className="text-sm font-medium  leading-relaxed flex-1">
               {formatAddress(address)}
             </p>
           </div>

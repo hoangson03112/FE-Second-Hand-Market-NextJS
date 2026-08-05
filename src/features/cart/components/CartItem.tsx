@@ -1,10 +1,10 @@
 "use client";
 
-import { IconTrash } from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
 import { formatPrice } from "@/utils/format/price";
 import type { CartItem as CartItemType } from "@/types/cart";
+import { Trash2 } from "lucide-react";
 
 interface CartItemProps {
   item: CartItemType;
@@ -15,7 +15,9 @@ interface CartItemProps {
   isUpdating?: boolean;
 }
 
-function getImageUrl(avatar: CartItemType["productId"]["avatar"]): string | null {
+function getImageUrl(
+  avatar: CartItemType["productId"]["avatar"],
+): string | null {
   if (!avatar) return null;
   return typeof avatar === "object" && "url" in avatar ? avatar.url : null;
 }
@@ -87,13 +89,20 @@ export default function CartItem({
         >
           {product.name}
         </Link>
-        
+
         <div className="mt-auto space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-0.5">
-              <span className="text-base font-bold text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif" }}>{formatPrice(product.price)}</span>
+              <span
+                className="text-base font-bold text-luxury-ink"
+                style={{ fontFamily: "var(--font-droid-serif), serif" }}
+              >
+                {formatPrice(product.price)}
+              </span>
               {product.hasPersonalDiscount && product.originalPrice != null && (
-                <span className="text-[10px] text-taupe-400 line-through">{formatPrice(product.originalPrice)}</span>
+                <span className="text-[10px] text-taupe-400 line-through">
+                  {formatPrice(product.originalPrice)}
+                </span>
               )}
             </div>
             <button
@@ -102,7 +111,7 @@ export default function CartItem({
               disabled={isUpdating}
               className="text-taupe-400 hover:text-blush-600 hover:scale-110 transition-all duration-200 disabled:opacity-50"
             >
-              <IconTrash className="h-4 w-4" />
+              <Trash2 className="h-4 w-4" />
             </button>
           </div>
 
@@ -135,7 +144,10 @@ export default function CartItem({
               </button>
             </div>
 
-            <span className="text-base font-bold text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif" }}>
+            <span
+              className="text-base font-bold text-luxury-ink"
+              style={{ fontFamily: "var(--font-droid-serif), serif" }}
+            >
               {formatPrice(product.price * item.quantity)}
             </span>
           </div>
@@ -146,19 +158,26 @@ export default function CartItem({
       <div className="hidden lg:flex flex-1 items-center gap-4">
         <Link
           href={productHref}
-          className="flex-1 text-sm font-medium text-luxury-ink line-clamp-2 hover:text-taupe-600 transition-colors"
+          className="flex-1 text-base font-medium text-luxury-ink line-clamp-2 hover:text-primary/70 transition-colors"
         >
           {product.name}
         </Link>
 
-        <div className="w-28 text-center">
-          <div className="text-base font-bold text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif" }}>{formatPrice(product.price)}</div>
+        <div className="w-40 text-center">
+          <div className="text-base font-medium text-luxury-ink">
+            {formatPrice(product.price)}
+          </div>
           {product.hasPersonalDiscount && product.originalPrice != null && (
-            <div className="text-[10px] text-taupe-400 line-through">{formatPrice(product.originalPrice)}</div>
+            <div className="text-2xs text-red-400 line-through">
+              {formatPrice(product.originalPrice)}
+            </div>
           )}
         </div>
 
-        <div className="w-32 flex justify-center" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="w-40 flex justify-center"
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="flex items-center border border-luxury-ink/20 overflow-hidden rounded-[2px]">
             <button
               type="button"
@@ -185,7 +204,7 @@ export default function CartItem({
           </div>
         </div>
 
-        <div className="w-28 text-center text-base font-bold text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif" }}>
+        <div className="w-52 text-center text-base font-bold text-luxury-ink">
           {formatPrice(product.price * item.quantity)}
         </div>
 
@@ -194,9 +213,9 @@ export default function CartItem({
             type="button"
             onClick={() => onRemove(product._id)}
             disabled={isUpdating}
-            className="text-taupe-400 hover:text-blush-600 transition-colors disabled:opacity-50"
+            className="p-2.5 rounded-full text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
           >
-            <IconTrash className="h-4 w-4" />
+            <Trash2 className="h-4 w-4" />
           </button>
         </div>
       </div>
