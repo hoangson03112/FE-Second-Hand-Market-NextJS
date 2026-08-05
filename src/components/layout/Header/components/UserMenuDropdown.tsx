@@ -1,4 +1,11 @@
-import { IconChevronDown, IconSettings, IconPackage, IconTruck, IconUser, IconLogout } from "@tabler/icons-react";
+import {
+  IconChevronDown,
+  IconSettings,
+  IconPackage,
+  IconTruck,
+  IconUser,
+  IconLogout,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
 import { RefObject } from "react";
@@ -52,8 +59,11 @@ export function UserMenuDropdown({
           />
         ) : (
           <span
-            className="w-7 h-7 sm:w-[30px] sm:h-[30px] flex items-center justify-center text-white text-[11px] font-bold rounded-full"
-            style={{ background: "linear-gradient(135deg, var(--primary) 0%, oklch(0.43 0.08 35) 100%)" }}
+            className="w-7 h-7 sm:w-[30px] sm:h-[30px] flex items-center justify-center text-white text-xs font-bold rounded-full"
+            style={{
+              background:
+                "linear-gradient(135deg, var(--primary) 0%, oklch(0.43 0.08 35) 100%)",
+            }}
           >
             {getInitials(account?.fullName)}
           </span>
@@ -65,15 +75,7 @@ export function UserMenuDropdown({
       </button>
 
       {showUserDropdown && (
-        <div
-          className="absolute right-0 mt-2 w-60 z-50"
-          style={{
-            background: "var(--background)",
-            border: "1px solid var(--border)",
-            borderRadius: "16px",
-            boxShadow: "0 16px 48px rgba(26,23,20,0.13), 0 2px 8px rgba(26,23,20,0.05)",
-          }}
-        >
+        <div className="absolute right-0 mt-2 w-60 z-50 bg-cream-50 rounded-[2px]">
           <div className="px-4 pt-4 pb-3 border-b border-border">
             <div className="flex items-center gap-3">
               {avatarUrl ? (
@@ -86,18 +88,15 @@ export function UserMenuDropdown({
                   style={{ border: "2px solid var(--border)" }}
                 />
               ) : (
-                <span
-                  className="w-9 h-9 flex items-center justify-center text-white text-[13px] font-bold shrink-0 rounded-full"
-                  style={{ background: "linear-gradient(135deg, var(--primary) 0%, oklch(0.43 0.08 35) 100%)" }}
-                >
+                <span className="w-9 h-9 flex items-center justify-center text-white text-sm font-bold shrink-0 rounded-full">
                   {getInitials(account?.fullName)}
                 </span>
               )}
               <div className="min-w-0 flex-1">
-                <p className="text-[13px] font-semibold truncate text-foreground">
+                <p className="text-sm font-semibold truncate text-foreground">
                   {account?.fullName || "Người dùng"}
                 </p>
-                <p className="text-[11.5px] truncate mt-0.5 text-muted-foreground">
+                <p className="text-xs truncate mt-0.5 text-muted-foreground">
                   {account?.email}
                 </p>
               </div>
@@ -105,20 +104,50 @@ export function UserMenuDropdown({
           </div>
           <div className="p-1.5">
             {[
-              { href: "/profile", icon: <IconUser className="w-4 h-4 shrink-0" />, label: "Thông tin tài khoản", show: true },
-              { href: "/admin", icon: <IconSettings className="w-4 h-4 shrink-0" />, label: "Quản trị", show: account.role === "admin" },
-              { href: "/my/listings", icon: <IconPackage className="w-4 h-4 shrink-0" />, label: "Sản phẩm đã đăng", show: true },
+              {
+                href: "/profile",
+                icon: <IconUser className="w-4 h-4 shrink-0" />,
+                label: "Thông tin tài khoản",
+                show: true,
+              },
+              {
+                href: "/admin",
+                icon: <IconSettings className="w-4 h-4 shrink-0" />,
+                label: "Quản trị",
+                show: account.role === "admin",
+              },
+              {
+                href: "/my/listings",
+                icon: <IconPackage className="w-4 h-4 shrink-0" />,
+                label: "Sản phẩm đã đăng",
+                show: true,
+              },
               {
                 href: "/orders",
                 icon: (
-                  <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  <svg
+                    className="w-4 h-4 shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                    />
                   </svg>
                 ),
                 label: "Đơn hàng của tôi",
                 show: true,
               },
-              { href: "/seller/orders", icon: <IconTruck className="w-4 h-4 shrink-0" />, label: "Đơn hàng bán của tôi", show: true },
+              {
+                href: "/seller/orders",
+                icon: <IconTruck className="w-4 h-4 shrink-0" />,
+                label: "Đơn hàng bán của tôi",
+                show: true,
+              },
             ]
               .filter((item) => item.show)
               .map((item) => (
@@ -126,9 +155,11 @@ export function UserMenuDropdown({
                   key={item.href}
                   href={item.href}
                   onClick={closeUserDropdown}
-                  className="flex items-center gap-3 px-3 py-2.5 text-[13px] font-medium rounded-xl transition-all duration-100 text-foreground hover:bg-primary/10 hover:text-foreground"
+                  className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-[2px] transition-all duration-100 text-luxury-ink hover:bg-primary/10 hover:text-luxury-ink/80"
                 >
-                  <span className="text-muted-foreground group-hover:text-primary">{item.icon}</span>
+                  <span className="text-muted-foreground group-hover:text-primary">
+                    {item.icon}
+                  </span>
                   {item.label}
                 </Link>
               ))}
@@ -136,9 +167,10 @@ export function UserMenuDropdown({
             <button
               type="button"
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-3 py-2.5 text-[13px] font-medium rounded-xl transition-all duration-100 text-destructive hover:bg-destructive/5"
+              className="hover:text-red-600 w-full flex items-center gap-3 px-3 py-2.5 text-[13px] font-medium rounded-xl transition-all duration-100 text-destructive hover:bg-destructive/5"
             >
-              <IconLogout className="w-4 h-4 shrink-0" />Đăng xuất
+              <IconLogout className="w-4 h-4 shrink-0" />
+              Đăng xuất
             </button>
           </div>
         </div>

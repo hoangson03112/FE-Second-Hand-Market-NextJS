@@ -13,7 +13,9 @@
     background: var(--background);
     color: var(--foreground);
   }
-
+  .font-droid-serif {
+    font-family: var(--font-droid-serif), serif;
+  }
   :where(*, *::before, *::after) {
     font-family: inherit;
   }

@@ -32,7 +32,6 @@ export default function Header() {
 
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const isHomeHero = pathname === "/" && !isScrolled;
 
   useEffect(() => {
     const mainContainer = document.getElementById("main-scroll-container");
@@ -50,12 +49,10 @@ export default function Header() {
 
   return (
     <header
-      className={`relative z-50 w-full bg-luxury-ivory shrink-0 transition-all duration-500 ${
+      className={`relative z-50 w-full shrink-0 transition-all duration-500 ${
         isScrolled
-          ? "border-b border-[#1A1816]/8 bg-[#F7F5F0]/95 shadow-[0_8px_30px_rgba(26,24,22,0.06)] backdrop-blur-md"
-          : isHomeHero
-            ? "border-b border-transparent bg-[#F7F5F0]/25 backdrop-blur-sm"
-            : "border-b border-transparent bg-transparent"
+          ? "border-b border-[#1A1816]/8 bg-white/95 shadow-[0_8px_30px_rgba(26,24,22,0.08)] backdrop-blur-md"
+          : "border-b border-transparent bg-luxury-ivory"
       }`}
     >
       <div className="mx-auto w-full max-w-9xl px-3 sm:px-6 lg:px-8">

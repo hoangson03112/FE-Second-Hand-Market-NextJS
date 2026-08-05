@@ -40,7 +40,12 @@ const ROLE_CONFIG: Record<string, { label: string; className: string }> = {
 
 function getRoleBadge(role?: string) {
   if (!role) return ROLE_CONFIG.buyer;
-  return ROLE_CONFIG[role] ?? { label: "Người dùng", className: "bg-muted text-muted-foreground border-border" };
+  return (
+    ROLE_CONFIG[role] ?? {
+      label: "Người dùng",
+      className: "bg-muted text-muted-foreground border-border",
+    }
+  );
 }
 
 export function ProfileSidebar({
@@ -70,12 +75,21 @@ export function ProfileSidebar({
         <div className="p-6 border-b border-luxury-ink/10 bg-luxury-ivory/50">
           <div className="flex flex-col items-center text-center">
             <div className="mb-4">
-              <UserAvatar avatarUrl={avatarUrl} fullName={fullName} size="large" showEditIcon />
+              <UserAvatar
+                avatarUrl={avatarUrl}
+                fullName={fullName}
+                size="large"
+              />
             </div>
-            <h3 className="text-xl text-luxury-ink mb-1 line-clamp-1" style={{ fontFamily: "var(--font-droid-serif), serif" }}>
+            <h3
+              className="text-xl text-luxury-ink mb-1 line-clamp-1"
+              style={{ fontFamily: "var(--font-droid-serif), serif" }}
+            >
               {fullName || "Người dùng"}
             </h3>
-            <p className="text-xs text-muted-foreground mb-4 line-clamp-1">{email}</p>
+            <p className="text-xs text-muted-foreground mb-4 line-clamp-1">
+              {email}
+            </p>
             <div className="flex flex-wrap justify-center gap-2">
               <span
                 className={`inline-flex items-center px-2.5 py-1 rounded-[2px] text-xs font-medium border ${roleBadge.className}`}
@@ -94,7 +108,7 @@ export function ProfileSidebar({
 
         {/* Tabs: Tài khoản */}
         <div className="p-4 border-b border-luxury-ink/10">
-          <p className="px-2 py-2 text-[10px] font-semibold text-taupe-500 uppercase tracking-[0.2em]">
+          <p className="px-2 py-2 text-xs font-semibold text-charcoal-400  uppercase tracking-[0.13em]">
             Tài khoản
           </p>
           <div className="space-y-1">
@@ -112,12 +126,13 @@ export function ProfileSidebar({
               className={navClass("password")}
             >
               <IconLock className="w-4 h-4" />
-              <span>{isGoogleUser ? "Thiết lập mật khẩu" : "Đổi mật khẩu"}</span>
+              <span>
+                {isGoogleUser ? "Thiết lập mật khẩu" : "Đổi mật khẩu"}
+              </span>
             </button>
           </div>
         </div>
 
-        {/* Tab: Ngân hàng (chỉ Seller) */}
         {isSeller && (
           <div className="p-4 border-b border-luxury-ink/10">
             <p className="px-2 py-2 text-[10px] font-semibold text-taupe-500 uppercase tracking-[0.2em]">
@@ -139,7 +154,7 @@ export function ProfileSidebar({
         {/* Quick links by role */}
         {(isSeller || isAdmin) && (
           <div className="p-4">
-            <p className="px-2 py-2 text-[10px] font-semibold text-taupe-500 uppercase tracking-[0.2em]">
+            <p className="px-2 py-2 text-xs font-semibold text-charcoal-400  uppercase tracking-[0.13em]">
               Truy cập nhanh
             </p>
             <div className="space-y-1">
@@ -178,10 +193,10 @@ export function ProfileSidebar({
               {isAdmin && (
                 <Link
                   href="/admin"
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-sm font-medium text-muted-foreground hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
+                  className=" flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-base font-medium text-muted-foreground hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
                 >
                   <IconSettings className="w-4 h-4 shrink-0" />
-                  Trang quản trị
+                  Quản trị hệ thống
                 </Link>
               )}
             </div>
