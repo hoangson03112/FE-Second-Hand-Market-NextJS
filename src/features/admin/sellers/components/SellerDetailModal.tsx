@@ -17,10 +17,10 @@ import type { AdminSeller } from "@/types/admin";
 import { format } from "@/utils/format/date";
 
 const STATUS_CONFIG: Record<string, { label: string; icon: React.ElementType; className: string }> = {
-  pending:  { label: "Chá» duyá»‡t", icon: IconClock,        className: "bg-primary/10 text-primary" },
-  approved: { label: "ÄÃ£ duyá»‡t",  icon: IconCircleCheck,  className: "bg-emerald-500/10 text-emerald-600" },
-  rejected: { label: "Tá»« chá»‘i",   icon: IconCircleX,      className: "bg-destructive/10 text-destructive" },
-  banned:   { label: "Bá»‹ khÃ³a",   icon: IconBan,          className: "bg-muted text-muted-foreground" },
+  pending:  { label: "Chờ duyệt", icon: IconClock,        className: "bg-primary/10 text-primary" },
+  approved: { label: "Đã duyệt",  icon: IconCircleCheck,  className: "bg-emerald-500/10 text-emerald-600" },
+  rejected: { label: "Từ chối",   icon: IconCircleX,      className: "bg-destructive/10 text-destructive" },
+  banned:   { label: "Bị khóa",   icon: IconBan,          className: "bg-muted text-muted-foreground" },
 };
 
 function Section({ icon: Icon, title, children }: { icon: React.ElementType; title: string; children: React.ReactNode }) {
@@ -39,7 +39,7 @@ function Row({ label, value }: { label: string; value?: React.ReactNode }) {
   return (
     <div className="flex items-start gap-2 text-sm">
       <span className="w-36 shrink-0 text-muted-foreground">{label}</span>
-      <span className="text-foreground font-medium break-all">{value ?? "â€”"}</span>
+      <span className="text-foreground font-medium break-all">{value ?? "—"}</span>
     </div>
   );
 }
@@ -98,7 +98,7 @@ export default function SellerDetailModal({
             )}
             <div>
               <p className="text-base font-semibold text-foreground leading-tight">
-                {seller.accountId?.fullName ?? "â€”"}
+                {seller.accountId?.fullName ?? "—"}
               </p>
               <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium mt-1 ${statusCfg.className}`}>
                 <StatusIcon className="w-3.5 h-3.5" />
@@ -117,87 +117,87 @@ export default function SellerDetailModal({
 
         {/* Body */}
         <div className="overflow-y-auto p-5 sm:p-6 space-y-5">
-          {/* Thá»‘ng kÃª - full width */}
+          {/* Thống kê - full width */}
           <div className="rounded-xl border border-primary/20 bg-primary/5 p-5">
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-4">Thá»‘ng kÃª hoáº¡t Ä‘á»™ng</p>
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-4">Thống kê hoạt động</p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div className="flex flex-col items-center rounded-xl bg-background border border-border py-4 px-3">
                 <IconPackage className="w-6 h-6 text-primary mb-1.5" />
                 <span className="text-xl font-bold text-foreground">{stats?.totalProductsActive ?? 0}</span>
-                <span className="text-xs text-muted-foreground mt-0.5">Äang bÃ¡n</span>
+                <span className="text-xs text-muted-foreground mt-0.5">Đang bán</span>
               </div>
               <div className="flex flex-col items-center rounded-xl bg-background border border-border py-4 px-3">
                 <IconShoppingCart className="w-6 h-6 text-primary mb-1.5" />
                 <span className="text-xl font-bold text-foreground">{stats?.totalSold ?? 0}</span>
-                <span className="text-xs text-muted-foreground mt-0.5">ÄÃ£ bÃ¡n</span>
+                <span className="text-xs text-muted-foreground mt-0.5">Đã bán</span>
               </div>
               <div className="flex flex-col items-center rounded-xl bg-background border border-border py-4 px-3">
                 <IconStar className="w-6 h-6 text-amber-500 mb-1.5" />
                 <span className="text-xl font-bold text-foreground">
-                  {(stats?.avgRating ?? 0) > 0 ? `${Number(stats!.avgRating).toFixed(1)} â˜…` : "0"}
+                  {(stats?.avgRating ?? 0) > 0 ? `${Number(stats!.avgRating).toFixed(1)} ★` : "0"}
                 </span>
-                <span className="text-xs text-muted-foreground mt-0.5">ÄÃ¡nh giÃ¡ TB</span>
+                <span className="text-xs text-muted-foreground mt-0.5">Đánh giá TB</span>
               </div>
               <div className="flex flex-col items-center rounded-xl bg-background border border-border py-4 px-3">
                 <IconMessageCircle className="w-6 h-6 text-primary mb-1.5" />
                 <span className="text-xl font-bold text-foreground">{stats?.totalReviews ?? 0}</span>
-                <span className="text-xs text-muted-foreground mt-0.5">LÆ°á»£t Ä‘Ã¡nh giÃ¡</span>
+                <span className="text-xs text-muted-foreground mt-0.5">Lượt đánh giá</span>
               </div>
             </div>
           </div>
 
-          {/* 2 cá»™t: TrÃ¡i = TÃ i khoáº£n + NgÃ¢n hÃ ng, Pháº£i = CCCD */}
+          {/* 2 cột: Trái = Tài khoản + Ngân hàng, Phải = CCCD */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
             <div className="lg:col-span-5 space-y-5">
-              <Section icon={IconUser} title="ThÃ´ng tin tÃ i khoáº£n">
+              <Section icon={IconUser} title="Thông tin tài khoản">
                 <div className="space-y-2">
                   <Row label="Seller ID" value={<span className="font-mono text-xs">{seller._id}</span>} />
-                  <Row label="Há» tÃªn" value={seller.accountId?.fullName} />
+                  <Row label="Họ tên" value={seller.accountId?.fullName} />
                   <Row label="Email" value={seller.accountId?.email} />
-                  <Row label="Sá»‘ Ä‘iá»‡n thoáº¡i" value={seller.accountId?.phoneNumber} />
-                  <Row label="NgÃ y táº¡o TK" value={seller.accountId?.createdAt ? format(seller.accountId.createdAt) : undefined} />
-                  <Row label="NgÃ y Ä‘Äƒng kÃ½ seller" value={seller.createdAt ? format(seller.createdAt) : undefined} />
+                  <Row label="Số điện thoại" value={seller.accountId?.phoneNumber} />
+                  <Row label="Ngày tạo TK" value={seller.accountId?.createdAt ? format(seller.accountId.createdAt) : undefined} />
+                  <Row label="Ngày đăng ký seller" value={seller.createdAt ? format(seller.createdAt) : undefined} />
                 </div>
                 <div className="pt-3 border-t border-border mt-3 space-y-2">
                   <Row
-                    label="Äá»“ng Ã½ Ä‘iá»u khoáº£n"
+                    label="Đồng ý điều khoản"
                     value={
                       seller.agreeTerms !== undefined ? (
                         <span className={seller.agreeTerms ? "text-emerald-600" : "text-destructive"}>
-                          {seller.agreeTerms ? "ÄÃ£ Ä‘á»“ng Ã½" : "ChÆ°a Ä‘á»“ng Ã½"}
+                          {seller.agreeTerms ? "Đã đồng ý" : "Chưa đồng ý"}
                         </span>
                       ) : undefined
                     }
                   />
                   <Row
-                    label="Äá»“ng Ã½ chÃ­nh sÃ¡ch"
+                    label="Đồng ý chính sách"
                     value={
                       seller.agreePolicy !== undefined ? (
                         <span className={seller.agreePolicy ? "text-emerald-600" : "text-destructive"}>
-                          {seller.agreePolicy ? "ÄÃ£ Ä‘á»“ng Ã½" : "ChÆ°a Ä‘á»“ng Ã½"}
+                          {seller.agreePolicy ? "Đã đồng ý" : "Chưa đồng ý"}
                         </span>
                       ) : undefined
                     }
                   />
-                  {seller.approvedDate && <Row label="NgÃ y duyá»‡t" value={format(seller.approvedDate)} />}
-                  {seller.approvedBy && <Row label="Admin duyá»‡t" value={`${seller.approvedBy.fullName}`} />}
+                  {seller.approvedDate && <Row label="Ngày duyệt" value={format(seller.approvedDate)} />}
+                  {seller.approvedBy && <Row label="Admin duyệt" value={`${seller.approvedBy.fullName}`} />}
                   {seller.rejectedReason && (
-                    <Row label="LÃ½ do tá»« chá»‘i" value={<span className="text-destructive">{seller.rejectedReason}</span>} />
+                    <Row label="Lý do từ chối" value={<span className="text-destructive">{seller.rejectedReason}</span>} />
                   )}
                 </div>
               </Section>
 
-              <Section icon={IconCreditCard} title="ThÃ´ng tin ngÃ¢n hÃ ng">
-                <Row label="NgÃ¢n hÃ ng" value={seller.bankInfo?.bankName} />
-                <Row label="Sá»‘ tÃ i khoáº£n" value={seller.bankInfo?.accountNumber} />
-                <Row label="Chá»§ tÃ i khoáº£n" value={seller.bankInfo?.accountHolder.toUpperCase()} />
+              <Section icon={IconCreditCard} title="Thông tin ngân hàng">
+                <Row label="Ngân hàng" value={seller.bankInfo?.bankName} />
+                <Row label="Số tài khoản" value={seller.bankInfo?.accountNumber} />
+                <Row label="Chủ tài khoản" value={seller.bankInfo?.accountHolder.toUpperCase()} />
               </Section>
             </div>
 
             <div className="lg:col-span-7">
               <Section icon={IconId} title="CCCD / CMND">
                 <div className="grid grid-cols-2 gap-4">
-                  {[{ label: "Máº·t trÆ°á»›c", file: seller.idCardFront }, { label: "Máº·t sau", file: seller.idCardBack }].map(({ label, file }) => (
+                  {[{ label: "Mặt trước", file: seller.idCardFront }, { label: "Mặt sau", file: seller.idCardBack }].map(({ label, file }) => (
                     <div key={label}>
                       <p className="text-xs font-medium text-muted-foreground mb-2">{label}</p>
                       {file?.url ? (
@@ -212,7 +212,7 @@ export default function SellerDetailModal({
                         </a>
                       ) : (
                         <div className="w-full h-32 rounded-xl border border-border bg-muted/40 flex items-center justify-center text-sm text-muted-foreground">
-                          ChÆ°a cÃ³ áº£nh
+                          Chưa có ảnh
                         </div>
                       )}
                     </div>
@@ -222,13 +222,13 @@ export default function SellerDetailModal({
             </div>
           </div>
 
-          {/* LÃ½ do tá»« chá»‘i / khÃ³a - full width */}
+          {/* Lý do từ chối / khóa - full width */}
           {(seller.verificationStatus === "pending" || seller.verificationStatus === "approved") && (
             <div className="rounded-xl border border-border bg-background p-5">
               <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
                 {seller.verificationStatus === "pending"
-                  ? "LÃ½ do tá»« chá»‘i (náº¿u tá»« chá»‘i)"
-                  : "LÃ½ do khÃ³a (báº¯t buá»™c khi khÃ³a)"}
+                  ? "Lý do từ chối (nếu từ chối)"
+                  : "Lý do khóa (bắt buộc khi khóa)"}
               </label>
               <textarea
                 value={rejectReason}
@@ -237,8 +237,8 @@ export default function SellerDetailModal({
                 rows={2}
                 placeholder={
                   seller.verificationStatus === "pending"
-                    ? "Nháº­p lÃ½ do tá»« chá»‘i..."
-                    : "Nháº­p lÃ½ do khÃ³a tÃ i khoáº£n..."
+                    ? "Nhập lý do từ chối..."
+                    : "Nhập lý do khóa tài khoản..."
                 }
               />
             </div>
@@ -252,7 +252,7 @@ export default function SellerDetailModal({
             onClick={onClose}
             className="rounded-xl border border-border px-5 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors"
           >
-            ÄÃ³ng
+            Đóng
           </button>
           {seller.verificationStatus === "pending" && (
             <>
@@ -262,7 +262,7 @@ export default function SellerDetailModal({
                 disabled={isUpdating}
                 className="rounded-xl border border-destructive/30 bg-destructive/5 px-5 py-2.5 text-sm font-medium text-destructive hover:bg-destructive/10 disabled:opacity-50 transition-colors"
               >
-                Tá»« chá»‘i
+                Từ chối
               </button>
               <button
                 type="button"
@@ -270,7 +270,7 @@ export default function SellerDetailModal({
                 disabled={isUpdating}
                 className="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
               >
-                Duyá»‡t seller
+                Duyệt seller
               </button>
             </>
           )}
@@ -281,7 +281,7 @@ export default function SellerDetailModal({
               disabled={isUpdating || !rejectReason.trim()}
               className="rounded-xl border border-destructive/30 bg-destructive/5 px-5 py-2.5 text-sm font-medium text-destructive hover:bg-destructive/10 disabled:opacity-50 transition-colors"
             >
-              KhÃ³a tÃ i khoáº£n
+              Khóa tài khoản
             </button>
           )}
         </div>

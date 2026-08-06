@@ -44,7 +44,7 @@ export default function SubCategoryPage({ slug, subId }: SubCategoryPageProps) {
           <ProductList
             products={products?.data || []}
             isLoading={isLoading}
-            emptyMessage="KhÃ´ng cÃ³ sáº£n pháº©m nÃ o trong danh má»¥c nÃ y"
+            emptyMessage="Không có sản phẩm nào trong danh mục này"
             pagination={{
               currentPage: products?.page || 1,
               totalPages: products?.totalPages || 1,

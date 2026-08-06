@@ -183,7 +183,7 @@ export default function Footer() {
 
         <div className="border-t-2 border-taupe-800 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-taupe-300 font-medium">
-            Â© {currentYear} Chợ Đồ Cũ Thông Minh. Tất cả quyền được bảo lưu.
+            © {currentYear} Chợ Đồ Cũ Thông Minh. Tất cả quyền được bảo lưu.
           </p>
           <div className="flex items-center gap-8">
             {["Điều khoản", "Bảo mật", "Sitemap"].map((label, i) => (

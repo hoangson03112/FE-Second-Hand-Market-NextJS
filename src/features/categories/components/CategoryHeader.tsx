@@ -26,10 +26,10 @@ export default function CategoryHeader({ category, subCategory }: CategoryHeader
         <nav className="flex items-center gap-1.5 text-xs text-taupe-400 mb-5">
           <Link href="/" className="flex items-center gap-1 hover:text-primary transition-colors">
             <IconHome className="w-3.5 h-3.5" />
-            <span>Trang chá»§</span>
+            <span>Trang chủ</span>
           </Link>
           <IconChevronRight className="w-3 h-3 text-taupe-300" />
-          <Link href="/categories" className="hover:text-primary transition-colors">Danh má»¥c</Link>
+          <Link href="/categories" className="hover:text-primary transition-colors">Danh mục</Link>
           {category && (
             <>
               <IconChevronRight className="w-3 h-3 text-taupe-300" />
@@ -66,14 +66,14 @@ export default function CategoryHeader({ category, subCategory }: CategoryHeader
 
         {/* Title */}
         <h1 className="text-3xl md:text-4xl font-bold text-taupe-900 mb-1.5 leading-[1.1] tracking-tight">
-          {subCategory?.name || category?.name || "Danh má»¥c"}
+          {subCategory?.name || category?.name || "Danh mục"}
         </h1>
         <p className="text-sm text-taupe-400 mb-6">
           {isSubCategoryView
-            ? `KhÃ¡m phÃ¡ táº¥t cáº£ sáº£n pháº©m trong danh má»¥c nÃ y`
+            ? `Khám phá tất cả sản phẩm trong danh mục này`
             : category
-              ? `Táº¥t cáº£ sáº£n pháº©m trong danh má»¥c ${category.name}`
-              : "KhÃ¡m phÃ¡ sáº£n pháº©m"}
+              ? `Tất cả sản phẩm trong danh mục ${category.name}`
+              : "Khám phá sản phẩm"}
         </p>
 
         {/* Subcategory navigation chips */}
@@ -84,7 +84,7 @@ export default function CategoryHeader({ category, subCategory }: CategoryHeader
                 href={`/categories/${category.slug}`}
                 className="px-4 py-1.5 rounded-full border-2 border-primary bg-primary text-primary-foreground text-sm font-semibold shadow-sm"
               >
-                Táº¥t cáº£
+                Tất cả
               </Link>
             )}
             {category.subCategories.map((sub) => {

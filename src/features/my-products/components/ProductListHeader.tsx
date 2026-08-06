@@ -19,12 +19,12 @@ interface ProductListHeaderProps {
 }
 
 const FILTER_CONFIGS = [
-  { value: "all" as const, label: "Táº¥t cáº£", icon: IconPackage },
-  { value: "pending" as const, label: "Chá» duyá»‡t", icon: IconClock },
-  { value: "approved" as const, label: "ÄÃ£ duyá»‡t", icon: IconCircleCheck },
-  { value: "under_review" as const, label: "Äang xem xÃ©t", icon: IconEye },
-  { value: "rejected" as const, label: "Tá»« chá»‘i", icon: IconCircleX },
-  { value: "sold" as const, label: "ÄÃ£ bÃ¡n", icon: IconCurrencyDollar },
+  { value: "all" as const, label: "Tất cả", icon: IconPackage },
+  { value: "pending" as const, label: "Chờ duyệt", icon: IconClock },
+  { value: "approved" as const, label: "Đã duyệt", icon: IconCircleCheck },
+  { value: "under_review" as const, label: "Đang xem xét", icon: IconEye },
+  { value: "rejected" as const, label: "Từ chối", icon: IconCircleX },
+  { value: "sold" as const, label: "Đã bán", icon: IconCurrencyDollar },
 ];
 
 export function ProductListHeader({
@@ -40,10 +40,10 @@ export function ProductListHeader({
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-semibold text-foreground mb-1">
-              Sáº£n pháº©m cá»§a tÃ´i
+              Sản phẩm của tôi
             </h1>
             <p className="text-sm text-muted-foreground">
-              {stats.all} sáº£n pháº©m
+              {stats.all} sản phẩm
             </p>
           </div>
           
@@ -78,7 +78,7 @@ export function ProductListHeader({
               className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
             >
               <IconPlus className="w-4 h-4" />
-              ÄÄƒng tin
+              Đăng tin
             </Link>
           </div>
         </div>

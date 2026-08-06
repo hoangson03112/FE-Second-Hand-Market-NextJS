@@ -56,19 +56,19 @@ function buildTimeline(
   isLocalPickup: boolean
 ): TimelineEntry[] {
   const GHN_STEPS: Array<{ key: string; label: string }> = [
-    { key: "pending",          label: "Äáº·t hÃ ng" },
-    { key: "confirmed",        label: "ÄÃ£ xÃ¡c nháº­n" },
-    { key: "picked_up",        label: "ÄÃ£ láº¥y hÃ ng" },
-    { key: "shipping",         label: "Äang váº­n chuyá»ƒn" },
-    { key: "out_for_delivery", label: "Äang giao hÃ ng" },
-    { key: "delivered",        label: "ÄÃ£ giao hÃ ng" },
-    { key: "completed",        label: "HoÃ n thÃ nh" },
+    { key: "pending",          label: "Đặt hàng" },
+    { key: "confirmed",        label: "Đã xác nhận" },
+    { key: "picked_up",        label: "Đã lấy hàng" },
+    { key: "shipping",         label: "Đang vận chuyển" },
+    { key: "out_for_delivery", label: "Đang giao hàng" },
+    { key: "delivered",        label: "Đã giao hàng" },
+    { key: "completed",        label: "Hoàn thành" },
   ];
   const LOCAL_STEPS: Array<{ key: string; label: string }> = [
-    { key: "pending",   label: "Äáº·t hÃ ng" },
-    { key: "confirmed", label: "ÄÃ£ xÃ¡c nháº­n" },
-    { key: "delivered", label: "ÄÃ£ giao hÃ ng" },
-    { key: "completed", label: "HoÃ n thÃ nh" },
+    { key: "pending",   label: "Đặt hàng" },
+    { key: "confirmed", label: "Đã xác nhận" },
+    { key: "delivered", label: "Đã giao hàng" },
+    { key: "completed", label: "Hoàn thành" },
   ];
   const STEPS = isLocalPickup ? LOCAL_STEPS : GHN_STEPS;
   const ORDER = isLocalPickup ? LOCAL_ORDER : GHN_ORDER;
@@ -150,7 +150,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
     );
   };
 
-  /* â”€â”€ Loading skeleton â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+  /* ── Loading skeleton ─────────────────────────────────────────────── */
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -163,9 +163,9 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
         <IconPackage className="w-12 h-12 text-muted-foreground" />
-        <p className="text-lg font-semibold text-foreground">KhÃ´ng tÃ¬m tháº¥y Ä‘Æ¡n hÃ ng</p>
+        <p className="text-lg font-semibold text-foreground">Không tìm thấy đơn hàng</p>
         <Link href="/my/orders" className="text-sm text-primary hover:underline">
-          Quay láº¡i danh sÃ¡ch Ä‘Æ¡n hÃ ng
+          Quay lại danh sách đơn hàng
         </Link>
       </div>
     );
@@ -180,7 +180,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* â”€â”€ Sticky Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Sticky Header ─────────────────────────────────────────────── */}
       <div className="sticky top-0 z-30 bg-background/90 backdrop-blur border-b border-border">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 h-14 flex items-center gap-4">
           <Link
@@ -188,7 +188,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
             className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors shrink-0"
           >
             <IconArrowLeft className="w-4 h-4" />
-            ÄÆ¡n hÃ ng
+            Đơn hàng
           </Link>
           <span className="text-muted-foreground/40 text-sm">/</span>
           <span className="text-sm font-semibold text-foreground truncate">{orderCode}</span>
@@ -198,13 +198,13 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
         </div>
       </div>
 
-      {/* â”€â”€ Body â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Body ──────────────────────────────────────────────────────── */}
       <div className="max-w-8xl mx-auto px-4 sm:px-6 py-6">
-        {/* Lá»‹ch sá»­ Ä‘Æ¡n hÃ ng */}
+        {/* Lịch sử đơn hàng */}
         <div className="mb-6 rounded-xl border border-border bg-card overflow-hidden">
           <div className="flex items-center gap-2 px-4 py-3 border-b border-border">
             <IconClock className="w-4 h-4 text-muted-foreground" />
-            <h2 className="text-sm font-semibold text-foreground">Lá»‹ch sá»­ Ä‘Æ¡n hÃ ng</h2>
+            <h2 className="text-sm font-semibold text-foreground">Lịch sử đơn hàng</h2>
           </div>
           <div className="px-4 py-4">
             <div className="flex w-full items-start gap-0">
@@ -261,7 +261,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-          {/* LEFT column â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+          {/* LEFT column ─────────────────────────────────────────────── */}
           <div className="lg:col-span-7 space-y-5">
 
             {/* Products */}
@@ -278,11 +278,11 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                   )}
                 </div>
                 <h2 className="text-sm font-bold text-foreground">
-                  {isLocalPickup ? "Giao hÃ ng trá»±c tiáº¿p" : "Äá»‹a chá»‰ giao hÃ ng"}
+                  {isLocalPickup ? "Giao hàng trực tiếp" : "Địa chỉ giao hàng"}
                 </h2>
                 {isLocalPickup && (
                   <span className="ml-auto text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300">
-                    Gáº·p máº·t trá»±c tiáº¿p
+                    Gặp mặt trực tiếp
                   </span>
                 )}
                 {!isLocalPickup && (
@@ -294,11 +294,11 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
               <div className="p-5">
                 {isLocalPickup ? (
                   <div className="flex items-start gap-3 p-3 bg-emerald-50 rounded-xl border border-emerald-200">
-                    <span className="text-lg">ðŸ¤</span>
+                    <span className="text-lg">🤝</span>
                     <div>
-                      <p className="text-sm font-semibold text-emerald-800">NgÆ°á»i mua tá»± Ä‘áº¿n láº¥y hÃ ng</p>
+                      <p className="text-sm font-semibold text-emerald-800">Người mua tự đến lấy hàng</p>
                       <p className="text-xs text-emerald-700 mt-0.5">
-                        LiÃªn há»‡ ngÆ°á»i mua Ä‘á»ƒ thá»‘ng nháº¥t thá»i gian vÃ  Ä‘á»‹a Ä‘iá»ƒm gáº·p máº·t, sau Ä‘Ã³ xÃ¡c nháº­n Ä‘Ã£ giao hÃ ng.
+                        Liên hệ người mua để thống nhất thời gian và địa điểm gặp mặt, sau đó xác nhận đã giao hàng.
                       </p>
                     </div>
                   </div>
@@ -319,7 +319,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                     {order.ghnOrderCode && (
                       <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground bg-muted/50 rounded-lg px-3 py-2">
                         <IconTruck className="w-3.5 h-3.5 shrink-0" />
-                        <span>MÃ£ GHN:</span>
+                        <span>Mã GHN:</span>
                         <span className="font-mono font-semibold text-foreground">{order.ghnOrderCode}</span>
                         <a
                           href={`https://tracking.ghn.dev/?order_code=${order.ghnOrderCode}`}
@@ -328,14 +328,14 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                           className="ml-auto flex items-center gap-1 text-primary hover:underline shrink-0"
                         >
                           <IconExternalLink className="w-3 h-3" />
-                          Theo dÃµi
+                          Theo dõi
                         </a>
                       </div>
                     )}
                     {order.ghnReturnOrderCode && (
                       <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground bg-blue-50 rounded-lg px-3 py-2">
                         <IconTruck className="w-3.5 h-3.5 shrink-0 text-blue-500" />
-                        <span className="text-blue-600">MÃ£ hoÃ n:</span>
+                        <span className="text-blue-600">Mã hoàn:</span>
                         <span className="font-mono font-semibold text-blue-700">{order.ghnReturnOrderCode}</span>
                         <a
                           href={
@@ -347,7 +347,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                           className="ml-auto flex items-center gap-1 text-blue-600 hover:underline shrink-0"
                         >
                           <IconExternalLink className="w-3 h-3" />
-                          Theo dÃµi
+                          Theo dõi
                         </a>
                       </div>
                     )}
@@ -384,7 +384,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
             />
           </div>
 
-          {/* RIGHT column â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+          {/* RIGHT column ────────────────────────────────────────────── */}
           <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-20 lg:self-start">
 
             {/* Buyer info */}
@@ -393,7 +393,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                 <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                   <IconUser className="w-4.5 h-4.5 text-primary" />
                 </div>
-                <h2 className="text-sm font-bold text-foreground">ThÃ´ng tin ngÆ°á»i mua</h2>
+                <h2 className="text-sm font-bold text-foreground">Thông tin người mua</h2>
               </div>
               <div className="p-5 space-y-4">
                 {/* Avatar + name */}
@@ -408,7 +408,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                     <p className="font-semibold text-foreground truncate">{order.buyerId.fullName}</p>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <IconCalendar className="w-3 h-3 text-muted-foreground" />
-                      <p className="text-xs text-muted-foreground">Äáº·t lÃºc {format(order.createdAt)}</p>
+                      <p className="text-xs text-muted-foreground">Đặt lúc {format(order.createdAt)}</p>
                     </div>
                   </div>
                 </div>
@@ -428,7 +428,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                         type="button"
                         onClick={() => navigator.clipboard.writeText(order.buyerId.phoneNumber)}
                         className="p-2.5 rounded-xl border border-border hover:bg-muted/60 transition-colors shrink-0"
-                        title="Sao chÃ©p sá»‘ Ä‘iá»‡n thoáº¡i"
+                        title="Sao chép số điện thoại"
                       >
                         <IconCopy className="w-4 h-4 text-muted-foreground" />
                       </button>
@@ -449,7 +449,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                 {order.shippingAddress && (
                   <div className="rounded-xl border border-border bg-muted/30 p-3 space-y-1.5">
                     <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                      {isLocalPickup ? "LiÃªn há»‡ nháº­n hÃ ng" : "NgÆ°á»i nháº­n hÃ ng"}
+                      {isLocalPickup ? "Liên hệ nhận hàng" : "Người nhận hàng"}
                     </p>
                     <div className="flex items-center gap-2">
                       <IconUser className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
@@ -487,7 +487,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                   className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-semibold text-sm transition-colors"
                 >
                   <IconMessage className="w-4 h-4" />
-                  Nháº¯n tin ngÆ°á»i mua
+                  Nhắn tin người mua
                 </button>
               </div>
             </div>
@@ -498,17 +498,17 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                 <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                   <IconCreditCard className="w-4.5 h-4.5 text-primary" />
                 </div>
-                <h2 className="text-sm font-bold text-foreground">Thanh toÃ¡n</h2>
+                <h2 className="text-sm font-bold text-foreground">Thanh toán</h2>
               </div>
               <div className="p-5 space-y-2.5">
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">PhÆ°Æ¡ng thá»©c</span>
+                  <span className="text-muted-foreground">Phương thức</span>
                   <span className="font-medium text-foreground text-right max-w-[55%]">
                     {formatPaymentMethod(order.paymentMethod, { shippingMethod: order.shippingMethod })}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Tráº¡ng thÃ¡i</span>
+                  <span className="text-muted-foreground">Trạng thái</span>
                   <span
                     className={`font-semibold ${
                       order.paymentStatus === "paid"
@@ -519,29 +519,29 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                     }`}
                   >
                     {order.paymentStatus === "paid"
-                      ? "ÄÃ£ thanh toÃ¡n"
+                      ? "Đã thanh toán"
                       : order.paymentStatus === "refunded"
-                      ? "ÄÃ£ hoÃ n tiá»n"
-                      : "Chá» thanh toÃ¡n"}
+                      ? "Đã hoàn tiền"
+                      : "Chờ thanh toán"}
                   </span>
                 </div>
                 <hr className="border-border" />
                 <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>Tiá»n hÃ ng</span>
+                  <span>Tiền hàng</span>
                   <span>{formatPrice(order.productAmount || 0)}</span>
                 </div>
                 <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>PhÃ­ váº­n chuyá»ƒn</span>
+                  <span>Phí vận chuyển</span>
                   <span>{formatPrice(order.shippingFee || 0)}</span>
                 </div>
                 {(order.codFee ?? 0) > 0 && (
                   <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>PhÃ­ COD</span>
+                    <span>Phí COD</span>
                     <span>{formatPrice(order.codFee!)}</span>
                   </div>
                 )}
                 <div className="flex justify-between items-center pt-2 border-t border-border">
-                  <span className="font-bold text-foreground text-sm">Tá»•ng cá»™ng</span>
+                  <span className="font-bold text-foreground text-sm">Tổng cộng</span>
                   <span className="font-bold text-primary text-base">{formatPrice(order.totalAmount)}</span>
                 </div>
               </div>
@@ -559,7 +559,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
               <div ref={returnTrackingRef}>
                 <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-blue-700">
                   <IconTruck className="w-4 h-4" />
-                  Váº­n Ä‘Æ¡n hoÃ n hÃ ng
+                  Vận đơn hoàn hàng
                 </div>
                 <OrderTracking orderId={order._id} ghnOrderCode={order.ghnReturnOrderCode} />
               </div>
