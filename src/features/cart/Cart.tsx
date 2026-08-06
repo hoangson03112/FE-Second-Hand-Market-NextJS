@@ -52,7 +52,7 @@ export default function Cart() {
         <CartHeader onBack={onBack} />
         <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg" className="flex items-center justify-center min-h-[40vh]">
           <LoadingBlock
-            text="Ä ang táº£i giá»  hÃ ng..."
+            text="Đang tải giỏ hàng..."
             spinnerSize="lg"
             className="w-full max-w-md"
           />

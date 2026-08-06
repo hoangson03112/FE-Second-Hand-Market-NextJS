@@ -89,7 +89,7 @@ export default function SellForm() {
           <div className="text-center">
             <div className="w-10 h-10 rounded-full border-2 border-primary border-t-transparent animate-spin mx-auto mb-4" />
             <p className="text-sm text-muted-foreground">
-              Äang táº£i thÃ´ng tin sáº£n pháº©m...
+              Đang tải thông tin sản phẩm...
             </p>
           </div>
         </div>
@@ -112,7 +112,7 @@ export default function SellForm() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <ErrorMessage message={apiError} />
 
-          {/* Äá»‹a chá»‰ láº¥y hÃ ng â€“ hiá»ƒn thá»‹ cho táº¥t cáº£ users */}
+          {/* Địa chỉ lấy hàng – hiển thị cho tất cả users */}
           <PickupAddressSelector
             addresses={pickupAddresses}
             selectedId={pickupAddressId}
@@ -124,7 +124,7 @@ export default function SellForm() {
             error={pickupAddressError}
           />
 
-          {/* HÃ¬nh thá»©c giao hÃ ng */}
+          {/* Hình thức giao hàng */}
           <DeliveryOptions
             value={deliveryOptions}
             onChange={handleDeliveryOptionsChange}
@@ -132,9 +132,9 @@ export default function SellForm() {
           />
 
           <div className="grid lg:grid-cols-2 gap-4 lg:gap-6 lg:items-stretch">
-            {/* Cá»™t trÃ¡i: thÃ´ng tin + danh má»¥c + mÃ´ táº£ */}
+            {/* Cột trái: thông tin + danh mục + mô tả */}
             <div className="flex flex-col gap-4">
-              <SectionCard icon={IconPackage} title="ThÃ´ng tin cÆ¡ báº£n">
+              <SectionCard icon={IconPackage} title="Thông tin cơ bản">
                 <ProductBasicInfo
                   values={{
                     name: values.name,
@@ -151,7 +151,7 @@ export default function SellForm() {
                 />
               </SectionCard>
 
-              <SectionCard icon={IconFolders} title="Danh má»¥c">
+              <SectionCard icon={IconFolders} title="Danh mục">
                 <ProductCategory
                   categoryId={values.categoryId}
                   subcategoryId={values.subcategoryId}
@@ -166,7 +166,7 @@ export default function SellForm() {
 
               <SectionCard
                 icon={IconFileText}
-                title="MÃ´ táº£"
+                title="Mô tả"
                 className="flex-1 min-h-0"
               >
                 <ProductDescription
@@ -176,11 +176,11 @@ export default function SellForm() {
               </SectionCard>
             </div>
 
-            {/* Cá»™t pháº£i: Thuá»™c tÃ­nh + áº¢nh & IconVideo â€” chia Ä‘á»u vá»›i cá»™t trÃ¡i */}
+            {/* Cột phải: Thuộc tính + Ảnh & IconVideo — chia đều với cột trái */}
             <div className="flex flex-col gap-4">
               <SectionCard
                 icon={IconListDetails}
-                title="Thuá»™c tÃ­nh"
+                title="Thuộc tính"
                 className="min-h-0 shrink-0"
               >
                 <ProductAttributes
@@ -193,7 +193,7 @@ export default function SellForm() {
 
               <SectionCard
                 icon={IconPhoto}
-                title="áº¢nh & Video"
+                title="Ảnh & Video"
                 className="flex-1 min-h-0 flex flex-col"
               >
                 <ProductMedia
@@ -226,7 +226,7 @@ export default function SellForm() {
         </form>
       </div>
 
-      {/* Modal thÃªm/sá»­a Ä‘á»‹a chá»‰ láº¥y hÃ ng */}
+      {/* Modal thêm/sửa địa chỉ lấy hàng */}
       <AddressFormModal
         isOpen={showModal}
         editingAddress={editingAddress}

@@ -44,7 +44,7 @@ export default function MyProducts() {
     setRequestingReviewId(productId);
     await _requestReview(productId);
     setRequestingReviewId(null);
-    // Optimistic update: Ä‘á»•i status ngay láº­p tá»©c, rá»“i refetch ná»n
+    // Optimistic update: đổi status ngay lập tức, rồi refetch nền
     queryClient.setQueryData<MyListingsResponse>(["my", "products"], (old) => {
       if (!old) return old;
       return {
@@ -91,7 +91,7 @@ export default function MyProducts() {
           <div className="rounded-xl bg-card border border-border p-16 text-center">
             <IconPackage className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
             <p className="text-muted-foreground">
-              KhÃ´ng cÃ³ sáº£n pháº©m nÃ o trong danh má»¥c nÃ y
+              Không có sản phẩm nào trong danh mục này
             </p>
           </div>
         ) : (

@@ -23,10 +23,10 @@ export default function BecomeSellerSuccessPage() {
             className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <IconArrowLeft className="w-4 h-4" />
-            Vá» trang chá»§
+            Về trang chủ
           </button>
           <span className="text-muted-foreground/40 select-none">|</span>
-          <span className="text-sm font-medium text-foreground">ÄÄƒng kÃ½ Seller</span>
+          <span className="text-sm font-medium text-foreground">Đăng ký Seller</span>
         </div>
       </div>
 
@@ -38,11 +38,11 @@ export default function BecomeSellerSuccessPage() {
           </div>
           <div className="flex-1 min-w-0">
             <h1 className="text-base font-bold text-foreground mb-1">
-              Há»“ sÆ¡ Ä‘Ã£ Ä‘Æ°á»£c gá»­i thÃ nh cÃ´ng!
+              Hồ sơ đã được gửi thành công!
             </h1>
             <p className="text-sm text-muted-foreground">
-              ChÃºng tÃ´i sáº½ xem xÃ©t há»“ sÆ¡ cá»§a báº¡n vÃ  pháº£n há»“i trong vÃ²ng 24h. Báº¡n sáº½ nháº­n
-              thÃ´ng bÃ¡o qua email khi cÃ³ káº¿t quáº£.
+              Chúng tôi sẽ xem xét hồ sơ của bạn và phản hồi trong vòng 24h. Bạn sẽ nhận
+              thông báo qua email khi có kết quả.
             </p>
           </div>
         </div>
@@ -51,8 +51,8 @@ export default function BecomeSellerSuccessPage() {
         <div className="rounded-xl border border-primary/20 bg-primary/8 px-4 py-3 flex items-start gap-3">
           <IconClock className="w-4 h-4 text-primary mt-0.5 shrink-0" />
           <p className="text-xs text-primary/90">
-            Äá»™i ngÅ© Eco Market Ä‘ang kiá»ƒm duyá»‡t há»“ sÆ¡ cá»§a báº¡n. ThÃ´ng thÆ°á»ng máº¥t dÆ°á»›i{" "}
-            <span className="font-semibold">24 giá»</span> Ä‘á»ƒ xem xÃ©t.
+            Đội ngũ Eco Market đang kiểm duyệt hồ sơ của bạn. Thông thường mất dưới{" "}
+            <span className="font-semibold">24 giờ</span> để xem xét.
           </p>
         </div>
 
@@ -63,18 +63,18 @@ export default function BecomeSellerSuccessPage() {
             className="flex-1 h-11 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center gap-2"
           >
             <IconBuildingStore className="w-4 h-4" />
-            KhÃ¡m phÃ¡ tÃ­nh nÄƒng Seller
+            Khám phá tính năng Seller
           </Link>
           <Link
             href="/"
             className="flex-1 h-11 rounded-xl border border-border text-muted-foreground text-sm font-medium hover:bg-muted hover:text-foreground transition-colors flex items-center justify-center"
           >
-            Vá» trang chá»§
+            Về trang chủ
           </Link>
         </div>
 
         <p className="text-center text-xs text-muted-foreground pb-2">
-          Há»“ sÆ¡ sáº½ Ä‘Æ°á»£c Ä‘á»™i ngÅ© Eco Market kiá»ƒm duyá»‡t trong vÃ²ng 24h.
+          Hồ sơ sẽ được đội ngũ Eco Market kiểm duyệt trong vòng 24h.
         </p>
       </div>
     </div>

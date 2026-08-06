@@ -77,16 +77,16 @@ export default function SellerDashboard() {
   ).length;
 
   const statCards = [
-    { label: "Sá»‘ dÆ° vÃ­", value: formatPrice(wallet?.balance ?? 0), Icon: IconCoins, color: "text-green-600", bg: "bg-green-50", border: "border-green-100" },
-    { label: "Chá» rÃºt", value: formatPrice(wallet?.pendingBalance ?? 0), Icon: IconChartBar, color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-100" },
-    { label: "Doanh thu 7 ngÃ y", value: formatPrice(weekRevenue), Icon: IconTrendingUp, color: "text-primary", bg: "bg-primary/8", border: "border-primary/15" },
-    { label: "Doanh thu 30 ngÃ y", value: formatPrice(monthRevenue), Icon: IconCoins, color: "text-blue-600", bg: "bg-blue-50", border: "border-blue-100" },
+    { label: "Số dư ví", value: formatPrice(wallet?.balance ?? 0), Icon: IconCoins, color: "text-green-600", bg: "bg-green-50", border: "border-green-100" },
+    { label: "Chờ rút", value: formatPrice(wallet?.pendingBalance ?? 0), Icon: IconChartBar, color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-100" },
+    { label: "Doanh thu 7 ngày", value: formatPrice(weekRevenue), Icon: IconTrendingUp, color: "text-primary", bg: "bg-primary/8", border: "border-primary/15" },
+    { label: "Doanh thu 30 ngày", value: formatPrice(monthRevenue), Icon: IconCoins, color: "text-blue-600", bg: "bg-blue-50", border: "border-blue-100" },
   ];
 
   const actionCards = [
-    { href: "/seller/orders", label: "Quáº£n lÃ½ Ä‘Æ¡n hÃ ng", sub: `${pending} chá» xÃ¡c nháº­n â€¢ ${shipping} Ä‘ang giao`, Icon: IconTruck },
-    { href: "/my/listings", label: "Sáº£n pháº©m Ä‘Ã£ Ä‘Äƒng", sub: "Chá»‰nh sá»­a, Ä‘Äƒng thÃªm", Icon: IconPackage },
-    { href: "/seller/payouts", label: "VÃ­ & Thanh toÃ¡n", sub: `Tá»•ng thu: ${formatPrice(wallet?.totalEarned ?? 0)}`, Icon: IconBolt },
+    { href: "/seller/orders", label: "Quản lý đơn hàng", sub: `${pending} chờ xác nhận • ${shipping} đang giao`, Icon: IconTruck },
+    { href: "/my/listings", label: "Sản phẩm đã đăng", sub: "Chỉnh sửa, đăng thêm", Icon: IconPackage },
+    { href: "/seller/payouts", label: "Ví & Thanh toán", sub: `Tổng thu: ${formatPrice(wallet?.totalEarned ?? 0)}`, Icon: IconBolt },
   ];
 
   return (
@@ -94,13 +94,13 @@ export default function SellerDashboard() {
       <div className="flex items-center justify-between mb-6">
         <Link href="/" className="inline-flex items-center gap-2 text-primary hover:underline font-medium text-sm">
           <IconArrowLeft className="h-4 w-4" />
-          Quay láº¡i
+          Quay lại
         </Link>
       </div>
 
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-foreground mb-0.5">Tá»•ng quan Seller</h1>
-        <p className="text-sm text-muted-foreground">Xem nhanh doanh thu vÃ  Ä‘Æ¡n hÃ ng cá»§a báº¡n</p>
+        <h1 className="text-2xl font-bold text-foreground mb-0.5">Tổng quan Seller</h1>
+        <p className="text-sm text-muted-foreground">Xem nhanh doanh thu và đơn hàng của bạn</p>
       </div>
 
       {loading ? (
@@ -141,9 +141,9 @@ export default function SellerDashboard() {
             <div className="mt-6 p-4 rounded-xl border border-orange-200 bg-orange-50 flex items-center gap-3">
               <IconBolt className="w-5 h-5 text-orange-500 shrink-0" />
               <div>
-                <p className="text-sm font-medium text-orange-800">Báº¡n cÃ³ {pending} Ä‘Æ¡n chá» xÃ¡c nháº­n</p>
+                <p className="text-sm font-medium text-orange-800">Bạn có {pending} đơn chờ xác nhận</p>
                 <Link href="/seller/orders?tab=pending" className="text-xs font-semibold text-orange-600 hover:underline">
-                  Xá»­ lÃ½ ngay â†’
+                  Xử lý ngay →
                 </Link>
               </div>
             </div>

@@ -39,85 +39,85 @@ import {
 } from "./utils/orderUtils";
 
 const DATE_OPTIONS: { value: DateFilter; label: string }[] = [
-  { value: "all", label: "Táº¥t cáº£ thá»i gian" },
-  { value: "today", label: "HÃ´m nay" },
-  { value: "week", label: "7 ngÃ y qua" },
-  { value: "month", label: "30 ngÃ y qua" },
+  { value: "all", label: "Tất cả thời gian" },
+  { value: "today", label: "Hôm nay" },
+  { value: "week", label: "7 ngày qua" },
+  { value: "month", label: "30 ngày qua" },
 ];
 
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
-  { value: "newest", label: "Má»›i nháº¥t" },
-  { value: "oldest", label: "CÅ© nháº¥t" },
-  { value: "highest", label: "GiÃ¡ trá»‹ cao" },
-  { value: "lowest", label: "GiÃ¡ trá»‹ tháº¥p" },
+  { value: "newest", label: "Mới nhất" },
+  { value: "oldest", label: "Cũ nhất" },
+  { value: "highest", label: "Giá trị cao" },
+  { value: "lowest", label: "Giá trị thấp" },
 ];
 
 const REFUND_REQUEST_STATUS_LABELS: Record<string, string> = {
-  pending: "Chá» báº¡n xÃ©t duyá»‡t",
-  approved: "ÄÃ£ cháº¥p thuáº­n (chá» táº¡o / gá»­i hÃ ng hoÃ n)",
-  rejected: "ÄÃ£ tá»« chá»‘i",
-  return_shipping: "Äang hoÃ n tráº£ hÃ ng (buyer gá»­i vá»)",
-  returning: "HÃ ng hoÃ n Ä‘ang váº­n chuyá»ƒn",
-  returned: "ÄÃ£ nháº­n hÃ ng hoÃ n",
-  bank_info_required: "Chá» buyer cung cáº¥p STK",
-  processing: "Äang xá»­ lÃ½ hoÃ n tiá»n",
-  completed: "ÄÃ£ hoÃ n tiá»n",
-  failed: "HoÃ n tiá»n lá»—i â€” cáº§n xá»­ lÃ½ láº¡i",
-  disputed: "Äang tranh cháº¥p",
+  pending: "Chờ bạn xét duyệt",
+  approved: "Đã chấp thuận (chờ tạo / gửi hàng hoàn)",
+  rejected: "Đã từ chối",
+  return_shipping: "Đang hoàn trả hàng (buyer gửi về)",
+  returning: "Hàng hoàn đang vận chuyển",
+  returned: "Đã nhận hàng hoàn",
+  bank_info_required: "Chờ buyer cung cấp STK",
+  processing: "Đang xử lý hoàn tiền",
+  completed: "Đã hoàn tiền",
+  failed: "Hoàn tiền lỗi — cần xử lý lại",
+  disputed: "Đang tranh chấp",
 };
 
-/** order.status thÆ°á»ng váº«n lÃ  "refund"; chi tiáº¿t náº±m á»Ÿ Refund.status */
+/** order.status thường vẫn là "refund"; chi tiết nằm ở Refund.status */
 function getSellerRefundTodo(orderStatus: string, refundStatus: string | null | undefined) {
   const rs = refundStatus ?? null;
   if (orderStatus === "refunded") {
     return {
       tone: "success" as const,
-      title: "HoÃ n tiá»n Ä‘Ã£ hoÃ n táº¥t",
-      description: "ÄÆ¡n hÃ ng nÃ y Ä‘Ã£ Ä‘Æ°á»£c hoÃ n tiá»n thÃ nh cÃ´ng cho buyer.",
+      title: "Hoàn tiền đã hoàn tất",
+      description: "Đơn hàng này đã được hoàn tiền thành công cho buyer.",
     };
   }
   if (rs === "rejected") {
     return {
       tone: "warning" as const,
-      title: "Báº¡n Ä‘Ã£ tá»« chá»‘i yÃªu cáº§u",
-      description: "Buyer cÃ³ thá»ƒ khiáº¿u náº¡i lÃªn admin. Theo dÃµi thÃ´ng bÃ¡o náº¿u cÃ³ tranh cháº¥p.",
+      title: "Bạn đã từ chối yêu cầu",
+      description: "Buyer có thể khiếu nại lên admin. Theo dõi thông báo nếu có tranh chấp.",
     };
   }
   if (rs === "disputed") {
     return {
       tone: "warning" as const,
-      title: "Äang tranh cháº¥p",
-      description: "Admin Ä‘ang xem xÃ©t. KhÃ´ng cáº§n báº¥m duyá»‡t láº¡i trÃªn Ä‘Æ¡n nÃ y.",
+      title: "Đang tranh chấp",
+      description: "Admin đang xem xét. Không cần bấm duyệt lại trên đơn này.",
     };
   }
   if (rs === "pending" || ((orderStatus === "refund" || orderStatus === "refund_requested") && !rs)) {
     return {
       tone: "warning" as const,
-      title: "Viá»‡c cáº§n lÃ m ngay",
-      description: "Kiá»ƒm tra lÃ½ do hoÃ n tiá»n, sau Ä‘Ã³ chá»n Cháº¥p thuáº­n hoáº·c Tá»« chá»‘i Ä‘á»ƒ khÃ´ng quÃ¡ SLA xá»­ lÃ½.",
+      title: "Việc cần làm ngay",
+      description: "Kiểm tra lý do hoàn tiền, sau đó chọn Chấp thuận hoặc Từ chối để không quá SLA xử lý.",
     };
   }
   if (rs === "approved" || rs === "return_shipping" || rs === "returning") {
     return {
       tone: "info" as const,
-      title: "Viá»‡c cáº§n lÃ m ngay",
+      title: "Việc cần làm ngay",
       description:
-        "Theo dÃµi váº­n Ä‘Æ¡n hoÃ n vÃ  xÃ¡c nháº­n Ä‘Ã£ nháº­n láº¡i hÃ ng khi buyer tráº£ hÃ ng thÃ nh cÃ´ng. " +
+        "Theo dõi vận đơn hoàn và xác nhận đã nhận lại hàng khi buyer trả hàng thành công. " +
         REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER,
     };
   }
   if (rs === "returned" || rs === "processing" || rs === "bank_info_required") {
     return {
       tone: "warning" as const,
-      title: "ÄÆ¡n Ä‘Ã£ sáºµn sÃ ng hoÃ n tiá»n",
-      description: "Há»‡ thá»‘ng Ä‘ang xá»­ lÃ½ chuyá»ƒn tiá»n hoÃ n cho buyer (hoáº·c chá» thÃ´ng tin tá»« buyer).",
+      title: "Đơn đã sẵn sàng hoàn tiền",
+      description: "Hệ thống đang xử lý chuyển tiền hoàn cho buyer (hoặc chờ thông tin từ buyer).",
     };
   }
   if (rs === "completed") {
     return {
       tone: "success" as const,
-      title: "HoÃ n tiá»n Ä‘Ã£ hoÃ n táº¥t",
-      description: "ÄÆ¡n hÃ ng nÃ y Ä‘Ã£ Ä‘Æ°á»£c hoÃ n tiá»n thÃ nh cÃ´ng cho buyer.",
+      title: "Hoàn tiền đã hoàn tất",
+      description: "Đơn hàng này đã được hoàn tiền thành công cho buyer.",
     };
   }
   switch (orderStatus) {
@@ -125,23 +125,23 @@ function getSellerRefundTodo(orderStatus: string, refundStatus: string | null | 
     case "return_shipping":
       return {
         tone: "info" as const,
-        title: "Viá»‡c cáº§n lÃ m ngay",
+        title: "Việc cần làm ngay",
         description:
-          "Theo dÃµi váº­n Ä‘Æ¡n hoÃ n vÃ  xÃ¡c nháº­n Ä‘Ã£ nháº­n láº¡i hÃ ng khi buyer tráº£ hÃ ng thÃ nh cÃ´ng. " +
+          "Theo dõi vận đơn hoàn và xác nhận đã nhận lại hàng khi buyer trả hàng thành công. " +
           REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER,
       };
     case "returned":
       return {
         tone: "warning" as const,
-        title: "ÄÆ¡n Ä‘Ã£ sáºµn sÃ ng hoÃ n tiá»n",
-        description: "Báº¡n Ä‘Ã£ nháº­n láº¡i hÃ ng. Há»‡ thá»‘ng Ä‘ang chá» admin xá»­ lÃ½ hoÃ n tiá»n cho buyer.",
+        title: "Đơn đã sẵn sàng hoàn tiền",
+        description: "Bạn đã nhận lại hàng. Hệ thống đang chờ admin xử lý hoàn tiền cho buyer.",
       };
     default:
       return null;
   }
 }
 
-/** Map Refund.status â†’ pseudo order status cho getRefundStatusNotice (seller) */
+/** Map Refund.status → pseudo order status cho getRefundStatusNotice (seller) */
 function sellerNoticeStatusFromRefund(
   orderStatus: string,
   refundStatus: string | null | undefined,
@@ -235,7 +235,7 @@ export default function SellerOrders() {
       : "bg-amber-100 text-amber-700 border-amber-200";
   const selectedPaymentStatusLabel = selectedOrder
     ? getPaymentStatusLabel(selectedOrder.paymentStatus)
-    : "KhÃ´ng xÃ¡c Ä‘á»‹nh";
+    : "Không xác định";
   const selectedProductAmount = selectedOrder
     ? selectedOrder.productAmount ??
       selectedOrder.products.reduce((total, item) => total + (item.price || 0) * (item.quantity || 0), 0)
@@ -252,14 +252,14 @@ export default function SellerOrders() {
   const sellerRefundNotice = selectedOrder
     ? refundRequestStatus === "rejected"
       ? {
-          title: "Báº¡n Ä‘Ã£ tá»« chá»‘i yÃªu cáº§u hoÃ n tiá»n",
-          description: "Buyer cÃ³ thá»ƒ khiáº¿u náº¡i lÃªn admin. Báº¡n khÃ´ng cáº§n thao tÃ¡c duyá»‡t thÃªm trÃªn Ä‘Æ¡n nÃ y.",
+          title: "Bạn đã từ chối yêu cầu hoàn tiền",
+          description: "Buyer có thể khiếu nại lên admin. Bạn không cần thao tác duyệt thêm trên đơn này.",
           tone: "warning" as const,
         }
       : refundRequestStatus === "disputed"
       ? {
-          title: "Khiáº¿u náº¡i Ä‘ang Ä‘Æ°á»£c admin xem xÃ©t",
-          description: "Vui lÃ²ng chá» quyáº¿t Ä‘á»‹nh tá»« quáº£n trá»‹ viÃªn.",
+          title: "Khiếu nại đang được admin xem xét",
+          description: "Vui lòng chờ quyết định từ quản trị viên.",
           tone: "warning" as const,
         }
       : getRefundStatusNotice(
@@ -309,13 +309,13 @@ export default function SellerOrders() {
       <main className="mx-auto max-w-8xl px-4 py-6 md:py-8">
         <div className="mb-5 flex items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Quáº£n lÃ½ Ä‘Æ¡n hÃ ng</h1>
+            <h1 className="text-2xl font-bold text-foreground">Quản lý đơn hàng</h1>
             <p className="text-sm text-muted-foreground">
-              Theo dÃµi vÃ  xá»­ lÃ½ cÃ¡c Ä‘Æ¡n hÃ ng má»›i tá»« ngÆ°á»i mua.
+              Theo dõi và xử lý các đơn hàng mới từ người mua.
             </p>
           </div>
           <div className="text-xs font-medium text-muted-foreground">
-            HÃ´m nay: <span className="text-foreground">{stats.todayOrders}</span> Ä‘Æ¡n â€¢{" "}
+            Hôm nay: <span className="text-foreground">{stats.todayOrders}</span> đơn •{" "}
             <span className="text-foreground">{formatPrice(stats.todayRevenue)}</span>
           </div>
         </div>
@@ -328,7 +328,7 @@ export default function SellerOrders() {
               <IconSearch className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="TÃ¬m mÃ£ Ä‘Æ¡n hoáº·c tÃªn ngÆ°á»i mua..."
+                placeholder="Tìm mã đơn hoặc tên người mua..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="h-9 w-full rounded-lg border border-border bg-card pl-9 pr-3 text-sm outline-none transition-all focus:border-primary/50 focus:ring-2 focus:ring-primary/10"
@@ -375,12 +375,12 @@ export default function SellerOrders() {
               <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.8fr_1fr]">
                 <div className="rounded-xl border border-border">
                   <div className="hidden grid-cols-[1.1fr_1fr_1.2fr_0.9fr_1fr_0.8fr] border-b border-border bg-muted/20 px-4 py-3 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground md:grid">
-                    <span>MÃ£ Ä‘Æ¡n</span>
-                    <span>NgÃ y táº¡o</span>
-                    <span>NgÆ°á»i mua</span>
-                    <span>Sá»‘ SP</span>
-                    <span>Tá»•ng tiá»n</span>
-                    <span>Thanh toÃ¡n</span>
+                    <span>Mã đơn</span>
+                    <span>Ngày tạo</span>
+                    <span>Người mua</span>
+                    <span>Số SP</span>
+                    <span>Tổng tiền</span>
+                    <span>Thanh toán</span>
                   </div>
 
                   <div className="divide-y divide-border">
@@ -426,7 +426,7 @@ export default function SellerOrders() {
                             <p className="truncate text-sm font-medium text-foreground">
                               {getBuyerName(order)}
                             </p>
-                            <p className="text-xs text-muted-foreground">{productCount} sáº£n pháº©m</p>
+                            <p className="text-xs text-muted-foreground">{productCount} sản phẩm</p>
                             <p className="text-sm font-semibold text-foreground">
                               {formatPrice(order.totalAmount)}
                             </p>
@@ -437,10 +437,10 @@ export default function SellerOrders() {
                               )}
                             >
                               {order.paymentStatus === "paid"
-                                ? "ÄÃƒ TT"
+                                ? "ĐÃ TT"
                                 : order.paymentStatus === "refunded"
-                                ? "ÄÃƒ HOÃ€N"
-                                : "CHÆ¯A TT"}
+                                ? "ĐÃ HOÀN"
+                                : "CHƯA TT"}
                             </span>
                           </div>
                         </button>
@@ -450,7 +450,7 @@ export default function SellerOrders() {
 
                   <div className="flex flex-col items-center justify-between gap-3 border-t border-border px-4 py-3 md:flex-row">
                     <p className="text-xs text-muted-foreground">
-                      Hiá»ƒn thá»‹ {pageStart}-{pageEnd} trÃªn {filteredOrders.length} káº¿t quáº£
+                      Hiển thị {pageStart}-{pageEnd} trên {filteredOrders.length} kết quả
                     </p>
                     <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
                   </div>
@@ -459,17 +459,17 @@ export default function SellerOrders() {
                 <aside className="rounded-xl border border-border bg-background">
                   {!selectedOrder ? (
                     <div className="flex min-h-[420px] items-center justify-center p-6 text-center text-sm text-muted-foreground">
-                      Chá»n Ä‘Æ¡n hÃ ng bÃªn trÃ¡i Ä‘á»ƒ xem chi tiáº¿t.
+                      Chọn đơn hàng bên trái để xem chi tiết.
                     </div>
                   ) : (
                     <div className="space-y-4 p-4">
                       <div className="flex items-start justify-between gap-2">
                         <div>
                           <p className="text-xl font-bold text-foreground">
-                            ÄÆ¡n #{selectedOrder._id.slice(-8).toUpperCase()}
+                            Đơn #{selectedOrder._id.slice(-8).toUpperCase()}
                           </p>
                           <p className="mt-1 text-xs text-muted-foreground">
-                            Äáº·t lÃºc {formatDateTime(selectedOrder.createdAt)}
+                            Đặt lúc {formatDateTime(selectedOrder.createdAt)}
                           </p>
                         </div>
                         <StatusBadge status={selectedOrder.status} />
@@ -483,7 +483,7 @@ export default function SellerOrders() {
                             loading={isSelectedUpdating}
                             leftIcon={<IconCircleCheck className="h-4 w-4" />}
                           >
-                            XÃ¡c nháº­n Ä‘Æ¡n
+                            Xác nhận đơn
                           </Button>
                           <Button
                             size="sm"
@@ -492,7 +492,7 @@ export default function SellerOrders() {
                             disabled={isSelectedUpdating}
                             leftIcon={<IconCircleX className="h-4 w-4" />}
                           >
-                            Há»§y Ä‘Æ¡n
+                            Hủy đơn
                           </Button>
                         </div>
                       )}
@@ -506,7 +506,7 @@ export default function SellerOrders() {
                             disabled={isSelectedUpdating}
                             leftIcon={<IconCircleX className="h-4 w-4" />}
                           >
-                            Tá»« chá»‘i
+                            Từ chối
                           </Button>
                           <Button
                             size="sm"
@@ -514,7 +514,7 @@ export default function SellerOrders() {
                             loading={isSelectedUpdating}
                             leftIcon={<IconCircleCheck className="h-4 w-4" />}
                           >
-                            Cháº¥p thuáº­n
+                            Chấp thuận
                           </Button>
                         </div>
                       )}
@@ -527,7 +527,7 @@ export default function SellerOrders() {
                           loading={isSelectedUpdating}
                           leftIcon={<IconCircleCheck className="h-4 w-4" />}
                         >
-                          XÃ¡c nháº­n Ä‘Ã£ nháº­n láº¡i hÃ ng
+                          Xác nhận đã nhận lại hàng
                         </Button>
                       )}
 
@@ -547,8 +547,8 @@ export default function SellerOrders() {
                         refundRequest?.status === "bank_info_required") && (
                         <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
                           {refundRequest?.status === "returned"
-                            ? "Báº¡n Ä‘Ã£ xÃ¡c nháº­n nháº­n láº¡i hÃ ng. Há»‡ thá»‘ng Ä‘ang chá» bÆ°á»›c hoÃ n tiá»n cho buyer."
-                            : "Há»‡ thá»‘ng Ä‘ang xá»­ lÃ½ hoÃ n tiá»n cho buyer."}
+                            ? "Bạn đã xác nhận nhận lại hàng. Hệ thống đang chờ bước hoàn tiền cho buyer."
+                            : "Hệ thống đang xử lý hoàn tiền cho buyer."}
                         </div>
                       )}
 
@@ -564,7 +564,7 @@ export default function SellerOrders() {
                         refundRequest?.status !== "processing" &&
                         refundRequest?.status !== "bank_info_required" && (
                           <div className="rounded-lg border border-border bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
-                            ÄÆ¡n hÃ ng hiá»‡n khÃ´ng cÃ³ thao tÃ¡c nhanh.
+                            Đơn hàng hiện không có thao tác nhanh.
                           </div>
                         )}
                       {sellerRefundNotice && (
@@ -576,26 +576,26 @@ export default function SellerOrders() {
                       {refundRequest && (
                         <div className="rounded-xl border border-border bg-card p-3">
                           <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                            ThÃ´ng tin yÃªu cáº§u hoÃ n tiá»n
+                            Thông tin yêu cầu hoàn tiền
                           </p>
                           <div className="space-y-1.5 text-xs">
                             <p className="text-muted-foreground">
-                              Tráº¡ng thÃ¡i:{" "}
+                              Trạng thái:{" "}
                               <span className="font-medium text-foreground">
                                 {REFUND_REQUEST_STATUS_LABELS[refundRequest.status] || refundRequest.status}
                               </span>
                             </p>
                             <p className="text-muted-foreground">
-                              LÃ½ do: <span className="font-medium text-foreground">{refundRequest.reason || "â€”"}</span>
+                              Lý do: <span className="font-medium text-foreground">{refundRequest.reason || "—"}</span>
                             </p>
                             <p className="text-muted-foreground">
-                              Sá»‘ tiá»n hoÃ n:{" "}
+                              Số tiền hoàn:{" "}
                               <span className="font-semibold text-foreground">
                                 {formatPrice(refundRequest.refundAmount || selectedOrder.totalAmount)}
                               </span>
                             </p>
                             <p className="text-muted-foreground">
-                              Thá»i gian gá»­i:{" "}
+                              Thời gian gửi:{" "}
                               <span className="font-medium text-foreground">
                                 {formatDateTime(refundRequest.createdAt)}
                               </span>
@@ -608,13 +608,13 @@ export default function SellerOrders() {
                         href={`/my/orders/${selectedOrder._id}`}
                         className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
                       >
-                        Xem trang chi tiáº¿t
+                        Xem trang chi tiết
                         <IconArrowNarrowRight className="h-4 w-4" />
                       </Link>
 
                       <div className="rounded-xl border border-border bg-muted/20 p-3">
                         <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                          ThÃ´ng tin khÃ¡ch hÃ ng
+                          Thông tin khách hàng
                         </p>
                         <p className="text-sm font-semibold text-foreground">
                           {getBuyerName(selectedOrder)}
@@ -622,16 +622,16 @@ export default function SellerOrders() {
                         <p className="text-xs text-muted-foreground">Email: {getBuyerEmail(selectedOrder)}</p>
          
                         <p className="text-xs text-muted-foreground">
-                          Cáº­p nháº­t: {formatDateTime(selectedOrder.updatedAt)}
+                          Cập nhật: {formatDateTime(selectedOrder.updatedAt)}
                         </p>
                       </div>
 
                       <div className="rounded-xl border border-border bg-muted/20 p-3">
                         <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                          Äá»‹a chá»‰ giao hÃ ng
+                          Địa chỉ giao hàng
                         </p>
                         <p className="text-sm font-semibold text-foreground">
-                          {selectedOrder.shippingAddress?.fullName || "â€”"}
+                          {selectedOrder.shippingAddress?.fullName || "—"}
                           {selectedOrder.shippingAddress?.phoneNumber
                             ? ` | ${selectedOrder.shippingAddress.phoneNumber}`
                             : ""}
@@ -644,7 +644,7 @@ export default function SellerOrders() {
                             selectedOrder.shippingAddress?.province,
                           ]
                             .filter((part) => Boolean(part && String(part).trim()))
-                            .join(", ") || "â€”"}
+                            .join(", ") || "—"}
                         </p>
                         <div className="mt-2 grid grid-cols-1 gap-1.5 text-xs text-muted-foreground">
                           <p className="inline-flex items-center gap-1.5">
@@ -663,7 +663,7 @@ export default function SellerOrders() {
                       <div className="rounded-xl border border-border">
                         <div className="border-b border-border px-3 py-2">
                           <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                            Sáº£n pháº©m trong Ä‘Æ¡n
+                            Sản phẩm trong đơn
                           </p>
                         </div>
                         <div className="divide-y divide-border">
@@ -676,7 +676,7 @@ export default function SellerOrders() {
                                 <div className="relative h-10 w-10 overflow-hidden rounded-md border border-border bg-muted/50">
                                   <Image
                                     src={productImage}
-                                    alt={p.productId?.name || "Sáº£n pháº©m"}
+                                    alt={p.productId?.name || "Sản phẩm"}
                                     fill
                                     sizes="40px"
                                     className="object-cover"
@@ -685,10 +685,10 @@ export default function SellerOrders() {
                                 </div>
                                 <div className="min-w-0 flex-1">
                                   <p className="truncate text-sm font-medium text-foreground">
-                                    {p.productId?.name || "Sáº£n pháº©m"}
+                                    {p.productId?.name || "Sản phẩm"}
                                   </p>
                                   <p className="text-xs text-muted-foreground">
-                                    SL: {p.quantity} â€¢ ÄÆ¡n giÃ¡: {formatPrice(p.price)}
+                                    SL: {p.quantity} • Đơn giá: {formatPrice(p.price)}
                                   </p>
                                 </div>
                                 <p className="text-xs font-semibold text-foreground">
@@ -702,15 +702,15 @@ export default function SellerOrders() {
 
                       <div className="rounded-xl border border-border bg-card p-3">
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Tiá»n sáº£n pháº©m</span>
+                          <span className="text-muted-foreground">Tiền sản phẩm</span>
                           <span className="font-medium">{formatPrice(selectedProductAmount)}</span>
                         </div>
                         <div className="mt-2 flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Tiá»n ship</span>
+                          <span className="text-muted-foreground">Tiền ship</span>
                           <span className="font-medium">{formatPrice(selectedShippingFee)}</span>
                         </div>
                         <div className="mt-2 flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">PhÆ°Æ¡ng thá»©c thanh toÃ¡n</span>
+                          <span className="text-muted-foreground">Phương thức thanh toán</span>
                           <span className="font-medium text-foreground">
                             {formatPaymentMethod(selectedOrder.paymentMethod, {
                               shippingMethod: selectedOrder.shippingMethod,
@@ -718,13 +718,13 @@ export default function SellerOrders() {
                           </span>
                         </div>
                         <div className="mt-2 flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Tráº¡ng thÃ¡i thanh toÃ¡n</span>
+                          <span className="text-muted-foreground">Trạng thái thanh toán</span>
                           <span className={cn("rounded-md border px-2 py-0.5 text-[11px] font-semibold", paymentBadgeClass)}>
                             {selectedPaymentStatusLabel}
                           </span>
                         </div>
                         <div className="mt-3 flex items-center justify-between border-t border-border pt-2.5">
-                          <span className="font-semibold text-foreground">Tá»•ng tiá»n</span>
+                          <span className="font-semibold text-foreground">Tổng tiền</span>
                           <span className="font-bold text-primary">
                             {formatPrice(selectedGrandTotal)}
                           </span>
@@ -753,12 +753,12 @@ export default function SellerOrders() {
         {selectedOrder && (
           <ConfirmWithReasonDialog
             isOpen={rejectRefundOpen}
-            title="Tá»« chá»‘i yÃªu cáº§u hoÃ n tiá»n"
-            description={`ÄÆ¡n #${selectedOrder._id.slice(-8).toUpperCase()}`}
-            reasonLabel="LÃ½ do tá»« chá»‘i"
-            reasonPlaceholder="MÃ´ táº£ lÃ½ do tá»« chá»‘i Ä‘á»ƒ buyer náº¯m Ä‘Æ°á»£c."
-            reasonHint="Buyer sáº½ nháº­n ná»™i dung lÃ½ do nÃ y."
-            confirmText="XÃ¡c nháº­n tá»« chá»‘i"
+            title="Từ chối yêu cầu hoàn tiền"
+            description={`Đơn #${selectedOrder._id.slice(-8).toUpperCase()}`}
+            reasonLabel="Lý do từ chối"
+            reasonPlaceholder="Mô tả lý do từ chối để buyer nắm được."
+            reasonHint="Buyer sẽ nhận nội dung lý do này."
+            confirmText="Xác nhận từ chối"
             variant="danger"
             isLoading={isSelectedUpdating}
             onCancel={() => setRejectRefundOpen(false)}
