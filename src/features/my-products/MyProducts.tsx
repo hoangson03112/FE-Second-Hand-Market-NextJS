@@ -67,7 +67,7 @@ export default function MyProducts() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-cream-50">
       <ProductListHeader
         stats={stats}
         activeFilter={activeFilter}
@@ -78,7 +78,7 @@ export default function MyProducts() {
 
       <Container maxWidth="8xl" paddingX="md" paddingY="lg">
         {error && (
-          <div className="rounded-lg px-4 py-3 text-sm mb-6 bg-destructive/8 text-destructive border border-destructive/20">
+          <div className="rounded-xl px-4 py-3 text-sm mb-6 bg-red-50 text-red-600 border-2 border-red-200">
             {PRODUCT_MESSAGES.LOAD_ERROR}
           </div>
         )}
@@ -88,9 +88,9 @@ export default function MyProducts() {
         ) : products.length === 0 ? (
           <EmptyProductState />
         ) : filteredProducts.length === 0 ? (
-          <div className="rounded-xl bg-card border border-border p-16 text-center">
-            <IconPackage className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
-            <p className="text-muted-foreground">
+          <div className="rounded-2xl bg-gradient-to-br from-cream-50 to-white border-2 border-border p-16 text-center shadow-md">
+            <IconPackage className="w-12 h-12 text-taupe-300 mx-auto mb-3" />
+            <p className="text-taupe-500">
               Không có sản phẩm nào trong danh mục này
             </p>
           </div>
@@ -129,4 +129,3 @@ export default function MyProducts() {
     </div>
   );
 }
-

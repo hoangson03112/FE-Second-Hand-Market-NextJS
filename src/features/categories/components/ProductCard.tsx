@@ -10,22 +10,18 @@ import {
 import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
 import type { IProduct } from "@/types/product";
+import { getProvinceName } from "@/utils";
 
 interface ProductCardProps {
   product: IProduct;
   className?: string;
-  provinceName?: string;
 }
 export default function ProductCard({
   product,
   className,
-  provinceName,
 }: ProductCardProps) {
   const imageUrl = product.avatar?.url ?? product.images?.[0]?.url;
-
-  const displayProvince =
-    provinceName || product.seller?.province || "Toàn quốc";
-
+  
   return (
     <Link
       href={`/products/${product._id}/${product.slug ?? "san-pham"}`}
@@ -74,9 +70,9 @@ export default function ProductCard({
 
       <div className="mt-2.5 flex flex-1 flex-col justify-between px-0.5 pb-0.5">
         <div>
-          <div className="flex items-center gap-1 text-[10px] font-medium text-neutral-500 uppercase tracking-[0.14em]">
+          <div className="flex items-center gap-1 text-xs font-medium text-charcoal-500 uppercase tracking-[0.14em]">
             <IconMapPin className="h-3 w-3 text-blush-500 shrink-0" />
-            <span className="line-clamp-1">{displayProvince}</span>
+            <span className="line-clamp-1"> {getProvinceName(product!.address!.provinceId)}</span>
           </div>
 
           <h3 className="mt-1.5 line-clamp-2 text-xs font-medium text-foreground leading-snug transition-colors group-hover:text-primary md:text-sm">

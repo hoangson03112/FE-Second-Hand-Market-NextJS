@@ -86,7 +86,7 @@ export function AddressForm({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-border/60">
+    <div className="w-full max-w-4xl mx-auto bg-white rounded-2xl p-6 sm:p-8 shadow-md border-2 border-border">
       {/* Thông báo lỗi nếu không tải được tỉnh thành */}
       {provincesError && (
         <div className="p-4 mb-6 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm flex items-center gap-2">
@@ -100,15 +100,15 @@ export function AddressForm({
       <form onSubmit={submitForm} className="space-y-6">
         {/* KHU VỰC 1: THÔNG TIN NGƯỜI NHẬN */}
         <div>
-          <h3 className="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
+          <h3 className="text-base font-semibold text-taupe-900 mb-4 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-primary" />
             Thông tin người nhận
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold uppercase text-muted-foreground mb-1.5">
-                Họ và tên <span className="text-destructive">*</span>
+              <label className="block text-xs font-semibold uppercase text-taupe-500 mb-1.5">
+                Họ và tên <span className="text-red-500">*</span>
               </label>
               <Input
                 type="text"
@@ -122,8 +122,8 @@ export function AddressForm({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase text-muted-foreground mb-1.5">
-                Số điện thoại <span className="text-destructive">*</span>
+              <label className="block text-xs font-semibold uppercase text-taupe-500 mb-1.5">
+                Số điện thoại <span className="text-red-500">*</span>
               </label>
               <Input
                 type="tel"
@@ -142,11 +142,11 @@ export function AddressForm({
           </div>
         </div>
 
-        <hr className="border-border/40" />
+        <hr className="border-border" />
 
         {/* KHU VỰC 2: ĐỊA CHỈ GIAO HÀNG */}
         <div>
-          <h3 className="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
+          <h3 className="text-base font-semibold text-taupe-900 mb-4 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-primary" />
             Địa chỉ giao hàng
           </h3>
@@ -155,8 +155,8 @@ export function AddressForm({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             {/* Tỉnh / Thành phố */}
             <div>
-              <label className="block text-xs font-semibold uppercase text-muted-foreground mb-1.5">
-                Tỉnh / Thành phố <span className="text-destructive">*</span>
+              <label className="block text-xs font-semibold uppercase text-taupe-500 mb-1.5">
+                Tỉnh / Thành phố <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <select
@@ -164,7 +164,7 @@ export function AddressForm({
                   value={values.provinceId}
                   onChange={handleProvinceChange}
                   disabled={provincesLoading}
-                  className="w-full p-2.5 pr-8 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-muted/50 disabled:cursor-not-allowed appearance-none bg-cream-50/50 transition-all cursor-pointer"
+                  className="w-full p-2.5 pr-8 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-taupe-100 disabled:cursor-not-allowed appearance-none bg-cream-50/50 transition-all cursor-pointer"
                   required
                 >
                   <option value="">
@@ -181,7 +181,7 @@ export function AddressForm({
                     </option>
                   ))}
                 </select>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-muted-foreground">
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-taupe-500">
                   <svg
                     className="h-4 w-4"
                     fill="none"
@@ -201,8 +201,8 @@ export function AddressForm({
 
             {/* Quận / Huyện */}
             <div>
-              <label className="block text-xs font-semibold uppercase text-muted-foreground mb-1.5">
-                Quận / Huyện <span className="text-destructive">*</span>
+              <label className="block text-xs font-semibold uppercase text-taupe-500 mb-1.5">
+                Quận / Huyện <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <select
@@ -210,7 +210,7 @@ export function AddressForm({
                   value={values.districtId}
                   onChange={handleDistrictChange}
                   disabled={!values.provinceId || districtsLoading}
-                  className="w-full p-2.5 pr-8 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-muted/50 disabled:cursor-not-allowed appearance-none bg-cream-50/50 transition-all cursor-pointer"
+                  className="w-full p-2.5 pr-8 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-taupe-100 disabled:cursor-not-allowed appearance-none bg-cream-50/50 transition-all cursor-pointer"
                   required
                 >
                   <option value="">
@@ -229,7 +229,7 @@ export function AddressForm({
                     </option>
                   ))}
                 </select>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-muted-foreground">
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-taupe-500">
                   <svg
                     className="h-4 w-4"
                     fill="none"
@@ -249,8 +249,8 @@ export function AddressForm({
 
             {/* Phường / Xã */}
             <div>
-              <label className="block text-xs font-semibold uppercase text-muted-foreground mb-1.5">
-                Phường / Xã <span className="text-destructive">*</span>
+              <label className="block text-xs font-semibold uppercase text-taupe-500 mb-1.5">
+                Phường / Xã <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <select
@@ -258,7 +258,7 @@ export function AddressForm({
                   value={values.wardCode}
                   onChange={handleWardChange}
                   disabled={!values.districtId || wardsLoading}
-                  className="w-full p-2.5 pr-8 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-muted/50 disabled:cursor-not-allowed appearance-none bg-cream-50/50 transition-all cursor-pointer"
+                  className="w-full p-2.5 pr-8 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-taupe-100 disabled:cursor-not-allowed appearance-none bg-cream-50/50 transition-all cursor-pointer"
                   required
                 >
                   <option value="">
@@ -274,7 +274,7 @@ export function AddressForm({
                     </option>
                   ))}
                 </select>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-muted-foreground">
+                <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-taupe-500">
                   <svg
                     className="h-4 w-4"
                     fill="none"
@@ -295,8 +295,8 @@ export function AddressForm({
 
           {/* Địa chỉ cụ thể */}
           <div>
-            <label className="block text-xs font-semibold uppercase text-muted-foreground mb-1.5">
-              Địa chỉ cụ thể <span className="text-destructive">*</span>
+            <label className="block text-xs font-semibold uppercase text-taupe-500 mb-1.5">
+              Địa chỉ cụ thể <span className="text-red-500">*</span>
             </label>
             <Input
               type="text"
@@ -321,14 +321,14 @@ export function AddressForm({
               onChange={handleChange}
               className="w-4 h-4 text-primary border-border rounded focus:ring-primary/30 cursor-pointer accent-primary"
             />
-            <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+            <span className="text-sm font-medium text-taupe-900 group-hover:text-primary transition-colors">
               Đặt làm địa chỉ mặc định
             </span>
           </label>
         </div>
 
         {/* NÚT THAO TÁC */}
-        <div className="flex items-center gap-3 justify-end pt-4 border-t border-border/40">
+        <div className="flex items-center gap-3 justify-end pt-4 border-t border-border">
           {onCancel && (
             <Button
               type="button"

@@ -1,6 +1,5 @@
 "use client";
 
-
 import { IconWallet, IconBuilding } from "@tabler/icons-react";
 export type PaymentMethodType = "cod" | "bank_transfer";
 
@@ -41,8 +40,8 @@ export default function PaymentMethod({ selected, onSelect, showBankTransfer = f
         return (
           <label
             key={method.id}
-            className={`flex items-center gap-4 p-4 rounded-[2px] border cursor-pointer transition-colors ${
-              isSelected ? "border-luxury-ink bg-taupe-50/50" : "border-luxury-ink/10 hover:border-luxury-ink/30 hover:bg-taupe-50/30 bg-white"
+            className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
+              isSelected ? "border-primary bg-primary/5" : "border-border hover:border-primary/40 hover:bg-taupe-50/60 bg-white"
             }`}
           >
             <input
@@ -54,28 +53,28 @@ export default function PaymentMethod({ selected, onSelect, showBankTransfer = f
             />
             <div className="flex-shrink-0">
               <div
-                className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${
-                  isSelected ? "border-luxury-ink bg-luxury-ink" : "border-luxury-ink/20"
+                className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${
+                  isSelected ? "border-primary bg-primary" : "border-taupe-300"
                 }`}
               >
                 {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
               </div>
             </div>
-            <div className={`flex-shrink-0 w-10 h-10 rounded-[2px] flex items-center justify-center border bg-white ${
-              isSelected ? "border-luxury-ink" : "border-luxury-ink/10"
+            <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center border-2 bg-white ${
+              isSelected ? "border-primary" : "border-border"
             }`}>
-              <Icon className="h-5 w-5 text-luxury-ink" />
+              <Icon className="h-5 w-5 text-primary" />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-3">
-                <h4 className="text-sm font-semibold text-luxury-ink">{method.name}</h4>
+                <h4 className="text-sm font-semibold text-taupe-900">{method.name}</h4>
                 {method.badge && (
-                  <span className="px-2 py-0.5 bg-luxury-ink text-white text-[10px] uppercase tracking-wide font-semibold rounded-[2px]">
+                  <span className="px-2 py-0.5 bg-primary text-primary-foreground text-[10px] uppercase tracking-wide font-semibold rounded-full">
                     {method.badge}
                   </span>
                 )}
               </div>
-              <p className="text-[11px] text-taupe-600 mt-1">{method.description}</p>
+              <p className="text-xs text-taupe-500 mt-1">{method.description}</p>
             </div>
           </label>
         );

@@ -5,13 +5,18 @@ import { IconStar, IconStarFilled } from "@tabler/icons-react";
 import { useProductReviews } from "@/hooks";
 import { getAvatarUrl, getUserInitials } from "@/utils";
 import { formatDateOnly } from "@/utils/format/date";
-import type { ProductReview, ProductReviewBuyer } from "@/services/productReview.service";
+import type {
+  ProductReview,
+  ProductReviewBuyer,
+} from "@/services/productReview.service";
 import { Button } from "@/components/shared";
 
 function isPopulatedBuyer(
   buyerId: ProductReview["buyerId"],
 ): buyerId is ProductReviewBuyer {
-  return typeof buyerId === "object" && buyerId !== null && "fullName" in buyerId;
+  return (
+    typeof buyerId === "object" && buyerId !== null && "fullName" in buyerId
+  );
 }
 
 function ReviewCard({ review }: { review: ProductReview }) {
@@ -45,12 +50,17 @@ function ReviewCard({ review }: { review: ProductReview }) {
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2 gap-y-1">
             <p className="text-xs font-bold text-luxury-ink">{name}</p>
-            <span className="text-[10px] text-taupe-400">{formatDateOnly(review.createdAt)}</span>
+            <span className="text-[10px] text-taupe-400">
+              {formatDateOnly(review.createdAt)}
+            </span>
           </div>
           <div className="mt-1 flex gap-0.5">
             {[1, 2, 3, 4, 5].map((i) =>
               i <= review.rating ? (
-                <IconStarFilled key={i} className="h-3.5 w-3.5 text-luxury-ink" />
+                <IconStarFilled
+                  key={i}
+                  className="h-3.5 w-3.5 text-luxury-ink"
+                />
               ) : (
                 <IconStar key={i} className="h-3.5 w-3.5 text-taupe-200" />
               ),
@@ -71,19 +81,27 @@ interface ProductReviewsSectionProps {
   productId: string;
 }
 
-export default function ProductReviewsSection({ productId }: ProductReviewsSectionProps) {
-  const { data, isPending, isError, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useProductReviews(productId);
+export default function ProductReviewsSection({
+  productId,
+}: ProductReviewsSectionProps) {
+  const {
+    data,
+    isPending,
+    isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useProductReviews(productId);
 
   const reviews = data?.pages.flatMap((p) => p.reviews) ?? [];
 
   if (isPending) {
     return (
       <section className="pt-6">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-luxury-ink">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-luxury-ink">
           Đánh giá từ người mua
         </h2>
-        <p className="mt-2 text-xs text-taupe-400">Đang tải đánh giá...</p>
+        <p className="mt-2 text-sm text-taupe-400">Đang tải đánh giá...</p>
       </section>
     );
   }
@@ -91,10 +109,12 @@ export default function ProductReviewsSection({ productId }: ProductReviewsSecti
   if (isError) {
     return (
       <section className="pt-6">
-        <h2 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-luxury-ink">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-luxury-ink">
           Đánh giá từ người mua
         </h2>
-        <p className="mt-2 text-xs text-blush-600">Không tải được đánh giá. Vui lòng thử lại sau.</p>
+        <p className="mt-2 text-sm text-blush-600">
+          Không tải được đánh giá. Vui lòng thử lại sau.
+        </p>
       </section>
     );
   }
@@ -102,11 +122,12 @@ export default function ProductReviewsSection({ productId }: ProductReviewsSecti
   if (reviews.length === 0) {
     return (
       <section className="pt-6">
-      <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-luxury-ink mb-5">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.1em] text-luxury-ink mb-5">
           Đánh giá từ người mua
         </h2>
-        <p className="mt-2 text-xs text-neutral-500">
-          Chưa có đánh giá nào. Sau khi mua và hoàn thành đơn, bạn có thể đánh giá để giúp người mua khác.
+        <p className="mt-2 text-sm text-neutral-500">
+          Chưa có đánh giá nào. Sau khi mua và hoàn thành đơn, bạn có thể đánh
+          giá để giúp người mua khác.
         </p>
       </section>
     );
@@ -115,11 +136,12 @@ export default function ProductReviewsSection({ productId }: ProductReviewsSecti
   return (
     <section className="pt-6">
       <div className="mb-4">
-      <h2 className="text-xs font-semibold uppercase tracking-[0.1em] text-luxury-ink mb-5">
+        <h2 className="text-sm font-semibold uppercase tracking-[0.1em] text-luxury-ink mb-5">
           Đánh giá từ người mua
         </h2>
-        <p className="mt-0.5 text-xs text-neutral-500">
-          {data.pages[0].totalReviews.toLocaleString("vi-VN")} đánh giá đã xác minh mua hàng
+        <p className="mt-0.5 text-sm text-neutral-500">
+          {data.pages[0].totalReviews.toLocaleString("vi-VN")} đánh giá đã xác
+          minh mua hàng
         </p>
       </div>
 

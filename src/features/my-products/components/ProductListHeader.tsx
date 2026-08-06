@@ -35,27 +35,27 @@ export function ProductListHeader({
   onViewModeChange,
 }: ProductListHeaderProps) {
   return (
-    <div className="bg-card border-b border-border sticky top-0 z-20">
+    <div className="bg-cream-50/95 backdrop-blur-md border-b-2 border-border sticky top-0 z-20">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 py-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-semibold text-foreground mb-1">
+            <h1 className="text-xl font-bold text-taupe-900 mb-1">
               Sản phẩm của tôi
             </h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-taupe-500">
               {stats.all} sản phẩm
             </p>
           </div>
           
           <div className="flex items-center gap-3">
-            <div className="flex items-center border border-border rounded-lg p-1">
+            <div className="flex items-center border-2 border-border rounded-xl p-1 bg-white">
               <button
                 onClick={() => onViewModeChange("list")}
                 className={cn(
-                  "p-1.5 rounded transition-colors",
+                  "p-1.5 rounded-lg transition-colors",
                   viewMode === "list"
                     ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
+                    : "text-taupe-500 hover:text-taupe-900"
                 )}
               >
                 <IconList className="w-4 h-4" />
@@ -63,10 +63,10 @@ export function ProductListHeader({
               <button
                 onClick={() => onViewModeChange("grid")}
                 className={cn(
-                  "p-1.5 rounded transition-colors",
+                  "p-1.5 rounded-lg transition-colors",
                   viewMode === "grid"
                     ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
+                    : "text-taupe-500 hover:text-taupe-900"
                 )}
               >
                 <IconLayoutGrid className="w-4 h-4" />
@@ -75,7 +75,7 @@ export function ProductListHeader({
 
             <Link
               href="/sell"
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 hover:shadow-md transition-all duration-200 active:scale-[0.98]"
             >
               <IconPlus className="w-4 h-4" />
               Đăng tin
@@ -94,17 +94,17 @@ export function ProductListHeader({
                 key={config.value}
                 onClick={() => onFilterChange(config.value)}
                 className={cn(
-                  "flex items-center gap-2 px-3.5 py-2 rounded-lg transition-colors shrink-0 text-sm font-medium border",
+                  "flex items-center gap-2 px-3.5 py-2 rounded-full transition-all duration-200 shrink-0 text-sm font-semibold border-2",
                   isActive
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-background text-foreground hover:bg-muted border-border"
+                    ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                    : "bg-white text-taupe-600 hover:border-primary/40 hover:text-taupe-900 border-border"
                 )}
               >
                 <Icon className="w-4 h-4" />
                 <span>{config.label}</span>
                 <span className={cn(
-                  "ml-1 px-2 py-0.5 rounded-md text-xs font-semibold tabular-nums",
-                  isActive ? "bg-cream-100/30 text-white" : "bg-muted text-muted-foreground"
+                  "ml-1 px-2 py-0.5 rounded-full text-xs font-bold tabular-nums",
+                  isActive ? "bg-white/25 text-primary-foreground" : "bg-taupe-100 text-taupe-600"
                 )}>
                   {count}
                 </span>

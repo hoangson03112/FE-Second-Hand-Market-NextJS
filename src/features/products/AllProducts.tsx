@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useAllProducts } from "./hooks/useAllProducts";
 import { useProvinces } from "@/hooks/useGHNLocation";
 import AllProductsHeader from "./components/AllProductsHeader";
@@ -20,29 +19,14 @@ export default function AllProducts() {
   } = useAllProducts();
 
   const { data: provinces = [] } = useProvinces();
-  const [searchInput, setSearchInput] = useState(filters.search || "");
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFilters((prev) => ({
-      ...prev,
-      search: searchInput || undefined,
-      page: 1,
-    }));
-  };
-
   return (
     <div className="max-w-9xl mx-auto flex-1 w-full min-h-screen bg-background text-luxury-ink selection:bg-luxury-ink selection:text-background flex flex-col font-sans">
       <AllProductsHeader
         total={total}
-        searchValue={searchInput}
-        onSearchChange={setSearchInput}
-        onSearchSubmit={handleSearchSubmit}
       />
 
       <div className="max-w-9xl flex-1 w-full mx-auto px-4 sm:px-8 lg:px-12">
         <div className="flex flex-col lg:flex-row items-start relative">
-          {/* ── Editorial Sidebar ── */}
           <aside className="hidden lg:block w-72 shrink-0 sticky top-12 pr-12 lg:border-r border-taupe-200/60 min-h-[80vh]">
             <FilterSidebar
               filters={filters}
@@ -70,7 +54,7 @@ export default function AllProducts() {
                   currentPage,
                   totalPages,
                   total,
-                  limit: filters.limit || 15,
+                  limit: filters.limit || 16,
                 }}
                 onPageChange={(page) =>
                   setFilters((prev) => ({ ...prev, page }))

@@ -123,8 +123,7 @@ export default function Product({ id }: ProductProps) {
       <main className="max-w-9xl mx-auto px-4 md:px-8 py-10">
         {/* NÚT QUAY LẠI */}
         <button
-                style={{ fontFamily: "var(--font-droid-serif), serif" }}
-
+          style={{ fontFamily: "var(--font-droid-serif), serif" }}
           onClick={() => router.back()}
           className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-foreground hover:text-luxury-ink transition-colors mb-8 group"
         >
@@ -145,7 +144,7 @@ export default function Product({ id }: ProductProps) {
           </div>
 
           {/* CỘT PHẢI: Thông Tin Chi Tiết & Hành Động */}
-          <div className="lg:col-span-6 xl:col-span-7 flex flex-col space-y-6">
+          <div className="lg:col-span-6 xl:col-span-7 flex flex-col">
             <ProductHeader
               name={product.name}
               averageRating={averageRating}
@@ -164,49 +163,49 @@ export default function Product({ id }: ProductProps) {
                 onContactSeller={handleContactSeller}
               />
             )}
-
-            <ProductPrice
-              price={product.price}
-              formattedPrice={
-                product.price ? formatPrice(product.price) : "Liên hệ"
-              }
-              originalPrice={product.originalPrice}
-              hasPersonalDiscount={product.hasPersonalDiscount}
-            />
-
-            {/* TRẠNG THÁI KHO HÀNG */}
-            {(product.stock ?? 0) === 0 && (
-              <div className="inline-flex items-center justify-center rounded-[2px] bg-taupe-50/50 text-taupe-500 border border-luxury-ink/10 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.1em]">
-                Hết hàng
-              </div>
-            )}
-            {(product.stock ?? 0) === 1 && (
-              <div className="inline-flex items-center justify-center rounded-[2px] bg-blush-50 text-blush-600 border border-blush-200 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.1em]">
-                ⚡ Chỉ còn 1 sản phẩm duy nhất
-              </div>
-            )}
-            {(product.stock ?? 0) > 1 && (
-              <div className="text-[11px] font-semibold uppercase tracking-wide text-taupe-500 mt-2">
-                Kho hàng:{" "}
-                <span className="font-bold text-luxury-ink">
-                  {product.stock} sản phẩm
-                </span>
-              </div>
-            )}
+            <div className="flex justify-between items-center">
+              {" "}
+              <ProductPrice
+                price={product.price}
+                formattedPrice={
+                  product.price ? formatPrice(product.price) : "Liên hệ"
+                }
+                originalPrice={product.originalPrice}
+                hasPersonalDiscount={product.hasPersonalDiscount}
+              />
+              {(product.stock ?? 0) === 0 && (
+                <div className="inline-flex items-center justify-center rounded-[2px] bg-taupe-50/50 text-taupe-500 border border-luxury-ink/10 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.1em]">
+                  Hết hàng
+                </div>
+              )}
+              {(product.stock ?? 0) === 1 && (
+                <div className="inline-flex items-center justify-center rounded-[2px] bg-blush-50 text-blush-600 border border-blush-200 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.1em]">
+                  Chỉ còn 1 sản phẩm duy nhất
+                </div>
+              )}
+              {(product.stock ?? 0) > 1 && (
+                <div className="text-sm font-semibold uppercase tracking-wide text-charcoal-400">
+                  Còn lại:{" "}
+                  <span className="font-medium text-luxury-ink">
+                    {product.stock} sản phẩm
+                  </span>
+                </div>
+              )}
+            </div>
 
             {/* HÌNH THỨC GIAO HÀNG */}
             {product.deliveryOptions && (
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex flex-wrap gap-3 py-2 ">
                 {product.deliveryOptions.codShipping && (
                   <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-[11px] uppercase tracking-wide font-semibold">
-                    <IconTruck className="h-4 w-4 text-taupe-500" />
-                    Giao hàng tận nơi (COD)
+                    <IconTruck className="h-4 w-4 text-primary" />
+                    Giao hàng tận nhà (COD)
                   </div>
                 )}
                 {product.deliveryOptions.localPickup && (
                   <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-[11px] uppercase tracking-wide font-semibold">
-                    <IconMapPin className="h-4 w-4 text-taupe-500" />
-                    Nhận hàng trực tiếp
+                    <IconMapPin className="h-4 w-4 text-red-500" />
+                    Giao dịch trực tiếp
                   </div>
                 )}
               </div>
@@ -240,7 +239,7 @@ export default function Product({ id }: ProductProps) {
             <button
               type="button"
               onClick={() => setShowReportModal(true)}
-              className="text-[11px] uppercase tracking-[0.2em] font-semibold text-taupe-400 hover:text-blush-600 transition-colors underline underline-offset-4"
+              className="text-xs uppercase tracking-[0.15em] font-bold text-charcoal-500 hover:text-blush-600 transition-colors underline underline-offset-4"
             >
               Báo cáo sản phẩm này
             </button>

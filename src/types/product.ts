@@ -5,9 +5,9 @@ export interface IProduct {
   name: string;
   slug: string;
   price: number;
-  originalPrice?: number; // Giá gốc (nếu có personal discount)
-  hasPersonalDiscount?: boolean; // Flag để biết có discount không
-  personalDiscountId?: string; // ID của discount (để mark as used khi order)
+  originalPrice?: number; 
+  hasPersonalDiscount?: boolean; 
+  personalDiscountId?: string; 
   avatar: IImage;
   stock: number;
   description: string;

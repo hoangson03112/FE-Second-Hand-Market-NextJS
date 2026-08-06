@@ -22,7 +22,7 @@ export default function CheckoutButton({
       onClick={onClick}
       disabled={isSubmitting || isDisabled}
       fullWidth
-      className="bg-luxury-ink text-white hover:bg-luxury-ink/90 rounded-[2px] disabled:opacity-40 uppercase tracking-[0.2em] text-[11px] font-semibold transition-colors h-14"
+      className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl disabled:opacity-40 uppercase tracking-[0.15em] text-xs font-bold transition-all shadow-sm hover:shadow-md active:scale-[0.98] h-14"
     >
       {isSubmitting ? (
         <span className="flex items-center justify-center gap-3">

@@ -1,6 +1,11 @@
 "use client";
 
-import { IconMapPin, IconPlus, IconX, IconArrowLeft } from "@tabler/icons-react";
+import {
+  IconMapPin,
+  IconPlus,
+  IconX,
+  IconArrowLeft,
+} from "@tabler/icons-react";
 import { Address } from "@/types/address";
 import { AddressForm } from "./AddressForm";
 import type { CreateAddressRequest } from "@/types/address";
@@ -72,37 +77,37 @@ export default function AddressModal({
   return (
     <>
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity"
+        className="fixed inset-0 bg-taupe-900/40 backdrop-blur-sm z-50 transition-opacity"
         onClick={onHide}
       />
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="relative bg-white rounded-[2px] shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden border border-luxury-ink/10"
+          className="relative bg-cream-50 rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden border-2 border-border"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex justify-between p-6 border-b border-luxury-ink/10 bg-taupe-50/30">
+          <div className="flex justify-between p-6 border-b-2 border-border bg-taupe-50/60">
             <div className="flex items-center gap-4">
               {showNewAddressForm && (
                 <button
                   onClick={handleBack}
-                  className="p-2 hover:bg-taupe-50 rounded-[2px] transition-colors"
+                  className="p-2 text-taupe-500 hover:bg-taupe-100 hover:text-taupe-900 rounded-full transition-colors"
                 >
-                  <IconArrowLeft className="h-5 w-5 text-taupe-500" />
+                  <IconArrowLeft className="h-5 w-5" />
                 </button>
               )}
-              <div className="flex items-center gap-4 font-droid-serif">
-                <div className="w-12 h-12 rounded-[2px] bg-white border border-luxury-ink/10 flex items-center justify-center">
-                  <IconMapPin className="h-5 w-5 text-red-600" />
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <IconMapPin className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <h2 className="text-2xl text-luxury-ink mb-1" >
+                  <h2 className="text-lg font-semibold text-taupe-900 mb-1">
                     {showNewAddressForm
                       ? editingAddress
                         ? "Chỉnh sửa địa chỉ"
                         : "Thêm địa chỉ mới"
                       : "Địa Chỉ Giao Hàng"}
                   </h2>
-                  <p className="text-sm tracking-[0.15em] font-medium text-luxury-ink">
+                  <p className="text-xs uppercase tracking-wide font-semibold text-taupe-500">
                     {showNewAddressForm
                       ? "Điền thông tin địa chỉ của bạn"
                       : `${addresses.length} Địa chỉ`}
@@ -112,12 +117,12 @@ export default function AddressModal({
             </div>
             <button
               onClick={onHide}
-              className="p-2 hover:bg-blush-50 rounded-[2px] transition-colors group"
+              className="p-2 text-taupe-400 hover:bg-red-50 hover:text-red-600 rounded-full transition-colors"
             >
-              <IconX className="h-5 w-5 text-taupe-400 group-hover:text-blush-600" />
+              <IconX className="h-5 w-5" />
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-6 bg-white">
+          <div className="flex-1 overflow-y-auto p-6 bg-cream-50">
             {!showNewAddressForm ? (
               <div className="space-y-4">
                 <AddressList
@@ -133,13 +138,13 @@ export default function AddressModal({
                     setEditingAddress(null);
                     onToggleNewAddressForm(true);
                   }}
-                  className="w-full p-4 border border-dashed border-luxury-ink/20 rounded-[2px] hover:border-luxury-ink/50 hover:bg-taupe-50/50 transition-colors"
+                  className="w-full p-4 border-2 border-dashed border-taupe-300 rounded-xl hover:border-primary/50 hover:bg-taupe-50/60 transition-colors"
                 >
                   <div className="flex items-center justify-center gap-3">
-                    <div className="w-8 h-8 rounded-[2px] bg-taupe-50 border border-luxury-ink/10 flex items-center justify-center">
-                      <IconPlus className="h-4 w-4 text-luxury-ink" />
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                      <IconPlus className="h-4 w-4 text-primary" />
                     </div>
-                    <span className="font-semibold text-[11px] uppercase tracking-[0.2em] text-luxury-ink">
+                    <span className="font-bold text-xs uppercase tracking-wide text-taupe-900">
                       Thêm địa chỉ mới
                     </span>
                   </div>

@@ -82,7 +82,7 @@ export default function Checkout() {
 
   return (
     <PageContainer withBackground={false}>
-      <div className="min-h-screen bg-luxury-ivory">
+      <div className="min-h-screen bg-cream-50">
         <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg">
           <CheckoutHeader onBack={handleBack} />
 
@@ -101,10 +101,8 @@ export default function Checkout() {
 
           {/* Delivery address */}
           {showAddressSection && (
-            <div className="bg-white rounded-[2px] border border-luxury-ink/10 p-6 mb-6">
-              <h2
-                className="font-droid-serif text-xl text-luxury-ink mb-5 pb-4 border-b border-luxury-ink/10"
-              >
+            <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border p-6 mb-6 shadow-md">
+              <h2 className="text-lg font-semibold text-taupe-900 mb-5 pb-4 border-b-2 border-border uppercase tracking-wider">
                 Địa chỉ nhận hàng
               </h2>
               <AddressSection
@@ -116,8 +114,8 @@ export default function Checkout() {
 
           {/* Multi-seller notice */}
           {isMultiSeller && (
-            <div className="flex items-start gap-4 p-5 mb-6 bg-taupe-50/50 border border-luxury-ink/10 rounded-[2px]">
-              <IconInfoCircle className="w-5 h-5 text-luxury-ink flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-4 p-5 mb-6 bg-primary/5 border-2 border-primary/20 rounded-xl">
+              <IconInfoCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
               <p className="text-sm text-primary/90">
                 Bạn đang đặt hàng từ{" "}
                 <strong>{sellerGroups.length} người bán</strong>. Mỗi đơn
@@ -133,7 +131,7 @@ export default function Checkout() {
             {/* Left column: seller sections */}
             <div className="lg:col-span-2 space-y-6">
               {sellerGroups.length === 0 ? (
-                <div className="bg-white rounded-[2px] border border-luxury-ink/10 p-12 text-center text-taupe-600 text-sm">
+                <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border p-12 text-center text-taupe-600 text-sm shadow-md">
                   Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi
                   thanh toán.
                 </div>
@@ -165,15 +163,15 @@ export default function Checkout() {
 
               {/* Global shipping error / loading */}
               {!allLocalPickup && shippingError && (
-                <div className="p-4 bg-blush-50/50 border border-blush-200 rounded-[2px] text-[11px] uppercase tracking-wide font-semibold text-blush-600">
+                <div className="p-4 bg-red-50 border-2 border-red-200 rounded-xl text-xs uppercase tracking-wide font-semibold text-red-600">
                   {shippingError}
                 </div>
               )}
 
               {!allLocalPickup && isCalculatingShipping && (
-                <div className="flex items-center gap-4 p-5 bg-white rounded-[2px] border border-luxury-ink/10">
-                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-luxury-ink/20 border-t-luxury-ink" />
-                  <span className="text-sm text-gray-600">
+                <div className="flex items-center gap-4 p-5 bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border shadow-md">
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary/30 border-t-primary" />
+                  <span className="text-sm text-taupe-600">
                     Đang tính phí vận chuyển...
                   </span>
                 </div>
@@ -183,7 +181,7 @@ export default function Checkout() {
             {/* Right column: summary + checkout */}
             <div className="lg:col-span-1">
               <div className="sticky top-8 space-y-6">
-                <div className="bg-white rounded-[2px] border border-luxury-ink/10">
+                <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border shadow-md">
                   <CheckoutSummary
                     sellerGroups={sellerGroups}
                     subtotal={subtotal}

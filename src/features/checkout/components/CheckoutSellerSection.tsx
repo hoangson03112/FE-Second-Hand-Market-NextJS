@@ -30,12 +30,12 @@ export default function CheckoutSellerSection({
   const { sellerId, sellerName, sellerAvatar, items, shippingInfo, subtotal, shippingFee } = group;
 
   return (
-    <div className="bg-white rounded-[2px] border border-luxury-ink/10 overflow-hidden">
+    <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border overflow-hidden shadow-md">
       {/* Seller header */}
-      <div className="flex items-center gap-4 px-6 py-4 bg-taupe-50/50 border-b border-luxury-ink/10">
+      <div className="flex items-center gap-4 px-6 py-4 bg-taupe-50/60 border-b-2 border-border">
         <AvatarOrInitials avatar={sellerAvatar} fullName={sellerName} size={32} className="flex-shrink-0" />
-        <span className="text-sm font-semibold text-luxury-ink">{sellerName}</span>
-        <span className="ml-auto text-[10px] uppercase tracking-[0.2em] font-semibold text-taupe-500">{items.length} sản phẩm</span>
+        <span className="text-sm font-semibold text-taupe-900">{sellerName}</span>
+        <span className="ml-auto text-[10px] uppercase tracking-wide font-semibold text-taupe-500">{items.length} sản phẩm</span>
       </div>
 
       <div className="p-6 space-y-6">
@@ -47,9 +47,9 @@ export default function CheckoutSellerSection({
             return (
               <div
                 key={item.product._id}
-                className="flex gap-4 p-4 border border-luxury-ink/10 rounded-[2px] hover:border-luxury-ink/30 transition-colors bg-white"
+                className="flex gap-4 p-4 border border-border rounded-xl hover:border-primary/40 transition-colors bg-white"
               >
-                <div className="flex-shrink-0 w-[72px] h-[72px] rounded-[2px] border border-luxury-ink/10 overflow-hidden bg-taupe-50 relative">
+                <div className="flex-shrink-0 w-[72px] h-[72px] rounded-xl border border-border overflow-hidden bg-taupe-100 relative">
                   {avatar ? (
                     <Image src={avatar} alt={item.product.name} fill className="object-cover" sizes="72px" />
                   ) : (
@@ -59,15 +59,15 @@ export default function CheckoutSellerSection({
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-luxury-ink line-clamp-2 font-medium">{item.product.name}</p>
+                  <p className="text-sm text-taupe-900 line-clamp-2 font-medium">{item.product.name}</p>
                   {condition && (
-                    <span className="inline-block mt-2 px-2 py-0.5 bg-taupe-50/50 border border-luxury-ink/10 text-luxury-ink text-[10px] uppercase tracking-wide font-semibold rounded-[2px]">
+                    <span className="inline-block mt-2 px-2 py-0.5 bg-taupe-50 border border-border text-taupe-700 text-[10px] uppercase tracking-wide font-semibold rounded-full">
                       {condition}
                     </span>
                   )}
                   <div className="flex items-center justify-between mt-3">
-                    <span className="text-[11px] font-semibold text-taupe-500">×{item.quantity}</span>
-                    <span className="text-sm font-bold text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif" }}>
+                    <span className="text-xs font-semibold text-taupe-500">×{item.quantity}</span>
+                    <span className="text-sm font-bold text-primary">
                       {formatPrice(item.product.price * item.quantity)}
                     </span>
                   </div>
@@ -80,15 +80,15 @@ export default function CheckoutSellerSection({
         {/* Delivery method selector */}
         {group.hasBothOptions && (
           <div>
-            <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-luxury-ink mb-3">Hình thức giao hàng</p>
+            <p className="text-xs uppercase tracking-wide font-semibold text-taupe-900 mb-3">Hình thức giao hàng</p>
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={() => onDeliveryMethodChange("local_pickup")}
-                className={`flex items-center justify-center gap-2 py-3 px-4 rounded-[2px] border text-[11px] uppercase tracking-[0.1em] font-semibold transition-all ${
+                className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 text-xs uppercase tracking-wide font-semibold transition-all ${
                   deliveryMethod === "local_pickup"
-                    ? "border-luxury-ink bg-luxury-ink text-white"
-                    : "border-luxury-ink/20 text-taupe-500 hover:border-luxury-ink/50 hover:text-luxury-ink"
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border text-taupe-500 hover:border-primary/40 hover:text-taupe-900"
                 }`}
               >
                 <IconMapPin className="w-4 h-4" />
@@ -97,10 +97,10 @@ export default function CheckoutSellerSection({
               <button
                 type="button"
                 onClick={() => onDeliveryMethodChange("cod_shipping")}
-                className={`flex items-center justify-center gap-2 py-3 px-4 rounded-[2px] border text-[11px] uppercase tracking-[0.1em] font-semibold transition-all ${
+                className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 text-xs uppercase tracking-wide font-semibold transition-all ${
                   deliveryMethod === "cod_shipping"
-                    ? "border-luxury-ink bg-luxury-ink text-white"
-                    : "border-luxury-ink/20 text-taupe-500 hover:border-luxury-ink/50 hover:text-luxury-ink"
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-border text-taupe-500 hover:border-primary/40 hover:text-taupe-900"
                 }`}
               >
                 <IconTruck className="w-4 h-4" />
@@ -112,25 +112,25 @@ export default function CheckoutSellerSection({
 
         {/* Shipping info for this seller */}
         {group.isLocalPickup ? (
-          <div className="flex items-start gap-3 p-4 bg-taupe-50/50 rounded-[2px] border border-luxury-ink/10">
-            <IconMapPin className="w-5 h-5 text-luxury-ink flex-shrink-0 mt-0.5" />
+          <div className="flex items-start gap-3 p-4 bg-taupe-50/60 rounded-xl border border-border">
+            <IconMapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
             <div className="flex-1 text-sm">
-              <span className="text-luxury-ink font-semibold">Giao dịch trực tiếp</span>
+              <span className="text-taupe-900 font-semibold">Giao dịch trực tiếp</span>
               <p className="text-xs text-taupe-600 mt-1">
                 Người bán và người mua tự thỏa thuận địa điểm gặp mặt
               </p>
             </div>
-            <span className="font-bold text-luxury-ink text-sm" style={{ fontFamily: "var(--font-droid-serif), serif" }}>Miễn phí</span>
+            <span className="font-bold text-primary text-sm">Miễn phí</span>
           </div>
         ) : (
-          <div className="flex items-start gap-3 p-4 bg-taupe-50/50 rounded-[2px] border border-luxury-ink/10">
-            <IconTruck className="w-5 h-5 text-luxury-ink flex-shrink-0 mt-0.5" />
+          <div className="flex items-start gap-3 p-4 bg-taupe-50/60 rounded-xl border border-border">
+            <IconTruck className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
             <div className="flex-1 text-sm">
               <div className="flex justify-between items-center">
-                <span className="text-luxury-ink font-semibold">
+                <span className="text-taupe-900 font-semibold">
                   GHN – {shippingInfo?.short_name ?? "Chuẩn"}
                 </span>
-                <span className="font-bold text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif" }}>
+                <span className="font-bold text-primary">
                   {shippingFee > 0 ? formatPrice(shippingFee) : "Đang tính..."}
                 </span>
               </div>
@@ -152,7 +152,7 @@ export default function CheckoutSellerSection({
 
         {/* Payment method selector */}
         <div>
-          <p className="text-[11px] uppercase tracking-[0.2em] font-semibold text-luxury-ink mb-3">Phương thức thanh toán</p>
+          <p className="text-xs uppercase tracking-wide font-semibold text-taupe-900 mb-3">Phương thức thanh toán</p>
           <PaymentMethod
             selected={paymentMethod}
             onSelect={onPaymentMethodChange}
@@ -163,32 +163,31 @@ export default function CheckoutSellerSection({
             <p className="text-[11px] uppercase tracking-wide font-semibold text-taupe-500 mt-3">Gặp mặt trực tiếp — thanh toán khi nhận hàng</p>
           )}
           {!isBankTransferAvailable && deliveryMethod !== "local_pickup" && (
-            <div className="mt-3 flex items-start gap-3 p-3.5 rounded-[2px] bg-blush-50/50 border border-blush-200">
-              <IconInfoCircle className="w-4 h-4 text-blush-600 shrink-0 mt-0.5" />
-              <p className="text-[11px] uppercase tracking-wide font-semibold text-blush-800">{FEATURE_INFO.PAYMENT_COD_ONLY}</p>
+            <div className="mt-3 flex items-start gap-3 p-3.5 rounded-xl bg-amber-50 border-2 border-amber-200">
+              <IconInfoCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <p className="text-[11px] uppercase tracking-wide font-semibold text-amber-800">{FEATURE_INFO.PAYMENT_COD_ONLY}</p>
             </div>
           )}
         </div>
 
         {/* Section subtotal */}
-        <div className="pt-5 border-t border-luxury-ink/10 space-y-3">
-          <div className="flex justify-between text-[11px] uppercase tracking-wide font-semibold text-taupe-600 items-center">
+        <div className="pt-5 border-t-2 border-border space-y-3">
+          <div className="flex justify-between text-xs uppercase tracking-wide font-semibold text-taupe-600 items-center">
             <span>Tiền hàng</span>
-            <span className="text-sm font-bold text-luxury-ink normal-case tracking-normal" style={{ fontFamily: "var(--font-droid-serif), serif" }}>{formatPrice(subtotal)}</span>
+            <span className="text-sm font-bold text-taupe-900 normal-case tracking-normal">{formatPrice(subtotal)}</span>
           </div>
           {!group.isLocalPickup && (
-            <div className="flex justify-between text-[11px] uppercase tracking-wide font-semibold text-taupe-600 items-center">
+            <div className="flex justify-between text-xs uppercase tracking-wide font-semibold text-taupe-600 items-center">
               <span>Phí vận chuyển</span>
-              <span className="text-sm font-bold text-luxury-ink normal-case tracking-normal" style={{ fontFamily: "var(--font-droid-serif), serif" }}>{shippingFee > 0 ? formatPrice(shippingFee) : "—"}</span>
+              <span className="text-sm font-bold text-taupe-900 normal-case tracking-normal">{shippingFee > 0 ? formatPrice(shippingFee) : "—"}</span>
             </div>
           )}
           <div className="flex justify-between items-center pt-2">
-            <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-luxury-ink">Tổng đơn này</span>
-            <span className="text-lg font-bold text-luxury-ink" style={{ fontFamily: "var(--font-droid-serif), serif" }}>{formatPrice(subtotal + shippingFee)}</span>
+            <span className="text-xs uppercase tracking-wide font-semibold text-taupe-900">Tổng đơn này</span>
+            <span className="text-lg font-bold text-primary">{formatPrice(subtotal + shippingFee)}</span>
           </div>
         </div>
       </div>
     </div>
   );
 }
-

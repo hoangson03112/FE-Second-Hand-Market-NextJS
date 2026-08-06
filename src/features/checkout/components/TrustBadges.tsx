@@ -8,9 +8,9 @@ const badges = [
 
 export default function TrustBadges() {
   return (
-    <div className="bg-cream-50/50 rounded-2xl p-4 space-y-2 border-2 border-neutral-200/60">
+    <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl p-4 space-y-2 border-2 border-border shadow-md">
       {badges.map((badge, index) => (
-        <div key={index} className="flex items-center gap-2 text-sm text-neutral-600">
+        <div key={index} className="flex items-center gap-2 text-sm text-taupe-600">
           <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
             <path
               fillRule="evenodd"

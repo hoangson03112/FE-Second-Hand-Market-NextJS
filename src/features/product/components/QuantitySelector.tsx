@@ -9,7 +9,7 @@ interface QuantitySelectorProps {
 export default function QuantitySelector({ quantity, maxQuantity, onQuantityChange }: QuantitySelectorProps) {
   return (
     <div className="flex items-center justify-between py-3 px-4 rounded-[2px] border border-luxury-ink/10 bg-taupe-50/50 mb-4">
-      <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-luxury-ink">Số lượng</span>
+      <span className="text-xs font-semibold uppercase tracking-[0.2em] text-luxury-ink">Số lượng</span>
       <div className="flex items-center gap-3">
         <div className="flex items-center border border-luxury-ink/10 rounded-[2px] overflow-hidden bg-white">
           <button
@@ -30,7 +30,6 @@ export default function QuantitySelector({ quantity, maxQuantity, onQuantityChan
             +
           </button>
         </div>
-        <span className="text-[10px] font-semibold uppercase tracking-wide text-taupe-400">{maxQuantity} có sẵn</span>
       </div>
     </div>
   );
