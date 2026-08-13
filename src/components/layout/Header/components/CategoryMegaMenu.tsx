@@ -15,6 +15,7 @@ export function CategoryMegaMenu({
   onShowAllCategories,
   onHideAllCategories,
 }: CategoryMegaMenuProps) {
+  
   return (
     <div
       className="relative shrink-0 hidden xl:block"

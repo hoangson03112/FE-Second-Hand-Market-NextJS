@@ -20,10 +20,8 @@ export default function AllProducts() {
 
   const { data: provinces = [] } = useProvinces();
   return (
-    <div className="max-w-9xl mx-auto flex-1 w-full min-h-screen bg-background text-luxury-ink selection:bg-luxury-ink selection:text-background flex flex-col font-sans">
-      <AllProductsHeader
-        total={total}
-      />
+    <div className="max-w-9xl mx-auto flex-1 w-full min-h-screen  text-luxury-ink  selection:text-background flex flex-col font-sans">
+      <AllProductsHeader total={total} />
 
       <div className="max-w-9xl flex-1 w-full mx-auto px-4 sm:px-8 lg:px-12">
         <div className="flex flex-col lg:flex-row items-start relative">
@@ -38,10 +36,10 @@ export default function AllProducts() {
           <main className="flex-1 min-w-0 w-full lg:pl-12">
             {error ? (
               <div className="py-32 flex flex-col items-center justify-center text-center border-t border-b border-taupe-200/60 mt-8">
-                <span className="font-serif text-4xl mb-4 italic text-taupe-400">
+                <span className="font-serif text-4xl mb-4 italic text-charcoal-600">
                   Lỗi Hệ Thống
                 </span>
-                <p className="text-xs uppercase tracking-[0.2em] text-taupe-500">
+                <p className="text-xs uppercase tracking-[0.15em] text-charcoal-500">
                   Không thể truy xuất dữ liệu lúc này.
                 </p>
               </div>

@@ -80,7 +80,7 @@ export default function DiscountForm({ product, buyerId, onCreated, onCancel }: 
 
   if (!product) {
     return (
-      <div className="text-sm text-muted-foreground">
+      <div className="text-sm text-taupe-500">
         Không có sản phẩm khả dụng để tạo ưu đãi.
       </div>
     );
@@ -139,7 +139,7 @@ export default function DiscountForm({ product, buyerId, onCreated, onCancel }: 
           required
         />
       </div>
-      <div className="text-xs text-muted-foreground">
+      <div className="text-xs text-taupe-500">
         Hạn dùng: <span className="font-semibold">24h</span> kể từ bây giờ
         {originalPrice != null ? (
           <span className="ml-2">
@@ -147,16 +147,16 @@ export default function DiscountForm({ product, buyerId, onCreated, onCancel }: 
           </span>
         ) : null}
       </div>
-      {error && <div className="text-destructive text-sm mt-1">{error}</div>}
+      {error && <div className="text-red-600 text-sm mt-1">{error}</div>}
       <div className="flex gap-2 mt-2">
         <button
           type="submit"
-          className="bg-primary text-white px-4 py-2 rounded font-semibold shadow-sm disabled:opacity-60"
+          className="bg-primary text-primary-foreground px-4 py-2 rounded-xl font-semibold shadow-sm hover:bg-primary/90 hover:shadow-md transition-all duration-200 disabled:opacity-60 active:scale-[0.98]"
           disabled={!canSubmit}
         >
           {loading ? "Đang tạo..." : "Tạo giảm giá"}
         </button>
-        <button type="button" className="bg-muted px-4 py-2 rounded font-semibold" onClick={onCancel} disabled={loading}>
+        <button type="button" className="border-2 border-taupe-300/80 text-taupe-700 px-4 py-2 rounded-xl font-semibold hover:bg-taupe-50 hover:border-taupe-500/70 transition-all duration-200" onClick={onCancel} disabled={loading}>
           Hủy
         </button>
       </div>

@@ -26,7 +26,6 @@ export type { SpinnerProps } from "./Loading";
 export { CardSkeleton, Skeleton, TableSkeleton } from "./Skeleton";
 export { Textarea } from "./Textarea";
 export type { TextareaProps } from "./Textarea";
-export { ToastProvider, useToast } from "./Toast";
 export { default as Pagination } from "./Pagination";
 export { StatusBadge, type StatusTone } from "./StatusBadge";
 export { default as Background } from "./Background";
@@ -99,3 +98,5 @@ export * from "./Rating";
 export * from "./CopyButton";
 
 export { default as ErrorMessage } from './ErrorMessage';
+
+export { useToast } from "../providers/ToastProvider";

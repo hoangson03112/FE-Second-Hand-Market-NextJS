@@ -149,8 +149,8 @@ const STATUS_STYLES: Record<StatusKey, StatusStyle> = {
   cancelled: {
     label: "Yêu cầu đã bị hủy",
     sublabel: "",
-    headerBg: "bg-taupe-100",
-    headerBorder: "border-border",
+    headerBg: "bg-cream-100",
+    headerBorder: "border-luxury-ink/10",
     textColor: "text-taupe-500",
     Icon: IconCircleX,
   },
@@ -158,7 +158,6 @@ const STATUS_STYLES: Record<StatusKey, StatusStyle> = {
 
 interface RefundDetailCardProps {
   refund: RefundDoc;
-  /** Called when buyer escalates a rejected refund to admin (dispute) */
   onEscalateToAdmin?: () => void;
   isEscalating?: boolean;
 }
@@ -176,94 +175,79 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
     );
 
   return (
-    <div className={cn("rounded-2xl overflow-hidden border-2 shadow-md", style.headerBorder)}>
-
-      {/* ── STATUS HEADER ─────────────────────────────────────────────── */}
+    <div className={cn("overflow-hidden border", style.headerBorder)} style={{ borderRadius: "2px" }}>
+      {/* ── STATUS HEADER ── */}
       <div className={cn("flex items-start gap-4 px-5 py-4", style.headerBg)}>
-        <div className={cn(
-          "w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border",
-          style.headerBorder,
-        )}>
-          <StatusIcon className={cn("w-5 h-5", style.textColor)} />
+        <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center border", style.headerBorder)} style={{ borderRadius: "2px" }}>
+          <StatusIcon className={cn("h-5 w-5", style.textColor)} strokeWidth={1.75} />
         </div>
-        <div className="flex-1 min-w-0">
-          <p className={cn("font-bold text-base leading-snug", style.textColor)}>
+        <div className="min-w-0 flex-1">
+          <p className={cn("text-base font-semibold leading-snug", style.textColor)}>
             {style.label}
           </p>
           {style.sublabel && (
-            <p className={cn("text-sm mt-0.5 opacity-80", style.textColor)}>
+            <p className={cn("mt-0.5 text-sm opacity-80", style.textColor)}>
               {style.sublabel}
             </p>
           )}
         </div>
-        <div className={cn(
-          "shrink-0 px-3 py-1.5 rounded-full text-sm font-bold border",
-          style.headerBorder,
-          style.textColor,
-          style.headerBg,
-        )}>
+        <div
+          className={cn("shrink-0 border px-3 py-1.5 text-sm font-bold", style.headerBorder, style.textColor, style.headerBg)}
+          style={{ borderRadius: "2px" }}
+        >
           {formatPrice(refund.refundAmount)}
         </div>
       </div>
 
-      {/* Tiến trình tổng thể: chỉ hiển thị ở OrderStatusHero (tránh 2 stepper trùng ý). */}
-
-      {/* ── BODY ──────────────────────────────────────────────────────── */}
-      <div className="p-5 bg-white space-y-4">
-
+      {/* ── BODY ── */}
+      <div className="space-y-4 bg-white p-5">
         {/* Reason + Date row */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="p-3.5 rounded-xl border border-border bg-taupe-50/60">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-taupe-500 mb-2">
+          <div className="border border-luxury-ink/8 bg-cream-50 p-3.5" style={{ borderRadius: "2px" }}>
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-taupe-400">
               Lý do hoàn tiền
             </p>
             <div className="flex items-center gap-2">
-              <ReasonIcon className="w-4 h-4 text-taupe-500 shrink-0" />
-              <p className="text-sm font-semibold text-taupe-900">{reasonInfo.label}</p>
+              <ReasonIcon className="h-4 w-4 shrink-0 text-taupe-500" strokeWidth={1.75} />
+              <p className="text-sm font-semibold text-luxury-ink">{reasonInfo.label}</p>
             </div>
           </div>
-          <div className="p-3.5 rounded-xl border border-border bg-taupe-50/60">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-taupe-500 mb-2">
+          <div className="border border-luxury-ink/8 bg-cream-50 p-3.5" style={{ borderRadius: "2px" }}>
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-taupe-400">
               Ngày gửi yêu cầu
             </p>
-            <p className="text-sm font-semibold text-taupe-900">
+            <p className="text-sm font-semibold text-luxury-ink">
               {format(refund.createdAt)}
             </p>
           </div>
         </div>
 
         {/* Description */}
-        <div className="p-3.5 rounded-xl border border-border bg-taupe-50/60">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-taupe-500 mb-2">
+        <div className="border border-luxury-ink/8 bg-cream-50 p-3.5" style={{ borderRadius: "2px" }}>
+          <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-taupe-400">
             Mô tả vấn đề
           </p>
-          <p className="text-sm text-taupe-900 leading-relaxed">{refund.description}</p>
+          <p className="text-sm leading-relaxed text-neutral-700">{refund.description}</p>
         </div>
 
         {/* Evidence images */}
         {(refund.evidence?.images?.length ?? 0) > 0 && (
           <div>
-            <div className="flex items-center gap-1.5 mb-2.5">
-              <IconPhoto className="w-3.5 h-3.5 text-taupe-500" />
-              <p className="text-[11px] font-bold uppercase tracking-wider text-taupe-500">
+            <div className="mb-2.5 flex items-center gap-1.5">
+              <IconPhoto className="h-3.5 w-3.5 text-taupe-400" strokeWidth={1.75} />
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-taupe-400">
                 Ảnh bằng chứng ({refund.evidence!.images!.length})
               </p>
             </div>
-            <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+            <div className="grid grid-cols-4 gap-2 sm:grid-cols-6">
               {refund.evidence!.images!.map((img, idx) => (
-                <a
-                  key={idx}
-                  href={img.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block group/img"
-                >
-                  <div className="aspect-square rounded-xl overflow-hidden border border-border bg-taupe-100 relative">
+                <a key={idx} href={img.url} target="_blank" rel="noopener noreferrer" className="group/img block">
+                  <div className="relative aspect-square overflow-hidden border border-luxury-ink/10 bg-cream-100" style={{ borderRadius: "2px" }}>
                     <Image
                       src={img.url}
                       alt={img.originalName ?? `Bằng chứng ${idx + 1}`}
                       fill
-                      className="object-cover group-hover/img:scale-105 transition-transform duration-300"
+                      className="object-cover transition-transform duration-300 group-hover/img:scale-105"
                       sizes="80px"
                     />
                   </div>
@@ -276,9 +260,9 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
         {/* Evidence videos */}
         {(refund.evidence?.videos?.length ?? 0) > 0 && (
           <div>
-            <div className="flex items-center gap-1.5 mb-2.5">
-              <IconVideo className="w-3.5 h-3.5 text-taupe-500" />
-              <p className="text-[11px] font-bold uppercase tracking-wider text-taupe-500">
+            <div className="mb-2.5 flex items-center gap-1.5">
+              <IconVideo className="h-3.5 w-3.5 text-taupe-400" strokeWidth={1.75} />
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-taupe-400">
                 Video bằng chứng ({refund.evidence!.videos!.length})
               </p>
             </div>
@@ -289,74 +273,73 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
                   href={vid.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-3 rounded-xl border border-border bg-taupe-50/60 hover:bg-taupe-100 transition-colors"
+                  className="flex items-center gap-3 border border-luxury-ink/8 bg-cream-50 p-3 transition-colors hover:bg-cream-100"
+                  style={{ borderRadius: "2px" }}
                 >
-                  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <IconVideo className="w-4 h-4 text-primary" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-taupe-900 truncate">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-luxury-ink/5" style={{ borderRadius: "2px" }}>
+                    <IconVideo className="h-4 w-4 text-taupe-500" strokeWidth={1.75} />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium text-luxury-ink">
                       {vid.originalName ?? `Video ${idx + 1}`}
                     </p>
-                    <p className="text-xs text-taupe-500">Video bằng chứng · Nhấn để xem</p>
+                    <p className="text-xs text-taupe-400">Video bằng chứng · Nhấn để xem</p>
                   </div>
-                  <span className="text-xs text-primary font-semibold shrink-0">Xem →</span>
+                  <span className="shrink-0 text-xs font-semibold text-luxury-ink">Xem →</span>
                 </a>
               ))}
             </div>
           </div>
         )}
 
-        {/* Seller response — ẩn bản “đã chấp thuận” khi đã sang phase sau (tránh trùng với header thẻ). */}
+        {/* Seller response */}
         {refund.sellerResponse && !showApprovedSellerBannerDupe && (
-          <div className={cn(
-            "p-4 rounded-xl border",
-            refund.sellerResponse.decision === "approved"
-              ? "bg-green-50 border-green-200"
-              : "bg-red-50 border-red-200",
-          )}>
-            <div className="flex items-center gap-2 mb-1.5">
+          <div
+            className={cn(
+              "border p-4",
+              refund.sellerResponse.decision === "approved"
+                ? "border-green-200 bg-green-50"
+                : "border-red-200 bg-red-50",
+            )}
+            style={{ borderRadius: "2px" }}
+          >
+            <div className="mb-1.5 flex items-center gap-2">
               {refund.sellerResponse.decision === "approved"
-                ? <IconCircleCheck className="w-4 h-4 text-green-600 shrink-0" />
-                : <IconCircleX    className="w-4 h-4 text-red-600 shrink-0" />}
-              <p className={cn(
-                "text-sm font-semibold",
-                refund.sellerResponse.decision === "approved" ? "text-green-700" : "text-red-700",
-              )}>
+                ? <IconCircleCheck className="h-4 w-4 shrink-0 text-green-600" strokeWidth={1.75} />
+                : <IconCircleX    className="h-4 w-4 shrink-0 text-red-600" strokeWidth={1.75} />}
+              <p className={cn("text-sm font-semibold", refund.sellerResponse.decision === "approved" ? "text-green-700" : "text-red-700")}>
                 Người bán đã{" "}
-                {refund.sellerResponse.decision === "approved"
-                  ? "chấp thuận hoàn tiền"
-                  : "từ chối hoàn tiền"}
+                {refund.sellerResponse.decision === "approved" ? "chấp thuận hoàn tiền" : "từ chối hoàn tiền"}
                 {refund.sellerResponse.respondedAt && (
-                  <span className="font-normal opacity-70 ml-1.5">
+                  <span className="ml-1.5 font-normal opacity-70">
                     · {format(refund.sellerResponse.respondedAt)}
                   </span>
                 )}
               </p>
             </div>
             {refund.sellerResponse.comment && (
-              <p className="text-sm text-taupe-700 pl-6 leading-relaxed">
+              <p className="pl-6 text-sm leading-relaxed text-neutral-700">
                 &ldquo;{refund.sellerResponse.comment}&rdquo;
               </p>
             )}
-            {/* Buyer escalate to admin when seller rejects */}
             {refund.sellerResponse.decision === "rejected" &&
              !refund.escalatedToAdmin &&
              onEscalateToAdmin && (
-              <div className="mt-3 pt-3 border-t border-red-200/50">
-                <p className="text-xs text-red-700/80 mb-2">
+              <div className="mt-3 border-t border-red-200/60 pt-3">
+                <p className="mb-2 text-xs text-red-700/80">
                   Bạn không đồng ý với quyết định của người bán? Gửi khiếu nại để Admin xem xét.
                 </p>
                 <button
                   type="button"
                   onClick={onEscalateToAdmin}
                   disabled={isEscalating}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-600 text-white text-sm font-semibold hover:bg-purple-700 disabled:opacity-50 transition-colors"
+                  className="inline-flex items-center gap-2 bg-purple-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-purple-700 disabled:opacity-50"
+                  style={{ borderRadius: "2px" }}
                 >
                   {isEscalating ? (
-                    <IconLoader2 className="w-4 h-4 animate-spin" />
+                    <IconLoader2 className="h-4 w-4 animate-spin" />
                   ) : (
-                    <IconShield className="w-4 h-4" />
+                    <IconShield className="h-4 w-4" />
                   )}
                   Khiếu nại lên Admin
                 </button>
@@ -367,21 +350,21 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
 
         {/* Admin intervention */}
         {refund.adminIntervention && (
-          <div className="p-4 rounded-xl border bg-purple-50 border-purple-200">
-            <div className="flex items-center gap-2 mb-1.5">
-              <IconShield className="w-4 h-4 text-purple-600 shrink-0" />
+          <div className="border border-purple-200 bg-purple-50 p-4" style={{ borderRadius: "2px" }}>
+            <div className="mb-1.5 flex items-center gap-2">
+              <IconShield className="h-4 w-4 shrink-0 text-purple-600" strokeWidth={1.75} />
               <p className="text-sm font-semibold text-purple-700">
                 Admin can thiệp ·{" "}
                 {refund.adminIntervention.decision === "refund" ? "Hoàn tiền" : "Từ chối"}
                 {refund.adminIntervention.handledAt && (
-                  <span className="font-normal opacity-70 ml-1.5">
+                  <span className="ml-1.5 font-normal opacity-70">
                     · {format(refund.adminIntervention.handledAt)}
                   </span>
                 )}
               </p>
             </div>
             {refund.adminIntervention.comment && (
-              <p className="text-sm text-taupe-700 pl-6 leading-relaxed">
+              <p className="pl-6 text-sm leading-relaxed text-neutral-700">
                 &ldquo;{refund.adminIntervention.comment}&rdquo;
               </p>
             )}
@@ -390,13 +373,13 @@ export function RefundDetailCard({ refund, onEscalateToAdmin, isEscalating }: Re
 
         {/* Refunded confirmation */}
         {refund.refundedAt && (
-          <div className="flex items-center gap-3 p-3.5 rounded-xl bg-green-50 border border-green-200">
-            <IconCircleCheck className="w-5 h-5 text-green-600 shrink-0" />
+          <div className="flex items-center gap-3 border border-green-200 bg-green-50 p-3.5" style={{ borderRadius: "2px" }}>
+            <IconCircleCheck className="h-5 w-5 shrink-0 text-green-600" strokeWidth={1.75} />
             <div>
               <p className="text-sm font-semibold text-green-700">
                 Đã hoàn tiền thành công
               </p>
-              <p className="text-xs text-green-600 mt-0.5">
+              <p className="mt-0.5 text-xs text-green-600">
                 {formatPrice(refund.refundAmount)} · {format(refund.refundedAt)}
               </p>
             </div>

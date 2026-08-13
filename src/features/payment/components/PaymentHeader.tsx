@@ -19,7 +19,7 @@ export function PaymentHeader({
     <div className="mb-8">
       <Link
         href="/"
-        className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors"
+        className="inline-flex items-center gap-2 text-taupe-500 hover:text-taupe-900 mb-6 transition-colors"
       >
         <IconArrowLeft className="h-4 w-4" />
         Quay lại
@@ -27,12 +27,12 @@ export function PaymentHeader({
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl font-bold text-taupe-900 mb-2">
             Thanh toán đơn hàng
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-taupe-500">
             Mã đơn nội bộ:{" "}
-            <span className="font-mono font-semibold text-foreground">
+            <span className="font-mono font-semibold text-taupe-900">
               {orderId}
             </span>
           </p>

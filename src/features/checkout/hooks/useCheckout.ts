@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCheckoutStore, CheckoutItem } from "@/store/useCheckoutStore";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/features/auth/hooks/useUser";
 import { useCart } from "@/hooks/useCart";
 import { PaymentMethodType } from "@/features/checkout/components/PaymentMethod";
 import { Address, ShippingServiceOption } from "@/types/address";

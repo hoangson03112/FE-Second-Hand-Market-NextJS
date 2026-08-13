@@ -36,10 +36,10 @@ export function OrderProgressCard({
   const tip = TIPS_BY_STATUS[status] || statusDescription[status] || "Đang xử lý đơn hàng.";
 
   return (
-    <div className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl overflow-hidden shadow-md">
-      <div className="px-5 py-3 border-b-2 border-border flex items-center justify-between">
-        <span className="text-sm font-semibold text-taupe-900 uppercase tracking-wider">Tiến trình đơn hàng</span>
-        <span className="text-xs font-mono text-taupe-500">#{orderCode}</span>
+    <div className="overflow-hidden border border-luxury-ink/8 bg-white/60" style={{ borderRadius: "2px" }}>
+      <div className="flex items-center justify-between border-b border-luxury-ink/8 px-5 py-3">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-600">Tiến trình đơn hàng</span>
+        <span className="font-mono text-xs text-taupe-400">#{orderCode}</span>
       </div>
       <div className="px-5 py-4">
         <ul className="space-y-0">
@@ -49,24 +49,29 @@ export function OrderProgressCard({
             const isLast = i === progressSteps.length - 1;
             return (
               <li key={step.key} className="flex items-start gap-3">
-                <div className="flex flex-col items-center shrink-0">
+                <div className="flex shrink-0 flex-col items-center">
                   <div
-                    className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                      isDone ? "bg-primary text-primary-foreground" : isActive ? "bg-primary/90 text-primary-foreground ring-2 ring-primary/30" : "bg-taupe-100 border border-border text-taupe-400"
-                    }`}
+                    className={
+                      isDone
+                        ? "flex h-6 w-6 items-center justify-center bg-luxury-ink"
+                        : isActive
+                          ? "flex h-6 w-6 items-center justify-center bg-luxury-ink ring-2 ring-luxury-champagne/40"
+                          : "flex h-6 w-6 items-center justify-center border border-luxury-ink/15 bg-white"
+                    }
+                    style={{ borderRadius: "2px" }}
                   >
-                    {isDone ? (
-                      <IconCircleCheck className="w-3.5 h-3.5" strokeWidth={2.5} />
+                    {isDone || isActive ? (
+                      <IconCircleCheck className="h-3.5 w-3.5 text-luxury-champagne" strokeWidth={2.5} />
                     ) : (
-                      <IconCircle className={`w-3 h-3 ${isActive ? "fill-current" : ""}`} strokeWidth={2} />
+                      <IconCircle className="h-3 w-3 text-taupe-300" strokeWidth={2} />
                     )}
                   </div>
                   {!isLast && (
-                    <div className={`w-0.5 min-h-[20px] mt-1 flex-shrink-0 ${i < effectiveStepIdx ? "bg-primary/50" : "bg-border"}`} />
+                    <div className={i < effectiveStepIdx ? "mt-1 min-h-[20px] w-px flex-shrink-0 bg-luxury-champagne/50" : "mt-1 min-h-[20px] w-px flex-shrink-0 bg-luxury-ink/10"} />
                   )}
                 </div>
                 <div className={!isLast ? "pb-1" : ""}>
-                  <p className={`text-sm font-medium ${isDone || isActive ? "text-taupe-900" : "text-taupe-500"}`}>
+                  <p className={isDone || isActive ? "text-sm font-medium text-luxury-ink" : "text-sm text-taupe-400"}>
                     {step.shortLabel}
                   </p>
                 </div>
@@ -74,9 +79,9 @@ export function OrderProgressCard({
             );
           })}
         </ul>
-        <div className="mt-4 pt-4 border-t-2 border-border flex gap-2 rounded-xl bg-taupe-50/60 p-3">
-          <IconInfoCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-          <p className="text-xs text-taupe-500 leading-snug">{tip}</p>
+        <div className="mt-4 flex gap-2 border-t border-luxury-ink/8 bg-cream-50 p-3 pt-4" style={{ borderRadius: "2px" }}>
+          <IconInfoCircle className="mt-0.5 h-4 w-4 shrink-0 text-luxury-champagne" strokeWidth={1.75} />
+          <p className="text-xs leading-snug text-neutral-600">{tip}</p>
         </div>
       </div>
     </div>

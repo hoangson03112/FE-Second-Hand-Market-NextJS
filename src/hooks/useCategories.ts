@@ -15,8 +15,8 @@ export function useCategories() {
     queryKey: queryKeys.categories.all,
     queryFn: async () => {
       const response = await CategoryService.getAll();
-      const all: ICategory[] = response.data;
-      // chỉ lấy danh mục đang active
+      
+      const all: ICategory[] = response.data.data;
       return all
         .filter((c) => c.status !== "inactive")
         .map((c) => ({
@@ -25,7 +25,6 @@ export function useCategories() {
             c.subCategories?.filter((s) => s.status !== "inactive") ?? [],
         }));
     },
-    // Use config for static data (categories rarely change)
     staleTime: serverStateConfig.staleTime.static,
     gcTime: serverStateConfig.gcTime.static,
   });
@@ -33,6 +32,7 @@ export function useCategories() {
 
 export function useVisibleCategories(limit: number = 8) {
   const { data: categories } = useCategories();
+console.log(categories);
 
   return categories?.slice(0, limit);
 }

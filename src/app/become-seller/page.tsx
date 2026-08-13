@@ -3,25 +3,22 @@
 import { IconArrowLeft, IconCircleCheck, IconBuildingStore } from "@tabler/icons-react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/hooks/useUser";
-import { useTokenStore } from "@/store/useTokenStore";
-import BecomeSeller from "@/features/become-seller/BecomeSeller";
+import { useUser } from "@/features/auth/hooks/useUser";
+import BecomeSeller from "@/features/seller/become-seller/BecomeSeller";
 import Link from "next/link";
 
 export default function BecomeSellerPage() {
   const router = useRouter();
-  const accessToken = useTokenStore((s) => s.accessToken);
   const { data: account, isLoading } = useUser();
 
   useEffect(() => {
     if (isLoading) return;
-    if (!accessToken || !account) {
+    if (!account) {
       router.replace("/login?redirect=/become-seller");
-      return;
     }
-  }, [accessToken, account, isLoading, router]);
+  }, [account, isLoading, router]);
 
-  if (isLoading || !accessToken || !account) {
+  if (isLoading || !account) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent" />

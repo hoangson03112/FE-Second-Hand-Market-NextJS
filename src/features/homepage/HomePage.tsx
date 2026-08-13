@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <div
       className={`min-h-full bg-luxury-ivory ${plusJakarta.variable}`}
-      style={{ fontFamily: "var(--font-jakarta), sans-serif" }}
+      // style={{ fontFamily: "var(--font-jakarta), sans-serif" }}
     >
       <HeroSection />
       <MarqueeStrip />

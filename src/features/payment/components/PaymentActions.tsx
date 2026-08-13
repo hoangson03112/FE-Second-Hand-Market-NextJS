@@ -18,17 +18,17 @@ export function PaymentActions({
     <div className="flex flex-col sm:flex-row gap-3">
       <Link
         href="/"
-        className="flex-1 inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-3 text-center font-medium text-slate-700 transition-colors hover:bg-slate-50"
+        className="flex-1 inline-flex items-center justify-center rounded-xl border-2 border-taupe-300/80 bg-white px-4 py-3 text-center font-semibold text-taupe-700 transition-all duration-200 hover:bg-taupe-50 hover:border-taupe-500/70"
       >
         Về trang chủ
       </Link>
       <button
         onClick={onConfirmPayment}
         disabled={disabled}
-        className={`flex-1 inline-flex items-center justify-center rounded-xl px-4 py-3 font-semibold transition-all ${
+        className={`flex-1 inline-flex items-center justify-center rounded-xl px-4 py-3 font-bold tracking-wide transition-all duration-200 active:scale-[0.98] ${
           disabled
-            ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-            : "bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm hover:shadow-md"
+            ? "bg-taupe-100 text-taupe-400 cursor-not-allowed"
+            : "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow-md"
         }`}
       >
         {isConfirmingPayment ? (

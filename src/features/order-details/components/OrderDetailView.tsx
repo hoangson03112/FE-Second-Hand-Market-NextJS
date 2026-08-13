@@ -344,6 +344,7 @@ export function OrderDetailView({
       : refundTodo?.tone === "warning"
       ? "border-amber-200 bg-amber-50 text-amber-800"
       : "border-sky-200 bg-sky-50 text-sky-800";
+  const refundTodoStyle = { borderRadius: "2px" } as const;
 
   const refundHeroDescription = getBuyerRefundHeroDescription({
     orderStatus: order.status,
@@ -352,7 +353,7 @@ export function OrderDetailView({
   });
 
   return (
-    <div className="min-h-screen bg-cream-50">
+    <div className="min-h-screen bg-luxury-ivory">
       <OrderDetailHeader orderId={order._id} status={order.status} onBack={onBack} />
 
       <Container maxWidth="8xl" paddingX="md" paddingY="lg">
@@ -372,9 +373,9 @@ export function OrderDetailView({
           />
 
           {isRefundFlow && refundTodo && (
-            <div className={`rounded-xl border-2 px-4 py-3 ${refundTodoClass}`}>
+            <div className={`border px-4 py-3.5 ${refundTodoClass}`} style={refundTodoStyle}>
               <p className="text-sm font-semibold">{refundTodo.title}</p>
-              <p className="mt-1 text-xs leading-relaxed">{refundTodo.description}</p>
+              <p className="mt-1 text-xs leading-relaxed opacity-90">{refundTodo.description}</p>
             </div>
           )}
 
@@ -415,9 +416,12 @@ export function OrderDetailView({
               />
               {showSellerReview && (
                 <>
-                  <div className="flex items-start gap-3 p-3 rounded-xl border border-primary/20 bg-primary/5">
-                    <IconInfoCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                    <p className="text-xs text-primary/90">{FEATURE_INFO.REVIEW_PRODUCT_RULE}</p>
+                  <div
+                    className="flex items-start gap-3 border border-luxury-champagne/30 bg-luxury-champagne/8 p-3.5"
+                    style={{ borderRadius: "2px" }}
+                  >
+                    <IconInfoCircle className="mt-0.5 h-4 w-4 shrink-0 text-taupe-700" strokeWidth={1.75} />
+                    <p className="text-xs leading-relaxed text-neutral-700">{FEATURE_INFO.REVIEW_PRODUCT_RULE}</p>
                   </div>
                   <OrderSellerReviewSection
                   existingReview={existingReview}

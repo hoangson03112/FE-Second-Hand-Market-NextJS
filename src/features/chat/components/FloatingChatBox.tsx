@@ -3,13 +3,12 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { IconMessageCircle, IconLoader2, IconPercentage } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/features/auth/hooks/useUser";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { ChatService } from "@/services/chat.service";
 import { SellerService } from "@/services/seller.service";
 import type { Message, Conversation } from "@/types/chat";
 import { useNotificationStore } from "@/store/useNotificationStore";
-import { useTokenStore } from "@/store/useTokenStore";
 import { ChatHeader } from "./ChatHeader";
 import { ChatConversationList } from "./ChatConversationList";
 import { ChatMessages } from "./ChatMessages";
@@ -62,7 +61,6 @@ export default function FloatingChatBox() {
   const shouldAutoScrollRef = useRef(true);
 
   const { data: account } = useUser();
-  const accessToken = useTokenStore((state) => state.accessToken);
   const { lastMessage, isConnected } = useWebSocket(account?.accountID);
   const addNotification = useNotificationStore(
     (state) => state.addNotification,
@@ -71,7 +69,7 @@ export default function FloatingChatBox() {
   const { data: productLimit } = useQuery({
     queryKey: ["seller", "product-limit"],
     queryFn: () => SellerService.getProductLimit(),
-    enabled: !!accessToken && !!account,
+    enabled: !!account,
     staleTime: 60000,
   });
 
@@ -436,7 +434,7 @@ export default function FloatingChatBox() {
               <AIProductAssistantPanel onBackToConversations={handleBackToList} />
             ) : !selectedConversation ? (
               <div className="h-full overflow-y-auto">
-                <div className="p-4 border-b border-border/70 bg-primary/5">
+                <div className="p-4 border-b border-border bg-primary/5">
                   <button
                     type="button"
                     onClick={() => {
@@ -449,7 +447,7 @@ export default function FloatingChatBox() {
                     <p className="text-sm font-semibold text-primary">
                       Trợ lý AI tìm sản phẩm
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-taupe-500 mt-1">
                       Mô tả nhu cầu để AI gợi ý sản phẩm phù hợp ngay trong chat.
                     </p>
                   </button>

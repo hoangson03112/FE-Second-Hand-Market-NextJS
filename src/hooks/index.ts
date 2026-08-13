@@ -12,4 +12,3 @@ export {
 } from "./useProducts";
 export { useProvinces } from "./useProvinces";
 export { useScrollToTop } from "./useScrollToTop";
-export { useUser } from "./useUser";

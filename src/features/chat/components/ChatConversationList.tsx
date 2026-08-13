@@ -110,11 +110,11 @@ function ConversationItem({
       </div>
 
       <div className="flex-1 min-w-0">
-        <p className="font-semibold text-lg truncate text-foreground mb-1">
+        <p className="font-semibold text-lg truncate text-taupe-900 mb-1">
           {conversation.name}
         </p>
         {conversation.lastMessage && (
-          <p className="text-base text-muted-foreground truncate">
+          <p className="text-base text-taupe-500 truncate">
             {conversation.lastMessage}
           </p>
         )}
@@ -132,7 +132,7 @@ export function ChatConversationList({
     return (
       <div className="flex flex-col items-center justify-center h-full gap-4">
         <IconLoader2 className="w-12 h-12 animate-spin text-primary" />
-        <p className="text-base text-muted-foreground">Đang tải...</p>
+        <p className="text-base text-taupe-500">Đang tải...</p>
       </div>
     );
   }
@@ -143,10 +143,10 @@ export function ChatConversationList({
         <div className="bg-primary/10 p-7 rounded-full mb-5">
           <IconMessageCircle className="w-20 h-20 text-primary" />
         </div>
-        <h3 className="font-semibold text-xl text-foreground mb-2">
+        <h3 className="font-semibold text-xl text-taupe-900 mb-2">
           Chưa có cuộc trò chuyện
         </h3>
-        <p className="text-base text-muted-foreground max-w-md">
+        <p className="text-base text-taupe-500 max-w-md">
           Bắt đầu trò chuyện với người bán bằng cách nhấn &quot;Chat với người
           bán&quot; trên trang sản phẩm
         </p>
@@ -160,8 +160,8 @@ export function ChatConversationList({
     <div>
       {groups.map((group) => (
         <div key={group.label}>
-          <div className="sticky top-0 z-10 px-6 py-2 bg-muted/80 backdrop-blur-sm border-y border-border">
-            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <div className="sticky top-0 z-10 px-6 py-2 bg-taupe-50/80 backdrop-blur-sm border-y border-border">
+            <span className="text-xs font-semibold uppercase tracking-wider text-taupe-500">
               {group.label}
             </span>
           </div>

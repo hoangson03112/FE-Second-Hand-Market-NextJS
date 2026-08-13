@@ -1,6 +1,6 @@
 "use client";
 
-import ForgotPassword from "@/features/forgot-password/ForgotPassword";
+import ForgotPassword from "@/features/auth/forgot-password/ForgotPassword";
 
 export default function ForgotPasswordPage() {
   return <ForgotPassword />;

@@ -13,7 +13,7 @@ import {
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/features/auth/hooks/useUser";
 import { useNotificationStore } from "@/store/useNotificationStore";
 import { NotificationService } from "@/services/notification.service";
 import { usePagination } from "@/hooks/usePagination";

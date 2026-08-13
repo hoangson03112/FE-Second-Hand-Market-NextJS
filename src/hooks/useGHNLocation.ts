@@ -2,10 +2,7 @@ import { useQuery, type QueryClient } from "@tanstack/react-query";
 import { AddressService } from "@/services/address.service";
 import type { Province, District, Ward } from "@/types/address";
 
-/**
- * Cache GHN provinces data với React Query
- * Chỉ call API 1 lần, sau đó dùng cache
- */
+
 export function useProvinces() {
   return useQuery({
     queryKey: ["ghn", "provinces"],

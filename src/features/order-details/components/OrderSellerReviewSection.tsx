@@ -23,35 +23,33 @@ export function OrderSellerReviewSection({
   onSubmit,
 }: OrderSellerReviewSectionProps) {
   return (
-    <div id="seller-review-section" className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl overflow-hidden shadow-md">
-      <div className="px-5 py-3 border-b-2 border-border">
+    <div id="seller-review-section" className="overflow-hidden border border-luxury-ink/8 bg-white/60" style={{ borderRadius: "2px" }}>
+      <div className="border-b border-luxury-ink/8 px-5 py-3">
         <div className="flex items-center gap-2">
-          <IconStar className="w-4 h-4 text-primary" />
-          <span className="text-sm font-semibold text-taupe-900 uppercase tracking-wider">Đánh giá người bán</span>
+          <IconStar className="h-4 w-4 text-luxury-champagne" strokeWidth={1.75} />
+          <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-600">Đánh giá người bán</span>
         </div>
-        <p className="text-xs text-taupe-500 mt-1">{FEATURE_INFO.REVIEW_SELLER_TIP}</p>
+        <p className="mt-1 text-xs text-taupe-400">{FEATURE_INFO.REVIEW_SELLER_TIP}</p>
       </div>
       <div className="p-5">
         {existingReview ? (
-          <div className="bg-taupe-50/60 rounded-xl border border-border p-4">
-            <div className="flex gap-1 mb-2">
+          <div className="border border-luxury-ink/8 bg-cream-50 p-4" style={{ borderRadius: "2px" }}>
+            <div className="mb-2 flex gap-1">
               {[1, 2, 3, 4, 5].map((i) => (
                 <IconStar
                   key={i}
-                  className={`w-5 h-5 ${
-                    i <= existingReview.rating ? "fill-primary/80 text-primary/80" : "text-taupe-200"
-                  }`}
+                  className={i <= existingReview.rating ? "h-5 w-5 fill-luxury-champagne text-luxury-champagne" : "h-5 w-5 text-taupe-200"}
                 />
               ))}
             </div>
             {existingReview.comment && (
-              <p className="text-sm text-taupe-700 leading-relaxed">{existingReview.comment}</p>
+              <p className="text-sm leading-relaxed text-neutral-700">{existingReview.comment}</p>
             )}
           </div>
         ) : showReviewForm ? (
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-taupe-700 mb-2">
+              <label className="mb-2 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
                 Đánh giá của bạn
               </label>
               <div className="flex gap-1.5">
@@ -60,40 +58,40 @@ export function OrderSellerReviewSection({
                     key={i}
                     type="button"
                     onClick={() => onRatingChange(i)}
-                    className="p-0.5 hover:scale-110 transition-transform"
+                    className="p-0.5 transition-transform hover:scale-110"
                   >
                     <IconStar
-                      className={`w-9 h-9 ${
-                        i <= reviewRating ? "fill-primary/80 text-primary/80" : "text-taupe-200 hover:text-primary/40"
-                      }`}
+                      className={i <= reviewRating ? "h-9 w-9 fill-luxury-champagne text-luxury-champagne" : "h-9 w-9 text-taupe-200 hover:text-luxury-champagne/40"}
                     />
                   </button>
                 ))}
               </div>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-taupe-700 mb-2">
+              <label className="mb-2 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
                 Nhận xét (tùy chọn)
               </label>
               <textarea
                 value={reviewComment}
                 onChange={(e) => onCommentChange(e.target.value)}
                 rows={3}
-                className="w-full px-4 py-3 rounded-xl border border-border bg-white text-taupe-900 placeholder:text-taupe-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-sm resize-none"
+                className="w-full resize-none border border-luxury-ink/15 bg-white px-3.5 py-2.5 text-sm text-luxury-ink placeholder:text-taupe-400/70 outline-none transition-colors duration-300 hover:border-luxury-ink/25 focus:border-luxury-champagne"
+                style={{ borderRadius: "2px" }}
                 placeholder="Chia sẻ trải nghiệm mua hàng của bạn..."
               />
             </div>
             <button
               type="submit"
               disabled={isSubmittingReview}
-              className="w-full py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 disabled:opacity-50 transition-all shadow-sm hover:shadow-md"
+              className="w-full bg-luxury-ink py-2.5 text-sm font-semibold text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
+              style={{ borderRadius: "2px" }}
             >
               {isSubmittingReview ? "Đang gửi..." : "Gửi đánh giá"}
             </button>
           </form>
         ) : (
-          <div className="flex items-center justify-center py-6 text-taupe-500 text-sm gap-2">
-            <IconStar className="w-5 h-5 text-taupe-300" />
+          <div className="flex items-center justify-center gap-2 py-6 text-sm text-taupe-400">
+            <IconStar className="h-5 w-5 text-taupe-200" />
             Đang tải thông tin đánh giá...
           </div>
         )}

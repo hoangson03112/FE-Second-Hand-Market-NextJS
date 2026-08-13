@@ -22,47 +22,43 @@ export function OrderMetaCard({
   hideExpectedDelivery = false,
 }: OrderMetaCardProps) {
   return (
-    <div className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl overflow-hidden shadow-md">
-      <div className="divide-y divide-border">
+    <div className="overflow-hidden border border-luxury-ink/8 bg-white/60" style={{ borderRadius: "2px" }}>
+      <div className="divide-y divide-luxury-ink/6">
         <div className="flex items-center gap-3 px-5 py-3.5">
-          <IconCalendar className="w-4 h-4 text-primary shrink-0" />
+          <IconCalendar className="h-4 w-4 shrink-0 text-luxury-champagne" strokeWidth={1.75} />
           <div className="flex-1">
-            <p className="text-xs text-taupe-500">Thời gian đặt hàng</p>
-            <p className="text-sm font-medium text-taupe-900">{format(createdAt)}</p>
+            <p className="text-xs text-taupe-400">Thời gian đặt hàng</p>
+            <p className="text-sm font-medium text-luxury-ink">{format(createdAt)}</p>
           </div>
         </div>
         {expectedDeliveryTime && !isLocalPickup && !hideExpectedDelivery && (
           <div className="flex items-center gap-3 px-5 py-3.5">
-            <IconClockHour4 className="w-4 h-4 text-primary shrink-0" />
+            <IconClockHour4 className="h-4 w-4 shrink-0 text-luxury-champagne" strokeWidth={1.75} />
             <div className="flex-1">
-              <p className="text-xs text-taupe-500">Dự kiến giao</p>
-              <p className="text-sm font-medium text-taupe-900">
+              <p className="text-xs text-taupe-400">Dự kiến giao</p>
+              <p className="text-sm font-medium text-luxury-ink">
                 {formatDateOnly(expectedDeliveryTime)}
               </p>
             </div>
           </div>
         )}
         <div className="flex items-center gap-3 px-5 py-3.5">
-          <IconCreditCard className="w-4 h-4 text-primary shrink-0" />
+          <IconCreditCard className="h-4 w-4 shrink-0 text-luxury-champagne" strokeWidth={1.75} />
           <div className="flex-1">
-            <p className="text-xs text-taupe-500">Thanh toán</p>
-            <p className="text-sm font-medium text-taupe-900">
+            <p className="text-xs text-taupe-400">Thanh toán</p>
+            <p className="text-sm font-medium text-luxury-ink">
               {formatPaymentMethod(paymentMethod, { shippingMethod })}
             </p>
           </div>
-          <span
-            className={`flex items-center gap-1 text-xs font-medium shrink-0 ${
-              statusPayment ? "text-primary" : "text-taupe-400"
-            }`}
-          >
+          <span className={`flex shrink-0 items-center gap-1 text-xs font-medium ${statusPayment ? "text-luxury-ink" : "text-taupe-400"}`}>
             {statusPayment ? (
               <>
-                <IconCircleCheck className="w-3.5 h-3.5" />
+                <IconCircleCheck className="h-3.5 w-3.5 text-luxury-champagne" />
                 Đã TT
               </>
             ) : (
               <>
-                <IconCircleX className="w-3.5 h-3.5" />
+                <IconCircleX className="h-3.5 w-3.5" />
                 Chưa TT
               </>
             )}

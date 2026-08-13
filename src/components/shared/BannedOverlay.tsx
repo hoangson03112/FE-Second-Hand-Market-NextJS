@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useBannedStore } from "@/store/useBannedStore";
-import { useTokenStore } from "@/store/useTokenStore";
 import { AuthService } from "@/services/auth.service";
 
 type Step = "main" | "form" | "success";
@@ -20,7 +19,6 @@ export function BannedOverlay() {
   if (!isBanned) return null;
 
   const handleGoToLogin = () => {
-    useTokenStore.getState().clearAuth();
     setBanned(false);
     window.location.href = "/login";
   };

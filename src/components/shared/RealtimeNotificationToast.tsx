@@ -3,25 +3,20 @@
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useNotificationStore } from "@/store/useNotificationStore";
-import { useToast } from "@/components/shared";
 import type { NotificationType } from "@/store/useNotificationStore";
+import { useToast } from "@/components/providers/ToastProvider";
 
 const TYPE_LABELS: Record<NotificationType, string> = {
-  order:   "Đơn hàng",
-  chat:    "Tin nhắn",
+  order: "Đơn hàng",
+  chat: "Tin nhắn",
   product: "Sản phẩm",
-  system:  "Thông báo",
+  system: "Thông báo",
 };
 
-/**
- * Sits inside ToastProvider. Watches the notification store for new unread
- * notifications and shows a clickable toast popup.
- */
 export function RealtimeNotificationToast() {
-  const toast         = useToast();
-  const router        = useRouter();
+  const { toast } = useToast();
   const notifications = useNotificationStore((s) => s.notifications);
-  const markAsRead    = useNotificationStore((s) => s.markAsRead);
+  const markAsRead = useNotificationStore((s) => s.markAsRead);
 
   const lastSeenId = useRef<string | null>(null);
 
@@ -35,7 +30,6 @@ export function RealtimeNotificationToast() {
     if (newest.read) return;
     if (newest.id === lastSeenId.current) return;
 
-    // Lần đầu có notifications = load từ hydrate (login) → không hiện toast
     if (lastSeenId.current === null) {
       lastSeenId.current = newest.id;
       return;
@@ -45,22 +39,14 @@ export function RealtimeNotificationToast() {
 
     const typeLabel = TYPE_LABELS[newest.type] ?? "Thông báo";
 
-    toast.notification({
-      title:   `${typeLabel}: ${newest.title}`,
-      message: newest.message,
-      type:    newest.type,
-      onClick: newest.link
-        ? () => {
-            markAsRead(newest.id);
-            router.push(newest.link!);
-          }
-        : undefined,
+    toast({
+      title: `${typeLabel}: ${newest.title}`,
+      description: newest.message,
     });
 
     setTimeout(() => markAsRead(newest.id), 6000);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [notifications]);
 
   return null;
 }
-

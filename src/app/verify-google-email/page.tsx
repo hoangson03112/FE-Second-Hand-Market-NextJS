@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import VerifyGoogleEmail from "@/features/verify-google-email/VerifyGoogleEmail";
+import VerifyGoogleEmail from "@/features/auth/verify-google-email/VerifyGoogleEmail";
 
 export default function VerifyGoogleEmailPage() {
   return (

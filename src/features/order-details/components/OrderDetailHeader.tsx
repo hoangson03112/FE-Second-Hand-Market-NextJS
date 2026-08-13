@@ -10,20 +10,20 @@ interface OrderDetailHeaderProps {
 
 export function OrderDetailHeader({ orderId, status, onBack }: OrderDetailHeaderProps) {
   return (
-    <div className="bg-cream-50/95 backdrop-blur-md border-b-2 border-border sticky top-0 z-10">
+    <div className="sticky top-0 z-10 border-b border-luxury-ink/8 bg-luxury-ivory/95 backdrop-blur-md">
       <Container maxWidth="8xl" paddingX="md">
-        <div className="py-3 flex items-center gap-3">
+        <div className="flex items-center gap-3 py-3.5">
           <button
             onClick={onBack}
-            className="p-2 -ml-2 rounded-full text-taupe-500 hover:bg-taupe-100 hover:text-taupe-900 transition-colors"
+            className="group -ml-1.5 flex h-8 w-8 items-center justify-center text-taupe-400 transition-colors hover:text-luxury-ink"
           >
-            <IconArrowLeft className="h-5 w-5" />
+            <IconArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" strokeWidth={1.75} />
           </button>
-          <div className="flex-1 min-w-0">
-            <h1 className="text-base font-semibold text-taupe-900 leading-tight">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-[13px] font-semibold uppercase tracking-[0.1em] text-luxury-ink">
               Chi tiết đơn hàng
             </h1>
-            <p className="text-xs text-taupe-500 font-mono">
+            <p className="font-mono text-xs text-taupe-400">
               #{orderId.slice(-10).toUpperCase()}
             </p>
           </div>

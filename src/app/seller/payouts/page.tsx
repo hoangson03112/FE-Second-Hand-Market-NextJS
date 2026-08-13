@@ -1,4 +1,4 @@
-import SellerPayouts from "@/features/seller-payouts/SellerPayouts";
+import SellerPayouts from "@/features/seller/seller-payouts/SellerPayouts";
 
 export default function SellerPayoutsPage() {
   return <SellerPayouts />;

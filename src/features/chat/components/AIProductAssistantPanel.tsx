@@ -113,7 +113,7 @@ export function AIProductAssistantPanel({
                 className={`max-w-[88%] rounded-2xl px-5 py-3.5 shadow-sm ${
                   isUser
                     ? "bg-gradient-to-br from-primary to-primary/90 text-white rounded-br-md"
-                    : "bg-white border border-border text-foreground rounded-bl-md"
+                    : "bg-white border border-border text-taupe-900 rounded-bl-md"
                 }`}
               >
                 {!isUser && (
@@ -143,7 +143,7 @@ export function AIProductAssistantPanel({
                             rank: rank != null && rank >= 0 ? rank + 1 : undefined,
                           }).catch(() => {});
                         }}
-                        className="flex items-center gap-3 p-2 rounded-xl border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors bg-background"
+                        className="flex items-center gap-3 p-2 rounded-xl border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors bg-white"
                       >
                         <Image
                           src={getProductImage(product)}
@@ -154,7 +154,7 @@ export function AIProductAssistantPanel({
                           unoptimized
                         />
                         <div className="min-w-0">
-                          <p className="text-sm font-semibold text-foreground truncate">
+                          <p className="text-sm font-semibold text-taupe-900 truncate">
                             {product.name}
                           </p>
                           <p className="text-sm text-primary font-medium">
@@ -171,7 +171,7 @@ export function AIProductAssistantPanel({
         })}
 
         {loading && (
-          <div className="flex items-center gap-2 text-muted-foreground text-sm">
+          <div className="flex items-center gap-2 text-taupe-500 text-sm">
             <IconLoader2 className="w-4 h-4 animate-spin" />
             <span>AI đang tìm sản phẩm...</span>
           </div>

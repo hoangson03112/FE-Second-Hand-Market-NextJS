@@ -2,24 +2,21 @@
 
 import { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/hooks/useUser";
-import { useTokenStore } from "@/store/useTokenStore";
-import SellForm from "@/features/sell/SellForm";
+import { useUser } from "@/features/auth/hooks/useUser";
+import SellForm from "@/features/seller/sell/SellForm";
 
 function SellPageContent() {
   const router = useRouter();
-  const accessToken = useTokenStore((s) => s.accessToken);
   const { data: account, isLoading } = useUser();
 
   useEffect(() => {
     if (isLoading) return;
-    if (!accessToken || !account) {
+    if (!account) {
       router.replace("/login?redirect=/sell");
-      return;
     }
-  }, [accessToken, account, isLoading, router]);
+  }, [account, isLoading, router]);
 
-  if (isLoading || !accessToken || !account) {
+  if (isLoading || !account) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent" />

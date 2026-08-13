@@ -35,7 +35,7 @@ export default function Payment() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-cream-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent" />
       </div>
     );
@@ -46,7 +46,7 @@ export default function Payment() {
   }
 
   return (
-    <div className="min-h-screen bg-background py-8">
+    <div className="min-h-screen bg-cream-50 py-8">
       <div className="max-w-8xl mx-auto w-full px-4 sm:px-6">
         <PaymentHeader
           orderId={orderId}

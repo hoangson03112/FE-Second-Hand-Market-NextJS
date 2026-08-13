@@ -23,15 +23,15 @@ export function OrderProductsCard({
     order.status === "completed" || (!isLocalPickup && order.status === "delivered");
 
   return (
-    <div className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl overflow-hidden shadow-md">
-      <div className="px-5 py-3 border-b-2 border-border flex items-center gap-2">
-        <IconPackage className="w-4 h-4 text-primary" />
-        <span className="text-sm font-semibold text-taupe-900 uppercase tracking-wider">Sản phẩm đã đặt</span>
-        <span className="ml-auto text-xs text-taupe-500">
+    <div className="overflow-hidden border border-luxury-ink/8 bg-white/60" style={{ borderRadius: "2px" }}>
+      <div className="flex items-center gap-2 border-b border-luxury-ink/8 px-5 py-3">
+        <IconPackage className="h-4 w-4 text-luxury-champagne" strokeWidth={1.75} />
+        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-600">Sản phẩm đã đặt</span>
+        <span className="ml-auto text-xs text-taupe-400">
           {order.products?.length || 0} sản phẩm
         </span>
       </div>
-      <div className="divide-y divide-border">
+      <div className="divide-y divide-luxury-ink/6">
         {order.products?.map((item, idx) => {
           const product = item.productId;
           const productId = product?._id ?? (typeof item.productId === "string" ? item.productId : null);
@@ -46,75 +46,76 @@ export function OrderProductsCard({
           const conditionLabel = condition ? getConditionLabel(condition) : null;
           const badgeColorClass = condition ? getConditionBadgeColor(condition) : null;
           const hasReview = productId ? productReviews[productId] : undefined;
-          // Cho phép đánh giá theo đơn đã giao/hoàn thành — không gắn với tồn kho hiện tại
-          // (sau khi mua hết, stock có thể = 0 nhưng đánh giá vẫn cần để người mua sau xem trên trang SP).
           const canReviewProduct = canReview && Boolean(productId);
 
           return (
-            <div key={idx} className="flex gap-3 sm:gap-4 p-4 sm:p-5">
+            <div key={idx} className="flex gap-3 p-4 sm:gap-4 sm:p-5">
               {productHref ? (
                 <Link
                   href={productHref}
-                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-taupe-100 shrink-0 border border-border hover:border-primary/50 transition-colors"
+                  className="h-16 w-16 shrink-0 overflow-hidden border border-luxury-ink/10 bg-cream-100 transition-colors hover:border-luxury-champagne/60 sm:h-20 sm:w-20"
+                  style={{ borderRadius: "2px" }}
                 >
                   <Image
                     src={avatar}
                     alt={product?.name || "Sản phẩm"}
                     width={80}
                     height={80}
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
                   />
                 </Link>
               ) : (
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-taupe-100 shrink-0 border border-border">
+                <div
+                  className="h-16 w-16 shrink-0 overflow-hidden border border-luxury-ink/10 bg-cream-100 sm:h-20 sm:w-20"
+                  style={{ borderRadius: "2px" }}
+                >
                   <Image
                     src={avatar}
                     alt={product?.name || "Sản phẩm"}
                     width={80}
                     height={80}
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
                   />
                 </div>
               )}
-              <div className="flex-1 min-w-0">
+              <div className="min-w-0 flex-1">
                 {productHref ? (
                   <Link
                     href={productHref}
-                    className="text-sm font-medium text-taupe-900 line-clamp-2 leading-snug hover:text-primary transition-colors"
+                    className="line-clamp-2 text-sm font-medium leading-snug text-luxury-ink transition-colors hover:text-accent"
                   >
                     {product?.name || "Sản phẩm đã ngừng kinh doanh"}
                   </Link>
                 ) : (
-                  <p className="text-sm font-medium text-taupe-900 line-clamp-2 leading-snug">
+                  <p className="line-clamp-2 text-sm font-medium leading-snug text-luxury-ink">
                     {product?.name || "Sản phẩm đã ngừng kinh doanh"}
                   </p>
                 )}
                 {conditionLabel && badgeColorClass && (
                   <span
-                    className={`inline-block mt-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${badgeColorClass}`}
+                    className={`mt-1 inline-block border px-2 py-0.5 text-[10px] font-semibold ${badgeColorClass}`}
+                    style={{ borderRadius: "2px" }}
                   >
                     {conditionLabel}
                   </span>
                 )}
-                <div className="flex items-center gap-3 mt-2">
-                  <p className="text-xs text-taupe-500">
-                    Số lượng: <span className="font-semibold text-taupe-900">×{item.quantity}</span>
+                <div className="mt-2 flex items-center gap-3">
+                  <p className="text-xs text-taupe-400">
+                    Số lượng: <span className="font-semibold text-luxury-ink">×{item.quantity}</span>
                   </p>
-                  <p className="text-sm font-semibold text-primary">
+                  <p className="text-sm font-semibold text-luxury-ink">
                     {formatPrice(item.price || product?.price || 0)}
                   </p>
                 </div>
                 {canReviewProduct && productId && (
                   <div className="mt-2">
                     {hasReview ? (
-                      <div className="flex items-center gap-1.5 text-xs text-taupe-500">
+                      <div className="flex items-center gap-1.5 text-xs text-taupe-400">
                         <div className="flex">
                           {[1, 2, 3, 4, 5].map((i) => (
                             <IconStar
                               key={i}
-                              className={`w-3.5 h-3.5 ${
-                                i <= hasReview.rating ? "fill-primary/80 text-primary/80" : "text-taupe-200"
-                              }`}
+                              className={i <= hasReview.rating ? "h-3.5 w-3.5 fill-luxury-champagne text-luxury-champagne" : "h-3.5 w-3.5 text-taupe-200"}
                             />
                           ))}
                         </div>
@@ -123,9 +124,9 @@ export function OrderProductsCard({
                     ) : (
                       <button
                         onClick={() => onOpenProductReview(productId, product.name || "Sản phẩm")}
-                        className="text-xs text-primary font-medium hover:underline flex items-center gap-1"
+                        className="flex items-center gap-1 text-xs font-medium text-luxury-ink hover:text-accent hover:underline"
                       >
-                        <IconStar className="w-3.5 h-3.5" />
+                        <IconStar className="h-3.5 w-3.5 text-luxury-champagne" />
                         Đánh giá sản phẩm
                       </button>
                     )}
@@ -139,19 +140,19 @@ export function OrderProductsCard({
 
       {/* Seller row */}
       {order.sellerId && (
-        <div className="px-5 py-4 border-t-2 border-border flex items-center justify-between bg-taupe-50/40">
+        <div className="flex items-center justify-between border-t border-luxury-ink/8 bg-cream-50 px-5 py-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-              <IconUser className="w-4 h-4 text-primary" />
-            </div>
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-luxury-ink/5" style={{ borderRadius: "2px" }}>
+              <IconUser className="h-4 w-4 text-taupe-500" strokeWidth={1.75} />
+            </span>
             <div>
-              <p className="text-xs text-taupe-500">Người bán</p>
-              <p className="text-sm font-semibold text-taupe-900">
+              <p className="text-xs text-taupe-400">Người bán</p>
+              <p className="text-sm font-semibold text-luxury-ink">
                 {order.sellerId.fullName || "—"}
               </p>
               {order.sellerId.phoneNumber && (
-                <p className="text-xs text-taupe-500 flex items-center gap-1">
-                  <IconPhone className="w-3 h-3" />
+                <p className="flex items-center gap-1 text-xs text-taupe-400">
+                  <IconPhone className="h-3 w-3" />
                   {order.sellerId.phoneNumber}
                 </p>
               )}
@@ -178,10 +179,11 @@ export function OrderProductsCard({
                 }
               )
             }
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl border-2 border-primary/30 text-primary hover:bg-primary/5 hover:border-primary/60 transition-all"
+            className="flex items-center gap-1.5 border border-luxury-ink/15 px-3.5 py-2 text-luxury-ink transition-all duration-300 hover:border-luxury-champagne hover:text-accent"
+            style={{ borderRadius: "2px" }}
           >
-            <IconMessage className="w-4 h-4" />
-            <span className="text-sm font-semibold">Nhắn tin</span>
+            <IconMessage className="h-4 w-4" strokeWidth={1.75} />
+            <span className="text-xs font-semibold">Nhắn tin</span>
           </button>
         </div>
       )}

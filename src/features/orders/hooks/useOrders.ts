@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/hooks/useUser";
-import { useTokenStore } from "@/store/useTokenStore";
+import { useUser } from "@/features/auth/hooks/useUser";
 import { OrderService } from "@/services/order.service";
 import { useToast } from "@/components/shared";
 import type { Order } from "@/types/order";
@@ -28,7 +27,6 @@ export const ORDER_TABS = [
 export function useOrders() {
   const router = useRouter();
   const { data: account, isLoading: userLoading } = useUser();
-  const accessToken = useTokenStore((state) => state.accessToken);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRedirectingAuth, setIsRedirectingAuth] = useState(false);
@@ -93,15 +91,9 @@ export function useOrders() {
   };
 
   useEffect(() => {
-    if (!userLoading && !accessToken) {
-      setIsRedirectingAuth(true);
-      setIsLoading(false);
-      router.replace("/login?redirect=%2Forders");
-      return;
-    }
-
-    if (!userLoading && accessToken && !account) {
-      // Token exists but account cannot be resolved (expired/invalid session).
+    // Không phân giải được tài khoản sau khi useUser đã xong ⇒ chưa đăng nhập
+    // hoặc phiên đã hết hạn.
+    if (!userLoading && !account) {
       setIsRedirectingAuth(true);
       setIsLoading(false);
       router.replace("/login?redirect=%2Forders");
@@ -121,7 +113,7 @@ export function useOrders() {
       }
     };
     fetchOrders();
-  }, [account, userLoading, accessToken, router]);
+  }, [account, userLoading, router]);
 
   const openRefundModal = (orderId: string) => {
     const order = orders.find((o) => o._id === orderId) ?? null;

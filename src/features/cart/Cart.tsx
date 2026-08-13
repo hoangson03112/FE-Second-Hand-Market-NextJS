@@ -8,12 +8,12 @@ import CartEmpty from "./components/CartEmpty";
 import CartLoginPrompt from "./components/CartLoginPrompt";
 import { LoadingBlock } from "@/components/shared";
 import { useCartPage } from "./hooks/useCartPage";
-import { useTokenStore } from "@/store/useTokenStore";
+import { useUser } from "@/features/auth/hooks/useUser";
 import { PageContainer, Container } from "@/components/layout/Container";
 
 export default function Cart() {
   const router = useRouter();
-  const accessToken = useTokenStore((state) => state.accessToken);
+  const { data: account, isLoading: isUserLoading } = useUser();
   const {
     cartItems,
     groups,
@@ -35,7 +35,7 @@ export default function Cart() {
 
   const onBack = () => router.back();
 
-  if (!accessToken) {
+  if (!isUserLoading && !account) {
     return (
       <PageContainer withBackground={false} className="bg-luxury-ivory min-h-screen">
         <CartHeader onBack={onBack} />
@@ -46,7 +46,7 @@ export default function Cart() {
     );
   }
 
-  if (isLoadingCart) {
+  if (isUserLoading || isLoadingCart) {
     return (
       <PageContainer withBackground={false} className="bg-luxury-ivory min-h-screen">
         <CartHeader onBack={onBack} />

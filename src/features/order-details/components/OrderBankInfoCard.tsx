@@ -11,9 +11,7 @@ interface RefundBankInfo {
 }
 
 interface OrderBankInfoCardProps {
-  /** Trạng thái đơn hàng (Order.status) — chỉ dùng fallback khi không có refundStatus */
   status: string;
-  /** Trạng thái Refund — nguồn đúng cho form STK / vận đơn hoàn khi order vẫn là "refund" */
   refundStatus?: string | null;
   ghnReturnOrderCode?: string | null;
   ghnReturnTrackingUrl?: string | null;
@@ -27,6 +25,9 @@ interface OrderBankInfoCardProps {
   onAccountHolderChange: (v: string) => void;
   onSubmitBankInfo: (e: React.FormEvent) => void;
 }
+
+const inputClass =
+  "w-full border border-luxury-ink/15 bg-white px-3 py-2 text-sm text-luxury-ink placeholder:text-taupe-400/70 outline-none transition-colors duration-300 hover:border-luxury-ink/25 focus:border-luxury-champagne";
 
 export function OrderBankInfoCard({
   status: orderStatus,
@@ -80,30 +81,30 @@ export function OrderBankInfoCard({
   ];
 
   return (
-    <div className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl overflow-hidden shadow-md">
-      <div className="px-5 py-3 border-b-2 border-border flex items-center gap-2">
-        <IconBuildingBank className="w-4 h-4 text-primary" />
-        <span className="text-sm font-semibold text-taupe-900 uppercase tracking-wider">{cardTitle}</span>
+    <div className="overflow-hidden border border-luxury-ink/8 bg-white/60" style={{ borderRadius: "2px" }}>
+      <div className="flex items-center gap-2 border-b border-luxury-ink/8 px-5 py-3">
+        <IconBuildingBank className="h-4 w-4 text-luxury-champagne" strokeWidth={1.75} />
+        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-600">{cardTitle}</span>
       </div>
       <div className="p-5">
         {showGhnSection && (
           <div className="space-y-3">
-            <p className="text-xs text-taupe-500 leading-relaxed border border-border rounded-lg px-3 py-2 bg-taupe-50/60">
+            <p className="border border-luxury-ink/8 bg-cream-50 px-3 py-2 text-xs leading-relaxed text-neutral-600" style={{ borderRadius: "2px" }}>
               {REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}
             </p>
-            <p className="text-sm text-taupe-500">
+            <p className="text-sm text-neutral-500">
               Vui lòng đến bưu cục GHN gần nhất để gửi hàng theo mã vận đơn hoàn trả (nếu đơn dùng GHN).
             </p>
             {ghnReturnOrderCode && (
-              <div className="bg-primary/5 border border-primary/20 rounded-xl p-3">
-                <p className="text-xs text-taupe-500 mb-1">Mã vận đơn hoàn trả</p>
-                <p className="font-mono font-semibold text-primary">{ghnReturnOrderCode}</p>
+              <div className="border border-luxury-champagne/30 bg-luxury-champagne/8 p-3" style={{ borderRadius: "2px" }}>
+                <p className="mb-1 text-xs text-neutral-500">Mã vận đơn hoàn trả</p>
+                <p className="font-mono font-semibold text-luxury-ink">{ghnReturnOrderCode}</p>
                 {ghnReturnTrackingUrl && (
                   <a
                     href={ghnReturnTrackingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-primary hover:underline mt-1 block"
+                    className="mt-1 block text-xs text-luxury-ink underline decoration-luxury-champagne underline-offset-2 hover:text-accent"
                   >
                     Xem trên GHN →
                   </a>
@@ -115,27 +116,26 @@ export function OrderBankInfoCard({
 
         {showBankSubmitted && refundBankInfo && (
           <div
-            className={`bg-emerald-50 border border-emerald-200 rounded-xl p-3 ${
-              showGhnSection ? "mt-4" : ""
-            }`}
+            className={`border border-emerald-200 bg-emerald-50 p-3 ${showGhnSection ? "mt-4" : ""}`}
+            style={{ borderRadius: "2px" }}
           >
-            <p className="text-xs font-semibold text-emerald-700 mb-2">
+            <p className="mb-2 text-xs font-semibold text-emerald-700">
               {rs === "processing"
                 ? "Đã gửi STK — Admin sẽ chuyển khoản hoàn tiền"
                 : "Đã gửi — Chờ admin xử lý hoàn tiền"}
             </p>
             <div className="space-y-1 text-sm">
               <p>
-                <span className="text-taupe-500">Ngân hàng:</span>{" "}
-                <span className="font-semibold text-taupe-900">{refundBankInfo.buyerBankName}</span>
+                <span className="text-neutral-500">Ngân hàng:</span>{" "}
+                <span className="font-semibold text-luxury-ink">{refundBankInfo.buyerBankName}</span>
               </p>
               <p>
-                <span className="text-taupe-500">Số TK:</span>{" "}
-                <span className="font-mono font-semibold text-taupe-900">{refundBankInfo.buyerAccountNumber}</span>
+                <span className="text-neutral-500">Số TK:</span>{" "}
+                <span className="font-mono font-semibold text-luxury-ink">{refundBankInfo.buyerAccountNumber}</span>
               </p>
               <p>
-                <span className="text-taupe-500">Chủ TK:</span>{" "}
-                <span className="font-semibold text-taupe-900">{refundBankInfo.buyerAccountHolder}</span>
+                <span className="text-neutral-500">Chủ TK:</span>{" "}
+                <span className="font-semibold text-luxury-ink">{refundBankInfo.buyerAccountHolder}</span>
               </p>
             </div>
           </div>
@@ -144,20 +144,21 @@ export function OrderBankInfoCard({
         {showBankForm && (
           <form
             onSubmit={onSubmitBankInfo}
-            className={`space-y-3 ${showGhnSection ? "mt-4 pt-4 border-t-2 border-border" : ""}`}
+            className={`space-y-3 ${showGhnSection ? "mt-4 border-t border-luxury-ink/8 pt-4" : ""}`}
           >
-            <p className="text-sm text-taupe-500">
+            <p className="text-sm text-neutral-500">
               Người bán đã xác nhận nhận hàng hoàn. Vui lòng nhập tài khoản ngân hàng của bạn để admin
               chuyển khoản hoàn tiền (tiền đang được giữ / đối soát theo quy trình sàn).
             </p>
             <div>
-              <label className="block text-xs font-medium text-taupe-700 mb-1">Tên ngân hàng</label>
+              <label className="mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">Tên ngân hàng</label>
               <div className="relative">
                 <select
                   value={bankName}
                   onChange={(e) => onBankNameChange(e.target.value)}
                   required
-                  className="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-border bg-white text-taupe-900 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all appearance-none"
+                  className={`${inputClass} appearance-none pl-9 pr-3`}
+                  style={{ borderRadius: "2px" }}
                 >
                   <option value="">Chọn ngân hàng</option>
                   {legacyBankName && (
@@ -169,19 +170,20 @@ export function OrderBankInfoCard({
                     </option>
                   ))}
                 </select>
-                <IconBuildingBank className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-taupe-400 pointer-events-none" />
+                <IconBuildingBank className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-taupe-400" strokeWidth={1.75} />
               </div>
             </div>
             {accountFields.map(({ label, value, setter, placeholder }) => (
               <div key={label}>
-                <label className="block text-xs font-medium text-taupe-700 mb-1">{label}</label>
+                <label className="mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">{label}</label>
                 <input
                   type="text"
                   value={value}
                   onChange={(e) => setter(e.target.value)}
                   required
                   placeholder={placeholder}
-                  className="w-full px-3 py-2 text-sm rounded-xl border border-border bg-white text-taupe-900 placeholder:text-taupe-400 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                  className={inputClass}
+                  style={{ borderRadius: "2px" }}
                 />
               </div>
             ))}
@@ -193,7 +195,8 @@ export function OrderBankInfoCard({
                 !accountNumber.trim() ||
                 !accountHolder.trim()
               }
-              className="w-full py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 disabled:opacity-50 transition-all shadow-sm hover:shadow-md"
+              className="w-full bg-luxury-ink py-2.5 text-sm font-semibold text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
+              style={{ borderRadius: "2px" }}
             >
               {isSubmittingBankInfo ? "Đang gửi..." : "Gửi thông tin nhận hoàn tiền"}
             </button>

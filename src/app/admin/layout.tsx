@@ -4,7 +4,7 @@ import { IconLayoutDashboard, IconPackage, IconShieldCheck, IconChevronRight, Ic
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/features/auth/hooks/useUser";
 import { Spinner } from "@/components/shared";
 
 export default function AdminLayout({

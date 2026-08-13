@@ -10,7 +10,6 @@ import {
 import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
 import type { IProduct } from "@/types/product";
-import { getProvinceName } from "@/utils";
 
 interface ProductCardProps {
   product: IProduct;
@@ -72,7 +71,9 @@ export default function ProductCard({
         <div>
           <div className="flex items-center gap-1 text-xs font-medium text-charcoal-500 uppercase tracking-[0.14em]">
             <IconMapPin className="h-3 w-3 text-blush-500 shrink-0" />
-            <span className="line-clamp-1"> {getProvinceName(product!.address!.provinceId)}</span>
+            <span className="line-clamp-1">
+              {product?.seller?.province || "Toàn quốc"}
+            </span>
           </div>
 
           <h3 className="mt-1.5 line-clamp-2 text-xs font-medium text-foreground leading-snug transition-colors group-hover:text-primary md:text-sm">

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/features/auth/hooks/useUser";
 import { AuthService } from "@/services/auth.service";
 import { useToast } from "@/components/shared";
 import { queryKeys } from "@/lib/query-client";

@@ -70,8 +70,12 @@ export default function Orders() {
     return (
       <div className="min-h-screen bg-cream-50 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-taupe-700 font-medium">Vui lòng đăng nhập để xem đơn hàng</p>
-          <p className="text-sm text-taupe-500 mt-2">Đang chuyển hướng tới trang đăng nhập...</p>
+          <p className="text-taupe-700 font-medium">
+            Vui lòng đăng nhập để xem đơn hàng
+          </p>
+          <p className="text-sm text-taupe-500 mt-2">
+            Đang chuyển hướng tới trang đăng nhập...
+          </p>
         </div>
       </div>
     );

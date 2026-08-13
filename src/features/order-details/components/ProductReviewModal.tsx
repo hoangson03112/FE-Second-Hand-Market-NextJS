@@ -1,4 +1,4 @@
-import { IconCircleX, IconStar } from "@tabler/icons-react";
+import { IconStar, IconX } from "@tabler/icons-react";
 
 interface ProductReviewModalProps {
   open: boolean;
@@ -26,74 +26,85 @@ export function ProductReviewModal({
   if (!open || !selectedProduct) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-taupe-900/40 backdrop-blur-sm">
-      <div className="bg-cream-50 rounded-2xl shadow-xl border-2 border-border max-w-lg w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6 border-b-2 border-border">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold text-taupe-900 uppercase tracking-wider">
-                Đánh Giá Sản Phẩm
-              </h3>
-              <p className="text-sm text-taupe-600 mt-1">
-                {selectedProduct.name}
-              </p>
-            </div>
-            <button
-              onClick={onClose}
-              className="p-2 rounded-full text-taupe-500 hover:bg-taupe-100 hover:text-taupe-900 transition-colors"
-            >
-              <IconCircleX className="w-6 h-6" />
-            </button>
-          </div>
-        </div>
-        <form onSubmit={onSubmit} className="p-6 space-y-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-luxury-ink/60 p-4 backdrop-blur-sm">
+      <div
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto bg-luxury-ivory shadow-2xl"
+        style={{ borderRadius: "2px" }}
+      >
+        <div className="flex items-start justify-between border-b border-luxury-ink/8 px-6 py-5">
           <div>
-            <label className="block text-sm font-medium text-taupe-700 mb-2">
-              Đánh giá của bạn <span className="text-red-500">*</span>
+            <h3
+              style={{
+                fontFamily: "var(--font-droid-serif), serif",
+                fontWeight: 400,
+              }}
+              className="text-lg text-luxury-ink"
+            >
+              Đánh giá sản phẩm
+            </h3>
+            <p className="mt-1 text-sm text-neutral-500">
+              {selectedProduct.name}
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="flex h-8 w-8 shrink-0 items-center justify-center text-taupe-400 transition-colors hover:text-luxury-ink"
+            aria-label="Đóng"
+          >
+            <IconX className="h-4 w-4" strokeWidth={1.75} />
+          </button>
+        </div>
+        <form onSubmit={onSubmit} className="space-y-4 px-6 py-6">
+          <div>
+            <label className="mb-2 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
+              Đánh giá của bạn <span className="text-accent">*</span>
             </label>
-            <div className="flex gap-2 justify-center py-2">
+            <div className="flex justify-center gap-2 py-2">
               {[1, 2, 3, 4, 5].map((i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => onRatingChange(i)}
-                  className="p-1 hover:scale-110 transition-transform"
+                  className="p-1 transition-transform hover:scale-110"
                 >
                   <IconStar
-                    className={`w-10 h-10 ${
+                    className={
                       i <= rating
-                        ? "fill-primary/80 text-primary/80"
-                        : "text-taupe-200 hover:text-primary/40"
-                    }`}
+                        ? "h-10 w-10 fill-luxury-champagne text-luxury-champagne"
+                        : "h-10 w-10 text-taupe-200 hover:text-luxury-champagne/40"
+                    }
                   />
                 </button>
               ))}
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-taupe-700 mb-1.5">
+            <label className="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
               Nhận xét (tùy chọn)
             </label>
             <textarea
               value={comment}
               onChange={(e) => onCommentChange(e.target.value)}
               rows={6}
-              className="w-full px-4 py-3 rounded-xl border border-border bg-white text-taupe-900 placeholder:text-taupe-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+              className="w-full border border-luxury-ink/15 bg-white px-3.5 py-2.5 text-sm text-luxury-ink placeholder:text-taupe-400/70 outline-none transition-colors duration-300 hover:border-luxury-ink/25 focus:border-luxury-champagne"
+              style={{ borderRadius: "2px" }}
               placeholder="Chia sẻ cảm nhận của bạn về sản phẩm này..."
             />
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 pt-2">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 px-6 border-2 border-taupe-300/80 text-taupe-700 rounded-xl font-semibold text-sm hover:bg-taupe-50 hover:border-taupe-500/70 transition-all duration-200"
+              className="flex-1 border border-luxury-ink/15 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-600 transition-all duration-300 hover:border-luxury-ink/30 hover:text-luxury-ink"
+              style={{ borderRadius: "2px" }}
             >
               Hủy
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 py-3 px-6 bg-primary text-primary-foreground rounded-xl font-bold text-sm tracking-wide hover:bg-primary/90 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 active:scale-[0.98]"
+              className="flex-1 bg-luxury-ink px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-50"
+              style={{ borderRadius: "2px" }}
             >
               {isSubmitting ? "Đang gửi..." : "Gửi đánh giá"}
             </button>

@@ -12,8 +12,8 @@ export function generateProductMetadata(product: {
     typeof product.avatar === "object" && product.avatar?.url
       ? product.avatar.url
       : typeof product.avatar === "string"
-      ? product.avatar
-      : "/placeholder.svg";
+        ? product.avatar
+        : "/placeholder.svg";
 
   const title = `${product.name} - ${product.condition || "Đồ cũ"} giá tốt`;
   const description =
@@ -21,7 +21,9 @@ export function generateProductMetadata(product: {
     `Mua ${product.name} giá tốt chỉ ${new Intl.NumberFormat("vi-VN", {
       style: "currency",
       currency: "VND",
-    }).format(product.price)}. ${product.categoryId?.name || "Sản phẩm"} chất lượng, uy tín.`;
+    }).format(
+      product.price,
+    )}. ${product.categoryId?.name || "Sản phẩm"} chất lượng, uy tín.`;
 
   return {
     title,
@@ -54,7 +56,8 @@ export function generateCategoryMetadata(category: {
 }): Metadata {
   const title = `${category.name} - Eco Marketplace`;
   const description =
-    category.description || `Mua bán ${category.name} cũ giá tốt tại Eco Marketplace`;
+    category.description ||
+    `Mua bán ${category.name} cũ giá tốt tại Eco Marketplace`;
 
   return {
     title,
@@ -80,7 +83,7 @@ export function generateSearchMetadata(query: string): Metadata {
     title,
     description,
     robots: {
-      index: false, // Không index trang search
+      index: false,
       follow: true,
     },
   };

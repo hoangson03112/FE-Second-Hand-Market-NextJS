@@ -1,6 +1,7 @@
 "use client";
 
 import { IconSearch } from "@tabler/icons-react";
+
 interface SearchHeaderProps {
   query: string;
   total: number;
@@ -8,20 +9,26 @@ interface SearchHeaderProps {
 
 export default function SearchHeader({ query, total }: SearchHeaderProps) {
   return (
-    <div className="border-b-2 border-border bg-gradient-to-r from-cream-50 to-taupe-50/30 sticky top-0 z-10 backdrop-blur-md">
-      <div className="max-w-8xl mx-auto px-4 py-6">
-        <div className="flex items-center gap-3 mb-2">
-          <IconSearch className="w-5 h-5 text-primary" />
-          <p className="text-xs font-primary uppercase tracking-[0.2em] text-taupe-400">
-            TÌM KIẾM
+    <div className="sticky top-0 z-10 border-b border-luxury-ink/8 bg-luxury-ivory/95 backdrop-blur-md">
+      <div className="mx-auto w-full max-w-9xl px-4 py-6 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3">
+          <span className="h-px w-8 bg-luxury-champagne/80" aria-hidden />
+          <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.28em] text-neutral-600">
+            <IconSearch className="h-3.5 w-3.5 text-luxury-champagne" strokeWidth={1.75} />
+            Tìm kiếm
           </p>
         </div>
-        <h1 className="text-xl font-medium text-taupe-900 leading-tight">
-          &quot;{query || "..."}&quot;
+
+        <h1
+          style={{ fontFamily: "var(--font-droid-serif), serif", fontWeight: 400 }}
+          className="mt-3 text-[clamp(1.4rem,3vw,2rem)] leading-tight text-luxury-ink"
+        >
+          &ldquo;{query || "..."}&rdquo;
         </h1>
+
         {query && (
-          <p className="text-sm text-taupe-500 mt-1">
-            Tìm thấy {total} sản phẩm
+          <p className="mt-1.5 text-sm text-neutral-500">
+            Tìm thấy <span className="font-semibold text-luxury-ink">{total.toLocaleString("vi-VN")}</span> sản phẩm
           </p>
         )}
       </div>

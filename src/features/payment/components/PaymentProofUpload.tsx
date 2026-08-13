@@ -20,7 +20,7 @@ export function PaymentProofUpload({
   const disabled = isExpired || isConfirmingPayment;
 
   return (
-    <div className="bg-cream-50 rounded-lg border border-border p-6 shadow-sm">
+    <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border p-6 shadow-md">
       <div className="flex items-center gap-3 mb-4">
         <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
           <svg
@@ -38,8 +38,8 @@ export function PaymentProofUpload({
           </svg>
         </div>
         <div>
-          <h3 className="font-semibold text-foreground">Xác nhận thanh toán</h3>
-          <p className="text-xs text-muted-foreground">
+          <h3 className="font-semibold text-taupe-900 text-sm uppercase tracking-wide">Xác nhận thanh toán</h3>
+          <p className="text-xs text-taupe-500">
             Upload ảnh chụp màn hình chuyển khoản
           </p>
         </div>
@@ -71,7 +71,7 @@ export function PaymentProofUpload({
                 className="max-w-full max-h-full object-contain rounded-lg"
               />
               {!disabled && (
-                <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center">
+                <div className="absolute inset-0 bg-taupe-900/50 opacity-0 hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center">
                   <span className="text-white text-sm font-medium">
                     Click để thay đổi
                   </span>
@@ -81,7 +81,7 @@ export function PaymentProofUpload({
           ) : (
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <svg
-                className="w-10 h-10 mb-3 text-muted-foreground"
+                className="w-10 h-10 mb-3 text-taupe-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -93,11 +93,11 @@ export function PaymentProofUpload({
                   d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                 />
               </svg>
-              <p className="mb-2 text-sm text-muted-foreground">
-                <span className="font-semibold">Click để upload</span> hoặc kéo
+              <p className="mb-2 text-sm text-taupe-500">
+                <span className="font-semibold text-taupe-700">Click để upload</span> hoặc kéo
                 thả
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-taupe-400">
                 PNG, JPG, WEBP (MAX. 10MB)
               </p>
             </div>
@@ -105,9 +105,9 @@ export function PaymentProofUpload({
         </label>
 
         {paymentError && (
-          <div className="flex items-start gap-2 p-3 bg-destructive/8 border border-destructive/20 rounded-lg">
+          <div className="flex items-start gap-2 p-3 bg-red-50 border-2 border-red-200 rounded-xl">
             <svg
-              className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5"
+              className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"
               fill="currentColor"
               viewBox="0 0 20 20"
             >
@@ -117,13 +117,13 @@ export function PaymentProofUpload({
                 clipRule="evenodd"
               />
             </svg>
-            <p className="text-sm text-destructive">{paymentError}</p>
+            <p className="text-sm text-red-600">{paymentError}</p>
           </div>
         )}
         {paymentSuccess && (
-          <div className="flex items-start gap-2 p-3 bg-secondary/60 border border-border rounded-lg">
-            <IconCircleCheck className="w-5 h-5 text-foreground/70 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-foreground/80">{paymentSuccess}</p>
+          <div className="flex items-start gap-2 p-3 bg-emerald-50 border-2 border-emerald-200 rounded-xl">
+            <IconCircleCheck className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-emerald-700">{paymentSuccess}</p>
           </div>
         )}
       </div>

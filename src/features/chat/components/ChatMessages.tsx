@@ -23,7 +23,7 @@ function MessageTimestamp({
   return (
     <span
       className={`text-sm mt-1.5 block ${
-        isOwn ? "text-white/70 text-right" : "text-muted-foreground"
+        isOwn ? "text-white/70 text-right" : "text-taupe-500"
       }`}
     >
       {new Date(createdAt).toLocaleTimeString("vi-VN", {
@@ -59,7 +59,7 @@ function renderTextBubble(message: Message, isOwn: boolean) {
       className={`max-w-[80%] rounded-2xl px-5 py-3.5 shadow-sm ${
         isOwn
           ? "bg-gradient-to-br from-primary to-primary/90 text-white rounded-br-md"
-          : "bg-white border border-border text-foreground rounded-bl-md"
+          : "bg-white border border-border text-taupe-900 rounded-bl-md"
       }`}
     >
       <p className="text-base leading-relaxed break-words whitespace-pre-wrap">
@@ -78,7 +78,7 @@ function renderMediaBubble(message: Message, isOwn: boolean) {
       className={`max-w-[80%] rounded-2xl px-3 py-3 shadow-sm space-y-2 ${
         isOwn
           ? "bg-gradient-to-br from-primary to-primary/90 text-white rounded-br-md"
-          : "bg-white border border-border text-foreground rounded-bl-md"
+          : "bg-white border border-border text-taupe-900 rounded-bl-md"
       }`}
     >
       {mediaItems.map((item, index) => {
@@ -122,7 +122,7 @@ export function ChatMessages({ loading, messages, accountId }: ChatMessagesProps
     return (
       <div className="flex flex-col items-center justify-center h-full gap-4">
         <IconLoader2 className="w-12 h-12 animate-spin text-primary" />
-        <p className="text-base text-muted-foreground">Đang tải tin nhắn...</p>
+        <p className="text-base text-taupe-500">Đang tải tin nhắn...</p>
       </div>
     );
   }
@@ -133,7 +133,7 @@ export function ChatMessages({ loading, messages, accountId }: ChatMessagesProps
         <div className="bg-primary/10 p-6 rounded-full mb-4">
           <IconSend className="w-14 h-14 text-primary" />
         </div>
-        <p className="text-base text-muted-foreground max-w-sm">
+        <p className="text-base text-taupe-500 max-w-sm">
           Bắt đầu cuộc trò chuyện bằng cách gửi tin nhắn đầu tiên
         </p>
       </div>

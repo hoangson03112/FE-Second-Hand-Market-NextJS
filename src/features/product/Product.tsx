@@ -10,7 +10,7 @@ import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/features/auth/hooks/useUser";
 import { queryKeys } from "@/lib/query-client";
 import { formatPrice } from "@/utils/format/price";
 import type { IAttribute } from "@/types/product";

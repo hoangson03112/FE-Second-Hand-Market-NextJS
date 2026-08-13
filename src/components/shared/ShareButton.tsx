@@ -20,7 +20,6 @@ import {
   isNativeShareSupported,
   type ShareData 
 } from "@/utils/share";
-import { useToast } from "@/components/shared";
 
 interface ShareButtonProps {
   shareData: ShareData;
@@ -30,17 +29,13 @@ interface ShareButtonProps {
 export default function ShareButton({ shareData, className = "" }: ShareButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const toast = useToast();
 
   const handleCopyLink = async () => {
     const success = await copyLink(shareData.url);
     if (success) {
       setCopied(true);
-      toast.success("Đã copy link!");
       setTimeout(() => setCopied(false), 2000);
-    } else {
-      toast.error("Không thể copy link");
-    }
+    } 
   };
 
   const handleNativeShare = async () => {

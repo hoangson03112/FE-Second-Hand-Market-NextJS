@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/query-client";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/features/auth/hooks/useUser";
 import { useToast } from "@/components/shared";
 import { useConfirm } from "@/components/shared";
 import { OrderService } from "@/services/order.service";

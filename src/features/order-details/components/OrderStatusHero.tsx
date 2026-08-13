@@ -42,42 +42,42 @@ export function OrderStatusHero({
   const showGhnReturn = ghnReturnOrderCode && ["refund", "returning", "return_shipping", "returned", "refunded"].includes(status);
 
   return (
-    <div className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl overflow-hidden shadow-md">
+    <div className="overflow-hidden border border-luxury-ink/8 bg-white/60" style={{ borderRadius: "2px" }}>
       {/* Status row */}
-      <div className="flex items-center gap-4 px-5 py-4 border-b-2 border-border">
-        <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-xl shrink-0 ${statusConfig.bgColor}`}>
+      <div className="flex items-center gap-4 border-b border-luxury-ink/8 px-5 py-4">
+        <div className={`flex h-11 w-11 shrink-0 items-center justify-center text-xl ${statusConfig.bgColor}`} style={{ borderRadius: "2px" }}>
           {statusConfig.icon}
         </div>
-        <div className="flex-1 min-w-0">
-          <p className={`text-sm font-bold ${statusConfig.color}`}>{statusConfig.label}</p>
-          <p className="text-xs text-taupe-500 mt-0.5 leading-snug">
+        <div className="min-w-0 flex-1">
+          <p className={`text-sm font-semibold ${statusConfig.color}`}>{statusConfig.label}</p>
+          <p className="mt-0.5 text-xs leading-snug text-neutral-500">
             {descriptionOverride ?? statusDescription[status] ?? "Đang xử lý đơn hàng."}
           </p>
         </div>
-        <span className="text-xs text-taupe-400 shrink-0 hidden sm:block">{format(updatedAt)}</span>
+        <span className="hidden shrink-0 text-xs text-taupe-400 sm:block">{format(updatedAt)}</span>
       </div>
 
       {/* GHN tracking codes */}
       {(ghnOrderCode || ghnReturnOrderCode) && (showGhnOrder || showGhnReturn) && (
-        <div className="px-5 py-3 border-b-2 border-border flex flex-wrap gap-x-6 gap-y-1.5">
+        <div className="flex flex-wrap gap-x-6 gap-y-1.5 border-b border-luxury-ink/8 px-5 py-3">
           {showGhnOrder && (
-            <p className="text-xs text-taupe-500 font-mono flex items-center gap-1.5">
+            <p className="flex items-center gap-1.5 font-mono text-xs text-neutral-500">
               Vận đơn GHN:
-              <span className="font-semibold text-primary">{ghnOrderCode}</span>
+              <span className="font-semibold text-luxury-ink">{ghnOrderCode}</span>
               <a
                 href={`https://tracking.ghn.dev/?order_code=${ghnOrderCode}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline"
+                className="text-luxury-ink underline decoration-luxury-champagne underline-offset-2 hover:text-accent"
               >
                 Theo dõi →
               </a>
             </p>
           )}
           {showGhnReturn && (
-            <p className="text-xs text-taupe-500 font-mono flex items-center gap-1.5">
+            <p className="flex items-center gap-1.5 font-mono text-xs text-neutral-500">
               Vận đơn hoàn trả:
-              <span className="font-semibold text-primary">{ghnReturnOrderCode}</span>
+              <span className="font-semibold text-luxury-ink">{ghnReturnOrderCode}</span>
               <a
                 href={
                   ghnReturnTrackingUrl?.trim() ||
@@ -85,7 +85,7 @@ export function OrderStatusHero({
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline"
+                className="text-luxury-ink underline decoration-luxury-champagne underline-offset-2 hover:text-accent"
               >
                 Theo dõi →
               </a>
@@ -97,7 +97,7 @@ export function OrderStatusHero({
       {/* Progress stepper */}
       {!isTerminal && (
         <div className="px-5 py-4">
-          <p className="text-xs font-semibold text-taupe-500 uppercase tracking-wider mb-4">
+          <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-taupe-400">
             Tiến trình
           </p>
           <div className="flex items-center overflow-x-auto pb-1">
@@ -105,34 +105,41 @@ export function OrderStatusHero({
               const isDone = i < effectiveStepIdx;
               const isActive = i === effectiveStepIdx;
               return (
-                <div key={step.key} className="flex items-center flex-1 last:flex-none min-w-[72px]">
-                  <div className="flex flex-col items-center gap-1">
+                <div key={step.key} className="flex min-w-[72px] flex-1 items-center last:flex-none">
+                  <div className="flex flex-col items-center gap-1.5">
                     <div
-                      className={`w-7 h-7 rounded-full flex items-center justify-center border-2 transition-colors ${
-                        isDone || isActive ? "bg-primary border-primary" : "bg-white border-border"
-                      }`}
+                      className={
+                        isDone || isActive
+                          ? "flex h-7 w-7 items-center justify-center border border-luxury-ink bg-luxury-ink transition-colors"
+                          : "flex h-7 w-7 items-center justify-center border border-luxury-ink/15 bg-white transition-colors"
+                      }
+                      style={{ borderRadius: "2px" }}
                     >
                       {isDone ? (
-                        <IconCircleCheck className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
+                        <IconCircleCheck className="h-3.5 w-3.5 text-luxury-champagne" strokeWidth={2.5} />
                       ) : isActive ? (
-                        <IconTruck className="w-3.5 h-3.5 text-white" strokeWidth={2} />
+                        <IconTruck className="h-3.5 w-3.5 text-luxury-champagne" strokeWidth={1.75} />
                       ) : (
-                        <IconPackage className="w-3.5 h-3.5 text-taupe-300" strokeWidth={2} />
+                        <IconPackage className="h-3.5 w-3.5 text-taupe-300" strokeWidth={1.75} />
                       )}
                     </div>
                     <span
-                      className={`text-[10px] text-center leading-tight w-[60px] ${
-                        isDone || isActive ? "text-primary font-medium" : "text-taupe-500"
-                      }`}
+                      className={
+                        isDone || isActive
+                          ? "w-[60px] text-center text-[10px] font-medium leading-tight text-luxury-ink"
+                          : "w-[60px] text-center text-[10px] leading-tight text-taupe-400"
+                      }
                     >
                       {step.shortLabel}
                     </span>
                   </div>
                   {i < progressSteps.length - 1 && (
                     <div
-                      className={`flex-1 h-0.5 mb-5 mx-0.5 transition-colors ${
-                        i < effectiveStepIdx ? "bg-primary/60" : "bg-border"
-                      }`}
+                      className={
+                        i < effectiveStepIdx
+                          ? "mx-0.5 mb-5 h-px flex-1 bg-luxury-champagne"
+                          : "mx-0.5 mb-5 h-px flex-1 bg-luxury-ink/10"
+                      }
                     />
                   )}
                 </div>

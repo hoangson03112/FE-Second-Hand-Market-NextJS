@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { IconArrowUpRight, IconPackageOff } from "@tabler/icons-react";
 import { useOrderDetail } from "./hooks/useOrderDetail";
 import { OrderDetailView } from "./components/OrderDetailView";
 
@@ -19,10 +20,12 @@ export default function OrderDetail({
 
   if (state.userLoading || state.isLoading) {
     return (
-      <div className="min-h-screen bg-cream-50 flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-luxury-ivory">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-4" />
-          <p className="text-taupe-600">Đang tải chi tiết đơn hàng...</p>
+          <div className="mx-auto h-10 w-10 animate-spin rounded-full border-2 border-luxury-ink/15 border-t-luxury-champagne" />
+          <p className="mt-4 text-xs uppercase tracking-[0.18em] text-taupe-400">
+            Đang tải chi tiết đơn hàng...
+          </p>
         </div>
       </div>
     );
@@ -30,15 +33,23 @@ export default function OrderDetail({
 
   if (!state.order)
     return (
-      <div className="min-h-screen bg-cream-50 flex flex-col items-center justify-center gap-4">
-        <p className="text-taupe-500">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-5 bg-luxury-ivory px-4 text-center">
+        <span
+          className="flex h-14 w-14 items-center justify-center border border-luxury-ink/10 bg-white"
+          style={{ borderRadius: "2px" }}
+        >
+          <IconPackageOff className="h-6 w-6 text-taupe-400" strokeWidth={1.5} />
+        </span>
+        <p className="max-w-xs text-sm text-neutral-500">
           Không tìm thấy đơn hàng hoặc bạn không có quyền xem.
         </p>
         <Link
           href="/orders"
-          className="px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-all"
+          className="group inline-flex items-center gap-2 bg-luxury-ink px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+          style={{ borderRadius: "2px" }}
         >
           Về danh sách đơn hàng
+          <IconArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </Link>
       </div>
     );

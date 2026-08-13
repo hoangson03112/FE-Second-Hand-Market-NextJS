@@ -20,32 +20,24 @@ export function OrderShippingCard({ shippingMethod, shippingAddress }: OrderShip
   const isLP = shippingType === "local_pickup";
 
   return (
-    <div className="bg-gradient-to-br from-cream-50 to-white border-2 border-border rounded-2xl overflow-hidden shadow-md">
-      <div
-        className={`px-5 py-3 flex items-center gap-2.5 border-b-2 border-border ${
-          isLP ? "bg-emerald-50" : "bg-blue-50"
-        }`}
-      >
+    <div className="overflow-hidden border border-luxury-ink/8 bg-white/60" style={{ borderRadius: "2px" }}>
+      <div className="flex items-center gap-2.5 border-b border-luxury-ink/8 bg-cream-50 px-5 py-3">
         {isLP ? (
-          <IconUsers className="w-4 h-4 text-emerald-600 shrink-0" />
+          <IconUsers className="h-4 w-4 shrink-0 text-luxury-champagne" strokeWidth={1.75} />
         ) : (
-          <IconTruck className="w-4 h-4 text-blue-600 shrink-0" />
+          <IconTruck className="h-4 w-4 shrink-0 text-luxury-champagne" strokeWidth={1.75} />
         )}
-        <span
-          className={`text-sm font-semibold ${
-            isLP ? "text-emerald-700" : "text-blue-700"
-          }`}
-        >
+        <span className="text-sm font-semibold text-luxury-ink">
           {formatShippingMethod(shippingMethod)}
         </span>
       </div>
       {!isLP && shippingAddress ? (
-        <div className="px-5 py-4 flex items-start gap-3">
-          <IconMapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+        <div className="flex items-start gap-3 px-5 py-4">
+          <IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-taupe-400" strokeWidth={1.75} />
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-taupe-900">{shippingAddress.fullName}</p>
-            <p className="text-xs text-taupe-500">{shippingAddress.phoneNumber}</p>
-            <p className="text-xs text-taupe-500 mt-0.5">
+            <p className="text-sm font-semibold text-luxury-ink">{shippingAddress.fullName}</p>
+            <p className="text-xs text-taupe-400">{shippingAddress.phoneNumber}</p>
+            <p className="mt-0.5 text-xs text-neutral-500">
               {[
                 shippingAddress.specificAddress,
                 shippingAddress.ward,
@@ -58,9 +50,9 @@ export function OrderShippingCard({ shippingMethod, shippingAddress }: OrderShip
           </div>
         </div>
       ) : isLP ? (
-        <div className="px-5 py-4 flex items-start gap-3">
-          <IconMapPin className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-          <p className="text-sm text-taupe-500">
+        <div className="flex items-start gap-3 px-5 py-4">
+          <IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-taupe-400" strokeWidth={1.75} />
+          <p className="text-sm text-neutral-500">
             Người bán và người mua tự thỏa thuận địa điểm gặp mặt.
           </p>
         </div>

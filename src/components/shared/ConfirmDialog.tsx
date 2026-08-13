@@ -27,18 +27,27 @@ interface ConfirmContextType {
 
 const ConfirmContext = createContext<ConfirmContextType | undefined>(undefined);
 
-export function ConfirmDialogProvider({ children }: { children: React.ReactNode }) {
+export function ConfirmDialogProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [options, setOptions] = useState<ConfirmOptions | null>(null);
-  const [resolvePromise, setResolvePromise] = useState<((value: boolean) => void) | null>(null);
+  const [resolvePromise, setResolvePromise] = useState<
+    ((value: boolean) => void) | null
+  >(null);
 
-  const confirm = useCallback((nextOptions: ConfirmOptions): Promise<boolean> => {
-    setOptions(nextOptions);
-    setIsOpen(true);
-    return new Promise<boolean>((resolve) => {
-      setResolvePromise(() => resolve);
-    });
-  }, []);
+  const confirm = useCallback(
+    (nextOptions: ConfirmOptions): Promise<boolean> => {
+      setOptions(nextOptions);
+      setIsOpen(true);
+      return new Promise<boolean>((resolve) => {
+        setResolvePromise(() => resolve);
+      });
+    },
+    [],
+  );
 
   const closeWith = useCallback(
     (value: boolean) => {
@@ -47,7 +56,7 @@ export function ConfirmDialogProvider({ children }: { children: React.ReactNode 
       setOptions(null);
       setResolvePromise(null);
     },
-    [resolvePromise]
+    [resolvePromise],
   );
 
   const handleConfirm = useCallback(() => closeWith(true), [closeWith]);

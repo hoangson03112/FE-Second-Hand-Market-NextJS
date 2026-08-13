@@ -3,223 +3,126 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
-import { captureException } from "@/infrastructure/monitoring/sentry";
-import { logger } from "@/infrastructure/monitoring/logger";
-import { useTokenStore } from "@/store/useTokenStore";
+
 import { useBannedStore } from "@/store/useBannedStore";
-import { AuthService } from "@/services/auth.service";
+import { notifySessionLost } from "./session";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const axiosClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-  timeout: 10000,
+  baseURL: BASE_URL,
+  timeout: 15000,
   headers: {
     "Content-Type": "application/json",
   },
+  // Xác thực chạy hoàn toàn bằng cookie httpOnly do backend set.
   withCredentials: true,
 });
 
-// Request Interceptor
-axiosClient.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    const token = useTokenStore.getState().accessToken;
+/**
+ * Client riêng cho /auth/refresh: không gắn interceptor nên không thể tự gọi
+ * lại chính nó, và tránh vòng import axios ↔ auth.service.
+ */
+const refreshClient = axios.create({
+  baseURL: BASE_URL,
+  timeout: 15000,
+  withCredentials: true,
+});
 
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+/**
+ * Các endpoint mà 401/403 là câu trả lời nghiệp vụ hợp lệ (sai mật khẩu, mã
+ * xác thực hết hạn, chưa đăng nhập...) chứ không phải access token hết hạn.
+ * Thử refresh ở đây sẽ nuốt mất thông báo lỗi thật gửi cho người dùng.
+ */
+const NO_REFRESH_PATHS = [
+  "/auth/login",
+  "/auth/register",
+  "/auth/refresh",
+  "/auth/logout",
+  "/auth/verify",
+  "/auth/forgot-password",
+  "/auth/reset-password",
+  "/auth/validate-reset-token",
+  "/auth/appeal",
+];
 
-    // If sending FormData (file upload), let the browser/axios set the correct multipart boundary
-    // (do NOT force application/json from defaults)
-    if (config.data instanceof FormData && config.headers) {
-      delete (config.headers as Record<string, unknown>)["Content-Type"];
-    }
+/**
+ * Single-flight trong cùng tab: mọi request bị 401 một lúc đều chờ chung một
+ * lần refresh, thay vì mỗi request tự gọi /auth/refresh.
+ */
+let refreshPromise: Promise<void> | null = null;
 
-    // Log request in development
-    if (process.env.NODE_ENV === "development") {
-      logger.apiRequest(
-        config.method?.toUpperCase() || "GET",
-        config.url || ""
-      );
-    }
+/**
+ * Khoá liên tab: backend xoay vòng refresh token, nên hai tab cùng gọi
+ * /auth/refresh trong một khoảnh khắc sẽ khiến tab chậm hơn cầm token đã bị
+ * thay. Web Locks đảm bảo tại một thời điểm chỉ một tab thực sự refresh; các
+ * tab còn lại chờ rồi dùng luôn cookie mới. (Backend còn có thêm cửa sổ ân hạn
+ * 60 giây làm lớp phòng vệ thứ hai cho trình duyệt không hỗ trợ Web Locks.)
+ */
+async function withCrossTabLock<T>(fn: () => Promise<T>): Promise<T> {
+  const locks = typeof navigator !== "undefined" ? navigator.locks : undefined;
+  if (!locks) return fn();
+  return locks.request("eco:auth-refresh", fn);
+}
 
-    return config;
-  },
-  (error) => {
-    captureException(error as Error, { context: "axios_request_interceptor" });
-    return Promise.reject(error);
+function refreshSession(): Promise<void> {
+  if (!refreshPromise) {
+    refreshPromise = withCrossTabLock(() =>
+      refreshClient.post("/auth/refresh").then(() => undefined),
+    ).finally(() => {
+      refreshPromise = null;
+    });
   }
-);
+  return refreshPromise;
+}
 
-// Track if we're currently refreshing to avoid multiple refresh calls
-let isRefreshing = false;
-let failedQueue: Array<{
-  resolve: (value?: unknown) => void;
-  reject: (reason?: unknown) => void;
-  config: InternalAxiosRequestConfig;
-}> = [];
-
-const processQueue = (
-  error: AxiosError | null,
-  token: string | null = null
-) => {
-  failedQueue.forEach((prom) => {
-    if (error) {
-      prom.reject(error);
-    } else {
-      // Update token in request header before retrying
-      if (token && prom.config.headers) {
-        prom.config.headers.Authorization = `Bearer ${token}`;
-      }
-      prom.resolve(token);
-    }
-  });
-
-  failedQueue = [];
-};
-
-// Response Interceptor
 axiosClient.interceptors.response.use(
-  (response: AxiosResponse) => {
-    // Log successful response
-    if (process.env.NODE_ENV === "development") {
-      logger.apiResponse(
-        response.config.method?.toUpperCase() || "GET",
-        response.config.url || "",
-        response.status
-      );
+  // Trả thẳng payload nghiệp vụ để service không phải bóc `.data` ở mọi nơi.
+  (response: AxiosResponse) => response.data,
+
+  async (error: AxiosError) => {
+    const originalRequest = error.config as
+      | (InternalAxiosRequestConfig & { _retry?: boolean })
+      | undefined;
+    const status = error.response?.status;
+    const url = originalRequest?.url ?? "";
+    const payload = error.response?.data as
+      | { message?: string; error?: string; code?: string }
+      | undefined;
+
+    // Ưu tiên thông báo nghiệp vụ của backend thay vì
+    // "Request failed with status code ..." của axios.
+    if (payload?.message?.trim()) {
+      error.message = payload.message;
+    } else if (payload?.error?.trim()) {
+      error.message = payload.error;
     }
 
-    // Return data directly for easier usage in services
-    return response.data;
-  },
-  async (error: AxiosError) => {
-    const originalRequest = error.config as InternalAxiosRequestConfig & {
-      _retry?: boolean;
-    };
+    if (status === 403 && payload?.code === "account_banned") {
+      notifySessionLost();
+      useBannedStore.getState().setBanned(true);
+      return Promise.reject(error);
+    }
 
-    if (error.response) {
-      const status = error.response.status;
-      const url = error.config?.url || "";
-      const responseData = error.response.data as
-        | { message?: string; error?: string }
-        | undefined;
+    const canRefresh =
+      status === 401 &&
+      originalRequest &&
+      !originalRequest._retry &&
+      !NO_REFRESH_PATHS.some((path) => url.includes(path));
 
-      // Prefer backend-provided business message over Axios default
-      // ("Request failed with status code ...") for user-facing flows.
-      if (typeof responseData?.message === "string" && responseData.message.trim()) {
-        error.message = responseData.message;
-      } else if (typeof responseData?.error === "string" && responseData.error.trim()) {
-        error.message = responseData.error;
+    if (canRefresh) {
+      originalRequest._retry = true;
+      try {
+        await refreshSession();
+        return await axiosClient(originalRequest);
+      } catch (refreshError) {
+        notifySessionLost();
+        return Promise.reject(refreshError);
       }
-
-      // Log error
-      logger.apiResponse(
-        error.config?.method?.toUpperCase() || "GET",
-        url,
-        status
-      );
-
-      // Track error
-      captureException(error as Error, {
-        context: "axios_response_error",
-        status,
-        url,
-      });
-
-      // Handle 401 - Access Token Expired
-      if (status === 401 && !originalRequest._retry) {
-        const skipRefreshUrls = [
-          "/auth/login",
-          "/auth/register",
-          "/auth/refresh",
-          "/auth/logout",
-        ];
-        const shouldSkipRefresh = skipRefreshUrls.some((skipUrl) =>
-          url.includes(skipUrl)
-        );
-
-        if (shouldSkipRefresh) {
-          return Promise.reject(error);
-        }
-
-        // If already refreshing, queue this request
-        if (isRefreshing) {
-          return new Promise((resolve, reject) => {
-            failedQueue.push({ resolve, reject, config: originalRequest });
-          })
-            .then(() => {
-              // originalRequest header has been updated in processQueue
-              return axiosClient(originalRequest);
-            })
-            .catch((err) => {
-              return Promise.reject(err);
-            });
-        }
-
-        originalRequest._retry = true;
-        isRefreshing = true;
-
-        try {
-          const response = await AuthService.refresh();
-
-          const accessToken = response?.token;
-
-          if (accessToken) {
-            useTokenStore.getState().setAccessToken(accessToken);
-
-            if (originalRequest.headers) {
-              originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-            }
-
-            processQueue(null, accessToken);
-
-            // Retry the original request with new token
-            return axiosClient(originalRequest);
-          }
-        } catch (refreshError) {
-          processQueue(refreshError as AxiosError, null);
-
-          // Refresh token expired or invalid - Logout user
-          console.error("Phiên làm việc hết hạn. Vui lòng đăng nhập lại.");
-          if (typeof window !== "undefined") {
-            useTokenStore.getState().clearAuth();
-            window.location.href = "/login";
-          }
-
-          return Promise.reject(refreshError);
-        } finally {
-          isRefreshing = false;
-        }
-      }
-
-      // 403 account_banned: tài khoản bị khóa → hiện overlay, chặn mọi thao tác, chỉ cho khiếu nại
-      if (status === 403) {
-        const data = error.response?.data as { code?: string; message?: string } | undefined;
-        if (data?.code === "account_banned") {
-          if (typeof window !== "undefined") {
-            useBannedStore.getState().setBanned(true);
-            useTokenStore.getState().clearAuth();
-          }
-        } else {
-          console.error("Bạn không có quyền truy cập");
-        }
-      } else {
-        switch (status) {
-          case 500:
-            console.error("Lỗi Server");
-            break;
-          default:
-            console.error("Lỗi hệ thống:", error.message);
-        }
-      }
-    } else if (error.request) {
-      // Network error
-      logger.error("Network error - no response received", error as Error, {
-        url: error.config?.url,
-      });
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosClient;

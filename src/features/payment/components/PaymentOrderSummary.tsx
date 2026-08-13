@@ -6,17 +6,17 @@ export interface PaymentOrderSummaryProps {
 
 export function PaymentOrderSummary({ totalAmount }: PaymentOrderSummaryProps) {
   return (
-    <div className="bg-cream-50 rounded-lg border border-border p-6">
-      <h2 className="font-semibold text-foreground mb-4">
+    <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border p-6 shadow-md">
+      <h2 className="font-semibold text-taupe-900 mb-4 uppercase tracking-wide text-sm">
         Thông tin đơn hàng
       </h2>
       <div className="space-y-3">
         <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Tổng tiền hàng:</span>
-          <span className="font-medium">{formatPrice(totalAmount)}</span>
+          <span className="text-taupe-500">Tổng tiền hàng:</span>
+          <span className="font-medium text-taupe-900">{formatPrice(totalAmount)}</span>
         </div>
-        <div className="flex justify-between pt-3 border-t">
-          <span className="text-lg font-semibold">Tổng thanh toán:</span>
+        <div className="flex justify-between pt-3 border-t-2 border-border">
+          <span className="text-base font-semibold text-taupe-900">Tổng thanh toán:</span>
           <span className="text-xl font-bold text-primary">
             {formatPrice(totalAmount)}
           </span>
