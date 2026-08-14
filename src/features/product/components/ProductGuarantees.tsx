@@ -5,8 +5,16 @@ import { IconTruck, IconShield, IconMessageCircle } from "@tabler/icons-react";
 export default function ProductGuarantees() {
   const guarantees = [
     { icon: IconTruck, title: "Vận Chuyển Miễn Phí", description: "Toàn quốc" },
-    { icon: IconShield, title: "Bảo Vệ Người Mua", description: "Hoàn tiền 100%" },
-    { icon: IconMessageCircle, title: "Hỗ Trợ 24/7", description: "Phản hồi nhanh" },
+    {
+      icon: IconShield,
+      title: "Bảo Vệ Người Mua",
+      description: "Hoàn tiền 100%",
+    },
+    {
+      icon: IconMessageCircle,
+      title: "Hỗ Trợ 24/7",
+      description: "Phản hồi nhanh",
+    },
   ];
   return (
     <div className="border-t border-luxury-ink/10 pt-5 mt-5">
@@ -22,10 +30,12 @@ export default function ProductGuarantees() {
                 <Icon className="h-5 w-5 text-accent" />
               </div>
               <div>
-                <h4 className="text-[11px] font-semibold uppercase tracking-[0.15em] text-luxury-ink leading-tight">
+                <h4 className="text-[11px] font-bold uppercase tracking-[0.15em] text-luxury-ink leading-tight">
                   {item.title}
                 </h4>
-                <p className="text-[11px] text-taupe-500 mt-1">{item.description}</p>
+                <p className="text-[11px] text-taupe-500 mt-1">
+                  {item.description}
+                </p>
               </div>
             </div>
           );

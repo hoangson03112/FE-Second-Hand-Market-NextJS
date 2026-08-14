@@ -35,7 +35,15 @@ function toDealProduct(p: MyListingProduct): Product {
 }
 
 // ─── Product Card for Popover ─────────────────────────────────────────────
-function ProductCard({ product, selected, onSelect }: { product: Product; selected: boolean; onSelect: () => void }) {
+function ProductCard({
+  product,
+  selected,
+  onSelect,
+}: {
+  product: Product;
+  selected: boolean;
+  onSelect: () => void;
+}) {
   return (
     <button
       type="button"
@@ -43,14 +51,26 @@ function ProductCard({ product, selected, onSelect }: { product: Product; select
       className={`flex items-center gap-3 w-full p-2 rounded-xl border-2 transition-all shadow-sm hover:border-primary/40 bg-white ${selected ? "border-primary ring-2 ring-primary/20" : "border-border"}`}
     >
       {product.imageUrl ? (
-        <img src={product.imageUrl} alt={product.name} className="w-10 h-10 rounded-lg object-cover border border-border" />
+        <img
+          src={product.imageUrl}
+          alt={product.name}
+          className="w-10 h-10 rounded-lg object-cover border border-border"
+        />
       ) : (
-        <div className="w-10 h-10 rounded-lg bg-taupe-100 flex items-center justify-center text-taupe-300 font-bold text-lg">?</div>
+        <div className="w-10 h-10 rounded-lg bg-taupe-100 flex items-center justify-center text-taupe-300 font-bold text-lg">
+          ?
+        </div>
       )}
       <div className="flex-1 min-w-0 text-left">
-        <div className="font-medium text-taupe-900 truncate">{product.name}</div>
-        <div className="text-xs text-taupe-400 truncate">{product.category}</div>
-        <div className="text-primary font-semibold text-sm">{product.price.toLocaleString("vi-VN")}₫</div>
+        <div className="font-medium text-taupe-900 truncate">
+          {product.name}
+        </div>
+        <div className="text-xs text-taupe-400 truncate">
+          {product.category}
+        </div>
+        <div className="text-primary font-bold text-sm">
+          {product.price.toLocaleString("vi-VN")}₫
+        </div>
       </div>
       {selected && <IconCheck className="w-4 h-4 text-primary" />}
     </button>
@@ -59,7 +79,13 @@ function ProductCard({ product, selected, onSelect }: { product: Product; select
 
 // ─── Main Component ─────────────────────────────────────────────────────────
 
-export default function SellerDiscountInline({ buyerId, buyerName, sellerId, onCreated, onCancel }: SellerDiscountInlineProps) {
+export default function SellerDiscountInline({
+  buyerId,
+  buyerName,
+  sellerId,
+  onCreated,
+  onCancel,
+}: SellerDiscountInlineProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -109,8 +135,9 @@ export default function SellerDiscountInline({ buyerId, buyerName, sellerId, onC
   return (
     <div className="border-t-2 border-border bg-white p-4">
       <div className="flex items-center justify-between pb-3 border-b border-border">
-        <div className="font-semibold text-taupe-900 text-sm leading-tight">
-          Tạo ưu đãi riêng {buyerName && <span className="text-primary">cho {buyerName}</span>}
+        <div className="font-bold text-taupe-900 text-sm leading-tight">
+          Tạo ưu đãi riêng{" "}
+          {buyerName && <span className="text-primary">cho {buyerName}</span>}
         </div>
         <button
           type="button"
@@ -126,12 +153,14 @@ export default function SellerDiscountInline({ buyerId, buyerName, sellerId, onC
           <span className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
             <IconCheck className="w-7 h-7 text-emerald-600" />
           </span>
-          <div className="text-emerald-700 font-semibold text-base">Ưu đãi đã được tạo thành công!</div>
+          <div className="text-emerald-700 font-bold text-base">
+            Ưu đãi đã được tạo thành công!
+          </div>
         </div>
       ) : (
         <div className="pt-3">
           <div className="mb-3">
-            <div className="text-xs font-semibold text-taupe-500 uppercase tracking-wide mb-2">
+            <div className="text-xs font-bold text-taupe-500 uppercase tracking-wide mb-2">
               Chọn sản phẩm áp dụng
             </div>
             {loading ? (
@@ -140,7 +169,9 @@ export default function SellerDiscountInline({ buyerId, buyerName, sellerId, onC
                 Đang tải sản phẩm…
               </div>
             ) : loadError ? (
-              <div className="text-xs text-center text-red-600 py-2">{loadError}</div>
+              <div className="text-xs text-center text-red-600 py-2">
+                {loadError}
+              </div>
             ) : products.length === 0 ? (
               <div className="text-xs text-center text-taupe-400 py-2">
                 Bạn chưa có sản phẩm nào để tạo ưu đãi.
@@ -161,12 +192,14 @@ export default function SellerDiscountInline({ buyerId, buyerName, sellerId, onC
 
           {selectedProduct ? (
             <div className="mt-2 animate-in fade-in slide-in-from-top-1 duration-200">
-              <div className="text-xs font-semibold text-taupe-500 uppercase tracking-wide mb-1">
+              <div className="text-xs font-bold text-taupe-500 uppercase tracking-wide mb-1">
                 Cấu hình ưu đãi
               </div>
               <div className="rounded-xl border border-border bg-taupe-50/60 p-3">
                 <DiscountForm
-                  product={products.find((p) => p._id === selectedProduct) || null}
+                  product={
+                    products.find((p) => p._id === selectedProduct) || null
+                  }
                   buyerId={buyerId}
                   onCreated={handleCreated}
                   onCancel={handleCancel}

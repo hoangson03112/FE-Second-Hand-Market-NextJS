@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { IconInfoCircle } from "@tabler/icons-react";
+import { IconArrowUpRight, IconInfoCircle } from "@tabler/icons-react";
 import {
   AddressSection,
   AddressModal,
   CheckoutHeader,
   CheckoutButton,
+  CheckoutPanel,
   TrustBadges,
   CheckoutSummary,
   CheckoutSellerSection,
@@ -16,6 +18,7 @@ import { useAddress } from "@/hooks";
 import { useCheckout } from "./hooks/useCheckout";
 import { PageContainer, Container } from "@/components/layout/Container";
 import { useConfirm } from "@/components/shared";
+import { cn } from "@/lib/utils";
 
 export default function Checkout() {
   const router = useRouter();
@@ -47,13 +50,21 @@ export default function Checkout() {
     setPaymentMethodForSeller,
     getPaymentMethodForSeller,
     setDeliveryMethodForSeller,
-    deliveryMethodBySeller,
     isBankTransferAvailableBySeller,
     isSubmitting,
     shippingData,
     updateShippingFromAddress,
     handleCheckout,
   } = useCheckout();
+
+  // Entry reveal on mount rather than on scroll: a checkout must never be
+  // hidden behind an IntersectionObserver that has not fired yet.
+  const [isRevealed, setIsRevealed] = useState(false);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setIsRevealed(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
 
   useEffect(() => {
     if (selectedAddress) {
@@ -77,69 +88,121 @@ export default function Checkout() {
   };
 
   const isMultiSeller = sellerGroups.length > 1;
+  const isEmpty = sellerGroups.length === 0;
 
   const showAddressSection = sellerGroups.some((g) => g.canCodShipping);
 
+  const itemCount = sellerGroups.reduce(
+    (sum, group) => sum + group.items.length,
+    0,
+  );
+
+  const revealClass = cn(
+    "transition-all duration-700 ease-out",
+    isRevealed ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
+  );
+  const delay = (ms: number) => ({ transitionDelay: `${ms}ms` });
+
   return (
-    <PageContainer withBackground={false}>
-      <div className="min-h-screen bg-cream-50">
-        <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg">
-          <CheckoutHeader onBack={handleBack} />
+    <PageContainer
+      withBackground={false}
+      className="min-h-screen bg-luxury-ivory"
+    >
+      <CheckoutHeader
+        isEmpty={isEmpty}
+        onBack={handleBack}
+        itemCount={itemCount}
+        sellerCount={sellerGroups.length}
+      />
 
-          <AddressModal
-            show={showAddressModal}
-            onHide={handleCloseModal}
-            addresses={addresses}
-            selectedAddress={selectedAddress}
-            onSelectAddress={handleSelectAddress}
-            showNewAddressForm={showNewAddressForm}
-            onToggleNewAddressForm={handleToggleNewAddressForm}
-            onCreateAddress={handleCreateAddress}
-            onUpdateAddress={handleUpdateAddress}
-            onDeleteAddress={handleDeleteAddress}
-          />
+      <AddressModal
+        show={showAddressModal}
+        onHide={handleCloseModal}
+        addresses={addresses}
+        selectedAddress={selectedAddress}
+        onSelectAddress={handleSelectAddress}
+        showNewAddressForm={showNewAddressForm}
+        onToggleNewAddressForm={handleToggleNewAddressForm}
+        onCreateAddress={handleCreateAddress}
+        onUpdateAddress={handleUpdateAddress}
+        onDeleteAddress={handleDeleteAddress}
+      />
 
-          {/* Delivery address */}
-          {showAddressSection && (
-            <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border p-6 mb-6 shadow-md">
-              <h2 className="text-lg font-semibold text-taupe-900 mb-5 pb-4 border-b-2 border-border uppercase tracking-wider">
-                Địa chỉ nhận hàng
-              </h2>
+      <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg">
+        {/* Delivery address */}
+        {showAddressSection ? (
+          <div style={delay(140)} className={cn(revealClass, "mb-6")}>
+            <CheckoutPanel eyebrow="Giao đến" title="Địa chỉ nhận hàng">
               <AddressSection
                 selectedAddress={selectedAddress}
                 onChangeAddress={handleOpenModal}
               />
-            </div>
-          )}
+            </CheckoutPanel>
+          </div>
+        ) : null}
 
-          {/* Multi-seller notice */}
-          {isMultiSeller && (
-            <div className="flex items-start gap-4 p-5 mb-6 bg-primary/5 border-2 border-primary/20 rounded-xl">
-              <IconInfoCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-primary/90">
-                Bạn đang đặt hàng từ{" "}
-                <strong>{sellerGroups.length} người bán</strong>. Mỗi đơn
-                hàng sẽ được xử lý riêng biệt và có thể
-                được giao vào các thời điểm khác nhau. Bạn có
-                thể chọn phương thức thanh toán khác nhau cho từng
-                đơn.
-              </p>
-            </div>
-          )}
+        {/* Multi-seller notice */}
+        {isMultiSeller ? (
+          <div
+            style={delay(180)}
+            className={cn(
+              revealClass,
+              "mb-6 flex items-start gap-4 rounded-[2px] border border-luxury-champagne/30 bg-cream-100/70 px-5 py-4",
+            )}
+          >
+            <IconInfoCircle className="mt-0.5 h-4 w-4 shrink-0 text-luxury-champagne" />
+            <p className="text-xs leading-relaxed text-neutral-700">
+              Bạn đang đặt hàng từ{" "}
+              <strong className="font-bold text-luxury-ink">
+                {sellerGroups.length} người bán
+              </strong>
+              . Mỗi đơn được xử lý riêng biệt, có thể giao vào các thời điểm
+              khác nhau, và bạn có thể chọn phương thức thanh toán riêng cho
+              từng đơn.
+            </p>
+          </div>
+        ) : null}
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left column: seller sections */}
-            <div className="lg:col-span-2 space-y-6">
-              {sellerGroups.length === 0 ? (
-                <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border p-12 text-center text-taupe-600 text-sm shadow-md">
-                  Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi
-                  thanh toán.
-                </div>
-              ) : (
-                sellerGroups.map((group) => (
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
+          {/* Left column: seller sections */}
+          <div className="space-y-6 lg:col-span-8">
+            {isEmpty ? (
+              <div
+                style={delay(220)}
+                className={cn(
+                  revealClass,
+                  "rounded-[2px] border border-dashed border-luxury-ink/15 bg-white px-6 py-20 text-center",
+                )}
+              >
+                <h3
+                  style={{ fontFamily: "var(--font-droid-serif), serif" }}
+                  className="text-xl text-luxury-ink"
+                >
+                  Chưa có gì để thanh toán
+                </h3>
+                <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-neutral-600">
+                  Giỏ hàng đang trống. Hãy chọn vài món trước khi quay lại bước
+                  này.
+                </p>
+                <Link
+                  href="/products"
+                  className="group mt-8 inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-7 py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+                >
+                  Khám phá sản phẩm
+                  <IconArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </Link>
+              </div>
+            ) : (
+              sellerGroups.map((group, index) => (
+                <div
+                  key={group.sellerId}
+                  style={delay(220 + index * 100)}
+                  className={revealClass}
+                >
                   <CheckoutSellerSection
-                    key={group.sellerId}
                     group={group}
+                    index={index}
+                    totalGroups={sellerGroups.length}
                     paymentMethod={getPaymentMethodForSeller(group.sellerId)}
                     isBankTransferAvailable={
                       isBankTransferAvailableBySeller[group.sellerId] ?? false
@@ -147,9 +210,11 @@ export default function Checkout() {
                     onPaymentMethodChange={(method) =>
                       setPaymentMethodForSeller(group.sellerId, method)
                     }
+                    // `group.isLocalPickup` is what the hook actually uses to
+                    // price and create the order, so drive the toggle from it
+                    // rather than re-deriving a fallback that can disagree.
                     deliveryMethod={
-                      deliveryMethodBySeller[group.sellerId] ??
-                      (group.canCodShipping ? "cod_shipping" : "local_pickup")
+                      group.isLocalPickup ? "local_pickup" : "cod_shipping"
                     }
                     onDeliveryMethodChange={(method) => {
                       setDeliveryMethodForSeller(group.sellerId, method);
@@ -158,52 +223,50 @@ export default function Checkout() {
                       }
                     }}
                   />
-                ))
-              )}
-
-              {/* Global shipping error / loading */}
-              {!allLocalPickup && shippingError && (
-                <div className="p-4 bg-red-50 border-2 border-red-200 rounded-xl text-xs uppercase tracking-wide font-semibold text-red-600">
-                  {shippingError}
                 </div>
-              )}
+              ))
+            )}
 
-              {!allLocalPickup && isCalculatingShipping && (
-                <div className="flex items-center gap-4 p-5 bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border shadow-md">
-                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary/30 border-t-primary" />
-                  <span className="text-sm text-taupe-600">
-                    Đang tính phí vận chuyển...
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Right column: summary + checkout */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-8 space-y-6">
-                <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border shadow-md">
-                  <CheckoutSummary
-                    sellerGroups={sellerGroups}
-                    subtotal={subtotal}
-                    shipping={shipping}
-                    paymentMethods={paymentMethods}
-                  />
-                </div>
-                <CheckoutButton
-                  total={total}
-                  isSubmitting={isSubmitting}
-                  isDisabled={
-                    (!allLocalPickup && !shippingData) ||
-                    sellerGroups.length === 0
-                  }
-                  onClick={handleCheckout}
-                />
-                <TrustBadges />
+            {/* Global shipping error / loading */}
+            {!allLocalPickup && shippingError ? (
+              <div className="rounded-[2px] border border-blush-300 bg-blush-50 px-5 py-4 text-xs leading-relaxed text-blush-800">
+                {shippingError}
               </div>
+            ) : null}
+
+            {!allLocalPickup && isCalculatingShipping ? (
+              <div className="flex items-center gap-4 rounded-[2px] border border-luxury-ink/10 bg-white px-5 py-5">
+                <span className="h-3.5 w-3.5 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-600">
+                  Đang tính phí vận chuyển
+                </span>
+              </div>
+            ) : null}
+          </div>
+
+          {/* Right column: summary + checkout */}
+          <div className="lg:col-span-4">
+            <div
+              style={delay(300)}
+              className={cn(revealClass, "space-y-5 lg:sticky lg:top-24")}
+            >
+              <CheckoutSummary
+                sellerGroups={sellerGroups}
+                subtotal={subtotal}
+                shipping={shipping}
+                paymentMethods={paymentMethods}
+              />
+              <CheckoutButton
+                total={total}
+                isSubmitting={isSubmitting}
+                isDisabled={(!allLocalPickup && !shippingData) || isEmpty}
+                onClick={handleCheckout}
+              />
+              <TrustBadges />
             </div>
           </div>
-        </Container>
-      </div>
+        </div>
+      </Container>
     </PageContainer>
   );
 }

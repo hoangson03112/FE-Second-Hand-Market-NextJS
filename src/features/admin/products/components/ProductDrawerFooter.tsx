@@ -51,7 +51,7 @@ export function ProductDrawerFooter({
           type="button"
           onClick={() => onReject(product)}
           disabled={isUpdating}
-          className="flex-1 px-4 py-2.5 rounded-xl bg-destructive/8 border border-destructive/20 text-destructive text-sm font-semibold hover:bg-destructive/12 disabled:opacity-50 transition-colors"
+          className="flex-1 px-4 py-2.5 rounded-xl bg-destructive/8 border border-destructive/20 text-destructive text-sm font-bold hover:bg-destructive/12 disabled:opacity-50 transition-colors"
         >
           ✕ Từ chối
         </button>
@@ -59,7 +59,7 @@ export function ProductDrawerFooter({
           type="button"
           onClick={() => onApprove(product)}
           disabled={isUpdating}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-md shadow-primary/20"
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-bold hover:bg-primary/90 disabled:opacity-50 transition-colors shadow-md shadow-primary/20"
         >
           {isUpdating ? (
             <IconLoader2 className="w-4 h-4 animate-spin" />

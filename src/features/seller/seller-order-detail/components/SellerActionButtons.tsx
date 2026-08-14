@@ -83,55 +83,61 @@ export function SellerActionButtons({
         onCancel={() => setRejectOpen(false)}
         isLoading={updatingStatus}
       />
-      {approveOpen && createPortal(
-        <>
-          <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] animate-in fade-in"
-            onClick={() => setApproveOpen(false)}
-          />
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+      {approveOpen &&
+        createPortal(
+          <>
             <div
-              className="relative bg-background rounded-2xl shadow-xl w-full max-w-sm border border-border animate-in zoom-in-95 slide-in-from-bottom-4"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex items-start gap-4 p-6 border-b border-border">
-                <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
-                  <IconCircleCheck className="w-5 h-5 text-emerald-600" />
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] animate-in fade-in"
+              onClick={() => setApproveOpen(false)}
+            />
+            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+              <div
+                className="relative bg-background rounded-2xl shadow-xl w-full max-w-sm border border-border animate-in zoom-in-95 slide-in-from-bottom-4"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-start gap-4 p-6 border-b border-border">
+                  <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
+                    <IconCircleCheck className="w-5 h-5 text-emerald-600" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-foreground">
+                      Chấp thuận hoàn tiền?
+                    </h3>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Đơn hàng #{order._id.slice(-8).toUpperCase()} sẽ chuyển
+                      sang trạng thái &ldquo;Đang hoàn hàng&rdquo;.{" "}
+                      {isLocalPickup
+                        ? "Người mua sẽ trực tiếp trả lại hàng cho bạn."
+                        : "GHN return shipment sẽ được tạo tự động."}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-base font-semibold text-foreground">Chấp thuận hoàn tiền?</h3>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Đơn hàng #{order._id.slice(-8).toUpperCase()} sẽ chuyển sang trạng thái
-                    &ldquo;Đang hoàn hàng&rdquo;.{" "}
-                    {isLocalPickup
-                      ? "Người mua sẽ trực tiếp trả lại hàng cho bạn."
-                      : "GHN return shipment sẽ được tạo tự động."}
-                  </p>
+                <div className="flex items-center gap-3 p-4">
+                  <button
+                    type="button"
+                    onClick={() => setApproveOpen(false)}
+                    disabled={updatingStatus}
+                    className="flex-1 px-4 py-2 rounded-lg border border-border text-foreground font-medium hover:bg-muted transition-colors disabled:opacity-50"
+                  >
+                    Hủy
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setApproveOpen(false);
+                      onApproveRefund();
+                    }}
+                    disabled={updatingStatus}
+                    className="flex-1 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium transition-colors disabled:opacity-50"
+                  >
+                    {updatingStatus ? "Đang xử lý..." : "Chấp thuận"}
+                  </button>
                 </div>
-              </div>
-              <div className="flex items-center gap-3 p-4">
-                <button
-                  type="button"
-                  onClick={() => setApproveOpen(false)}
-                  disabled={updatingStatus}
-                  className="flex-1 px-4 py-2 rounded-lg border border-border text-foreground font-medium hover:bg-muted transition-colors disabled:opacity-50"
-                >
-                  Hủy
-                </button>
-                <button
-                  type="button"
-                  onClick={() => { setApproveOpen(false); onApproveRefund(); }}
-                  disabled={updatingStatus}
-                  className="flex-1 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium transition-colors disabled:opacity-50"
-                >
-                  {updatingStatus ? "Đang xử lý..." : "Chấp thuận"}
-                </button>
               </div>
             </div>
-          </div>
-        </>,
-        document.body
-      )}
+          </>,
+          document.body,
+        )}
     </>
   );
 
@@ -144,7 +150,9 @@ export function SellerActionButtons({
           <div className="p-4 bg-amber-50 border-b border-amber-200">
             <div className="flex items-center gap-2 text-amber-700">
               <IconAlertTriangle className="w-4 h-4 shrink-0" />
-              <p className="text-sm font-medium">Đơn hàng mới đang chờ xác nhận</p>
+              <p className="text-sm font-medium">
+                Đơn hàng mới đang chờ xác nhận
+              </p>
             </div>
             <p className="text-xs text-amber-600 mt-1 ml-6">
               Vui lòng xác nhận hoặc hủy đơn trong thời gian sớm nhất.
@@ -154,7 +162,7 @@ export function SellerActionButtons({
             <button
               onClick={() => setCancelOpen(true)}
               disabled={updatingStatus}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-destructive/40 text-destructive hover:bg-destructive/5 font-semibold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-destructive/40 text-destructive hover:bg-destructive/5 font-bold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <IconX className="w-4 h-4" />
               Hủy đơn
@@ -162,7 +170,7 @@ export function SellerActionButtons({
             <button
               onClick={onConfirm}
               disabled={updatingStatus}
-              className="flex-[2] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-semibold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+              className="flex-[2] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
             >
               <IconCheck className="w-4 h-4" />
               {updatingStatus ? "Đang xử lý..." : "Xác nhận đơn"}
@@ -180,7 +188,8 @@ export function SellerActionButtons({
     status === "shipping" ||
     status === "out_for_delivery"
   ) {
-    const showMarkDelivered = isLocalPickup && status === "confirmed" && !!onMarkDelivered;
+    const showMarkDelivered =
+      isLocalPickup && status === "confirmed" && !!onMarkDelivered;
     return (
       <>
         {dialogs}
@@ -190,13 +199,14 @@ export function SellerActionButtons({
               <div className="flex items-center gap-2 p-3 bg-emerald-50 rounded-xl border border-emerald-200">
                 <span className="text-base">🤝</span>
                 <p className="text-xs text-emerald-700">
-                  Sau khi gặp mặt và trao hàng cho người mua, nhấn nút bên dưới để xác nhận.
+                  Sau khi gặp mặt và trao hàng cho người mua, nhấn nút bên dưới
+                  để xác nhận.
                 </p>
               </div>
               <button
                 onClick={onMarkDelivered}
                 disabled={updatingStatus}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-semibold text-sm transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-bold text-sm transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <IconHandStop className="w-4 h-4" />
                 {updatingStatus ? "Đang xử lý..." : "Xác nhận đã giao hàng"}
@@ -206,7 +216,7 @@ export function SellerActionButtons({
           {onTrackingClick && (
             <button
               onClick={onTrackingClick}
-              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-semibold text-sm transition-colors shadow-sm"
+              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-sm transition-colors shadow-sm"
             >
               <IconTruck className="w-4 h-4" />
               Theo dõi vận chuyển
@@ -215,7 +225,7 @@ export function SellerActionButtons({
           {onChatClick && (
             <button
               onClick={onChatClick}
-              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-semibold text-sm transition-colors"
+              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-bold text-sm transition-colors"
             >
               <IconMessage className="w-4 h-4" />
               Nhắn tin người mua
@@ -236,7 +246,9 @@ export function SellerActionButtons({
           <div className="bg-rose-50 rounded-2xl border border-rose-200 shadow-sm p-4 flex items-center gap-3">
             <IconX className="w-5 h-5 text-rose-500 shrink-0" />
             <div>
-              <p className="text-sm font-medium text-rose-700">Đã từ chối yêu cầu hoàn tiền</p>
+              <p className="text-sm font-medium text-rose-700">
+                Đã từ chối yêu cầu hoàn tiền
+              </p>
               {order.refundRequestId.sellerResponse?.comment && (
                 <p className="text-xs text-rose-600 mt-0.5">
                   Lý do: {order.refundRequestId.sellerResponse.comment}
@@ -255,7 +267,9 @@ export function SellerActionButtons({
           <div className="p-4 bg-orange-50 border-b border-orange-200">
             <div className="flex items-center gap-2 text-orange-700">
               <IconRefresh className="w-4 h-4 shrink-0" />
-              <p className="text-sm font-medium">Người mua đã yêu cầu hoàn tiền</p>
+              <p className="text-sm font-medium">
+                Người mua đã yêu cầu hoàn tiền
+              </p>
             </div>
             <p className="text-xs text-orange-600 mt-1 ml-6">
               Xem yêu cầu bên dưới và chọn hành động phù hợp.
@@ -265,7 +279,7 @@ export function SellerActionButtons({
             <button
               onClick={() => setRejectOpen(true)}
               disabled={updatingStatus}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-destructive/40 text-destructive hover:bg-destructive/5 font-semibold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-destructive/40 text-destructive hover:bg-destructive/5 font-bold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <IconX className="w-4 h-4" />
               Từ chối
@@ -273,7 +287,7 @@ export function SellerActionButtons({
             <button
               onClick={() => setApproveOpen(true)}
               disabled={updatingStatus}
-              className="flex-[2] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-semibold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+              className="flex-[2] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-bold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
             >
               <IconCircleCheck className="w-4 h-4" />
               {updatingStatus ? "Đang xử lý..." : "Chấp thuận hoàn tiền"}
@@ -292,12 +306,14 @@ export function SellerActionButtons({
         <div className="bg-card rounded-2xl border border-border shadow-sm p-4">
           <div className="flex items-center gap-2 text-muted-foreground">
             <IconTruck className="w-4 h-4 shrink-0" />
-            <p className="text-sm">Đơn hàng đã giao tới người mua. Đang chờ xác nhận hoàn thành.</p>
+            <p className="text-sm">
+              Đơn hàng đã giao tới người mua. Đang chờ xác nhận hoàn thành.
+            </p>
           </div>
           {onChatClick && (
             <button
               onClick={onChatClick}
-              className="flex items-center justify-center gap-2 w-full mt-3 px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-semibold text-sm transition-colors"
+              className="flex items-center justify-center gap-2 w-full mt-3 px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-bold text-sm transition-colors"
             >
               <IconMessage className="w-4 h-4" />
               Nhắn tin người mua
@@ -315,7 +331,9 @@ export function SellerActionButtons({
         {dialogs}
         <div className="bg-emerald-50 rounded-2xl border border-emerald-200 shadow-sm p-4 flex items-center gap-3">
           <IconCircleCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-          <p className="text-sm font-medium text-emerald-700">Đơn hàng đã hoàn thành thành công.</p>
+          <p className="text-sm font-medium text-emerald-700">
+            Đơn hàng đã hoàn thành thành công.
+          </p>
         </div>
       </>
     );
@@ -329,9 +347,13 @@ export function SellerActionButtons({
         <div className="bg-rose-50 rounded-2xl border border-rose-200 shadow-sm p-4 flex items-center gap-3">
           <IconBan className="w-5 h-5 text-rose-500 shrink-0" />
           <div>
-            <p className="text-sm font-medium text-rose-700">Đơn hàng đã bị hủy</p>
+            <p className="text-sm font-medium text-rose-700">
+              Đơn hàng đã bị hủy
+            </p>
             {order.cancelReason && (
-              <p className="text-xs text-rose-600 mt-0.5">Lý do: {order.cancelReason}</p>
+              <p className="text-xs text-rose-600 mt-0.5">
+                Lý do: {order.cancelReason}
+              </p>
             )}
           </div>
         </div>
@@ -349,7 +371,9 @@ export function SellerActionButtons({
             <div className="flex items-center gap-2 text-blue-700">
               <IconRefresh className="w-4 h-4 shrink-0" />
               <p className="text-sm font-medium">
-                {isLocalPickup ? "Người mua đang chuẩn bị trả hàng" : "Người mua đang gửi hàng hoàn"}
+                {isLocalPickup
+                  ? "Người mua đang chuẩn bị trả hàng"
+                  : "Người mua đang gửi hàng hoàn"}
               </p>
             </div>
             <p className="text-xs text-blue-600 mt-1 ml-6">
@@ -362,7 +386,7 @@ export function SellerActionButtons({
             {!isLocalPickup && onReturnTrackingClick && (
               <button
                 onClick={onReturnTrackingClick}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-blue-600 text-white hover:bg-blue-700 font-semibold text-sm transition-colors shadow-sm"
+                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-blue-600 text-white hover:bg-blue-700 font-bold text-sm transition-colors shadow-sm"
               >
                 <IconTruck className="w-4 h-4" />
                 Xem vận đơn hoàn
@@ -372,7 +396,7 @@ export function SellerActionButtons({
               <button
                 onClick={onConfirmReturnReceived}
                 disabled={updatingStatus}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-semibold text-sm transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-bold text-sm transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <IconCircleCheck className="w-4 h-4" />
                 {updatingStatus ? "Đang xử lý..." : "Xác nhận đã nhận lại hàng"}
@@ -381,7 +405,7 @@ export function SellerActionButtons({
             {onChatClick && (
               <button
                 onClick={onChatClick}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-semibold text-sm transition-colors"
+                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-bold text-sm transition-colors"
               >
                 <IconMessage className="w-4 h-4" />
                 Nhắn tin người mua
@@ -402,7 +426,9 @@ export function SellerActionButtons({
           <div className="p-4 bg-emerald-50 border-b border-emerald-200">
             <div className="flex items-center gap-2 text-emerald-700">
               <IconCircleCheck className="w-4 h-4 shrink-0" />
-              <p className="text-sm font-medium">Đã nhận hàng hoàn — chờ admin xử lý hoàn tiền</p>
+              <p className="text-sm font-medium">
+                Đã nhận hàng hoàn — chờ admin xử lý hoàn tiền
+              </p>
             </div>
             <p className="text-xs text-emerald-600 mt-1 ml-6">
               Admin sẽ xử lý hoàn tiền cho người mua trong thời gian sớm nhất.
@@ -412,7 +438,7 @@ export function SellerActionButtons({
             <div className="p-4">
               <button
                 onClick={onChatClick}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-semibold text-sm transition-colors"
+                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-bold text-sm transition-colors"
               >
                 <IconMessage className="w-4 h-4" />
                 Nhắn tin người mua
@@ -432,7 +458,9 @@ export function SellerActionButtons({
         <div className="bg-blue-50 rounded-2xl border border-blue-200 shadow-sm p-4 flex items-center gap-3">
           <IconRefresh className="w-5 h-5 text-blue-500 shrink-0" />
           <p className="text-sm font-medium text-blue-700">
-            {status === "refunded" ? "Đơn hàng đã được hoàn tiền." : "Yêu cầu hoàn tiền đã được chấp thuận."}
+            {status === "refunded"
+              ? "Đơn hàng đã được hoàn tiền."
+              : "Yêu cầu hoàn tiền đã được chấp thuận."}
           </p>
         </div>
       </>

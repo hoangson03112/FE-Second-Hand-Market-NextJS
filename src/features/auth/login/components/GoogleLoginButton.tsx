@@ -5,13 +5,16 @@ interface GoogleLoginButtonProps {
   disabled?: boolean;
 }
 
-export default function GoogleLoginButton({ onClick, disabled }: GoogleLoginButtonProps) {
+export default function GoogleLoginButton({
+  onClick,
+  disabled,
+}: GoogleLoginButtonProps) {
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="group flex h-[52px] w-full items-center justify-center gap-3 rounded-[2px] border border-luxury-ink/15 bg-white/60 px-6 text-[11px] font-semibold uppercase tracking-[0.2em] text-luxury-ink backdrop-blur-sm transition-all duration-300 hover:border-luxury-ink/35 hover:bg-white focus:outline-none focus-visible:ring-[3px] focus-visible:ring-accent/15 disabled:pointer-events-none disabled:opacity-50"
+      className="group flex h-[52px] w-full items-center justify-center gap-3 rounded-[2px] border border-luxury-ink/15 bg-white/60 px-6 text-[11px] font-bold uppercase tracking-[0.2em] text-luxury-ink backdrop-blur-sm transition-all duration-300 hover:border-luxury-ink/35 hover:bg-white focus:outline-none focus-visible:ring-[3px] focus-visible:ring-accent/15 disabled:pointer-events-none disabled:opacity-50"
     >
       <GoogleIcon className="h-[18px] w-[18px]" />
       <span>Đăng nhập bằng Google</span>

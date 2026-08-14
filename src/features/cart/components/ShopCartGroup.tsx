@@ -58,14 +58,14 @@ export default function ShopCartGroup({
             size={28}
             className="w-7 h-7"
           />
-          <span className="text-sm font-semibold text-luxury-ink truncate group-hover:text-taupe-600">
+          <span className="text-sm font-bold text-luxury-ink truncate group-hover:text-taupe-600">
             {sellerName}
           </span>
         </Link>
         <IconChevronRight className="h-4 w-4 text-taupe-400 flex-shrink-0" />
       </div>
 
-      <div className="hidden lg:flex items-center gap-4 px-6 py-3 bg-white border-b border-luxury-ink/10 text-xs uppercase tracking-[0.13em] font-semibold text-primary">
+      <div className="hidden lg:flex items-center gap-4 px-6 py-3 bg-white border-b border-luxury-ink/10 text-xs uppercase tracking-[0.13em] font-bold text-primary">
         <div className="w-4"></div>
         <div className="w-20"></div>
         <div className="flex-1">Sản phẩm</div>

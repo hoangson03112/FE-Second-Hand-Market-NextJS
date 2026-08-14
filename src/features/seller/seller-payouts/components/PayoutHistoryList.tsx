@@ -10,7 +10,11 @@ interface PayoutHistoryListProps {
   error: string | null;
 }
 
-export function PayoutHistoryList({ payouts, total, error }: PayoutHistoryListProps) {
+export function PayoutHistoryList({
+  payouts,
+  total,
+  error,
+}: PayoutHistoryListProps) {
   if (error) {
     return (
       <div className="rounded-xl bg-red-50 border-2 border-red-200 p-4 text-sm text-red-600">
@@ -35,18 +39,24 @@ export function PayoutHistoryList({ payouts, total, error }: PayoutHistoryListPr
       </p>
       <div className="divide-y divide-border">
         {payouts.map((payout) => (
-          <div key={payout._id} className="flex items-center justify-between gap-4 py-3">
+          <div
+            key={payout._id}
+            className="flex items-center justify-between gap-4 py-3"
+          >
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-taupe-900">
+              <p className="text-sm font-bold text-taupe-900">
                 {formatPrice(payout.amount)}
               </p>
               <p className="text-xs text-taupe-500 mt-0.5">
                 {format(payout.createdAt)}
                 {payout.bankName && ` · ${payout.bankName}`}
-                {payout.accountNumber && ` ****${payout.accountNumber.slice(-4)}`}
+                {payout.accountNumber &&
+                  ` ****${payout.accountNumber.slice(-4)}`}
               </p>
               {payout.note && (
-                <p className="text-xs text-taupe-400 mt-0.5 line-clamp-1">{payout.note}</p>
+                <p className="text-xs text-taupe-400 mt-0.5 line-clamp-1">
+                  {payout.note}
+                </p>
               )}
             </div>
             <PayoutStatusBadge status={payout.status} />

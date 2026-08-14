@@ -95,7 +95,7 @@ export function ProductReviewModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 border border-luxury-ink/15 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-600 transition-all duration-300 hover:border-luxury-ink/30 hover:text-luxury-ink"
+              className="flex-1 border border-luxury-ink/15 px-6 py-3 text-[11px] font-bold uppercase tracking-[0.16em] text-neutral-600 transition-all duration-300 hover:border-luxury-ink/30 hover:text-luxury-ink"
               style={{ borderRadius: "2px" }}
             >
               Hủy
@@ -103,7 +103,7 @@ export function ProductReviewModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 bg-luxury-ink px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex-1 bg-luxury-ink px-6 py-3 text-[11px] font-bold uppercase tracking-[0.16em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-50"
               style={{ borderRadius: "2px" }}
             >
               {isSubmitting ? "Đang gửi..." : "Gửi đánh giá"}

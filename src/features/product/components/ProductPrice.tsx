@@ -23,12 +23,12 @@ export default function ProductPrice({
             <span className="text-4xl font-normal tracking-tight text-primary md:text-base group-hover:text-blush-600">
               {formattedPrice || "Liên hệ"}
             </span>
-            <span className="px-2 py-0.5 text-xs font-semibold uppercase tracking-[0.2em] text-blush-600 bg-blush-50 border border-blush-200 rounded-[2px]">
+            <span className="px-2 py-0.5 text-xs font-bold uppercase tracking-[0.2em] text-blush-600 bg-blush-50 border border-blush-200 rounded-[2px]">
               Giá đặc biệt
             </span>
           </div>
           <div className="flex items-center gap-3 text-xs uppercase tracking-wide">
-            <span className="text-taupe-400 line-through font-semibold">
+            <span className="text-taupe-400 line-through font-bold">
               {formatPrice(originalPrice)}
             </span>
             <span className="font-bold text-blush-600">
@@ -45,7 +45,7 @@ export default function ProductPrice({
             {formattedPrice || "Liên hệ"}
           </span>
           {originalPrice && originalPrice > price && (
-            <span className="text-sm font-semibold text-taupe-400 line-through uppercase tracking-wide">
+            <span className="text-sm font-bold text-taupe-400 line-through uppercase tracking-wide">
               {formatPrice(originalPrice)}
             </span>
           )}

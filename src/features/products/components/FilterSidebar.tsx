@@ -81,7 +81,7 @@ function FilterGroup({
           >
             {String(index).padStart(2, "0")}
           </span>
-          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-600 transition-colors group-hover:text-luxury-ink">
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-600 transition-colors group-hover:text-luxury-ink">
             {title}
           </span>
         </div>
@@ -352,7 +352,7 @@ export default function FilterSidebar({
 
       {typeof resultCount === "number" && (
         <p className="border-b border-luxury-ink/6 py-3 text-[11px] text-neutral-500">
-          <span className="font-semibold text-luxury-ink">
+          <span className="font-bold text-luxury-ink">
             {resultCount.toLocaleString("vi-VN")}
           </span>{" "}
           sản phẩm phù hợp

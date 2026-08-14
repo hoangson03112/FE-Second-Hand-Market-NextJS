@@ -78,13 +78,16 @@ export function BecomeSellerView({
           <button
             type="button"
             onClick={onBack}
-            className="group flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-neutral-500 transition-colors hover:text-luxury-ink"
+            className="group flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-neutral-500 transition-colors hover:text-luxury-ink"
           >
-            <IconArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" strokeWidth={1.75} />
+            <IconArrowLeft
+              className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5"
+              strokeWidth={1.75}
+            />
             Quay lại
           </button>
           <span className="h-4 w-px bg-luxury-ink/12" aria-hidden />
-          <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-luxury-ink">
+          <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-luxury-ink">
             Đăng ký Người bán
           </span>
         </div>
@@ -92,7 +95,10 @@ export function BecomeSellerView({
 
       <div className="mx-auto w-full max-w-4xl space-y-6 px-4 py-10 sm:px-6 md:py-14">
         {/* ── HERO — luxury-ink card, đồng bộ LuxuryCtaSection ── */}
-        <div className="relative overflow-hidden bg-luxury-ink px-6 py-8 md:px-10 md:py-10" style={{ borderRadius: "2px" }}>
+        <div
+          className="relative overflow-hidden bg-luxury-ink px-6 py-8 md:px-10 md:py-10"
+          style={{ borderRadius: "2px" }}
+        >
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0 opacity-[0.04]"
@@ -105,7 +111,8 @@ export function BecomeSellerView({
             aria-hidden
             className="pointer-events-none absolute -right-10 -top-16 h-56 w-56 opacity-[0.16]"
             style={{
-              background: "radial-gradient(circle, var(--luxury-champagne) 0%, transparent 70%)",
+              background:
+                "radial-gradient(circle, var(--luxury-champagne) 0%, transparent 70%)",
             }}
           />
 
@@ -114,17 +121,27 @@ export function BecomeSellerView({
               className="flex h-12 w-12 shrink-0 items-center justify-center border border-luxury-champagne/30 bg-luxury-champagne/10"
               style={{ borderRadius: "2px" }}
             >
-              <IconBuildingStore className="h-6 w-6 text-luxury-champagne" strokeWidth={1.5} />
+              <IconBuildingStore
+                className="h-6 w-6 text-luxury-champagne"
+                strokeWidth={1.5}
+              />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-luxury-champagne">
-                {requiresVerification ? "Xác minh tài khoản" : "Bắt đầu hành trình"}
+              <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-luxury-champagne">
+                {requiresVerification
+                  ? "Xác minh tài khoản"
+                  : "Bắt đầu hành trình"}
               </p>
               <h1
-                style={{ fontFamily: "var(--font-droid-serif), serif", fontWeight: 400 }}
+                style={{
+                  fontFamily: "var(--font-droid-serif), serif",
+                  fontWeight: 400,
+                }}
                 className="mt-2 text-[clamp(1.4rem,3vw,1.9rem)] leading-tight text-luxury-ivory"
               >
-                {requiresVerification ? "Xác minh tài khoản Seller" : "Mở gian hàng của bạn"}
+                {requiresVerification
+                  ? "Xác minh tài khoản Seller"
+                  : "Mở gian hàng của bạn"}
               </h1>
               <p className="mt-3 max-w-lg text-sm leading-relaxed text-luxury-ivory/65">
                 {requiresVerification
@@ -134,8 +151,14 @@ export function BecomeSellerView({
 
               <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2.5">
                 {PERKS.map(({ icon: Icon, text }) => (
-                  <div key={text} className="flex items-center gap-2 text-xs text-luxury-ivory/75">
-                    <Icon className="h-3.5 w-3.5 shrink-0 text-luxury-champagne" strokeWidth={1.75} />
+                  <div
+                    key={text}
+                    className="flex items-center gap-2 text-xs text-luxury-ivory/75"
+                  >
+                    <Icon
+                      className="h-3.5 w-3.5 shrink-0 text-luxury-champagne"
+                      strokeWidth={1.75}
+                    />
                     {text}
                   </div>
                 ))}
@@ -145,27 +168,34 @@ export function BecomeSellerView({
         </div>
 
         {/* ── PRODUCT LIMIT NOTICE ── */}
-        {productLimit && requiresVerification && requestStatus !== "approved" && (
-          <div
-            className="flex items-start gap-3 border border-luxury-champagne/30 bg-luxury-champagne/8 px-4 py-3.5"
-            style={{ borderRadius: "2px" }}
-          >
-            <IconClock className="mt-0.5 h-4 w-4 shrink-0 text-taupe-700" strokeWidth={1.75} />
-            <p className="text-xs leading-relaxed text-neutral-700">
-              Bạn đã đăng{" "}
-              <span className="font-semibold text-luxury-ink">
-                {productLimit.totalProducts}/{productLimit.limit}
-              </span>{" "}
-              sản phẩm. Xác minh tài khoản để đăng không giới hạn.
-            </p>
-          </div>
-        )}
+        {productLimit &&
+          requiresVerification &&
+          requestStatus !== "approved" && (
+            <div
+              className="flex items-start gap-3 border border-luxury-champagne/30 bg-luxury-champagne/8 px-4 py-3.5"
+              style={{ borderRadius: "2px" }}
+            >
+              <IconClock
+                className="mt-0.5 h-4 w-4 shrink-0 text-taupe-700"
+                strokeWidth={1.75}
+              />
+              <p className="text-xs leading-relaxed text-neutral-700">
+                Bạn đã đăng{" "}
+                <span className="font-bold text-luxury-ink">
+                  {productLimit.totalProducts}/{productLimit.limit}
+                </span>{" "}
+                sản phẩm. Xác minh tài khoản để đăng không giới hạn.
+              </p>
+            </div>
+          )}
 
         {/* ── STATES ── */}
         {isCheckingStatus ? (
           <div className="flex flex-col items-center justify-center gap-3 py-24">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-luxury-ink/15 border-t-luxury-champagne" />
-            <p className="text-[11px] uppercase tracking-[0.18em] text-taupe-400">Đang kiểm tra hồ sơ...</p>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-taupe-400">
+              Đang kiểm tra hồ sơ...
+            </p>
           </div>
         ) : hasRequest && requestStatus === "pending" ? (
           <StatusCard
@@ -176,7 +206,7 @@ export function BecomeSellerView({
           >
             <Link
               href="/"
-              className="group mt-4 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-luxury-ink transition-colors hover:text-accent"
+              className="group mt-4 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-luxury-ink transition-colors hover:text-accent"
             >
               Về trang chủ
               <IconArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -187,7 +217,10 @@ export function BecomeSellerView({
             tone="rejected"
             icon={IconCircleX}
             title="Yêu cầu đã bị từ chối"
-            description={apiError || "Yêu cầu của bạn đã bị từ chối. Vui lòng liên hệ hỗ trợ để được giải đáp."}
+            description={
+              apiError ||
+              "Yêu cầu của bạn đã bị từ chối. Vui lòng liên hệ hỗ trợ để được giải đáp."
+            }
           />
         ) : null}
 
@@ -197,7 +230,11 @@ export function BecomeSellerView({
             <ErrorMessage message={apiError} />
 
             <TimelineStep index={1} label="Thông tin ngân hàng" isLast={false}>
-              <BankInfoSection values={values} errors={errors} onChange={handleChange} />
+              <BankInfoSection
+                values={values}
+                errors={errors}
+                onChange={handleChange}
+              />
             </TimelineStep>
 
             <TimelineStep index={2} label="Ảnh CCCD/CMND" isLast={false}>
@@ -210,14 +247,20 @@ export function BecomeSellerView({
             </TimelineStep>
 
             <TimelineStep index={3} label="Điều khoản & chính sách" isLast>
-              <TermsSection values={values} errors={errors} onChange={handleChange} />
+              <TermsSection
+                values={values}
+                errors={errors}
+                onChange={handleChange}
+              />
             </TimelineStep>
 
             <div className="flex flex-col gap-2.5 pt-2 sm:flex-row">
               <button
                 type="submit"
-                disabled={isLoading || (hasRequest && requestStatus === "pending")}
-                className="group inline-flex flex-1 items-center justify-center gap-2 bg-luxury-ink px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={
+                  isLoading || (hasRequest && requestStatus === "pending")
+                }
+                className="group inline-flex flex-1 items-center justify-center gap-2 bg-luxury-ink px-8 py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-50"
                 style={{ borderRadius: "2px" }}
               >
                 {isLoading ? (
@@ -227,7 +270,9 @@ export function BecomeSellerView({
                   </>
                 ) : (
                   <>
-                    {requiresVerification ? "Xác minh tài khoản seller" : "Bắt đầu bán hàng"}
+                    {requiresVerification
+                      ? "Xác minh tài khoản seller"
+                      : "Bắt đầu bán hàng"}
                     <IconArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </>
                 )}
@@ -235,7 +280,7 @@ export function BecomeSellerView({
               <button
                 type="button"
                 onClick={onBack}
-                className="flex-1 border border-luxury-ink/15 px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-neutral-600 transition-all duration-300 hover:border-luxury-ink/30 hover:text-luxury-ink sm:flex-none"
+                className="flex-1 border border-luxury-ink/15 px-8 py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-neutral-600 transition-all duration-300 hover:border-luxury-ink/30 hover:text-luxury-ink sm:flex-none"
                 style={{ borderRadius: "2px" }}
               >
                 Hủy
@@ -273,10 +318,12 @@ function TimelineStep({
         >
           {String(index).padStart(2, "0")}
         </span>
-        {!isLast && <span className="mt-2 w-px flex-1 bg-luxury-ink/10" aria-hidden />}
+        {!isLast && (
+          <span className="mt-2 w-px flex-1 bg-luxury-ink/10" aria-hidden />
+        )}
       </div>
       <div className="min-w-0 flex-1 pb-1">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
+        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-500">
           {label}
         </p>
         {children}
@@ -317,16 +364,31 @@ function StatusCard({
         }
         style={{ borderRadius: "2px" }}
       >
-        <Icon className={isPending ? "h-5 w-5 text-luxury-champagne" : "h-5 w-5 text-white"} strokeWidth={1.75} />
+        <Icon
+          className={
+            isPending ? "h-5 w-5 text-luxury-champagne" : "h-5 w-5 text-white"
+          }
+          strokeWidth={1.75}
+        />
       </div>
       <div className="min-w-0">
         <h3
           style={{ fontFamily: "var(--font-droid-serif), serif" }}
-          className={isPending ? "text-base font-normal text-luxury-ink" : "text-base font-normal text-red-700"}
+          className={
+            isPending
+              ? "text-base font-normal text-luxury-ink"
+              : "text-base font-normal text-red-700"
+          }
         >
           {title}
         </h3>
-        <p className={isPending ? "mt-1.5 text-xs leading-relaxed text-neutral-600" : "mt-1.5 text-xs leading-relaxed text-red-700/80"}>
+        <p
+          className={
+            isPending
+              ? "mt-1.5 text-xs leading-relaxed text-neutral-600"
+              : "mt-1.5 text-xs leading-relaxed text-red-700/80"
+          }
+        >
           {description}
         </p>
         {children}

@@ -110,7 +110,7 @@ function ConversationItem({
       </div>
 
       <div className="flex-1 min-w-0">
-        <p className="font-semibold text-lg truncate text-taupe-900 mb-1">
+        <p className="font-bold text-lg truncate text-taupe-900 mb-1">
           {conversation.name}
         </p>
         {conversation.lastMessage && (
@@ -143,7 +143,7 @@ export function ChatConversationList({
         <div className="bg-primary/10 p-7 rounded-full mb-5">
           <IconMessageCircle className="w-20 h-20 text-primary" />
         </div>
-        <h3 className="font-semibold text-xl text-taupe-900 mb-2">
+        <h3 className="font-bold text-xl text-taupe-900 mb-2">
           Chưa có cuộc trò chuyện
         </h3>
         <p className="text-base text-taupe-500 max-w-md">
@@ -161,7 +161,7 @@ export function ChatConversationList({
       {groups.map((group) => (
         <div key={group.label}>
           <div className="sticky top-0 z-10 px-6 py-2 bg-taupe-50/80 backdrop-blur-sm border-y border-border">
-            <span className="text-xs font-semibold uppercase tracking-wider text-taupe-500">
+            <span className="text-xs font-bold uppercase tracking-wider text-taupe-500">
               {group.label}
             </span>
           </div>

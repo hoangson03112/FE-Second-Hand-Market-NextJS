@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { OrderService } from "@/services/order.service";
 import type { SellerBankInfo } from "@/types/order";
@@ -18,6 +18,9 @@ export type OrderLite = {
   createdAt: string;
   paymentMethod?: string;
 };
+
+/** Client-side guard matching the copy shown on the upload dropzone. */
+export const PROOF_MAX_BYTES = 10 * 1024 * 1024;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -58,23 +61,33 @@ export function usePayment() {
   const orderId = searchParams.get("orderId");
   const [order, setOrder] = useState<OrderLite | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [secondsLeft, setSecondsLeft] = useState<number | null>(null);
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [proofPreviewUrl, setProofPreviewUrl] = useState<string | null>(null);
   const [isConfirmingPayment, setIsConfirmingPayment] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
   const [paymentSuccess, setPaymentSuccess] = useState<string | null>(null);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [bankInfo, setBankInfo] = useState<SellerBankInfo | null>(null);
   const [bankInfoLoading, setBankInfoLoading] = useState(true);
   const [bankInfoError, setBankInfoError] = useState<string | null>(null);
   const [isCancelling, setIsCancelling] = useState(false);
   const toast = useToast();
 
+  // `useToast()` builds a fresh object on every render, so referencing it
+  // directly from the fetch effect's dependency array re-ran that effect after
+  // every state update — an endless refetch loop. Read it through a ref.
+  const toastRef = useRef(toast);
+  toastRef.current = toast;
+
   useEffect(() => {
     if (!orderId) {
       router.push("/");
       return;
     }
+
+    let cancelled = false;
 
     const fetchOrder = async () => {
       try {
@@ -83,39 +96,45 @@ export function usePayment() {
         if (!normalized) {
           throw new Error("Dữ liệu đơn hàng không hợp lệ.");
         }
+        if (cancelled) return;
         setOrder(normalized);
       } catch (error) {
-        console.error("Error fetching order:", error);
-        toast.error(getErrorMessage(error, "Không thể tải thông tin đơn hàng"));
-        router.push("/");
+        if (cancelled) return;
+        const message = getErrorMessage(
+          error,
+          "Không thể tải thông tin đơn hàng",
+        );
+        setLoadError(message);
+        toastRef.current.error(message);
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     };
 
     const fetchBankInfo = async () => {
-      if (!orderId) return;
       setBankInfoLoading(true);
       setBankInfoError(null);
       try {
         const info = await OrderService.getSellerBankInfo(orderId);
+        if (cancelled) return;
         setBankInfo(info);
       } catch (error) {
-        console.error("Error fetching bank info:", error);
-        const msg = getErrorMessage(
-          error,
-          "Không thể tải thông tin ngân hàng"
-        );
+        if (cancelled) return;
+        const msg = getErrorMessage(error, "Không thể tải thông tin ngân hàng");
         setBankInfoError(msg);
-        toast.error(msg);
+        toastRef.current.error(msg);
       } finally {
-        setBankInfoLoading(false);
+        if (!cancelled) setBankInfoLoading(false);
       }
     };
 
     fetchOrder();
     fetchBankInfo();
-  }, [orderId, router, toast]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [orderId, router]);
 
   const expiresAt = useMemo(() => {
     if (!order?.createdAt) return null;
@@ -136,7 +155,10 @@ export function usePayment() {
             await OrderService.updateStatus(
               orderId,
               "cancelled",
-              "Đơn hàng bị hủy do hết thời gian thanh toán"
+              "Đơn hàng bị hủy do hết thời gian thanh toán",
+            );
+            toastRef.current.error(
+              "Đã hết thời gian thanh toán — đơn hàng đã được hủy.",
             );
           } catch (error) {
             console.error("Error cancelling expired order:", error);
@@ -166,13 +188,16 @@ export function usePayment() {
     return generateVietQRImageUrl(bankInfo);
   }, [bankInfo]);
 
-  const handleCopy = async (text: string) => {
+  /** Copies and reports which field was copied so the UI can confirm it. */
+  const handleCopy = useCallback(async (text: string, field?: string) => {
     try {
       await navigator.clipboard.writeText(text);
+      setCopiedField(field ?? text);
+      window.setTimeout(() => setCopiedField(null), 2000);
     } catch {
-      // ignore
+      toastRef.current.error("Không thể sao chép. Vui lòng copy thủ công.");
     }
-  };
+  }, []);
 
   const isExpired = secondsLeft !== null && secondsLeft <= 0;
 
@@ -192,25 +217,37 @@ export function usePayment() {
       setPaymentError("Đã hết thời gian thanh toán cho đơn này.");
       return;
     }
+    // Previously this reported success even with nothing attached, so the buyer
+    // was told the proof had been sent while no request was ever made.
+    if (!proofFile) {
+      setPaymentError(
+        "Vui lòng tải lên ảnh chụp biên lai chuyển khoản trước khi xác nhận.",
+      );
+      return;
+    }
+    if (!bankInfo) {
+      setPaymentError(
+        "Chưa tải được thông tin ngân hàng của người bán. Vui lòng thử lại.",
+      );
+      return;
+    }
+
     setIsConfirmingPayment(true);
     setPaymentError(null);
     setPaymentSuccess(null);
     try {
-      // Upload proof of payment (screenshot / receipt) if provided
-      if (proofFile && bankInfo) {
-        const form = new FormData();
-        form.append("orderId", orderId);
-        form.append("bankName", bankInfo.bankName);
-        form.append("accountNumber", bankInfo.accountNumber);
-        form.append("accountHolder", bankInfo.accountHolder);
-        form.append("proof", proofFile);
-        await axiosClient.post("/bank-info/payment-proof", form);
-      }
+      const form = new FormData();
+      form.append("orderId", orderId);
+      form.append("bankName", bankInfo.bankName);
+      form.append("accountNumber", bankInfo.accountNumber);
+      form.append("accountHolder", bankInfo.accountHolder);
+      form.append("proof", proofFile);
+      await axiosClient.post("/bank-info/payment-proof", form);
 
       // Bank transfer confirmation is done by admin (POST /orders/:id/confirm-bank-transfer).
       // Buyer only needs to submit the proof; the admin will verify and confirm.
       setPaymentSuccess(
-        "Đã gửi bằng chứng thanh toán thành công. Admin sẽ xác nhận trong vòng 24h."
+        "Đã gửi bằng chứng thanh toán thành công. Admin sẽ xác nhận trong vòng 24h.",
       );
       setProofFile(null);
       setTimeout(() => {
@@ -218,7 +255,10 @@ export function usePayment() {
       }, 2500);
     } catch (error) {
       setPaymentError(
-        getErrorMessage(error, "Không thể gửi bằng chứng thanh toán. Vui lòng thử lại.")
+        getErrorMessage(
+          error,
+          "Không thể gửi bằng chứng thanh toán. Vui lòng thử lại.",
+        ),
       );
     } finally {
       setIsConfirmingPayment(false);
@@ -226,15 +266,33 @@ export function usePayment() {
   };
 
   const setProofFileHandler = (file: File | null) => {
-    setProofFile(file);
     setPaymentError(null);
     setPaymentSuccess(null);
+
+    if (!file) {
+      setProofFile(null);
+      return;
+    }
+    // The dropzone advertises "PNG, JPG, WEBP (MAX. 10MB)" — enforce it here
+    // rather than letting the upload fail server-side.
+    if (!file.type.startsWith("image/")) {
+      setProofFile(null);
+      setPaymentError("Chỉ chấp nhận tệp ảnh (PNG, JPG, WEBP).");
+      return;
+    }
+    if (file.size > PROOF_MAX_BYTES) {
+      setProofFile(null);
+      setPaymentError("Ảnh vượt quá 10MB. Vui lòng chọn ảnh nhỏ hơn.");
+      return;
+    }
+    setProofFile(file);
   };
 
   return {
     orderId,
     order,
     isLoading,
+    loadError,
     secondsLeft,
     formatCountdown,
     proofFile,
@@ -242,6 +300,7 @@ export function usePayment() {
     isConfirmingPayment,
     paymentError,
     paymentSuccess,
+    copiedField,
     bankInfo,
     bankInfoLoading,
     bankInfoError,

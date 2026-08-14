@@ -8,7 +8,7 @@ export default function InvalidTokenError({ message }: InvalidTokenErrorProps) {
   return (
     <div className="space-y-6">
       <div className="flex justify-center">
-        <span className="inline-flex items-center rounded-full border border-destructive/25 bg-destructive/8 px-3 py-1 text-[12px] font-semibold tracking-wide text-destructive">
+        <span className="inline-flex items-center rounded-full border border-destructive/25 bg-destructive/8 px-3 py-1 text-[12px] font-bold tracking-wide text-destructive">
           Liên kết không khả dụng
         </span>
       </div>
@@ -21,7 +21,9 @@ export default function InvalidTokenError({ message }: InvalidTokenErrorProps) {
         </div>
 
         <div className="space-y-2">
-          <h3 className="text-[28px] font-bold leading-tight text-taupe-900">Link không hợp lệ</h3>
+          <h3 className="text-[28px] font-bold leading-tight text-taupe-900">
+            Link không hợp lệ
+          </h3>
           <p className="text-[15px] leading-relaxed text-taupe-600">
             Liên kết đặt lại mật khẩu của bạn đã hết hạn hoặc đã được sử dụng.
           </p>
@@ -29,23 +31,26 @@ export default function InvalidTokenError({ message }: InvalidTokenErrorProps) {
       </div>
 
       <div className="rounded-2xl border border-taupe-200/70 bg-gradient-to-r from-cream-50 to-taupe-50 p-4">
-        <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-taupe-500">Chi tiết</p>
+        <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-taupe-500">
+          Chi tiết
+        </p>
         <p className="mt-2 text-[14px] leading-relaxed text-taupe-700">
-          {message || "Link reset mật khẩu không đúng hoặc đã hết hạn (15 phút)."}
+          {message ||
+            "Link reset mật khẩu không đúng hoặc đã hết hạn (15 phút)."}
         </p>
       </div>
 
       <div className="space-y-3 pt-1">
         <Link
           href="/forgot-password"
-          className="block w-full rounded-xl bg-primary px-4 py-3 text-center text-[15px] font-semibold text-primary-foreground transition-all hover:bg-primary/90"
+          className="block w-full rounded-xl bg-primary px-4 py-3 text-center text-[15px] font-bold text-primary-foreground transition-all hover:bg-primary/90"
         >
           Yêu cầu liên kết mới
         </Link>
 
         <Link
           href="/login"
-          className="block w-full rounded-xl border border-border bg-background px-4 py-3 text-center text-[15px] font-semibold text-foreground transition-colors hover:bg-muted/60"
+          className="block w-full rounded-xl border border-border bg-background px-4 py-3 text-center text-[15px] font-bold text-foreground transition-colors hover:bg-muted/60"
         >
           Quay lại đăng nhập
         </Link>

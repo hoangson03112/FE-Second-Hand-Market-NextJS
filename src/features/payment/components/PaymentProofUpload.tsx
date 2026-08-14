@@ -1,4 +1,13 @@
-import { IconCircleCheck } from "@tabler/icons-react";
+"use client";
+
+import {
+  IconAlertTriangle,
+  IconCircleCheck,
+  IconUpload,
+  IconX,
+} from "@tabler/icons-react";
+import { Eyebrow } from "@/components/shared/Eyebrow";
+import { cn } from "@/lib/utils";
 
 export interface PaymentProofUploadProps {
   proofPreviewUrl: string | null;
@@ -20,40 +29,28 @@ export function PaymentProofUpload({
   const disabled = isExpired || isConfirmingPayment;
 
   return (
-    <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border p-6 shadow-md">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-          <svg
-            className="h-5 w-5 text-primary"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-            />
-          </svg>
-        </div>
-        <div>
-          <h3 className="font-semibold text-taupe-900 text-sm uppercase tracking-wide">Xác nhận thanh toán</h3>
-          <p className="text-xs text-taupe-500">
-            Upload ảnh chụp màn hình chuyển khoản
-          </p>
-        </div>
-      </div>
+    <section className="rounded-[2px] border border-luxury-ink/10 bg-white px-5 py-6 sm:px-6">
+      <Eyebrow>Bước cuối</Eyebrow>
+      <h2
+        style={{ fontFamily: "var(--font-droid-serif), serif" }}
+        className="mt-3 text-lg tracking-tight text-luxury-ink"
+      >
+        Gửi biên lai chuyển khoản
+      </h2>
+      <p className="mt-2.5 text-xs leading-relaxed text-neutral-600">
+        Tải lên ảnh chụp màn hình giao dịch để admin đối chiếu và xác nhận đơn.
+      </p>
 
-      <div className="space-y-4">
+      <div className="mt-6 space-y-4">
         <label
-          className={`relative flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-xl cursor-pointer transition-all ${
+          className={cn(
+            "relative flex h-44 w-full cursor-pointer flex-col items-center justify-center rounded-[2px] border border-dashed transition-all duration-300",
             disabled
-              ? "border-taupe-200 bg-taupe-50 cursor-not-allowed"
+              ? "cursor-not-allowed border-luxury-ink/10 bg-cream-100/60"
               : proofPreviewUrl
-                ? "border-primary/30 bg-primary/5"
-                : "border-taupe-300 bg-taupe-50 hover:border-primary hover:bg-primary/5"
-          }`}
+                ? "border-luxury-ink/25 bg-cream-50"
+                : "border-luxury-ink/20 bg-cream-50/60 hover:border-luxury-ink/45 hover:bg-cream-50",
+          )}
         >
           <input
             type="file"
@@ -62,71 +59,67 @@ export function PaymentProofUpload({
             className="hidden"
             disabled={disabled}
           />
+
           {proofPreviewUrl ? (
-            <div className="relative w-full h-full flex items-center justify-center p-4">
+            <div className="group relative flex h-full w-full items-center justify-center p-3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={proofPreviewUrl}
-                alt="Preview"
-                className="max-w-full max-h-full object-contain rounded-lg"
+                alt="Biên lai đã chọn"
+                className="max-h-full max-w-full rounded-[2px] object-contain"
               />
-              {!disabled && (
-                <div className="absolute inset-0 bg-taupe-900/50 opacity-0 hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center">
-                  <span className="text-white text-sm font-medium">
-                    Click để thay đổi
+              {!disabled ? (
+                <span className="absolute inset-0 flex items-center justify-center bg-luxury-ink/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory">
+                    Chọn ảnh khác
                   </span>
-                </div>
-              )}
+                </span>
+              ) : null}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <svg
-                className="w-10 h-10 mb-3 text-taupe-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                />
-              </svg>
-              <p className="mb-2 text-sm text-taupe-500">
-                <span className="font-semibold text-taupe-700">Click để upload</span> hoặc kéo
-                thả
+            <div className="flex flex-col items-center px-6 text-center">
+              <span className="flex h-10 w-10 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-white">
+                <IconUpload className="h-4 w-4 text-luxury-ink" />
+              </span>
+              <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink">
+                Chọn ảnh biên lai
               </p>
-              <p className="text-xs text-taupe-400">
-                PNG, JPG, WEBP (MAX. 10MB)
+              <p className="mt-2 text-xs text-neutral-500">
+                PNG, JPG hoặc WEBP — tối đa 10MB
               </p>
             </div>
           )}
         </label>
 
-        {paymentError && (
-          <div className="flex items-start gap-2 p-3 bg-red-50 border-2 border-red-200 rounded-xl">
-            <svg
-              className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <p className="text-sm text-red-600">{paymentError}</p>
+        {proofPreviewUrl && !disabled ? (
+          <button
+            type="button"
+            onClick={() => onFileChange(null)}
+            className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 transition-colors hover:text-blush-700"
+          >
+            <IconX className="h-3.5 w-3.5" />
+            Bỏ ảnh đã chọn
+          </button>
+        ) : null}
+
+        {paymentError ? (
+          <div className="flex items-start gap-3 rounded-[2px] border border-blush-300 bg-blush-50 px-4 py-3.5">
+            <IconAlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-blush-700" />
+            <p className="text-xs leading-relaxed text-blush-800">
+              {paymentError}
+            </p>
           </div>
-        )}
-        {paymentSuccess && (
-          <div className="flex items-start gap-2 p-3 bg-emerald-50 border-2 border-emerald-200 rounded-xl">
-            <IconCircleCheck className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-emerald-700">{paymentSuccess}</p>
+        ) : null}
+
+        {paymentSuccess ? (
+          <div className="flex items-start gap-3 rounded-[2px] border border-accent/40 bg-taupe-50 px-4 py-3.5">
+            <IconCircleCheck className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+            <p className="text-xs leading-relaxed text-taupe-800">
+              {paymentSuccess}
+            </p>
           </div>
-        )}
+        ) : null}
       </div>
-    </div>
+    </section>
   );
 }

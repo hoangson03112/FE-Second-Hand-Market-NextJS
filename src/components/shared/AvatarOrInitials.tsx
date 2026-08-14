@@ -23,7 +23,9 @@ export function AvatarOrInitials({
 }: AvatarOrInitialsProps) {
   const [imgError, setImgError] = useState(false);
   const url =
-    typeof avatar === "string" ? avatar : (avatar as { url?: string })?.url ?? null;
+    typeof avatar === "string"
+      ? avatar
+      : ((avatar as { url?: string })?.url ?? null);
 
   if (url && !imgError) {
     return (
@@ -41,7 +43,7 @@ export function AvatarOrInitials({
   const initials = getUserInitials(fullName) || "?";
   return (
     <span
-      className={`flex items-center justify-center rounded-full bg-primary/10 text-primary font-semibold flex-shrink-0 ${className}`}
+      className={`flex items-center justify-center rounded-full bg-primary/10 text-primary font-bold flex-shrink-0 ${className}`}
       style={{ width: size, height: size, fontSize: Math.max(10, size * 0.4) }}
     >
       {initials}

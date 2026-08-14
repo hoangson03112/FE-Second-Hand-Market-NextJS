@@ -62,13 +62,9 @@ export function PasswordForm({
   return (
     <div>
       <div className="px-6 py-6 border-b border-luxury-ink/10">
-        <h2
-          className="text-2xl text-luxury-ink font-droid-serif"
-        >
-          {title}
-        </h2>
+        <h2 className="text-2xl text-luxury-ink font-droid-serif">{title}</h2>
 
-        <p className="text-2xs uppercase tracking-[0.13em] font-semibold text-charcoal-400 mt-2">
+        <p className="text-2xs uppercase tracking-[0.13em] font-bold text-charcoal-400 mt-2">
           {description}
         </p>
       </div>
@@ -78,7 +74,7 @@ export function PasswordForm({
           <div className="flex gap-3">
             <IconShieldCheck className="w-5 h-5 text-luxury-ink shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-xs uppercase tracking-wide font-semibold text-luxury-ink">
+              <h4 className="text-xs uppercase tracking-wide font-bold text-luxury-ink">
                 Mẹo bảo mật
               </h4>
               <ul className="text-xs text-luxury-ink/80 mt-2 space-y-1">
@@ -104,7 +100,7 @@ export function PasswordForm({
         <div className="space-y-6 max-w-3xl">
           {!isGoogleUser && (
             <div>
-              <label className="block text-[11px] uppercase tracking-wide font-semibold text-luxury-ink mb-2">
+              <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
                 Mật khẩu hiện tại <span className="text-blush-600">*</span>
               </label>
               <div className="relative">
@@ -121,7 +117,7 @@ export function PasswordForm({
                 <button
                   type="button"
                   onClick={() => setShowOldPassword(!showOldPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-wide font-semibold text-luxury-ink hover:text-luxury-ink/70"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-wide font-bold text-luxury-ink hover:text-luxury-ink/70"
                 >
                   {showOldPassword ? "Ẩn" : "Hiện"}
                 </button>
@@ -130,7 +126,7 @@ export function PasswordForm({
           )}
 
           <div>
-            <label className="block text-[11px] uppercase tracking-wide font-semibold text-luxury-ink mb-2">
+            <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
               {isGoogleUser ? "Mật khẩu" : "Mật khẩu mới"}{" "}
               <span className="text-blush-600">*</span>
             </label>
@@ -153,7 +149,7 @@ export function PasswordForm({
               <button
                 type="button"
                 onClick={() => setShowNewPassword(!showNewPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-wide font-semibold text-luxury-ink hover:text-luxury-ink/70"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-wide font-bold text-luxury-ink hover:text-luxury-ink/70"
               >
                 {showNewPassword ? "Ẩn" : "Hiện"}
               </button>
@@ -184,7 +180,7 @@ export function PasswordForm({
           </div>
 
           <div>
-            <label className="block text-[11px] uppercase tracking-wide font-semibold text-luxury-ink mb-2">
+            <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
               Xác nhận {isGoogleUser ? "mật khẩu" : "mật khẩu mới"}{" "}
               <span className="text-blush-600">*</span>
             </label>
@@ -202,7 +198,7 @@ export function PasswordForm({
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-2xs uppercase tracking-wide font-semibold text-luxury-ink hover:text-luxury-ink/70"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-2xs uppercase tracking-wide font-bold text-luxury-ink hover:text-luxury-ink/70"
               >
                 {showConfirmPassword ? "Ẩn" : "Hiện"}
               </button>
@@ -235,7 +231,7 @@ export function PasswordForm({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.2em] text-[11px] font-semibold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
+              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.2em] text-[11px] font-bold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
             >
               {isSubmitting ? (
                 <>

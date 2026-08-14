@@ -39,7 +39,7 @@ export function PickupAddressSection({
         <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
           <IconMapPin className="w-3.5 h-3.5 text-primary" />
         </div>
-        <h3 className="text-xs font-semibold text-foreground">Địa chỉ lấy hàng</h3>
+        <h3 className="text-xs font-bold text-foreground">Địa chỉ lấy hàng</h3>
         <span className="ml-auto text-[10px] font-medium px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
           Tài khoản mua hàng
         </span>
@@ -66,7 +66,9 @@ export function PickupAddressSection({
               ))}
             </select>
             {errors.provinceId && (
-              <p className="mt-0.5 text-xs text-destructive">{errors.provinceId}</p>
+              <p className="mt-0.5 text-xs text-destructive">
+                {errors.provinceId}
+              </p>
             )}
           </div>
 
@@ -91,7 +93,9 @@ export function PickupAddressSection({
               ))}
             </select>
             {errors.districtId && (
-              <p className="mt-0.5 text-xs text-destructive">{errors.districtId}</p>
+              <p className="mt-0.5 text-xs text-destructive">
+                {errors.districtId}
+              </p>
             )}
           </div>
 
@@ -116,7 +120,9 @@ export function PickupAddressSection({
               ))}
             </select>
             {errors.wardCode && (
-              <p className="mt-0.5 text-xs text-destructive">{errors.wardCode}</p>
+              <p className="mt-0.5 text-xs text-destructive">
+                {errors.wardCode}
+              </p>
             )}
           </div>
         </div>
@@ -136,7 +142,9 @@ export function PickupAddressSection({
               className={inputClass}
             />
             {errors.specificAddress && (
-              <p className="mt-0.5 text-xs text-destructive">{errors.specificAddress}</p>
+              <p className="mt-0.5 text-xs text-destructive">
+                {errors.specificAddress}
+              </p>
             )}
           </div>
 
@@ -154,7 +162,9 @@ export function PickupAddressSection({
               className={inputClass}
             />
             {errors.phoneNumber && (
-              <p className="mt-0.5 text-xs text-destructive">{errors.phoneNumber}</p>
+              <p className="mt-0.5 text-xs text-destructive">
+                {errors.phoneNumber}
+              </p>
             )}
           </div>
         </div>

@@ -20,14 +20,20 @@ export default function ForgotPasswordForm({
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
       <div className="rounded-2xl border border-taupe-200/70 bg-gradient-to-r from-cream-50 to-taupe-50 p-4 sm:p-5">
-        <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-taupe-500">Bảo mật tài khoản</p>
+        <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-taupe-500">
+          Bảo mật tài khoản
+        </p>
         <p className="mt-2 text-[14px] leading-relaxed text-taupe-700">
-          Nhập email đã đăng ký để nhận liên kết đặt lại mật khẩu. Liên kết chỉ có hiệu lực trong 15 phút.
+          Nhập email đã đăng ký để nhận liên kết đặt lại mật khẩu. Liên kết chỉ
+          có hiệu lực trong 15 phút.
         </p>
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="email" className="block text-[14px] font-semibold text-taupe-900">
+        <label
+          htmlFor="email"
+          className="block text-[14px] font-bold text-taupe-900"
+        >
           Email đã đăng ký <span className="text-destructive ml-1">*</span>
         </label>
         <div className="relative">
@@ -39,7 +45,9 @@ export default function ForgotPasswordForm({
             name="email"
             type="email"
             value={email}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onEmailChange(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onEmailChange(e.target.value)
+            }
             placeholder="VD: email@example.com"
             required
             className="pl-12 pr-4 py-6 border-foreground/20 focus-visible:border-foreground focus-visible:ring-foreground/10 transition-all text-foreground bg-transparent placeholder:text-foreground/40 text-[15px] rounded-xl"
@@ -48,7 +56,8 @@ export default function ForgotPasswordForm({
       </div>
 
       <InfoBox variant="warning" title="Lưu ý bảo mật">
-        Liên kết đặt lại mật khẩu sẽ được gửi đến email của bạn và <strong>hết hạn sau 15 phút</strong>.
+        Liên kết đặt lại mật khẩu sẽ được gửi đến email của bạn và{" "}
+        <strong>hết hạn sau 15 phút</strong>.
       </InfoBox>
 
       <button
@@ -68,7 +77,7 @@ export default function ForgotPasswordForm({
         Nhớ mật khẩu rồi?{" "}
         <Link
           href="/login"
-          className="font-semibold text-primary hover:text-primary/80 inline-flex items-center gap-1.5 transition-colors"
+          className="font-bold text-primary hover:text-primary/80 inline-flex items-center gap-1.5 transition-colors"
         >
           Đăng nhập ngay
           <ArrowRightIcon className="w-4 h-4" />
@@ -77,4 +86,3 @@ export default function ForgotPasswordForm({
     </form>
   );
 }
-

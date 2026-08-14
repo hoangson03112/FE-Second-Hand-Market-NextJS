@@ -55,12 +55,17 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
   return (
     <div className="rounded-2xl border-2 border-border bg-taupe-50/60 p-3 lg:p-4 space-y-3">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-sm font-semibold text-taupe-900">Địa chỉ kinh doanh / lấy hàng</h3>
-        <span className="text-[11px] font-semibold text-primary uppercase tracking-wide">Bước 1</span>
+        <h3 className="text-sm font-bold text-taupe-900">
+          Địa chỉ kinh doanh / lấy hàng
+        </h3>
+        <span className="text-[11px] font-bold text-primary uppercase tracking-wide">
+          Bước 1
+        </span>
       </div>
       {selectedProvince && selectedDistrict && selectedWard && (
         <p className="text-xs text-taupe-500">
-          {selectedWard.WardName}, {selectedDistrict.DistrictName}, {selectedProvince.ProvinceName}
+          {selectedWard.WardName}, {selectedDistrict.DistrictName},{" "}
+          {selectedProvince.ProvinceName}
         </p>
       )}
 
@@ -102,8 +107,8 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
               {!values.provinceId
                 ? "Chọn Tỉnh trước"
                 : districtsLoading
-                ? "Đang tải..."
-                : "Chọn Quận/Huyện"}
+                  ? "Đang tải..."
+                  : "Chọn Quận/Huyện"}
             </option>
             {districts.map((d) => (
               <option key={d.DistrictID} value={d.DistrictID}>
@@ -128,8 +133,8 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
               {!values.districtId
                 ? "Chọn Quận trước"
                 : wardsLoading
-                ? "Đang tải..."
-                : "Chọn Phường/Xã"}
+                  ? "Đang tải..."
+                  : "Chọn Phường/Xã"}
             </option>
             {wards.map((w) => (
               <option key={w.WardCode} value={w.WardCode}>
@@ -143,7 +148,8 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
           <label className="block text-xs font-medium text-taupe-700 mb-1">
-            Địa chỉ cụ thể (số nhà, đường) <span className="text-red-500">*</span>
+            Địa chỉ cụ thể (số nhà, đường){" "}
+            <span className="text-red-500">*</span>
           </label>
           <input
             type="text"

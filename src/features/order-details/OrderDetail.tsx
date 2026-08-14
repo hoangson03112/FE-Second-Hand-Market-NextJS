@@ -38,14 +38,17 @@ export default function OrderDetail({
           className="flex h-14 w-14 items-center justify-center border border-luxury-ink/10 bg-white"
           style={{ borderRadius: "2px" }}
         >
-          <IconPackageOff className="h-6 w-6 text-taupe-400" strokeWidth={1.5} />
+          <IconPackageOff
+            className="h-6 w-6 text-taupe-400"
+            strokeWidth={1.5}
+          />
         </span>
         <p className="max-w-xs text-sm text-neutral-500">
           Không tìm thấy đơn hàng hoặc bạn không có quyền xem.
         </p>
         <Link
           href="/orders"
-          className="group inline-flex items-center gap-2 bg-luxury-ink px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+          className="group inline-flex items-center gap-2 bg-luxury-ink px-6 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
           style={{ borderRadius: "2px" }}
         >
           Về danh sách đơn hàng

@@ -15,7 +15,12 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { PAGE_SIZE, useSellerOrders, type DateFilter, type SortOption } from "./hooks/useSellerOrders";
+import {
+  PAGE_SIZE,
+  useSellerOrders,
+  type DateFilter,
+  type SortOption,
+} from "./hooks/useSellerOrders";
 import OrderTabs from "./components/OrderTabs";
 import EmptyOrderState from "./components/EmptyOrderState";
 import {
@@ -29,7 +34,10 @@ import { REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER } from "@/constants/refund";
 import { formatPrice } from "@/utils/format/price";
 import { format as formatDateTime, formatDateOnly } from "@/utils/format/date";
 import { formatPaymentMethod, formatShippingMethod } from "@/utils/format";
-import { getOrderStatusLabel, getRefundStatusNotice } from "@/constants/orderStatus";
+import {
+  getOrderStatusLabel,
+  getRefundStatusNotice,
+} from "@/constants/orderStatus";
 import { cn } from "@/lib/utils";
 import {
   getBuyerEmail,
@@ -67,7 +75,10 @@ const REFUND_REQUEST_STATUS_LABELS: Record<string, string> = {
 };
 
 /** order.status thường vẫn là "refund"; chi tiết nằm ở Refund.status */
-function getSellerRefundTodo(orderStatus: string, refundStatus: string | null | undefined) {
+function getSellerRefundTodo(
+  orderStatus: string,
+  refundStatus: string | null | undefined,
+) {
   const rs = refundStatus ?? null;
   if (orderStatus === "refunded") {
     return {
@@ -80,7 +91,8 @@ function getSellerRefundTodo(orderStatus: string, refundStatus: string | null | 
     return {
       tone: "warning" as const,
       title: "Bạn đã từ chối yêu cầu",
-      description: "Buyer có thể khiếu nại lên admin. Theo dõi thông báo nếu có tranh chấp.",
+      description:
+        "Buyer có thể khiếu nại lên admin. Theo dõi thông báo nếu có tranh chấp.",
     };
   }
   if (rs === "disputed") {
@@ -90,11 +102,15 @@ function getSellerRefundTodo(orderStatus: string, refundStatus: string | null | 
       description: "Admin đang xem xét. Không cần bấm duyệt lại trên đơn này.",
     };
   }
-  if (rs === "pending" || ((orderStatus === "refund" || orderStatus === "refund_requested") && !rs)) {
+  if (
+    rs === "pending" ||
+    ((orderStatus === "refund" || orderStatus === "refund_requested") && !rs)
+  ) {
     return {
       tone: "warning" as const,
       title: "Việc cần làm ngay",
-      description: "Kiểm tra lý do hoàn tiền, sau đó chọn Chấp thuận hoặc Từ chối để không quá SLA xử lý.",
+      description:
+        "Kiểm tra lý do hoàn tiền, sau đó chọn Chấp thuận hoặc Từ chối để không quá SLA xử lý.",
     };
   }
   if (rs === "approved" || rs === "return_shipping" || rs === "returning") {
@@ -110,7 +126,8 @@ function getSellerRefundTodo(orderStatus: string, refundStatus: string | null | 
     return {
       tone: "warning" as const,
       title: "Đơn đã sẵn sàng hoàn tiền",
-      description: "Hệ thống đang xử lý chuyển tiền hoàn cho buyer (hoặc chờ thông tin từ buyer).",
+      description:
+        "Hệ thống đang xử lý chuyển tiền hoàn cho buyer (hoặc chờ thông tin từ buyer).",
     };
   }
   if (rs === "completed") {
@@ -134,7 +151,8 @@ function getSellerRefundTodo(orderStatus: string, refundStatus: string | null | 
       return {
         tone: "warning" as const,
         title: "Đơn đã sẵn sàng hoàn tiền",
-        description: "Bạn đã nhận lại hàng. Hệ thống đang chờ admin xử lý hoàn tiền cho buyer.",
+        description:
+          "Bạn đã nhận lại hàng. Hệ thống đang chờ admin xử lý hoàn tiền cho buyer.",
       };
     default:
       return null;
@@ -201,14 +219,17 @@ export default function SellerOrders() {
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [cancelOpen, setCancelOpen] = useState(false);
   const [rejectRefundOpen, setRejectRefundOpen] = useState(false);
-  const pageStart = filteredOrders.length === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
+  const pageStart =
+    filteredOrders.length === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
   const pageEnd = Math.min(page * PAGE_SIZE, filteredOrders.length);
   const selectedOrder = useMemo(
     () =>
-      (selectedOrderId ? paginatedOrders.find((o) => o._id === selectedOrderId) : null) ||
+      (selectedOrderId
+        ? paginatedOrders.find((o) => o._id === selectedOrderId)
+        : null) ||
       paginatedOrders[0] ||
       null,
-    [selectedOrderId, paginatedOrders]
+    [selectedOrderId, paginatedOrders],
   );
 
   useEffect(() => {
@@ -226,26 +247,33 @@ export default function SellerOrders() {
   }, [selectedOrderId, paginatedOrders]);
 
   const selectedOrderProducts = selectedOrder?.products || [];
-  const isSelectedUpdating = selectedOrder ? updatingId === selectedOrder._id : false;
+  const isSelectedUpdating = selectedOrder
+    ? updatingId === selectedOrder._id
+    : false;
   const paymentBadgeClass =
     selectedOrder?.paymentStatus === "paid"
       ? "bg-green-100 text-green-700 border-green-200"
       : selectedOrder?.paymentStatus === "refunded"
-      ? "bg-blue-100 text-blue-700 border-blue-200"
-      : "bg-amber-100 text-amber-700 border-amber-200";
+        ? "bg-blue-100 text-blue-700 border-blue-200"
+        : "bg-amber-100 text-amber-700 border-amber-200";
   const selectedPaymentStatusLabel = selectedOrder
     ? getPaymentStatusLabel(selectedOrder.paymentStatus)
     : "Không xác định";
   const selectedProductAmount = selectedOrder
-    ? selectedOrder.productAmount ??
-      selectedOrder.products.reduce((total, item) => total + (item.price || 0) * (item.quantity || 0), 0)
+    ? (selectedOrder.productAmount ??
+      selectedOrder.products.reduce(
+        (total, item) => total + (item.price || 0) * (item.quantity || 0),
+        0,
+      ))
     : 0;
   const selectedShippingFee = selectedOrder
-    ? selectedOrder.totalShippingFee ?? selectedOrder.shippingFee ?? 0
+    ? (selectedOrder.totalShippingFee ?? selectedOrder.shippingFee ?? 0)
     : 0;
-  const selectedGrandTotal = selectedOrder?.totalAmount ?? selectedProductAmount + selectedShippingFee;
+  const selectedGrandTotal =
+    selectedOrder?.totalAmount ?? selectedProductAmount + selectedShippingFee;
   const refundRequest =
-    selectedOrder?.refundRequestId && typeof selectedOrder.refundRequestId === "object"
+    selectedOrder?.refundRequestId &&
+    typeof selectedOrder.refundRequestId === "object"
       ? selectedOrder.refundRequestId
       : null;
   const refundRequestStatus = refundRequest?.status;
@@ -253,26 +281,30 @@ export default function SellerOrders() {
     ? refundRequestStatus === "rejected"
       ? {
           title: "Bạn đã từ chối yêu cầu hoàn tiền",
-          description: "Buyer có thể khiếu nại lên admin. Bạn không cần thao tác duyệt thêm trên đơn này.",
+          description:
+            "Buyer có thể khiếu nại lên admin. Bạn không cần thao tác duyệt thêm trên đơn này.",
           tone: "warning" as const,
         }
       : refundRequestStatus === "disputed"
-      ? {
-          title: "Khiếu nại đang được admin xem xét",
-          description: "Vui lòng chờ quyết định từ quản trị viên.",
-          tone: "warning" as const,
-        }
-      : getRefundStatusNotice(
-          sellerNoticeStatusFromRefund(selectedOrder.status, refundRequestStatus),
-          "seller",
-        )
+        ? {
+            title: "Khiếu nại đang được admin xem xét",
+            description: "Vui lòng chờ quyết định từ quản trị viên.",
+            tone: "warning" as const,
+          }
+        : getRefundStatusNotice(
+            sellerNoticeStatusFromRefund(
+              selectedOrder.status,
+              refundRequestStatus,
+            ),
+            "seller",
+          )
     : null;
   const sellerRefundNoticeClass =
     sellerRefundNotice?.tone === "success"
       ? "border-emerald-200 bg-emerald-50 text-emerald-800"
       : sellerRefundNotice?.tone === "warning"
-      ? "border-amber-200 bg-amber-50 text-amber-800"
-      : "border-sky-200 bg-sky-50 text-sky-800";
+        ? "border-amber-200 bg-amber-50 text-amber-800"
+        : "border-sky-200 bg-sky-50 text-sky-800";
   const sellerRefundTodo = selectedOrder
     ? getSellerRefundTodo(selectedOrder.status, refundRequestStatus)
     : null;
@@ -280,12 +312,13 @@ export default function SellerOrders() {
     sellerRefundTodo?.tone === "success"
       ? "border-emerald-200 bg-emerald-50 text-emerald-800"
       : sellerRefundTodo?.tone === "warning"
-      ? "border-amber-200 bg-amber-50 text-amber-800"
-      : "border-sky-200 bg-sky-50 text-sky-800";
+        ? "border-amber-200 bg-amber-50 text-amber-800"
+        : "border-sky-200 bg-sky-50 text-sky-800";
 
   const canSellerApproveRejectRefund =
     !!selectedOrder &&
-    (selectedOrder.status === "refund_requested" || selectedOrder.status === "refund") &&
+    (selectedOrder.status === "refund_requested" ||
+      selectedOrder.status === "refund") &&
     (refundRequest == null || refundRequest.status === "pending");
   const canSellerConfirmReturn =
     !!selectedOrder &&
@@ -309,19 +342,28 @@ export default function SellerOrders() {
       <main className="mx-auto max-w-8xl px-4 py-6 md:py-8">
         <div className="mb-5 flex items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Quản lý đơn hàng</h1>
+            <h1 className="text-2xl font-bold text-foreground">
+              Quản lý đơn hàng
+            </h1>
             <p className="text-sm text-muted-foreground">
               Theo dõi và xử lý các đơn hàng mới từ người mua.
             </p>
           </div>
           <div className="text-xs font-medium text-muted-foreground">
-            Hôm nay: <span className="text-foreground">{stats.todayOrders}</span> đơn •{" "}
-            <span className="text-foreground">{formatPrice(stats.todayRevenue)}</span>
+            Hôm nay:{" "}
+            <span className="text-foreground">{stats.todayOrders}</span> đơn •{" "}
+            <span className="text-foreground">
+              {formatPrice(stats.todayRevenue)}
+            </span>
           </div>
         </div>
 
         <section className="rounded-2xl border border-border bg-card p-3 shadow-sm">
-          <OrderTabs activeTab={activeTab} onTabChange={setActiveTab} tabCounts={tabCounts} />
+          <OrderTabs
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            tabCounts={tabCounts}
+          />
 
           <div className="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-border bg-background p-2.5">
             <div className="relative min-w-[220px] flex-1">
@@ -374,7 +416,7 @@ export default function SellerOrders() {
             <>
               <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.8fr_1fr]">
                 <div className="rounded-xl border border-border">
-                  <div className="hidden grid-cols-[1.1fr_1fr_1.2fr_0.9fr_1fr_0.8fr] border-b border-border bg-muted/20 px-4 py-3 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground md:grid">
+                  <div className="hidden grid-cols-[1.1fr_1fr_1.2fr_0.9fr_1fr_0.8fr] border-b border-border bg-muted/20 px-4 py-3 text-[11px] font-bold uppercase tracking-wide text-muted-foreground md:grid">
                     <span>Mã đơn</span>
                     <span>Ngày tạo</span>
                     <span>Người mua</span>
@@ -388,15 +430,16 @@ export default function SellerOrders() {
                       const productCount = order.products?.length ?? 0;
                       const isSelected = selectedOrder?._id === order._id;
                       const rowRefundDoc =
-                        order.refundRequestId && typeof order.refundRequestId === "object"
+                        order.refundRequestId &&
+                        typeof order.refundRequestId === "object"
                           ? order.refundRequestId
                           : null;
                       const paymentClass =
                         order.paymentStatus === "paid"
                           ? "bg-green-100 text-green-700 border-green-200"
                           : order.paymentStatus === "refunded"
-                          ? "bg-blue-100 text-blue-700 border-blue-200"
-                          : "bg-amber-100 text-amber-700 border-amber-200";
+                            ? "bg-blue-100 text-blue-700 border-blue-200"
+                            : "bg-amber-100 text-amber-700 border-amber-200";
 
                       return (
                         <button
@@ -405,7 +448,7 @@ export default function SellerOrders() {
                           onClick={() => setSelectedOrderId(order._id)}
                           className={cn(
                             "w-full px-4 py-3 text-left transition-colors hover:bg-muted/20",
-                            isSelected && "bg-primary/5"
+                            isSelected && "bg-primary/5",
                           )}
                         >
                           <div className="grid grid-cols-1 gap-2 md:grid-cols-[1.1fr_1fr_1.2fr_0.9fr_1fr_0.8fr] md:items-center">
@@ -418,29 +461,35 @@ export default function SellerOrders() {
                               </p>
                               {rowRefundDoc && order.status === "refund" && (
                                 <p className="text-[10px] text-primary/80 font-medium mt-0.5">
-                                  {REFUND_REQUEST_STATUS_LABELS[rowRefundDoc.status] ?? rowRefundDoc.status}
+                                  {REFUND_REQUEST_STATUS_LABELS[
+                                    rowRefundDoc.status
+                                  ] ?? rowRefundDoc.status}
                                 </p>
                               )}
                             </div>
-                            <p className="text-xs text-foreground">{formatDateOnly(order.createdAt)}</p>
+                            <p className="text-xs text-foreground">
+                              {formatDateOnly(order.createdAt)}
+                            </p>
                             <p className="truncate text-sm font-medium text-foreground">
                               {getBuyerName(order)}
                             </p>
-                            <p className="text-xs text-muted-foreground">{productCount} sản phẩm</p>
-                            <p className="text-sm font-semibold text-foreground">
+                            <p className="text-xs text-muted-foreground">
+                              {productCount} sản phẩm
+                            </p>
+                            <p className="text-sm font-bold text-foreground">
                               {formatPrice(order.totalAmount)}
                             </p>
                             <span
                               className={cn(
                                 "inline-flex h-6 items-center justify-center rounded-full border px-2 text-[10px] font-bold",
-                                paymentClass
+                                paymentClass,
                               )}
                             >
                               {order.paymentStatus === "paid"
                                 ? "ĐÃ TT"
                                 : order.paymentStatus === "refunded"
-                                ? "ĐÃ HOÀN"
-                                : "CHƯA TT"}
+                                  ? "ĐÃ HOÀN"
+                                  : "CHƯA TT"}
                             </span>
                           </div>
                         </button>
@@ -450,9 +499,14 @@ export default function SellerOrders() {
 
                   <div className="flex flex-col items-center justify-between gap-3 border-t border-border px-4 py-3 md:flex-row">
                     <p className="text-xs text-muted-foreground">
-                      Hiển thị {pageStart}-{pageEnd} trên {filteredOrders.length} kết quả
+                      Hiển thị {pageStart}-{pageEnd} trên{" "}
+                      {filteredOrders.length} kết quả
                     </p>
-                    <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+                    <Pagination
+                      currentPage={page}
+                      totalPages={totalPages}
+                      onPageChange={setPage}
+                    />
                   </div>
                 </div>
 
@@ -479,7 +533,9 @@ export default function SellerOrders() {
                         <div className="grid grid-cols-2 gap-2">
                           <Button
                             size="sm"
-                            onClick={() => handleUpdateStatus(selectedOrder._id, "confirmed")}
+                            onClick={() =>
+                              handleUpdateStatus(selectedOrder._id, "confirmed")
+                            }
                             loading={isSelectedUpdating}
                             leftIcon={<IconCircleCheck className="h-4 w-4" />}
                           >
@@ -510,7 +566,9 @@ export default function SellerOrders() {
                           </Button>
                           <Button
                             size="sm"
-                            onClick={() => handleApproveRefund(selectedOrder._id)}
+                            onClick={() =>
+                              handleApproveRefund(selectedOrder._id)
+                            }
                             loading={isSelectedUpdating}
                             leftIcon={<IconCircleCheck className="h-4 w-4" />}
                           >
@@ -523,7 +581,9 @@ export default function SellerOrders() {
                         <Button
                           size="sm"
                           fullWidth
-                          onClick={() => handleConfirmReturnReceived(selectedOrder._id)}
+                          onClick={() =>
+                            handleConfirmReturnReceived(selectedOrder._id)
+                          }
                           loading={isSelectedUpdating}
                           leftIcon={<IconCircleCheck className="h-4 w-4" />}
                         >
@@ -532,12 +592,19 @@ export default function SellerOrders() {
                       )}
 
                       {sellerRefundTodo && (
-                        <div className={cn("rounded-lg border px-3 py-2.5", sellerRefundTodoClass)}>
-                          <p className="inline-flex items-center gap-1.5 text-xs font-semibold">
+                        <div
+                          className={cn(
+                            "rounded-lg border px-3 py-2.5",
+                            sellerRefundTodoClass,
+                          )}
+                        >
+                          <p className="inline-flex items-center gap-1.5 text-xs font-bold">
                             <IconAlertTriangle className="h-3.5 w-3.5" />
                             {sellerRefundTodo.title}
                           </p>
-                          <p className="mt-1 text-xs">{sellerRefundTodo.description}</p>
+                          <p className="mt-1 text-xs">
+                            {sellerRefundTodo.description}
+                          </p>
                         </div>
                       )}
 
@@ -568,30 +635,47 @@ export default function SellerOrders() {
                           </div>
                         )}
                       {sellerRefundNotice && (
-                        <div className={cn("rounded-lg border px-3 py-2.5", sellerRefundNoticeClass)}>
-                          <p className="text-xs font-semibold">{sellerRefundNotice.title}</p>
-                          <p className="mt-1 text-xs">{sellerRefundNotice.description}</p>
+                        <div
+                          className={cn(
+                            "rounded-lg border px-3 py-2.5",
+                            sellerRefundNoticeClass,
+                          )}
+                        >
+                          <p className="text-xs font-bold">
+                            {sellerRefundNotice.title}
+                          </p>
+                          <p className="mt-1 text-xs">
+                            {sellerRefundNotice.description}
+                          </p>
                         </div>
                       )}
                       {refundRequest && (
                         <div className="rounded-xl border border-border bg-card p-3">
-                          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                          <p className="mb-2 text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
                             Thông tin yêu cầu hoàn tiền
                           </p>
                           <div className="space-y-1.5 text-xs">
                             <p className="text-muted-foreground">
                               Trạng thái:{" "}
                               <span className="font-medium text-foreground">
-                                {REFUND_REQUEST_STATUS_LABELS[refundRequest.status] || refundRequest.status}
+                                {REFUND_REQUEST_STATUS_LABELS[
+                                  refundRequest.status
+                                ] || refundRequest.status}
                               </span>
                             </p>
                             <p className="text-muted-foreground">
-                              Lý do: <span className="font-medium text-foreground">{refundRequest.reason || "—"}</span>
+                              Lý do:{" "}
+                              <span className="font-medium text-foreground">
+                                {refundRequest.reason || "—"}
+                              </span>
                             </p>
                             <p className="text-muted-foreground">
                               Số tiền hoàn:{" "}
-                              <span className="font-semibold text-foreground">
-                                {formatPrice(refundRequest.refundAmount || selectedOrder.totalAmount)}
+                              <span className="font-bold text-foreground">
+                                {formatPrice(
+                                  refundRequest.refundAmount ||
+                                    selectedOrder.totalAmount,
+                                )}
                               </span>
                             </p>
                             <p className="text-muted-foreground">
@@ -613,24 +697,26 @@ export default function SellerOrders() {
                       </Link>
 
                       <div className="rounded-xl border border-border bg-muted/20 p-3">
-                        <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                        <p className="mb-2 text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
                           Thông tin khách hàng
                         </p>
-                        <p className="text-sm font-semibold text-foreground">
+                        <p className="text-sm font-bold text-foreground">
                           {getBuyerName(selectedOrder)}
                         </p>
-                        <p className="text-xs text-muted-foreground">Email: {getBuyerEmail(selectedOrder)}</p>
-         
+                        <p className="text-xs text-muted-foreground">
+                          Email: {getBuyerEmail(selectedOrder)}
+                        </p>
+
                         <p className="text-xs text-muted-foreground">
                           Cập nhật: {formatDateTime(selectedOrder.updatedAt)}
                         </p>
                       </div>
 
                       <div className="rounded-xl border border-border bg-muted/20 p-3">
-                        <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                        <p className="mb-2 text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
                           Địa chỉ giao hàng
                         </p>
-                        <p className="text-sm font-semibold text-foreground">
+                        <p className="text-sm font-bold text-foreground">
                           {selectedOrder.shippingAddress?.fullName || "—"}
                           {selectedOrder.shippingAddress?.phoneNumber
                             ? ` | ${selectedOrder.shippingAddress.phoneNumber}`
@@ -643,7 +729,9 @@ export default function SellerOrders() {
                             selectedOrder.shippingAddress?.district,
                             selectedOrder.shippingAddress?.province,
                           ]
-                            .filter((part) => Boolean(part && String(part).trim()))
+                            .filter((part) =>
+                              Boolean(part && String(part).trim()),
+                            )
                             .join(", ") || "—"}
                         </p>
                         <div className="mt-2 grid grid-cols-1 gap-1.5 text-xs text-muted-foreground">
@@ -662,17 +750,24 @@ export default function SellerOrders() {
 
                       <div className="rounded-xl border border-border">
                         <div className="border-b border-border px-3 py-2">
-                          <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                          <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
                             Sản phẩm trong đơn
                           </p>
                         </div>
                         <div className="divide-y divide-border">
                           {selectedOrderProducts.map((p, idx) => {
                             const imageKey = `${selectedOrder._id}-${idx}`;
-                            const productImage = getProductImage(p.productId, imageErrorMap, imageKey);
+                            const productImage = getProductImage(
+                              p.productId,
+                              imageErrorMap,
+                              imageKey,
+                            );
 
                             return (
-                              <div key={`${p.productId?._id || idx}`} className="flex items-start gap-2.5 px-3 py-2.5">
+                              <div
+                                key={`${p.productId?._id || idx}`}
+                                className="flex items-start gap-2.5 px-3 py-2.5"
+                              >
                                 <div className="relative h-10 w-10 overflow-hidden rounded-md border border-border bg-muted/50">
                                   <Image
                                     src={productImage}
@@ -688,10 +783,11 @@ export default function SellerOrders() {
                                     {p.productId?.name || "Sản phẩm"}
                                   </p>
                                   <p className="text-xs text-muted-foreground">
-                                    SL: {p.quantity} • Đơn giá: {formatPrice(p.price)}
+                                    SL: {p.quantity} • Đơn giá:{" "}
+                                    {formatPrice(p.price)}
                                   </p>
                                 </div>
-                                <p className="text-xs font-semibold text-foreground">
+                                <p className="text-xs font-bold text-foreground">
                                   {formatPrice(p.price * p.quantity)}
                                 </p>
                               </div>
@@ -702,15 +798,25 @@ export default function SellerOrders() {
 
                       <div className="rounded-xl border border-border bg-card p-3">
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Tiền sản phẩm</span>
-                          <span className="font-medium">{formatPrice(selectedProductAmount)}</span>
+                          <span className="text-muted-foreground">
+                            Tiền sản phẩm
+                          </span>
+                          <span className="font-medium">
+                            {formatPrice(selectedProductAmount)}
+                          </span>
                         </div>
                         <div className="mt-2 flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Tiền ship</span>
-                          <span className="font-medium">{formatPrice(selectedShippingFee)}</span>
+                          <span className="text-muted-foreground">
+                            Tiền ship
+                          </span>
+                          <span className="font-medium">
+                            {formatPrice(selectedShippingFee)}
+                          </span>
                         </div>
                         <div className="mt-2 flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Phương thức thanh toán</span>
+                          <span className="text-muted-foreground">
+                            Phương thức thanh toán
+                          </span>
                           <span className="font-medium text-foreground">
                             {formatPaymentMethod(selectedOrder.paymentMethod, {
                               shippingMethod: selectedOrder.shippingMethod,
@@ -718,13 +824,22 @@ export default function SellerOrders() {
                           </span>
                         </div>
                         <div className="mt-2 flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Trạng thái thanh toán</span>
-                          <span className={cn("rounded-md border px-2 py-0.5 text-[11px] font-semibold", paymentBadgeClass)}>
+                          <span className="text-muted-foreground">
+                            Trạng thái thanh toán
+                          </span>
+                          <span
+                            className={cn(
+                              "rounded-md border px-2 py-0.5 text-[11px] font-bold",
+                              paymentBadgeClass,
+                            )}
+                          >
                             {selectedPaymentStatusLabel}
                           </span>
                         </div>
                         <div className="mt-3 flex items-center justify-between border-t border-border pt-2.5">
-                          <span className="font-semibold text-foreground">Tổng tiền</span>
+                          <span className="font-bold text-foreground">
+                            Tổng tiền
+                          </span>
                           <span className="font-bold text-primary">
                             {formatPrice(selectedGrandTotal)}
                           </span>
@@ -772,4 +887,3 @@ export default function SellerOrders() {
     </div>
   );
 }
-

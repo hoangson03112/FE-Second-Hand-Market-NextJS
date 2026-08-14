@@ -26,7 +26,9 @@ export default function BecomeSellerSuccessPage() {
             Về trang chủ
           </button>
           <span className="text-muted-foreground/40 select-none">|</span>
-          <span className="text-sm font-medium text-foreground">Đăng ký Seller</span>
+          <span className="text-sm font-medium text-foreground">
+            Đăng ký Seller
+          </span>
         </div>
       </div>
 
@@ -41,8 +43,8 @@ export default function BecomeSellerSuccessPage() {
               Hồ sơ đã được gửi thành công!
             </h1>
             <p className="text-sm text-muted-foreground">
-              Chúng tôi sẽ xem xét hồ sơ của bạn và phản hồi trong vòng 24h. Bạn sẽ nhận
-              thông báo qua email khi có kết quả.
+              Chúng tôi sẽ xem xét hồ sơ của bạn và phản hồi trong vòng 24h. Bạn
+              sẽ nhận thông báo qua email khi có kết quả.
             </p>
           </div>
         </div>
@@ -51,8 +53,8 @@ export default function BecomeSellerSuccessPage() {
         <div className="rounded-xl border border-primary/20 bg-primary/8 px-4 py-3 flex items-start gap-3">
           <IconClock className="w-4 h-4 text-primary mt-0.5 shrink-0" />
           <p className="text-xs text-primary/90">
-            Đội ngũ Eco Market đang kiểm duyệt hồ sơ của bạn. Thông thường mất dưới{" "}
-            <span className="font-semibold">24 giờ</span> để xem xét.
+            Đội ngũ Eco Market đang kiểm duyệt hồ sơ của bạn. Thông thường mất
+            dưới <span className="font-bold">24 giờ</span> để xem xét.
           </p>
         </div>
 
@@ -60,7 +62,7 @@ export default function BecomeSellerSuccessPage() {
         <div className="flex flex-col sm:flex-row gap-2 pt-2">
           <Link
             href="/sell"
-            className="flex-1 h-11 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center gap-2"
+            className="flex-1 h-11 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center gap-2"
           >
             <IconBuildingStore className="w-4 h-4" />
             Khám phá tính năng Seller

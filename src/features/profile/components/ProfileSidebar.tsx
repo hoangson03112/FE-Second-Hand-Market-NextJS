@@ -108,7 +108,7 @@ export function ProfileSidebar({
 
         {/* Tabs: Tài khoản */}
         <div className="p-4 border-b border-luxury-ink/10">
-          <p className="px-2 py-2 text-xs font-semibold text-charcoal-400  uppercase tracking-[0.13em]">
+          <p className="px-2 py-2 text-xs font-bold text-charcoal-400  uppercase tracking-[0.13em]">
             Tài khoản
           </p>
           <div className="space-y-1">
@@ -135,7 +135,7 @@ export function ProfileSidebar({
 
         {isSeller && (
           <div className="p-4 border-b border-luxury-ink/10">
-            <p className="px-2 py-2 text-[10px] font-semibold text-taupe-500 uppercase tracking-[0.2em]">
+            <p className="px-2 py-2 text-[10px] font-bold text-taupe-500 uppercase tracking-[0.2em]">
               Seller
             </p>
             <div className="space-y-1">
@@ -154,7 +154,7 @@ export function ProfileSidebar({
         {/* Quick links by role */}
         {(isSeller || isAdmin) && (
           <div className="p-4">
-            <p className="px-2 py-2 text-xs font-semibold text-charcoal-400  uppercase tracking-[0.13em]">
+            <p className="px-2 py-2 text-xs font-bold text-charcoal-400  uppercase tracking-[0.13em]">
               Truy cập nhanh
             </p>
             <div className="space-y-1">

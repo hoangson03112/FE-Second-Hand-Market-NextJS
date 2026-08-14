@@ -29,7 +29,7 @@ export function ProfileForm({
         <h2 className="text-2xl text-luxury-ink font-droid-serif">
           Hồ sơ của tôi
         </h2>
-        <p className="text-2xs uppercase tracking-[0.13em] font-semibold text-charcoal-400 mt-2">
+        <p className="text-2xs uppercase tracking-[0.13em] font-bold text-charcoal-400 mt-2">
           Quản lý thông tin cá nhân và bảo mật tài khoản
         </p>
       </div>
@@ -37,7 +37,7 @@ export function ProfileForm({
       <form onSubmit={onSubmit} className="p-6 lg:p-8">
         <div className="space-y-6 max-w-3xl">
           <div>
-            <label className="block text-xs uppercase tracking-wide font-semibold text-luxury-ink mb-2">
+            <label className="block text-xs uppercase tracking-wide font-bold text-luxury-ink mb-2">
               Họ và tên <span className="text-blush-600">*</span>
             </label>
             <div className="relative">
@@ -55,10 +55,10 @@ export function ProfileForm({
           </div>
 
           <div>
-            <label className="block text-xs uppercase tracking-wide font-semibold text-luxury-ink mb-2">
+            <label className="block text-xs uppercase tracking-wide font-bold text-luxury-ink mb-2">
               Email <span className="text-blush-600">*</span>
               {isGoogleUser && (
-                <span className="ml-3 text-2xs uppercase tracking-[0.1em] font-semibold px-2 py-1 rounded-[2px] bg-taupe-50 text-luxury-ink border border-luxury-ink/10">
+                <span className="ml-3 text-2xs uppercase tracking-[0.1em] font-bold px-2 py-1 rounded-[2px] bg-taupe-50 text-luxury-ink border border-luxury-ink/10">
                   Quản lý bởi Google
                 </span>
               )}
@@ -98,7 +98,7 @@ export function ProfileForm({
           </div>
 
           <div>
-            <label className="block text-xs uppercase tracking-wide font-semibold text-luxury-ink mb-2">
+            <label className="block text-xs uppercase tracking-wide font-bold text-luxury-ink mb-2">
               Số điện thoại
             </label>
             <div className="relative">
@@ -124,7 +124,7 @@ export function ProfileForm({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.2em] text-[11px] font-semibold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
+              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.2em] text-[11px] font-bold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
             >
               {isSubmitting ? (
                 <>

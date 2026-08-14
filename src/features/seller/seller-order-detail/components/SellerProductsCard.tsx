@@ -9,12 +9,21 @@ import type { Order } from "@/types/order";
 
 function getAvatar(product: Order["products"][number]["productId"]): string {
   if (!product) return "/images/product-placeholder.svg";
-  if (typeof product.avatar === "string" && product.avatar.trim()) return product.avatar;
-  if (product.avatar && typeof product.avatar === "object" && "url" in product.avatar) {
-    return (product.avatar as { url: string }).url || "/images/product-placeholder.svg";
+  if (typeof product.avatar === "string" && product.avatar.trim())
+    return product.avatar;
+  if (
+    product.avatar &&
+    typeof product.avatar === "object" &&
+    "url" in product.avatar
+  ) {
+    return (
+      (product.avatar as { url: string }).url ||
+      "/images/product-placeholder.svg"
+    );
   }
   const first = product.images?.[0];
-  if (first && typeof first === "object" && "url" in first) return (first as { url: string }).url;
+  if (first && typeof first === "object" && "url" in first)
+    return (first as { url: string }).url;
   return "/images/product-placeholder.svg";
 }
 
@@ -30,8 +39,12 @@ export function SellerProductsCard({ order }: SellerProductsCardProps) {
           <IconPackage className="w-4.5 h-4.5 text-primary" />
         </div>
         <div>
-          <h2 className="text-sm font-bold text-foreground">Sản phẩm trong đơn</h2>
-          <p className="text-xs text-muted-foreground mt-0.5">{order.products.length} sản phẩm</p>
+          <h2 className="text-sm font-bold text-foreground">
+            Sản phẩm trong đơn
+          </h2>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            {order.products.length} sản phẩm
+          </p>
         </div>
       </div>
 
@@ -40,8 +53,12 @@ export function SellerProductsCard({ order }: SellerProductsCardProps) {
           const product = item.productId;
           const avatar = getAvatar(product);
           const condition = product?.condition;
-          const conditionLabel = condition ? getConditionLabel(condition) : null;
-          const badgeColor = condition ? getConditionBadgeColor(condition) : null;
+          const conditionLabel = condition
+            ? getConditionLabel(condition)
+            : null;
+          const badgeColor = condition
+            ? getConditionBadgeColor(condition)
+            : null;
 
           return (
             <div
@@ -59,7 +76,7 @@ export function SellerProductsCard({ order }: SellerProductsCardProps) {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2 mb-1.5">
-                  <h4 className="font-semibold text-foreground text-sm line-clamp-2 leading-snug">
+                  <h4 className="font-bold text-foreground text-sm line-clamp-2 leading-snug">
                     {product?.name || "Sản phẩm"}
                   </h4>
                   {product?._id && (
@@ -74,12 +91,17 @@ export function SellerProductsCard({ order }: SellerProductsCardProps) {
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
                   {conditionLabel && badgeColor && (
-                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border ${badgeColor}`}>
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${badgeColor}`}
+                    >
                       {conditionLabel}
                     </span>
                   )}
                   <span className="text-xs text-muted-foreground">
-                    Số lượng: <span className="font-semibold text-foreground">×{item.quantity}</span>
+                    Số lượng:{" "}
+                    <span className="font-bold text-foreground">
+                      ×{item.quantity}
+                    </span>
                   </span>
                 </div>
                 <p className="text-base font-bold text-primary mt-1.5">
@@ -109,7 +131,9 @@ export function SellerProductsCard({ order }: SellerProductsCardProps) {
         )}
         <div className="flex justify-between items-center pt-2 mt-1 border-t border-border">
           <span className="text-sm font-bold text-foreground">Tổng cộng</span>
-          <span className="text-lg font-bold text-primary">{formatPrice(order.totalAmount)}</span>
+          <span className="text-lg font-bold text-primary">
+            {formatPrice(order.totalAmount)}
+          </span>
         </div>
       </div>
     </div>

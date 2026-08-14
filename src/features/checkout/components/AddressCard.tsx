@@ -1,17 +1,12 @@
 "use client";
 
-import {
-  IconPhone,
-  IconUser,
-  IconHome,
-  IconEdit,
-  IconTrash,
-} from "@tabler/icons-react";
+import { IconPhone, IconEdit, IconTrash, IconCheck } from "@tabler/icons-react";
 import { Address } from "@/types/address";
 import { useState } from "react";
 import { useConfirm } from "@/components/shared";
 import { useToast } from "@/components/shared";
 import { ADDRESS_MESSAGES } from "@/constants/messages";
+import { cn } from "@/lib/utils";
 
 interface AddressCardProps {
   address: Address;
@@ -75,59 +70,68 @@ export default function AddressCard({
   return (
     <div
       onClick={onSelect}
-      className={`p-5 rounded-xl cursor-pointer transition-all border-2 ${
+      className={cn(
+        "cursor-pointer rounded-[2px] border bg-white px-5 py-5 transition-all duration-300",
         isSelected
-          ? "bg-primary/5 border-primary"
-          : "bg-white border-border hover:border-primary/40"
-      }`}
+          ? "border-luxury-ink shadow-[0_8px_24px_color-mix(in_srgb,var(--luxury-ink)_8%,transparent)]"
+          : "border-luxury-ink/10 hover:border-luxury-ink/40",
+      )}
     >
       <div className="flex items-start gap-4">
-        <div className="flex-1 space-y-3">
-          <div className="flex items-center gap-3 flex-wrap">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <IconUser className="h-4 w-4 text-primary" />
-              </div>
-              <span className="font-medium text-taupe-900">
-                {address.fullName}
-              </span>
-            </div>
-            <div className="h-3 w-px bg-taupe-300" />
-            <div className="flex items-center gap-1.5 text-taupe-500">
-              <IconPhone className="h-3.5 w-3.5" />
-              <span className="text-xs font-medium tracking-wide">
-                {address.phoneNumber}
-              </span>
-            </div>
-            {address.isDefault && (
-              <span className="px-2 py-0.5 bg-primary text-primary-foreground text-[10px] uppercase tracking-wide font-semibold rounded-full">
+        <span
+          aria-hidden
+          className={cn(
+            "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors duration-300",
+            isSelected
+              ? "border-luxury-ink bg-luxury-ink"
+              : "border-luxury-ink/25",
+          )}
+        >
+          {isSelected ? (
+            <IconCheck className="h-2.5 w-2.5 text-luxury-ivory" />
+          ) : null}
+        </span>
+
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="text-sm font-bold text-luxury-ink">
+              {address.fullName}
+            </span>
+            <span aria-hidden className="h-3 w-px bg-luxury-ink/15" />
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] tabular-nums text-neutral-600">
+              <IconPhone className="h-3 w-3" />
+              {address.phoneNumber}
+            </span>
+            {address.isDefault ? (
+              <span className="rounded-[2px] border border-luxury-champagne/50 bg-cream-100 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.2em] text-neutral-700">
                 Mặc định
               </span>
-            )}
+            ) : null}
           </div>
-          <div className="flex items-start gap-2.5 text-taupe-600">
-            <IconHome className="h-4 w-4 mt-0.5" />
-            <p className="text-sm font-medium leading-relaxed flex-1">
-              {formatAddress(address)}
-            </p>
-          </div>
+
+          <p className="mt-2.5 text-sm leading-relaxed text-neutral-600">
+            {formatAddress(address)}
+          </p>
         </div>
-        <div className="flex flex-col items-end gap-3 flex-shrink-0">
-          <div className="flex gap-1.5">
-            <button
-              onClick={handleEdit}
-              className="flex items-center gap-1.5 p-2 text-taupe-500 hover:bg-taupe-100 hover:text-primary rounded-full transition-colors"
-            >
-              <IconEdit className="h-4 w-4" />
-            </button>
-            <button
-              onClick={handleDelete}
-              disabled={isDeleting}
-              className="flex items-center gap-1.5 p-2 text-taupe-500 hover:bg-red-50 hover:text-red-600 rounded-full transition-colors disabled:opacity-50"
-            >
-              <IconTrash className="h-4 w-4" />
-            </button>
-          </div>
+
+        <div className="flex shrink-0 items-center gap-1">
+          <button
+            type="button"
+            onClick={handleEdit}
+            aria-label="Sửa địa chỉ"
+            className="rounded-[2px] p-2 text-neutral-500 transition-colors hover:bg-cream-100 hover:text-luxury-ink"
+          >
+            <IconEdit className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            onClick={handleDelete}
+            disabled={isDeleting}
+            aria-label="Xóa địa chỉ"
+            className="rounded-[2px] p-2 text-neutral-500 transition-colors hover:bg-blush-50 hover:text-blush-700 disabled:opacity-50"
+          >
+            <IconTrash className="h-4 w-4" />
+          </button>
         </div>
       </div>
     </div>

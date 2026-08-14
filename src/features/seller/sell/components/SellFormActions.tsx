@@ -39,7 +39,7 @@ export function SellFormActions({
       </button>
       <Link
         href={isEditMode ? "/my/listings" : "/"}
-        className="flex-1 text-center h-11 rounded-xl flex items-center justify-center border-2 border-taupe-300/80 text-taupe-700 text-sm font-semibold hover:bg-taupe-50 hover:border-taupe-500/70 transition-all duration-200"
+        className="flex-1 text-center h-11 rounded-xl flex items-center justify-center border-2 border-taupe-300/80 text-taupe-700 text-sm font-bold hover:bg-taupe-50 hover:border-taupe-500/70 transition-all duration-200"
       >
         Hủy
       </Link>

@@ -1,9 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { IconPackage, IconTruck, IconClock, IconMapPin, IconInfoCircle } from "@tabler/icons-react";
+import {
+  IconPackage,
+  IconTruck,
+  IconClock,
+  IconMapPin,
+  IconInfoCircle,
+  IconWallet,
+} from "@tabler/icons-react";
 import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
 import { FEATURE_INFO } from "@/constants/messages";
+import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
 import { formatCondition } from "@/utils/format";
 import type { SellerGroup } from "../hooks/useCheckout";
@@ -17,6 +25,76 @@ interface CheckoutSellerSectionProps {
   onPaymentMethodChange: (method: PaymentMethodType) => void;
   deliveryMethod: "local_pickup" | "cod_shipping";
   onDeliveryMethodChange: (method: "local_pickup" | "cod_shipping") => void;
+  /** Zero-based position, shown as an editorial "01 / 03" marker. */
+  index?: number;
+  totalGroups?: number;
+}
+
+const serif = { fontFamily: "var(--font-droid-serif), serif" };
+
+const twoDigits = (value: number) => String(value).padStart(2, "0");
+
+/** Micro-caps label + serif figure, the row shape used in every money block. */
+function MoneyRow({
+  label,
+  value,
+  emphasis = false,
+}: {
+  label: string;
+  value: string;
+  emphasis?: boolean;
+}) {
+  return (
+    <div className="flex items-baseline justify-between gap-4">
+      <span
+        className={cn(
+          "text-[10px] font-bold uppercase tracking-[0.22em]",
+          emphasis ? "text-luxury-ink" : "text-neutral-500",
+        )}
+      >
+        {label}
+      </span>
+      <span
+        style={serif}
+        className={cn(
+          "tabular-nums text-luxury-ink",
+          emphasis ? "text-xl" : "text-sm",
+        )}
+      >
+        {value}
+      </span>
+    </div>
+  );
+}
+
+/** Segmented delivery choice: selected fills with ink, the rest stay hairline. */
+function DeliveryOption({
+  active,
+  onClick,
+  icon: Icon,
+  label,
+}: {
+  active: boolean;
+  onClick: () => void;
+  icon: typeof IconTruck;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={cn(
+        "flex items-center justify-center gap-2 rounded-[2px] border px-4 py-3.5 text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300",
+        active
+          ? "border-luxury-ink bg-luxury-ink text-luxury-ivory"
+          : "border-luxury-ink/15 text-neutral-500 hover:border-luxury-ink/40 hover:text-luxury-ink",
+      )}
+    >
+      <Icon className="h-4 w-4" />
+      {label}
+    </button>
+  );
 }
 
 export default function CheckoutSellerSection({
@@ -26,48 +104,90 @@ export default function CheckoutSellerSection({
   onPaymentMethodChange,
   deliveryMethod,
   onDeliveryMethodChange,
+  index,
+  totalGroups,
 }: CheckoutSellerSectionProps) {
-  const { sellerId, sellerName, sellerAvatar, items, shippingInfo, subtotal, shippingFee } = group;
+  const {
+    sellerId,
+    sellerName,
+    sellerAvatar,
+    items,
+    shippingInfo,
+    subtotal,
+    shippingFee,
+  } = group;
+
+  const showMarker = index !== undefined && totalGroups !== undefined;
 
   return (
-    <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border overflow-hidden shadow-md">
+    <section className="overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white">
       {/* Seller header */}
-      <div className="flex items-center gap-4 px-6 py-4 bg-taupe-50/60 border-b-2 border-border">
-        <AvatarOrInitials avatar={sellerAvatar} fullName={sellerName} size={32} className="flex-shrink-0" />
-        <span className="text-sm font-semibold text-taupe-900">{sellerName}</span>
-        <span className="ml-auto text-[10px] uppercase tracking-wide font-semibold text-taupe-500">{items.length} sản phẩm</span>
-      </div>
+      <header className="flex items-center gap-4 border-b border-luxury-ink/10 bg-cream-50/70 px-5 py-4 sm:px-6">
+        <AvatarOrInitials
+          avatar={sellerAvatar}
+          fullName={sellerName}
+          size={32}
+          className="shrink-0"
+        />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-bold text-luxury-ink">
+            {sellerName}
+          </p>
+          <p className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
+            {items.length} sản phẩm
+          </p>
+        </div>
+        {showMarker ? (
+          <span
+            style={serif}
+            className="shrink-0 text-sm italic text-luxury-ink/30"
+          >
+            {twoDigits(index + 1)} / {twoDigits(totalGroups)}
+          </span>
+        ) : null}
+      </header>
 
-      <div className="p-6 space-y-6">
+      <div className="px-5 sm:px-6">
         {/* Product list */}
-        <div className="space-y-4">
+        <div className="divide-y divide-luxury-ink/8">
           {items.map((item) => {
             const avatar = item.product.avatar?.url ?? "";
             const condition = formatCondition(item.product.condition);
             return (
-              <div
-                key={item.product._id}
-                className="flex gap-4 p-4 border border-border rounded-xl hover:border-primary/40 transition-colors bg-white"
-              >
-                <div className="flex-shrink-0 w-[72px] h-[72px] rounded-xl border border-border overflow-hidden bg-taupe-100 relative">
+              <div key={item.product._id} className="flex gap-4 py-5">
+                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-taupe-50">
                   {avatar ? (
-                    <Image src={avatar} alt={item.product.name} fill className="object-cover" sizes="72px" />
+                    <Image
+                      src={avatar}
+                      alt={item.product.name}
+                      fill
+                      className="object-cover"
+                      sizes="80px"
+                    />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <IconPackage className="w-7 h-7 text-taupe-400" />
+                    <div className="flex h-full w-full items-center justify-center">
+                      <IconPackage className="h-6 w-6 text-taupe-300" />
                     </div>
                   )}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm text-taupe-900 line-clamp-2 font-medium">{item.product.name}</p>
-                  {condition && (
-                    <span className="inline-block mt-2 px-2 py-0.5 bg-taupe-50 border border-border text-taupe-700 text-[10px] uppercase tracking-wide font-semibold rounded-full">
+
+                <div className="min-w-0 flex-1">
+                  <p className="line-clamp-2 text-sm font-medium leading-relaxed text-luxury-ink">
+                    {item.product.name}
+                  </p>
+                  {condition ? (
+                    <span className="mt-2 inline-block rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.2em] text-neutral-600">
                       {condition}
                     </span>
-                  )}
-                  <div className="flex items-center justify-between mt-3">
-                    <span className="text-xs font-semibold text-taupe-500">×{item.quantity}</span>
-                    <span className="text-sm font-bold text-primary">
+                  ) : null}
+                  <div className="mt-3 flex items-baseline justify-between gap-4">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
+                      Số lượng ×{item.quantity}
+                    </span>
+                    <span
+                      style={serif}
+                      className="tabular-nums text-base text-luxury-ink"
+                    >
                       {formatPrice(item.product.price * item.quantity)}
                     </span>
                   </div>
@@ -78,116 +198,145 @@ export default function CheckoutSellerSection({
         </div>
 
         {/* Delivery method selector */}
-        {group.hasBothOptions && (
-          <div>
-            <p className="text-xs uppercase tracking-wide font-semibold text-taupe-900 mb-3">Hình thức giao hàng</p>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
+        {group.hasBothOptions ? (
+          <div className="border-t border-luxury-ink/8 py-6">
+            <p className="text-2xs font-medium uppercase tracking-[0.15em] text-charcoal-800">
+              Hình thức giao hàng
+            </p>
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <DeliveryOption
+                active={deliveryMethod === "local_pickup"}
                 onClick={() => onDeliveryMethodChange("local_pickup")}
-                className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 text-xs uppercase tracking-wide font-semibold transition-all ${
-                  deliveryMethod === "local_pickup"
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border text-taupe-500 hover:border-primary/40 hover:text-taupe-900"
-                }`}
-              >
-                <IconMapPin className="w-4 h-4" />
-                Gặp mặt trực tiếp
-              </button>
-              <button
-                type="button"
+                icon={IconMapPin}
+                label="Gặp mặt trực tiếp"
+              />
+              <DeliveryOption
+                active={deliveryMethod === "cod_shipping"}
                 onClick={() => onDeliveryMethodChange("cod_shipping")}
-                className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border-2 text-xs uppercase tracking-wide font-semibold transition-all ${
-                  deliveryMethod === "cod_shipping"
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border text-taupe-500 hover:border-primary/40 hover:text-taupe-900"
-                }`}
-              >
-                <IconTruck className="w-4 h-4" />
-                Giao hàng COD
-              </button>
+                icon={IconTruck}
+                label="Giao hàng COD"
+              />
             </div>
           </div>
-        )}
+        ) : null}
 
         {/* Shipping info for this seller */}
-        {group.isLocalPickup ? (
-          <div className="flex items-start gap-3 p-4 bg-taupe-50/60 rounded-xl border border-border">
-            <IconMapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-            <div className="flex-1 text-sm">
-              <span className="text-taupe-900 font-semibold">Giao dịch trực tiếp</span>
-              <p className="text-xs text-taupe-600 mt-1">
-                Người bán và người mua tự thỏa thuận địa điểm gặp mặt
-              </p>
-            </div>
-            <span className="font-bold text-primary text-sm">Miễn phí</span>
-          </div>
-        ) : (
-          <div className="flex items-start gap-3 p-4 bg-taupe-50/60 rounded-xl border border-border">
-            <IconTruck className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-            <div className="flex-1 text-sm">
-              <div className="flex justify-between items-center">
-                <span className="text-taupe-900 font-semibold">
-                  GHN – {shippingInfo?.short_name ?? "Chuẩn"}
-                </span>
-                <span className="font-bold text-primary">
-                  {shippingFee > 0 ? formatPrice(shippingFee) : "Đang tính..."}
-                </span>
+        <div
+          className={cn(
+            "py-6",
+            !group.hasBothOptions && "border-t border-luxury-ink/8",
+          )}
+        >
+          {group.isLocalPickup ? (
+            <div className="flex items-start gap-4 rounded-[2px] border border-luxury-ink/10 bg-cream-50/60 px-4 py-4">
+              <IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-luxury-ink" />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-luxury-ink">
+                  Giao dịch trực tiếp
+                </p>
+                <p className="mt-1.5 text-xs leading-relaxed text-neutral-600">
+                  Người bán và người mua tự thỏa thuận địa điểm gặp mặt.
+                </p>
               </div>
-              {shippingInfo?.expectedDeliveryTime && (
-                <div className="flex items-center gap-1.5 mt-2 text-[11px] font-semibold uppercase tracking-wide text-taupe-500">
-                  <IconClock className="w-3.5 h-3.5" />
-                  <span>
-                    Dự kiến:{" "}
-                    {new Date(shippingInfo.expectedDeliveryTime).toLocaleDateString("vi-VN", {
-                      day: "2-digit",
-                      month: "2-digit",
-                    })}
+              <span className="shrink-0 text-2xs font-bold uppercase tracking-[0.2em] text-charcoal-600">
+                Miễn phí
+              </span>
+            </div>
+          ) : (
+            <div className="flex items-start gap-4 rounded-[2px] border border-luxury-ink/10 bg-cream-50/60 px-4 py-4">
+              <IconTruck className="mt-0.5 h-4 w-4 shrink-0 text-luxury-ink" />
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <p className="text-sm font-medium text-luxury-ink">
+                    GHN — {shippingInfo?.short_name ?? "Chuẩn"}
+                  </p>
+                  <span
+                    style={serif}
+                    className="tabular-nums text-sm text-luxury-ink"
+                  >
+                    {shippingFee > 0 ? formatPrice(shippingFee) : "Đang tính…"}
                   </span>
                 </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Payment method selector */}
-        <div>
-          <p className="text-xs uppercase tracking-wide font-semibold text-taupe-900 mb-3">Phương thức thanh toán</p>
-          <PaymentMethod
-            selected={paymentMethod}
-            onSelect={onPaymentMethodChange}
-            showBankTransfer={isBankTransferAvailable && deliveryMethod !== "local_pickup"}
-            radioName={`payment-${sellerId}`}
-          />
-          {deliveryMethod === "local_pickup" && (
-            <p className="text-[11px] uppercase tracking-wide font-semibold text-taupe-500 mt-3">Gặp mặt trực tiếp — thanh toán khi nhận hàng</p>
-          )}
-          {!isBankTransferAvailable && deliveryMethod !== "local_pickup" && (
-            <div className="mt-3 flex items-start gap-3 p-3.5 rounded-xl bg-amber-50 border-2 border-amber-200">
-              <IconInfoCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-              <p className="text-[11px] uppercase tracking-wide font-semibold text-amber-800">{FEATURE_INFO.PAYMENT_COD_ONLY}</p>
+                {shippingInfo?.expectedDeliveryTime ? (
+                  <div className="mt-2 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+                    <IconClock className="h-3.5 w-3.5" />
+                    <span>
+                      Dự kiến{" "}
+                      {new Date(
+                        shippingInfo.expectedDeliveryTime,
+                      ).toLocaleDateString("vi-VN", {
+                        day: "2-digit",
+                        month: "2-digit",
+                      })}
+                    </span>
+                  </div>
+                ) : null}
+              </div>
             </div>
           )}
         </div>
 
-        {/* Section subtotal */}
-        <div className="pt-5 border-t-2 border-border space-y-3">
-          <div className="flex justify-between text-xs uppercase tracking-wide font-semibold text-taupe-600 items-center">
-            <span>Tiền hàng</span>
-            <span className="text-sm font-bold text-taupe-900 normal-case tracking-normal">{formatPrice(subtotal)}</span>
-          </div>
-          {!group.isLocalPickup && (
-            <div className="flex justify-between text-xs uppercase tracking-wide font-semibold text-taupe-600 items-center">
-              <span>Phí vận chuyển</span>
-              <span className="text-sm font-bold text-taupe-900 normal-case tracking-normal">{shippingFee > 0 ? formatPrice(shippingFee) : "—"}</span>
+        {/* Payment method — only a real choice when the order ships.
+            Gặp mặt trực tiếp always settles in cash at the handover, so we
+            state it instead of rendering a single-option radio group. */}
+        <div className="border-t border-luxury-ink/8 py-6">
+          <p className="text-2xs font-medium uppercase tracking-[0.15em] text-charcoal-800">
+            {group.isLocalPickup ? "Thanh toán" : "Phương thức thanh toán"}
+          </p>
+
+          {group.isLocalPickup ? (
+            <div className="mt-4 flex items-start gap-4 rounded-[2px] border border-luxury-ink/10 bg-cream-50/60 px-4 py-4">
+              <IconWallet className="mt-0.5 h-4 w-4 shrink-0 text-luxury-ink" />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-luxury-ink">
+                  Thanh toán khi gặp mặt
+                </p>
+                <p className="mt-1.5 text-xs leading-relaxed text-neutral-600">
+                  Bạn trả tiền trực tiếp cho người bán lúc nhận hàng.
+                </p>
+              </div>
             </div>
+          ) : (
+            <>
+              <div className="mt-4">
+                <PaymentMethod
+                  selected={paymentMethod}
+                  onSelect={onPaymentMethodChange}
+                  showBankTransfer={isBankTransferAvailable}
+                  radioName={`payment-${sellerId}`}
+                />
+              </div>
+
+              {!isBankTransferAvailable ? (
+                <div className="mt-4 flex items-start gap-3 rounded-[2px] border border-luxury-champagne/30 bg-cream-100/70 px-4 py-3.5">
+                  <IconInfoCircle className="mt-0.5 h-4 w-4 shrink-0 text-luxury-champagne" />
+                  <p className="text-xs leading-relaxed text-neutral-700">
+                    {FEATURE_INFO.PAYMENT_COD_ONLY}
+                  </p>
+                </div>
+              ) : null}
+            </>
           )}
-          <div className="flex justify-between items-center pt-2">
-            <span className="text-xs uppercase tracking-wide font-semibold text-taupe-900">Tổng đơn này</span>
-            <span className="text-lg font-bold text-primary">{formatPrice(subtotal + shippingFee)}</span>
-          </div>
         </div>
       </div>
-    </div>
+
+      {/* Section subtotal */}
+      <div className="space-y-3.5 border-t border-luxury-ink/10 bg-cream-50/70 px-5 py-5 sm:px-6">
+        <MoneyRow label="Tiền hàng" value={formatPrice(subtotal)} />
+        {!group.isLocalPickup ? (
+          <MoneyRow
+            label="Phí vận chuyển"
+            value={shippingFee > 0 ? formatPrice(shippingFee) : "—"}
+          />
+        ) : null}
+        <div className="border-t border-luxury-ink/10 pt-3.5">
+          <MoneyRow
+            label="Tổng đơn này"
+            value={formatPrice(subtotal + shippingFee)}
+            emphasis
+          />
+        </div>
+      </div>
+    </section>
   );
 }

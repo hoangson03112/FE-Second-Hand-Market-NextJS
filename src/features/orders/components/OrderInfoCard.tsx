@@ -13,19 +13,25 @@ export function OrderInfoCard({ order }: OrderInfoCardProps) {
       <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-border">
         <div className="flex items-center gap-2">
           <IconShoppingBag className="w-4 h-4 text-primary" />
-          <h3 className="text-sm font-semibold text-taupe-900 uppercase tracking-wider">Thông tin đơn hàng</h3>
+          <h3 className="text-sm font-bold text-taupe-900 uppercase tracking-wider">
+            Thông tin đơn hàng
+          </h3>
         </div>
         <StatusBadge status={order.status} size="md" />
       </div>
       <div className="space-y-2 text-sm">
         <div className="flex justify-between">
           <span className="text-taupe-500">Mã đơn nội bộ</span>
-          <span className="font-mono font-medium text-taupe-900">#{order._id.slice(-8).toUpperCase()}</span>
+          <span className="font-mono font-medium text-taupe-900">
+            #{order._id.slice(-8).toUpperCase()}
+          </span>
         </div>
         {order.ghnOrderCode && (
           <div className="flex justify-between">
             <span className="text-taupe-500">Mã GHN</span>
-            <span className="font-mono font-medium text-taupe-900">{order.ghnOrderCode}</span>
+            <span className="font-mono font-medium text-taupe-900">
+              {order.ghnOrderCode}
+            </span>
           </div>
         )}
         <div className="flex justify-between">

@@ -59,7 +59,7 @@ export default function Pagination({
     /* Nút Trước/Sau — dạng chữ editorial, gạch chân hairline khi hover */
     const arrowClass = (disabled: boolean) =>
       cn(
-        "group inline-flex items-center gap-2 py-1 text-[11px] font-semibold uppercase tracking-[0.2em]",
+        "group inline-flex items-center gap-2 py-1 text-[11px] font-bold uppercase tracking-[0.2em]",
         "outline-none transition-colors duration-300 ease-out",
         "focus-visible:text-luxury-ink",
         disabled
@@ -194,7 +194,7 @@ export default function Pagination({
                 "transition-all duration-150 select-none outline-none",
                 "focus-visible:ring-2 focus-visible:ring-primary/30",
                 isActive
-                  ? "bg-primary text-primary-foreground font-semibold shadow-sm cursor-default pointer-events-none"
+                  ? "bg-primary text-primary-foreground font-bold shadow-sm cursor-default pointer-events-none"
                   : "text-muted-foreground font-medium hover:bg-background hover:text-foreground hover:shadow-xs cursor-pointer",
               )}
             >

@@ -81,7 +81,7 @@ export default function VerifyForm({
           type="button"
           onClick={onResend}
           disabled={resendLoading || waiting}
-          className="group mt-2.5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-taupe-700 disabled:pointer-events-none disabled:text-neutral-400"
+          className="group mt-2.5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-taupe-700 disabled:pointer-events-none disabled:text-neutral-400"
         >
           {resendLoading
             ? "Đang gửi..."
@@ -91,9 +91,7 @@ export default function VerifyForm({
           <span
             aria-hidden
             className={`h-px w-6 transition-all duration-300 ${
-              waiting
-                ? "bg-neutral-300"
-                : "bg-luxury-champagne group-hover:w-9"
+              waiting ? "bg-neutral-300" : "bg-luxury-champagne group-hover:w-9"
             }`}
           />
         </button>
@@ -101,7 +99,7 @@ export default function VerifyForm({
         <div className="mt-6">
           <Link
             href="/login"
-            className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-500 transition-colors hover:text-luxury-ink"
+            className="group inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500 transition-colors hover:text-luxury-ink"
           >
             <IconArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-1" />
             Quay lại đăng nhập

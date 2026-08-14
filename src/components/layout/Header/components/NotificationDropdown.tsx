@@ -23,7 +23,8 @@ export function NotificationDropdown() {
     () => notifications.slice(0, 20),
     [notifications],
   );
-  const hasMoreNotifications = notifications.length > visibleNotifications.length;
+  const hasMoreNotifications =
+    notifications.length > visibleNotifications.length;
 
   const getNotificationIcon = (type: string) => {
     if (type === "chat") return <IconMessageCircle className="w-4 h-4" />;
@@ -62,7 +63,10 @@ export function NotificationDropdown() {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -111,21 +115,24 @@ export function NotificationDropdown() {
 
       {isOpen && (
         <div
-          className="absolute right-0 top-full mt-2 w-[392px] max-h-[560px] rounded-xl border bg-card shadow-2xl flex flex-col z-[70] overflow-hidden"
-          style={{ borderColor: "var(--border)", boxShadow: "0 18px 42px rgba(26,23,20,0.16)" }}
+          className="absolute right-0 top-full mt-2 w-[392px] max-h-[560px]   bg-cream-50 rounded-[2px] shadow-lg flex flex-col z-[70] overflow-hidden"
         >
           <div
             className="px-4 py-3 flex items-center justify-between"
-            style={{ borderBottom: "1px solid var(--border)", background: "oklch(from var(--primary) l c h / 0.08)" }}
+            style={{
+              borderBottom: "1px solid var(--border)",
+              background: "oklch(from var(--primary) l c h / 0.08)",
+            }}
           >
             <div className="flex items-center gap-2.5 min-w-0">
-              <span
-                className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 bg-primary/15 text-primary"
-              >
+              <span className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 bg-primary/15 text-primary">
                 <IconBell className="w-4 h-4" />
               </span>
               <div>
-                <h2 className="text-sm font-semibold leading-none text-foreground" style={{ letterSpacing: "0.01em" }}>
+                <h2
+                  className="text-sm font-bold leading-none text-foreground"
+                  style={{ letterSpacing: "0.01em" }}
+                >
                   Thông báo
                 </h2>
                 <p className="text-[11px] mt-1 text-muted-foreground">
@@ -134,28 +141,26 @@ export function NotificationDropdown() {
               </div>
             </div>
 
-            <span
-              className="text-[10px] font-semibold px-2 py-1 rounded-full bg-primary/10 text-primary"
-            >
+            <span className="text-[10px] font-bold px-2 py-1 rounded-full bg-primary/10 text-primary">
               Mới nhất
             </span>
           </div>
 
           <div className="px-4 py-2 border-b border-border bg-card">
             <div className="flex items-center justify-between text-[10.5px] text-muted-foreground">
-              <span>Xem nhanh {visibleNotifications.length} thông báo mới nhất</span>
+              <span>
+                Xem nhanh {visibleNotifications.length} thông báo mới nhất
+              </span>
             </div>
           </div>
 
           <div className="overflow-y-auto p-1.5">
             {visibleNotifications.length === 0 ? (
               <div className="py-12 flex flex-col items-center justify-center text-center px-6">
-                <span
-                  className="w-12 h-12 rounded-full flex items-center justify-center mb-3 bg-secondary text-muted-foreground"
-                >
+                <span className="w-12 h-12 rounded-full flex items-center justify-center mb-3 bg-secondary text-muted-foreground">
                   <IconBell className="w-6 h-6" />
                 </span>
-                <p className="font-semibold text-sm text-foreground">
+                <p className="font-bold text-sm text-foreground">
                   Chưa có thông báo nào
                 </p>
                 <p className="text-xs mt-1.5 text-muted-foreground">
@@ -164,7 +169,10 @@ export function NotificationDropdown() {
               </div>
             ) : (
               visibleNotifications.map((item) => {
-                const metadata = (item.metadata || {}) as Record<string, unknown>;
+                const metadata = (item.metadata || {}) as Record<
+                  string,
+                  unknown
+                >;
                 const isChatShortcut =
                   item.type === "chat" && typeof metadata.senderId === "string";
 
@@ -182,13 +190,13 @@ export function NotificationDropdown() {
                       className="w-full text-left block rounded-lg p-3 transition-colors duration-200 group bg-card hover:bg-primary/10"
                     >
                       <div className="flex items-start justify-between gap-2.5">
-                        <span
-                          className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15"
-                        >
+                        <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15">
                           {getNotificationIcon(item.type)}
                         </span>
                         <div className="min-w-0 flex-1">
-                          <p className="font-semibold text-sm text-foreground line-clamp-1">{item.title}</p>
+                          <p className="font-bold text-sm text-foreground line-clamp-1">
+                            {item.title}
+                          </p>
                           <p className="text-xs text-muted-foreground mt-0.5 break-words line-clamp-2 leading-relaxed">
                             {item.message}
                           </p>
@@ -210,13 +218,13 @@ export function NotificationDropdown() {
                       className="block rounded-lg p-3 transition-colors duration-200 group bg-card hover:bg-primary/10"
                     >
                       <div className="flex items-start gap-2.5">
-                        <span
-                          className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15"
-                        >
+                        <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15">
                           {getNotificationIcon(item.type)}
                         </span>
                         <div className="min-w-0 flex-1">
-                          <p className="font-semibold text-sm text-foreground line-clamp-1">{item.title}</p>
+                          <p className="font-bold text-sm text-foreground line-clamp-1">
+                            {item.title}
+                          </p>
                           <p className="text-xs text-muted-foreground mt-0.5 break-words line-clamp-2 leading-relaxed">
                             {item.message}
                           </p>
@@ -235,13 +243,13 @@ export function NotificationDropdown() {
                     className="w-full text-left rounded-lg p-3 transition-colors duration-200 group bg-card hover:bg-primary/10"
                   >
                     <div className="flex items-start gap-2.5">
-                      <span
-                        className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15"
-                      >
+                      <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15">
                         {getNotificationIcon(item.type)}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className="font-semibold text-sm text-foreground line-clamp-1">{item.title}</p>
+                        <p className="font-bold text-sm text-foreground line-clamp-1">
+                          {item.title}
+                        </p>
                         <p className="text-xs text-muted-foreground mt-0.5 break-words line-clamp-2 leading-relaxed">
                           {item.message}
                         </p>
@@ -258,7 +266,8 @@ export function NotificationDropdown() {
             {hasMoreNotifications && (
               <div className="mx-2 mt-1 mb-2 rounded-lg px-3 py-2 text-center bg-primary/5">
                 <p className="text-[11px] text-muted-foreground">
-                  Đang hiển thị 20 thông báo mới nhất. Danh sách cuộn trong khung này.
+                  Đang hiển thị 20 thông báo mới nhất. Danh sách cuộn trong
+                  khung này.
                 </p>
               </div>
             )}

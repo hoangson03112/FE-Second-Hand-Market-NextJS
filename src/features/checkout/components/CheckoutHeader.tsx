@@ -1,33 +1,71 @@
 "use client";
 
-import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { IconArrowLeft } from "@tabler/icons-react";
 
 interface CheckoutHeaderProps {
   onBack: () => void;
+  isEmpty: boolean;
+  itemCount: number;
+  sellerCount: number;
 }
 
-export default function CheckoutHeader({ onBack }: CheckoutHeaderProps) {
+const serif = { fontFamily: "var(--font-droid-serif), serif" };
+
+export default function CheckoutHeader({
+  onBack,
+  isEmpty,
+  itemCount,
+  sellerCount,
+}: CheckoutHeaderProps) {
   return (
-    <div className="max-w-9xl mx-auto w-full px-4 mb-6 sm:px-6">
-      <div className="flex items-center gap-2 text-sm mt-2">
-        <nav
-          aria-label="Breadcrumb"
-          className="flex items-center gap-2 text-xs font-semibold tracking-wide text-taupe-500 uppercase flex-wrap"
+    <header className="sticky top-0 z-20 border-b border-luxury-ink/10 bg-luxury-ivory/95 backdrop-blur-md">
+      <div className="mx-auto flex h-16 w-full max-w-9xl items-center gap-4 px-4 sm:px-6">
+        <button
+          type="button"
+          onClick={onBack}
+          aria-label="Quay lại"
+          className="-ml-2 shrink-0 rounded-[2px] p-2 text-luxury-ink transition-colors hover:bg-taupe-50"
         >
-          <button
-            type="button"
-            onClick={onBack}
-            className="group inline-flex items-center gap-1 text-xs font-semibold uppercase transition-colors hover:text-taupe-900 focus:outline-none"
-          >
-            <IconChevronLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
-            <span>Trở lại</span>
-          </button>
+          <IconArrowLeft className="h-5 w-5" />
+        </button>
 
-          <IconChevronRight className="h-3 w-3 text-taupe-300" />
+        <h1
+          style={serif}
+          className="min-w-0 flex-1 truncate text-xl tracking-tight text-luxury-ink sm:text-2xl"
+        >
+          Xác Nhận Đơn Hàng
+        </h1>
 
-          <span className="text-primary">Xác nhận đơn hàng</span>
-        </nav>
+        {!isEmpty ? (
+          <dl className="hidden shrink-0 items-center gap-6 sm:flex md:gap-8">
+            <div className="text-right">
+              <dt className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
+                Sản phẩm
+              </dt>
+              <dd
+                style={serif}
+                className="mt-1 text-xl leading-none tabular-nums text-luxury-ink"
+              >
+                {itemCount}
+              </dd>
+            </div>
+
+            <span aria-hidden className="h-8 w-px bg-luxury-ink/10" />
+
+            <div className="text-right">
+              <dt className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
+                Người bán
+              </dt>
+              <dd
+                style={serif}
+                className="mt-1 text-xl leading-none tabular-nums text-luxury-ink"
+              >
+                {sellerCount}
+              </dd>
+            </div>
+          </dl>
+        ) : null}
       </div>
-    </div>
+    </header>
   );
 }

@@ -1,15 +1,52 @@
 "use client";
 
+import { IconAlertTriangle, IconChevronDown } from "@tabler/icons-react";
 import { useProvinces, useDistricts, useWards } from "@/hooks/useGHNLocation";
 import { useForm } from "@/hooks/useForm";
-import { Button, Input } from "@/components/shared";
+import { cn } from "@/lib/utils";
 import type { CreateAddressRequest, Address } from "@/types/address";
+import { Eyebrow } from "@/components/shared/Eyebrow";
 
 interface AddressFormProps {
   initialData?: Address | null;
   onSuccess?: () => void;
   onCancel?: () => void;
   onSubmit: (data: CreateAddressRequest) => Promise<void>;
+}
+
+const fieldLabel =
+  "block text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-600";
+
+const fieldBase =
+  "h-11 w-full rounded-[2px] border border-luxury-ink/15 bg-white px-3.5 text-sm text-luxury-ink transition-colors duration-200 placeholder:text-neutral-400 focus:border-luxury-ink focus:outline-none disabled:cursor-not-allowed disabled:bg-cream-100/60 disabled:text-neutral-400";
+
+const selectBase = cn(fieldBase, "cursor-pointer appearance-none pr-9");
+
+function Required() {
+  return (
+    <span aria-hidden className="text-accent">
+      {" "}
+      *
+    </span>
+  );
+}
+
+/** Native select wrapped with the champagne-free hairline chevron. */
+function Select({
+  children,
+  ...props
+}: React.SelectHTMLAttributes<HTMLSelectElement>) {
+  return (
+    <div className="relative">
+      <select {...props} className={selectBase}>
+        {children}
+      </select>
+      <IconChevronDown
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-3 my-auto h-4 w-4 text-neutral-500"
+      />
+    </div>
+  );
 }
 
 export function AddressForm({
@@ -86,52 +123,52 @@ export function AddressForm({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white rounded-2xl p-6 sm:p-8 shadow-md border-2 border-border">
-      {/* Thông báo lỗi nếu không tải được tỉnh thành */}
-      {provincesError && (
-        <div className="p-4 mb-6 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm flex items-center gap-2">
-          <span>⚠️</span>
-          <span>
+    <div className="rounded-[2px] border border-luxury-ink/10 bg-white px-5 py-6 sm:px-8 sm:py-8">
+      {provincesError ? (
+        <div className="mb-8 flex items-start gap-3 rounded-[2px] border border-blush-300 bg-blush-50 px-4 py-3.5">
+          <IconAlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-blush-700" />
+          <p className="text-xs leading-relaxed text-blush-800">
             Không thể tải dữ liệu Tỉnh/Thành phố. Vui lòng thử lại sau.
-          </span>
+          </p>
         </div>
-      )}
+      ) : null}
 
-      <form onSubmit={submitForm} className="space-y-6">
-        {/* KHU VỰC 1: THÔNG TIN NGƯỜI NHẬN */}
-        <div>
-          <h3 className="text-base font-semibold text-taupe-900 mb-4 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-primary" />
-            Thông tin người nhận
-          </h3>
+      <form onSubmit={submitForm} className="space-y-10">
+        {/* Recipient */}
+        <fieldset>
+          <Eyebrow>Thông tin người nhận</Eyebrow>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
             <div>
-              <label className="block text-xs font-semibold uppercase text-taupe-500 mb-1.5">
-                Họ và tên <span className="text-red-500">*</span>
+              <label htmlFor="fullName" className={fieldLabel}>
+                Họ và tên
+                <Required />
               </label>
-              <Input
+              <input
+                id="fullName"
                 type="text"
                 name="fullName"
                 value={values.fullName}
                 onChange={handleChange}
                 placeholder="Ví dụ: Nguyễn Văn A"
-                className="bg-cream-50/50 focus:bg-white transition-all rounded-lg"
+                className={cn(fieldBase, "mt-2.5")}
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase text-taupe-500 mb-1.5">
-                Số điện thoại <span className="text-red-500">*</span>
+              <label htmlFor="phoneNumber" className={fieldLabel}>
+                Số điện thoại
+                <Required />
               </label>
-              <Input
+              <input
+                id="phoneNumber"
                 type="tel"
                 name="phoneNumber"
                 value={values.phoneNumber}
                 onChange={handleChange}
                 placeholder="Ví dụ: 0912345678"
-                className="bg-cream-50/50 focus:bg-white transition-all rounded-lg"
+                className={cn(fieldBase, "mt-2.5 tabular-nums")}
                 pattern="0[0-9]{9}"
                 title="Số điện thoại gồm 10 chữ số bắt đầu bằng số 0"
                 minLength={10}
@@ -140,37 +177,29 @@ export function AddressForm({
               />
             </div>
           </div>
-        </div>
+        </fieldset>
 
-        <hr className="border-border" />
+        {/* Location */}
+        <fieldset className="border-t border-luxury-ink/8 pt-8">
+          <Eyebrow>Địa chỉ giao hàng</Eyebrow>
 
-        {/* KHU VỰC 2: ĐỊA CHỈ GIAO HÀNG */}
-        <div>
-          <h3 className="text-base font-semibold text-taupe-900 mb-4 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-primary" />
-            Địa chỉ giao hàng
-          </h3>
-
-          {/* Grid 3 cột cho Tỉnh / Quận / Xã */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            {/* Tỉnh / Thành phố */}
+          <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-3">
             <div>
-              <label className="block text-xs font-semibold uppercase text-taupe-500 mb-1.5">
-                Tỉnh / Thành phố <span className="text-red-500">*</span>
+              <label htmlFor="provinceId" className={fieldLabel}>
+                Tỉnh / Thành phố
+                <Required />
               </label>
-              <div className="relative">
-                <select
+              <div className="mt-2.5">
+                <Select
+                  id="provinceId"
                   name="provinceId"
                   value={values.provinceId}
                   onChange={handleProvinceChange}
                   disabled={provincesLoading}
-                  className="w-full p-2.5 pr-8 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-taupe-100 disabled:cursor-not-allowed appearance-none bg-cream-50/50 transition-all cursor-pointer"
                   required
                 >
                   <option value="">
-                    {provincesLoading
-                      ? "Đang tải..."
-                      : "-- Chọn Tỉnh / Thành --"}
+                    {provincesLoading ? "Đang tải…" : "— Chọn Tỉnh / Thành —"}
                   </option>
                   {provinces.map((province) => (
                     <option
@@ -180,45 +209,30 @@ export function AddressForm({
                       {province.ProvinceName}
                     </option>
                   ))}
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-taupe-500">
-                  <svg
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
+                </Select>
               </div>
             </div>
 
-            {/* Quận / Huyện */}
             <div>
-              <label className="block text-xs font-semibold uppercase text-taupe-500 mb-1.5">
-                Quận / Huyện <span className="text-red-500">*</span>
+              <label htmlFor="districtId" className={fieldLabel}>
+                Quận / Huyện
+                <Required />
               </label>
-              <div className="relative">
-                <select
+              <div className="mt-2.5">
+                <Select
+                  id="districtId"
                   name="districtId"
                   value={values.districtId}
                   onChange={handleDistrictChange}
                   disabled={!values.provinceId || districtsLoading}
-                  className="w-full p-2.5 pr-8 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-taupe-100 disabled:cursor-not-allowed appearance-none bg-cream-50/50 transition-all cursor-pointer"
                   required
                 >
                   <option value="">
                     {districtsLoading
-                      ? "Đang tải..."
+                      ? "Đang tải…"
                       : values.provinceId
-                        ? "-- Chọn Quận / Huyện --"
-                        : "-- Chọn Tỉnh trước --"}
+                        ? "— Chọn Quận / Huyện —"
+                        : "— Chọn Tỉnh trước —"}
                   </option>
                   {districts.map((district) => (
                     <option
@@ -228,131 +242,101 @@ export function AddressForm({
                       {district.DistrictName}
                     </option>
                   ))}
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-taupe-500">
-                  <svg
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
+                </Select>
               </div>
             </div>
 
-            {/* Phường / Xã */}
             <div>
-              <label className="block text-xs font-semibold uppercase text-taupe-500 mb-1.5">
-                Phường / Xã <span className="text-red-500">*</span>
+              <label htmlFor="wardCode" className={fieldLabel}>
+                Phường / Xã
+                <Required />
               </label>
-              <div className="relative">
-                <select
+              <div className="mt-2.5">
+                <Select
+                  id="wardCode"
                   name="wardCode"
                   value={values.wardCode}
                   onChange={handleWardChange}
                   disabled={!values.districtId || wardsLoading}
-                  className="w-full p-2.5 pr-8 border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:bg-taupe-100 disabled:cursor-not-allowed appearance-none bg-cream-50/50 transition-all cursor-pointer"
                   required
                 >
                   <option value="">
                     {wardsLoading
-                      ? "Đang tải..."
+                      ? "Đang tải…"
                       : values.districtId
-                        ? "-- Chọn Phường / Xã --"
-                        : "-- Chọn Huyện trước --"}
+                        ? "— Chọn Phường / Xã —"
+                        : "— Chọn Huyện trước —"}
                   </option>
                   {wards.map((ward) => (
                     <option key={ward.WardCode} value={ward.WardCode}>
                       {ward.WardName}
                     </option>
                   ))}
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center pr-2.5 pointer-events-none text-taupe-500">
-                  <svg
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
+                </Select>
               </div>
             </div>
           </div>
 
-          {/* Địa chỉ cụ thể */}
-          <div>
-            <label className="block text-xs font-semibold uppercase text-taupe-500 mb-1.5">
-              Địa chỉ cụ thể <span className="text-red-500">*</span>
+          <div className="mt-5">
+            <label htmlFor="specificAddress" className={fieldLabel}>
+              Địa chỉ cụ thể
+              <Required />
             </label>
-            <Input
+            <input
+              id="specificAddress"
               type="text"
               name="specificAddress"
               value={values.specificAddress}
               onChange={handleChange}
-              placeholder="Ví dụ: Số 12, Ngõ 34, Đường Nguyễn Trãi..."
-              className="bg-cream-50/50 focus:bg-white transition-all rounded-lg"
+              placeholder="Ví dụ: Số 12, Ngõ 34, Đường Nguyễn Trãi…"
+              className={cn(fieldBase, "mt-2.5")}
               required
             />
           </div>
-        </div>
 
-        {/* CẤU HÌNH MẶC ĐỊNH */}
-        <div className="pt-2">
-          <label className="inline-flex items-center gap-2 cursor-pointer select-none group">
+          <label className="mt-6 inline-flex cursor-pointer select-none items-center gap-3">
             <input
               type="checkbox"
               id="isDefault"
               name="isDefault"
               checked={values.isDefault}
               onChange={handleChange}
-              className="w-4 h-4 text-primary border-border rounded focus:ring-primary/30 cursor-pointer accent-primary"
+              className="h-4 w-4 cursor-pointer rounded-[2px] border border-luxury-ink/25 accent-luxury-ink"
             />
-            <span className="text-sm font-medium text-taupe-900 group-hover:text-primary transition-colors">
+            <span className="text-sm text-neutral-700">
               Đặt làm địa chỉ mặc định
             </span>
           </label>
-        </div>
+        </fieldset>
 
-        {/* NÚT THAO TÁC */}
-        <div className="flex items-center gap-3 justify-end pt-4 border-t border-border">
-          {onCancel && (
-            <Button
+        {/* Actions */}
+        <div className="flex flex-col-reverse items-stretch gap-3 border-t border-luxury-ink/8 pt-6 sm:flex-row sm:items-center sm:justify-end">
+          {onCancel ? (
+            <button
               type="button"
               onClick={onCancel}
-              variant="secondary"
-              className="px-5 py-2.5 rounded-lg text-sm font-medium transition-all"
               disabled={isSubmitting}
+              className="inline-flex h-11 items-center justify-center rounded-[2px] border border-luxury-ink/15 px-7 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink/40 disabled:opacity-40"
             >
               Hủy
-            </Button>
-          )}
-          <Button
+            </button>
+          ) : null}
+          <button
             type="submit"
-            className="px-6 py-2.5 rounded-lg text-sm font-medium shadow-sm transition-all"
             disabled={!values.wardCode || isSubmitting}
+            className="inline-flex h-11 items-center justify-center gap-3 rounded-[2px] bg-luxury-ink px-7 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-luxury-ink"
           >
-            {isSubmitting
-              ? isEditMode
-                ? "Đang cập nhật..."
-                : "Đang lưu..."
-              : isEditMode
-                ? "Cập nhật địa chỉ"
-                : "Lưu địa chỉ"}
-          </Button>
+            {isSubmitting ? (
+              <>
+                <span className="h-3.5 w-3.5 animate-spin rounded-full border border-luxury-ivory/30 border-t-luxury-ivory" />
+                {isEditMode ? "Đang cập nhật" : "Đang lưu"}
+              </>
+            ) : isEditMode ? (
+              "Cập nhật địa chỉ"
+            ) : (
+              "Lưu địa chỉ"
+            )}
+          </button>
         </div>
       </form>
     </div>

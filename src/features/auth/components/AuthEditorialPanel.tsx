@@ -52,7 +52,7 @@ export default function AuthEditorialPanel({
 
         <Link
           href="/"
-          className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-luxury-ivory/60 transition-colors hover:text-luxury-champagne"
+          className="group inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory/60 transition-colors hover:text-luxury-champagne"
         >
           <IconArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-1" />
           Về trang chủ
@@ -67,7 +67,7 @@ export default function AuthEditorialPanel({
         >
           <div className="flex items-center gap-3">
             <span className="h-px w-8 bg-luxury-champagne/80" aria-hidden />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-luxury-champagne">
+            <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-luxury-champagne">
               {eyebrow}
             </p>
           </div>
@@ -104,11 +104,11 @@ export default function AuthEditorialPanel({
               }}
             >
               <div className="flex items-baseline gap-5">
-                <span className="text-xs font-semibold uppercase tracking-[0.22em] text-luxury-champagne/80">
+                <span className="text-xs font-bold uppercase tracking-[0.22em] text-luxury-champagne/80">
                   {item.number}
                 </span>
                 <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-luxury-ivory/60">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-luxury-ivory/60">
                     {item.tag}
                   </p>
                   <h3
@@ -136,7 +136,7 @@ export default function AuthEditorialPanel({
         {AUTH_PANEL_TAGS.map((tag, index) => (
           <span
             key={tag}
-            className="inline-flex items-center gap-5 text-[10px] font-semibold uppercase tracking-[0.28em] text-luxury-ivory/50"
+            className="inline-flex items-center gap-5 text-[10px] font-bold uppercase tracking-[0.28em] text-luxury-ivory/50"
           >
             {tag}
             {index < AUTH_PANEL_TAGS.length - 1 ? (

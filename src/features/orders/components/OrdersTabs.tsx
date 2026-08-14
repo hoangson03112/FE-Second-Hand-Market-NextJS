@@ -34,12 +34,12 @@ export function OrdersTabs({
   }, [activeTab]);
 
   return (
-    <div className="sticky top-[73px] z-10 bg-cream-50/95 backdrop-blur-sm border-b-2 border-border">
-      <div className="max-w-9xl mx-auto overflow-x-auto scrollbar-hide">
+    <div className="border-t border-luxury-ink/6">
+      <div className="mx-auto w-full max-w-9xl overflow-x-auto scrollbar-hide">
         <div
           role="tablist"
           aria-label="Trạng thái đơn hàng"
-          className="inline-flex min-w-full gap-2 px-4 sm:px-6 py-3"
+          className="inline-flex min-w-full gap-2 px-4 py-3 sm:px-6"
         >
           {tabs.map((tab) => {
             const count =
@@ -56,28 +56,28 @@ export function OrdersTabs({
                 aria-selected={isActive}
                 onClick={() => onChange(tab.key)}
                 className={cn(
-                  "relative flex shrink-0 items-center gap-2 px-4 py-2 rounded-full border-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30",
+                  "relative flex shrink-0 items-center gap-2 rounded-[2px] border px-4 py-2 transition-all duration-300",
+                  "focus-visible:border-luxury-champagne focus-visible:outline-none",
                   isActive
-                    ? "bg-primary border-primary text-primary-foreground shadow-sm"
-                    : "border-border bg-white text-taupe-600 hover:border-primary/40 hover:text-taupe-900",
+                    ? "border-luxury-ink bg-luxury-ink text-luxury-ivory"
+                    : "border-luxury-ink/12 bg-white text-neutral-500 hover:border-luxury-ink/40 hover:text-luxury-ink",
                 )}
               >
-                <span className="text-xs font-semibold uppercase tracking-wide">
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
                   {tab.label}
                 </span>
 
-                {count > 0 && (
+                {count > 0 ? (
                   <span
+                    style={{ fontFamily: "var(--font-droid-serif), serif" }}
                     className={cn(
-                      "inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-[11px] font-bold tabular-nums transition-colors duration-150",
-                      isActive
-                        ? "bg-white/25 text-primary-foreground"
-                        : "bg-taupe-100 text-taupe-600",
+                      "text-[13px] leading-none tabular-nums transition-colors duration-300",
+                      isActive ? "text-luxury-champagne" : "text-luxury-ink/40",
                     )}
                   >
                     {count}
                   </span>
-                )}
+                ) : null}
               </button>
             );
           })}

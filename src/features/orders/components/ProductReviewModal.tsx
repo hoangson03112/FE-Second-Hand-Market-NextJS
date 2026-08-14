@@ -31,7 +31,7 @@ export function ProductReviewModal({
         <div className="p-6 border-b-2 border-border">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-taupe-900 uppercase tracking-wider">
+              <h3 className="text-lg font-bold text-taupe-900 uppercase tracking-wider">
                 Đánh Giá Sản Phẩm
               </h3>
               <p className="text-sm text-taupe-600 mt-1">
@@ -86,7 +86,7 @@ export function ProductReviewModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 px-6 border-2 border-taupe-300/80 text-taupe-700 rounded-xl font-semibold text-sm hover:bg-taupe-50 hover:border-taupe-500/70 transition-all duration-200"
+              className="flex-1 py-3 px-6 border-2 border-taupe-300/80 text-taupe-700 rounded-xl font-bold text-sm hover:bg-taupe-50 hover:border-taupe-500/70 transition-all duration-200"
             >
               Hủy
             </button>

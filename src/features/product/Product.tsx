@@ -74,7 +74,7 @@ export default function Product({ id }: ProductProps) {
       <div className="min-h-screen bg-luxury-ivory flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-8 h-8 border-2 border-luxury-ink/20 border-t-luxury-ink rounded-full animate-spin" />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-taupe-500">
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-taupe-500">
             Đang tải thông tin sản phẩm...
           </p>
         </div>
@@ -99,7 +99,7 @@ export default function Product({ id }: ProductProps) {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center justify-center h-12 px-8 rounded-[2px] bg-luxury-ink text-white text-[11px] uppercase tracking-[0.2em] font-semibold hover:bg-luxury-ink/90 transition-colors"
+            className="inline-flex items-center justify-center h-12 px-8 rounded-[2px] bg-luxury-ink text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-luxury-ink/90 transition-colors"
           >
             Quay lại trang chủ
           </Link>
@@ -121,18 +121,16 @@ export default function Product({ id }: ProductProps) {
   return (
     <div className="min-h-screen bg-luxury-ivory text-luxury-ink font-sans selection:bg-luxury-ink selection:text-white">
       <main className="max-w-9xl mx-auto px-4 md:px-8 py-10">
-        {/* NÚT QUAY LẠI */}
         <button
-          style={{ fontFamily: "var(--font-droid-serif), serif" }}
           onClick={() => router.back()}
-          className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-foreground hover:text-luxury-ink transition-colors mb-8 group"
+          className="font-droid-serif inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.2em] text-foreground hover:text-luxury-ink transition-colors mb-8 group"
         >
           <IconArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
           Trở lại
         </button>
 
         {/* LAYOUT CHÍNH: GALLERY & THÔNG TIN SẢN PHẨM */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 mb-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 pb-6">
           {/* CỘT TRÁI: Gallery Hình Ảnh & Thông Số Kỹ Thuật */}
           <div className="lg:col-span-6 xl:col-span-5 space-y-8">
             <ProductGalleryNew
@@ -174,17 +172,17 @@ export default function Product({ id }: ProductProps) {
                 hasPersonalDiscount={product.hasPersonalDiscount}
               />
               {(product.stock ?? 0) === 0 && (
-                <div className="inline-flex items-center justify-center rounded-[2px] bg-taupe-50/50 text-taupe-500 border border-luxury-ink/10 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.1em]">
+                <div className="inline-flex items-center justify-center rounded-[2px] bg-taupe-50/50 text-taupe-500 border border-luxury-ink/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.1em]">
                   Hết hàng
                 </div>
               )}
               {(product.stock ?? 0) === 1 && (
-                <div className="inline-flex items-center justify-center rounded-[2px] bg-blush-50 text-blush-600 border border-blush-200 px-4 py-3 text-[11px] font-semibold uppercase tracking-[0.1em]">
+                <div className="inline-flex items-center justify-center rounded-[2px] bg-blush-50 text-blush-600 border border-blush-200 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.1em]">
                   Chỉ còn 1 sản phẩm duy nhất
                 </div>
               )}
               {(product.stock ?? 0) > 1 && (
-                <div className="text-sm font-semibold uppercase tracking-wide text-charcoal-400">
+                <div className="text-sm font-bold uppercase tracking-wide text-charcoal-400">
                   Còn lại:{" "}
                   <span className="font-medium text-luxury-ink">
                     {product.stock} sản phẩm
@@ -197,13 +195,13 @@ export default function Product({ id }: ProductProps) {
             {product.deliveryOptions && (
               <div className="flex flex-wrap gap-3 py-2 ">
                 {product.deliveryOptions.codShipping && (
-                  <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-[11px] uppercase tracking-wide font-semibold">
+                  <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-[11px] uppercase tracking-wide font-bold">
                     <IconTruck className="h-4 w-4 text-primary" />
                     Giao hàng tận nhà (COD)
                   </div>
                 )}
                 {product.deliveryOptions.localPickup && (
-                  <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-[11px] uppercase tracking-wide font-semibold">
+                  <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-[11px] uppercase tracking-wide font-bold">
                     <IconMapPin className="h-4 w-4 text-red-500" />
                     Giao dịch trực tiếp
                   </div>
@@ -228,7 +226,7 @@ export default function Product({ id }: ProductProps) {
         </div>
 
         {/* MÔ TẢ & ĐÁNH GIÁ SẢN PHẨM */}
-        <div className="space-y-12 border-t border-luxury-ink/10 pt-12">
+        <div className="space-y-12 border-t border-luxury-ink/10 pt-6">
           <ProductDescription description={product.description} />
           <ProductReviewsSection productId={product._id} />
         </div>

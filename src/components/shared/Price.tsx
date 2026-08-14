@@ -42,7 +42,7 @@ export function Price({
         </span>
       )}
       {hasDiscount && showDiscount && discountPercent > 0 && (
-        <span className="rounded-md bg-destructive/10 px-1.5 py-0.5 text-xs font-semibold text-destructive">
+        <span className="rounded-md bg-destructive/10 px-1.5 py-0.5 text-xs font-bold text-destructive">
           -{discountPercent}%
         </span>
       )}

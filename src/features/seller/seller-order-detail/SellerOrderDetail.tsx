@@ -29,7 +29,11 @@ import { useSellerOrderDetail } from "./hooks/useSellerOrderDetail";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
-import { formatShippingMethod, getShippingMethodType, formatPaymentMethod } from "@/utils/format";
+import {
+  formatShippingMethod,
+  getShippingMethodType,
+  formatPaymentMethod,
+} from "@/utils/format";
 import { openChatWithOrder } from "@/utils/chat";
 import { getAvatarUrl } from "@/utils";
 
@@ -48,24 +52,37 @@ const STATUS_TO_TS: Record<string, string> = {
   delivered: "deliveredAt",
   completed: "completedAt",
 };
-const GHN_ORDER: string[] = ["pending", "confirmed", "picked_up", "shipping", "out_for_delivery", "delivered", "completed"];
-const LOCAL_ORDER: string[] = ["pending", "confirmed", "delivered", "completed"];
+const GHN_ORDER: string[] = [
+  "pending",
+  "confirmed",
+  "picked_up",
+  "shipping",
+  "out_for_delivery",
+  "delivered",
+  "completed",
+];
+const LOCAL_ORDER: string[] = [
+  "pending",
+  "confirmed",
+  "delivered",
+  "completed",
+];
 
 function buildTimeline(
   order: NonNullable<ReturnType<typeof useSellerOrderDetail>["order"]>,
-  isLocalPickup: boolean
+  isLocalPickup: boolean,
 ): TimelineEntry[] {
   const GHN_STEPS: Array<{ key: string; label: string }> = [
-    { key: "pending",          label: "Đặt hàng" },
-    { key: "confirmed",        label: "Đã xác nhận" },
-    { key: "picked_up",        label: "Đã lấy hàng" },
-    { key: "shipping",         label: "Đang vận chuyển" },
+    { key: "pending", label: "Đặt hàng" },
+    { key: "confirmed", label: "Đã xác nhận" },
+    { key: "picked_up", label: "Đã lấy hàng" },
+    { key: "shipping", label: "Đang vận chuyển" },
     { key: "out_for_delivery", label: "Đang giao hàng" },
-    { key: "delivered",        label: "Đã giao hàng" },
-    { key: "completed",        label: "Hoàn thành" },
+    { key: "delivered", label: "Đã giao hàng" },
+    { key: "completed", label: "Hoàn thành" },
   ];
   const LOCAL_STEPS: Array<{ key: string; label: string }> = [
-    { key: "pending",   label: "Đặt hàng" },
+    { key: "pending", label: "Đặt hàng" },
     { key: "confirmed", label: "Đã xác nhận" },
     { key: "delivered", label: "Đã giao hàng" },
     { key: "completed", label: "Hoàn thành" },
@@ -74,8 +91,11 @@ function buildTimeline(
   const ORDER = isLocalPickup ? LOCAL_ORDER : GHN_ORDER;
 
   const statusHistory: Array<{ status: string; updatedAt: string }> =
-    (order as unknown as { statusHistory?: Array<{ status: string; updatedAt: string }> })
-      .statusHistory ?? [];
+    (
+      order as unknown as {
+        statusHistory?: Array<{ status: string; updatedAt: string }>;
+      }
+    ).statusHistory ?? [];
   const orderRaw = order as unknown as Record<string, unknown>;
   const currentStatus = String(order.status || "");
 
@@ -126,7 +146,10 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
   };
 
   const handleReturnTrackingClick = () => {
-    returnTrackingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    returnTrackingRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   const handleChatClick = () => {
@@ -135,7 +158,10 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
       {
         _id: order.buyerId._id,
         fullName: order.buyerId.fullName,
-        avatar: getAvatarUrl((order.buyerId as { avatar?: { url?: string } })?.avatar) ?? undefined,
+        avatar:
+          getAvatarUrl(
+            (order.buyerId as { avatar?: { url?: string } })?.avatar,
+          ) ?? undefined,
       },
       {
         _id: order._id,
@@ -146,7 +172,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
           quantity: p.quantity,
           price: p.price,
         })),
-      }
+      },
     );
   };
 
@@ -163,8 +189,13 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
         <IconPackage className="w-12 h-12 text-muted-foreground" />
-        <p className="text-lg font-semibold text-foreground">Không tìm thấy đơn hàng</p>
-        <Link href="/my/orders" className="text-sm text-primary hover:underline">
+        <p className="text-lg font-bold text-foreground">
+          Không tìm thấy đơn hàng
+        </p>
+        <Link
+          href="/my/orders"
+          className="text-sm text-primary hover:underline"
+        >
           Quay lại danh sách đơn hàng
         </Link>
       </div>
@@ -172,7 +203,8 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
   }
 
   const orderCode = `#${order._id.slice(-8).toUpperCase()}`;
-  const isLocalPickup = getShippingMethodType(order.shippingMethod) === "local_pickup";
+  const isLocalPickup =
+    getShippingMethodType(order.shippingMethod) === "local_pickup";
   const timeline = buildTimeline(order, isLocalPickup);
   const hasTracking = !isLocalPickup && Boolean(order.ghnOrderCode);
   const hasReturnTracking = !isLocalPickup && Boolean(order.ghnReturnOrderCode);
@@ -191,7 +223,9 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
             Đơn hàng
           </Link>
           <span className="text-muted-foreground/40 text-sm">/</span>
-          <span className="text-sm font-semibold text-foreground truncate">{orderCode}</span>
+          <span className="text-sm font-bold text-foreground truncate">
+            {orderCode}
+          </span>
           <div className="ml-auto">
             <StatusBadge status={order.status} size="sm" />
           </div>
@@ -204,7 +238,9 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
         <div className="mb-6 rounded-xl border border-border bg-card overflow-hidden">
           <div className="flex items-center gap-2 px-4 py-3 border-b border-border">
             <IconClock className="w-4 h-4 text-muted-foreground" />
-            <h2 className="text-sm font-semibold text-foreground">Lịch sử đơn hàng</h2>
+            <h2 className="text-sm font-bold text-foreground">
+              Lịch sử đơn hàng
+            </h2>
           </div>
           <div className="px-4 py-4">
             <div className="flex w-full items-start gap-0">
@@ -213,8 +249,10 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                 const stepOrder = isLocalPickup ? LOCAL_ORDER : GHN_ORDER;
                 const stepIdx = stepOrder.indexOf(status);
                 const currIdx = stepOrder.indexOf(currentOrderStatus);
-                const isDone = stepIdx >= 0 && currIdx >= 0 && stepIdx < currIdx;
-                const isCurrent = stepIdx >= 0 && currIdx >= 0 && stepIdx === currIdx;
+                const isDone =
+                  stepIdx >= 0 && currIdx >= 0 && stepIdx < currIdx;
+                const isCurrent =
+                  stepIdx >= 0 && currIdx >= 0 && stepIdx === currIdx;
                 const isLast = idx === timeline.length - 1;
                 return (
                   <div key={status} className="contents">
@@ -226,21 +264,29 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                             : "bg-muted text-muted-foreground"
                         }`}
                       >
-                        {(isDone || isCurrent) ? (
-                          <IconCircleCheck className="w-4 h-4" strokeWidth={2.5} />
+                        {isDone || isCurrent ? (
+                          <IconCircleCheck
+                            className="w-4 h-4"
+                            strokeWidth={2.5}
+                          />
                         ) : (
                           <IconPackage className="w-4 h-4" strokeWidth={2} />
                         )}
                       </div>
                       <span
                         className={`mt-1.5 text-[11px] text-center leading-tight ${
-                          isDone || isCurrent ? "text-foreground font-medium" : "text-muted-foreground"
+                          isDone || isCurrent
+                            ? "text-foreground font-medium"
+                            : "text-muted-foreground"
                         }`}
                       >
                         {label}
                       </span>
                       {at && (
-                        <span className="mt-0.5 text-[10px] text-muted-foreground text-center block" title={format(at)}>
+                        <span
+                          className="mt-0.5 text-[10px] text-muted-foreground text-center block"
+                          title={format(at)}
+                        >
                           {format(at)}
                         </span>
                       )}
@@ -260,10 +306,8 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-
           {/* LEFT column ─────────────────────────────────────────────── */}
           <div className="lg:col-span-7 space-y-5">
-
             {/* Products */}
             <SellerProductsCard order={order} />
 
@@ -281,12 +325,12 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                   {isLocalPickup ? "Giao hàng trực tiếp" : "Địa chỉ giao hàng"}
                 </h2>
                 {isLocalPickup && (
-                  <span className="ml-auto text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300">
+                  <span className="ml-auto text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300">
                     Gặp mặt trực tiếp
                   </span>
                 )}
                 {!isLocalPickup && (
-                  <span className="ml-auto text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 border border-blue-300">
+                  <span className="ml-auto text-xs font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 border border-blue-300">
                     {formatShippingMethod(order.shippingMethod)}
                   </span>
                 )}
@@ -296,16 +340,23 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                   <div className="flex items-start gap-3 p-3 bg-emerald-50 rounded-xl border border-emerald-200">
                     <span className="text-lg">🤝</span>
                     <div>
-                      <p className="text-sm font-semibold text-emerald-800">Người mua tự đến lấy hàng</p>
+                      <p className="text-sm font-bold text-emerald-800">
+                        Người mua tự đến lấy hàng
+                      </p>
                       <p className="text-xs text-emerald-700 mt-0.5">
-                        Liên hệ người mua để thống nhất thời gian và địa điểm gặp mặt, sau đó xác nhận đã giao hàng.
+                        Liên hệ người mua để thống nhất thời gian và địa điểm
+                        gặp mặt, sau đó xác nhận đã giao hàng.
                       </p>
                     </div>
                   </div>
                 ) : (
                   <>
-                    <p className="font-semibold text-foreground">{order.shippingAddress.fullName}</p>
-                    <p className="text-sm text-muted-foreground mt-0.5">{order.shippingAddress.phoneNumber}</p>
+                    <p className="font-bold text-foreground">
+                      {order.shippingAddress.fullName}
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-0.5">
+                      {order.shippingAddress.phoneNumber}
+                    </p>
                     <p className="text-sm text-foreground mt-2 leading-relaxed">
                       {[
                         order.shippingAddress.specificAddress,
@@ -320,7 +371,9 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                       <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground bg-muted/50 rounded-lg px-3 py-2">
                         <IconTruck className="w-3.5 h-3.5 shrink-0" />
                         <span>Mã GHN:</span>
-                        <span className="font-mono font-semibold text-foreground">{order.ghnOrderCode}</span>
+                        <span className="font-mono font-bold text-foreground">
+                          {order.ghnOrderCode}
+                        </span>
                         <a
                           href={`https://tracking.ghn.dev/?order_code=${order.ghnOrderCode}`}
                           target="_blank"
@@ -336,7 +389,9 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                       <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground bg-blue-50 rounded-lg px-3 py-2">
                         <IconTruck className="w-3.5 h-3.5 shrink-0 text-blue-500" />
                         <span className="text-blue-600">Mã hoàn:</span>
-                        <span className="font-mono font-semibold text-blue-700">{order.ghnReturnOrderCode}</span>
+                        <span className="font-mono font-bold text-blue-700">
+                          {order.ghnReturnOrderCode}
+                        </span>
                         <a
                           href={
                             order.ghnReturnTrackingUrl?.trim() ||
@@ -376,7 +431,9 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
               onApproveRefund={handleApproveRefund}
               onRejectRefund={handleRejectRefund}
               onTrackingClick={hasTracking ? handleTrackingClick : undefined}
-              onReturnTrackingClick={hasReturnTracking ? handleReturnTrackingClick : undefined}
+              onReturnTrackingClick={
+                hasReturnTracking ? handleReturnTrackingClick : undefined
+              }
               onConfirmReturnReceived={handleConfirmReturnReceived}
               onMarkDelivered={isLocalPickup ? handleMarkDelivered : undefined}
               isLocalPickup={isLocalPickup}
@@ -386,29 +443,36 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
 
           {/* RIGHT column ────────────────────────────────────────────── */}
           <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-20 lg:self-start">
-
             {/* Buyer info */}
             <div className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
               <div className="flex items-center gap-3 px-5 py-4 border-b border-border bg-muted/20">
                 <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                   <IconUser className="w-4.5 h-4.5 text-primary" />
                 </div>
-                <h2 className="text-sm font-bold text-foreground">Thông tin người mua</h2>
+                <h2 className="text-sm font-bold text-foreground">
+                  Thông tin người mua
+                </h2>
               </div>
               <div className="p-5 space-y-4">
                 {/* Avatar + name */}
                 <div className="flex items-center gap-3">
                   <AvatarOrInitials
-                    avatar={(order.buyerId as { avatar?: { url?: string } })?.avatar}
+                    avatar={
+                      (order.buyerId as { avatar?: { url?: string } })?.avatar
+                    }
                     fullName={order.buyerId.fullName}
                     size={44}
                     className="ring-2 ring-primary/20"
                   />
                   <div className="min-w-0">
-                    <p className="font-semibold text-foreground truncate">{order.buyerId.fullName}</p>
+                    <p className="font-bold text-foreground truncate">
+                      {order.buyerId.fullName}
+                    </p>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <IconCalendar className="w-3 h-3 text-muted-foreground" />
-                      <p className="text-xs text-muted-foreground">Đặt lúc {format(order.createdAt)}</p>
+                      <p className="text-xs text-muted-foreground">
+                        Đặt lúc {format(order.createdAt)}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -422,11 +486,17 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                         className="flex-1 flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors group"
                       >
                         <IconPhoneCall className="w-4 h-4 text-emerald-600 shrink-0" />
-                        <span className="text-sm font-semibold text-emerald-700 truncate">{order.buyerId.phoneNumber}</span>
+                        <span className="text-sm font-bold text-emerald-700 truncate">
+                          {order.buyerId.phoneNumber}
+                        </span>
                       </a>
                       <button
                         type="button"
-                        onClick={() => navigator.clipboard.writeText(order.buyerId.phoneNumber)}
+                        onClick={() =>
+                          navigator.clipboard.writeText(
+                            order.buyerId.phoneNumber,
+                          )
+                        }
                         className="p-2.5 rounded-xl border border-border hover:bg-muted/60 transition-colors shrink-0"
                         title="Sao chép số điện thoại"
                       >
@@ -440,7 +510,9 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                       className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-muted/50 border border-border hover:bg-muted/80 transition-colors"
                     >
                       <IconMail className="w-4 h-4 text-muted-foreground shrink-0" />
-                      <span className="text-sm text-foreground truncate">{order.buyerId.email}</span>
+                      <span className="text-sm text-foreground truncate">
+                        {order.buyerId.email}
+                      </span>
                     </a>
                   )}
                 </div>
@@ -448,12 +520,14 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                 {/* Shipping recipient (may differ from buyer account) */}
                 {order.shippingAddress && (
                   <div className="rounded-xl border border-border bg-muted/30 p-3 space-y-1.5">
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide">
                       {isLocalPickup ? "Liên hệ nhận hàng" : "Người nhận hàng"}
                     </p>
                     <div className="flex items-center gap-2">
                       <IconUser className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-                      <span className="text-sm font-semibold text-foreground">{order.shippingAddress.fullName}</span>
+                      <span className="text-sm font-bold text-foreground">
+                        {order.shippingAddress.fullName}
+                      </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <IconPhone className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
@@ -484,7 +558,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
 
                 <button
                   onClick={handleChatClick}
-                  className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-semibold text-sm transition-colors"
+                  className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-bold text-sm transition-colors"
                 >
                   <IconMessage className="w-4 h-4" />
                   Nhắn tin người mua
@@ -498,31 +572,35 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                 <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                   <IconCreditCard className="w-4.5 h-4.5 text-primary" />
                 </div>
-                <h2 className="text-sm font-bold text-foreground">Thanh toán</h2>
+                <h2 className="text-sm font-bold text-foreground">
+                  Thanh toán
+                </h2>
               </div>
               <div className="p-5 space-y-2.5">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Phương thức</span>
                   <span className="font-medium text-foreground text-right max-w-[55%]">
-                    {formatPaymentMethod(order.paymentMethod, { shippingMethod: order.shippingMethod })}
+                    {formatPaymentMethod(order.paymentMethod, {
+                      shippingMethod: order.shippingMethod,
+                    })}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Trạng thái</span>
                   <span
-                    className={`font-semibold ${
+                    className={`font-bold ${
                       order.paymentStatus === "paid"
                         ? "text-emerald-600"
                         : order.paymentStatus === "refunded"
-                        ? "text-blue-500"
-                        : "text-amber-500"
+                          ? "text-blue-500"
+                          : "text-amber-500"
                     }`}
                   >
                     {order.paymentStatus === "paid"
                       ? "Đã thanh toán"
                       : order.paymentStatus === "refunded"
-                      ? "Đã hoàn tiền"
-                      : "Chờ thanh toán"}
+                        ? "Đã hoàn tiền"
+                        : "Chờ thanh toán"}
                   </span>
                 </div>
                 <hr className="border-border" />
@@ -541,8 +619,12 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                   </div>
                 )}
                 <div className="flex justify-between items-center pt-2 border-t border-border">
-                  <span className="font-bold text-foreground text-sm">Tổng cộng</span>
-                  <span className="font-bold text-primary text-base">{formatPrice(order.totalAmount)}</span>
+                  <span className="font-bold text-foreground text-sm">
+                    Tổng cộng
+                  </span>
+                  <span className="font-bold text-primary text-base">
+                    {formatPrice(order.totalAmount)}
+                  </span>
                 </div>
               </div>
             </div>
@@ -550,18 +632,24 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
             {/* GHN tracking */}
             {hasTracking && (
               <div ref={trackingRef}>
-                <OrderTracking orderId={order._id} ghnOrderCode={order.ghnOrderCode} />
+                <OrderTracking
+                  orderId={order._id}
+                  ghnOrderCode={order.ghnOrderCode}
+                />
               </div>
             )}
 
             {/* GHN return tracking */}
             {hasReturnTracking && (
               <div ref={returnTrackingRef}>
-                <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-blue-700">
+                <div className="mb-2 flex items-center gap-2 text-sm font-bold text-blue-700">
                   <IconTruck className="w-4 h-4" />
                   Vận đơn hoàn hàng
                 </div>
-                <OrderTracking orderId={order._id} ghnOrderCode={order.ghnReturnOrderCode} />
+                <OrderTracking
+                  orderId={order._id}
+                  ghnOrderCode={order.ghnReturnOrderCode}
+                />
               </div>
             )}
           </div>
@@ -570,4 +658,3 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
     </div>
   );
 }
-

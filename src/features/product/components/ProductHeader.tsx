@@ -48,7 +48,7 @@ export default function ProductHeader({
         {(category || subcategory) && (
           <nav
             aria-label="Breadcrumb"
-            className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-charcoal-400 uppercase flex-wrap"
+            className="flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-charcoal-400 uppercase flex-wrap"
           >
             <Link href="/" className="hover:text-luxury-ink transition-colors">
               Trang chủ
@@ -117,12 +117,12 @@ export default function ProductHeader({
 
             <div className="h-3 w-[1px] bg-luxury-ink/20" />
 
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-taupe-500 mt-0.5">
+            <span className="text-[11px] font-bold uppercase tracking-wide text-taupe-500 mt-0.5">
               {totalReviews.toLocaleString("vi-VN")} đánh giá
             </span>
           </>
         ) : (
-          <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-charcoal-400">
+          <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-charcoal-400">
             <IconStar className="h-4 w-4" />
             <span>Chưa có đánh giá</span>
           </div>

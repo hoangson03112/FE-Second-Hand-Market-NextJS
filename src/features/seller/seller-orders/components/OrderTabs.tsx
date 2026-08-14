@@ -19,7 +19,11 @@ interface OrderTabsProps {
   tabCounts: Record<string, number>;
 }
 
-export default function OrderTabs({ activeTab, onTabChange, tabCounts }: OrderTabsProps) {
+export default function OrderTabs({
+  activeTab,
+  onTabChange,
+  tabCounts,
+}: OrderTabsProps) {
   const activeRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
@@ -55,7 +59,7 @@ export default function OrderTabs({ activeTab, onTabChange, tabCounts }: OrderTa
                   "transition-colors duration-150",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-inset",
                   isActive
-                    ? "bg-primary text-primary-foreground font-semibold"
+                    ? "bg-primary text-primary-foreground font-bold"
                     : "bg-transparent font-medium text-muted-foreground hover:bg-background hover:text-foreground",
                 )}
               >
@@ -66,7 +70,7 @@ export default function OrderTabs({ activeTab, onTabChange, tabCounts }: OrderTa
                     className={cn(
                       "inline-flex items-center justify-center",
                       "min-w-[20px] h-5 px-1.5 rounded-md",
-                      "text-xs font-semibold tabular-nums",
+                      "text-xs font-bold tabular-nums",
                       "transition-colors duration-150",
                       isActive
                         ? "bg-primary-foreground/20 text-primary-foreground"

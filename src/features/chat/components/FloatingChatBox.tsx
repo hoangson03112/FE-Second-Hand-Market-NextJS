@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { IconMessageCircle, IconLoader2, IconPercentage } from "@tabler/icons-react";
+import {
+  IconMessageCircle,
+  IconLoader2,
+  IconPercentage,
+} from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import { useUser } from "@/features/auth/hooks/useUser";
 import { useWebSocket } from "@/hooks/useWebSocket";
@@ -15,7 +19,10 @@ import { ChatMessages } from "./ChatMessages";
 import { ChatInput } from "./ChatInput";
 import { AIProductAssistantPanel } from "./AIProductAssistantPanel";
 import SellerDiscountInline from "./SellerDiscountInline";
-import { buildProductMessage, buildOrderMessage } from "../utils/productMessage";
+import {
+  buildProductMessage,
+  buildOrderMessage,
+} from "../utils/productMessage";
 
 interface ProductInfo {
   _id: string;
@@ -187,7 +194,8 @@ export default function FloatingChatBox() {
   useEffect(() => {
     const handleOpenChat = (event: Event) => {
       const customEvent = event as CustomEvent<OpenChatEventDetail>;
-      const { userId, userName, userAvatar, product, order } = customEvent.detail;
+      const { userId, userName, userAvatar, product, order } =
+        customEvent.detail;
       openChatWith(userId, userName, userAvatar, product, order);
     };
 
@@ -215,13 +223,14 @@ export default function FloatingChatBox() {
 
       // Safety: ignore messages not addressed to / sent by current user
       // (prevents cross-user leakage if socket routing misbehaves)
-      const isRelevant =
-        newMsg.senderId === myId || newMsg.receiverId === myId;
+      const isRelevant = newMsg.senderId === myId || newMsg.receiverId === myId;
       if (!isRelevant) return;
 
-      const otherPartyId = newMsg.senderId === myId ? newMsg.receiverId : newMsg.senderId;
+      const otherPartyId =
+        newMsg.senderId === myId ? newMsg.receiverId : newMsg.senderId;
       const isCurrentThread =
-        !!selectedConversation?._id && selectedConversation._id === otherPartyId;
+        !!selectedConversation?._id &&
+        selectedConversation._id === otherPartyId;
 
       if (isCurrentThread) {
         setMessages((prev) => [...prev, newMsg]);
@@ -431,7 +440,9 @@ export default function FloatingChatBox() {
 
           <div className="flex-1 overflow-hidden">
             {isAIChatOpen ? (
-              <AIProductAssistantPanel onBackToConversations={handleBackToList} />
+              <AIProductAssistantPanel
+                onBackToConversations={handleBackToList}
+              />
             ) : !selectedConversation ? (
               <div className="h-full overflow-y-auto">
                 <div className="p-4 border-b border-border bg-primary/5">
@@ -444,11 +455,12 @@ export default function FloatingChatBox() {
                     }}
                     className="w-full rounded-2xl border border-primary/25 bg-white px-4 py-3.5 text-left hover:border-primary/45 hover:bg-primary/5 transition-colors"
                   >
-                    <p className="text-sm font-semibold text-primary">
+                    <p className="text-sm font-bold text-primary">
                       Trợ lý AI tìm sản phẩm
                     </p>
                     <p className="text-xs text-taupe-500 mt-1">
-                      Mô tả nhu cầu để AI gợi ý sản phẩm phù hợp ngay trong chat.
+                      Mô tả nhu cầu để AI gợi ý sản phẩm phù hợp ngay trong
+                      chat.
                     </p>
                   </button>
                 </div>
@@ -482,7 +494,12 @@ export default function FloatingChatBox() {
                       product,
                       discountedPrice,
                     }: {
-                      product: { _id: string; name: string; imageUrl?: string; slug?: string };
+                      product: {
+                        _id: string;
+                        name: string;
+                        imageUrl?: string;
+                        slug?: string;
+                      };
                       discountedPrice: number;
                     }) => {
                       try {
@@ -515,7 +532,10 @@ export default function FloatingChatBox() {
                         ]);
                         setIsDealMode(false);
                       } catch (error) {
-                        console.error("Error sending discount product message:", error);
+                        console.error(
+                          "Error sending discount product message:",
+                          error,
+                        );
                       }
                     }}
                   />
@@ -530,7 +550,7 @@ export default function FloatingChatBox() {
                         <button
                           type="button"
                           onClick={() => setIsDealMode(true)}
-                          className="inline-flex h-[52px] items-center gap-1.5 rounded-xl border-2 border-primary/30 bg-primary/8 px-3.5 text-xs font-semibold text-primary transition hover:bg-primary/14"
+                          className="inline-flex h-[52px] items-center gap-1.5 rounded-xl border-2 border-primary/30 bg-primary/8 px-3.5 text-xs font-bold text-primary transition hover:bg-primary/14"
                         >
                           <IconPercentage className="h-4 w-4" />
                           Deal
@@ -548,7 +568,9 @@ export default function FloatingChatBox() {
                       }
                     }}
                     onFilesChange={(files) => {
-                      setSelectedFiles((prev) => [...prev, ...files].slice(0, 5));
+                      setSelectedFiles((prev) =>
+                        [...prev, ...files].slice(0, 5),
+                      );
                       setChatError(null);
                     }}
                     onRemoveFile={(index) => {

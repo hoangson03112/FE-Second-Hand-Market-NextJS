@@ -41,7 +41,7 @@ export default function ProductMessageCard({
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="font-semibold text-sm text-taupe-900 mb-1 line-clamp-2">
+          <p className="font-bold text-sm text-taupe-900 mb-1 line-clamp-2">
             {productName}
           </p>
           <p className="text-primary font-bold text-base">

@@ -19,10 +19,13 @@ interface OrderTrackingProps {
 
 export function OrderTracking({ orderId, ghnOrderCode }: OrderTrackingProps) {
   const trackingUrl = `https://tracking.ghn.dev/?order_code=${ghnOrderCode || ""}`;
-  const { data: tracking, isLoading, isError, refetch, isFetching } = useOrderTracking(
-    orderId,
-    Boolean(orderId && ghnOrderCode)
-  );
+  const {
+    data: tracking,
+    isLoading,
+    isError,
+    refetch,
+    isFetching,
+  } = useOrderTracking(orderId, Boolean(orderId && ghnOrderCode));
 
   const events = useMemo(() => {
     if (!ghnOrderCode) return [];
@@ -46,7 +49,6 @@ export function OrderTracking({ orderId, ghnOrderCode }: OrderTrackingProps) {
     try {
       await navigator.clipboard.writeText(ghnOrderCode);
     } catch {
-      // Ignore copy failures silently.
     }
   };
 
@@ -57,7 +59,9 @@ export function OrderTracking({ orderId, ghnOrderCode }: OrderTrackingProps) {
           <IconTruck className="w-4.5 h-4.5 text-primary" />
         </div>
         <div className="min-w-0">
-          <h3 className="text-sm font-bold text-foreground">Theo doi van don</h3>
+          <h3 className="text-sm font-bold text-foreground">
+            Theo doi van don
+          </h3>
           <p className="text-xs text-muted-foreground">
             Don #{orderId.slice(-8).toUpperCase()} - Ma GHN: {ghnOrderCode}
           </p>
@@ -89,7 +93,7 @@ export function OrderTracking({ orderId, ghnOrderCode }: OrderTrackingProps) {
             <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
               Trang thai
             </p>
-            <p className="mt-1 text-sm font-semibold text-foreground">
+            <p className="mt-1 text-sm font-bold text-foreground">
               {tracking?.status_text || "Dang dong bo"}
             </p>
           </div>
@@ -97,7 +101,7 @@ export function OrderTracking({ orderId, ghnOrderCode }: OrderTrackingProps) {
             <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
               Cap nhat luc
             </p>
-            <p className="mt-1 text-sm font-semibold text-foreground">
+            <p className="mt-1 text-sm font-bold text-foreground">
               {formatDateTime(tracking?.updated_date)}
             </p>
           </div>
@@ -105,7 +109,7 @@ export function OrderTracking({ orderId, ghnOrderCode }: OrderTrackingProps) {
             <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
               Du kien giao
             </p>
-            <p className="mt-1 text-sm font-semibold text-foreground">
+            <p className="mt-1 text-sm font-bold text-foreground">
               {formatDateTime(tracking?.estimate_deliver_time)}
             </p>
           </div>
@@ -113,7 +117,7 @@ export function OrderTracking({ orderId, ghnOrderCode }: OrderTrackingProps) {
 
         <div className="rounded-xl border border-border overflow-hidden">
           <div className="px-3 py-2.5 border-b border-border bg-muted/20 flex items-center justify-between">
-            <p className="text-xs font-semibold text-foreground">Lich su van don</p>
+            <p className="text-xs font-bold text-foreground">Lich su van don</p>
             <button
               type="button"
               onClick={() => refetch()}
@@ -158,17 +162,20 @@ export function OrderTracking({ orderId, ghnOrderCode }: OrderTrackingProps) {
             ) : (
               <ul className="space-y-3">
                 {events.map((event, index) => (
-                  <li key={`${event.time}-${event.status}-${index}`} className="flex gap-3">
+                  <li
+                    key={`${event.time}-${event.status}-${index}`}
+                    className="flex gap-3"
+                  >
                     <div className="pt-1">
                       <span
                         className={cn(
                           "block w-2.5 h-2.5 rounded-full",
-                          index === 0 ? "bg-primary" : "bg-primary/35"
+                          index === 0 ? "bg-primary" : "bg-primary/35",
                         )}
                       />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-foreground">
+                      <p className="text-sm font-bold text-foreground">
                         {event.status_text || event.status}
                       </p>
                       <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
@@ -184,7 +191,9 @@ export function OrderTracking({ orderId, ghnOrderCode }: OrderTrackingProps) {
                         )}
                       </div>
                       {event.note && (
-                        <p className="mt-1 text-xs text-muted-foreground">{event.note}</p>
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          {event.note}
+                        </p>
                       )}
                     </div>
                   </li>

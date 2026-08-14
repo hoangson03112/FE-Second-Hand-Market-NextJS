@@ -13,7 +13,7 @@ export default function Header() {
     account,
     categories,
     showAllCategories,
-    cartItemCount,
+    productCount,
     query,
     setQuery,
     showUserDropdown,
@@ -80,7 +80,7 @@ export default function Header() {
                   account={account}
                   sellButtonHref={sellButtonHref}
                   sellButtonText={sellButtonText}
-                  cartItemCount={cartItemCount}
+                  productCount={productCount}
                   showUserDropdown={showUserDropdown}
                   dropdownRef={dropdownRef}
                   toggleUserDropdown={toggleUserDropdown}

@@ -23,7 +23,7 @@ export function useHeader() {
   const router = useRouter();
   const { data: categories, isLoading } = useCategories();
   const { data: account, isLoading: isUserLoading } = useUser();
-  const { itemCount: cartItemCount } = useCart();
+  const { productCount: productCount } = useCart();
   const unreadNotificationCount = useNotificationStore(
     (state) => state.unreadCount,
   );
@@ -189,7 +189,7 @@ export function useHeader() {
     visibleCategories: visibleCategories ?? [],
     activeCategory,
     showAllCategories,
-    cartItemCount: cartItemCount ?? 0,
+    productCount: productCount ?? 0,
     query,
     setQuery,
     showUserDropdown,

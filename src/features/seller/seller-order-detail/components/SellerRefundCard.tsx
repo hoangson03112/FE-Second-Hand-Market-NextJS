@@ -15,13 +15,16 @@ import {
 import { REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER } from "@/constants/refund";
 import type { Order } from "@/types/order";
 
-const REASON_LABELS: Record<string, { label: string; Icon: React.ElementType }> = {
-  damaged:          { label: "Hàng bị hỏng",     Icon: IconTool },
-  wrong_item:       { label: "Giao sai hàng",     Icon: IconRepeat },
+const REASON_LABELS: Record<
+  string,
+  { label: string; Icon: React.ElementType }
+> = {
+  damaged: { label: "Hàng bị hỏng", Icon: IconTool },
+  wrong_item: { label: "Giao sai hàng", Icon: IconRepeat },
   not_as_described: { label: "Không đúng mô tả", Icon: IconFileSearch },
-  missing_parts:    { label: "Thiếu phụ kiện",    Icon: IconPackage },
-  quality_issue:    { label: "Chất lượng kém",     Icon: IconMoodSad },
-  other:            { label: "Lý do khác",         Icon: IconDots },
+  missing_parts: { label: "Thiếu phụ kiện", Icon: IconPackage },
+  quality_issue: { label: "Chất lượng kém", Icon: IconMoodSad },
+  other: { label: "Lý do khác", Icon: IconDots },
 };
 
 interface SellerRefundCardProps {
@@ -29,7 +32,10 @@ interface SellerRefundCardProps {
 }
 
 export function SellerRefundCard({ refund }: SellerRefundCardProps) {
-  const reasonInfo = REASON_LABELS[refund.reason] ?? { label: refund.reason, Icon: IconAlertTriangle };
+  const reasonInfo = REASON_LABELS[refund.reason] ?? {
+    label: refund.reason,
+    Icon: IconAlertTriangle,
+  };
   const ReasonIcon = reasonInfo.Icon;
 
   return (
@@ -41,7 +47,9 @@ export function SellerRefundCard({ refund }: SellerRefundCardProps) {
         </div>
         <div>
           <p className="text-sm font-bold text-orange-800">Yêu cầu hoàn tiền</p>
-          <p className="text-xs text-orange-500 mt-0.5">Người mua đã gửi yêu cầu, vui lòng xem xét</p>
+          <p className="text-xs text-orange-500 mt-0.5">
+            Người mua đã gửi yêu cầu, vui lòng xem xét
+          </p>
         </div>
       </div>
 
@@ -52,8 +60,12 @@ export function SellerRefundCard({ refund }: SellerRefundCardProps) {
             <ReasonIcon className="w-4 h-4 text-foreground/60" />
           </div>
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Lý do</p>
-            <p className="text-sm font-semibold text-foreground">{reasonInfo.label}</p>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              Lý do
+            </p>
+            <p className="text-sm font-bold text-foreground">
+              {reasonInfo.label}
+            </p>
           </div>
         </div>
 
@@ -94,7 +106,9 @@ export function SellerRefundCard({ refund }: SellerRefundCardProps) {
                       className="object-cover group-hover/img:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/20 transition-colors flex items-center justify-center">
-                      <span className="text-white text-xs font-medium opacity-0 group-hover/img:opacity-100 transition-opacity">Xem</span>
+                      <span className="text-white text-xs font-medium opacity-0 group-hover/img:opacity-100 transition-opacity">
+                        Xem
+                      </span>
                     </div>
                   </div>
                 </a>
@@ -128,9 +142,13 @@ export function SellerRefundCard({ refund }: SellerRefundCardProps) {
                     <p className="text-sm font-medium text-foreground truncate">
                       {vid.originalName ?? `Video ${idx + 1}`}
                     </p>
-                    <p className="text-xs text-muted-foreground">Nhấn để xem toàn bộ video</p>
+                    <p className="text-xs text-muted-foreground">
+                      Nhấn để xem toàn bộ video
+                    </p>
                   </div>
-                  <span className="text-xs text-primary font-semibold shrink-0">Xem →</span>
+                  <span className="text-xs text-primary font-bold shrink-0">
+                    Xem →
+                  </span>
                 </a>
               ))}
             </div>

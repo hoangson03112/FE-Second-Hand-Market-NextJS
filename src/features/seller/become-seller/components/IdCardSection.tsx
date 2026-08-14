@@ -7,7 +7,9 @@ interface IdCardSectionProps {
   idCardFront: File | null;
   idCardBack: File | null;
   errors: BecomeSellerErrors;
-  onFileChange: (field: "idCardFront" | "idCardBack" | "avatar") => (e: ChangeEvent<HTMLInputElement>) => void;
+  onFileChange: (
+    field: "idCardFront" | "idCardBack" | "avatar",
+  ) => (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 /* ── Dropzone card với preview ảnh — thay input file mặc định khó dùng ── */
@@ -52,7 +54,11 @@ function FileDropzone({
         {previewUrl ? (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={previewUrl} alt={label} className="h-full w-full object-cover" />
+            <img
+              src={previewUrl}
+              alt={label}
+              className="h-full w-full object-cover"
+            />
             <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 via-black/10 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               <p className="flex items-center gap-1.5 text-[11px] font-medium text-white">
                 <IconUpload className="h-3.5 w-3.5" strokeWidth={1.75} />
@@ -60,7 +66,7 @@ function FileDropzone({
               </p>
             </div>
             <div
-              className="absolute right-2 top-2 flex items-center gap-1 bg-luxury-ink/85 px-2 py-1 text-[10px] font-semibold text-luxury-champagne backdrop-blur-sm"
+              className="absolute right-2 top-2 flex items-center gap-1 bg-luxury-ink/85 px-2 py-1 text-[10px] font-bold text-luxury-champagne backdrop-blur-sm"
               style={{ borderRadius: "2px" }}
             >
               <IconCheck className="h-3 w-3" strokeWidth={2.5} />
@@ -92,7 +98,9 @@ function FileDropzone({
       />
 
       {file && !error && (
-        <p className="mt-1.5 truncate text-[11px] text-neutral-500">{file.name}</p>
+        <p className="mt-1.5 truncate text-[11px] text-neutral-500">
+          {file.name}
+        </p>
       )}
       {error && <p className="mt-1.5 text-xs text-red-600">{error}</p>}
     </div>
@@ -106,7 +114,10 @@ export const IdCardSection: React.FC<IdCardSectionProps> = ({
   onFileChange,
 }) => {
   return (
-    <div className="border border-luxury-ink/8 bg-white/50 p-5 md:p-6" style={{ borderRadius: "2px" }}>
+    <div
+      className="border border-luxury-ink/8 bg-white/50 p-5 md:p-6"
+      style={{ borderRadius: "2px" }}
+    >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FileDropzone
           inputId="idCardFront"

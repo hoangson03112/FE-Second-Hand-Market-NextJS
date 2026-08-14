@@ -21,8 +21,7 @@ export default function AddSubcategoryForm({
     <div className="rounded-lg border border-dashed border-border bg-muted/40 p-3 space-y-2">
       <p className="text-xs font-medium text-foreground flex items-center gap-1.5">
         <IconPlus className="h-3.5 w-3.5" />
-        Thêm danh mục con cho{" "}
-        <span className="font-semibold">{categoryName}</span>
+        Thêm danh mục con cho <span className="font-bold">{categoryName}</span>
       </p>
       <div className="flex flex-col sm:flex-row gap-2">
         <input

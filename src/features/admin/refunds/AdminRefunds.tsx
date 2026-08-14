@@ -65,30 +65,41 @@ export default function AdminRefunds() {
   } = useAdminRefunds();
   const toast = useToast();
   const [processingId, setProcessingId] = useState<string | null>(null);
-  const [approveModal, setApproveModal] = useState<{ refundId: string } | null>(null);
+  const [approveModal, setApproveModal] = useState<{ refundId: string } | null>(
+    null,
+  );
   const [approveComment, setApproveComment] = useState("");
-  const [rejectModal, setRejectModal] = useState<{ refundId: string } | null>(null);
+  const [rejectModal, setRejectModal] = useState<{ refundId: string } | null>(
+    null,
+  );
   const [rejectNote, setRejectNote] = useState("");
-  const [completeRefundModal, setCompleteRefundModal] = useState<{ orderId: string } | null>(null);
+  const [completeRefundModal, setCompleteRefundModal] = useState<{
+    orderId: string;
+  } | null>(null);
   const [selectedRefundId, setSelectedRefundId] = useState<string | null>(null);
 
-  const { refund: selectedRefund, isLoading: isLoadingDetail } = useRefundDetail(selectedRefundId);
+  const { refund: selectedRefund, isLoading: isLoadingDetail } =
+    useRefundDetail(selectedRefundId);
 
-  const tabs: Array<{ value: string; label: string; icon: React.ElementType }> = [
-    { value: "", label: "Tất cả", icon: IconEye },
-    { value: "disputed", label: "Khiếu nại", icon: IconShield },
-    { value: "pending", label: "Chờ seller", icon: IconClock },
-    { value: "return_shipping", label: "Hoàn GHN", icon: IconTruck },
-    { value: "returned", label: "Chờ STK buyer", icon: IconClock },
-    { value: "processing", label: "Chờ CK admin", icon: IconCircleCheck },
-    { value: "completed", label: "Đã xử lý", icon: IconCircleX },
-  ];
+  const tabs: Array<{ value: string; label: string; icon: React.ElementType }> =
+    [
+      { value: "", label: "Tất cả", icon: IconEye },
+      { value: "disputed", label: "Khiếu nại", icon: IconShield },
+      { value: "pending", label: "Chờ seller", icon: IconClock },
+      { value: "return_shipping", label: "Hoàn GHN", icon: IconTruck },
+      { value: "returned", label: "Chờ STK buyer", icon: IconClock },
+      { value: "processing", label: "Chờ CK admin", icon: IconCircleCheck },
+      { value: "completed", label: "Đã xử lý", icon: IconCircleX },
+    ];
 
   const handleConfirmApprove = async () => {
     if (!approveModal) return;
     setProcessingId(approveModal.refundId);
     try {
-      await approveDispute({ refundId: approveModal.refundId, comment: approveComment.trim() || undefined });
+      await approveDispute({
+        refundId: approveModal.refundId,
+        comment: approveComment.trim() || undefined,
+      });
       toast.success("Đã chấp thuận khiếu nại, hoàn tiền cho người mua.");
       setApproveModal(null);
       setApproveComment("");
@@ -104,7 +115,10 @@ export default function AdminRefunds() {
     if (!rejectModal || !rejectNote.trim()) return;
     setProcessingId(rejectModal.refundId);
     try {
-      await rejectDispute({ refundId: rejectModal.refundId, adminNote: rejectNote });
+      await rejectDispute({
+        refundId: rejectModal.refundId,
+        adminNote: rejectNote,
+      });
       toast.success(ADMIN_MESSAGES.REFUND_REJECT_SUCCESS);
       setRejectModal(null);
       setRejectNote("");
@@ -164,10 +178,12 @@ export default function AdminRefunds() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-lg font-bold text-foreground">Quản lý hoàn tiền & khiếu nại</h1>
+        <h1 className="text-lg font-bold text-foreground">
+          Quản lý hoàn tiền & khiếu nại
+        </h1>
         <p className="text-xs text-muted-foreground mt-0.5">
-          Khiếu nại → sau khi seller nhận hàng hoàn, buyer gửi STK → tại đây admin xác nhận đã chuyển khoản
-          (POST complete-refund).
+          Khiếu nại → sau khi seller nhận hàng hoàn, buyer gửi STK → tại đây
+          admin xác nhận đã chuyển khoản (POST complete-refund).
         </p>
       </div>
 
@@ -183,8 +199,8 @@ export default function AdminRefunds() {
               onClick={() => setStatusFilter(t.value)}
               className={
                 active
-                  ? "inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-semibold border border-primary shrink-0"
-                  : "inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-card text-foreground text-xs font-semibold border border-border hover:bg-muted shrink-0"
+                  ? "inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-bold border border-primary shrink-0"
+                  : "inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-card text-foreground text-xs font-bold border border-border hover:bg-muted shrink-0"
               }
             >
               <Icon className="w-4 h-4" />
@@ -202,29 +218,44 @@ export default function AdminRefunds() {
               <tr className="border-b border-border bg-muted/50">
                 <th className="text-left px-4 py-3 font-medium">Đơn hàng</th>
                 <th className="text-left px-4 py-3 font-medium">Người mua</th>
-                <th className="text-left px-4 py-3 font-medium hidden md:table-cell">Người bán</th>
+                <th className="text-left px-4 py-3 font-medium hidden md:table-cell">
+                  Người bán
+                </th>
                 <th className="text-left px-4 py-3 font-medium">Trạng thái</th>
-                <th className="text-left px-4 py-3 font-medium hidden lg:table-cell">Lý do</th>
+                <th className="text-left px-4 py-3 font-medium hidden lg:table-cell">
+                  Lý do
+                </th>
                 <th className="text-right px-4 py-3 font-medium">Thao tác</th>
               </tr>
             </thead>
             <tbody>
               {refunds.map((refund: RefundRequest) => (
-                <tr key={refund._id} className="border-b border-border last:border-0 hover:bg-muted/30">
+                <tr
+                  key={refund._id}
+                  className="border-b border-border last:border-0 hover:bg-muted/30"
+                >
                   <td className="px-4 py-3">
-                    <span className="font-mono text-xs text-muted-foreground">#{getOrderId(refund)}</span>
+                    <span className="font-mono text-xs text-muted-foreground">
+                      #{getOrderId(refund)}
+                    </span>
                     <br />
-                    <span className="text-xs text-muted-foreground">{format(refund.createdAt)}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {format(refund.createdAt)}
+                    </span>
                   </td>
                   <td className="px-4 py-3">
-                    <span className="text-foreground">{getBuyerName(refund)}</span>
+                    <span className="text-foreground">
+                      {getBuyerName(refund)}
+                    </span>
                     <br />
                     <span className="text-xs text-muted-foreground">
                       {(refund.buyerId as { email?: string })?.email ?? ""}
                     </span>
                   </td>
                   <td className="px-4 py-3 hidden md:table-cell">
-                    <span className="text-foreground">{getSellerName(refund)}</span>
+                    <span className="text-foreground">
+                      {getSellerName(refund)}
+                    </span>
                   </td>
                   <td className="px-4 py-3">
                     <StatusBadge
@@ -247,7 +278,7 @@ export default function AdminRefunds() {
                     <div className="flex justify-end gap-2 flex-wrap">
                       <button
                         onClick={() => setSelectedRefundId(refund._id)}
-                        className="flex items-center gap-1 px-3 py-1.5 border border-border text-foreground rounded-lg text-xs font-semibold hover:bg-muted disabled:opacity-50 transition-colors"
+                        className="flex items-center gap-1 px-3 py-1.5 border border-border text-foreground rounded-lg text-xs font-bold hover:bg-muted disabled:opacity-50 transition-colors"
                       >
                         <IconEye className="w-3.5 h-3.5" />
                         Chi tiết
@@ -256,11 +287,18 @@ export default function AdminRefunds() {
                       {refund.status === "disputed" && (
                         <>
                           <button
-                            onClick={() => setApproveModal({ refundId: refund._id })}
-                            disabled={processingId === refund._id || isApprovingDispute || isRejectingDispute}
-                            className="flex items-center gap-1 px-3 py-1.5 bg-primary text-primary-foreground rounded-lg text-xs font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                            onClick={() =>
+                              setApproveModal({ refundId: refund._id })
+                            }
+                            disabled={
+                              processingId === refund._id ||
+                              isApprovingDispute ||
+                              isRejectingDispute
+                            }
+                            className="flex items-center gap-1 px-3 py-1.5 bg-primary text-primary-foreground rounded-lg text-xs font-bold hover:bg-primary/90 disabled:opacity-50 transition-colors"
                           >
-                            {(processingId === refund._id && isApprovingDispute) ? (
+                            {processingId === refund._id &&
+                            isApprovingDispute ? (
                               <IconLoader2 className="w-3.5 h-3.5 animate-spin" />
                             ) : (
                               <IconCircleCheck className="w-3.5 h-3.5" />
@@ -268,9 +306,15 @@ export default function AdminRefunds() {
                             Duyệt
                           </button>
                           <button
-                            onClick={() => setRejectModal({ refundId: refund._id })}
-                            disabled={processingId === refund._id || isApprovingDispute || isRejectingDispute}
-                            className="flex items-center gap-1 px-3 py-1.5 border border-destructive/30 text-destructive rounded-lg text-xs font-semibold hover:bg-destructive/5 disabled:opacity-50 transition-colors"
+                            onClick={() =>
+                              setRejectModal({ refundId: refund._id })
+                            }
+                            disabled={
+                              processingId === refund._id ||
+                              isApprovingDispute ||
+                              isRejectingDispute
+                            }
+                            className="flex items-center gap-1 px-3 py-1.5 border border-destructive/30 text-destructive rounded-lg text-xs font-bold hover:bg-destructive/5 disabled:opacity-50 transition-colors"
                           >
                             <IconCircleX className="w-3.5 h-3.5" />
                             Bác bỏ
@@ -282,8 +326,10 @@ export default function AdminRefunds() {
                         <button
                           onClick={() => {
                             const orderId =
-                              typeof refund.orderId === "object" && refund.orderId
-                                ? (refund.orderId as { _id?: string })._id ?? ""
+                              typeof refund.orderId === "object" &&
+                              refund.orderId
+                                ? ((refund.orderId as { _id?: string })._id ??
+                                  "")
                                 : typeof refund.orderId === "string"
                                   ? refund.orderId
                                   : "";
@@ -291,7 +337,7 @@ export default function AdminRefunds() {
                             setCompleteRefundModal({ orderId });
                           }}
                           disabled={isApprovingRefund}
-                          className="flex items-center gap-1 px-3 py-1.5 bg-primary text-primary-foreground rounded-lg text-xs font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                          className="flex items-center gap-1 px-3 py-1.5 bg-primary text-primary-foreground rounded-lg text-xs font-bold hover:bg-primary/90 disabled:opacity-50 transition-colors"
                         >
                           <IconCircleCheck className="w-3.5 h-3.5" />
                           Đã chuyển khoản
@@ -309,7 +355,10 @@ export default function AdminRefunds() {
 
               {refunds.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-4 py-10 text-center text-sm text-muted-foreground">
+                  <td
+                    colSpan={6}
+                    className="px-4 py-10 text-center text-sm text-muted-foreground"
+                  >
                     Không có dữ liệu
                   </td>
                 </tr>
@@ -319,7 +368,11 @@ export default function AdminRefunds() {
         </div>
       </div>
 
-      <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={setPage}
+      />
 
       {/* Dispute detail modal — xem bằng chứng, thông tin đơn, chat với buyer/seller */}
       <AdminDisputeDetailModal
@@ -336,13 +389,19 @@ export default function AdminRefunds() {
       {approveModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-card rounded-2xl shadow-2xl max-w-md w-full p-6">
-            <h3 className="text-base font-bold text-foreground mb-4">Duyệt khiếu nại & hoàn tiền</h3>
+            <h3 className="text-base font-bold text-foreground mb-4">
+              Duyệt khiếu nại & hoàn tiền
+            </h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Bạn sẽ chấp thuận khiếu nại và đồng ý hoàn tiền cho người mua. Người bán sẽ không nhận tiền.
+              Bạn sẽ chấp thuận khiếu nại và đồng ý hoàn tiền cho người mua.
+              Người bán sẽ không nhận tiền.
             </p>
             <div className="mb-4">
               <label className="block text-sm font-medium text-foreground mb-2">
-                Ghi chú <span className="text-muted-foreground text-xs">(tùy chọn)</span>
+                Ghi chú{" "}
+                <span className="text-muted-foreground text-xs">
+                  (tùy chọn)
+                </span>
               </label>
               <textarea
                 value={approveComment}
@@ -365,7 +424,7 @@ export default function AdminRefunds() {
               <button
                 onClick={handleConfirmApprove}
                 disabled={processingId !== null}
-                className="flex-1 py-2 px-4 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                className="flex-1 py-2 px-4 bg-primary text-primary-foreground rounded-xl text-sm font-bold hover:bg-primary/90 disabled:opacity-50 transition-colors"
               >
                 {processingId ? (
                   <IconLoader2 className="w-4 h-4 animate-spin mx-auto" />
@@ -382,9 +441,12 @@ export default function AdminRefunds() {
       {completeRefundModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-card rounded-2xl shadow-2xl max-w-md w-full p-6">
-            <h3 className="text-base font-bold text-foreground mb-4">Xác nhận đã chuyển khoản</h3>
+            <h3 className="text-base font-bold text-foreground mb-4">
+              Xác nhận đã chuyển khoản
+            </h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Bạn đã chuyển hoàn tiền cho người mua theo STK họ gửi? Hệ thống sẽ đóng yêu cầu hoàn.
+              Bạn đã chuyển hoàn tiền cho người mua theo STK họ gửi? Hệ thống sẽ
+              đóng yêu cầu hoàn.
             </p>
             <div className="flex gap-3">
               <button
@@ -399,7 +461,7 @@ export default function AdminRefunds() {
                 type="button"
                 onClick={handleConfirmCompleteRefund}
                 disabled={processingId !== null}
-                className="flex-1 py-2 px-4 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                className="flex-1 py-2 px-4 bg-primary text-primary-foreground rounded-xl text-sm font-bold hover:bg-primary/90 disabled:opacity-50 transition-colors"
               >
                 {processingId === completeRefundModal.orderId ? (
                   <IconLoader2 className="w-4 h-4 animate-spin mx-auto" />
@@ -416,9 +478,12 @@ export default function AdminRefunds() {
       {rejectModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-card rounded-2xl shadow-2xl max-w-md w-full p-6">
-            <h3 className="text-base font-bold text-foreground mb-4">Bác bỏ khiếu nại</h3>
+            <h3 className="text-base font-bold text-foreground mb-4">
+              Bác bỏ khiếu nại
+            </h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Bạn sẽ đồng ý với quyết định từ chối của người bán. Người mua sẽ không được hoàn tiền.
+              Bạn sẽ đồng ý với quyết định từ chối của người bán. Người mua sẽ
+              không được hoàn tiền.
             </p>
             <div className="mb-4">
               <label className="block text-sm font-medium text-foreground mb-2">
@@ -445,7 +510,7 @@ export default function AdminRefunds() {
               <button
                 onClick={handleRejectDispute}
                 disabled={!rejectNote.trim() || processingId !== null}
-                className="flex-1 py-2 px-4 bg-destructive text-destructive-foreground rounded-xl text-sm font-semibold hover:bg-destructive/90 disabled:opacity-50 transition-colors"
+                className="flex-1 py-2 px-4 bg-destructive text-destructive-foreground rounded-xl text-sm font-bold hover:bg-destructive/90 disabled:opacity-50 transition-colors"
               >
                 {processingId ? (
                   <IconLoader2 className="w-4 h-4 animate-spin mx-auto" />

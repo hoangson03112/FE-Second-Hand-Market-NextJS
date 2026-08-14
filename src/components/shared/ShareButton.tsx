@@ -1,24 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { 
-  IconShare, 
-  IconBrandFacebook, 
-  IconBrandTelegram, 
+import {
+  IconShare,
+  IconBrandFacebook,
+  IconBrandTelegram,
   IconBrandTwitter,
   IconLink,
   IconCheck,
-  IconX
+  IconX,
 } from "@tabler/icons-react";
-import { 
-  shareFacebook, 
-  shareZalo, 
-  shareTelegram, 
-  shareTwitter, 
+import {
+  shareFacebook,
+  shareZalo,
+  shareTelegram,
+  shareTwitter,
   copyLink,
   nativeShare,
   isNativeShareSupported,
-  type ShareData 
+  type ShareData,
 } from "@/utils/share";
 
 interface ShareButtonProps {
@@ -26,7 +26,10 @@ interface ShareButtonProps {
   className?: string;
 }
 
-export default function ShareButton({ shareData, className = "" }: ShareButtonProps) {
+export default function ShareButton({
+  shareData,
+  className = "",
+}: ShareButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -35,7 +38,7 @@ export default function ShareButton({ shareData, className = "" }: ShareButtonPr
     if (success) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } 
+    }
   };
 
   const handleNativeShare = async () => {
@@ -61,7 +64,7 @@ export default function ShareButton({ shareData, className = "" }: ShareButtonPr
       action: () => shareZalo(shareData),
       customIcon: (
         <svg className="w-5 h-5" viewBox="0 0 48 48" fill="currentColor">
-          <path d="M24 4C13 4 4 13 4 24C4 35 13 44 24 44C35 44 44 35 44 24C44 13 35 4 24 4ZM32.2 30.8C31.9 31.3 31.3 31.6 30.7 31.6H17.3C16.7 31.6 16.1 31.3 15.8 30.8C15.5 30.3 15.5 29.6 15.8 29.1L22.5 18.4C22.8 17.9 23.4 17.6 24 17.6C24.6 17.6 25.2 17.9 25.5 18.4L32.2 29.1C32.5 29.6 32.5 30.3 32.2 30.8Z"/>
+          <path d="M24 4C13 4 4 13 4 24C4 35 13 44 24 44C35 44 44 35 44 24C44 13 35 4 24 4ZM32.2 30.8C31.9 31.3 31.3 31.6 30.7 31.6H17.3C16.7 31.6 16.1 31.3 15.8 30.8C15.5 30.3 15.5 29.6 15.8 29.1L22.5 18.4C22.8 17.9 23.4 17.6 24 17.6C24.6 17.6 25.2 17.9 25.5 18.4L32.2 29.1C32.5 29.6 32.5 30.3 32.2 30.8Z" />
         </svg>
       ),
     },
@@ -110,7 +113,7 @@ export default function ShareButton({ shareData, className = "" }: ShareButtonPr
           {/* Dropdown */}
           <div className="absolute right-0 mt-2 w-64 bg-card rounded-xl shadow-2xl border border-border z-50 overflow-hidden">
             <div className="p-3 border-b border-border flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-foreground">
+              <h3 className="text-sm font-bold text-foreground">
                 Chia sẻ sản phẩm
               </h3>
               <button
@@ -150,7 +153,9 @@ export default function ShareButton({ shareData, className = "" }: ShareButtonPr
                   }}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg ${option.bgColor} transition-colors text-left`}
                 >
-                  <div className={`w-8 h-8 rounded-full bg-muted flex items-center justify-center ${option.color}`}>
+                  <div
+                    className={`w-8 h-8 rounded-full bg-muted flex items-center justify-center ${option.color}`}
+                  >
                     {option.customIcon || <option.icon className="w-5 h-5" />}
                   </div>
                   <span className="text-sm font-medium text-foreground">

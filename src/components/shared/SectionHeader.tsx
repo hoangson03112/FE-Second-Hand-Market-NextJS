@@ -21,11 +21,15 @@ export function SectionHeader({
   className,
 }: SectionHeaderProps) {
   return (
-    <div className={cn("mb-4 flex items-center justify-between gap-3", className)}>
+    <div
+      className={cn("mb-4 flex items-center justify-between gap-3", className)}
+    >
       <div className="flex items-center gap-2">
-        {icon && <span className="text-muted-foreground [&_svg]:size-5">{icon}</span>}
+        {icon && (
+          <span className="text-muted-foreground [&_svg]:size-5">{icon}</span>
+        )}
         <div>
-          <h2 className="text-lg font-semibold text-foreground">{title}</h2>
+          <h2 className="text-lg font-bold text-foreground">{title}</h2>
           {description && (
             <p className="text-sm text-muted-foreground">{description}</p>
           )}

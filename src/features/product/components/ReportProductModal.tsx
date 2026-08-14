@@ -38,7 +38,7 @@ export default function ReportProductModal({
       onClose();
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Không thể gửi báo cáo"
+        error instanceof Error ? error.message : "Không thể gửi báo cáo",
       );
     } finally {
       setIsSubmitting(false);
@@ -50,7 +50,9 @@ export default function ReportProductModal({
       <div className="bg-white border border-zinc-200 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex justify-between items-center mb-4 pb-3 border-b border-zinc-100">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-900">Báo cáo sản phẩm</h2>
+            <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-900">
+              Báo cáo sản phẩm
+            </h2>
             <button
               onClick={onClose}
               className="p-1.5 rounded-full hover:bg-zinc-100 text-zinc-400 hover:text-zinc-900 transition-colors"
@@ -61,7 +63,8 @@ export default function ReportProductModal({
           </div>
 
           <p className="text-xs text-zinc-500 mb-4">
-            Đang báo cáo: <span className="font-semibold text-zinc-900">{productName}</span>
+            Đang báo cáo:{" "}
+            <span className="font-bold text-zinc-900">{productName}</span>
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -82,14 +85,14 @@ export default function ReportProductModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 py-2.5 border border-zinc-200 rounded-xl text-xs font-semibold text-zinc-700 hover:bg-zinc-50 transition-colors"
+                className="flex-1 py-2.5 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-700 hover:bg-zinc-50 transition-colors"
               >
                 Hủy
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex-1 py-2.5 bg-zinc-900 text-white rounded-xl text-xs font-semibold hover:bg-zinc-800 disabled:opacity-50 transition-colors"
+                className="flex-1 py-2.5 bg-zinc-900 text-white rounded-xl text-xs font-bold hover:bg-zinc-800 disabled:opacity-50 transition-colors"
               >
                 {isSubmitting ? "Đang gửi..." : "Gửi báo cáo"}
               </button>

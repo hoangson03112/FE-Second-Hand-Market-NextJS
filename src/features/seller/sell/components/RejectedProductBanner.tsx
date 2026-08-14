@@ -18,7 +18,7 @@ export function RejectedProductBanner({
           <IconAlertCircle className="w-5 h-5 text-red-600" />
         </div>
         <div className="flex-1 min-w-0">
-          <h4 className="text-sm font-semibold text-red-700 mb-1">
+          <h4 className="text-sm font-bold text-red-700 mb-1">
             Sản phẩm bị từ chối
           </h4>
           {rejectionReason && (
@@ -33,8 +33,8 @@ export function RejectedProductBanner({
             </div>
           ) : (
             <p className="text-xs text-taupe-500">
-              Bạn có thể chỉnh sửa sản phẩm theo yêu cầu, sau đó nhấn
-              &ldquo;Lưu và yêu cầu duyệt lại&rdquo; để admin xem xét.
+              Bạn có thể chỉnh sửa sản phẩm theo yêu cầu, sau đó nhấn &ldquo;Lưu
+              và yêu cầu duyệt lại&rdquo; để admin xem xét.
             </p>
           )}
         </div>

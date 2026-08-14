@@ -361,7 +361,7 @@ export default function HeroSection() {
           }}
         >
           <span className="h-px w-10 bg-luxury-champagne/90" aria-hidden />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-600">
+          <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-neutral-600">
             Nền tảng đồ cũ cao cấp
           </p>
           <span className="h-px w-10 bg-luxury-champagne/90" aria-hidden />
@@ -451,14 +451,14 @@ export default function HeroSection() {
         >
           <Link
             href="/products"
-            className="group relative inline-flex min-w-[220px] items-center justify-center rounded-[2px] bg-luxury-ink px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-white transition-all duration-300 hover:scale-[1.02]"
+            className="group relative inline-flex min-w-[220px] items-center justify-center rounded-[2px] bg-luxury-ink px-10 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-white transition-all duration-300 hover:scale-[1.02]"
           >
             <div className="absolute inset-0 bg-accent opacity-0 transition-opacity duration-300 group-hover:opacity-15 blur-md" />
             <span className="relative z-10">Khám phá bộ sưu tập</span>
           </Link>
           <Link
             href="/sell"
-            className="inline-flex min-w-[220px] items-center justify-center rounded-[2px] border border-luxury-ink/20 bg-white/50 px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-luxury-ink backdrop-blur-sm transition-all duration-300 hover:border-luxury-ink/40 hover:bg-white/80"
+            className="inline-flex min-w-[220px] items-center justify-center rounded-[2px] border border-luxury-ink/20 bg-white/50 px-10 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-luxury-ink backdrop-blur-sm transition-all duration-300 hover:border-luxury-ink/40 hover:bg-white/80"
           >
             Bắt đầu bán
           </Link>

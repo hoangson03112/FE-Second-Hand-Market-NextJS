@@ -37,7 +37,8 @@ function getBuyerRefundHeroDescription(params: {
   isLocalPickup: boolean;
 }): string | undefined {
   const { orderStatus, refundStatus, isLocalPickup } = params;
-  if (!REFUND_RELATED_STATUSES.includes(orderStatus) && !refundStatus) return undefined;
+  if (!REFUND_RELATED_STATUSES.includes(orderStatus) && !refundStatus)
+    return undefined;
 
   const rs = refundStatus;
   const local = STATUS_DESCRIPTION_LOCAL;
@@ -56,7 +57,12 @@ function getBuyerRefundHeroDescription(params: {
       ? "Người bán đã chấp thuận hoàn tiền. Liên hệ để trả hàng theo thỏa thuận."
       : `Người bán đã chấp thuận hoàn tiền. Tiếp theo: vận đơn hoàn GHN và gửi hàng đúng quy định. ${REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}`;
   }
-  if (rs === "return_shipping" || rs === "returning" || orderStatus === "return_shipping" || orderStatus === "returning") {
+  if (
+    rs === "return_shipping" ||
+    rs === "returning" ||
+    orderStatus === "return_shipping" ||
+    orderStatus === "returning"
+  ) {
     return isLocalPickup ? local.returning : ghn.returning;
   }
   if (rs === "returned" || orderStatus === "returned") {
@@ -76,7 +82,11 @@ function getBuyerRefundHeroDescription(params: {
   if (rs === "disputed") {
     return "Khiếu nại đang được admin xem xét. Bạn sẽ nhận thông báo khi có quyết định.";
   }
-  if (orderStatus === "refund" || orderStatus === "refund_requested" || orderStatus === "refund_approved") {
+  if (
+    orderStatus === "refund" ||
+    orderStatus === "refund_requested" ||
+    orderStatus === "refund_approved"
+  ) {
     return isLocalPickup ? local.refund : ghn.refund;
   }
   return undefined;
@@ -103,7 +113,8 @@ function buildRefundTodoMessage(params: {
     return {
       tone: "warning" as const,
       title: "Yêu cầu đã bị từ chối",
-      description: "Nếu bạn không đồng ý, hãy dùng nút khiếu nại trong phần chi tiết hoàn tiền để admin xem xét.",
+      description:
+        "Nếu bạn không đồng ý, hãy dùng nút khiếu nại trong phần chi tiết hoàn tiền để admin xem xét.",
     };
   }
 
@@ -111,7 +122,8 @@ function buildRefundTodoMessage(params: {
     return {
       tone: "info" as const,
       title: "Chờ người bán xem xét",
-      description: "Yêu cầu đã được gửi. Người bán sẽ chấp thuận hoặc từ chối; bạn sẽ thấy cập nhật tại đây.",
+      description:
+        "Yêu cầu đã được gửi. Người bán sẽ chấp thuận hoặc từ chối; bạn sẽ thấy cập nhật tại đây.",
     };
   }
 
@@ -125,7 +137,12 @@ function buildRefundTodoMessage(params: {
     };
   }
 
-  if (rs === "return_shipping" || rs === "returning" || orderStatus === "returning" || orderStatus === "return_shipping") {
+  if (
+    rs === "return_shipping" ||
+    rs === "returning" ||
+    orderStatus === "returning" ||
+    orderStatus === "return_shipping"
+  ) {
     return {
       tone: "warning" as const,
       title: "Việc cần làm ngay",
@@ -139,14 +156,18 @@ function buildRefundTodoMessage(params: {
     return {
       tone: "warning" as const,
       title: "Việc cần làm ngay",
-      description: "Bổ sung thông tin tài khoản ngân hàng để admin có thể chuyển khoản hoàn tiền.",
+      description:
+        "Bổ sung thông tin tài khoản ngân hàng để admin có thể chuyển khoản hoàn tiền.",
     };
   }
 
   if (rs === "processing" || rs === "failed") {
     return {
       tone: "info" as const,
-      title: rs === "failed" ? "Hoàn tiền cần xử lý lại" : "Đang chuyển khoản hoàn tiền",
+      title:
+        rs === "failed"
+          ? "Hoàn tiền cần xử lý lại"
+          : "Đang chuyển khoản hoàn tiền",
       description:
         rs === "failed"
           ? "Giao dịch hoàn tiền chưa thành công. Hệ thống sẽ thử lại; vui lòng theo dõi trang này."
@@ -159,13 +180,15 @@ function buildRefundTodoMessage(params: {
       return {
         tone: "warning" as const,
         title: "Việc cần làm ngay",
-        description: "Cập nhật thông tin tài khoản ngân hàng để hệ thống chuyển tiền hoàn.",
+        description:
+          "Cập nhật thông tin tài khoản ngân hàng để hệ thống chuyển tiền hoàn.",
       };
     }
     return {
       tone: "info" as const,
       title: "Đang chờ admin xử lý hoàn tiền",
-      description: "Người bán đã nhận hàng hoàn, hệ thống đang xử lý bước hoàn tiền cuối cùng.",
+      description:
+        "Người bán đã nhận hàng hoàn, hệ thống đang xử lý bước hoàn tiền cuối cùng.",
     };
   }
 
@@ -173,11 +196,16 @@ function buildRefundTodoMessage(params: {
     return {
       tone: "info" as const,
       title: "Admin đang xem xét khiếu nại",
-      description: "Bạn đã gửi khiếu nại. Vui lòng chờ quyết định từ quản trị viên.",
+      description:
+        "Bạn đã gửi khiếu nại. Vui lòng chờ quyết định từ quản trị viên.",
     };
   }
 
-  if (orderStatus === "refund" || orderStatus === "refund_requested" || orderStatus === "refund_approved") {
+  if (
+    orderStatus === "refund" ||
+    orderStatus === "refund_requested" ||
+    orderStatus === "refund_approved"
+  ) {
     return {
       tone: "info" as const,
       title: "Yêu cầu hoàn tiền đang được xử lý",
@@ -318,7 +346,8 @@ export function OrderDetailView({
     typeof order.refundRequestId === "object";
 
   const showSellerReview =
-    order.status === "completed" || (!isLocalPickup && order.status === "delivered");
+    order.status === "completed" ||
+    (!isLocalPickup && order.status === "delivered");
   const refundDocStatus =
     order.refundRequestId && typeof order.refundRequestId === "object"
       ? order.refundRequestId.status
@@ -328,9 +357,13 @@ export function OrderDetailView({
     order.status === "returned" ||
     (order.status === "refund" &&
       refundDocStatus &&
-      ["return_shipping", "returning", "returned", "bank_info_required", "processing"].includes(
-        refundDocStatus,
-      ));
+      [
+        "return_shipping",
+        "returning",
+        "returned",
+        "bank_info_required",
+        "processing",
+      ].includes(refundDocStatus));
   const isRefundFlow = REFUND_RELATED_STATUSES.includes(order.status);
   const refundTodo = buildRefundTodoMessage({
     orderStatus: order.status,
@@ -342,8 +375,8 @@ export function OrderDetailView({
     refundTodo?.tone === "success"
       ? "border-emerald-200 bg-emerald-50 text-emerald-800"
       : refundTodo?.tone === "warning"
-      ? "border-amber-200 bg-amber-50 text-amber-800"
-      : "border-sky-200 bg-sky-50 text-sky-800";
+        ? "border-amber-200 bg-amber-50 text-amber-800"
+        : "border-sky-200 bg-sky-50 text-sky-800";
   const refundTodoStyle = { borderRadius: "2px" } as const;
 
   const refundHeroDescription = getBuyerRefundHeroDescription({
@@ -354,7 +387,11 @@ export function OrderDetailView({
 
   return (
     <div className="min-h-screen bg-luxury-ivory">
-      <OrderDetailHeader orderId={order._id} status={order.status} onBack={onBack} />
+      <OrderDetailHeader
+        orderId={order._id}
+        status={order.status}
+        onBack={onBack}
+      />
 
       <Container maxWidth="8xl" paddingX="md" paddingY="lg">
         <div className="space-y-4 sm:space-y-5">
@@ -373,9 +410,14 @@ export function OrderDetailView({
           />
 
           {isRefundFlow && refundTodo && (
-            <div className={`border px-4 py-3.5 ${refundTodoClass}`} style={refundTodoStyle}>
-              <p className="text-sm font-semibold">{refundTodo.title}</p>
-              <p className="mt-1 text-xs leading-relaxed opacity-90">{refundTodo.description}</p>
+            <div
+              className={`border px-4 py-3.5 ${refundTodoClass}`}
+              style={refundTodoStyle}
+            >
+              <p className="text-sm font-bold">{refundTodo.title}</p>
+              <p className="mt-1 text-xs leading-relaxed opacity-90">
+                {refundTodo.description}
+              </p>
             </div>
           )}
 
@@ -420,19 +462,24 @@ export function OrderDetailView({
                     className="flex items-start gap-3 border border-luxury-champagne/30 bg-luxury-champagne/8 p-3.5"
                     style={{ borderRadius: "2px" }}
                   >
-                    <IconInfoCircle className="mt-0.5 h-4 w-4 shrink-0 text-taupe-700" strokeWidth={1.75} />
-                    <p className="text-xs leading-relaxed text-neutral-700">{FEATURE_INFO.REVIEW_PRODUCT_RULE}</p>
+                    <IconInfoCircle
+                      className="mt-0.5 h-4 w-4 shrink-0 text-taupe-700"
+                      strokeWidth={1.75}
+                    />
+                    <p className="text-xs leading-relaxed text-neutral-700">
+                      {FEATURE_INFO.REVIEW_PRODUCT_RULE}
+                    </p>
                   </div>
                   <OrderSellerReviewSection
-                  existingReview={existingReview}
-                  showReviewForm={showReviewForm}
-                  reviewRating={reviewRating}
-                  reviewComment={reviewComment}
-                  isSubmittingReview={isSubmittingReview}
-                  onRatingChange={setReviewRating}
-                  onCommentChange={setReviewComment}
-                  onSubmit={handleSubmitReview}
-                />
+                    existingReview={existingReview}
+                    showReviewForm={showReviewForm}
+                    reviewRating={reviewRating}
+                    reviewComment={reviewComment}
+                    isSubmittingReview={isSubmittingReview}
+                    onRatingChange={setReviewRating}
+                    onCommentChange={setReviewComment}
+                    onSubmit={handleSubmitReview}
+                  />
                 </>
               )}
             </div>
@@ -453,9 +500,13 @@ export function OrderDetailView({
                   shippingMethod={order.shippingMethod}
                   shippingAddress={order.shippingAddress}
                 />
-                {order.ghnOrderCode && !REFUND_RELATED_STATUSES.includes(order.status) && (
-                  <OrderTracking orderId={order._id} ghnOrderCode={order.ghnOrderCode} />
-                )}
+                {order.ghnOrderCode &&
+                  !REFUND_RELATED_STATUSES.includes(order.status) && (
+                    <OrderTracking
+                      orderId={order._id}
+                      ghnOrderCode={order.ghnOrderCode}
+                    />
+                  )}
                 {showBankInfoCard && (
                   <OrderBankInfoCard
                     status={order.status}

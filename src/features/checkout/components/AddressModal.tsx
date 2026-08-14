@@ -1,16 +1,12 @@
 "use client";
 
-import {
-  IconMapPin,
-  IconPlus,
-  IconX,
-  IconArrowLeft,
-} from "@tabler/icons-react";
+import { IconPlus, IconX, IconArrowLeft } from "@tabler/icons-react";
 import { Address } from "@/types/address";
 import { AddressForm } from "./AddressForm";
 import type { CreateAddressRequest } from "@/types/address";
 import { useState } from "react";
 import AddressList from "./AddressList";
+import { Eyebrow } from "@/components/shared/Eyebrow";
 
 interface AddressModalProps {
   show: boolean;
@@ -74,57 +70,62 @@ export default function AddressModal({
     }
   };
 
+  const title = showNewAddressForm
+    ? editingAddress
+      ? "Chỉnh sửa địa chỉ"
+      : "Thêm địa chỉ mới"
+    : "Địa chỉ giao hàng";
+
+  const eyebrow = showNewAddressForm
+    ? "Thông tin nhận hàng"
+    : `${addresses.length} địa chỉ đã lưu`;
+
   return (
     <>
       <div
-        className="fixed inset-0 bg-taupe-900/40 backdrop-blur-sm z-50 transition-opacity"
+        className="fixed inset-0 z-50 bg-luxury-ink/50 backdrop-blur-sm transition-opacity"
         onClick={onHide}
       />
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="relative bg-cream-50 rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden border-2 border-border"
+          className="relative flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-luxury-ivory shadow-[0_24px_64px_color-mix(in_srgb,var(--luxury-ink)_22%,transparent)]"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex justify-between p-6 border-b-2 border-border bg-taupe-50/60">
-            <div className="flex items-center gap-4">
-              {showNewAddressForm && (
+          <div className="flex items-start justify-between gap-4 border-b border-luxury-ink/10 bg-white px-6 py-5">
+            <div className="flex min-w-0 items-start gap-4">
+              {showNewAddressForm ? (
                 <button
+                  type="button"
                   onClick={handleBack}
-                  className="p-2 text-taupe-500 hover:bg-taupe-100 hover:text-taupe-900 rounded-full transition-colors"
+                  aria-label="Quay lại danh sách"
+                  className="-ml-2 rounded-[2px] p-2 text-luxury-ink transition-colors hover:bg-taupe-50"
                 >
                   <IconArrowLeft className="h-5 w-5" />
                 </button>
-              )}
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <IconMapPin className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-semibold text-taupe-900 mb-1">
-                    {showNewAddressForm
-                      ? editingAddress
-                        ? "Chỉnh sửa địa chỉ"
-                        : "Thêm địa chỉ mới"
-                      : "Địa Chỉ Giao Hàng"}
-                  </h2>
-                  <p className="text-xs uppercase tracking-wide font-semibold text-taupe-500">
-                    {showNewAddressForm
-                      ? "Điền thông tin địa chỉ của bạn"
-                      : `${addresses.length} Địa chỉ`}
-                  </p>
-                </div>
+              ) : null}
+              <div className="min-w-0">
+                <Eyebrow>{eyebrow}</Eyebrow>
+                <h2
+                  style={{ fontFamily: "var(--font-droid-serif), serif" }}
+                  className="mt-3 truncate text-xl tracking-tight text-luxury-ink"
+                >
+                  {title}
+                </h2>
               </div>
             </div>
             <button
+              type="button"
               onClick={onHide}
-              className="p-2 text-taupe-400 hover:bg-red-50 hover:text-red-600 rounded-full transition-colors"
+              aria-label="Đóng"
+              className="-mr-2 rounded-[2px] p-2 text-neutral-500 transition-colors hover:bg-taupe-50 hover:text-luxury-ink"
             >
               <IconX className="h-5 w-5" />
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-6 bg-cream-50">
+
+          <div className="flex-1 overflow-y-auto px-6 py-6">
             {!showNewAddressForm ? (
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <AddressList
                   addresses={addresses}
                   selectedAddress={selectedAddress}
@@ -134,20 +135,17 @@ export default function AddressModal({
                   onClose={onHide}
                 />
                 <button
+                  type="button"
                   onClick={() => {
                     setEditingAddress(null);
                     onToggleNewAddressForm(true);
                   }}
-                  className="w-full p-4 border-2 border-dashed border-taupe-300 rounded-xl hover:border-primary/50 hover:bg-taupe-50/60 transition-colors"
+                  className="group flex w-full items-center justify-center gap-3 rounded-[2px] border border-dashed border-luxury-ink/20 bg-white/60 px-4 py-5 transition-all duration-300 hover:border-luxury-ink/40 hover:bg-white"
                 >
-                  <div className="flex items-center justify-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <IconPlus className="h-4 w-4 text-primary" />
-                    </div>
-                    <span className="font-bold text-xs uppercase tracking-wide text-taupe-900">
-                      Thêm địa chỉ mới
-                    </span>
-                  </div>
+                  <IconPlus className="h-4 w-4 text-luxury-ink" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink">
+                    Thêm địa chỉ mới
+                  </span>
                 </button>
               </div>
             ) : (

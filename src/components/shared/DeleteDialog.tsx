@@ -46,8 +46,8 @@ export function DeleteDialog({
               (itemName ? (
                 <>
                   Bạn có chắc muốn xóa{" "}
-                  <span className="font-semibold text-foreground">{itemName}</span>? Hành
-                  động này không thể hoàn tác.
+                  <span className="font-bold text-foreground">{itemName}</span>?
+                  Hành động này không thể hoàn tác.
                 </>
               ) : (
                 "Bạn có chắc muốn xóa? Hành động này không thể hoàn tác."

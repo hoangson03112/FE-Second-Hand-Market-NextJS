@@ -73,13 +73,14 @@ export function useCart() {
   );
 
   const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-
+  const productCount=cartItems.length;
   return {
     cartItems,
     isLoadingCart,
     cartError,
     refetchCart,
     subtotal,
+    productCount,
     itemCount,
     updateQuantity,
     removeItems,

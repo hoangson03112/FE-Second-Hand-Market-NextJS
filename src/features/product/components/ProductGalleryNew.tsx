@@ -16,8 +16,11 @@ export default function ProductGalleryNew({
   condition,
 }: ProductGalleryNewProps) {
   const [selectedImage, setSelectedImage] = useState(0);
-  const imageUrls = images?.length > 0 ? images.map((img) => img.url) : ["/placeholder.svg"];
-  const conditionLabel = condition ? getConditionLabel(condition) : "Đã sử dụng";
+  const imageUrls =
+    images?.length > 0 ? images.map((img) => img.url) : ["/placeholder.svg"];
+  const conditionLabel = condition
+    ? getConditionLabel(condition)
+    : "Đã sử dụng";
 
   return (
     <div className="flex flex-col gap-3">
@@ -30,7 +33,7 @@ export default function ProductGalleryNew({
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         {conditionLabel && (
-          <div className="absolute top-3 right-3 px-3 py-1 rounded-[2px] text-[10px] font-semibold uppercase tracking-[0.2em] bg-white/90 backdrop-blur-sm border border-luxury-ink/10 text-luxury-ink">
+          <div className="absolute top-3 right-3 px-3 py-1 rounded-[2px] text-[10px] font-bold uppercase tracking-[0.2em] bg-white/90 backdrop-blur-sm border border-luxury-ink/10 text-luxury-ink">
             {conditionLabel}
           </div>
         )}
@@ -50,7 +53,11 @@ export default function ProductGalleryNew({
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img} alt={`${productName} ${idx + 1}`} className="w-full h-full object-cover" />
+              <img
+                src={img}
+                alt={`${productName} ${idx + 1}`}
+                className="w-full h-full object-cover"
+              />
             </button>
           ))}
         </div>

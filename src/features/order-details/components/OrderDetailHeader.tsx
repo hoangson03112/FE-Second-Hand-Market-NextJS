@@ -8,7 +8,11 @@ interface OrderDetailHeaderProps {
   onBack: () => void;
 }
 
-export function OrderDetailHeader({ orderId, status, onBack }: OrderDetailHeaderProps) {
+export function OrderDetailHeader({
+  orderId,
+  status,
+  onBack,
+}: OrderDetailHeaderProps) {
   return (
     <div className="sticky top-0 z-10 border-b border-luxury-ink/8 bg-luxury-ivory/95 backdrop-blur-md">
       <Container maxWidth="8xl" paddingX="md">
@@ -17,10 +21,13 @@ export function OrderDetailHeader({ orderId, status, onBack }: OrderDetailHeader
             onClick={onBack}
             className="group -ml-1.5 flex h-8 w-8 items-center justify-center text-taupe-400 transition-colors hover:text-luxury-ink"
           >
-            <IconArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" strokeWidth={1.75} />
+            <IconArrowLeft
+              className="h-4 w-4 transition-transform group-hover:-translate-x-0.5"
+              strokeWidth={1.75}
+            />
           </button>
           <div className="min-w-0 flex-1">
-            <h1 className="text-[13px] font-semibold uppercase tracking-[0.1em] text-luxury-ink">
+            <h1 className="text-[13px] font-bold uppercase tracking-[0.1em] text-luxury-ink">
               Chi tiết đơn hàng
             </h1>
             <p className="font-mono text-xs text-taupe-400">

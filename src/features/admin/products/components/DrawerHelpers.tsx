@@ -14,7 +14,7 @@ export function SectionTitle({
       <div className="p-1.5 rounded-lg bg-primary/10">
         <Icon className="w-3.5 h-3.5 text-primary" />
       </div>
-      <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider">
+      <h3 className="text-xs font-bold text-foreground uppercase tracking-wider">
         {title}
       </h3>
       {count !== undefined && (

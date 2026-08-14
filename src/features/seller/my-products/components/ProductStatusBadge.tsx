@@ -13,7 +13,7 @@ export function ProductStatusBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap border-2 shrink-0",
+        "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold whitespace-nowrap border-2 shrink-0",
         variant === "grid" && "bg-white/90 backdrop-blur-sm",
         statusCfg.text,
       )}

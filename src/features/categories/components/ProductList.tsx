@@ -69,9 +69,9 @@ export default function ProductList({
       </div>
 
       {pagination && onPageChange && (
-        <div className="mt-20 border-t border-luxury-ink/10 pt-10">
+        <div className="border-t border-luxury-ink/10 py-10">
           <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between md:gap-6">
-            <p className="order-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-charcoal-400 md:order-1 md:w-44">
+            <p className="order-2 text-[11px] font-bold uppercase tracking-[0.2em] text-charcoal-400 md:order-1 md:w-44">
               Trang{" "}
               <span className="text-luxury-ink">
                 {String(pagination.currentPage).padStart(2, "0")}
@@ -89,7 +89,7 @@ export default function ProductList({
             />
 
             {pagination.total > 0 && (
-              <p className="order-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-charcoal-400 md:w-44 md:text-right">
+              <p className="order-3 text-[11px] font-bold uppercase tracking-[0.2em] text-charcoal-400 md:w-44 md:text-right">
                 <span className="text-luxury-ink">
                   {pagination.total.toLocaleString("vi-VN")}
                 </span>{" "}

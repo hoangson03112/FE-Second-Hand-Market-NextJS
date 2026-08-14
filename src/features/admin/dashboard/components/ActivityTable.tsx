@@ -13,7 +13,7 @@ interface ActivityTableProps {
 export default function ActivityTable({ data }: ActivityTableProps) {
   return (
     <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-      <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+      <h2 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
         <IconTrendingUp className="h-4 w-4" />
         Hoạt động 7 ngày qua
       </h2>
@@ -28,10 +28,7 @@ export default function ActivityTable({ data }: ActivityTableProps) {
           </thead>
           <tbody>
             {data.map((row, i) => (
-              <tr
-                key={i}
-                className="border-b border-border/50 last:border-0"
-              >
+              <tr key={i} className="border-b border-border/50 last:border-0">
                 <td className="py-2 pr-4 text-foreground">{row.day}</td>
                 <td className="py-2 pr-4">{row.listings}</td>
                 <td className="py-2">{row.purchases}</td>

@@ -8,7 +8,10 @@ interface ForgotPasswordSuccessProps {
   onResend: () => void;
 }
 
-export default function ForgotPasswordSuccess({ email, onResend }: ForgotPasswordSuccessProps) {
+export default function ForgotPasswordSuccess({
+  email,
+  onResend,
+}: ForgotPasswordSuccessProps) {
   return (
     <div className="space-y-6">
       <SuccessMessage
@@ -16,7 +19,8 @@ export default function ForgotPasswordSuccess({ email, onResend }: ForgotPasswor
         title="Kiểm tra email của bạn"
         description={
           <>
-            Chúng tôi đã gửi link đặt lại mật khẩu đến <strong className="text-primary">{email}</strong>
+            Chúng tôi đã gửi link đặt lại mật khẩu đến{" "}
+            <strong className="text-primary">{email}</strong>
           </>
         }
         hint="Link sẽ hết hạn sau 15 phút"
@@ -27,7 +31,7 @@ export default function ForgotPasswordSuccess({ email, onResend }: ForgotPasswor
       <div className="pt-4 space-y-3">
         <button
           onClick={onResend}
-          className="w-full py-3 px-4 bg-primary/10 text-primary rounded-xl font-semibold hover:bg-primary/20 transition-colors"
+          className="w-full py-3 px-4 bg-primary/10 text-primary rounded-xl font-bold hover:bg-primary/20 transition-colors"
         >
           Gửi lại email
         </button>
@@ -42,4 +46,3 @@ export default function ForgotPasswordSuccess({ email, onResend }: ForgotPasswor
     </div>
   );
 }
-

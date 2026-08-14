@@ -1,6 +1,11 @@
 "use client";
 
-import { IconShoppingCart, IconBolt, IconLock, IconChevronRight } from "@tabler/icons-react";
+import {
+  IconShoppingCart,
+  IconBolt,
+  IconLock,
+  IconChevronRight,
+} from "@tabler/icons-react";
 import type { AccountInfo } from "@/types/auth";
 
 interface ProductActionButtonsProps {
@@ -31,18 +36,22 @@ export default function ProductActionButtons({
             <IconLock className="h-5 w-5" />
           </span>
           <span className="flex flex-col gap-1">
-            <span className="text-sm font-semibold text-luxury-ink">Đăng nhập để mua hàng</span>
-            <span className="text-[11px] text-taupe-600">Mở giỏ hàng và đặt mua nhanh hơn</span>
+            <span className="text-sm font-bold text-luxury-ink">
+              Đăng nhập để mua hàng
+            </span>
+            <span className="text-xs text-charcoal-600">
+              Mở giỏ hàng và đặt mua nhanh hơn
+            </span>
           </span>
         </span>
-        <IconChevronRight className="h-5 w-5 text-taupe-300 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-luxury-ink" />
+        <IconChevronRight className="h-5 w-5 text-charcoal-300 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-luxury-ink" />
       </button>
     );
   }
 
   if (isOutOfStock) {
     return (
-      <div className="w-full py-4 rounded-[2px] bg-taupe-50 text-taupe-400 border border-luxury-ink/10 font-semibold text-[11px] uppercase tracking-[0.2em] text-center">
+      <div className="w-full py-4 rounded-[2px] bg-taupe-50 text-taupe-400 border border-luxury-ink/10 font-bold text-[11px] uppercase tracking-[0.2em] text-center">
         Hết hàng
       </div>
     );
@@ -54,7 +63,7 @@ export default function ProductActionButtons({
       <button
         onClick={onAddToCart}
         disabled={disabled}
-        className="flex-1 flex items-center justify-center gap-2 py-4 rounded-[2px] bg-white border border-luxury-ink/20 text-luxury-ink font-semibold text-[11px] uppercase tracking-[0.2em] hover:bg-taupe-50 hover:border-luxury-ink/40 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+        className="flex-1 flex items-center justify-center gap-2 py-4 rounded-[2px] bg-white border border-luxury-ink/20 text-luxury-ink font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-taupe-50 hover:border-luxury-ink/40 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
       >
         <IconShoppingCart className="w-4 h-4 shrink-0" />
         {actionLoading ? "Đang thêm..." : "Thêm vào giỏ"}
@@ -64,7 +73,7 @@ export default function ProductActionButtons({
       <button
         onClick={onBuyNow}
         disabled={disabled}
-        className="flex-1 flex items-center justify-center gap-2 py-4 rounded-[2px] bg-luxury-ink text-white font-semibold text-[11px] uppercase tracking-[0.2em] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:bg-luxury-ink/90"
+        className="flex-1 flex items-center justify-center gap-2 py-4 rounded-[2px] bg-luxury-ink text-white font-bold text-[11px] uppercase tracking-[0.2em] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:bg-luxury-ink/90"
       >
         <IconBolt className="w-4 h-4 shrink-0" />
         {actionLoading ? "Đang xử lý..." : "Mua ngay"}

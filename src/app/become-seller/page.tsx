@@ -1,6 +1,10 @@
 "use client";
 
-import { IconArrowLeft, IconCircleCheck, IconBuildingStore } from "@tabler/icons-react";
+import {
+  IconArrowLeft,
+  IconCircleCheck,
+  IconBuildingStore,
+} from "@tabler/icons-react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/features/auth/hooks/useUser";
@@ -41,7 +45,9 @@ export default function BecomeSellerPage() {
               Quay lại
             </button>
             <span className="text-muted-foreground/40 select-none">|</span>
-            <span className="text-sm font-medium text-foreground">Tài khoản Seller</span>
+            <span className="text-sm font-medium text-foreground">
+              Tài khoản Seller
+            </span>
           </div>
         </div>
 
@@ -55,13 +61,14 @@ export default function BecomeSellerPage() {
                 Bạn đã là Seller
               </h1>
               <p className="text-sm text-muted-foreground mb-4">
-                Tài khoản của bạn đã được xác minh. Bạn có thể đăng sản phẩm và quản lý đơn hàng.
-                Để cập nhật thông tin ngân hàng hoặc địa chỉ, vui lòng liên hệ hỗ trợ.
+                Tài khoản của bạn đã được xác minh. Bạn có thể đăng sản phẩm và
+                quản lý đơn hàng. Để cập nhật thông tin ngân hàng hoặc địa chỉ,
+                vui lòng liên hệ hỗ trợ.
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/sell"
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:bg-primary/90 transition-colors"
                 >
                   <IconBuildingStore className="w-3.5 h-3.5" />
                   Đăng sản phẩm

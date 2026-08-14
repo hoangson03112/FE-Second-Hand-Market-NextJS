@@ -13,7 +13,10 @@ export default function SearchError() {
       </div>
 
       <h3
-        style={{ fontFamily: "var(--font-droid-serif), serif", fontWeight: 400 }}
+        style={{
+          fontFamily: "var(--font-droid-serif), serif",
+          fontWeight: 400,
+        }}
         className="mt-6 text-xl text-luxury-ink"
       >
         Có lỗi xảy ra
@@ -25,10 +28,13 @@ export default function SearchError() {
       <button
         type="button"
         onClick={() => window.location.reload()}
-        className="group mt-7 inline-flex items-center gap-2 bg-luxury-ink px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+        className="group mt-7 inline-flex items-center gap-2 bg-luxury-ink px-6 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
         style={{ borderRadius: "2px" }}
       >
-        <IconRefresh className="h-4 w-4 transition-transform duration-500 group-hover:rotate-180" strokeWidth={1.75} />
+        <IconRefresh
+          className="h-4 w-4 transition-transform duration-500 group-hover:rotate-180"
+          strokeWidth={1.75}
+        />
         Thử lại
       </button>
     </div>

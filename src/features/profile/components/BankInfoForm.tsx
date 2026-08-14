@@ -16,7 +16,9 @@ interface BankInfoFormProps {
   isSubmitting: boolean;
   isLoading?: boolean;
   onSubmit: (e: React.FormEvent) => void;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => void;
 }
 
 export function BankInfoForm({
@@ -37,12 +39,16 @@ export function BankInfoForm({
   return (
     <div>
       <div className="px-6 py-6 border-b border-luxury-ink/10">
-        <h2 className="text-2xl text-luxury-ink flex items-center gap-2" style={{ fontFamily: "var(--font-droid-serif), serif" }}>
+        <h2
+          className="text-2xl text-luxury-ink flex items-center gap-2"
+          style={{ fontFamily: "var(--font-droid-serif), serif" }}
+        >
           <IconBuildingBank className="w-6 h-6 text-luxury-ink" />
           Thông tin ngân hàng
         </h2>
-        <p className="text-[10px] uppercase tracking-[0.2em] font-semibold text-taupe-500 mt-2">
-          Tài khoản nhận tiền khi bán hàng. Chỉ hiển thị và chỉnh sửa được với tài khoản Seller.
+        <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-taupe-500 mt-2">
+          Tài khoản nhận tiền khi bán hàng. Chỉ hiển thị và chỉnh sửa được với
+          tài khoản Seller.
         </p>
       </div>
 
@@ -51,9 +57,12 @@ export function BankInfoForm({
           <div className="flex gap-3">
             <IconAlertCircle className="w-5 h-5 text-luxury-ink shrink-0 mt-0.5" />
             <div>
-              <h4 className="text-xs uppercase tracking-wide font-semibold text-luxury-ink">Lưu ý</h4>
+              <h4 className="text-xs uppercase tracking-wide font-bold text-luxury-ink">
+                Lưu ý
+              </h4>
               <p className="text-xs text-luxury-ink/80 mt-1">
-                Thông tin ngân hàng dùng để nhận thanh toán từ người mua. Đảm bảo nhập chính xác để tránh sai lệch.
+                Thông tin ngân hàng dùng để nhận thanh toán từ người mua. Đảm
+                bảo nhập chính xác để tránh sai lệch.
               </p>
             </div>
           </div>
@@ -61,7 +70,7 @@ export function BankInfoForm({
 
         <form onSubmit={onSubmit} className="space-y-6 max-w-3xl">
           <div>
-            <label className="block text-[11px] uppercase tracking-wide font-semibold text-luxury-ink mb-2">
+            <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
               Tên ngân hàng <span className="text-blush-600">*</span>
             </label>
             <div className="relative">
@@ -84,7 +93,7 @@ export function BankInfoForm({
           </div>
 
           <div>
-            <label className="block text-[11px] uppercase tracking-wide font-semibold text-luxury-ink mb-2">
+            <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
               Số tài khoản <span className="text-blush-600">*</span>
             </label>
             <div className="relative">
@@ -102,7 +111,7 @@ export function BankInfoForm({
           </div>
 
           <div>
-            <label className="block text-[11px] uppercase tracking-wide font-semibold text-luxury-ink mb-2">
+            <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
               Chủ tài khoản <span className="text-blush-600">*</span>
             </label>
             <div className="relative">
@@ -126,7 +135,7 @@ export function BankInfoForm({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.2em] text-[11px] font-semibold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
+              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.2em] text-[11px] font-bold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
             >
               {isSubmitting ? (
                 <>

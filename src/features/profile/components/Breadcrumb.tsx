@@ -7,7 +7,7 @@ export function Breadcrumb() {
       <div className="flex items-center gap-2 text-sm mt-2 text-muted-foreground">
         <nav
           aria-label="Breadcrumb"
-          className="flex items-center gap-2 text-xs font-semibold tracking-[0.2em] text-charcoal-400 uppercase flex-wrap"
+          className="flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-charcoal-400 uppercase flex-wrap"
         >
           <Link href="/" className="hover:text-luxury-ink transition-colors">
             Trang chủ

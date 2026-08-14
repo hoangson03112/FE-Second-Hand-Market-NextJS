@@ -21,7 +21,9 @@ export function SectionCard({
         <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
           <Icon className="w-3.5 h-3.5 text-primary" />
         </div>
-        <h3 className="text-xs font-semibold text-taupe-900 uppercase tracking-wide">{title}</h3>
+        <h3 className="text-xs font-bold text-taupe-900 uppercase tracking-wide">
+          {title}
+        </h3>
       </div>
       <div className="p-3.5 space-y-3 flex-1 min-h-0">{children}</div>
     </div>

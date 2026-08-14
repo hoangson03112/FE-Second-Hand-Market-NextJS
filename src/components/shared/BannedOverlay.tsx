@@ -59,8 +59,8 @@ export function BannedOverlay() {
       setStep("success");
     } catch (err: unknown) {
       const msg =
-        (err as { response?: { data?: { message?: string } } })?.response?.data?.message ||
-        "Gửi khiếu nại thất bại. Vui lòng thử lại.";
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message || "Gửi khiếu nại thất bại. Vui lòng thử lại.";
       setError(msg);
     } finally {
       setLoading(false);
@@ -89,15 +89,15 @@ export function BannedOverlay() {
               Tài khoản đã bị khóa
             </h1>
             <p className="mb-6 text-center text-gray-600">
-              Tài khoản của bạn đã bị quản trị viên khóa. Bạn không thể thực hiện
-              thao tác trên trang. Nếu cho rằng đây là nhầm lẫn, vui lòng gửi khiếu
-              nại đến quản trị viên.
+              Tài khoản của bạn đã bị quản trị viên khóa. Bạn không thể thực
+              hiện thao tác trên trang. Nếu cho rằng đây là nhầm lẫn, vui lòng
+              gửi khiếu nại đến quản trị viên.
             </p>
             <div className="flex flex-col gap-3">
               <button
                 type="button"
                 onClick={handleOpenAppealForm}
-                className="inline-flex justify-center rounded-xl bg-amber-700 px-4 py-3 font-semibold text-white transition hover:bg-amber-800"
+                className="inline-flex justify-center rounded-xl bg-amber-700 px-4 py-3 font-bold text-white transition hover:bg-amber-800"
               >
                 Gửi khiếu nại lên quản trị viên
               </button>
@@ -119,7 +119,10 @@ export function BannedOverlay() {
             </h2>
             <form onSubmit={handleSubmitAppeal} className="flex flex-col gap-4">
               <div>
-                <label htmlFor="appeal-email" className="mb-1 block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="appeal-email"
+                  className="mb-1 block text-sm font-medium text-gray-700"
+                >
                   Email <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -133,7 +136,10 @@ export function BannedOverlay() {
                 />
               </div>
               <div>
-                <label htmlFor="appeal-fullName" className="mb-1 block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="appeal-fullName"
+                  className="mb-1 block text-sm font-medium text-gray-700"
+                >
                   Họ tên
                 </label>
                 <input
@@ -146,7 +152,10 @@ export function BannedOverlay() {
                 />
               </div>
               <div>
-                <label htmlFor="appeal-message" className="mb-1 block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="appeal-message"
+                  className="mb-1 block text-sm font-medium text-gray-700"
+                >
                   Nội dung khiếu nại <span className="text-red-500">*</span>
                 </label>
                 <textarea
@@ -159,9 +168,7 @@ export function BannedOverlay() {
                   required
                 />
               </div>
-              {error && (
-                <p className="text-sm text-red-600">{error}</p>
-              )}
+              {error && <p className="text-sm text-red-600">{error}</p>}
               <div className="flex gap-2">
                 <button
                   type="button"
@@ -173,7 +180,7 @@ export function BannedOverlay() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 rounded-xl bg-amber-700 px-4 py-3 font-semibold text-white hover:bg-amber-800 disabled:opacity-50"
+                  className="flex-1 rounded-xl bg-amber-700 px-4 py-3 font-bold text-white hover:bg-amber-800 disabled:opacity-50"
                 >
                   {loading ? "Đang gửi..." : "Gửi khiếu nại"}
                 </button>
@@ -193,7 +200,8 @@ export function BannedOverlay() {
               Đã gửi khiếu nại
             </h2>
             <p className="mb-6 text-center text-gray-600">
-              Chúng tôi đã nhận được khiếu nại của bạn và sẽ xem xét, liên hệ lại qua email trong thời gian sớm nhất.
+              Chúng tôi đã nhận được khiếu nại của bạn và sẽ xem xét, liên hệ
+              lại qua email trong thời gian sớm nhất.
             </p>
             <div className="flex flex-col gap-3">
               <button
@@ -206,7 +214,7 @@ export function BannedOverlay() {
               <button
                 type="button"
                 onClick={handleGoToLogin}
-                className="rounded-xl bg-amber-700 px-4 py-3 font-semibold text-white hover:bg-amber-800"
+                className="rounded-xl bg-amber-700 px-4 py-3 font-bold text-white hover:bg-amber-800"
               >
                 Về trang đăng nhập
               </button>

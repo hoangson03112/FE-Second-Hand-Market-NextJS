@@ -97,8 +97,8 @@ export default function ProductReviewsSection({
 
   if (isPending) {
     return (
-      <section className="pt-6">
-        <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-luxury-ink">
+      <section className="p-5 rounded-[2px] border border-luxury-ink/10 bg-taupe-50/50">
+        <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-luxury-ink">
           Đánh giá từ người mua
         </h2>
         <p className="mt-2 text-sm text-taupe-400">Đang tải đánh giá...</p>
@@ -108,8 +108,8 @@ export default function ProductReviewsSection({
 
   if (isError) {
     return (
-      <section className="pt-6">
-        <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-luxury-ink">
+      <section className="p-5 rounded-[2px] border border-luxury-ink/10 bg-taupe-50/50">
+        <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-luxury-ink">
           Đánh giá từ người mua
         </h2>
         <p className="mt-2 text-sm text-blush-600">
@@ -121,8 +121,8 @@ export default function ProductReviewsSection({
 
   if (reviews.length === 0) {
     return (
-      <section className="pt-6">
-        <h2 className="text-sm font-semibold uppercase tracking-[0.1em] text-luxury-ink mb-5">
+      <section className="p-5 rounded-[2px] border border-luxury-ink/10 bg-taupe-50/50">
+        <h2 className="text-sm font-bold uppercase tracking-[0.1em] text-luxury-ink mb-5">
           Đánh giá từ người mua
         </h2>
         <p className="mt-2 text-sm text-neutral-500">
@@ -134,9 +134,9 @@ export default function ProductReviewsSection({
   }
 
   return (
-    <section className="pt-6">
+    <section className="p-5 rounded-[2px] border border-luxury-ink/10 bg-taupe-50/50">
       <div className="mb-4">
-        <h2 className="text-sm font-semibold uppercase tracking-[0.1em] text-luxury-ink mb-5">
+        <h2 className="text-sm font-bold uppercase tracking-[0.1em] text-luxury-ink mb-5">
           Đánh giá từ người mua
         </h2>
         <p className="mt-0.5 text-sm text-neutral-500">
@@ -160,7 +160,7 @@ export default function ProductReviewsSection({
             variant="outline"
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="rounded-[2px] text-[11px] font-semibold uppercase tracking-[0.2em] px-6 border-luxury-ink/20 text-luxury-ink hover:bg-taupe-50"
+            className="rounded-[2px] text-[11px] font-bold uppercase tracking-[0.2em] px-6 border-luxury-ink/20 text-luxury-ink hover:bg-taupe-50"
           >
             {isFetchingNextPage ? "Đang tải..." : "Xem thêm đánh giá"}
           </Button>

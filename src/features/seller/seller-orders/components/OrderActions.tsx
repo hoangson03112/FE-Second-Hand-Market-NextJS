@@ -19,7 +19,7 @@ interface OrderActionsProps {
   onUpdateStatus: (
     orderId: string,
     status: "confirmed" | "cancelled",
-    reason?: string
+    reason?: string,
   ) => void;
   onApproveRefund?: (orderId: string) => void;
 }
@@ -32,7 +32,8 @@ export default function OrderActions({
 }: OrderActionsProps) {
   const isUpdating = updatingId === order._id;
   const [cancelOpen, setCancelOpen] = useState(false);
-  const isLocalPickup = getShippingMethodType(order.shippingMethod) === "local_pickup";
+  const isLocalPickup =
+    getShippingMethodType(order.shippingMethod) === "local_pickup";
   const refundDoc =
     order.refundRequestId && typeof order.refundRequestId === "object"
       ? order.refundRequestId
@@ -49,7 +50,7 @@ export default function OrderActions({
           <button
             onClick={() => onUpdateStatus(order._id, "confirmed")}
             disabled={isUpdating}
-            className="flex-1 py-2 px-3 bg-primary text-primary-foreground rounded-xl text-[13px] font-semibold hover:bg-primary/90 active:bg-primary/95 disabled:opacity-40 flex items-center justify-center gap-2 transition-all"
+            className="flex-1 py-2 px-3 bg-primary text-primary-foreground rounded-xl text-[13px] font-bold hover:bg-primary/90 active:bg-primary/95 disabled:opacity-40 flex items-center justify-center gap-2 transition-all"
           >
             {isUpdating ? (
               <IconLoader2 className="w-3.5 h-3.5 animate-spin" />
@@ -82,7 +83,11 @@ export default function OrderActions({
   }
 
   // ── Đang vận chuyển ───────────────────────────────────────────────────────
-  if (["confirmed", "picked_up", "shipping", "out_for_delivery"].includes(order.status)) {
+  if (
+    ["confirmed", "picked_up", "shipping", "out_for_delivery"].includes(
+      order.status,
+    )
+  ) {
     const label = isLocalPickup
       ? order.status === "confirmed"
         ? "Đã xác nhận • Liên hệ người mua để sắp xếp giao hàng"
@@ -107,7 +112,7 @@ export default function OrderActions({
             <button
               onClick={() => onApproveRefund(order._id)}
               disabled={isUpdating}
-              className="flex-1 py-1.5 px-3 bg-primary text-primary-foreground rounded-xl text-[12px] font-semibold hover:bg-primary/90 disabled:opacity-40 flex items-center justify-center gap-1.5 transition-all"
+              className="flex-1 py-1.5 px-3 bg-primary text-primary-foreground rounded-xl text-[12px] font-bold hover:bg-primary/90 disabled:opacity-40 flex items-center justify-center gap-1.5 transition-all"
             >
               {isUpdating ? (
                 <IconLoader2 className="w-3.5 h-3.5 animate-spin" />
@@ -135,7 +140,9 @@ export default function OrderActions({
       <div className="px-3 pb-3">
         <div className="flex items-center gap-2 bg-muted border border-border rounded-xl px-3 py-2">
           <IconCircleCheck className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-          <p className="text-[12px] font-medium text-muted-foreground">Đã chấp thuận hoàn tiền · Admin đang xử lý</p>
+          <p className="text-[12px] font-medium text-muted-foreground">
+            Đã chấp thuận hoàn tiền · Admin đang xử lý
+          </p>
         </div>
       </div>
     );
@@ -143,9 +150,14 @@ export default function OrderActions({
 
   // ── Các trạng thái kết thúc ────────────────────────────────────────────────
   if (
-    ["delivered", "completed", "delivery_failed", "returned", "cancelled", "refunded"].includes(
-      order.status
-    )
+    [
+      "delivered",
+      "completed",
+      "delivery_failed",
+      "returned",
+      "cancelled",
+      "refunded",
+    ].includes(order.status)
   ) {
     return null;
   }

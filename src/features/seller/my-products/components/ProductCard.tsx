@@ -159,7 +159,7 @@ export function ProductCard({
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-4 mb-2">
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-taupe-900 text-base line-clamp-1 mb-1">
+              <h3 className="font-bold text-taupe-900 text-base line-clamp-1 mb-1">
                 {product.name}
               </h3>
               <div className="flex items-center gap-3 text-xs text-taupe-500">

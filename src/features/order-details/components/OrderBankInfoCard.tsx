@@ -53,7 +53,8 @@ export function OrderBankInfoCard({
 
   const hasBankInfo = Boolean(refundBankInfo?.buyerAccountNumber);
   const showBankSubmitted =
-    hasBankInfo && (rs === "processing" || rs === "returned" || rs === "bank_info_required");
+    hasBankInfo &&
+    (rs === "processing" || rs === "returned" || rs === "bank_info_required");
   const showBankForm =
     !hasBankInfo && (rs === "returned" || rs === "bank_info_required");
 
@@ -63,7 +64,9 @@ export function OrderBankInfoCard({
       : "Thông tin ngân hàng nhận tiền";
 
   const legacyBankName =
-    bankName.trim() && !BANK_OPTIONS.includes(bankName) ? bankName.trim() : null;
+    bankName.trim() && !BANK_OPTIONS.includes(bankName)
+      ? bankName.trim()
+      : null;
 
   const accountFields = [
     {
@@ -81,24 +84,43 @@ export function OrderBankInfoCard({
   ];
 
   return (
-    <div className="overflow-hidden border border-luxury-ink/8 bg-white/60" style={{ borderRadius: "2px" }}>
+    <div
+      className="overflow-hidden border border-luxury-ink/8 bg-white/60"
+      style={{ borderRadius: "2px" }}
+    >
       <div className="flex items-center gap-2 border-b border-luxury-ink/8 px-5 py-3">
-        <IconBuildingBank className="h-4 w-4 text-luxury-champagne" strokeWidth={1.75} />
-        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-600">{cardTitle}</span>
+        <IconBuildingBank
+          className="h-4 w-4 text-luxury-champagne"
+          strokeWidth={1.75}
+        />
+        <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-600">
+          {cardTitle}
+        </span>
       </div>
       <div className="p-5">
         {showGhnSection && (
           <div className="space-y-3">
-            <p className="border border-luxury-ink/8 bg-cream-50 px-3 py-2 text-xs leading-relaxed text-neutral-600" style={{ borderRadius: "2px" }}>
+            <p
+              className="border border-luxury-ink/8 bg-cream-50 px-3 py-2 text-xs leading-relaxed text-neutral-600"
+              style={{ borderRadius: "2px" }}
+            >
               {REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}
             </p>
             <p className="text-sm text-neutral-500">
-              Vui lòng đến bưu cục GHN gần nhất để gửi hàng theo mã vận đơn hoàn trả (nếu đơn dùng GHN).
+              Vui lòng đến bưu cục GHN gần nhất để gửi hàng theo mã vận đơn hoàn
+              trả (nếu đơn dùng GHN).
             </p>
             {ghnReturnOrderCode && (
-              <div className="border border-luxury-champagne/30 bg-luxury-champagne/8 p-3" style={{ borderRadius: "2px" }}>
-                <p className="mb-1 text-xs text-neutral-500">Mã vận đơn hoàn trả</p>
-                <p className="font-mono font-semibold text-luxury-ink">{ghnReturnOrderCode}</p>
+              <div
+                className="border border-luxury-champagne/30 bg-luxury-champagne/8 p-3"
+                style={{ borderRadius: "2px" }}
+              >
+                <p className="mb-1 text-xs text-neutral-500">
+                  Mã vận đơn hoàn trả
+                </p>
+                <p className="font-mono font-bold text-luxury-ink">
+                  {ghnReturnOrderCode}
+                </p>
                 {ghnReturnTrackingUrl && (
                   <a
                     href={ghnReturnTrackingUrl}
@@ -119,7 +141,7 @@ export function OrderBankInfoCard({
             className={`border border-emerald-200 bg-emerald-50 p-3 ${showGhnSection ? "mt-4" : ""}`}
             style={{ borderRadius: "2px" }}
           >
-            <p className="mb-2 text-xs font-semibold text-emerald-700">
+            <p className="mb-2 text-xs font-bold text-emerald-700">
               {rs === "processing"
                 ? "Đã gửi STK — Admin sẽ chuyển khoản hoàn tiền"
                 : "Đã gửi — Chờ admin xử lý hoàn tiền"}
@@ -127,15 +149,21 @@ export function OrderBankInfoCard({
             <div className="space-y-1 text-sm">
               <p>
                 <span className="text-neutral-500">Ngân hàng:</span>{" "}
-                <span className="font-semibold text-luxury-ink">{refundBankInfo.buyerBankName}</span>
+                <span className="font-bold text-luxury-ink">
+                  {refundBankInfo.buyerBankName}
+                </span>
               </p>
               <p>
                 <span className="text-neutral-500">Số TK:</span>{" "}
-                <span className="font-mono font-semibold text-luxury-ink">{refundBankInfo.buyerAccountNumber}</span>
+                <span className="font-mono font-bold text-luxury-ink">
+                  {refundBankInfo.buyerAccountNumber}
+                </span>
               </p>
               <p>
                 <span className="text-neutral-500">Chủ TK:</span>{" "}
-                <span className="font-semibold text-luxury-ink">{refundBankInfo.buyerAccountHolder}</span>
+                <span className="font-bold text-luxury-ink">
+                  {refundBankInfo.buyerAccountHolder}
+                </span>
               </p>
             </div>
           </div>
@@ -147,11 +175,14 @@ export function OrderBankInfoCard({
             className={`space-y-3 ${showGhnSection ? "mt-4 border-t border-luxury-ink/8 pt-4" : ""}`}
           >
             <p className="text-sm text-neutral-500">
-              Người bán đã xác nhận nhận hàng hoàn. Vui lòng nhập tài khoản ngân hàng của bạn để admin
-              chuyển khoản hoàn tiền (tiền đang được giữ / đối soát theo quy trình sàn).
+              Người bán đã xác nhận nhận hàng hoàn. Vui lòng nhập tài khoản ngân
+              hàng của bạn để admin chuyển khoản hoàn tiền (tiền đang được giữ /
+              đối soát theo quy trình sàn).
             </p>
             <div>
-              <label className="mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">Tên ngân hàng</label>
+              <label className="mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
+                Tên ngân hàng
+              </label>
               <div className="relative">
                 <select
                   value={bankName}
@@ -170,12 +201,17 @@ export function OrderBankInfoCard({
                     </option>
                   ))}
                 </select>
-                <IconBuildingBank className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-taupe-400" strokeWidth={1.75} />
+                <IconBuildingBank
+                  className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-taupe-400"
+                  strokeWidth={1.75}
+                />
               </div>
             </div>
             {accountFields.map(({ label, value, setter, placeholder }) => (
               <div key={label}>
-                <label className="mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">{label}</label>
+                <label className="mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
+                  {label}
+                </label>
                 <input
                   type="text"
                   value={value}
@@ -195,10 +231,12 @@ export function OrderBankInfoCard({
                 !accountNumber.trim() ||
                 !accountHolder.trim()
               }
-              className="w-full bg-luxury-ink py-2.5 text-sm font-semibold text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
+              className="w-full bg-luxury-ink py-2.5 text-sm font-bold text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
               style={{ borderRadius: "2px" }}
             >
-              {isSubmittingBankInfo ? "Đang gửi..." : "Gửi thông tin nhận hoàn tiền"}
+              {isSubmittingBankInfo
+                ? "Đang gửi..."
+                : "Gửi thông tin nhận hoàn tiền"}
             </button>
           </form>
         )}

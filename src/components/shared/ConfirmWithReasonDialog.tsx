@@ -22,7 +22,8 @@ interface ConfirmWithReasonDialogProps {
 const VARIANT = {
   danger: {
     icon: "bg-destructive/10 text-destructive",
-    confirm: "bg-destructive hover:bg-destructive/90 text-destructive-foreground",
+    confirm:
+      "bg-destructive hover:bg-destructive/90 text-destructive-foreground",
   },
   warning: {
     icon: "bg-primary/10 text-primary",
@@ -73,12 +74,18 @@ export function ConfirmWithReasonDialog({
         >
           <div className="flex items-start justify-between p-6 border-b border-border">
             <div className="flex items-start gap-4 flex-1">
-              <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${styles.icon}`}>
+              <div
+                className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${styles.icon}`}
+              >
                 <IconAlertTriangle className="h-5 w-5" />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-semibold text-foreground">{title}</h3>
-                {description && <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{description}</p>}
+                <h3 className="text-lg font-bold text-foreground">{title}</h3>
+                {description && (
+                  <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                    {description}
+                  </p>
+                )}
               </div>
             </div>
             <button
@@ -93,7 +100,10 @@ export function ConfirmWithReasonDialog({
 
           <form onSubmit={handleSubmit}>
             <div className="p-6">
-              <label htmlFor="confirm-reason" className="block text-sm font-medium text-foreground mb-2">
+              <label
+                htmlFor="confirm-reason"
+                className="block text-sm font-medium text-foreground mb-2"
+              >
                 {reasonLabel} <span className="text-destructive">*</span>
               </label>
               <textarea
@@ -106,7 +116,11 @@ export function ConfirmWithReasonDialog({
                 disabled={isLoading}
                 className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
               />
-              {reasonHint && <p className="text-xs text-muted-foreground mt-2">{reasonHint}</p>}
+              {reasonHint && (
+                <p className="text-xs text-muted-foreground mt-2">
+                  {reasonHint}
+                </p>
+              )}
             </div>
 
             <div className="flex items-center gap-3 p-6 border-t border-border">

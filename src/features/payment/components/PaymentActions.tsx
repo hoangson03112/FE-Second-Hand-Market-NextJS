@@ -1,67 +1,75 @@
-import { IconCircleCheck } from "@tabler/icons-react";
+"use client";
+
+import {
+  IconArrowUpRight,
+  IconCircleCheck,
+  IconLoader2,
+} from "@tabler/icons-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export interface PaymentActionsProps {
   isExpired: boolean;
   isConfirmingPayment: boolean;
   onConfirmPayment: () => void;
+  /** Drives the disabled state so the intent is clear before clicking. */
+  hasProof?: boolean;
 }
 
 export function PaymentActions({
   isExpired,
   isConfirmingPayment,
   onConfirmPayment,
+  hasProof = true,
 }: PaymentActionsProps) {
-  const disabled = isExpired || isConfirmingPayment;
+  const disabled = isExpired || isConfirmingPayment || !hasProof;
+
+  const hint = isExpired
+    ? "Đơn đã hết thời gian thanh toán."
+    : !hasProof
+      ? "Tải lên ảnh biên lai để bật nút xác nhận."
+      : null;
 
   return (
-    <div className="flex flex-col sm:flex-row gap-3">
-      <Link
-        href="/"
-        className="flex-1 inline-flex items-center justify-center rounded-xl border-2 border-taupe-300/80 bg-white px-4 py-3 text-center font-semibold text-taupe-700 transition-all duration-200 hover:bg-taupe-50 hover:border-taupe-500/70"
-      >
-        Về trang chủ
-      </Link>
+    <div className="space-y-3">
       <button
+        type="button"
         onClick={onConfirmPayment}
         disabled={disabled}
-        className={`flex-1 inline-flex items-center justify-center rounded-xl px-4 py-3 font-bold tracking-wide transition-all duration-200 active:scale-[0.98] ${
+        className={cn(
+          "inline-flex h-14 w-full items-center justify-center gap-3 rounded-[2px] px-6",
+          "text-[11px] font-bold uppercase tracking-[0.22em] transition-all duration-300",
           disabled
-            ? "bg-taupe-100 text-taupe-400 cursor-not-allowed"
-            : "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow-md"
-        }`}
+            ? "cursor-not-allowed bg-luxury-ink/25 text-luxury-ivory/70"
+            : "bg-luxury-ink text-luxury-ivory hover:bg-charcoal-800",
+        )}
       >
         {isConfirmingPayment ? (
-          <span className="flex items-center justify-center gap-2">
-            <svg
-              className="animate-spin h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              />
-            </svg>
-            Đang xử lý...
-          </span>
+          <>
+            <IconLoader2 className="h-4 w-4 animate-spin" />
+            Đang gửi
+          </>
         ) : (
-          <span className="flex items-center justify-center gap-2">
-            <IconCircleCheck className="h-5 w-5" />
-            Đã thanh toán
-          </span>
+          <>
+            <IconCircleCheck className="h-4 w-4" />
+            Tôi đã chuyển khoản
+          </>
         )}
       </button>
+
+      {hint ? (
+        <p className="text-center text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500">
+          {hint}
+        </p>
+      ) : null}
+
+      <Link
+        href="/"
+        className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-[2px] border border-luxury-ink/15 px-6 text-[10px] font-bold uppercase tracking-[0.2em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
+      >
+        Về trang chủ
+        <IconArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+      </Link>
     </div>
   );
 }

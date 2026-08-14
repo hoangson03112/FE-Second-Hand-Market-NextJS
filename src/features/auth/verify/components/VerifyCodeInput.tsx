@@ -50,13 +50,13 @@ export default function VerifyCodeInput({
       <div className="flex items-baseline justify-between gap-4">
         <label
           htmlFor="code-0"
-          className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-500"
+          className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500"
         >
           {label}
         </label>
         <span
           aria-hidden
-          className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-400"
+          className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400"
         >
           <span className={cn(code.length === 6 && "text-luxury-ink")}>
             {code.length}
@@ -134,7 +134,9 @@ export default function VerifyCodeInput({
         })}
       </div>
 
-      <p className="mt-3 text-[11px] leading-relaxed text-neutral-500">{hint}</p>
+      <p className="mt-3 text-[11px] leading-relaxed text-neutral-500">
+        {hint}
+      </p>
     </div>
   );
 }

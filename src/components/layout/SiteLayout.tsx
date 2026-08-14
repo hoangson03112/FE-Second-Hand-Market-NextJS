@@ -19,22 +19,16 @@ export default function SiteLayout({
 
   return (
     <div className="fixed inset-0 flex flex-col overflow-hidden">
-      
       <Header />
 
       <main
         id="main-scroll-container"
         className="flex-1 min-h-0 w-full overflow-y-auto overflow-x-hidden"
       >
-        <div className="flex min-h-full flex-col justify-between">
-          
-          {/* Nội dung các trang */}
-          <div className="w-full">
-            {children}
-          </div>
-          
-          <Footer />
+        <div className="flex  flex-col justify-between">
+          <div className="w-full">{children}</div>
 
+          <Footer />
         </div>
       </main>
 

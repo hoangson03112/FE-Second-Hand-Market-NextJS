@@ -1,14 +1,27 @@
 "use client";
 
-import { IconArrowLeft, IconLoader2, IconCoins, IconClock, IconWallet } from "@tabler/icons-react";
+import {
+  IconArrowLeft,
+  IconLoader2,
+  IconCoins,
+  IconClock,
+  IconWallet,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import { useSellerWallet } from "./hooks/useSellerWallet";
 import { WalletStatCard } from "./components/WalletStatCard";
 import { PayoutHistoryList } from "./components/PayoutHistoryList";
 
 export default function SellerPayouts() {
-  const { userLoading, account, wallet, walletError, payouts, payoutsError, isLoading } =
-    useSellerWallet();
+  const {
+    userLoading,
+    account,
+    wallet,
+    walletError,
+    payouts,
+    payoutsError,
+    isLoading,
+  } = useSellerWallet();
 
   if (userLoading) {
     return (
@@ -22,7 +35,10 @@ export default function SellerPayouts() {
 
   return (
     <main className="max-w-8xl mx-auto w-full px-4 py-8 sm:px-6 bg-cream-50 min-h-screen">
-      <Link href="/seller" className="inline-flex items-center gap-2 text-primary hover:underline font-medium text-sm mb-6">
+      <Link
+        href="/seller"
+        className="inline-flex items-center gap-2 text-primary hover:underline font-medium text-sm mb-6"
+      >
         <IconArrowLeft className="h-4 w-4" />
         Quay lại
       </Link>
@@ -69,7 +85,7 @@ export default function SellerPayouts() {
           </div>
 
           <div className="rounded-2xl border-2 border-border bg-gradient-to-br from-cream-50 to-white p-5 shadow-md">
-            <h2 className="font-semibold text-taupe-900 mb-3 uppercase tracking-wide text-sm">
+            <h2 className="font-bold text-taupe-900 mb-3 uppercase tracking-wide text-sm">
               Lịch sử thanh toán
             </h2>
             <PayoutHistoryList

@@ -1,4 +1,8 @@
-import { IconQrcode } from "@tabler/icons-react";
+"use client";
+
+import { useEffect, useState } from "react";
+import { IconAlertTriangle, IconQrcode } from "@tabler/icons-react";
+import { Eyebrow } from "@/components/shared/Eyebrow";
 
 export interface PaymentQrSectionProps {
   bankInfoLoading: boolean;
@@ -7,62 +11,127 @@ export interface PaymentQrSectionProps {
   qrCodeImageUrl: string;
 }
 
+/** Fixed square frame so the QR never collapses or overflows its panel. */
+const frame =
+  "flex aspect-square w-full max-w-[300px] items-center justify-center rounded-[2px] border p-4";
+
 export function PaymentQrSection({
   bankInfoLoading,
   bankInfoError,
   bankInfo,
   qrCodeImageUrl,
 }: PaymentQrSectionProps) {
-  return (
-    <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border p-6 shadow-md">
-      <h2 className="font-semibold text-taupe-900 mb-4 text-center uppercase tracking-wide text-sm">
-        Quét QR để thanh toán
-      </h2>
-      <div className="flex justify-center mb-4">
-        {bankInfoLoading ? (
-          <div className="w-64 h-64 bg-taupe-100 rounded-xl flex items-center justify-center border-2 border-dashed border-border">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent" />
-          </div>
-        ) : bankInfoError ? (
-          <div className="w-64 h-64 bg-taupe-100 rounded-xl flex items-center justify-center border-2 border-dashed border-border p-4">
-            <p className="text-sm text-red-600 text-center">{bankInfoError}</p>
-          </div>
-        ) : bankInfo && qrCodeImageUrl ? (
-          <div className="w-94 bg-white rounded-xl flex items-center justify-center border-2 border-border">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={qrCodeImageUrl}
-              alt="QR Code thanh toán"
-              className="w-full h-full object-contain"
-              crossOrigin="anonymous"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = "none";
-                const parent = target.parentElement;
-                if (parent) {
-                  parent.innerHTML =
-                    '<div class="w-full h-full flex items-center justify-center p-4"><p class="text-sm text-red-600 text-center">Không thể tải QR code. Vui lòng kiểm tra lại thông tin ngân hàng.</p></div>';
-                }
-              }}
-            />
-          </div>
-        ) : bankInfo ? (
-          <div className="w-64 h-64 bg-taupe-100 rounded-xl flex items-center justify-center border-2 border-dashed border-border p-4">
-            <p className="text-sm text-taupe-500 text-center">
-              Đang tạo QR code...
+  // The previous version wrote `parent.innerHTML` from the img onError handler,
+  // mutating DOM that React owns. Track the failure in state instead.
+  const [hasImageError, setHasImageError] = useState(false);
+
+  useEffect(() => {
+    setHasImageError(false);
+  }, [qrCodeImageUrl]);
+
+  const renderBody = () => {
+    if (bankInfoLoading) {
+      return (
+        <div
+          className={`${frame} border-dashed border-luxury-ink/15 bg-cream-50`}
+        >
+          <span className="h-4 w-4 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
+        </div>
+      );
+    }
+
+    if (bankInfoError) {
+      return (
+        <div className={`${frame} border-blush-300 bg-blush-50`}>
+          <div className="text-center">
+            <IconAlertTriangle className="mx-auto h-5 w-5 text-blush-700" />
+            <p className="mt-3 text-xs leading-relaxed text-blush-800">
+              {bankInfoError}
             </p>
           </div>
-        ) : (
-          <div className="w-64 h-64 bg-taupe-100 rounded-xl flex items-center justify-center border-2 border-dashed border-border">
-            <IconQrcode className="h-32 w-32 text-taupe-300" />
+        </div>
+      );
+    }
+
+    if (bankInfo && qrCodeImageUrl && !hasImageError) {
+      return (
+        <div className={`${frame} border-luxury-ink/10 bg-white`}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={qrCodeImageUrl}
+            alt="Mã QR thanh toán"
+            className="h-full w-full object-contain"
+            crossOrigin="anonymous"
+            onError={() => setHasImageError(true)}
+          />
+        </div>
+      );
+    }
+
+    if (bankInfo && hasImageError) {
+      return (
+        <div className={`${frame} border-blush-300 bg-blush-50`}>
+          <div className="text-center">
+            <IconAlertTriangle className="mx-auto h-5 w-5 text-blush-700" />
+            <p className="mt-3 text-xs leading-relaxed text-blush-800">
+              Không thể tải mã QR. Vui lòng chuyển khoản thủ công theo thông tin
+              bên dưới.
+            </p>
           </div>
-        )}
+        </div>
+      );
+    }
+
+    if (bankInfo) {
+      return (
+        <div
+          className={`${frame} border-dashed border-luxury-ink/15 bg-cream-50`}
+        >
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
+            Đang tạo mã QR
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div
+        className={`${frame} border-dashed border-luxury-ink/15 bg-cream-50`}
+      >
+        <IconQrcode className="h-20 w-20 text-luxury-ink/15" strokeWidth={1} />
       </div>
-      {qrCodeImageUrl && bankInfo && (
-        <p className="text-xs text-center text-taupe-500">
-          Quét mã QR để tự động điền thông tin chuyển khoản
+    );
+  };
+
+  const showHint = Boolean(bankInfo && qrCodeImageUrl && !hasImageError);
+
+  return (
+    <section className="rounded-[2px] border border-luxury-ink/10 bg-white px-5 py-6 sm:px-6">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <Eyebrow>Cách nhanh nhất</Eyebrow>
+          <h2
+            style={{ fontFamily: "var(--font-droid-serif), serif" }}
+            className="mt-3 text-lg tracking-tight text-luxury-ink"
+          >
+            Quét mã để chuyển khoản
+          </h2>
+        </div>
+        {bankInfo?.bankName ? (
+          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+            {bankInfo.bankName}
+          </span>
+        ) : null}
+      </div>
+
+      <div className="mt-7 flex justify-center">{renderBody()}</div>
+
+      {showHint ? (
+        <p className="mt-6 text-center text-xs leading-relaxed text-neutral-600">
+          Mở ứng dụng ngân hàng, quét mã và toàn bộ thông tin chuyển khoản sẽ
+          được điền tự động.
         </p>
-      )}
-    </div>
+      ) : null}
+    </section>
   );
 }

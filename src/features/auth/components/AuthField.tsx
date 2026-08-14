@@ -37,7 +37,7 @@ export default function AuthField({
     <div className={cn("group", fieldClassName)}>
       <label
         htmlFor={inputId}
-        className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-500"
+        className="block text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500"
       >
         {label}
         {requiredMark ? (

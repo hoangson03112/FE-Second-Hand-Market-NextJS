@@ -16,17 +16,16 @@ import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
 
 const GHN_TRACKING_URL = "https://tracking.ghn.dev/?order_code=";
 
-function formatShippingAddress(addr: Record<string, unknown> | string | null | undefined): { fullName?: string; phone?: string; address?: string } | null {
+function formatShippingAddress(
+  addr: Record<string, unknown> | string | null | undefined,
+): { fullName?: string; phone?: string; address?: string } | null {
   if (!addr || typeof addr === "string") return null;
   const a = addr as Record<string, unknown>;
   const fullName = typeof a.fullName === "string" ? a.fullName : undefined;
   const phone = typeof a.phoneNumber === "string" ? a.phoneNumber : undefined;
-  const parts = [
-    a.specificAddress,
-    a.ward,
-    a.district,
-    a.province,
-  ].filter((x): x is string => typeof x === "string" && x.length > 0);
+  const parts = [a.specificAddress, a.ward, a.district, a.province].filter(
+    (x): x is string => typeof x === "string" && x.length > 0,
+  );
   const address = parts.length > 0 ? parts.join(", ") : undefined;
   if (!fullName && !phone && !address) return null;
   return { fullName, phone, address };
@@ -89,12 +88,17 @@ export default function OrdersTable({
                     <td className="px-4 py-3 hidden sm:table-cell">
                       <div className="flex items-center gap-2">
                         <AvatarOrInitials
-                          avatar={(order.buyerId as { avatar?: { url?: string } })?.avatar}
+                          avatar={
+                            (order.buyerId as { avatar?: { url?: string } })
+                              ?.avatar
+                          }
                           fullName={order.buyerId?.fullName}
                           size={28}
                         />
                         <div>
-                          <span className="text-foreground">{order.buyerId?.fullName ?? "—"}</span>
+                          <span className="text-foreground">
+                            {order.buyerId?.fullName ?? "—"}
+                          </span>
                           <br />
                           <span className="text-xs text-muted-foreground">
                             {order.buyerId?.email ?? ""}
@@ -129,7 +133,7 @@ export default function OrdersTable({
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                           {/* Sản phẩm */}
                           <div className="p-3 rounded-xl bg-background border border-border">
-                            <p className="text-xs font-semibold text-muted-foreground mb-2 flex items-center gap-1.5">
+                            <p className="text-xs font-bold text-muted-foreground mb-2 flex items-center gap-1.5">
                               <IconPackage className="w-3.5 h-3.5" /> Sản phẩm
                             </p>
                             <ul className="space-y-1">
@@ -141,33 +145,50 @@ export default function OrdersTable({
                                     ? (p.productId as { name: string }).name
                                     : null;
                                 return (
-                                  <li key={`${order._id}-${i}`} className="text-foreground">
+                                  <li
+                                    key={`${order._id}-${i}`}
+                                    className="text-foreground"
+                                  >
                                     {productName != null
                                       ? `${productName} × ${p.quantity}`
                                       : `Sản phẩm #${i + 1} × ${p.quantity}`}
                                   </li>
                                 );
-                              }) ?? <li className="text-muted-foreground">—</li>}
+                              }) ?? (
+                                <li className="text-muted-foreground">—</li>
+                              )}
                             </ul>
                           </div>
 
                           {/* Địa chỉ giao hàng */}
                           <div className="p-3 rounded-xl bg-background border border-border">
-                            <p className="text-xs font-semibold text-muted-foreground mb-2 flex items-center gap-1.5">
-                              <IconMapPin className="w-3.5 h-3.5" /> Địa chỉ giao hàng
+                            <p className="text-xs font-bold text-muted-foreground mb-2 flex items-center gap-1.5">
+                              <IconMapPin className="w-3.5 h-3.5" /> Địa chỉ
+                              giao hàng
                             </p>
                             {(() => {
-                              const addr = formatShippingAddress(order.shippingAddress);
-                              if (!addr) return <p className="text-muted-foreground text-sm">Chưa có địa chỉ</p>;
+                              const addr = formatShippingAddress(
+                                order.shippingAddress,
+                              );
+                              if (!addr)
+                                return (
+                                  <p className="text-muted-foreground text-sm">
+                                    Chưa có địa chỉ
+                                  </p>
+                                );
                               return (
                                 <div className="text-foreground text-sm space-y-0.5">
                                   {(addr.fullName || addr.phone) && (
                                     <p className="font-medium">
-                                      {[addr.fullName, addr.phone].filter(Boolean).join(" • ")}
+                                      {[addr.fullName, addr.phone]
+                                        .filter(Boolean)
+                                        .join(" • ")}
                                     </p>
                                   )}
                                   {addr.address && (
-                                    <p className="text-muted-foreground">{addr.address}</p>
+                                    <p className="text-muted-foreground">
+                                      {addr.address}
+                                    </p>
                                   )}
                                 </div>
                               );
@@ -176,12 +197,14 @@ export default function OrdersTable({
 
                           {/* Mã vận đơn GHN */}
                           <div className="p-3 rounded-xl bg-background border border-border space-y-2">
-                            <p className="text-xs font-semibold text-muted-foreground flex items-center gap-1.5">
+                            <p className="text-xs font-bold text-muted-foreground flex items-center gap-1.5">
                               <IconTruck className="w-3.5 h-3.5" /> Vận đơn GHN
                             </p>
                             {order.ghnOrderCode ? (
                               <div className="flex flex-wrap items-center gap-2">
-                                <span className="font-mono text-foreground text-xs">{order.ghnOrderCode}</span>
+                                <span className="font-mono text-foreground text-xs">
+                                  {order.ghnOrderCode}
+                                </span>
                                 <a
                                   href={`${GHN_TRACKING_URL}${order.ghnOrderCode}`}
                                   target="_blank"
@@ -197,8 +220,12 @@ export default function OrdersTable({
                             )}
                             {order.ghnReturnOrderCode && (
                               <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-border">
-                                <span className="text-muted-foreground text-xs">Hoàn trả:</span>
-                                <span className="font-mono text-foreground text-xs">{order.ghnReturnOrderCode}</span>
+                                <span className="text-muted-foreground text-xs">
+                                  Hoàn trả:
+                                </span>
+                                <span className="font-mono text-foreground text-xs">
+                                  {order.ghnReturnOrderCode}
+                                </span>
                                 <a
                                   href={`${GHN_TRACKING_URL}${order.ghnReturnOrderCode}`}
                                   target="_blank"
@@ -214,17 +241,44 @@ export default function OrdersTable({
                         </div>
 
                         {/* Thông tin hoàn tiền (returned / refunded) */}
-                        {(order.status === "returned" || order.status === "refunded") && (
+                        {(order.status === "returned" ||
+                          order.status === "refunded") && (
                           <div className="mt-4 p-3 rounded-xl bg-background border border-border">
-                            <p className="text-xs font-semibold text-muted-foreground mb-2">Thông tin ngân hàng hoàn tiền</p>
+                            <p className="text-xs font-bold text-muted-foreground mb-2">
+                              Thông tin ngân hàng hoàn tiền
+                            </p>
                             {order.refundBankInfo?.buyerAccountNumber ? (
                               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm">
-                                <p><span className="text-muted-foreground">Ngân hàng:</span> <span className="font-semibold text-foreground">{order.refundBankInfo.buyerBankName ?? "—"}</span></p>
-                                <p><span className="text-muted-foreground">Số TK:</span> <span className="font-mono font-semibold text-foreground">{order.refundBankInfo.buyerAccountNumber}</span></p>
-                                <p><span className="text-muted-foreground">Chủ TK:</span> <span className="font-semibold text-foreground">{order.refundBankInfo.buyerAccountHolder ?? "—"}</span></p>
+                                <p>
+                                  <span className="text-muted-foreground">
+                                    Ngân hàng:
+                                  </span>{" "}
+                                  <span className="font-bold text-foreground">
+                                    {order.refundBankInfo.buyerBankName ?? "—"}
+                                  </span>
+                                </p>
+                                <p>
+                                  <span className="text-muted-foreground">
+                                    Số TK:
+                                  </span>{" "}
+                                  <span className="font-mono font-bold text-foreground">
+                                    {order.refundBankInfo.buyerAccountNumber}
+                                  </span>
+                                </p>
+                                <p>
+                                  <span className="text-muted-foreground">
+                                    Chủ TK:
+                                  </span>{" "}
+                                  <span className="font-bold text-foreground">
+                                    {order.refundBankInfo.buyerAccountHolder ??
+                                      "—"}
+                                  </span>
+                                </p>
                               </div>
                             ) : (
-                              <p className="text-muted-foreground text-sm">Người mua chưa cung cấp STK</p>
+                              <p className="text-muted-foreground text-sm">
+                                Người mua chưa cung cấp STK
+                              </p>
                             )}
                             {(order.status as string) === "refund" && (
                               <button
@@ -242,13 +296,15 @@ export default function OrdersTable({
                                   void onCompleteRefund(order._id);
                                 }}
                                 disabled={isCompletingRefund}
-                                className="mt-2 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                className="mt-2 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                               >
-                                {isCompletingRefund ? "Đang xử lý..." : "Xử lý hoàn tiền"}
+                                {isCompletingRefund
+                                  ? "Đang xử lý..."
+                                  : "Xử lý hoàn tiền"}
                               </button>
                             )}
                             {order.status === "refunded" && (
-                              <span className="inline-block mt-2 px-2 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold">
+                              <span className="inline-block mt-2 px-2 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-bold">
                                 Đã hoàn tiền
                               </span>
                             )}
@@ -266,6 +322,3 @@ export default function OrdersTable({
     </div>
   );
 }
-
-
-

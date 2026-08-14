@@ -82,7 +82,7 @@ function AddressCard({
 
       <div className="pr-8 space-y-1">
         <div className="flex items-center gap-1.5">
-          <span className="text-xs font-semibold text-taupe-900">
+          <span className="text-xs font-bold text-taupe-900">
             {address.fullName}
           </span>
           {address.isDefault && (
@@ -185,9 +185,7 @@ export function PickupAddressSelector({
         </div>
       )}
 
-      {error && (
-        <p className="mt-1 text-xs text-red-600">{error}</p>
-      )}
+      {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
     </SectionCard>
   );
 }

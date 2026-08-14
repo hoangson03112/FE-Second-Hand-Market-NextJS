@@ -63,7 +63,7 @@ export default function LoginForm() {
 
         <Link
           href="/forgot-password"
-          className="text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-600 transition-colors hover:text-accent"
+          className="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-600 transition-colors hover:text-accent"
         >
           Quên mật khẩu?
         </Link>

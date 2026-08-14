@@ -47,7 +47,7 @@ interface OrderCardProps {
   onUpdateStatus: (
     orderId: string,
     status: "confirmed" | "cancelled",
-    reason?: string
+    reason?: string,
   ) => void;
   onApproveRefund?: (orderId: string) => void;
 }
@@ -71,7 +71,10 @@ export default function OrderCard({
     (order.status === "refund_requested" || order.status === "refund") &&
     (refundDoc == null || refundDoc.status === "pending");
   const isRefundInProgress =
-    order.status === "refund" && refundDoc && refundDoc.status !== "pending" && refundDoc.status !== "rejected";
+    order.status === "refund" &&
+    refundDoc &&
+    refundDoc.status !== "pending" &&
+    refundDoc.status !== "rejected";
   const isRefundRequest = needsSellerRefundReview;
   const isPending = order.status === "pending";
 
@@ -104,7 +107,10 @@ export default function OrderCard({
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
-              <IconPackage className="w-10 h-10 text-muted-foreground/40" strokeWidth={1.5} />
+              <IconPackage
+                className="w-10 h-10 text-muted-foreground/40"
+                strokeWidth={1.5}
+              />
             </div>
           )}
           {order.products.length > 1 && (
@@ -118,7 +124,7 @@ export default function OrderCard({
         <div className="flex-1 min-w-0 flex flex-col gap-1">
           {/* Product name + status badge */}
           <div className="flex items-start gap-2">
-            <h3 className="font-semibold text-sm leading-snug line-clamp-2 flex-1 group-hover:text-primary transition-colors">
+            <h3 className="font-bold text-sm leading-snug line-clamp-2 flex-1 group-hover:text-primary transition-colors">
               {firstProduct?.name ?? "Sản phẩm không xác định"}
             </h3>
             <StatusBadge status={order.status} />
@@ -150,7 +156,7 @@ export default function OrderCard({
 
           {/* Meta: ID · time · GHN code */}
           <div className="flex items-center flex-wrap gap-x-1.5 gap-y-0 text-[11px] text-muted-foreground mt-auto">
-            <span className="font-mono font-semibold text-foreground/50">
+            <span className="font-mono font-bold text-foreground/50">
               #{order._id.slice(-6).toUpperCase()}
             </span>
             <span className="w-[3px] h-[3px] rounded-full bg-muted-foreground/40 shrink-0" />
@@ -159,7 +165,7 @@ export default function OrderCard({
             {order.ghnOrderCode && (
               <>
                 <span className="w-[3px] h-[3px] rounded-full bg-muted-foreground/40 shrink-0" />
-                <span className="font-mono font-semibold text-blue-600/80">
+                <span className="font-mono font-bold text-blue-600/80">
                   {order.ghnOrderCode}
                 </span>
               </>
@@ -174,7 +180,7 @@ export default function OrderCard({
           <div className="flex items-start gap-2.5 bg-orange-50 border border-orange-100 rounded-xl px-3 py-2.5">
             <IconAlertTriangle className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
             <div>
-              <p className="text-[13px] font-semibold text-orange-700 leading-snug">
+              <p className="text-[13px] font-bold text-orange-700 leading-snug">
                 Yêu cầu hoàn tiền
                 {refundDoc?.reason &&
                   ` · ${REFUND_REASON_LABELS[refundDoc.reason] ?? refundDoc.reason}`}
@@ -191,13 +197,14 @@ export default function OrderCard({
           <div className="flex items-start gap-2.5 bg-sky-50 border border-sky-100 rounded-xl px-3 py-2.5">
             <IconPackage className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
             <div>
-              <p className="text-[13px] font-semibold text-sky-800 leading-snug">
+              <p className="text-[13px] font-bold text-sky-800 leading-snug">
                 Hoàn tiền đang xử lý
                 {refundDoc?.status &&
                   ` · ${REFUND_PHASE_LABELS[refundDoc.status] ?? refundDoc.status}`}
               </p>
               <p className="text-[11px] text-sky-600 mt-0.5">
-                Theo dõi vận đơn hoàn và xác nhận khi đã nhận lại hàng. {REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}
+                Theo dõi vận đơn hoàn và xác nhận khi đã nhận lại hàng.{" "}
+                {REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}
               </p>
             </div>
           </div>
@@ -231,4 +238,3 @@ export default function OrderCard({
     </div>
   );
 }
-

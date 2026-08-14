@@ -25,7 +25,13 @@ const DOT_COLORS: Record<string, string> = {
   rejected: "bg-destructive",
 };
 
-export type StatusTone = "success" | "warning" | "error" | "info" | "muted" | "default";
+export type StatusTone =
+  | "success"
+  | "warning"
+  | "error"
+  | "info"
+  | "muted"
+  | "default";
 
 interface StatusBadgeProps {
   status?: string;
@@ -45,12 +51,23 @@ const TONE_CLASSES: Record<StatusTone, string> = {
   default: "bg-primary/10 text-primary border-primary/20",
 };
 
-export function StatusBadge({ status, size = "sm", className = "", tone, dot = true, children }: StatusBadgeProps) {
+export function StatusBadge({
+  status,
+  size = "sm",
+  className = "",
+  tone,
+  dot = true,
+  children,
+}: StatusBadgeProps) {
   if (tone && children) {
     const toneClass = TONE_CLASSES[tone] || TONE_CLASSES.default;
     return (
-      <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold ${toneClass} ${className}`}>
-        {dot && <span className={`mr-1.5 h-1.5 w-1.5 rounded-full bg-current`} />}
+      <span
+        className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-bold ${toneClass} ${className}`}
+      >
+        {dot && (
+          <span className={`mr-1.5 h-1.5 w-1.5 rounded-full bg-current`} />
+        )}
         {children}
       </span>
     );
@@ -61,14 +78,18 @@ export function StatusBadge({ status, size = "sm", className = "", tone, dot = t
 
   const sizeClasses =
     size === "md"
-      ? "px-4 py-2 text-sm font-semibold gap-2"
-      : "px-3 py-1.5 text-xs font-semibold gap-1.5";
+      ? "px-4 py-2 text-sm font-bold gap-2"
+      : "px-3 py-1.5 text-xs font-bold gap-1.5";
 
   return (
     <span
       className={`inline-flex items-center rounded-full border ${cfg.bgColor} ${cfg.color} ${sizeClasses} ${className}`}
     >
-      {dot && <span className={`shrink-0 rounded-full ${dotColor} ${size === "md" ? "w-2 h-2" : "w-1.5 h-1.5"}`} />}
+      {dot && (
+        <span
+          className={`shrink-0 rounded-full ${dotColor} ${size === "md" ? "w-2 h-2" : "w-1.5 h-1.5"}`}
+        />
+      )}
       {cfg.label}
     </span>
   );

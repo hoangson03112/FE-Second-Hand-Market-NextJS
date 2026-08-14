@@ -19,7 +19,7 @@ export function RefundStepIndicator({
             <div key={step} className="flex items-center flex-1 min-w-0">
               <div className="flex items-center gap-2 min-w-0">
                 <span
-                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold shrink-0 ${
+                  className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
                     isDone || isActive
                       ? "bg-primary text-primary-foreground"
                       : "bg-muted text-muted-foreground"

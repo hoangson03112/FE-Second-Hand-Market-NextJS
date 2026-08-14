@@ -26,10 +26,30 @@ const PAGE_SIZE = 20;
 function TypeIcon({ type }: { type: NotificationType }) {
   const base = "w-8 h-8 rounded-full flex items-center justify-center shrink-0";
   switch (type) {
-    case "order":   return <span className={`${base} bg-secondary text-foreground`}><IconPackage       className="w-4 h-4" /></span>;
-    case "chat":    return <span className={`${base} bg-primary/10 text-primary`}><IconMessageCircle className="w-4 h-4" /></span>;
-    case "product": return <span className={`${base} bg-primary/10 text-primary`}><IconTag          className="w-4 h-4" /></span>;
-    default:        return <span className={`${base} bg-muted text-muted-foreground`}><IconBell            className="w-4 h-4" /></span>;
+    case "order":
+      return (
+        <span className={`${base} bg-secondary text-foreground`}>
+          <IconPackage className="w-4 h-4" />
+        </span>
+      );
+    case "chat":
+      return (
+        <span className={`${base} bg-primary/10 text-primary`}>
+          <IconMessageCircle className="w-4 h-4" />
+        </span>
+      );
+    case "product":
+      return (
+        <span className={`${base} bg-primary/10 text-primary`}>
+          <IconTag className="w-4 h-4" />
+        </span>
+      );
+    default:
+      return (
+        <span className={`${base} bg-muted text-muted-foreground`}>
+          <IconBell className="w-4 h-4" />
+        </span>
+      );
   }
 }
 
@@ -38,15 +58,18 @@ function TypeIcon({ type }: { type: NotificationType }) {
 export default function NotificationsPage() {
   const router = useRouter();
   const { data: account, isLoading } = useUser();
-  const notifications    = useNotificationStore((s) => s.notifications);
-  const unreadCount      = useNotificationStore((s) => s.unreadCount);
-  const markAsRead       = useNotificationStore((s) => s.markAsRead);
-  const markAllAsRead    = useNotificationStore((s) => s.markAllAsRead);
+  const notifications = useNotificationStore((s) => s.notifications);
+  const unreadCount = useNotificationStore((s) => s.unreadCount);
+  const markAsRead = useNotificationStore((s) => s.markAsRead);
+  const markAllAsRead = useNotificationStore((s) => s.markAllAsRead);
   const removeNotification = useNotificationStore((s) => s.removeNotification);
 
   const totalPages = Math.max(1, Math.ceil(notifications.length / PAGE_SIZE));
   const { page, setPage } = usePagination(totalPages);
-  const paginatedNotifications = notifications.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const paginatedNotifications = notifications.slice(
+    (page - 1) * PAGE_SIZE,
+    page * PAGE_SIZE,
+  );
 
   useEffect(() => {
     if (!isLoading && !account) router.push("/login");
@@ -119,65 +142,71 @@ export default function NotificationsPage() {
             <IconBell className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
             <p className="text-muted-foreground mb-2">Chưa có thông báo nào</p>
             <p className="text-sm text-muted-foreground">
-              Bạn sẽ nhận được thông báo khi có cập nhật về đơn hàng, sản phẩm đã đăng và tin nhắn mới.
+              Bạn sẽ nhận được thông báo khi có cập nhật về đơn hàng, sản phẩm
+              đã đăng và tin nhắn mới.
             </p>
           </div>
         ) : (
           <>
             <div className="space-y-2">
               {paginatedNotifications.map((item) => (
-              <div
-                key={item.id}
-                className={`group relative rounded-xl border transition-colors duration-200 ${
-                  item.read
-                    ? "bg-background border-border"
-                    : "bg-primary/[0.07] border-primary/20 hover:bg-primary/[0.11]"
-                }`}
-              >
-                <Link
-                  href={item.link || "/notifications"}
-                  onClick={() => handleMarkAsRead(item.id)}
-                  className="flex items-start gap-3 p-4 pr-14"
+                <div
+                  key={item.id}
+                  className={`group relative rounded-xl border transition-colors duration-200 ${
+                    item.read
+                      ? "bg-background border-border"
+                      : "bg-primary/[0.07] border-primary/20 hover:bg-primary/[0.11]"
+                  }`}
                 >
-                  <TypeIcon type={item.type} />
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-start justify-between gap-2">
-                      <p className={`font-semibold text-foreground text-sm leading-snug ${!item.read ? "font-bold" : ""}`}>
-                        {item.title}
+                  <Link
+                    href={item.link || "/notifications"}
+                    onClick={() => handleMarkAsRead(item.id)}
+                    className="flex items-start gap-3 p-4 pr-14"
+                  >
+                    <TypeIcon type={item.type} />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between gap-2">
+                        <p
+                          className={`font-bold text-foreground text-sm leading-snug ${!item.read ? "font-bold" : ""}`}
+                        >
+                          {item.title}
+                        </p>
+                        {!item.read && (
+                          <span className="w-2 h-2 rounded-full bg-primary mt-1 shrink-0" />
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-0.5 line-clamp-2">
+                        {item.message}
                       </p>
-                      {!item.read && (
-                        <span className="w-2 h-2 rounded-full bg-primary mt-1 shrink-0" />
-                      )}
+                      <p className="text-xs text-muted-foreground/70 mt-1">
+                        {formatTimeAgo(item.createdAt)}
+                      </p>
                     </div>
-                    <p className="text-sm text-muted-foreground mt-0.5 line-clamp-2">{item.message}</p>
-                    <p className="text-xs text-muted-foreground/70 mt-1">{formatTimeAgo(item.createdAt)}</p>
-                  </div>
-                  {item.link && (
-                    <IconChevronRight className="w-4 h-4 text-muted-foreground shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  )}
-                </Link>
+                    {item.link && (
+                      <IconChevronRight className="w-4 h-4 text-muted-foreground shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    )}
+                  </Link>
 
-                {/* Delete button */}
-                <button
-                  onClick={(e) => handleDelete(e, item.id)}
-                  className="absolute top-3 right-3 p-1.5 rounded-lg text-muted-foreground hover:bg-primary/10 hover:text-primary opacity-0 group-hover:opacity-100 transition-all"
-                  title="Xóa thông báo"
-                >
-                  <IconTrash className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            ))}
-          </div>
-          <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            onPageChange={setPage}
-            className="mt-4"
-          />
-        </>
+                  {/* Delete button */}
+                  <button
+                    onClick={(e) => handleDelete(e, item.id)}
+                    className="absolute top-3 right-3 p-1.5 rounded-lg text-muted-foreground hover:bg-primary/10 hover:text-primary opacity-0 group-hover:opacity-100 transition-all"
+                    title="Xóa thông báo"
+                  >
+                    <IconTrash className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={setPage}
+              className="mt-4"
+            />
+          </>
         )}
       </main>
     </div>
   );
 }
-

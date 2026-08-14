@@ -28,6 +28,8 @@ export { Textarea } from "./Textarea";
 export type { TextareaProps } from "./Textarea";
 export { default as Pagination } from "./Pagination";
 export { StatusBadge, type StatusTone } from "./StatusBadge";
+export { Eyebrow } from "./Eyebrow";
+export { OrderStatusChip } from "./OrderStatusChip";
 export { default as Background } from "./Background";
 export { ModalHeader } from "./ModalHeader";
 export { OrderTracking } from "./OrderTracking";
@@ -43,12 +45,6 @@ export { ArrowRightIcon } from "./icons/ArrowRightIcon";
 export { PhoneIcon } from "./icons/PhoneIcon";
 export { EmailVerifyIcon } from "./icons/EmailVerifyIcon";
 
-// From common
-/**
- * Common components — app-level components built on top of shadcn/ui (@/components/ui).
- */
-
-// Existing utilities
 export { RealtimeNotificationToast } from "./RealtimeNotificationToast";
 export { default as ShareButton } from "./ShareButton";
 export { ErrorBoundary } from "./ErrorBoundary";

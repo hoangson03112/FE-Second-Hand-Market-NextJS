@@ -5,6 +5,7 @@ export { default as AddressModal } from "./AddressModal";
 export { default as AddressSection } from "./AddressSection";
 export { default as CheckoutButton } from "./CheckoutButton";
 export { default as CheckoutHeader } from "./CheckoutHeader";
+export { default as CheckoutPanel } from "./CheckoutPanel";
 export { default as CheckoutSellerSection } from "./CheckoutSellerSection";
 export { default as CheckoutSummary } from "./CheckoutSummary";
 export { default as PaymentMethod } from "./PaymentMethod";

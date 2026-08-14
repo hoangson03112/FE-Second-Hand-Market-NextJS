@@ -1,3 +1,4 @@
+import { Eyebrow } from "@/components/shared/Eyebrow";
 import { formatPrice } from "@/utils/format/price";
 
 export interface PaymentOrderSummaryProps {
@@ -6,22 +7,36 @@ export interface PaymentOrderSummaryProps {
 
 export function PaymentOrderSummary({ totalAmount }: PaymentOrderSummaryProps) {
   return (
-    <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border p-6 shadow-md">
-      <h2 className="font-semibold text-taupe-900 mb-4 uppercase tracking-wide text-sm">
-        Thông tin đơn hàng
-      </h2>
-      <div className="space-y-3">
-        <div className="flex justify-between text-sm">
-          <span className="text-taupe-500">Tổng tiền hàng:</span>
-          <span className="font-medium text-taupe-900">{formatPrice(totalAmount)}</span>
-        </div>
-        <div className="flex justify-between pt-3 border-t-2 border-border">
-          <span className="text-base font-semibold text-taupe-900">Tổng thanh toán:</span>
-          <span className="text-xl font-bold text-primary">
+    <section className="overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white">
+      <header className="border-b border-luxury-ink/10 px-5 py-5 sm:px-6">
+        <Eyebrow>Số tiền cần chuyển</Eyebrow>
+      </header>
+
+      <div className="px-5 py-6 sm:px-6">
+        <div className="flex items-baseline justify-between gap-4">
+          <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
+            Tổng tiền hàng
+          </span>
+          <span
+            style={{ fontFamily: "var(--font-droid-serif), serif" }}
+            className="tabular-nums text-sm text-luxury-ink"
+          >
             {formatPrice(totalAmount)}
           </span>
         </div>
       </div>
-    </div>
+
+      <div className="flex items-baseline justify-between gap-4 border-t border-luxury-ink/10 bg-cream-50/70 px-5 py-5 sm:px-6">
+        <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink">
+          Tổng thanh toán
+        </span>
+        <span
+          style={{ fontFamily: "var(--font-droid-serif), serif" }}
+          className="tabular-nums text-2xl leading-none text-luxury-ink"
+        >
+          {formatPrice(totalAmount)}
+        </span>
+      </div>
+    </section>
   );
 }

@@ -28,7 +28,7 @@ export default function SellerInfoCard({
 
   return (
     <div className="p-5 rounded-[2px] border border-luxury-ink/10 bg-taupe-50/50 mb-6">
-      <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-charcoal-400 mb-4">
+      <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-charcoal-400 mb-4">
         Thông tin người bán
       </h3>
       <div className="flex items-start gap-4">
@@ -39,7 +39,7 @@ export default function SellerInfoCard({
           className="border border-luxury-ink/10 rounded-[2px]"
         />
         <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-luxury-ink text-sm truncate mb-1.5">
+          <h4 className="font-bold text-luxury-ink text-sm truncate mb-1.5">
             {seller.fullName}
           </h4>
           <div className="space-y-1.5 text-xs text-charcoal-400">
@@ -77,7 +77,7 @@ export default function SellerInfoCard({
       </div>
       <button
         onClick={onContactSeller}
-        className="w-full mt-5 border border-luxury-ink/20 bg-white text-luxury-ink py-3 rounded-[2px] text-[11px] uppercase tracking-[0.2em] font-semibold hover:bg-luxury-ink hover:text-white transition-colors"
+        className="w-full mt-5 border border-luxury-ink/20 bg-white text-luxury-ink py-3 rounded-[2px] text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-luxury-ink hover:text-white transition-colors"
       >
         Chat với người bán
       </button>

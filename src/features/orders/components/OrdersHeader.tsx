@@ -1,36 +1,53 @@
-import { IconArrowLeft, IconShoppingBag } from "@tabler/icons-react";
-import { Container } from "@/components/layout/Container";
+import { IconArrowLeft } from "@tabler/icons-react";
+import { Eyebrow } from "@/components/shared/Eyebrow";
 
 interface OrdersHeaderProps {
   onBack: () => void;
+  /** Total order count, shown as an editorial figure beside the title. */
+  totalCount?: number;
 }
 
-export function OrdersHeader({ onBack }: OrdersHeaderProps) {
+export function OrdersHeader({ onBack, totalCount }: OrdersHeaderProps) {
   return (
-    <div className="bg-cream-50/95 backdrop-blur-md border-b-2 border-border sticky top-0 z-10">
-      <Container maxWidth="9xl" paddingX="md" paddingY="none">
-        <div className="py-4 flex items-center gap-4">
-          <button
-            onClick={onBack}
-            className="p-2 -ml-2 rounded-full text-taupe-500 hover:bg-taupe-100 hover:text-taupe-900 transition-colors"
+    <div className="mx-auto w-full max-w-9xl px-4 sm:px-6">
+      <div className="flex items-center gap-4 py-5">
+        <button
+          type="button"
+          onClick={onBack}
+          aria-label="Quay lại"
+          className="-ml-2 shrink-0 rounded-[2px] p-2 text-luxury-ink transition-colors hover:bg-taupe-50"
+        >
+          <IconArrowLeft className="h-5 w-5" />
+        </button>
+
+        <div className="min-w-0 flex-1">
+          <Eyebrow>Lịch sử mua hàng</Eyebrow>
+          <h1
+            style={{
+              fontFamily: "var(--font-droid-serif), serif",
+              fontWeight: 400,
+              lineHeight: 1.1,
+            }}
+            className="mt-2.5 truncate text-2xl tracking-tight text-luxury-ink md:text-3xl"
           >
-            <IconArrowLeft className="h-5 w-5" />
-          </button>
-          <div className="flex-1 flex items-center gap-3">
-            <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
-              <IconShoppingBag className="w-5 h-5" />
-            </span>
-            <div>
-              <h1 className="text-xl md:text-2xl font-bold text-taupe-900 leading-tight">
-                Đơn hàng của tôi
-              </h1>
-              <p className="text-xs text-taupe-500 font-medium uppercase tracking-[0.15em] mt-0.5">
-                Quản lý và theo dõi đơn hàng của bạn
-              </p>
-            </div>
-          </div>
+            Đơn hàng của tôi
+          </h1>
         </div>
-      </Container>
+
+        {totalCount !== undefined && totalCount > 0 ? (
+          <div className="hidden shrink-0 text-right sm:block">
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
+              Tổng đơn
+            </p>
+            <p
+              style={{ fontFamily: "var(--font-droid-serif), serif" }}
+              className="mt-2 text-2xl leading-none tabular-nums text-luxury-ink"
+            >
+              {totalCount}
+            </p>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

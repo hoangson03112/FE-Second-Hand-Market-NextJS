@@ -25,7 +25,7 @@ export default function AuthSubmitButton({
       type="submit"
       disabled={isLoading || disabled}
       className={cn(
-        "group relative flex w-full items-center justify-center rounded-[2px] bg-luxury-ink px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-luxury-ivory transition-all duration-300",
+        "group relative flex w-full items-center justify-center rounded-[2px] bg-luxury-ink px-10 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-luxury-ivory transition-all duration-300",
         "hover:scale-[1.01] disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed",
         className,
       )}

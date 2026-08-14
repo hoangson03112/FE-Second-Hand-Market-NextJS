@@ -1,8 +1,9 @@
 "use client";
 
-import { IconLoader2 } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Container } from "@/components/layout/Container";
+import { cn } from "@/lib/utils";
 import { useOrders, ORDER_TABS, PAGE_SIZE } from "./hooks/useOrders";
 import { OrdersHeader } from "./components/OrdersHeader";
 import { OrdersTabs } from "./components/OrdersTabs";
@@ -11,6 +12,35 @@ import { OrderCard } from "./components/OrderCard";
 import { CancelOrderReasonDialog } from "@/components/shared";
 import { RefundModal } from "@/features/refunds";
 import { Pagination } from "@/components/shared";
+
+/** Centered ivory state used for the auth / initial-load screens. */
+function OrdersPlaceholder({
+  title,
+  subtitle,
+  spinner = false,
+}: {
+  title: string;
+  subtitle?: string;
+  spinner?: boolean;
+}) {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-luxury-ivory px-4">
+      <div className="flex flex-col items-center gap-5 text-center">
+        {spinner ? (
+          <span className="h-4 w-4 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
+        ) : null}
+        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">
+          {title}
+        </p>
+        {subtitle ? (
+          <p className="max-w-xs text-sm leading-relaxed text-neutral-600">
+            {subtitle}
+          </p>
+        ) : null}
+      </div>
+    </div>
+  );
+}
 
 export default function Orders() {
   const router = useRouter();
@@ -55,98 +85,109 @@ export default function Orders() {
     setAccountHolder,
   } = useOrders();
 
+  const [isRevealed, setIsRevealed] = useState(false);
+
+  useEffect(() => {
+    if (isLoading) return;
+    const frame = window.requestAnimationFrame(() => setIsRevealed(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, [isLoading]);
+
   if (userLoading) {
-    return (
-      <div className="min-h-screen bg-cream-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-4" />
-          <p className="text-taupe-600">Đang tải...</p>
-        </div>
-      </div>
-    );
+    return <OrdersPlaceholder title="Đang tải" spinner />;
   }
 
   if (isRedirectingAuth || !account) {
     return (
-      <div className="min-h-screen bg-cream-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-taupe-700 font-medium">
-            Vui lòng đăng nhập để xem đơn hàng
-          </p>
-          <p className="text-sm text-taupe-500 mt-2">
-            Đang chuyển hướng tới trang đăng nhập...
-          </p>
-        </div>
-      </div>
+      <OrdersPlaceholder
+        title="Cần đăng nhập"
+        subtitle="Vui lòng đăng nhập để xem đơn hàng. Đang chuyển hướng tới trang đăng nhập…"
+      />
     );
   }
 
+  const revealClass = cn(
+    "transition-all duration-700 ease-out",
+    isRevealed ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
+  );
+
   return (
     <>
-      <div className="min-h-screen bg-cream-50">
-        <OrdersHeader onBack={() => router.back()} />
-        <OrdersTabs
-          tabs={ORDER_TABS}
-          orders={orders}
-          activeTab={activeTab}
-          onChange={setActiveTab}
-        />
+      <div className="min-h-screen bg-luxury-ivory">
+        {/* Header and tabs travel together, so they share one sticky block
+            instead of each carrying its own hard-coded offset. */}
+        <div className="sticky top-0 z-20 border-b border-luxury-ink/10 bg-luxury-ivory/95 backdrop-blur-md">
+          <OrdersHeader
+            onBack={() => router.back()}
+            totalCount={orders.length}
+          />
+          <OrdersTabs
+            tabs={ORDER_TABS}
+            orders={orders}
+            activeTab={activeTab}
+            onChange={setActiveTab}
+          />
+        </div>
 
-        {/* Content */}
         <Container maxWidth="9xl" paddingX="md" paddingY="lg">
           {isLoading ? (
-            <div className="flex justify-center py-20">
-              <div className="text-center">
-                <IconLoader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
-                <p className="text-taupe-600">Đang tải đơn hàng...</p>
-              </div>
+            <div className="flex flex-col items-center gap-5 py-24">
+              <span className="h-4 w-4 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
+              <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">
+                Đang tải đơn hàng
+              </p>
             </div>
           ) : filteredOrders.length === 0 ? (
-            <OrdersEmpty activeTab={activeTab} tabs={ORDER_TABS} />
+            <div className={revealClass}>
+              <OrdersEmpty activeTab={activeTab} tabs={ORDER_TABS} />
+            </div>
           ) : (
-            <div className="space-y-4">
-              {paginatedOrders.map((order) => (
-                <OrderCard
+            <div className="space-y-6">
+              {paginatedOrders.map((order, index) => (
+                <div
                   key={order._id}
-                  order={order}
-                  cancellingId={cancellingId}
-                  onCancel={openCancelDialog}
-                  confirmingId={confirmingId}
-                  onConfirmReceived={handleConfirmReceived}
-                  onOpenRefund={openRefundModal}
-                />
+                  className={revealClass}
+                  style={{ transitionDelay: `${index * 80}ms` }}
+                >
+                  <OrderCard
+                    order={order}
+                    cancellingId={cancellingId}
+                    onCancel={openCancelDialog}
+                    confirmingId={confirmingId}
+                    onConfirmReceived={handleConfirmReceived}
+                    onOpenRefund={openRefundModal}
+                  />
+                </div>
               ))}
 
               {/* Pagination footer */}
-              {filteredOrders.length > 0 && (
-                <div className="flex flex-col items-center gap-4 pt-4 pb-2 border-t-2 border-border">
-                  {/* Page info */}
-                  <p className="text-xs text-taupe-500 tabular-nums">
-                    Hiển thị{" "}
-                    <span className="font-medium text-taupe-900">
-                      {(currentPage - 1) * PAGE_SIZE + 1}–
-                      {Math.min(currentPage * PAGE_SIZE, filteredOrders.length)}
-                    </span>{" "}
-                    trong{" "}
-                    <span className="font-medium text-taupe-900">
-                      {filteredOrders.length}
-                    </span>{" "}
-                    đơn hàng
-                  </p>
+              <div className="flex flex-col items-center gap-6 border-t border-luxury-ink/6 pt-8">
+                <p className="text-[10px] font-bold uppercase tracking-[0.22em] tabular-nums text-neutral-500">
+                  Hiển thị{" "}
+                  <span className="text-luxury-ink">
+                    {(currentPage - 1) * PAGE_SIZE + 1}–
+                    {Math.min(currentPage * PAGE_SIZE, filteredOrders.length)}
+                  </span>{" "}
+                  trong{" "}
+                  <span className="text-luxury-ink">
+                    {filteredOrders.length}
+                  </span>{" "}
+                  đơn hàng
+                </p>
 
-                  {totalPages > 1 && (
-                    <Pagination
-                      currentPage={currentPage}
-                      totalPages={totalPages}
-                      onPageChange={setCurrentPage}
-                    />
-                  )}
-                </div>
-              )}
+                {totalPages > 1 ? (
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                  />
+                ) : null}
+              </div>
             </div>
           )}
         </Container>
       </div>
+
       <CancelOrderReasonDialog
         isOpen={Boolean(cancelTargetOrder)}
         onConfirm={confirmCancelOrder}

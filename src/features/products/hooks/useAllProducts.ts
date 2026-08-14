@@ -7,7 +7,7 @@ import type { IProductFilters } from "@/types/product";
 export function useAllProducts() {
   const [filters, setFilters] = useState<IProductFilters>({
     sortBy: "newest",
-    limit: 15,
+    limit: 16,
     page: 1,
   });
 

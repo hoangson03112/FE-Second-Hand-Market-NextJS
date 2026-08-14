@@ -8,7 +8,10 @@ interface SellFormHeaderProps {
   showBecomeSellerLink: boolean;
 }
 
-export function SellFormHeader({ isEditMode, showBecomeSellerLink }: SellFormHeaderProps) {
+export function SellFormHeader({
+  isEditMode,
+  showBecomeSellerLink,
+}: SellFormHeaderProps) {
   return (
     <div className="mb-6 flex items-center justify-between gap-4">
       <div>
@@ -24,7 +27,7 @@ export function SellFormHeader({ isEditMode, showBecomeSellerLink }: SellFormHea
       {showBecomeSellerLink && (
         <Link
           href="/become-seller"
-          className="flex items-center gap-1.5 rounded-xl border-2 border-primary/30 bg-primary/5 px-3 py-2 text-xs font-semibold text-primary hover:bg-primary/10 hover:border-primary/60 transition-all duration-200 shrink-0"
+          className="flex items-center gap-1.5 rounded-xl border-2 border-primary/30 bg-primary/5 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/10 hover:border-primary/60 transition-all duration-200 shrink-0"
         >
           <IconBuildingStore className="w-3.5 h-3.5" />
           <span className="hidden sm:inline">Đăng ký làm Seller</span>

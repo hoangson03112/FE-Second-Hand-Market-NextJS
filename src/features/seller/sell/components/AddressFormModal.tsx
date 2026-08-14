@@ -44,7 +44,7 @@ export function AddressFormModal({
       >
         {/* Header */}
         <div className="sticky top-0 flex items-center justify-between px-4 py-3 border-b-2 border-border bg-cream-50 rounded-t-2xl z-10">
-          <h2 className="text-sm font-semibold text-taupe-900 uppercase tracking-wide">
+          <h2 className="text-sm font-bold text-taupe-900 uppercase tracking-wide">
             {editingAddress ? "Sửa địa chỉ lấy hàng" : "Thêm địa chỉ lấy hàng"}
           </h2>
           <button

@@ -23,27 +23,47 @@ export function OrderSellerReviewSection({
   onSubmit,
 }: OrderSellerReviewSectionProps) {
   return (
-    <div id="seller-review-section" className="overflow-hidden border border-luxury-ink/8 bg-white/60" style={{ borderRadius: "2px" }}>
+    <div
+      id="seller-review-section"
+      className="overflow-hidden border border-luxury-ink/8 bg-white/60"
+      style={{ borderRadius: "2px" }}
+    >
       <div className="border-b border-luxury-ink/8 px-5 py-3">
         <div className="flex items-center gap-2">
-          <IconStar className="h-4 w-4 text-luxury-champagne" strokeWidth={1.75} />
-          <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-600">Đánh giá người bán</span>
+          <IconStar
+            className="h-4 w-4 text-luxury-champagne"
+            strokeWidth={1.75}
+          />
+          <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-600">
+            Đánh giá người bán
+          </span>
         </div>
-        <p className="mt-1 text-xs text-taupe-400">{FEATURE_INFO.REVIEW_SELLER_TIP}</p>
+        <p className="mt-1 text-xs text-taupe-400">
+          {FEATURE_INFO.REVIEW_SELLER_TIP}
+        </p>
       </div>
       <div className="p-5">
         {existingReview ? (
-          <div className="border border-luxury-ink/8 bg-cream-50 p-4" style={{ borderRadius: "2px" }}>
+          <div
+            className="border border-luxury-ink/8 bg-cream-50 p-4"
+            style={{ borderRadius: "2px" }}
+          >
             <div className="mb-2 flex gap-1">
               {[1, 2, 3, 4, 5].map((i) => (
                 <IconStar
                   key={i}
-                  className={i <= existingReview.rating ? "h-5 w-5 fill-luxury-champagne text-luxury-champagne" : "h-5 w-5 text-taupe-200"}
+                  className={
+                    i <= existingReview.rating
+                      ? "h-5 w-5 fill-luxury-champagne text-luxury-champagne"
+                      : "h-5 w-5 text-taupe-200"
+                  }
                 />
               ))}
             </div>
             {existingReview.comment && (
-              <p className="text-sm leading-relaxed text-neutral-700">{existingReview.comment}</p>
+              <p className="text-sm leading-relaxed text-neutral-700">
+                {existingReview.comment}
+              </p>
             )}
           </div>
         ) : showReviewForm ? (
@@ -61,7 +81,11 @@ export function OrderSellerReviewSection({
                     className="p-0.5 transition-transform hover:scale-110"
                   >
                     <IconStar
-                      className={i <= reviewRating ? "h-9 w-9 fill-luxury-champagne text-luxury-champagne" : "h-9 w-9 text-taupe-200 hover:text-luxury-champagne/40"}
+                      className={
+                        i <= reviewRating
+                          ? "h-9 w-9 fill-luxury-champagne text-luxury-champagne"
+                          : "h-9 w-9 text-taupe-200 hover:text-luxury-champagne/40"
+                      }
                     />
                   </button>
                 ))}
@@ -83,7 +107,7 @@ export function OrderSellerReviewSection({
             <button
               type="submit"
               disabled={isSubmittingReview}
-              className="w-full bg-luxury-ink py-2.5 text-sm font-semibold text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
+              className="w-full bg-luxury-ink py-2.5 text-sm font-bold text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
               style={{ borderRadius: "2px" }}
             >
               {isSubmittingReview ? "Đang gửi..." : "Gửi đánh giá"}

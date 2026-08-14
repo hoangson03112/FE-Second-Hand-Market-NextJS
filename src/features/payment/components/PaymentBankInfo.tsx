@@ -1,4 +1,8 @@
-import { IconCopy, IconBuilding } from "@tabler/icons-react";
+"use client";
+
+import { IconAlertTriangle, IconCheck, IconCopy } from "@tabler/icons-react";
+import { Eyebrow } from "@/components/shared/Eyebrow";
+import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
 
 export interface DisplayBankInfo {
@@ -13,7 +17,52 @@ export interface PaymentBankInfoProps {
   bankInfoLoading: boolean;
   bankInfoError: string | null;
   displayBankInfo: DisplayBankInfo;
-  onCopy: (text: string) => void;
+  onCopy: (text: string, field?: string) => void;
+  copiedField?: string | null;
+}
+
+const serif = { fontFamily: "var(--font-droid-serif), serif" };
+
+const label =
+  "text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500";
+
+/** Hairline copy affordance that confirms in place instead of silently. */
+function CopyButton({
+  value,
+  field,
+  onCopy,
+  copied,
+}: {
+  value: string;
+  field: string;
+  onCopy: (text: string, field?: string) => void;
+  copied: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onCopy(value, field)}
+      aria-label={copied ? "Đã sao chép" : `Sao chép ${field}`}
+      className={cn(
+        "inline-flex shrink-0 items-center gap-1.5 rounded-[2px] border px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.18em] transition-all duration-300",
+        copied
+          ? "border-accent/45 bg-taupe-50 text-taupe-700"
+          : "border-luxury-ink/15 text-neutral-600 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory",
+      )}
+    >
+      {copied ? (
+        <>
+          <IconCheck className="h-3 w-3" />
+          Đã copy
+        </>
+      ) : (
+        <>
+          <IconCopy className="h-3 w-3" />
+          Copy
+        </>
+      )}
+    </button>
+  );
 }
 
 export function PaymentBankInfo({
@@ -21,76 +70,111 @@ export function PaymentBankInfo({
   bankInfoError,
   displayBankInfo,
   onCopy,
+  copiedField,
 }: PaymentBankInfoProps) {
   return (
-    <div className="bg-gradient-to-br from-cream-50 to-white rounded-2xl border-2 border-border p-6 shadow-md">
-      <div className="flex items-center gap-3 mb-4">
-        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-          <IconBuilding className="h-5 w-5 text-primary" />
-        </div>
-        <h2 className="font-semibold text-taupe-900 uppercase tracking-wide text-sm">
+    <section className="overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white">
+      <header className="border-b border-luxury-ink/10 px-5 py-5 sm:px-6">
+        <Eyebrow>Hoặc chuyển thủ công</Eyebrow>
+        <h2
+          style={serif}
+          className="mt-3 text-lg tracking-tight text-luxury-ink"
+        >
           Thông tin chuyển khoản
         </h2>
-      </div>
+      </header>
 
       {bankInfoLoading ? (
-        <div className="flex items-center justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent" />
+        <div className="flex items-center gap-4 px-5 py-10 sm:px-6">
+          <span className="h-3.5 w-3.5 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
+          <span className={label}>Đang tải thông tin ngân hàng</span>
         </div>
       ) : bankInfoError ? (
-        <div className="p-4 bg-red-50 border-2 border-red-200 rounded-xl">
-          <p className="text-sm text-red-600">{bankInfoError}</p>
-        </div>
-      ) : (
-        <div className="space-y-3">
-          <div className="flex items-center justify-between p-3 bg-taupe-50/60 rounded-xl">
-            <span className="text-sm text-taupe-500">Ngân hàng:</span>
-            <span className="font-medium text-taupe-900">{displayBankInfo.bankName}</span>
-          </div>
-          <div className="flex items-center justify-between p-3 bg-taupe-50/60 rounded-xl">
-            <span className="text-sm text-taupe-500">Số tài khoản:</span>
-            <div className="flex items-center gap-2">
-              <span className="font-medium font-mono text-taupe-900">
-                {displayBankInfo.accountNumber}
-              </span>
-              <button
-                onClick={() => onCopy(displayBankInfo.accountNumber)}
-                className="p-1 hover:bg-white rounded-full transition-colors"
-                title="Sao chép"
-              >
-                <IconCopy className="h-4 w-4 text-taupe-500" />
-              </button>
-            </div>
-          </div>
-          <div className="flex items-center justify-between p-3 bg-taupe-50/60 rounded-xl">
-            <span className="text-sm text-taupe-500">Chủ tài khoản:</span>
-            <span className="font-medium text-taupe-900 text-right max-w-[200px] truncate">
-              {displayBankInfo.accountHolder.toUpperCase()}
-            </span>
-          </div>
-          <div className="flex items-center justify-between p-3 bg-taupe-50/60 rounded-xl">
-            <span className="text-sm text-taupe-500">Số tiền:</span>
-            <span className="font-bold text-primary">
-              {formatPrice(displayBankInfo.amount)}
-            </span>
-          </div>
-          <div className="p-3 bg-taupe-50/60 rounded-xl">
-            <div className="flex items-start justify-between gap-2 mb-2">
-              <span className="text-sm text-taupe-500">Nội dung:</span>
-              <button
-                onClick={() => onCopy(displayBankInfo.content)}
-                className="p-1 hover:bg-white rounded-full transition-colors flex-shrink-0"
-                title="Sao chép"
-              >
-                <IconCopy className="h-4 w-4 text-taupe-500" />
-              </button>
-            </div>
-            <p className="font-medium text-xs text-taupe-900 break-all">
-              {displayBankInfo.content}
+        <div className="px-5 py-6 sm:px-6">
+          <div className="flex items-start gap-3 rounded-[2px] border border-blush-300 bg-blush-50 px-4 py-3.5">
+            <IconAlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-blush-700" />
+            <p className="text-xs leading-relaxed text-blush-800">
+              {bankInfoError}
             </p>
           </div>
         </div>
+      ) : (
+        <>
+          <dl className="divide-y divide-luxury-ink/8">
+            <div className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6">
+              <dt className={label}>Ngân hàng</dt>
+              <dd className="text-sm font-medium text-luxury-ink">
+                {displayBankInfo.bankName}
+              </dd>
+            </div>
+
+            <div className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6">
+              <dt className={label}>Số tài khoản</dt>
+              <dd className="flex items-center gap-3">
+                <span
+                  style={serif}
+                  className="tabular-nums text-base tracking-wide text-luxury-ink"
+                >
+                  {displayBankInfo.accountNumber}
+                </span>
+                <CopyButton
+                  value={displayBankInfo.accountNumber}
+                  field="số tài khoản"
+                  onCopy={onCopy}
+                  copied={copiedField === "số tài khoản"}
+                />
+              </dd>
+            </div>
+
+            <div className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6">
+              <dt className={label}>Chủ tài khoản</dt>
+              <dd className="max-w-[55%] truncate text-right text-sm font-medium uppercase text-luxury-ink">
+                {displayBankInfo.accountHolder.toUpperCase()}
+              </dd>
+            </div>
+
+            <div className="flex items-center justify-between gap-4 bg-cream-50/70 px-5 py-4 sm:px-6">
+              <dt className="text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink">
+                Số tiền
+              </dt>
+              <dd className="flex items-center gap-3">
+                <span
+                  style={serif}
+                  className="tabular-nums text-xl text-luxury-ink"
+                >
+                  {formatPrice(displayBankInfo.amount)}
+                </span>
+                <CopyButton
+                  value={String(Math.round(displayBankInfo.amount))}
+                  field="số tiền"
+                  onCopy={onCopy}
+                  copied={copiedField === "số tiền"}
+                />
+              </dd>
+            </div>
+
+            <div className="px-5 py-4 sm:px-6">
+              <div className="flex items-center justify-between gap-4">
+                <dt className={label}>Nội dung chuyển khoản</dt>
+                <CopyButton
+                  value={displayBankInfo.content}
+                  field="nội dung"
+                  onCopy={onCopy}
+                  copied={copiedField === "nội dung"}
+                />
+              </div>
+              <dd className="mt-3 break-all rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-3.5 py-3 text-xs leading-relaxed text-luxury-ink">
+                {displayBankInfo.content}
+              </dd>
+            </div>
+          </dl>
+
+          <p className="border-t border-luxury-ink/8 px-5 py-4 text-xs leading-relaxed text-neutral-600 sm:px-6">
+            Giữ nguyên nội dung chuyển khoản để hệ thống đối chiếu đúng đơn của
+            bạn.
+          </p>
+        </>
       )}
-    </div>
+    </section>
   );
 }
