@@ -7,7 +7,7 @@ import { useCart } from "@/hooks/useCart";
 import { useNotificationStore } from "@/store/useNotificationStore";
 import { AuthService } from "@/services/auth.service";
 import { SellerService } from "@/services/seller.service";
-import { announceSession, clearSessionHint } from "@/lib/session";
+import { announceSession } from "@/lib/session";
 
 function getInitials(name?: string) {
   if (!name) return "U";
@@ -128,9 +128,8 @@ export function useHeader() {
       console.error("Logout error:", error);
     } finally {
       setShowUserDropdown(false);
-      // Backend đã xoá cookie; xoá thêm ở client để UI đổi ngay cả khi request
-      // hỏng giữa chừng, rồi báo cho các tab khác cùng thoát.
-      clearSessionHint();
+      // Cookie httpOnly do backend xoá qua Set-Cookie; ở đây chỉ báo cho tab
+      // này và các tab khác cùng chuyển về trạng thái khách.
       announceSession("signed-out");
       router.replace("/login");
       router.refresh();

@@ -1,7 +1,9 @@
+"use client";
+
 import Link from "next/link";
-import { ErrorIcon } from "@/components/shared";
-import { SuccessIcon } from "@/components/shared";
-import { ArrowRightIcon } from "@/components/shared";
+import { IconArrowLeft, IconCheck } from "@tabler/icons-react";
+
+import { AuthSubmitButton } from "../../components";
 import VerifyCodeInput from "./VerifyCodeInput";
 
 interface VerifyFormProps {
@@ -14,6 +16,8 @@ interface VerifyFormProps {
   /** Optional override for the success message text (defaults to "Mã xác thực mới đã được gửi!"). */
   resendMessage?: string;
   resendLoading: boolean;
+  /** Số giây còn phải chờ trước khi được gửi lại; 0 = bấm được ngay. */
+  cooldown?: number;
   onSubmit: (e: React.FormEvent) => void;
   onResend: () => void;
   /** Customize copy for flows that reuse this form (e.g. Google email verification). */
@@ -31,25 +35,29 @@ export default function VerifyForm({
   resendSuccess,
   resendMessage = "Mã xác thực mới đã được gửi!",
   resendLoading,
+  cooldown = 0,
   onSubmit,
   onResend,
   submitLabel = "Xác thực tài khoản",
   submitLoadingLabel = "Đang xác thực...",
   resendPromptLabel = "Chưa nhận được mã?",
 }: VerifyFormProps) {
-  return (
-    <form className="space-y-6" onSubmit={onSubmit}>
-      {error && (
-        <div className="bg-red-50 border-l-4 border-red-500 rounded-xl p-4 flex items-start gap-3 animate-shake">
-          <ErrorIcon className="text-red-600 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-red-600">{error}</p>
-        </div>
-      )}
+  const waiting = cooldown > 0;
 
+  return (
+    <form className="space-y-7" onSubmit={onSubmit}>
       {resendSuccess && (
-        <div className="bg-emerald-50 border-l-4 border-emerald-500 rounded-xl p-4 flex items-start gap-3">
-          <SuccessIcon className="text-emerald-600 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-emerald-700">{resendMessage}</p>
+        <div
+          role="status"
+          className="auth-alert flex items-start gap-3 rounded-[2px] border border-accent/30 bg-accent/5 px-4 py-3.5"
+        >
+          <IconCheck
+            className="mt-px h-4 w-4 shrink-0 text-accent"
+            strokeWidth={2}
+          />
+          <p className="text-[13px] leading-relaxed text-neutral-700">
+            {resendMessage}
+          </p>
         </div>
       )}
 
@@ -57,47 +65,65 @@ export default function VerifyForm({
         code={code}
         onCodeChange={onCodeChange}
         onClearError={onClearError}
+        hasError={Boolean(error)}
       />
 
-      <button
-        type="submit"
-        disabled={isLoading || code.length !== 6}
-        className="w-full flex justify-center items-center gap-2 py-4 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none active:scale-[0.98]"
-      >
-        {isLoading ? (
-          <>
-            <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-            <span>{submitLoadingLabel}</span>
-          </>
-        ) : (
-          <>
-            <span>{submitLabel}</span>
-            <ArrowRightIcon />
-          </>
-        )}
-      </button>
+      <AuthSubmitButton
+        label={submitLabel}
+        loadingLabel={submitLoadingLabel}
+        isLoading={isLoading}
+        disabled={code.length !== 6}
+      />
 
-      <div className="text-center space-y-3 pt-4 border-t-2 border-border">
-        <p className="text-sm text-taupe-500">
-          {resendPromptLabel}{" "}
-          <button
-            type="button"
-            onClick={onResend}
-            disabled={resendLoading}
-            className="font-semibold text-primary hover:text-primary/80 transition-colors disabled:opacity-50"
-          >
-            {resendLoading ? "Đang gửi..." : "Gửi lại mã"}
-          </button>
-        </p>
-        <p className="text-sm text-taupe-500">
+      <div className="border-t border-luxury-ink/10 pt-6 text-center">
+        <p className="text-xs text-neutral-600">{resendPromptLabel}</p>
+        <button
+          type="button"
+          onClick={onResend}
+          disabled={resendLoading || waiting}
+          className="group mt-2.5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-taupe-700 disabled:pointer-events-none disabled:text-neutral-400"
+        >
+          {resendLoading
+            ? "Đang gửi..."
+            : waiting
+              ? `Gửi lại sau ${cooldown}s`
+              : "Gửi lại mã"}
+          <span
+            aria-hidden
+            className={`h-px w-6 transition-all duration-300 ${
+              waiting
+                ? "bg-neutral-300"
+                : "bg-luxury-champagne group-hover:w-9"
+            }`}
+          />
+        </button>
+
+        <div className="mt-6">
           <Link
             href="/login"
-            className="font-semibold text-primary hover:text-primary/80 transition-colors"
+            className="group inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-500 transition-colors hover:text-luxury-ink"
           >
+            <IconArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-1" />
             Quay lại đăng nhập
           </Link>
-        </p>
+        </div>
       </div>
+
+      <style jsx>{`
+        @keyframes authAlertIn {
+          from {
+            opacity: 0;
+            transform: translateY(-4px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .auth-alert {
+          animation: authAlertIn 0.35s ease-out backwards;
+        }
+      `}</style>
     </form>
   );
-} 
+}

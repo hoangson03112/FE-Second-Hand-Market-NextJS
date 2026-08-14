@@ -13,7 +13,6 @@ import { useToast } from "@/components/shared";
 
 const POST_LOGIN_REDIRECT_KEY = "eco:post-login-redirect";
 
-/** Chỉ chấp nhận đường dẫn nội bộ để tránh open redirect. */
 function safeRedirect(target: string | null): string {
   if (!target || !target.startsWith("/") || target.startsWith("//")) return "/";
   return target;
@@ -41,7 +40,7 @@ export function useLogin() {
   useEffect(() => {
     if (handledCallback.current) return;
 
-     const errorParam = searchParams.get("error");
+    const errorParam = searchParams.get("error");
     if (!errorParam) return;
 
     handledCallback.current = true;
@@ -93,12 +92,9 @@ export function useLogin() {
         password: normalizedData.password,
       });
 
-      // Backend đã set accessToken/refreshToken (httpOnly) và cờ eco_session
-      // ngay trong response này. FE chỉ cần nạp lại user và báo các tab khác.
       queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });
       announceSession("signed-in");
 
-      // replace: không để /login nằm lại trong history sau khi đã đăng nhập.
       router.replace(safeRedirect(searchParams.get("redirect")));
       router.refresh();
     } catch (err: unknown) {

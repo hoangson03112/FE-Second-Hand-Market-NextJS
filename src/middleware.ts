@@ -1,14 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-import { SESSION_HINT_COOKIE } from "@/lib/session";
+import { SESSION_COOKIE } from "@/lib/session";
 
-/**
- * Chặn sớm ở tầng edge để người dùng không thấy màn hình loading rồi mới bị
- * đá về /login. Đây CHỈ là lớp UX — quyền truy cập thật do backend quyết định
- * trên từng request, nên ở đây chỉ cần đọc cờ phiên (cookie do FE tự quản lý),
- * không phụ thuộc cookie httpOnly của backend vốn có thể nằm ở host khác.
- */
 const PROTECTED_PREFIXES = [
   "/profile",
   "/orders",
@@ -23,18 +17,12 @@ const PROTECTED_PREFIXES = [
   "/admin",
 ];
 
-/**
- * Trang chỉ dành cho khách; đã đăng nhập thì không cần vào nữa.
- * Cố ý KHÔNG chặn /reset-password và /verify-email: người dùng có thể bấm link
- * trong email khi vẫn đang đăng nhập ở tab khác.
- */
 const GUEST_ONLY_PREFIXES = ["/login", "/register", "/forgot-password"];
 
 export function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
 
-  const hasSession =
-    request.cookies.get(SESSION_HINT_COOKIE)?.value === "1";
+  const hasSession = Boolean(request.cookies.get(SESSION_COOKIE)?.value);
 
   if (!hasSession && PROTECTED_PREFIXES.some((p) => pathname.startsWith(p))) {
     const loginUrl = new URL("/login", request.url);

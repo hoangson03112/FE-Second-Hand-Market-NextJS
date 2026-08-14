@@ -69,18 +69,34 @@ export default function ProductList({
       </div>
 
       {pagination && onPageChange && (
-        <div className="mt-24 flex flex-col items-center gap-6 border-t border-taupe-200/60 pt-12">
-          <Pagination
-            currentPage={pagination.currentPage}
-            totalPages={Math.max(1, pagination.totalPages)}
-            onPageChange={onPageChange}
-          />
-          <p className="text-xs uppercase tracking-[0.16em] text-charcoal-400 font-medium">
-            Trang {pagination.currentPage} /{" "}
-            {Math.max(1, pagination.totalPages)}
-            {pagination.total > 0 &&
-              ` — ${pagination.total.toLocaleString("vi-VN")} SẢN PHẨM`}
-          </p>
+        <div className="mt-20 border-t border-luxury-ink/10 pt-10">
+          <div className="flex flex-col items-center gap-8 md:flex-row md:justify-between md:gap-6">
+            <p className="order-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-charcoal-400 md:order-1 md:w-44">
+              Trang{" "}
+              <span className="text-luxury-ink">
+                {String(pagination.currentPage).padStart(2, "0")}
+              </span>{" "}
+              <span className="text-luxury-ink/25">/</span>{" "}
+              {String(Math.max(1, pagination.totalPages)).padStart(2, "0")}
+            </p>
+
+            <Pagination
+              variant="luxury"
+              className="order-1 md:order-2"
+              currentPage={pagination.currentPage}
+              totalPages={Math.max(1, pagination.totalPages)}
+              onPageChange={onPageChange}
+            />
+
+            {pagination.total > 0 && (
+              <p className="order-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-charcoal-400 md:w-44 md:text-right">
+                <span className="text-luxury-ink">
+                  {pagination.total.toLocaleString("vi-VN")}
+                </span>{" "}
+                sản phẩm
+              </p>
+            )}
+          </div>
         </div>
       )}
     </>

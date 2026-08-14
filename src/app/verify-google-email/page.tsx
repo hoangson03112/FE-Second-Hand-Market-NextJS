@@ -7,8 +7,8 @@ export default function VerifyGoogleEmailPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center">
-          <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+        <div className="flex min-h-[60svh] items-center justify-center bg-luxury-ivory">
+          <div className="h-10 w-10 animate-spin rounded-full border border-luxury-ink/15 border-t-luxury-ink" />
         </div>
       }
     >

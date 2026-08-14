@@ -37,6 +37,20 @@ export interface VerifyResponse {
   message: string;
   token?: string;
   accessToken?: string;
+  /** CODE_EXPIRED | INVALID_CODE | ATTEMPTS_EXCEEDED */
+  code?: string;
+  /** Số lần nhập sai còn lại trước khi mã bị vô hiệu. */
+  attemptsLeft?: number;
+}
+
+export interface ResendCodeResponse {
+  status: "success" | "error";
+  message: string;
+  /** COOLDOWN | MAIL_FAILED */
+  code?: string;
+  /** Số giây phải chờ trước khi được gửi lại lần nữa. */
+  retryAfterSeconds?: number;
+  expiresInMinutes?: number;
 }
 
 export type AccountProvider = "google" | "local";

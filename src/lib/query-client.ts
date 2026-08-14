@@ -14,13 +14,11 @@ export const createQueryClient = () => {
         retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
       },
       mutations: {
-        // Retry mutations once
         retry: 1,
 
         // Show error on mutation failure
         onError: (error) => {
           console.error("Mutation error:", error);
-          // You can integrate with error tracking service here
         },
       },
     },

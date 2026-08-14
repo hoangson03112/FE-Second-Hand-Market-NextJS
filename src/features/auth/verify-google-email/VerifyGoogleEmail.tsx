@@ -6,7 +6,12 @@ import { useQueryClient } from "@tanstack/react-query";
 import { AuthService } from "@/services/auth.service";
 import { queryKeys } from "@/lib/query-client";
 import { announceSession } from "@/lib/session";
-import { EmailVerifyIcon } from "@/components/shared";
+import {
+  AuthEditorialPanel,
+  AuthFormHeader,
+  AuthShell,
+} from "@/features/auth/components";
+import { VERIFY_HIGHLIGHTS } from "@/features/auth/constants";
 import VerifyForm from "@/features/auth/verify/components/VerifyForm";
 
 export default function VerifyGoogleEmail() {
@@ -23,6 +28,14 @@ export default function VerifyGoogleEmail() {
   const [isLoading, setIsLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
   const [resendMessage, setResendMessage] = useState("");
+  const [cooldown, setCooldown] = useState(0);
+
+  /* Đếm ngược cooldown gửi lại mã — BE trả về retryAfterSeconds. */
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setTimeout(() => setCooldown((s) => s - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [cooldown]);
 
   useEffect(() => {
     if (!pending) {
@@ -67,22 +80,28 @@ export default function VerifyGoogleEmail() {
   };
 
   const handleResendCode = async () => {
-    if (!pending || resendLoading) return;
+    if (!pending || resendLoading || cooldown > 0) return;
     setError("");
     setResendMessage("");
     setResendLoading(true);
     try {
       const response = await AuthService.resendGoogleEmailCode({ pending });
       if (response.status === "success") {
+        setCode("");
         setResendMessage(
           response.message ||
             "Đã gửi lại mã xác minh. Vui lòng kiểm tra cả hộp thư Spam.",
         );
+        setCooldown(response.retryAfterSeconds ?? 60);
       } else {
         setError(response.message || "Không thể gửi lại mã. Vui lòng thử lại.");
       }
     } catch (err: unknown) {
-      const errData = err as { response?: { data?: { message?: string } } };
+      const errData = err as {
+        response?: { data?: { message?: string; retryAfterSeconds?: number } };
+      };
+      const retryAfter = errData.response?.data?.retryAfterSeconds;
+      if (retryAfter) setCooldown(retryAfter);
       setError(
         errData.response?.data?.message ||
           "Không thể gửi lại mã. Vui lòng thử lại.",
@@ -97,42 +116,55 @@ export default function VerifyGoogleEmail() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cream-50 via-white to-cream-50 p-4 lg:p-8">
-      <div className="w-full max-w-md">
-        <div className="bg-cream-50/95 backdrop-blur-xl rounded-3xl shadow-xl border-2 border-border p-8 lg:p-10">
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-primary flex items-center justify-center">
-              <EmailVerifyIcon className="w-10 h-10 text-white" />
-            </div>
-            <h2 className="text-2xl font-bold text-taupe-900 mb-2">
-              Xác minh email
-            </h2>
-            <p className="text-taupe-500">
-              Chúng tôi đã gửi mã 6 số đến{" "}
-              <span className="font-semibold text-taupe-900">
-                {email || "email của bạn"}
-              </span>
-              . Nhập mã bên dưới để hoàn tất đăng nhập.
-            </p>
-          </div>
+    <AuthShell
+      panel={
+        <AuthEditorialPanel
+          eyebrow="Bước cuối cùng"
+          title={
+            <>
+              Xác nhận rằng
+              <span className="block text-accent">đó là bạn.</span>
+            </>
+          }
+          description="Một mã gồm sáu chữ số vừa được gửi tới hộp thư của bạn. Nhập mã để hoàn tất đăng nhập bằng Google."
+          highlights={VERIFY_HIGHLIGHTS}
+        />
+      }
+    >
+      <AuthFormHeader
+        eyebrow="Xác minh"
+        title={
+          <>
+            Kiểm tra
+            <br /> <span className="text-accent">hộp thư</span>
+          </>
+        }
+      />
 
-          <VerifyForm
-            code={code}
-            onCodeChange={setCode}
-            error={error}
-            onClearError={() => setError("")}
-            isLoading={isLoading}
-            resendSuccess={Boolean(resendMessage)}
-            resendMessage={resendMessage}
-            resendLoading={resendLoading}
-            onSubmit={handleSubmit}
-            onResend={handleResendCode}
-            submitLabel="Hoàn tất đăng nhập"
-            submitLoadingLabel="Đang xác thực..."
-            resendPromptLabel="Không nhận được mã?"
-          />
-        </div>
-      </div>
-    </div>
+      <p className="-mt-5 mb-9 text-sm leading-relaxed text-neutral-600">
+        Chúng tôi đã gửi mã 6 chữ số đến{" "}
+        <span className="font-medium text-luxury-ink">
+          {email || "email của bạn"}
+        </span>
+        . Nhập mã bên dưới để hoàn tất đăng nhập.
+      </p>
+
+      <VerifyForm
+        code={code}
+        onCodeChange={setCode}
+        error={error}
+        onClearError={() => setError("")}
+        isLoading={isLoading}
+        resendSuccess={Boolean(resendMessage)}
+        resendMessage={resendMessage}
+        resendLoading={resendLoading}
+        cooldown={cooldown}
+        onSubmit={handleSubmit}
+        onResend={handleResendCode}
+        submitLabel="Hoàn tất đăng nhập"
+        submitLoadingLabel="Đang xác thực..."
+        resendPromptLabel="Không nhận được mã?"
+      />
+    </AuthShell>
   );
 }

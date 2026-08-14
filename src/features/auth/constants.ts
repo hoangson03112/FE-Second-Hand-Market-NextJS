@@ -52,6 +52,30 @@ export const REGISTER_HIGHLIGHTS: AuthHighlight[] = [
   },
 ];
 
+export const VERIFY_HIGHLIGHTS: AuthHighlight[] = [
+  {
+    number: "01",
+    tag: "Bảo mật",
+    title: "Mã dùng một lần",
+    description:
+      "Mỗi mã chỉ có hiệu lực trong thời gian ngắn và không thể dùng lại lần thứ hai.",
+  },
+  {
+    number: "02",
+    tag: "Xác thực",
+    title: "Email là danh tính của bạn",
+    description:
+      "Xác thực giúp chúng tôi bảo vệ tài khoản và giữ cho cộng đồng luôn đáng tin cậy.",
+  },
+  {
+    number: "03",
+    tag: "Sẵn sàng",
+    title: "Chỉ còn một bước nữa",
+    description:
+      "Nhập mã để hoàn tất và bắt đầu khám phá bộ sưu tập ngay hôm nay.",
+  },
+];
+
 export const AUTH_PANEL_TAGS = [
   "Tuyển chọn kỹ lưỡng",
   "Giao dịch an toàn",

@@ -8,6 +8,8 @@ interface AuthSubmitButtonProps {
   label: string;
   loadingLabel?: string;
   isLoading?: boolean;
+  /** Vô hiệu hóa mà không hiện nhãn "đang xử lý" — ví dụ form chưa hợp lệ. */
+  disabled?: boolean;
   className?: string;
 }
 
@@ -15,15 +17,16 @@ export default function AuthSubmitButton({
   label,
   loadingLabel = "Đang xử lý...",
   isLoading = false,
+  disabled = false,
   className,
 }: AuthSubmitButtonProps) {
   return (
     <button
       type="submit"
-      disabled={isLoading}
+      disabled={isLoading || disabled}
       className={cn(
         "group relative flex w-full items-center justify-center rounded-[2px] bg-luxury-ink px-10 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-luxury-ivory transition-all duration-300",
-        "hover:scale-[1.01] disabled:opacity-70 disabled:hover:scale-100",
+        "hover:scale-[1.01] disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-not-allowed",
         className,
       )}
     >

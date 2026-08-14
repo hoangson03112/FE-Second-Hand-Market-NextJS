@@ -4,13 +4,20 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 import { queryKeys } from "@/lib/query-client";
+import { SessionContext } from "@/components/providers/SessionContext";
 import {
   SESSION_CHANGED_EVENT,
   SESSION_CHANNEL,
   type SessionSignal,
 } from "@/lib/session";
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+export default function Providers({
+  children,
+  hasSession: initialHasSession,
+}: {
+  children: React.ReactNode;
+  hasSession: boolean;
+}) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -24,8 +31,16 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       }),
   );
 
+  const [hasSession, setHasSession] = useState(initialHasSession);
+
+  // router.refresh() sau khi đăng nhập/đăng xuất khiến server layout đọc lại
+  // cookie và đẩy giá trị mới xuống đây.
+  useEffect(() => setHasSession(initialHasSession), [initialHasSession]);
+
   useEffect(() => {
     const apply = (signal: SessionSignal) => {
+      setHasSession(signal === "signed-in");
+
       if (signal === "signed-out") {
         // Về trạng thái khách ngay: header, guard, giỏ hàng cùng cập nhật.
         queryClient.setQueryData(queryKeys.users.current(), null);
@@ -56,6 +71,8 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   }, [queryClient]);
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <SessionContext.Provider value={hasSession}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </SessionContext.Provider>
   );
 }

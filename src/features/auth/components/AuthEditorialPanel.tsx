@@ -7,11 +7,9 @@ import { IconArrowLeft } from "@tabler/icons-react";
 import { usePrefersReducedMotion } from "@/features/homepage/hooks";
 
 import { AUTH_PANEL_TAGS, type AuthHighlight } from "../constants";
+import Image from "next/image";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-
-const NOISE_TEXTURE =
-  "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
 interface AuthEditorialPanelProps {
   eyebrow: string;
@@ -29,40 +27,26 @@ export default function AuthEditorialPanel({
   const reducedMotion = usePrefersReducedMotion();
 
   return (
-    <div className="relative flex h-full flex-col justify-between overflow-hidden bg-luxury-ink px-10 py-14 xl:px-16 xl:py-16">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 80% 15%, color-mix(in srgb, var(--accent) 25%, transparent) 0%, transparent 55%), radial-gradient(ellipse 60% 50% at 5% 85%, color-mix(in srgb, var(--luxury-champagne) 18%, transparent) 0%, transparent 50%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
-        style={{ backgroundImage: NOISE_TEXTURE }}
-      />
-
+    /* Nền ink + hiệu ứng do AuthShell vẽ tràn viền — ở đây chỉ còn nội dung. */
+    <div className="relative flex h-full flex-col justify-between py-14 pr-10 xl:py-16 xl:pr-16">
       <motion.div
         className="relative z-10 flex items-center justify-between gap-6"
         initial={reducedMotion ? false : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: EASE }}
       >
-        <Link
-          href="/"
-          className="group inline-flex items-baseline gap-3 text-luxury-ivory"
-        >
-          <span
-            className="text-xl tracking-tight"
-            style={{ fontFamily: "var(--font-droid-serif), serif" }}
-          >
-            Eco Market
-          </span>
+        <Link href="/" className="shrink-0 group">
+          <Image
+            src="https://res.cloudinary.com/dqvtj4uxo/image/upload/v1784993079/Gemini_Generated_Image_rg4xa9rg4xa9rg4x_1_mtjahn.png"
+            alt="Eco Market Logo"
+            width={350}
+            height={260}
+            className="h-25 sm:h-25 sm:max-w-none object-contain max-w-[150px] w-auto brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity duration-200"
+            priority
+          />
           <span
             aria-hidden
-            className="h-px w-8 translate-y-[-0.35rem] bg-luxury-champagne/70 transition-all duration-500 group-hover:w-12 group-hover:bg-luxury-champagne"
+            className="h-px w-8 translate-y-[-0.3rem] bg-luxury-champagne"
           />
         </Link>
 
@@ -75,7 +59,7 @@ export default function AuthEditorialPanel({
         </Link>
       </motion.div>
 
-      <div className="relative z-10 py-14">
+      <div className="relative z-10 ">
         <motion.div
           initial={reducedMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -120,7 +104,7 @@ export default function AuthEditorialPanel({
               }}
             >
               <div className="flex items-baseline gap-5">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-luxury-champagne/80">
+                <span className="text-xs font-semibold uppercase tracking-[0.22em] text-luxury-champagne/80">
                   {item.number}
                 </span>
                 <div>

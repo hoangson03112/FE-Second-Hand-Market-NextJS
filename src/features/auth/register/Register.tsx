@@ -5,11 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { useUser } from "@/features/auth/hooks/useUser";
 
-import {
-  AuthEditorialPanel,
-  AuthFormHeader,
-  AuthShell,
-} from "../components";
+import { AuthEditorialPanel, AuthFormHeader, AuthShell } from "../components";
 import { REGISTER_HIGHLIGHTS } from "../constants";
 import { useRegister } from "./hooks/useRegister";
 import RegisterForm from "./components/RegisterForm";
@@ -26,7 +22,6 @@ export default function Register() {
     handleSubmit,
   } = useRegister();
 
-  // Nếu đã đăng nhập thì redirect về trang Home
   useEffect(() => {
     if (account) {
       router.replace("/");
@@ -58,7 +53,8 @@ export default function Register() {
         eyebrow="Đăng ký"
         title={
           <>
-            Bắt đầu cùng <span className="text-accent">Eco Market</span>
+            Bắt đầu cùng
+            <br /> <span className="text-accent">Eco Market</span>
           </>
         }
         description="Điền thông tin bên dưới để tạo tài khoản của bạn."

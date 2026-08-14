@@ -298,15 +298,14 @@ export default function FilterSidebar({
   }
 
   return (
-    <div className="w-full text-luxury-ink">
-      {/* ── HEADER ── */}
+    <div className="w-full text-luxury-ink pb-5 ">
       <div className="flex items-center justify-between border-b border-luxury-ink/6 pb-4">
         <div className="flex items-center gap-2.5">
           <IconAdjustmentsHorizontal
             className="h-4 w-4 text-luxury-champagne"
             strokeWidth={1.75}
           />
-          <h2 className="text-[11px] font-semibold uppercase tracking-[0.28em] text-luxury-ink">
+          <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-luxury-ink">
             Bộ lọc
           </h2>
           {activeFilterCount > 0 && (
@@ -321,7 +320,7 @@ export default function FilterSidebar({
         {activeFilterCount > 0 && (
           <button
             onClick={clearAll}
-            className="group inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-taupe-400 transition-colors hover:text-accent"
+            className="group inline-flex items-center gap-1 text-2xs font-bold uppercase tracking-[0.14em] text-charcoal-700 transition-colors hover:text-taupe-700"
           >
             Xóa tất cả
             <IconX
@@ -332,7 +331,6 @@ export default function FilterSidebar({
         )}
       </div>
 
-      {/* ── CHIP TÓM TẮT — stagger reveal ── */}
       {activeChips.length > 0 && (
         <div className="flex flex-wrap gap-1.5 border-b border-luxury-ink/6 py-4">
           {activeChips.map((chip, i) => (
@@ -344,7 +342,7 @@ export default function FilterSidebar({
             >
               {chip.label}
               <IconX
-                className="h-3 w-3 text-taupe-400 transition-colors group-hover:text-luxury-ink"
+                className="h-3 w-3 text-red-700 transition-colors"
                 strokeWidth={2}
               />
             </button>
@@ -352,7 +350,6 @@ export default function FilterSidebar({
         </div>
       )}
 
-      {/* ── KẾT QUẢ TRỰC TIẾP — phản hồi UX tức thì ── */}
       {typeof resultCount === "number" && (
         <p className="border-b border-luxury-ink/6 py-3 text-[11px] text-neutral-500">
           <span className="font-semibold text-luxury-ink">
@@ -363,7 +360,6 @@ export default function FilterSidebar({
       )}
 
       <div className="space-y-5 pt-5">
-        {/* ── KHU VỰC ── */}
         {provinces.length > 0 && (
           <FilterGroup index={1} title="Khu vực">
             <div className="relative group">
@@ -425,7 +421,7 @@ export default function FilterSidebar({
                   <Icon
                     className={cn(
                       "h-[18px] w-[18px]",
-                      isActive ? "text-luxury-champagne" : "text-taupe-400",
+                      isActive ? "text-luxury-champagne" : "text-red-700",
                     )}
                     strokeWidth={1.5}
                   />

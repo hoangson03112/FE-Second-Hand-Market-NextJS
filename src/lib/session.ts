@@ -1,17 +1,19 @@
 /**
- * Cờ phiên đăng nhập phía client.
+ * Trạng thái phiên phía client.
  *
- * accessToken/refreshToken là cookie httpOnly nên JavaScript không đọc được.
- * Backend set kèm cookie `eco_session=1` (KHÔNG httpOnly, không chứa bí mật)
- * mỗi khi cấp phiên, và xoá nó khi thu hồi phiên. FE chỉ ĐỌC cờ này để:
+ * accessToken/refreshToken đều là cookie httpOnly, nên JavaScript trong trình
+ * duyệt KHÔNG đọc được — không có cách nào biết "đang đăng nhập hay chưa" từ
+ * `document.cookie`. Việc kiểm tra đó chuyển hẳn sang phía server:
  *
- *   1. biết có nên gọi /auth/me hay không (khách vãng lai: 0 request),
- *   2. cho middleware chặn sớm route riêng tư.
+ *   1. `middleware.ts` (edge) đọc cookie từ request để chặn sớm route riêng tư,
+ *   2. `app/layout.tsx` (server component) đọc cookie rồi truyền xuống
+ *      `Providers`, để `useUser()` biết có cần gọi /auth/me hay không.
  *
- * Đây thuần tuý là gợi ý UX. Mọi quyền truy cập thật do accessToken quyết định
- * ở phía server — sửa cờ này trong DevTools không mở được dữ liệu nào.
+ * Module này chỉ còn lo phần phát tín hiệu khi phiên đổi trạng thái.
  */
-export const SESSION_HINT_COOKIE = "eco_session";
+
+/** Tên cookie refresh token do backend set — dùng làm dấu hiệu "có phiên". */
+export const SESSION_COOKIE = "refreshToken";
 
 /** Sự kiện trong CÙNG tab (BroadcastChannel không tự gửi lại cho nơi phát). */
 export const SESSION_CHANGED_EVENT = "eco:session-changed";
@@ -20,26 +22,6 @@ export const SESSION_CHANGED_EVENT = "eco:session-changed";
 export const SESSION_CHANNEL = "eco:session";
 
 export type SessionSignal = "signed-in" | "signed-out";
-
-export function hasSessionHint(): boolean {
-  if (typeof document === "undefined") return false;
-  return document.cookie
-    .split(";")
-    .some((cookie) => cookie.trim() === `${SESSION_HINT_COOKIE}=1`);
-}
-
-/**
- * Xoá cờ ở phía client.
- *
- * Bình thường backend đã xoá cờ trong response (logout, refresh thất bại).
- * Gọi thêm ở client để UI phản ứng tức thì, và để phòng trường hợp request
- * hỏng giữa chừng khiến cờ còn sót — nếu không, middleware sẽ tưởng vẫn còn
- * phiên và chặn người dùng quay lại trang đăng nhập.
- */
-export function clearSessionHint(): void {
-  if (typeof document === "undefined") return;
-  document.cookie = `${SESSION_HINT_COOKIE}=; path=/; max-age=0; SameSite=Lax`;
-}
 
 /**
  * Báo trạng thái phiên vừa đổi: cho chính tab này (CustomEvent) và cho các tab
@@ -66,9 +48,11 @@ export function announceSession(signal: SessionSignal): void {
  * Cố ý KHÔNG điều hướng ở đây — ép `window.location` từ trong interceptor chính
  * là thứ tạo ra vòng lặp redirect với middleware. Route guard tự xử lý dựa trên
  * `useUser()`.
+ *
+ * Cookie httpOnly do backend xoá qua header Set-Cookie ở chính response thất
+ * bại đó; client chỉ cần cập nhật lại UI.
  */
 export function notifySessionLost(): void {
   if (typeof window === "undefined") return;
-  clearSessionHint();
   announceSession("signed-out");
 }

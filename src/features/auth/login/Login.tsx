@@ -1,8 +1,4 @@
-import {
-  AuthEditorialPanel,
-  AuthFormHeader,
-  AuthShell,
-} from "../components";
+import { AuthEditorialPanel, AuthFormHeader, AuthShell } from "../components";
 import { LOGIN_HIGHLIGHTS } from "../constants";
 import LoginForm from "./components/LoginForm";
 
@@ -27,7 +23,8 @@ export default function LoginPage() {
         eyebrow="Đăng nhập"
         title={
           <>
-            Tiếp tục cùng <span className="text-accent">Eco Market</span>
+            Tiếp tục cùng
+            <br /> <span className="text-accent">Eco Market</span>
           </>
         }
         description="Nhập thông tin tài khoản của bạn để tiếp tục."

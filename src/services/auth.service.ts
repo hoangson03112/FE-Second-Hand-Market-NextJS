@@ -7,6 +7,7 @@ import type {
   RegisterResponse,
   VerifyRequest,
   VerifyResponse,
+  ResendCodeResponse,
   AccountResponse,
   RefreshResponse,
 } from "@/types/auth";
@@ -22,6 +23,13 @@ export const AuthService = {
 
   verify: async (data: VerifyRequest): Promise<VerifyResponse> => {
     return axiosClient.post("/auth/verify", data);
+  },
+
+  resendVerificationCode: async (data: {
+    accountID: string;
+  }): Promise<ResendCodeResponse> => {
+    const res = await axiosClient.post("/auth/resend-verification-code", data);
+    return res as unknown as ResendCodeResponse;
   },
 
   getAccountInfo: async (): Promise<AccountResponse> => {
@@ -69,9 +77,9 @@ export const AuthService = {
 
   resendGoogleEmailCode: async (data: {
     pending: string;
-  }): Promise<{ status: string; message?: string }> => {
+  }): Promise<ResendCodeResponse> => {
     const res = await axiosClient.post("/auth/resend-google-email-code", data);
-    return res as unknown as { status: string; message?: string };
+    return res as unknown as ResendCodeResponse;
   },
 
   submitAppeal: async (data: {

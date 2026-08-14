@@ -15,14 +15,9 @@ const axiosClient = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  // Xác thực chạy hoàn toàn bằng cookie httpOnly do backend set.
   withCredentials: true,
 });
 
-/**
- * Client riêng cho /auth/refresh: không gắn interceptor nên không thể tự gọi
- * lại chính nó, và tránh vòng import axios ↔ auth.service.
- */
 const refreshClient = axios.create({
   baseURL: BASE_URL,
   timeout: 15000,
@@ -46,10 +41,6 @@ const NO_REFRESH_PATHS = [
   "/auth/appeal",
 ];
 
-/**
- * Single-flight trong cùng tab: mọi request bị 401 một lúc đều chờ chung một
- * lần refresh, thay vì mỗi request tự gọi /auth/refresh.
- */
 let refreshPromise: Promise<void> | null = null;
 
 /**
@@ -77,7 +68,6 @@ function refreshSession(): Promise<void> {
 }
 
 axiosClient.interceptors.response.use(
-  // Trả thẳng payload nghiệp vụ để service không phải bóc `.data` ở mọi nơi.
   (response: AxiosResponse) => response.data,
 
   async (error: AxiosError) => {
@@ -90,8 +80,6 @@ axiosClient.interceptors.response.use(
       | { message?: string; error?: string; code?: string }
       | undefined;
 
-    // Ưu tiên thông báo nghiệp vụ của backend thay vì
-    // "Request failed with status code ..." của axios.
     if (payload?.message?.trim()) {
       error.message = payload.message;
     } else if (payload?.error?.trim()) {

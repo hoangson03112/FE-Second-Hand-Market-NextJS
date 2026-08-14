@@ -18,15 +18,7 @@ export default function AuthFormHeader({
         </p>
       </div>
 
-      <h1
-        className="mt-4 text-[clamp(1.875rem,3.2vw,2.5rem)] tracking-tight text-luxury-ink"
-        style={{
-          fontFamily: "var(--font-droid-serif), serif",
-          fontWeight: 400,
-          lineHeight: 1.08,
-          letterSpacing: "-0.03em",
-        }}
-      >
+      <h1 className="font-droid-serif mt-4 text-5xl tracking-tight text-luxury-ink">
         {title}
       </h1>
 

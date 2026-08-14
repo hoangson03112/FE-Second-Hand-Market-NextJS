@@ -1,5 +1,7 @@
 import "./globals.css";
+import { cookies } from "next/headers";
 import Providers from "./providers";
+import { SESSION_COOKIE } from "@/lib/session";
 import { ConfirmDialogProvider } from "@/components/shared";
 import SiteLayout from "@/components/layout/SiteLayout";
 import { RealtimeNotificationToast } from "@/components/shared/RealtimeNotificationToast";
@@ -94,13 +96,17 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Cookie phiên là httpOnly nên chỉ đọc được ở server. Truyền xuống client để
+  // useUser() bỏ qua /auth/me với khách vãng lai.
+  const hasSession = (await cookies()).has(SESSION_COOKIE);
+
   return (
     <html lang="vi" className={`h-full ${geist.variable}`} suppressHydrationWarning >
       <body
       suppressHydrationWarning 
         className={`h-full overflow-hidden bg-luxury-ivory text-foreground antialiased ${droidSerifWGL.variable}` }
       >
-        <Providers>
+        <Providers hasSession={hasSession}>
           <ToastProvider>
             <RealtimeNotificationToast />
             <BannedOverlay />
