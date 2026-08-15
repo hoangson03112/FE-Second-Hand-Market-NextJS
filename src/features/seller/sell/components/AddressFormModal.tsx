@@ -2,7 +2,7 @@
 
 import { IconX } from "@tabler/icons-react";
 import type { Address, CreateAddressRequest } from "@/types/address";
-import { AddressForm } from "@/features/checkout/components/AddressForm";
+import { AddressForm } from "@/features/order/checkout/components/AddressForm";
 
 interface AddressFormModalProps {
   isOpen: boolean;

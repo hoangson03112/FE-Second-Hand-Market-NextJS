@@ -1,7 +1,7 @@
 "use client";
 
 import { IconChevronRight } from "@tabler/icons-react";
-import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
+import { AvatarOrInitials } from "@/components/ui/AvatarOrInitials";
 import Link from "next/link";
 import CartItem from "./CartItem";
 import type { CartItem as CartItemType } from "@/types/cart";

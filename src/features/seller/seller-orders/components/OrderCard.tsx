@@ -1,5 +1,6 @@
 "use client";
 
+import { OrderStatusBadge } from "@/features/order/components";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -9,13 +10,14 @@ import {
   IconPackage,
 } from "@tabler/icons-react";
 import type { Order } from "@/types/order";
-import { StatusBadge } from "@/components/shared";
+import {
+} from "@/components/ui";
 import { formatPrice } from "@/utils/format/price";
 import { getProductImage } from "../utils/orderUtils";
 import OrderActions from "./OrderActions";
 import { cn } from "@/lib/utils";
 import { formatTimeAgo } from "@/utils/format/date";
-import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
+import { AvatarOrInitials } from "@/components/ui/AvatarOrInitials";
 import { REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER } from "@/constants/refund";
 
 const REFUND_PHASE_LABELS: Record<string, string> = {
@@ -127,7 +129,7 @@ export default function OrderCard({
             <h3 className="font-bold text-sm leading-snug line-clamp-2 flex-1 group-hover:text-primary transition-colors">
               {firstProduct?.name ?? "Sản phẩm không xác định"}
             </h3>
-            <StatusBadge status={order.status} />
+            <OrderStatusBadge status={order.status} />
           </div>
 
           {/* Buyer */}

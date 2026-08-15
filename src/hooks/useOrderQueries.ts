@@ -112,7 +112,11 @@ export function useRequestRefund() {
       videos?: File[];
     }) => OrderService.requestRefund(orderId, reason, description, images, videos),
     onSuccess: (_, { orderId }) => {
-      patchOrderInCache(qc, orderId, { status: "refund_requested" });
+      // The server sets `order.status = "refund"` when a refund is requested
+      // (services/refund.service.js) and tracks the request itself on
+      // `order.refundRequestId`. Mirror that so the cache does not disagree
+      // with the next refetch.
+      patchOrderInCache(qc, orderId, { status: "refund" });
     },
   });
 }

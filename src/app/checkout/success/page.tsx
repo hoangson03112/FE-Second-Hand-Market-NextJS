@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import CheckoutSuccess from "@/features/checkout-success/CheckoutSuccess";
+import CheckoutSuccess from "@/features/order/success/CheckoutSuccess";
 
 export default function CheckoutSuccessPage() {
   return (

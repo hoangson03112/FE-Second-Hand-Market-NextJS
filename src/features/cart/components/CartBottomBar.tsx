@@ -1,7 +1,6 @@
 "use client";
 
 import { formatPrice } from "@/utils/format/price";
-import { Button } from "@/components/shared";
 
 interface CartBottomBarProps {
   allSelected: boolean;

@@ -114,9 +114,7 @@ export function NotificationDropdown() {
       </button>
 
       {isOpen && (
-        <div
-          className="absolute right-0 top-full mt-2 w-[392px] max-h-[560px]   bg-cream-50 rounded-[2px] shadow-lg flex flex-col z-[70] overflow-hidden"
-        >
+        <div className="absolute right-0 top-full mt-2 w-[392px] max-h-[560px]   bg-cream-50 rounded-[2px] shadow-lg flex flex-col z-[70] overflow-hidden">
           <div
             className="px-4 py-3 flex items-center justify-between"
             style={{

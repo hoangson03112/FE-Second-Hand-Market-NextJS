@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/features/auth/hooks/useUser";
 import { OrderService } from "@/services/order.service";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 import { usePagination } from "@/hooks/usePagination";
 import type { Order } from "@/types/order";
 import { ORDER_MESSAGES, SELLER_MESSAGES } from "@/constants/messages";

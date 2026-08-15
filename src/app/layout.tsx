@@ -2,10 +2,10 @@ import "./globals.css";
 import { cookies } from "next/headers";
 import Providers from "./providers";
 import { SESSION_COOKIE } from "@/lib/session";
-import { ConfirmDialogProvider } from "@/components/shared";
+import { ConfirmDialogProvider } from "@/components/ui";
 import SiteLayout from "@/components/layout/SiteLayout";
-import { RealtimeNotificationToast } from "@/components/shared/RealtimeNotificationToast";
-import { BannedOverlay } from "@/components/shared/BannedOverlay";
+import { RealtimeNotificationToast } from "@/components/layout/RealtimeNotificationToast";
+import { BannedOverlay } from "@/components/layout/BannedOverlay";
 import type { Metadata } from "next";
 import { geist } from "@/lib/fonts";
 import localFont from "next/font/local";
@@ -96,15 +96,18 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Cookie phiên là httpOnly nên chỉ đọc được ở server. Truyền xuống client để
-  // useUser() bỏ qua /auth/me với khách vãng lai.
+
   const hasSession = (await cookies()).has(SESSION_COOKIE);
 
   return (
-    <html lang="vi" className={`h-full ${geist.variable}`} suppressHydrationWarning >
+    <html
+      lang="vi"
+      className={`h-full ${geist.variable}`}
+      suppressHydrationWarning
+    >
       <body
-      suppressHydrationWarning 
-        className={`h-full overflow-hidden bg-luxury-ivory text-foreground antialiased ${droidSerifWGL.variable}` }
+        suppressHydrationWarning
+        className={`h-full overflow-hidden bg-luxury-ivory text-foreground antialiased ${droidSerifWGL.variable}`}
       >
         <Providers hasSession={hasSession}>
           <ToastProvider>

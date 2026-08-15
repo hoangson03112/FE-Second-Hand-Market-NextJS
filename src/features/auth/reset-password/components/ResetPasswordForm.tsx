@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React from "react";
 import { Input } from "@/components/ui/input";
-import InfoBox from "@/components/shared/auth/InfoBox";
-import { ArrowRightIcon } from "@/components/shared";
+import InfoBox from "@/features/auth/components/InfoBox";
+import { IconArrowRight } from "@tabler/icons-react";
 
 interface ResetPasswordFormProps {
   newPassword: string;
@@ -210,7 +210,7 @@ export default function ResetPasswordForm({
         <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md rounded-lg" />
         <span className="relative z-10 flex items-center gap-2">
           {isLoading ? "Đang xử lý..." : "Đổi mật khẩu"}
-          {!isLoading && <ArrowRightIcon className="w-5 h-5" />}
+          {!isLoading && <IconArrowRight className="w-5 h-5" />}
         </span>
       </button>
 
@@ -221,7 +221,7 @@ export default function ResetPasswordForm({
           className="font-bold text-primary hover:text-primary/80 inline-flex items-center gap-1.5 transition-colors"
         >
           Đăng nhập ngay
-          <ArrowRightIcon className="w-4 h-4" />
+          <IconArrowRight className="w-4 h-4" />
         </Link>
       </p>
     </form>

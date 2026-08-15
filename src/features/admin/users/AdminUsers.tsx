@@ -3,14 +3,13 @@
 import { useEffect, useState } from "react";
 import { IconSearch, IconUsers } from "@tabler/icons-react";
 
-import { useToast, Pagination } from "@/components/shared";
+import { useToast, Pagination, Loading } from "@/components/ui";
 import {
   ErrorState,
-  Loading,
   NoData,
   PageHeader,
   SearchInput,
-} from "@/components/shared";
+} from "@/features/admin/components";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";

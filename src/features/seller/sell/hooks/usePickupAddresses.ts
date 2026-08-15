@@ -5,7 +5,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Address, CreateAddressRequest } from "@/types/address";
 import { AddressService } from "@/services/address.service";
 import { enrichAddresses } from "@/utils/addressTransform";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 import { useUser } from "@/features/auth/hooks/useUser";
 
 const PICKUP_QUERY_KEY = ["addresses", "list", "pickup"] as const;

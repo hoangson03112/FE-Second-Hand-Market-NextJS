@@ -1,13 +1,13 @@
 "use client";
 
 import { IconBuildingStore, IconLoader2 } from "@tabler/icons-react";
-import { Pagination } from "@/components/shared";
+import { Pagination } from "@/components/ui";
 import { useAdminSellers } from "./hooks/useAdminSellers";
 import StatsBadges from "./components/StatsBadges";
 import StatusTabs from "./components/StatusTabs";
 import SellersTable from "./components/SellersTable";
 import SellerDetailModal from "./components/SellerDetailModal";
-import { NoData } from "@/components/shared";
+import { NoData } from "@/features/admin/components";
 
 export default function AdminSellers() {
   const {

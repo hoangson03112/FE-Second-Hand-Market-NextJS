@@ -2,9 +2,9 @@
 
 import { IconFlag, IconLoader2 } from "@tabler/icons-react";
 import { useAdminReports } from "./hooks/useAdminReports";
-import { NoData } from "@/components/shared";
+import { NoData } from "@/features/admin/components";
 import ReportsTable from "./components/ReportsTable";
-import { Pagination } from "@/components/shared";
+import { Pagination } from "@/components/ui";
 
 export default function AdminReports() {
   const { reports, isLoading, error, expandedId, toggleExpanded, page, setPage, totalPages } =

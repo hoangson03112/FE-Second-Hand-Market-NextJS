@@ -3,7 +3,7 @@
 import React from "react";
 import { IProduct } from "@/types/product";
 import ProductCard from "./ProductCard";
-import { Pagination, Skeleton } from "@/components/shared";
+import { Pagination, Skeleton } from "@/components/ui";
 
 interface PaginationInfo {
   currentPage: number;

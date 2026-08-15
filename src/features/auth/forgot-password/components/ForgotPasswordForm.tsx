@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
-import InfoBox from "@/components/shared/auth/InfoBox";
-import { EmailIcon } from "@/components/shared";
-import { ArrowRightIcon } from "@/components/shared";
+import InfoBox from "@/features/auth/components/InfoBox";
+import { IconArrowRight, IconMail } from "@tabler/icons-react";
 
 interface ForgotPasswordFormProps {
   email: string;
@@ -38,7 +37,7 @@ export default function ForgotPasswordForm({
         </label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <EmailIcon />
+            <IconMail className="h-5 w-5" />
           </div>
           <Input
             id="email"
@@ -69,7 +68,7 @@ export default function ForgotPasswordForm({
         <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md rounded-lg" />
         <span className="relative z-10 flex items-center gap-2">
           {isLoading ? "Đang xử lý..." : "Gửi liên kết đặt lại"}
-          {!isLoading && <ArrowRightIcon className="w-5 h-5" />}
+          {!isLoading && <IconArrowRight className="w-5 h-5" />}
         </span>
       </button>
 
@@ -80,7 +79,7 @@ export default function ForgotPasswordForm({
           className="font-bold text-primary hover:text-primary/80 inline-flex items-center gap-1.5 transition-colors"
         >
           Đăng nhập ngay
-          <ArrowRightIcon className="w-4 h-4" />
+          <IconArrowRight className="w-4 h-4" />
         </Link>
       </p>
     </form>

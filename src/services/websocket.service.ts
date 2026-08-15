@@ -22,7 +22,8 @@ class WebSocketService {
     const explicitUrl = process.env.NEXT_PUBLIC_SOCKET_URL;
     if (explicitUrl) return explicitUrl;
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:2000/eco-market";
+    const apiUrl =
+      process.env.NEXT_PUBLIC_API_URL || "http://localhost:2000/eco-market";
     try {
       return new URL(apiUrl).origin;
     } catch {
@@ -39,7 +40,7 @@ class WebSocketService {
     this.userId = userId;
 
     const socketUrl = this.resolveSocketUrl();
-    
+
     try {
       this.socket = io(socketUrl, {
         transports: ["websocket", "polling"],
@@ -52,13 +53,11 @@ class WebSocketService {
       this.socket.on("connect", () => {
         this.isConnecting = false;
         this.socket?.emit("join-room", userId);
-        logger.info("Socket connected", { userId });
       });
 
       this.socket.on("reconnect", () => {
         if (this.userId) {
           this.socket?.emit("join-room", this.userId);
-          logger.info("Socket reconnected, re-joined room", { userId: this.userId });
         }
       });
 

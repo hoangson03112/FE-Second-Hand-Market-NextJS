@@ -1,5 +1,6 @@
 "use client";
 
+import { OrderStatusBadge } from "@/features/order/components";
 import { useRef } from "react";
 import Link from "next/link";
 import {
@@ -20,15 +21,16 @@ import {
   IconCopy,
   IconCalendar,
 } from "@tabler/icons-react";
-import { StatusBadge } from "@/components/shared";
-import { OrderTracking } from "@/components/shared";
+import {
+} from "@/components/ui";
+import { OrderTracking } from "@/features/order/components";
 import { SellerProductsCard } from "./components/SellerProductsCard";
 import { SellerRefundCard } from "./components/SellerRefundCard";
 import { SellerActionButtons } from "./components/SellerActionButtons";
 import { useSellerOrderDetail } from "./hooks/useSellerOrderDetail";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
-import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
+import { AvatarOrInitials } from "@/components/ui/AvatarOrInitials";
 import {
   formatShippingMethod,
   getShippingMethodType,
@@ -227,7 +229,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
             {orderCode}
           </span>
           <div className="ml-auto">
-            <StatusBadge status={order.status} size="sm" />
+            <OrderStatusBadge status={order.status} size="sm" />
           </div>
         </div>
       </div>

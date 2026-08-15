@@ -9,7 +9,7 @@ import type { LoginRequest } from "@/types/auth";
 import { loginSchema } from "@/schemas/auth.schema";
 import { getGoogleLoginUrl } from "@/constants";
 import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 
 const POST_LOGIN_REDIRECT_KEY = "eco:post-login-redirect";
 

@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/features/auth/hooks/useUser";
-import { useToast } from "@/components/shared";
-import { useConfirm } from "@/components/shared";
+import { useToast } from "@/components/ui";
+import { useConfirm } from "@/components/ui";
 import { OrderService } from "@/services/order.service";
 import type { Order } from "@/types/order";
 
@@ -83,7 +83,20 @@ export function useSellerOrderDetail(orderId: string) {
     setUpdatingStatus(true);
     try {
       await OrderService.approveRefund(order._id, note);
-      setOrder((prev) => prev ? { ...prev, status: "return_shipping" } : null);
+      // Server keeps order.status at "refund" and advances the Refund doc to
+      // "return_shipping" (POST /orders/:id/approve-refund). Mirror that shape
+      // so the UI does not disagree with the next refetch.
+      setOrder((prev) =>
+        prev && prev.refundRequestId
+          ? {
+              ...prev,
+              refundRequestId: {
+                ...prev.refundRequestId,
+                status: "return_shipping",
+              },
+            }
+          : prev,
+      );
       toast.success("Đã chấp thuận yêu cầu hoàn tiền");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Không thể duyệt hoàn tiền");
@@ -119,7 +132,15 @@ export function useSellerOrderDetail(orderId: string) {
     setUpdatingStatus(true);
     try {
       await OrderService.confirmReturnReceived(order._id);
-      setOrder((prev) => prev ? { ...prev, status: "returned" } : prev);
+      // Same shape as approve: only the Refund doc advances, to "returned".
+      setOrder((prev) =>
+        prev && prev.refundRequestId
+          ? {
+              ...prev,
+              refundRequestId: { ...prev.refundRequestId, status: "returned" },
+            }
+          : prev,
+      );
       toast.success("Đã xác nhận nhận hàng hoàn. Admin sẽ xử lý hoàn tiền cho người mua.");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Không thể xác nhận nhận hàng");

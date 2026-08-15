@@ -4,7 +4,7 @@ import { useForgotPassword } from "./hooks/useForgotPassword";
 import ForgotPasswordForm from "./components/ForgotPasswordForm";
 import ForgotPasswordSuccess from "./components/ForgotPasswordSuccess";
 import { forgotPasswordFeatures } from "@/constants/auth.features";
-import { Background } from "@/components/shared";
+import { Background } from "@/features/auth/components";
 import Image from "next/image";
 import Link from "next/link";
 

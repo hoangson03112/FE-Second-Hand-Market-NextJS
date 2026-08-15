@@ -5,7 +5,7 @@ import { AddressService } from "@/services/address.service";
 import { queryKeys } from "@/lib/query-client";
 import { serverStateConfig } from "@/lib/state";
 import { enrichAddresses } from "@/utils/addressTransform";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 
 export function useAddress() {
   const queryClient = useQueryClient();

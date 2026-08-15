@@ -1,4 +1,4 @@
-import { Skeleton } from "@/components/shared";
+import { Skeleton } from "@/components/ui";
 
 export function ProductLoadingState() {
   return (

@@ -15,7 +15,7 @@ import {
 import { Container } from "@/components/layout/Container";
 import { useRequestReview } from "@/features/seller/sell/hooks";
 import { usePagination } from "@/hooks/usePagination";
-import { Pagination } from "@/components/shared";
+import { Pagination } from "@/components/ui";
 import type { MyListingsResponse } from "@/types/myProducts";
 
 const PAGE_SIZE = 12;

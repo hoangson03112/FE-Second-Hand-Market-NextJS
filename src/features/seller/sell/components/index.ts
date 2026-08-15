@@ -2,7 +2,6 @@ export { SellFormHeader } from "./SellFormHeader";
 export { SellerLimitInfoBox } from "./SellerLimitInfoBox";
 export { RejectedProductBanner } from "./RejectedProductBanner";
 export { SellFormActions } from "./SellFormActions";
-export { PickupAddressSection } from "./PickupAddressSection";
 export { PickupAddressSelector } from "./PickupAddressSelector";
 export { AddressFormModal } from "./AddressFormModal";
 export { DeliveryOptions } from "./DeliveryOptions";

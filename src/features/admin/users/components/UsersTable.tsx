@@ -4,12 +4,8 @@ import { IconBan, IconLockOpen } from "@tabler/icons-react";
 
 import type { AdminAccount } from "@/types/admin";
 import { format } from "@/utils/format/date";
-import {
-  DataTable,
-  StatusBadge,
-  type DataTableColumn,
-  type StatusTone,
-} from "@/components/shared";
+import { ToneBadge, type StatusTone } from "@/components/ui";
+import { DataTable, type DataTableColumn } from "@/features/admin/components";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -69,13 +65,13 @@ export default function UsersTable({
                 <span className="max-w-[160px] truncate font-medium text-foreground sm:max-w-[220px]">
                   {acc.fullName ?? "—"}
                 </span>
-                <StatusBadge
+                <ToneBadge
                   tone={ROLE_TONES[acc.role ?? "buyer"] ?? "muted"}
                   dot={false}
                   className="text-[10px]"
                 >
                   {ROLE_LABELS[acc.role ?? "buyer"] ?? acc.role}
-                </StatusBadge>
+                </ToneBadge>
               </div>
               <p className="max-w-[220px] truncate text-xs text-muted-foreground">
                 {acc.email}
@@ -110,9 +106,9 @@ export default function UsersTable({
       className: "hidden sm:table-cell",
       headerClassName: "hidden sm:table-cell",
       cell: (acc) => (
-        <StatusBadge tone={STATUS_TONES[acc.status ?? "active"] ?? "muted"}>
+        <ToneBadge tone={STATUS_TONES[acc.status ?? "active"] ?? "muted"}>
           {STATUS_LABELS[acc.status ?? "active"] ?? acc.status ?? "—"}
-        </StatusBadge>
+        </ToneBadge>
       ),
     },
   ];

@@ -35,7 +35,10 @@ export function ProfileForm({
       </div>
 
       <form onSubmit={onSubmit} className="p-6 lg:p-8">
-        <div className="space-y-6 max-w-3xl">
+        {/* Two columns from `lg` so the panel fills its width instead of
+            leaving a dead gutter on the right. Fields that carry a hint or
+            badge span both columns. */}
+        <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2">
           <div>
             <label className="block text-xs uppercase tracking-wide font-bold text-luxury-ink mb-2">
               Họ và tên <span className="text-blush-600">*</span>
@@ -55,6 +58,26 @@ export function ProfileForm({
           </div>
 
           <div>
+            <label className="block text-xs uppercase tracking-wide font-bold text-luxury-ink mb-2">
+              Số điện thoại
+            </label>
+            <div className="relative">
+              <input
+                type="tel"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={onChange}
+                className="w-full h-11 pl-10 pr-4 rounded-[2px] border border-luxury-ink/20 bg-transparent text-sm outline-none focus:border-luxury-ink focus:ring-1 focus:ring-luxury-ink transition-all"
+                placeholder="VD: 0912 345 678"
+              />
+              <IconPhone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-600 pointer-events-none" />
+            </div>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Có thể nhận mã xác nhận khi thay đổi SĐT.
+            </p>
+          </div>
+
+          <div className="lg:col-span-2">
             <label className="block text-xs uppercase tracking-wide font-bold text-luxury-ink mb-2">
               Email <span className="text-blush-600">*</span>
               {isGoogleUser && (
@@ -97,27 +120,7 @@ export function ProfileForm({
             )}
           </div>
 
-          <div>
-            <label className="block text-xs uppercase tracking-wide font-bold text-luxury-ink mb-2">
-              Số điện thoại
-            </label>
-            <div className="relative">
-              <input
-                type="tel"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={onChange}
-                className="w-full h-11 pl-10 pr-4 rounded-[2px] border border-luxury-ink/20 bg-transparent text-sm outline-none focus:border-luxury-ink focus:ring-1 focus:ring-luxury-ink transition-all"
-                placeholder="VD: 0912 345 678"
-              />
-              <IconPhone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-600 pointer-events-none" />
-            </div>
-            <p className="mt-2 text-xs text-muted-foreground">
-              Có thể nhận mã xác nhận khi thay đổi SĐT.
-            </p>
-          </div>
-
-          <div className="border-t border-luxury-ink/10 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="lg:col-span-2 border-t border-luxury-ink/10 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <p className="text-xs text-muted-foreground">
               <span className="text-blush-600">*</span> Bắt buộc
             </p>

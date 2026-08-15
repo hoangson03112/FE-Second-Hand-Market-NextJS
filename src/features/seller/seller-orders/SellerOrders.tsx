@@ -1,5 +1,7 @@
 "use client";
 
+import { CancelOrderReasonDialog } from "@/features/order/components";
+import { OrderStatusBadge } from "@/features/order/components";
 import {
   IconArrowNarrowRight,
   IconCircleCheck,
@@ -25,17 +27,16 @@ import OrderTabs from "./components/OrderTabs";
 import EmptyOrderState from "./components/EmptyOrderState";
 import {
   Button,
-  CancelOrderReasonDialog,
-  ConfirmWithReasonDialog,
+ConfirmWithReasonDialog,
   Pagination,
-  StatusBadge,
-} from "@/components/shared";
+} from "@/components/ui";
 import { REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER } from "@/constants/refund";
 import { formatPrice } from "@/utils/format/price";
 import { format as formatDateTime, formatDateOnly } from "@/utils/format/date";
 import { formatPaymentMethod, formatShippingMethod } from "@/utils/format";
 import {
   getOrderStatusLabel,
+  sellerDisplayStatusFromRefund,
   getRefundStatusNotice,
 } from "@/constants/orderStatus";
 import { cn } from "@/lib/utils";
@@ -159,35 +160,6 @@ function getSellerRefundTodo(
   }
 }
 
-/** Map Refund.status → pseudo order status cho getRefundStatusNotice (seller) */
-function sellerNoticeStatusFromRefund(
-  orderStatus: string,
-  refundStatus: string | null | undefined,
-): string {
-  const rs = refundStatus ?? null;
-  if (orderStatus !== "refund" || !rs) return orderStatus;
-  switch (rs) {
-    case "pending":
-      return "refund_requested";
-    case "approved":
-      return "refund_approved";
-    case "return_shipping":
-    case "returning":
-      return "return_shipping";
-    case "returned":
-    case "processing":
-    case "bank_info_required":
-      return "returned";
-    case "completed":
-      return "refunded";
-    case "rejected":
-    case "disputed":
-      return orderStatus;
-    default:
-      return orderStatus;
-  }
-}
-
 export default function SellerOrders() {
   const {
     account,
@@ -292,7 +264,7 @@ export default function SellerOrders() {
             tone: "warning" as const,
           }
         : getRefundStatusNotice(
-            sellerNoticeStatusFromRefund(
+            sellerDisplayStatusFromRefund(
               selectedOrder.status,
               refundRequestStatus,
             ),
@@ -526,7 +498,7 @@ export default function SellerOrders() {
                             Đặt lúc {formatDateTime(selectedOrder.createdAt)}
                           </p>
                         </div>
-                        <StatusBadge status={selectedOrder.status} />
+                        <OrderStatusBadge status={selectedOrder.status} />
                       </div>
 
                       {selectedOrder.status === "pending" && (
@@ -536,9 +508,13 @@ export default function SellerOrders() {
                             onClick={() =>
                               handleUpdateStatus(selectedOrder._id, "confirmed")
                             }
-                            loading={isSelectedUpdating}
-                            leftIcon={<IconCircleCheck className="h-4 w-4" />}
+                            disabled={isSelectedUpdating}
                           >
+                            {isSelectedUpdating ? (
+                              <IconLoader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <IconCircleCheck className="h-4 w-4" />
+                            )}
                             Xác nhận đơn
                           </Button>
                           <Button
@@ -546,8 +522,8 @@ export default function SellerOrders() {
                             variant="outline"
                             onClick={() => setCancelOpen(true)}
                             disabled={isSelectedUpdating}
-                            leftIcon={<IconCircleX className="h-4 w-4" />}
                           >
+                            <IconCircleX className="h-4 w-4" />
                             Hủy đơn
                           </Button>
                         </div>
@@ -560,8 +536,8 @@ export default function SellerOrders() {
                             variant="outline"
                             onClick={() => setRejectRefundOpen(true)}
                             disabled={isSelectedUpdating}
-                            leftIcon={<IconCircleX className="h-4 w-4" />}
                           >
+                            <IconCircleX className="h-4 w-4" />
                             Từ chối
                           </Button>
                           <Button
@@ -569,9 +545,13 @@ export default function SellerOrders() {
                             onClick={() =>
                               handleApproveRefund(selectedOrder._id)
                             }
-                            loading={isSelectedUpdating}
-                            leftIcon={<IconCircleCheck className="h-4 w-4" />}
+                            disabled={isSelectedUpdating}
                           >
+                            {isSelectedUpdating ? (
+                              <IconLoader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <IconCircleCheck className="h-4 w-4" />
+                            )}
                             Chấp thuận
                           </Button>
                         </div>
@@ -580,13 +560,17 @@ export default function SellerOrders() {
                       {canSellerConfirmReturn && (
                         <Button
                           size="sm"
-                          fullWidth
+                          className="w-full"
                           onClick={() =>
                             handleConfirmReturnReceived(selectedOrder._id)
                           }
-                          loading={isSelectedUpdating}
-                          leftIcon={<IconCircleCheck className="h-4 w-4" />}
+                          disabled={isSelectedUpdating}
                         >
+                          {isSelectedUpdating ? (
+                            <IconLoader2 className="h-4 w-4 animate-spin" />
+                          ) : (
+                            <IconCircleCheck className="h-4 w-4" />
+                          )}
                           Xác nhận đã nhận lại hàng
                         </Button>
                       )}

@@ -96,7 +96,7 @@ export default function DiscountForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white border border-primary/30 rounded-xl p-4 mt-3 flex flex-col gap-4 shadow-lg"
+      className="mt-3 flex flex-col gap-4 rounded-[2px] border border-luxury-ink/12 bg-white p-4"
     >
       <div className="flex items-center gap-3">
         <input
@@ -165,14 +165,14 @@ export default function DiscountForm({
       <div className="flex gap-2 mt-2">
         <button
           type="submit"
-          className="bg-primary text-primary-foreground px-4 py-2 rounded-xl font-bold shadow-sm hover:bg-primary/90 hover:shadow-md transition-all duration-200 disabled:opacity-60 active:scale-[0.98]"
+          className="inline-flex h-10 items-center justify-center rounded-[2px] bg-luxury-ink px-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-40"
           disabled={!canSubmit}
         >
           {loading ? "Đang tạo..." : "Tạo giảm giá"}
         </button>
         <button
           type="button"
-          className="border-2 border-taupe-300/80 text-taupe-700 px-4 py-2 rounded-xl font-bold hover:bg-taupe-50 hover:border-taupe-500/70 transition-all duration-200"
+          className="inline-flex h-10 items-center justify-center rounded-[2px] border border-luxury-ink/15 px-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
           onClick={onCancel}
           disabled={loading}
         >

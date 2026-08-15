@@ -1,5 +1,6 @@
 "use client";
 
+import { OrderStatusBadge } from "@/features/order/components";
 import { useState } from "react";
 import {
   IconLoader2,
@@ -10,14 +11,15 @@ import {
   IconEye,
   IconTruck,
 } from "@tabler/icons-react";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 import { format } from "@/utils/format/date";
-import { StatusBadge } from "@/components/shared";
+import {
+} from "@/components/ui";
 import { useAdminRefunds, useRefundDetail } from "./hooks/useAdminRefunds";
 import { AdminDisputeDetailModal } from "./components/AdminDisputeDetailModal";
 import type { RefundRequest } from "@/types/order";
 import { ADMIN_MESSAGES } from "@/constants/messages";
-import { Pagination } from "@/components/shared";
+import { Pagination } from "@/components/ui";
 
 const REASON_LABELS: Record<string, string> = {
   damaged: "Hàng bị hỏng",
@@ -258,7 +260,7 @@ export default function AdminRefunds() {
                     </span>
                   </td>
                   <td className="px-4 py-3">
-                    <StatusBadge
+                    <OrderStatusBadge
                       status={
                         refund.status === "completed"
                           ? "refunded"

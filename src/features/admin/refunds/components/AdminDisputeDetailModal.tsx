@@ -1,5 +1,6 @@
 "use client";
 
+import { OrderStatusBadge } from "@/features/order/components";
 import Image from "next/image";
 import { useMemo, type ReactNode } from "react";
 import {
@@ -22,7 +23,8 @@ import { generateBuyerRefundVietQRImageUrl } from "@/constants/payment";
 import { format } from "@/utils/format/date";
 import { formatPrice } from "@/utils/format/price";
 import { openChat } from "@/utils/chat";
-import { StatusBadge } from "@/components/shared";
+import {
+} from "@/components/ui";
 
 const REASON_LABELS: Record<string, string> = {
   damaged: "Hàng bị hỏng",
@@ -235,7 +237,7 @@ export function AdminDisputeDetailModal({
                     </span>
                   </h2>
                   {refund?.status && (
-                    <StatusBadge status={refund.status} size="sm" />
+                    <OrderStatusBadge status={refund.status} size="sm" />
                   )}
                 </div>
                 <p className="text-xs text-muted-foreground sm:text-sm">
@@ -481,7 +483,7 @@ export function AdminDisputeDetailModal({
                       <h3 className="text-sm font-bold text-foreground">
                         Đơn #{order._id?.slice(-8).toUpperCase()}
                       </h3>
-                      <StatusBadge
+                      <OrderStatusBadge
                         status={order.status ?? "pending"}
                         size="sm"
                       />

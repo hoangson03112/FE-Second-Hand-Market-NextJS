@@ -4,7 +4,7 @@ import { IconPackageOff } from "@tabler/icons-react";
 import { useFeaturedProducts } from "@/hooks/useProducts";
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "../hooks";
-import { Skeleton } from "@/components/shared";
+import { Skeleton } from "@/components/ui";
 import SectionHeader from "./SectionHeader";
 import { ProductCard } from "@/features/categories/components";
 

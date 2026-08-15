@@ -1,3 +1,4 @@
+import type { OrderStatus } from "@/types/order";
 import { REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER } from "./refund";
 
 export const STATUS_CONFIG: Record<
@@ -294,22 +295,75 @@ export function getRefundStatusNotice(
   }
 }
 
-export const ORDER_TABS = [
-  { key: "all", label: "Tất cả" },
-  { key: "pending", label: "Chờ xác nhận" },
-  { key: "confirmed", label: "Đã xác nhận" },
-  { key: "picked_up", label: "Đã lấy hàng" },
-  { key: "shipping", label: "Đang vận chuyển" },
-  { key: "out_for_delivery", label: "Sắp giao đến" },
-  { key: "delivered", label: "Đã giao" },
-  { key: "completed", label: "Hoàn thành" },
-  { key: "failed", label: "Giao thất bại" },
-  { key: "returned", label: "Đã hoàn hàng" },
-  { key: "return_shipping", label: "Đang hoàn hàng" },
-  { key: "refund", label: "Đang xử lý hoàn tiền" },
-  { key: "cancelled", label: "Đã hủy" },
-  { key: "refund_requested", label: "Yêu cầu hoàn tiền" },
-  { key: "refunded", label: "Đã hoàn tiền" },
+/**
+ * The only statuses `order.status` can ever hold — mirrors the `ORDER_STATUS`
+ * enum in `backend/src/utils/orderStateMachine.js`, which Mongoose enforces.
+ *
+ * Statuses like `returning` / `return_shipping` / `returned` /
+ * `refund_requested` belong to the **Refund** model, not to the order, so a tab
+ * keyed on them can never match anything. Likewise the backend uses
+ * `delivery_failed`, never `failed`.
+ */
+export const ORDER_STATUS_KEYS: readonly OrderStatus[] = [
+  "pending",
+  "confirmed",
+  "picked_up",
+  "shipping",
+  "out_for_delivery",
+  "delivered",
+  "completed",
+  "delivery_failed",
+  "refund",
+  "refunded",
+  "cancelled",
 ] as const;
 
-export type OrderStatus = keyof typeof STATUS_CONFIG;
+export interface OrderTab {
+  key: string;
+  label: string;
+}
+
+/**
+ * Single source of truth for order filter tabs (buyer list + admin dropdown).
+ * Labels are derived from `STATUS_CONFIG` so tab text can never drift away from
+ * the status badge text.
+ */
+export const ORDER_TABS: readonly OrderTab[] = [
+  { key: "all", label: "Tất cả" },
+  ...ORDER_STATUS_KEYS.map((key) => ({ key, label: getOrderStatusLabel(key) })),
+];
+
+
+/**
+ * Project a Refund document's status onto the pseudo order status the seller
+ * screens key their UI on.
+ *
+ * The backend keeps `order.status === "refund"` for the entire refund
+ * lifecycle and advances `refund.status` instead
+ * (`backend/src/utils/refundStateMachine.js`), so seller UI must read the
+ * refund document — not the order — to know which stage it is at.
+ */
+export function sellerDisplayStatusFromRefund(
+  orderStatus: string,
+  refundStatus: string | null | undefined,
+): string {
+  const rs = refundStatus ?? null;
+  if (orderStatus !== "refund" || !rs) return orderStatus;
+  switch (rs) {
+    case "pending":
+      return "refund_requested";
+    case "approved":
+      return "refund_approved";
+    case "return_shipping":
+    case "returning":
+      return "return_shipping";
+    case "returned":
+    case "processing":
+    case "bank_info_required":
+      return "returned";
+    case "completed":
+      return "refunded";
+    default:
+      return orderStatus;
+  }
+}

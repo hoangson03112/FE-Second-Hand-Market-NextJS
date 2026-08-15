@@ -401,12 +401,12 @@ export default function FloatingChatBox() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full p-6 shadow-lg hover:shadow-xl transition-all z-50 group hover:scale-110"
+          className="group fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-luxury-ink text-luxury-ivory shadow-[0_10px_28px_color-mix(in_srgb,var(--luxury-ink)_28%,transparent)] transition-all duration-300 hover:bg-charcoal-800"
           aria-label="Open chat"
         >
-          <IconMessageCircle className="w-8 h-8" />
+          <IconMessageCircle className="h-5 w-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-sm rounded-full min-w-[28px] h-7 px-2 flex items-center justify-center font-bold shadow-md">
+            <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-accent px-1.5 text-[10px] font-semibold tabular-nums text-white">
               {unreadCount}
             </span>
           )}
@@ -416,7 +416,7 @@ export default function FloatingChatBox() {
       {isOpen && (
         <div
           className={
-            "fixed bottom-6 right-6 w-[600px] bg-white rounded-3xl shadow-2xl flex flex-col z-50 border-2 border-primary/20 transition-all duration-300 h-[720px]"
+            "fixed bottom-6 right-6 z-50 flex h-[min(680px,calc(100vh-3rem))] w-[min(420px,calc(100vw-3rem))] flex-col overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white shadow-[0_24px_64px_color-mix(in_srgb,var(--luxury-ink)_22%,transparent)]"
           }
         >
           <ChatHeader
@@ -432,8 +432,8 @@ export default function FloatingChatBox() {
           />
 
           {!isConnected && (
-            <div className="bg-primary/8 text-primary/90 text-sm px-5 py-2.5 text-center border-b border-primary/20 flex items-center justify-center gap-2">
-              <IconLoader2 className="w-4 h-4 animate-spin" />
+            <div className="flex shrink-0 items-center justify-center gap-2 border-b border-luxury-champagne/30 bg-cream-100/80 px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-600">
+              <IconLoader2 className="h-3 w-3 animate-spin" />
               <span>Đang kết nối lại...</span>
             </div>
           )}
@@ -445,7 +445,7 @@ export default function FloatingChatBox() {
               />
             ) : !selectedConversation ? (
               <div className="h-full overflow-y-auto">
-                <div className="p-4 border-b border-border bg-primary/5">
+                <div className="border-b border-luxury-ink/8 bg-cream-50/60 p-4">
                   <button
                     type="button"
                     onClick={() => {
@@ -453,12 +453,12 @@ export default function FloatingChatBox() {
                       setIsDealMode(false);
                       setSelectedConversation(null);
                     }}
-                    className="w-full rounded-2xl border border-primary/25 bg-white px-4 py-3.5 text-left hover:border-primary/45 hover:bg-primary/5 transition-colors"
+                    className="group w-full rounded-[2px] border border-luxury-ink/12 bg-white px-4 py-3.5 text-left transition-all duration-300 hover:border-luxury-ink/35"
                   >
-                    <p className="text-sm font-bold text-primary">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-luxury-champagne">
                       Trợ lý AI tìm sản phẩm
                     </p>
-                    <p className="text-xs text-taupe-500 mt-1">
+                    <p className="mt-2 text-sm leading-relaxed text-neutral-600">
                       Mô tả nhu cầu để AI gợi ý sản phẩm phù hợp ngay trong
                       chat.
                     </p>
@@ -475,7 +475,7 @@ export default function FloatingChatBox() {
                 <div
                   ref={messageListRef}
                   onScroll={handleMessageScroll}
-                  className="flex-1 overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-cream-50/30 to-transparent"
+                  className="flex-1 space-y-3 overflow-y-auto bg-luxury-ivory/40 px-4 py-5"
                 >
                   <ChatMessages
                     loading={loading}
@@ -550,7 +550,7 @@ export default function FloatingChatBox() {
                         <button
                           type="button"
                           onClick={() => setIsDealMode(true)}
-                          className="inline-flex h-[52px] items-center gap-1.5 rounded-xl border-2 border-primary/30 bg-primary/8 px-3.5 text-xs font-bold text-primary transition hover:bg-primary/14"
+                          className="inline-flex h-11 items-center gap-1.5 rounded-[2px] border border-luxury-ink/15 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
                         >
                           <IconPercentage className="h-4 w-4" />
                           Deal

@@ -48,7 +48,7 @@ function ProductCard({
     <button
       type="button"
       onClick={onSelect}
-      className={`flex items-center gap-3 w-full p-2 rounded-xl border-2 transition-all shadow-sm hover:border-primary/40 bg-white ${selected ? "border-primary ring-2 ring-primary/20" : "border-border"}`}
+      className={`flex w-full items-center gap-3 rounded-[2px] border bg-white p-2 transition-all duration-300 hover:border-luxury-ink/40 ${selected ? "border-luxury-ink" : "border-luxury-ink/12"}`}
     >
       {product.imageUrl ? (
         <img
@@ -57,7 +57,7 @@ function ProductCard({
           className="w-10 h-10 rounded-lg object-cover border border-border"
         />
       ) : (
-        <div className="w-10 h-10 rounded-lg bg-taupe-100 flex items-center justify-center text-taupe-300 font-bold text-lg">
+        <div className="flex h-10 w-10 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-taupe-50 text-sm font-semibold text-taupe-300">
           ?
         </div>
       )}
@@ -149,11 +149,11 @@ export default function SellerDiscountInline({
       </div>
 
       {created ? (
-        <div className="px-6 py-6 flex flex-col items-center justify-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl mt-3">
+        <div className="mt-3 flex flex-col items-center justify-center gap-2 rounded-[2px] border border-accent/40 bg-taupe-50 px-6 py-6">
           <span className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
             <IconCheck className="w-7 h-7 text-emerald-600" />
           </span>
-          <div className="text-emerald-700 font-bold text-base">
+          <div className="text-sm font-semibold text-taupe-800">
             Ưu đãi đã được tạo thành công!
           </div>
         </div>
@@ -164,8 +164,8 @@ export default function SellerDiscountInline({
               Chọn sản phẩm áp dụng
             </div>
             {loading ? (
-              <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-border bg-taupe-50/60 text-sm text-taupe-400">
-                <span className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+              <div className="flex items-center gap-2 rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 px-3 py-2.5 text-xs text-neutral-500">
+                <span className="h-3.5 w-3.5 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
                 Đang tải sản phẩm…
               </div>
             ) : loadError ? (
@@ -195,7 +195,7 @@ export default function SellerDiscountInline({
               <div className="text-xs font-bold text-taupe-500 uppercase tracking-wide mb-1">
                 Cấu hình ưu đãi
               </div>
-              <div className="rounded-xl border border-border bg-taupe-50/60 p-3">
+              <div className="rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 p-3">
                 <DiscountForm
                   product={
                     products.find((p) => p._id === selectedProduct) || null

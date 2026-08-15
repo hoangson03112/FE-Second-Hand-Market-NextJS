@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 import { AUTH_MESSAGES } from "@/constants/messages";
 import axiosClient from "@/lib/axios";
 

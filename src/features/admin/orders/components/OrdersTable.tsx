@@ -1,3 +1,4 @@
+import { OrderStatusBadge } from "@/features/order/components";
 import {
   IconChevronDown,
   IconChevronUp,
@@ -6,13 +7,14 @@ import {
   IconPackage,
   IconTruck,
 } from "@tabler/icons-react";
-import { useConfirm } from "@/components/shared";
+import { useConfirm } from "@/components/ui";
 import { Fragment } from "react";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import type { AdminOrder } from "@/types/admin";
-import { StatusBadge } from "@/components/shared";
-import { AvatarOrInitials } from "@/components/shared/AvatarOrInitials";
+import {
+} from "@/components/ui";
+import { AvatarOrInitials } from "@/components/ui/AvatarOrInitials";
 
 const GHN_TRACKING_URL = "https://tracking.ghn.dev/?order_code=";
 
@@ -110,7 +112,7 @@ export default function OrdersTable({
                       {formatPrice(order.totalAmount)}
                     </td>
                     <td className="px-4 py-3">
-                      <StatusBadge status={order.status} />
+                      <OrderStatusBadge status={order.status} />
                     </td>
                     <td className="px-4 py-3 text-right">
                       <button

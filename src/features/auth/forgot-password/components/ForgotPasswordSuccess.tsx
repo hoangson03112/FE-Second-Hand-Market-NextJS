@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { IconMail } from "@tabler/icons-react";
-import SuccessMessage from "@/components/shared/auth/SuccessMessage";
-import EmailSentTips from "@/components/shared/auth/EmailSentTips";
+import SuccessMessage from "@/features/auth/components/SuccessMessage";
+import EmailSentTips from "@/features/auth/components/EmailSentTips";
 
 interface ForgotPasswordSuccessProps {
   email: string;

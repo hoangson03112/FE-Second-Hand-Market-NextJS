@@ -6,7 +6,7 @@ import ShopCartGroup from "./components/ShopCartGroup";
 import CartBottomBar from "./components/CartBottomBar";
 import CartEmpty from "./components/CartEmpty";
 import CartLoginPrompt from "./components/CartLoginPrompt";
-import { LoadingBlock } from "@/components/shared";
+import { LoadingBlock } from "@/components/ui";
 import { useCartPage } from "./hooks/useCartPage";
 import { useUser } from "@/features/auth/hooks/useUser";
 import { PageContainer, Container } from "@/components/layout/Container";

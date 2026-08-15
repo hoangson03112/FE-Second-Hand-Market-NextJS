@@ -97,9 +97,9 @@ export function PasswordForm({
       </div>
 
       <form onSubmit={onSubmit} className="p-6 lg:p-8 pt-0 lg:pt-0">
-        <div className="space-y-6 max-w-3xl">
+        <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2">
           {!isGoogleUser && (
-            <div>
+            <div className="lg:col-span-2">
               <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
                 Mật khẩu hiện tại <span className="text-blush-600">*</span>
               </label>
@@ -224,7 +224,7 @@ export function PasswordForm({
             )}
           </div>
 
-          <div className="border-t border-luxury-ink/10 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="lg:col-span-2 border-t border-luxury-ink/10 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <p className="text-xs text-muted-foreground">
               <span className="text-blush-600">*</span> Bắt buộc
             </p>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ProductService } from "@/services/product.service";
-import { useToast } from "@/components/shared";
-import { useConfirm } from "@/components/shared";
+import { useToast } from "@/components/ui";
+import { useConfirm } from "@/components/ui";
 import { PRODUCT_UI_MESSAGES } from "@/constants/messages";
 
 export function useRequestReview(onSuccess?: () => void) {

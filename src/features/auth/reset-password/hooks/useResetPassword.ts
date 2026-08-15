@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 import { AUTH_MESSAGES } from "@/constants/messages";
 import axiosClient from "@/lib/axios";
 

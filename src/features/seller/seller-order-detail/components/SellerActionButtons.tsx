@@ -13,8 +13,9 @@ import {
   IconHandStop,
 } from "@tabler/icons-react";
 import { createPortal } from "react-dom";
-import { CancelOrderReasonDialog } from "@/components/shared";
-import { ConfirmWithReasonDialog } from "@/components/shared";
+import { CancelOrderReasonDialog } from "@/features/order/components";
+import { ConfirmWithReasonDialog } from "@/components/ui";
+import { sellerDisplayStatusFromRefund } from "@/constants/orderStatus";
 import type { Order } from "@/types/order";
 
 interface SellerActionButtonsProps {
@@ -58,7 +59,14 @@ export function SellerActionButtons({
   isLocalPickup,
   onChatClick,
 }: SellerActionButtonsProps) {
-  const { status } = order;
+  // The server parks `order.status` at "refund" for the whole refund
+  // lifecycle and advances `refundRequestId.status` instead, so reading
+  // `order.status` directly left every refund branch below unreachable and the
+  // seller with no actions at all after a reload.
+  const status = sellerDisplayStatusFromRefund(
+    order.status,
+    order.refundRequestId?.status,
+  );
 
   /* ── Dialogs always rendered ─────────────────────────────────── */
   const dialogs = (

@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useUser } from "@/features/auth/hooks/useUser";
-import { Spinner } from "@/components/shared";
+import { Spinner } from "@/components/ui";
 
 export default function AdminLayout({
   children,

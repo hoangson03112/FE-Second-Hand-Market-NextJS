@@ -4,7 +4,7 @@ import { AuthService } from "@/services/auth.service";
 import type { RegisterRequest } from "@/types/auth";
 import { registerSchema, RegisterInput } from "@/schemas/auth.schema";
 import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 
 export function useRegister() {
   const router = useRouter();

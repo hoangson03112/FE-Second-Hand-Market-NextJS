@@ -5,3 +5,7 @@ export { default as AuthField } from "./AuthField";
 export { default as AuthSubmitButton } from "./AuthSubmitButton";
 export { default as AuthDivider } from "./AuthDivider";
 export { default as AuthAltAction } from "./AuthAltAction";
+export { default as Background } from "./Background";
+export { default as InfoBox } from "./InfoBox";
+export { default as SuccessMessage } from "./SuccessMessage";
+export { default as EmailSentTips } from "./EmailSentTips";

@@ -9,7 +9,7 @@ import {
   IconShieldCheck,
 } from "@tabler/icons-react";
 import Link from "next/link";
-import ErrorMessage from "@/components/shared/ErrorMessage";
+import ErrorMessage from "@/features/seller/components/ErrorMessage";
 import { BankInfoSection } from "./BankInfoSection";
 import { IdCardSection } from "./IdCardSection";
 import { TermsSection } from "./TermsSection";

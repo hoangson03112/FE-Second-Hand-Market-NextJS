@@ -6,7 +6,7 @@ import ResetPasswordForm from "./components/ResetPasswordForm";
 import ResetPasswordSuccess from "./components/ResetPasswordSuccess";
 import InvalidTokenError from "./components/InvalidTokenError";
 import { resetPasswordFeatures } from "@/constants/auth.features";
-import { Background } from "@/components/shared";
+import { Background } from "@/features/auth/components";
 import Image from "next/image";
 import Link from "next/link";
 

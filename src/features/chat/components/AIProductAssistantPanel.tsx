@@ -101,7 +101,7 @@ export function AIProductAssistantPanel({
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-cream-50/30 to-transparent">
+      <div className="flex-1 space-y-3 overflow-y-auto bg-luxury-ivory/40 px-4 py-5">
         {messages.map((message) => {
           const isUser = message.sender === "user";
           return (
@@ -110,10 +110,10 @@ export function AIProductAssistantPanel({
               className={`flex ${isUser ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[88%] rounded-2xl px-5 py-3.5 shadow-sm ${
+                className={`max-w-[88%] rounded-[2px] px-4 py-3 ${
                   isUser
-                    ? "bg-gradient-to-br from-primary to-primary/90 text-white rounded-br-md"
-                    : "bg-white border border-border text-taupe-900 rounded-bl-md"
+                    ? "bg-luxury-ink text-luxury-ivory"
+                    : "border border-luxury-ink/10 bg-white text-luxury-ink"
                 }`}
               >
                 {!isUser && (
@@ -124,7 +124,7 @@ export function AIProductAssistantPanel({
                     </span>
                   </div>
                 )}
-                <p className="text-base leading-relaxed whitespace-pre-wrap">
+                <p className="text-sm leading-relaxed whitespace-pre-wrap">
                   {message.text}
                 </p>
 
@@ -149,7 +149,7 @@ export function AIProductAssistantPanel({
                                   : undefined,
                             }).catch(() => {});
                           }}
-                          className="flex items-center gap-3 p-2 rounded-xl border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors bg-white"
+                          className="flex items-center gap-3 rounded-[2px] border border-luxury-ink/10 bg-white p-2 transition-colors duration-300 hover:border-luxury-ink/30"
                         >
                           <Image
                             src={getProductImage(product)}

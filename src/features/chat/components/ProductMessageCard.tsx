@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { IconArrowUpRight, IconPackage } from "@tabler/icons-react";
+import { formatPrice } from "@/utils/format/price";
 
 interface ProductMessageCardProps {
   productId: string;
@@ -21,36 +23,39 @@ export default function ProductMessageCard({
   return (
     <Link
       href={productUrl}
-      className="block bg-white border-2 border-primary/20 rounded-xl p-3 hover:shadow-md transition-all duration-200 max-w-sm"
+      className="group block max-w-sm rounded-[2px] border border-luxury-ink/10 bg-white p-3 transition-all duration-300 hover:border-luxury-ink/30"
     >
       <div className="flex gap-3">
-        <div className="w-20 h-20 rounded-lg overflow-hidden bg-cream-50 flex-shrink-0">
+        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-taupe-50">
           {productImage ? (
             <Image
               src={productImage}
               alt={productName}
-              width={80}
-              height={80}
-              className="w-full h-full object-cover"
+              fill
+              sizes="80px"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-taupe-400">
-              <span className="text-2xl">📦</span>
+            <div className="flex h-full w-full items-center justify-center">
+              <IconPackage className="h-6 w-6 text-taupe-300" />
             </div>
           )}
         </div>
 
-        <div className="flex-1 min-w-0">
-          <p className="font-bold text-sm text-taupe-900 mb-1 line-clamp-2">
+        <div className="flex min-w-0 flex-1 flex-col">
+          <p className="line-clamp-2 text-sm font-medium leading-relaxed text-luxury-ink">
             {productName}
           </p>
-          <p className="text-primary font-bold text-base">
-            {new Intl.NumberFormat("vi-VN", {
-              style: "currency",
-              currency: "VND",
-            }).format(productPrice)}
+          <p
+            style={{ fontFamily: "var(--font-droid-serif), serif" }}
+            className="mt-1.5 tabular-nums text-base text-luxury-ink"
+          >
+            {formatPrice(productPrice)}
           </p>
-          <p className="text-xs text-taupe-500 mt-1">👆 Nhấn để xem chi tiết</p>
+          <span className="mt-auto flex items-center gap-1.5 pt-2 text-[9px] font-semibold uppercase tracking-[0.2em] text-neutral-500 transition-colors group-hover:text-luxury-ink">
+            Xem chi tiết
+            <IconArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </span>
         </div>
       </div>
     </Link>

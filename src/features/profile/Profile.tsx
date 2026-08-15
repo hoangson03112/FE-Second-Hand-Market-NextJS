@@ -50,55 +50,53 @@ export default function Profile() {
   const avatarUrl = getAvatarUrl(account.avatar);
 
   return (
-    <div className="min-h-screen bg-luxury-ivory">
-      <div className="max-w-9xl mx-auto w-full px-4 py-8 sm:px-6">
-        <Breadcrumb />
+    <div className="max-w-9xl mx-auto w-full px-4 py-8 sm:px-6">
+      <Breadcrumb />
 
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
-          <ProfileSidebar
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
-            avatarUrl={avatarUrl}
-            fullName={account.fullName || ""}
-            email={account.email || ""}
-            role={account.role}
-            isGoogleUser={isGoogleUser}
-          />
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+        <ProfileSidebar
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          avatarUrl={avatarUrl}
+          fullName={account.fullName || ""}
+          email={account.email || ""}
+          role={account.role}
+          isGoogleUser={isGoogleUser}
+        />
 
-          <main className="flex-1 min-w-0">
-            <div className="rounded-[2px] border border-luxury-ink/10 bg-white overflow-hidden">
-              {activeTab === "profile" && (
-                <ProfileForm
-                  formData={profileFormData}
-                  isSubmitting={isProfileSubmitting}
-                  isGoogleUser={isGoogleUser}
-                  onSubmit={handleProfileSubmit}
-                  onChange={handleProfileChange}
-                />
-              )}
+        <main className="flex-1 min-w-0">
+          <div className="rounded-[2px] border border-luxury-ink/10 bg-white overflow-hidden">
+            {activeTab === "profile" && (
+              <ProfileForm
+                formData={profileFormData}
+                isSubmitting={isProfileSubmitting}
+                isGoogleUser={isGoogleUser}
+                onSubmit={handleProfileSubmit}
+                onChange={handleProfileChange}
+              />
+            )}
 
-              {activeTab === "password" && (
-                <PasswordForm
-                  formData={passwordFormData}
-                  isSubmitting={isPasswordSubmitting}
-                  isGoogleUser={isGoogleUser}
-                  onSubmit={handlePasswordSubmit}
-                  onChange={handlePasswordChange}
-                />
-              )}
+            {activeTab === "password" && (
+              <PasswordForm
+                formData={passwordFormData}
+                isSubmitting={isPasswordSubmitting}
+                isGoogleUser={isGoogleUser}
+                onSubmit={handlePasswordSubmit}
+                onChange={handlePasswordChange}
+              />
+            )}
 
-              {activeTab === "bank" && account.role === "seller" && (
-                <BankInfoForm
-                  formData={bankFormData}
-                  isSubmitting={isBankSubmitting}
-                  isLoading={isBankLoading}
-                  onSubmit={handleBankSubmit}
-                  onChange={handleBankChange}
-                />
-              )}
-            </div>
-          </main>
-        </div>
+            {activeTab === "bank" && account.role === "seller" && (
+              <BankInfoForm
+                formData={bankFormData}
+                isSubmitting={isBankSubmitting}
+                isLoading={isBankLoading}
+                onSubmit={handleBankSubmit}
+                onChange={handleBankChange}
+              />
+            )}
+          </div>
+        </main>
       </div>
     </div>
   );

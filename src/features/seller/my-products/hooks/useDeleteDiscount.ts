@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SellerService } from "@/services/seller.service";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 import type { MyListingsResponse } from "@/types/myProducts";
 
 export function useDeleteDiscount(refetch?: () => void) {

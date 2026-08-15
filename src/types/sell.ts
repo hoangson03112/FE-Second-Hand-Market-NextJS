@@ -16,7 +16,6 @@ export type SellFormValues = {
   images: File[];
   video: File | null;
   attributes: ProductAttribute[];
-  
 };
 
 export type DeliveryOptions = {
@@ -34,7 +33,6 @@ export type PickupFormValues = {
 };
 
 export interface IProductWithMediaAndIds extends IProduct {
-  /** Địa chỉ lấy hàng – Address ref được populate từ backend */
   address?: {
     _id?: string;
     provinceId?: string;
@@ -45,17 +43,10 @@ export interface IProductWithMediaAndIds extends IProduct {
     phoneNumber?: string;
   } | null;
 
-
   video?: {
     url?: string | null;
   } | null;
 
-  /**
-   * Một số response có thêm `categoryId` / `subcategoryId`
-   * (string hoặc object chỉ chứa `_id`) ngoài field `category` / `subcategory`.
-   * Dùng union để không cần `any`.
-   */
   categoryId?: string | { _id: string };
   subcategoryId?: string | { _id: string };
 }
-

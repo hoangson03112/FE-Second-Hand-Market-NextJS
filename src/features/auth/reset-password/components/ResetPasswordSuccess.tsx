@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { IconCircleCheck } from "@tabler/icons-react";
-import SuccessMessage from "@/components/shared/auth/SuccessMessage";
-import InfoBox from "@/components/shared/auth/InfoBox";
-import { ArrowRightIcon } from "@/components/shared";
+import SuccessMessage from "@/features/auth/components/SuccessMessage";
+import InfoBox from "@/features/auth/components/InfoBox";
+import { IconArrowRight } from "@tabler/icons-react";
 
 export default function ResetPasswordSuccess() {
   return (
@@ -23,7 +23,7 @@ export default function ResetPasswordSuccess() {
           className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-bold text-primary-foreground transition-all hover:bg-primary/90"
         >
           <span>Đăng nhập ngay</span>
-          <ArrowRightIcon className="w-5 h-5" />
+          <IconArrowRight className="w-5 h-5" />
         </Link>
       </div>
     </div>

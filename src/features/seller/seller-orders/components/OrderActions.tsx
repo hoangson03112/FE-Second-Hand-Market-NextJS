@@ -9,7 +9,7 @@ import {
   IconTruck,
   IconEye,
 } from "@tabler/icons-react";
-import { CancelOrderReasonDialog } from "@/components/shared";
+import { CancelOrderReasonDialog } from "@/features/order/components";
 import { getShippingMethodType } from "@/utils/format";
 import type { Order } from "@/types/order";
 
