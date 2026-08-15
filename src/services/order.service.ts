@@ -4,6 +4,7 @@ import type {
   CreateOrderResponse,
   Order,
   OrderStatus,
+  ReturnInspectionCondition,
   SellerBankInfo,
   GHNTrackingData,
 } from "@/types/order";
@@ -160,11 +161,35 @@ export const OrderService = {
   },
 
   /**
-   * Seller: confirm item received from buyer return shipment → status "returned"
+   * Seller: confirm the returned parcel arrived, and record what was inside.
    * POST /orders/:id/confirm-return-received
+   *
+   * The refund is only owed when the goods come back intact. Reporting any
+   * other condition sends the refund to `disputed` for an admin to settle
+   * instead of obliging the seller to transfer the money.
    */
-  confirmReturnReceived: async (orderId: string): Promise<{ message: string }> => {
-    return axiosClient.post(`/orders/${orderId}/confirm-return-received`);
+  confirmReturnReceived: async (
+    orderId: string,
+    inspection?: {
+      condition?: ReturnInspectionCondition;
+      inspectionComment?: string;
+      images?: File[];
+    },
+  ): Promise<{ message: string }> => {
+    const { condition = "intact", inspectionComment, images } = inspection ?? {};
+
+    if (images?.length) {
+      const form = new FormData();
+      form.append("condition", condition);
+      if (inspectionComment) form.append("inspectionComment", inspectionComment);
+      images.forEach((f) => form.append("images", f));
+      return axiosClient.post(`/orders/${orderId}/confirm-return-received`, form);
+    }
+
+    return axiosClient.post(`/orders/${orderId}/confirm-return-received`, {
+      condition,
+      inspectionComment,
+    });
   },
 
   /**

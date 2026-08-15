@@ -14,10 +14,10 @@ export function SellerLimitInfoBox({
   productLimit,
 }: SellerLimitInfoBoxProps) {
   return (
-    <div className="mb-4 p-4 rounded-xl border-2 border-primary/20 bg-primary/5 flex items-start gap-3">
-      <IconInfoCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+    <div className="mb-4 flex items-start gap-4 rounded-[2px] border border-luxury-champagne/30 bg-cream-100/70 px-5 py-4">
+      <IconInfoCircle className="mt-0.5 h-4 w-4 shrink-0 text-luxury-champagne" />
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-primary/90">
+        <p className="text-xs leading-relaxed text-neutral-700">
           {isSeller
             ? FEATURE_INFO.SELLER_UNLIMITED
             : productLimit
@@ -30,7 +30,7 @@ export function SellerLimitInfoBox({
         {!isSeller && (
           <Link
             href="/become-seller"
-            className="inline-block mt-1.5 text-xs font-bold text-primary hover:underline"
+            className="mt-2 inline-block text-[10px] font-semibold uppercase tracking-[0.2em] text-luxury-ink transition-colors hover:text-taupe-700"
           >
             Đăng ký Seller →
           </Link>

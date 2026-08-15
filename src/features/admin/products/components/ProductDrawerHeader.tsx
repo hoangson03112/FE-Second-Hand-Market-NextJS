@@ -15,12 +15,12 @@ import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import { CONDITION_LABEL, STATUS_BADGE } from "../constants";
 
-type Props = {
+type ProductDrawerHeaderProps = {
   product: IProduct;
   onClose: () => void;
 };
 
-export function ProductDrawerHeader({ product, onClose }: Props) {
+export function ProductDrawerHeader({ product, onClose }: ProductDrawerHeaderProps) {
   const statusInfo = STATUS_BADGE[product.status] ?? {
     label: product.status,
     dot: "bg-muted-foreground",

@@ -75,7 +75,7 @@ export default function AdminUsers() {
     setBanModal(null);
     setBanReason("");
   };
-  const onConfirmBan = async () => {
+  const handleConfirmBan = async () => {
     if (!banModal) return;
     try {
       await handleBan(banModal._id, banReason.trim() || undefined);
@@ -85,7 +85,7 @@ export default function AdminUsers() {
       toast.error("Không thể khóa tài khoản.");
     }
   };
-  const onUnbanClick = async (acc: AdminAccount) => {
+  const handleUnbanClick = async (acc: AdminAccount) => {
     try {
       await handleUnban(acc._id);
       toast.success("Đã mở khóa tài khoản.");
@@ -144,7 +144,7 @@ export default function AdminUsers() {
             accounts={accounts}
             isUpdating={isUpdating}
             onBan={setBanModal}
-            onUnban={onUnbanClick}
+            onUnban={handleUnbanClick}
           />
           <Pagination
             currentPage={page}
@@ -191,7 +191,7 @@ export default function AdminUsers() {
             <Button
               variant="destructive"
               disabled={isUpdating}
-              onClick={onConfirmBan}
+              onClick={handleConfirmBan}
             >
               {isUpdating && <Loader2 className="size-4 animate-spin mr-2" />}
               Khóa tài khoản

@@ -23,12 +23,12 @@ const ROLE_BADGE: Record<string, { label: string; className: string }> = {
   user: { label: "Người dùng", className: "bg-blue-100 text-blue-800" },
 };
 
-type Props = {
+type SellerSectionProps = {
   seller: ISeller;
   addressPhone?: string;
 };
 
-export function SellerSection({ seller, addressPhone }: Props) {
+export function SellerSection({ seller, addressPhone }: SellerSectionProps) {
   const displayName =
     seller?.account?.fullName ?? seller?.fullName ?? "Người bán";
   const rating = seller?.avgRating ?? 0;

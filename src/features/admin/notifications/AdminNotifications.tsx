@@ -39,7 +39,7 @@ export default function AdminNotifications() {
   const canGoPrev = currentPage > 1;
   const canGoNext = currentPage < totalPages;
 
-  const onSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
     setResult("");
@@ -98,7 +98,7 @@ export default function AdminNotifications() {
       </div>
 
       <form
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         className="space-y-4 rounded-xl border border-border bg-card p-4 shadow-sm"
       >
         <div className="space-y-1">

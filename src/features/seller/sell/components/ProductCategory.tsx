@@ -1,8 +1,5 @@
 import type { ChangeEvent } from "react";
-
-const INPUT_CLASS =
-  "w-full rounded-lg border border-border bg-white text-taupe-900 px-2.5 py-2 text-sm placeholder:text-taupe-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:border-primary";
-const LABEL_CLASS = "block text-xs font-medium text-taupe-700 mb-1";
+import { INPUT_CLASS, LABEL_CLASS } from "./fieldStyles";
 
 interface Category {
   _id: string;
@@ -10,7 +7,7 @@ interface Category {
   subCategories?: Array<{ _id: string; name: string }>;
 }
 
-interface Props {
+interface ProductCategoryProps {
   categoryId: string;
   subcategoryId: string;
   errors: Partial<Record<"categoryId" | "subcategoryId", string>>;
@@ -24,7 +21,7 @@ export function ProductCategory({
   errors,
   categories,
   onChange,
-}: Props) {
+}: ProductCategoryProps) {
   const subCategories =
     categoryId
       ? (categories.find((c) => c._id === categoryId)?.subCategories ?? [])

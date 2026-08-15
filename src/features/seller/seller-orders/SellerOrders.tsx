@@ -2,6 +2,7 @@
 
 import { CancelOrderReasonDialog } from "@/features/order/components";
 import { OrderStatusBadge } from "@/features/order/components";
+import { ReturnInspectionModal } from "@/features/seller/components";
 import {
   IconArrowNarrowRight,
   IconCircleCheck,
@@ -80,7 +81,6 @@ function getSellerRefundTodo(
   orderStatus: string,
   refundStatus: string | null | undefined,
 ) {
-  const rs = refundStatus ?? null;
   if (orderStatus === "refunded") {
     return {
       tone: "success" as const,
@@ -88,7 +88,7 @@ function getSellerRefundTodo(
       description: "Đơn hàng này đã được hoàn tiền thành công cho buyer.",
     };
   }
-  if (rs === "rejected") {
+  if (refundStatus === "rejected") {
     return {
       tone: "warning" as const,
       title: "Bạn đã từ chối yêu cầu",
@@ -96,7 +96,7 @@ function getSellerRefundTodo(
         "Buyer có thể khiếu nại lên admin. Theo dõi thông báo nếu có tranh chấp.",
     };
   }
-  if (rs === "disputed") {
+  if (refundStatus === "disputed") {
     return {
       tone: "warning" as const,
       title: "Đang tranh chấp",
@@ -104,8 +104,8 @@ function getSellerRefundTodo(
     };
   }
   if (
-    rs === "pending" ||
-    ((orderStatus === "refund" || orderStatus === "refund_requested") && !rs)
+    refundStatus === "pending" ||
+    ((orderStatus === "refund" || orderStatus === "refund_requested") && !refundStatus)
   ) {
     return {
       tone: "warning" as const,
@@ -114,7 +114,7 @@ function getSellerRefundTodo(
         "Kiểm tra lý do hoàn tiền, sau đó chọn Chấp thuận hoặc Từ chối để không quá SLA xử lý.",
     };
   }
-  if (rs === "approved" || rs === "return_shipping" || rs === "returning") {
+  if (refundStatus === "approved" || refundStatus === "return_shipping" || refundStatus === "returning") {
     return {
       tone: "info" as const,
       title: "Việc cần làm ngay",
@@ -123,7 +123,7 @@ function getSellerRefundTodo(
         REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER,
     };
   }
-  if (rs === "returned" || rs === "processing" || rs === "bank_info_required") {
+  if (refundStatus === "returned" || refundStatus === "processing" || refundStatus === "bank_info_required") {
     return {
       tone: "warning" as const,
       title: "Đơn đã sẵn sàng hoàn tiền",
@@ -131,7 +131,7 @@ function getSellerRefundTodo(
         "Hệ thống đang xử lý chuyển tiền hoàn cho buyer (hoặc chờ thông tin từ buyer).",
     };
   }
-  if (rs === "completed") {
+  if (refundStatus === "completed") {
     return {
       tone: "success" as const,
       title: "Hoàn tiền đã hoàn tất",
@@ -191,6 +191,8 @@ export default function SellerOrders() {
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [cancelOpen, setCancelOpen] = useState(false);
   const [rejectRefundOpen, setRejectRefundOpen] = useState(false);
+  // Seller must inspect the returned parcel before the refund can proceed.
+  const [inspectionOrderId, setInspectionOrderId] = useState<string | null>(null);
   const pageStart =
     filteredOrders.length === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
   const pageEnd = Math.min(page * PAGE_SIZE, filteredOrders.length);
@@ -562,7 +564,7 @@ export default function SellerOrders() {
                           size="sm"
                           className="w-full"
                           onClick={() =>
-                            handleConfirmReturnReceived(selectedOrder._id)
+                            setInspectionOrderId(selectedOrder._id)
                           }
                           disabled={isSelectedUpdating}
                         >
@@ -867,6 +869,17 @@ export default function SellerOrders() {
             }}
           />
         )}
+
+        <ReturnInspectionModal
+          isOpen={inspectionOrderId !== null}
+          submitting={updatingId === inspectionOrderId}
+          onClose={() => setInspectionOrderId(null)}
+          onSubmit={async (payload) => {
+            if (!inspectionOrderId) return;
+            await handleConfirmReturnReceived(inspectionOrderId, payload);
+            setInspectionOrderId(null);
+          }}
+        />
       </main>
     </div>
   );

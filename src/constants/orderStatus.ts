@@ -299,8 +299,9 @@ export function getRefundStatusNotice(
  * The only statuses `order.status` can ever hold — mirrors the `ORDER_STATUS`
  * enum in `backend/src/utils/orderStateMachine.js`, which Mongoose enforces.
  *
- * Statuses like `returning` / `return_shipping` / `returned` /
- * `refund_requested` belong to the **Refund** model, not to the order, so a tab
+ * `returning` / `returned` are the leg where a failed delivery travels back to
+ * the seller — they live on the order. `return_shipping` / `refund_requested` /
+ * `refund_approved` belong to the **Refund** model, not to the order, so a tab
  * keyed on them can never match anything. Likewise the backend uses
  * `delivery_failed`, never `failed`.
  */
@@ -313,6 +314,8 @@ export const ORDER_STATUS_KEYS: readonly OrderStatus[] = [
   "delivered",
   "completed",
   "delivery_failed",
+  "returning",
+  "returned",
   "refund",
   "refunded",
   "cancelled",
@@ -347,9 +350,8 @@ export function sellerDisplayStatusFromRefund(
   orderStatus: string,
   refundStatus: string | null | undefined,
 ): string {
-  const rs = refundStatus ?? null;
-  if (orderStatus !== "refund" || !rs) return orderStatus;
-  switch (rs) {
+  if (orderStatus !== "refund" || !refundStatus) return orderStatus;
+  switch (refundStatus) {
     case "pending":
       return "refund_requested";
     case "approved":

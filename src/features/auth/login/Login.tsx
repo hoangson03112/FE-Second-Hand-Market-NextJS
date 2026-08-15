@@ -2,7 +2,7 @@ import { AuthEditorialPanel, AuthFormHeader, AuthShell } from "../components";
 import { LOGIN_HIGHLIGHTS } from "../constants";
 import LoginForm from "./components/LoginForm";
 
-export default function LoginPage() {
+export default function Login() {
   return (
     <AuthShell
       panel={

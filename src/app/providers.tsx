@@ -51,10 +51,10 @@ export default function Providers({
       }
     };
 
-    const onLocal = (event: Event) =>
+    const handleLocalSessionChange = (event: Event) =>
       apply((event as CustomEvent<SessionSignal>).detail);
 
-    window.addEventListener(SESSION_CHANGED_EVENT, onLocal);
+    window.addEventListener(SESSION_CHANGED_EVENT, handleLocalSessionChange);
 
     // Đồng bộ giữa các tab: đăng xuất ở tab này thì tab kia cũng thoát.
     const channel =
@@ -65,7 +65,7 @@ export default function Providers({
     }
 
     return () => {
-      window.removeEventListener(SESSION_CHANGED_EVENT, onLocal);
+      window.removeEventListener(SESSION_CHANGED_EVENT, handleLocalSessionChange);
       channel?.close();
     };
   }, [queryClient]);

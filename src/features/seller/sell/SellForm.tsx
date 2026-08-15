@@ -84,11 +84,11 @@ export default function SellForm() {
 
   if (isLoadingProduct) {
     return (
-      <div className="w-full max-w-8xl mx-auto px-4 py-6 lg:py-8 bg-cream-50 min-h-screen">
+      <div className="min-h-screen w-full bg-luxury-ivory">
         <div className="flex items-center justify-center min-h-[50vh]">
           <div className="text-center">
-            <div className="w-10 h-10 rounded-full border-2 border-primary border-t-transparent animate-spin mx-auto mb-4" />
-            <p className="text-sm text-taupe-500">
+            <div className="w-10 h-10 rounded-full border border-luxury-ink/20 border-t-luxury-ink animate-spin mx-auto mb-4" />
+            <p className="text-sm text-neutral-500">
               Đang tải thông tin sản phẩm...
             </p>
           </div>
@@ -99,7 +99,8 @@ export default function SellForm() {
 
   return (
     <>
-      <div className="w-full max-w-8xl mx-auto px-4 py-6 lg:py-8 bg-cream-50 min-h-screen">
+      <div className="min-h-screen w-full bg-luxury-ivory">
+        <div className="mx-auto w-full max-w-8xl px-4 py-8 sm:px-6">
         <SellFormHeader
           isEditMode={isEditMode}
           showBecomeSellerLink={showPickupSection && !isEditMode}
@@ -109,7 +110,7 @@ export default function SellForm() {
           <SellerLimitInfoBox isSeller={isSeller} productLimit={productLimit ?? null} />
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <ErrorMessage message={apiError} />
 
           {/* Địa chỉ lấy hàng – hiển thị cho tất cả users */}
@@ -131,9 +132,9 @@ export default function SellForm() {
             error={deliveryOptionsError}
           />
 
-          <div className="grid lg:grid-cols-2 gap-4 lg:gap-6 lg:items-stretch">
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
             {/* Cột trái: thông tin + danh mục + mô tả */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-6">
               <SectionCard icon={IconPackage} title="Thông tin cơ bản">
                 <ProductBasicInfo
                   values={{
@@ -177,7 +178,7 @@ export default function SellForm() {
             </div>
 
             {/* Cột phải: Thuộc tính + Ảnh & IconVideo — chia đều với cột trái */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-6">
               <SectionCard
                 icon={IconListDetails}
                 title="Thuộc tính"
@@ -224,6 +225,7 @@ export default function SellForm() {
             canRequestReview={canRequestReview}
           />
         </form>
+        </div>
       </div>
 
       {/* Modal thêm/sửa địa chỉ lấy hàng */}

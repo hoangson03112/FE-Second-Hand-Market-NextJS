@@ -43,20 +43,18 @@ export function OrderBankInfoCard({
   onAccountNumberChange,
   onAccountHolderChange,
   onSubmitBankInfo,
-}: OrderBankInfoCardProps) {
-  const rs = refundStatus ?? null;
-  const showGhnSection =
-    rs === "return_shipping" ||
-    rs === "returning" ||
+}: OrderBankInfoCardProps) {  const showGhnSection =
+    refundStatus === "return_shipping" ||
+    refundStatus === "returning" ||
     orderStatus === "returning" ||
     orderStatus === "return_shipping";
 
   const hasBankInfo = Boolean(refundBankInfo?.buyerAccountNumber);
   const showBankSubmitted =
     hasBankInfo &&
-    (rs === "processing" || rs === "returned" || rs === "bank_info_required");
+    (refundStatus === "processing" || refundStatus === "returned" || refundStatus === "bank_info_required");
   const showBankForm =
-    !hasBankInfo && (rs === "returned" || rs === "bank_info_required");
+    !hasBankInfo && (refundStatus === "returned" || refundStatus === "bank_info_required");
 
   const cardTitle =
     showGhnSection && !showBankForm && !showBankSubmitted
@@ -142,7 +140,7 @@ export function OrderBankInfoCard({
             style={{ borderRadius: "2px" }}
           >
             <p className="mb-2 text-xs font-bold text-emerald-700">
-              {rs === "processing"
+              {refundStatus === "processing"
                 ? "Đã gửi STK — Admin sẽ chuyển khoản hoàn tiền"
                 : "Đã gửi — Chờ admin xử lý hoàn tiền"}
             </p>

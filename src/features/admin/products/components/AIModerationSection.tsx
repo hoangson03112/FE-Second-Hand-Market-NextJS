@@ -2,12 +2,12 @@
 
 import type { IProduct } from "@/types/product";
 
-type Props = {
+type AIModerationSectionProps = {
   ai: NonNullable<IProduct["aiModerationResult"]>;
   estimatedWeight?: IProduct["estimatedWeight"];
 };
 
-export function AIModerationSection({ ai, estimatedWeight }: Props) {
+export function AIModerationSection({ ai, estimatedWeight }: AIModerationSectionProps) {
   const isApproved = ai.approved === true;
   const isRejected = ai.approved === false;
 

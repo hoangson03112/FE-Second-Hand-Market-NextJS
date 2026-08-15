@@ -4,19 +4,19 @@ import { useState, useRef, useEffect } from "react";
 import { IconSearch, IconX } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 
-interface SearchFormProps {
+interface HeaderSearchProps {
   query: string;
   setQuery: (value: string) => void;
   submitSearch: (event: React.FormEvent) => void;
   className?: string;
 }
 
-export default function SearchForm({
+export default function HeaderSearch({
   query,
   setQuery,
   submitSearch,
   className,
-}: SearchFormProps) {
+}: HeaderSearchProps) {
   const [isOpen, setIsOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);

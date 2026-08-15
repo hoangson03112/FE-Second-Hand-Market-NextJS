@@ -33,12 +33,12 @@ export default function Cart() {
     handleGoToCheckout,
   } = useCartPage();
 
-  const onBack = () => router.back();
+  const handleBack = () => router.back();
 
   if (!isUserLoading && !account) {
     return (
       <PageContainer withBackground={false} className="bg-luxury-ivory min-h-screen">
-        <CartHeader onBack={onBack} />
+        <CartHeader onBack={handleBack} />
         <Container as="main" maxWidth="9xl" paddingX="md" paddingY="md">
           <CartLoginPrompt />
         </Container>
@@ -49,7 +49,7 @@ export default function Cart() {
   if (isUserLoading || isLoadingCart) {
     return (
       <PageContainer withBackground={false} className="bg-luxury-ivory min-h-screen">
-        <CartHeader onBack={onBack} />
+        <CartHeader onBack={handleBack} />
         <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg" className="flex items-center justify-center min-h-[40vh]">
           <LoadingBlock
             text="Đang tải giỏ hàng..."
@@ -64,7 +64,7 @@ export default function Cart() {
   if (!cartItems.length) {
     return (
       <PageContainer withBackground={false} className="bg-luxury-ivory min-h-screen">
-        <CartHeader onBack={onBack} />
+        <CartHeader onBack={handleBack} />
         <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg">
           <CartEmpty />
         </Container>
@@ -74,7 +74,7 @@ export default function Cart() {
 
   return (
     <PageContainer withBackground={false} className="pb-24 bg-luxury-ivory min-h-screen">
-      <CartHeader onBack={onBack} />
+      <CartHeader onBack={handleBack} />
       <Container as="main" maxWidth="9xl" paddingX="md" paddingY="md">
         {groups.map((group) => (
           <ShopCartGroup

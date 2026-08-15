@@ -29,17 +29,17 @@ export function SellFormActions({
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-2 pt-2">
+    <div className="flex flex-col-reverse gap-3 border-t border-luxury-ink/10 pt-6 sm:flex-row sm:justify-end">
       <button
         type="submit"
         disabled={isLoading}
-        className="flex-1 h-11 rounded-xl bg-primary text-primary-foreground font-bold text-sm tracking-wide hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-md active:scale-[0.98]"
+        className="inline-flex h-12 items-center justify-center rounded-[2px] bg-luxury-ink px-8 text-[11px] font-semibold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-40"
       >
         {getSubmitLabel()}
       </button>
       <Link
         href={isEditMode ? "/my/listings" : "/"}
-        className="flex-1 text-center h-11 rounded-xl flex items-center justify-center border-2 border-taupe-300/80 text-taupe-700 text-sm font-bold hover:bg-taupe-50 hover:border-taupe-500/70 transition-all duration-200"
+        className="inline-flex h-12 items-center justify-center rounded-[2px] border border-luxury-ink/15 px-8 text-[11px] font-semibold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
       >
         Hủy
       </Link>

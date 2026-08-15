@@ -4,6 +4,7 @@ import { useUser } from "@/features/auth/hooks/useUser";
 import { OrderService } from "@/services/order.service";
 import { useToast } from "@/components/ui";
 import { usePagination } from "@/hooks/usePagination";
+import type { ReturnInspectionPayload } from "@/features/seller/components";
 import type { Order } from "@/types/order";
 import { ORDER_MESSAGES, SELLER_MESSAGES } from "@/constants/messages";
 
@@ -222,12 +223,21 @@ export function useSellerOrders() {
     }
   };
 
-  const handleConfirmReturnReceived = async (orderId: string) => {
+  // Hàng về nguyên vẹn thì người bán chuyển lại tiền; không nguyên vẹn thì
+  // yêu cầu được chuyển cho quản trị viên phân xử.
+  const handleConfirmReturnReceived = async (
+    orderId: string,
+    inspection?: ReturnInspectionPayload,
+  ) => {
     setUpdatingId(orderId);
     try {
-      await OrderService.confirmReturnReceived(orderId);
+      await OrderService.confirmReturnReceived(orderId, inspection);
       await refreshOrders();
-      toast.success("Đã xác nhận nhận lại hàng. Admin sẽ xử lý hoàn tiền cho buyer.");
+      toast.success(
+        (inspection?.condition ?? "intact") === "intact"
+          ? "Đã xác nhận nhận lại hàng. Người mua sẽ gửi số tài khoản để bạn chuyển lại tiền."
+          : "Đã ghi nhận hàng không nguyên vẹn. Quản trị viên sẽ phân xử.",
+      );
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Không thể xác nhận nhận lại hàng"

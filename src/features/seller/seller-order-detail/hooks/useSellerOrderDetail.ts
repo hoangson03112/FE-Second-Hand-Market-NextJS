@@ -6,6 +6,7 @@ import { useUser } from "@/features/auth/hooks/useUser";
 import { useToast } from "@/components/ui";
 import { useConfirm } from "@/components/ui";
 import { OrderService } from "@/services/order.service";
+import type { ReturnInspectionPayload } from "@/features/seller/components";
 import type { Order } from "@/types/order";
 
 export function useSellerOrderDetail(orderId: string) {
@@ -127,21 +128,31 @@ export function useSellerOrderDetail(orderId: string) {
   };
 
   // ── Seller confirms return item received ──────────────────────────────────
-  const handleConfirmReturnReceived = async () => {
+  // The inspection result decides where the refund goes: intact goods oblige
+  // the seller to transfer the money, anything else hands the case to an admin.
+  const handleConfirmReturnReceived = async (inspection?: ReturnInspectionPayload) => {
     if (!order) return;
     setUpdatingStatus(true);
     try {
-      await OrderService.confirmReturnReceived(order._id);
-      // Same shape as approve: only the Refund doc advances, to "returned".
+      await OrderService.confirmReturnReceived(order._id, inspection);
+      const isIntact = (inspection?.condition ?? "intact") === "intact";
+      // Same shape as approve: only the Refund doc advances.
       setOrder((prev) =>
         prev && prev.refundRequestId
           ? {
               ...prev,
-              refundRequestId: { ...prev.refundRequestId, status: "returned" },
+              refundRequestId: {
+                ...prev.refundRequestId,
+                status: isIntact ? "returned" : "disputed",
+              },
             }
           : prev,
       );
-      toast.success("Đã xác nhận nhận hàng hoàn. Admin sẽ xử lý hoàn tiền cho người mua.");
+      toast.success(
+        isIntact
+          ? "Đã xác nhận nhận hàng hoàn. Người mua sẽ gửi số tài khoản để bạn chuyển lại tiền."
+          : "Đã ghi nhận hàng không nguyên vẹn. Quản trị viên sẽ phân xử.",
+      );
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Không thể xác nhận nhận hàng");
     } finally {

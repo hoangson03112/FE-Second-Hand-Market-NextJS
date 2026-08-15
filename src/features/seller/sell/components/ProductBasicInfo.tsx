@@ -1,9 +1,6 @@
 import type { ChangeEvent } from "react";
+import { INPUT_CLASS, LABEL_CLASS } from "./fieldStyles";
 import type { SellFormValues } from "@/types/sell";
-
-const INPUT_CLASS =
-  "w-full rounded-lg border border-border bg-white text-taupe-900 px-2.5 py-2 text-sm placeholder:text-taupe-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:border-primary";
-const LABEL_CLASS = "block text-xs font-medium text-taupe-700 mb-1";
 
 const CONDITION_OPTIONS: { value: SellFormValues["condition"]; label: string }[] = [
   { value: "new", label: "Mới" },
@@ -13,13 +10,13 @@ const CONDITION_OPTIONS: { value: SellFormValues["condition"]; label: string }[]
   { value: "poor", label: "Đã dùng lâu" },
 ];
 
-interface Props {
+interface ProductBasicInfoProps {
   values: Pick<SellFormValues, "name" | "price" | "stock" | "condition">;
   errors: Partial<Record<"name" | "price" | "stock", string>>;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
-export function ProductBasicInfo({ values, errors, onChange }: Props) {
+export function ProductBasicInfo({ values, errors, onChange }: ProductBasicInfoProps) {
   return (
     <div className="space-y-3">
       <div>

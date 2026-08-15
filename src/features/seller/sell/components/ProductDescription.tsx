@@ -1,14 +1,12 @@
 ﻿import type { ChangeEvent } from "react";
+import { INPUT_CLASS } from "./fieldStyles";
 
-const INPUT_CLASS =
-  "w-full rounded-lg border border-border bg-white text-taupe-900 px-2.5 py-2 text-sm placeholder:text-taupe-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:border-primary";
-
-interface Props {
+interface ProductDescriptionProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-export function ProductDescription({ value, onChange }: Props) {
+export function ProductDescription({ value, onChange }: ProductDescriptionProps) {
   return (
     <textarea
       name="description"

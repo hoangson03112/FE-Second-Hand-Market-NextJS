@@ -3,7 +3,7 @@
 import { IconLoader2, IconShoppingBag } from "@tabler/icons-react";
 import type { IProduct } from "@/types/product";
 
-type Props = {
+type ProductDrawerFooterProps = {
   product: IProduct;
   onClose: () => void;
   onApprove: (p: IProduct) => void;
@@ -17,7 +17,7 @@ export function ProductDrawerFooter({
   onApprove,
   onReject,
   isUpdating,
-}: Props) {
+}: ProductDrawerFooterProps) {
   const canModerate =
     product.status === "pending" ||
     product.status === "under_review" ||

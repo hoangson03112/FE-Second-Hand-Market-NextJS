@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { IconUpload, IconVideo, IconMovie, IconTrash } from "@tabler/icons-react";
 
-interface Props {
+interface ProductMediaProps {
   existingImages: string[];
   newImages: File[];
   imageError?: string;
@@ -26,7 +26,7 @@ export function ProductMedia({
   newVideo,
   onVideoChange,
   onRemoveExistingVideo,
-}: Props) {
+}: ProductMediaProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
 
@@ -59,7 +59,7 @@ export function ProductMedia({
       <div className="flex-shrink-0">
         <p className="text-xs font-medium text-taupe-700 mb-2">
           Ảnh sản phẩm <span className="text-red-500">*</span>{" "}
-          <span className="text-taupe-400 font-normal">(ít nhất 1, tối đa 10)</span>
+          <span className="text-neutral-400 font-normal">(ít nhất 1, tối đa 10)</span>
         </p>
 
         <input
@@ -75,9 +75,9 @@ export function ProductMedia({
           onDrop={handleDrop}
           onDragOver={(e) => e.preventDefault()}
           onClick={() => fileInputRef.current?.click()}
-          className="rounded-xl border-2 border-dashed border-taupe-300 bg-taupe-50/60 px-4 py-4 text-center cursor-pointer hover:border-primary hover:bg-primary/5 transition-colors"
+          className="rounded-[2px] border border-dashed border-luxury-ink/20 bg-cream-50/70 px-4 py-4 text-center cursor-pointer hover:border-luxury-ink/40 hover:bg-cream-50 transition-colors"
         >
-          <IconUpload className="w-7 h-7 mx-auto text-taupe-400 mb-1" />
+          <IconUpload className="w-7 h-7 mx-auto text-neutral-400 mb-1" />
           <p className="text-xs font-medium text-taupe-700">Chọn ảnh hoặc kéo thả ảnh vào đây</p>
         </div>
 
@@ -87,7 +87,7 @@ export function ProductMedia({
             {existingImages.map((url, i) => (
               <div
                 key={`existing-${i}`}
-                className="relative aspect-square rounded-lg border border-border overflow-hidden bg-taupe-100 group"
+                className="relative aspect-square rounded-[2px] border border-luxury-ink/10 overflow-hidden bg-taupe-50 group"
               >
                 <Image
                   src={url}
@@ -96,7 +96,7 @@ export function ProductMedia({
                   className="object-cover"
                 />
                 {i === 0 && newImages.length === 0 && (
-                  <span className="absolute bottom-0.5 left-0.5 text-[9px] font-medium bg-primary text-primary-foreground px-1 py-0.5 rounded">
+                  <span className="absolute bottom-0.5 left-0.5 text-[9px] font-medium bg-luxury-ink text-luxury-ivory px-1 py-0.5 rounded-[2px]">
                     Đại diện
                   </span>
                 )}
@@ -106,7 +106,7 @@ export function ProductMedia({
                     e.stopPropagation();
                     onRemoveExistingImage(i);
                   }}
-                  className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                  className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-blush-600 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
                   aria-label="Xóa ảnh"
                 >
                   ×
@@ -122,7 +122,7 @@ export function ProductMedia({
             {newImages.map((file, i) => (
               <div
                 key={`new-${i}`}
-                className="relative aspect-square rounded-lg border border-border overflow-hidden bg-taupe-100 group"
+                className="relative aspect-square rounded-[2px] border border-luxury-ink/10 overflow-hidden bg-taupe-50 group"
               >
                 <Image
                   src={URL.createObjectURL(file)}
@@ -132,7 +132,7 @@ export function ProductMedia({
                   unoptimized
                 />
                 {i === 0 && existingImages.length === 0 && (
-                  <span className="absolute bottom-0.5 left-0.5 text-[9px] font-medium bg-primary text-primary-foreground px-1 py-0.5 rounded">
+                  <span className="absolute bottom-0.5 left-0.5 text-[9px] font-medium bg-luxury-ink text-luxury-ivory px-1 py-0.5 rounded-[2px]">
                     Đại diện
                   </span>
                 )}
@@ -142,7 +142,7 @@ export function ProductMedia({
                     e.stopPropagation();
                     removeNewImage(i);
                   }}
-                  className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
+                  className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-blush-600 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs"
                   aria-label="Xóa ảnh"
                 >
                   ×
@@ -158,11 +158,11 @@ export function ProductMedia({
       </div>
 
       {/* ── Video ── */}
-      <div className="pt-2 border-t-2 border-border flex-shrink-0">
+      <div className="pt-2 border-t-2 border-luxury-ink/10 flex-shrink-0">
         <p className="text-xs font-medium text-taupe-700 mb-2 flex items-center gap-1.5">
           <IconMovie className="w-3.5 h-3.5" />
           Video{" "}
-          <span className="text-taupe-400 font-normal">(tùy chọn, tối đa 50MB)</span>
+          <span className="text-neutral-400 font-normal">(tùy chọn, tối đa 50MB)</span>
         </p>
 
         <input
@@ -175,18 +175,18 @@ export function ProductMedia({
 
         {/* Existing video */}
         {existingVideoUrl && !newVideo && (
-          <div className="relative rounded-xl border border-border bg-taupe-50/60 p-2 flex items-center gap-2 mb-2">
-            <div className="w-10 h-10 rounded-lg bg-taupe-100 flex items-center justify-center shrink-0">
-              <IconVideo className="w-5 h-5 text-taupe-400" />
+          <div className="relative rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 p-2 flex items-center gap-2 mb-2">
+            <div className="w-10 h-10 rounded-[2px] bg-taupe-50 flex items-center justify-center shrink-0">
+              <IconVideo className="w-5 h-5 text-neutral-400" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-medium text-taupe-900">Video hiện tại</p>
-              <p className="text-[10px] text-taupe-500">Đã tải lên</p>
+              <p className="text-xs font-medium text-luxury-ink">Video hiện tại</p>
+              <p className="text-[10px] text-neutral-500">Đã tải lên</p>
             </div>
             <button
               type="button"
               onClick={onRemoveExistingVideo}
-              className="p-1.5 rounded-md text-taupe-400 hover:bg-red-50 hover:text-red-600 transition-colors"
+              className="p-1.5 rounded-[2px] text-neutral-400 hover:bg-blush-50 hover:text-blush-700 transition-colors"
               aria-label="Xóa video"
             >
               <IconTrash className="w-4 h-4" />
@@ -196,20 +196,20 @@ export function ProductMedia({
 
         {/* New video preview */}
         {newVideo ? (
-          <div className="relative rounded-xl border border-border bg-taupe-50/60 p-2 flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg bg-taupe-100 flex items-center justify-center shrink-0">
-              <IconVideo className="w-5 h-5 text-taupe-400" />
+          <div className="relative rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 p-2 flex items-center gap-2">
+            <div className="w-10 h-10 rounded-[2px] bg-taupe-50 flex items-center justify-center shrink-0">
+              <IconVideo className="w-5 h-5 text-neutral-400" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-medium text-taupe-900 truncate">{newVideo.name}</p>
-              <p className="text-[10px] text-taupe-500">
+              <p className="text-xs font-medium text-luxury-ink truncate">{newVideo.name}</p>
+              <p className="text-[10px] text-neutral-500">
                 {(newVideo.size / 1024 / 1024).toFixed(2)} MB
               </p>
             </div>
             <button
               type="button"
               onClick={() => onVideoChange(null)}
-              className="p-1.5 rounded-md text-taupe-400 hover:bg-red-50 hover:text-red-600 transition-colors"
+              className="p-1.5 rounded-[2px] text-neutral-400 hover:bg-blush-50 hover:text-blush-700 transition-colors"
               aria-label="Xóa video"
             >
               <IconTrash className="w-4 h-4" />
@@ -219,9 +219,9 @@ export function ProductMedia({
           <button
             type="button"
             onClick={() => videoInputRef.current?.click()}
-            className="w-full rounded-xl border-2 border-dashed border-taupe-300 bg-taupe-50/60 px-4 py-4 text-center hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center gap-1"
+            className="w-full rounded-[2px] border border-dashed border-luxury-ink/20 bg-cream-50/70 px-4 py-4 text-center hover:border-luxury-ink/40 hover:bg-cream-50 transition-colors flex flex-col items-center gap-1"
           >
-            <IconVideo className="w-7 h-7 text-taupe-400" />
+            <IconVideo className="w-7 h-7 text-neutral-400" />
             <span className="text-xs font-medium text-taupe-700">Chọn video</span>
           </button>
         ) : null}
@@ -231,9 +231,9 @@ export function ProductMedia({
           <button
             type="button"
             onClick={() => videoInputRef.current?.click()}
-            className="w-full mt-2 rounded-xl border-2 border-dashed border-taupe-300 bg-taupe-50/60 px-4 py-2 text-center hover:border-primary hover:bg-primary/5 transition-colors flex flex-col items-center gap-1"
+            className="w-full mt-2 rounded-[2px] border border-dashed border-luxury-ink/20 bg-cream-50/70 px-4 py-2 text-center hover:border-luxury-ink/40 hover:bg-cream-50 transition-colors flex flex-col items-center gap-1"
           >
-            <IconVideo className="w-5 h-5 text-taupe-400" />
+            <IconVideo className="w-5 h-5 text-neutral-400" />
             <span className="text-xs font-medium text-taupe-700">Thay thế video</span>
           </button>
         )}

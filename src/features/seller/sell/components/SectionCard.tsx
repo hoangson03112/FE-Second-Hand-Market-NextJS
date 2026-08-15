@@ -15,17 +15,17 @@ export function SectionCard({
 }: SectionCardProps) {
   return (
     <div
-      className={`rounded-2xl border-2 border-border bg-gradient-to-br from-cream-50 to-white shadow-sm overflow-hidden flex flex-col ${className}`}
+      className={`flex flex-col overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white ${className}`}
     >
-      <div className="flex items-center gap-2 px-3.5 py-3 bg-taupe-50/70 border-b-2 border-border shrink-0">
-        <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
-          <Icon className="w-3.5 h-3.5 text-primary" />
+      <div className="flex shrink-0 items-center gap-3 border-b border-luxury-ink/10 bg-cream-50/70 px-4 py-3">
+        <div className="flex h-7 w-7 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-white">
+          <Icon className="h-3.5 w-3.5 text-luxury-ink" />
         </div>
-        <h3 className="text-xs font-bold text-taupe-900 uppercase tracking-wide">
+        <h3 className="text-[10px] font-semibold uppercase tracking-[0.22em] text-luxury-ink">
           {title}
         </h3>
       </div>
-      <div className="p-3.5 space-y-3 flex-1 min-h-0">{children}</div>
+      <div className="min-h-0 flex-1 space-y-4 p-4">{children}</div>
     </div>
   );
 }

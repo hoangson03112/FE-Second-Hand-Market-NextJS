@@ -1,7 +1,8 @@
 "use client";
 
 import { OrderStatusBadge } from "@/features/order/components";
-import { useRef } from "react";
+import { ReturnInspectionModal } from "@/features/seller/components";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import {
   IconArrowLeft,
@@ -142,6 +143,9 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
     handleConfirmReturnReceived,
     handleMarkDelivered,
   } = useSellerOrderDetail(orderId);
+
+  // Seller must inspect the returned parcel before the refund can proceed.
+  const [inspectionOpen, setInspectionOpen] = useState(false);
 
   const handleTrackingClick = () => {
     trackingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -436,7 +440,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
               onReturnTrackingClick={
                 hasReturnTracking ? handleReturnTrackingClick : undefined
               }
-              onConfirmReturnReceived={handleConfirmReturnReceived}
+              onConfirmReturnReceived={() => setInspectionOpen(true)}
               onMarkDelivered={isLocalPickup ? handleMarkDelivered : undefined}
               isLocalPickup={isLocalPickup}
               onChatClick={handleChatClick}
@@ -657,6 +661,16 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
           </div>
         </div>
       </div>
+
+      <ReturnInspectionModal
+        isOpen={inspectionOpen}
+        submitting={updatingStatus}
+        onClose={() => setInspectionOpen(false)}
+        onSubmit={async (payload) => {
+          await handleConfirmReturnReceived(payload);
+          setInspectionOpen(false);
+        }}
+      />
     </div>
   );
 }

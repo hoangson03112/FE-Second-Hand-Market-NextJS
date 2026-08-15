@@ -9,17 +9,28 @@ export type OrderStatus =
   | "completed"
   | "cancelled"
   | "delivery_failed"
+  | "returning"
+  | "returned"
   | "refund"
   | "refunded";
 
 
 export type OrderDisplayStatus =
   | OrderStatus
-  | "returning"
   | "return_shipping"
-  | "returned"
   | "refund_requested"
   | "refund_approved";
+
+
+/**
+ * What the seller found when they opened the returned parcel. Only `intact`
+ * obliges them to refund; anything else routes the request to an admin.
+ */
+export type ReturnInspectionCondition =
+  | "intact"
+  | "damaged"
+  | "missing_parts"
+  | "wrong_item";
 
 export interface CreateOrderRequest {
   products: Array<{

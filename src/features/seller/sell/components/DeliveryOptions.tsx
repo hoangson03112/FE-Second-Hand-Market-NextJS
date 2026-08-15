@@ -42,10 +42,10 @@ export function DeliveryOptions({
           return (
             <label
               key={key}
-              className={`relative flex items-center gap-3 rounded-xl border-2 px-4 py-3 cursor-pointer select-none transition-all duration-200 ${
+              className={`relative flex items-center gap-3 rounded-[2px] border px-4 py-3 cursor-pointer select-none transition-all duration-200 ${
                 checked
-                  ? "border-primary bg-primary/5"
-                  : "border-border hover:border-primary/40 hover:bg-taupe-50/60"
+                  ? "border-luxury-ink bg-cream-50"
+                  : "border-luxury-ink/10 hover:border-luxury-ink/40 hover:bg-cream-50/70"
               }`}
             >
               <input
@@ -55,16 +55,16 @@ export function DeliveryOptions({
                 onChange={() => toggle(key)}
               />
               <div
-                className={`w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-colors ${
-                  checked ? "border-primary bg-primary" : "border-taupe-300 bg-white"
+                className={`w-5 h-5 rounded-[2px] border flex items-center justify-center shrink-0 transition-colors ${
+                  checked ? "border-luxury-ink bg-luxury-ink" : "border-luxury-ink/25 bg-white"
                 }`}
               >
                 {checked && <IconCheck className="w-3.5 h-3.5 text-white" strokeWidth={3} />}
               </div>
-              <Icon className={`w-4 h-4 shrink-0 ${checked ? "text-primary" : "text-taupe-400"}`} strokeWidth={1.8} />
+              <Icon className={`w-4 h-4 shrink-0 ${checked ? "text-primary" : "text-neutral-400"}`} strokeWidth={1.8} />
               <div className="min-w-0">
-                <p className="text-sm font-medium text-taupe-900">{label}</p>
-                <p className="text-xs text-taupe-500">{description}</p>
+                <p className="text-sm font-medium text-luxury-ink">{label}</p>
+                <p className="text-xs text-neutral-500">{description}</p>
               </div>
             </label>
           );

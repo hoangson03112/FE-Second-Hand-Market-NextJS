@@ -39,18 +39,18 @@ export function AddressFormModal({
 
       {/* Panel */}
       <div
-        className="relative z-10 w-full sm:max-w-lg bg-cream-50 rounded-t-2xl sm:rounded-2xl border-2 border-border shadow-xl max-h-[90vh] overflow-y-auto"
+        className="relative z-10 w-full sm:max-w-lg bg-cream-50 rounded-t-2xl sm:rounded-[2px] border border-luxury-ink/10 shadow-xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 flex items-center justify-between px-4 py-3 border-b-2 border-border bg-cream-50 rounded-t-2xl z-10">
-          <h2 className="text-sm font-bold text-taupe-900 uppercase tracking-wide">
+        <div className="sticky top-0 flex items-center justify-between px-4 py-3 border-b-2 border-luxury-ink/10 bg-cream-50 rounded-t-2xl z-10">
+          <h2 className="text-sm font-bold text-luxury-ink uppercase tracking-wide">
             {editingAddress ? "Sửa địa chỉ lấy hàng" : "Thêm địa chỉ lấy hàng"}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="w-7 h-7 rounded-full flex items-center justify-center text-taupe-500 hover:bg-taupe-100 hover:text-taupe-900 transition-colors"
+            className="w-7 h-7 rounded-full flex items-center justify-center text-neutral-500 hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
           >
             <IconX className="w-4 h-4" />
           </button>

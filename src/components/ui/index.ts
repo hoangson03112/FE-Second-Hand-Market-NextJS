@@ -24,7 +24,7 @@ export * from "./textarea";
 
 // Hand-written, domain-free
 export { AvatarOrInitials } from "./AvatarOrInitials";
-export { ConfirmDialogProvider, useConfirm } from "./ConfirmDialog";
+export { ConfirmDialogProvider, useConfirm } from "../providers/ConfirmDialogProvider";
 export { ConfirmWithReasonDialog } from "./ConfirmWithReasonDialog";
 export { LoadingBlock, LoadingState, Spinner, Loading } from "./Loading";
 export type { SpinnerProps } from "./Loading";

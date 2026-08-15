@@ -4,9 +4,9 @@ import {
   BASE_URL,
 } from "@/lib/api-server";
 
-type Props = { params: Promise<{ id: string; slug: string }> };
+type ProductLayoutProps = { params: Promise<{ id: string; slug: string }> };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: ProductLayoutProps): Promise<Metadata> {
   const { id } = await params;
   const product = await fetchProductById(id);
   if (!product) {

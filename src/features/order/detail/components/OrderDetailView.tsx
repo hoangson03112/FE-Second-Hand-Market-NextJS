@@ -39,47 +39,45 @@ function getBuyerRefundHeroDescription(params: {
   const { orderStatus, refundStatus, isLocalPickup } = params;
   if (!REFUND_RELATED_STATUSES.includes(orderStatus) && !refundStatus)
     return undefined;
-
-  const rs = refundStatus;
   const local = STATUS_DESCRIPTION_LOCAL;
   const ghn = STATUS_DESCRIPTION_GHN;
 
-  if (orderStatus === "refunded" || rs === "completed") {
+  if (orderStatus === "refunded" || refundStatus === "completed") {
     return isLocalPickup ? local.refunded : ghn.refunded;
   }
-  if (rs === "pending") {
+  if (refundStatus === "pending") {
     return isLocalPickup
       ? "Yêu cầu đã gửi. Người bán sẽ xem xét và phản hồi trong thời gian quy định."
       : "Yêu cầu đã gửi. Người bán sẽ xem xét; khi được chấp thuận, bạn gửi hàng hoàn theo vận đơn GHN.";
   }
-  if (rs === "approved") {
+  if (refundStatus === "approved") {
     return isLocalPickup
       ? "Người bán đã chấp thuận hoàn tiền. Liên hệ để trả hàng theo thỏa thuận."
       : `Người bán đã chấp thuận hoàn tiền. Tiếp theo: vận đơn hoàn GHN và gửi hàng đúng quy định. ${REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}`;
   }
   if (
-    rs === "return_shipping" ||
-    rs === "returning" ||
+    refundStatus === "return_shipping" ||
+    refundStatus === "returning" ||
     orderStatus === "return_shipping" ||
     orderStatus === "returning"
   ) {
     return isLocalPickup ? local.returning : ghn.returning;
   }
-  if (rs === "returned" || orderStatus === "returned") {
+  if (refundStatus === "returned" || orderStatus === "returned") {
     return isLocalPickup ? local.returned : ghn.returned;
   }
-  if (rs === "bank_info_required") {
+  if (refundStatus === "bank_info_required") {
     return "Cần bổ sung thông tin tài khoản ngân hàng để admin chuyển khoản hoàn tiền.";
   }
-  if (rs === "processing" || rs === "failed") {
-    return rs === "failed"
+  if (refundStatus === "processing" || refundStatus === "failed") {
+    return refundStatus === "failed"
       ? "Giao dịch hoàn tiền gặp sự cố. Hệ thống sẽ xử lý lại; vui lòng theo dõi hoặc liên hệ hỗ trợ."
       : "Hệ thống đang xử lý chuyển tiền hoàn về cho bạn.";
   }
-  if (rs === "rejected") {
+  if (refundStatus === "rejected") {
     return "Người bán đã từ chối yêu cầu hoàn tiền. Nếu không đồng ý, bạn có thể khiếu nại để admin xem xét.";
   }
-  if (rs === "disputed") {
+  if (refundStatus === "disputed") {
     return "Khiếu nại đang được admin xem xét. Bạn sẽ nhận thông báo khi có quyết định.";
   }
   if (
@@ -99,9 +97,8 @@ function buildRefundTodoMessage(params: {
   isEscalating?: boolean;
 }) {
   const { orderStatus, refundStatus, hasBankInfo } = params;
-  const rs = refundStatus ?? null;
 
-  if (orderStatus === "refunded" || rs === "completed") {
+  if (orderStatus === "refunded" || refundStatus === "completed") {
     return {
       tone: "success" as const,
       title: "Hoàn tiền đã hoàn tất",
@@ -109,7 +106,7 @@ function buildRefundTodoMessage(params: {
     };
   }
 
-  if (rs === "rejected") {
+  if (refundStatus === "rejected") {
     return {
       tone: "warning" as const,
       title: "Yêu cầu đã bị từ chối",
@@ -118,7 +115,7 @@ function buildRefundTodoMessage(params: {
     };
   }
 
-  if (rs === "pending") {
+  if (refundStatus === "pending") {
     return {
       tone: "info" as const,
       title: "Chờ người bán xem xét",
@@ -127,7 +124,7 @@ function buildRefundTodoMessage(params: {
     };
   }
 
-  if (rs === "approved") {
+  if (refundStatus === "approved") {
     return {
       tone: "info" as const,
       title: "Người bán đã chấp thuận",
@@ -138,8 +135,8 @@ function buildRefundTodoMessage(params: {
   }
 
   if (
-    rs === "return_shipping" ||
-    rs === "returning" ||
+    refundStatus === "return_shipping" ||
+    refundStatus === "returning" ||
     orderStatus === "returning" ||
     orderStatus === "return_shipping"
   ) {
@@ -152,7 +149,7 @@ function buildRefundTodoMessage(params: {
     };
   }
 
-  if (rs === "bank_info_required") {
+  if (refundStatus === "bank_info_required") {
     return {
       tone: "warning" as const,
       title: "Việc cần làm ngay",
@@ -161,21 +158,21 @@ function buildRefundTodoMessage(params: {
     };
   }
 
-  if (rs === "processing" || rs === "failed") {
+  if (refundStatus === "processing" || refundStatus === "failed") {
     return {
       tone: "info" as const,
       title:
-        rs === "failed"
+        refundStatus === "failed"
           ? "Hoàn tiền cần xử lý lại"
           : "Đang chuyển khoản hoàn tiền",
       description:
-        rs === "failed"
+        refundStatus === "failed"
           ? "Giao dịch hoàn tiền chưa thành công. Hệ thống sẽ thử lại; vui lòng theo dõi trang này."
           : "Người bán đã nhận hàng hoàn (nếu có). Tiền sẽ được chuyển theo thông tin bạn đã cung cấp.",
     };
   }
 
-  if (orderStatus === "returned" || rs === "returned") {
+  if (orderStatus === "returned" || refundStatus === "returned") {
     if (!hasBankInfo) {
       return {
         tone: "warning" as const,
@@ -192,7 +189,7 @@ function buildRefundTodoMessage(params: {
     };
   }
 
-  if (rs === "disputed") {
+  if (refundStatus === "disputed") {
     return {
       tone: "info" as const,
       title: "Admin đang xem xét khiếu nại",
