@@ -288,3 +288,35 @@ export interface SellerBankInfo {
   content: string;
   orderId: string;
 }
+
+export type PaymentProofStatus = "pending" | "verified" | "rejected";
+
+/**
+ * Biên lai chuyển khoản người mua tải lên. Tiền vào thẳng tài khoản người bán
+ * nên chính người bán là người đối soát và duyệt, không phải admin.
+ */
+export interface PaymentProof {
+  _id: string;
+  orderId: string;
+  buyerId?: {
+    _id: string;
+    fullName?: string;
+    email?: string;
+  } | null;
+  sellerBankSnapshot?: {
+    bankName?: string;
+    accountNumber?: string;
+    accountHolder?: string;
+  } | null;
+  proofImage?: {
+    url: string;
+    originalName?: string;
+  } | null;
+  transferredAt?: string;
+  status: PaymentProofStatus;
+  verifiedBy?: { _id: string; fullName?: string } | null;
+  verifiedAt?: string | null;
+  rejectReason?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+}

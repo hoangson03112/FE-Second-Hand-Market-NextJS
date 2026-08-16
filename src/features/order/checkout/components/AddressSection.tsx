@@ -23,10 +23,10 @@ const iconTile =
   "flex h-10 w-10 shrink-0 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-cream-50";
 
 const inkButton =
-  "group inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-[2px] bg-luxury-ink px-5 text-[10px] font-bold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800";
+  "group inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-[2px] bg-luxury-ink px-5 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800";
 
 const outlineButton =
-  "inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-[2px] border border-luxury-ink/15 px-5 text-[10px] font-bold uppercase tracking-[0.2em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory";
+  "inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-[2px] border border-luxury-ink/15 px-5 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory";
 
 export default function AddressSection({
   selectedAddress = null,

@@ -34,7 +34,6 @@ const serif = { fontFamily: "var(--font-droid-serif), serif" };
 
 const twoDigits = (value: number) => String(value).padStart(2, "0");
 
-/** Micro-caps label + serif figure, the row shape used in every money block. */
 function MoneyRow({
   label,
   value,
@@ -48,7 +47,7 @@ function MoneyRow({
     <div className="flex items-baseline justify-between gap-4">
       <span
         className={cn(
-          "text-[10px] font-bold uppercase tracking-[0.22em]",
+          "text-xs font-medium uppercase tracking-[0.15em]",
           emphasis ? "text-luxury-ink" : "text-neutral-500",
         )}
       >
@@ -67,7 +66,6 @@ function MoneyRow({
   );
 }
 
-/** Segmented delivery choice: selected fills with ink, the rest stay hairline. */
 function DeliveryOption({
   active,
   onClick,
@@ -133,7 +131,7 @@ export default function CheckoutSellerSection({
           <p className="truncate text-sm font-bold text-luxury-ink">
             {sellerName}
           </p>
-          <p className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
+          <p className="mt-0.5 text-2xs font-medium uppercase tracking-[0.15em] text-neutral-500">
             {items.length} sản phẩm
           </p>
         </div>
@@ -176,13 +174,13 @@ export default function CheckoutSellerSection({
                     {item.product.name}
                   </p>
                   {condition ? (
-                    <span className="mt-2 inline-block rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.2em] text-neutral-600">
+                    <span className="mt-2 inline-block rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-2 py-0.5 text-2xs font-bold uppercase text-neutral-600">
                       {condition}
                     </span>
                   ) : null}
                   <div className="mt-3 flex items-baseline justify-between gap-4">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
-                      Số lượng ×{item.quantity}
+                    <span className="text-xs font-medium uppercase tracking-[0.15em] text-neutral-500">
+                      Số lượng: {item.quantity} sản phẩm
                     </span>
                     <span
                       style={serif}
@@ -229,7 +227,7 @@ export default function CheckoutSellerSection({
         >
           {group.isLocalPickup ? (
             <div className="flex items-start gap-4 rounded-[2px] border border-luxury-ink/10 bg-cream-50/60 px-4 py-4">
-              <IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-luxury-ink" />
+              <IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-red-600" />
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium text-luxury-ink">
                   Giao dịch trực tiếp
@@ -238,7 +236,7 @@ export default function CheckoutSellerSection({
                   Người bán và người mua tự thỏa thuận địa điểm gặp mặt.
                 </p>
               </div>
-              <span className="shrink-0 text-2xs font-bold uppercase tracking-[0.2em] text-charcoal-600">
+              <span className="shrink-0 text-2xs font-bold uppercase tracking-[0.15em] text-charcoal-700">
                 Miễn phí
               </span>
             </div>
@@ -258,7 +256,7 @@ export default function CheckoutSellerSection({
                   </span>
                 </div>
                 {shippingInfo?.expectedDeliveryTime ? (
-                  <div className="mt-2 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+                  <div className="mt-2 flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.15em] text-neutral-700">
                     <IconClock className="h-3.5 w-3.5" />
                     <span>
                       Dự kiến{" "}

@@ -9,12 +9,21 @@ import { notifySessionLost } from "./session";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
+/**
+ * KHÔNG đặt mặc định `Content-Type: application/json` ở đây.
+ *
+ * Từ axios 1.x, `transformRequest` thấy payload là FormData mà header đã là
+ * JSON thì nó **chuyển FormData thành JSON** (`JSON.stringify(formDataToJSON(data))`)
+ * — File bị serialize thành `{}` và request không còn là multipart, nên multer
+ * ở backend không parse được: mọi endpoint upload (biên lai chuyển khoản, đăng
+ * ký seller, ảnh sản phẩm, ảnh chat, ảnh khiếu nại) đều trả về "thiếu file".
+ *
+ * Để trống thì axios tự chọn đúng: `application/json` cho object thường, và
+ * `multipart/form-data; boundary=...` cho FormData.
+ */
 const axiosClient = axios.create({
   baseURL: BASE_URL,
   timeout: 15000,
-  headers: {
-    "Content-Type": "application/json",
-  },
   withCredentials: true,
 });
 

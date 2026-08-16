@@ -7,7 +7,7 @@ import { useToast } from "@/components/ui";
 import { useConfirm } from "@/components/ui";
 import { OrderService } from "@/services/order.service";
 import type { ReturnInspectionPayload } from "@/features/seller/components";
-import type { Order } from "@/types/order";
+import type { Order, PaymentProof } from "@/types/order";
 
 export function useSellerOrderDetail(orderId: string) {
   const router = useRouter();
@@ -23,6 +23,10 @@ export function useSellerOrderDetail(orderId: string) {
   const [rejectOpen, setRejectOpen] = useState(false);
   const [approveOpen, setApproveOpen] = useState(false);
 
+  const [paymentProof, setPaymentProof] = useState<PaymentProof | null>(null);
+  const [proofLoading, setProofLoading] = useState(false);
+  const [verifyingProof, setVerifyingProof] = useState(false);
+
   useEffect(() => {
     if (!account) return;
     const load = async () => {
@@ -37,6 +41,32 @@ export function useSellerOrderDetail(orderId: string) {
     };
     load();
   }, [account, orderId]);
+
+  // Chỉ đơn chuyển khoản mới có biên lai. 404 ở đây là trạng thái bình thường
+  // (người mua chưa gửi), không phải lỗi — card sẽ hiện "chờ chuyển khoản".
+  const isBankTransfer = order?.paymentMethod === "bank_transfer";
+
+  useEffect(() => {
+    if (!isBankTransfer) return;
+    let cancelled = false;
+
+    const loadProof = async () => {
+      setProofLoading(true);
+      try {
+        const res = await OrderService.getPaymentProof(orderId);
+        if (!cancelled) setPaymentProof(res.bankInfo ?? null);
+      } catch {
+        if (!cancelled) setPaymentProof(null);
+      } finally {
+        if (!cancelled) setProofLoading(false);
+      }
+    };
+    loadProof();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isBankTransfer, orderId]);
 
   // ── Seller confirms order (pending → confirmed) ──────────────────────────
   const handleConfirm = async () => {
@@ -160,6 +190,53 @@ export function useSellerOrderDetail(orderId: string) {
     }
   };
 
+  // ── Seller đối soát biên lai chuyển khoản ─────────────────────────────────
+  // Tiền vào thẳng tài khoản người bán nên chính họ xác nhận. Server duyệt
+  // biên lai và đánh dấu đơn "đã thanh toán" trong cùng một lời gọi.
+  const handleVerifyProof = async () => {
+    if (!order) return;
+    const ok = await confirm({
+      title: "Xác nhận đã nhận tiền",
+      message:
+        "Bạn đã kiểm tra và thấy tiền vào tài khoản? Đơn hàng sẽ được đánh dấu là đã thanh toán.",
+      confirmText: "Đã nhận tiền",
+      cancelText: "Để kiểm tra lại",
+      variant: "info",
+    });
+    if (!ok) return;
+    setVerifyingProof(true);
+    try {
+      const res = await OrderService.verifyPaymentProof(order._id, "verified");
+      setPaymentProof(res.bankInfo ?? null);
+      setOrder((prev) => (prev ? { ...prev, paymentStatus: "paid" } : null));
+      toast.success("Đã xác nhận thanh toán cho đơn hàng");
+    } catch (e) {
+      toast.error(
+        e instanceof Error ? e.message : "Không thể xác nhận thanh toán",
+      );
+    } finally {
+      setVerifyingProof(false);
+    }
+  };
+
+  const handleRejectProof = async (reason: string) => {
+    if (!order) return;
+    setVerifyingProof(true);
+    try {
+      const res = await OrderService.verifyPaymentProof(
+        order._id,
+        "rejected",
+        reason,
+      );
+      setPaymentProof(res.bankInfo ?? null);
+      toast.success("Đã từ chối biên lai. Người mua sẽ được thông báo.");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Không thể từ chối biên lai");
+    } finally {
+      setVerifyingProof(false);
+    }
+  };
+
   // ── Seller marks local_pickup order as delivered ───────────────────────────
   const handleMarkDelivered = async () => {
     if (!order) return;
@@ -196,11 +273,17 @@ export function useSellerOrderDetail(orderId: string) {
     setRejectOpen,
     approveOpen,
     setApproveOpen,
+    isBankTransfer,
+    paymentProof,
+    proofLoading,
+    verifyingProof,
     handleConfirm,
     handleCancel,
     handleApproveRefund,
     handleRejectRefund,
     handleConfirmReturnReceived,
     handleMarkDelivered,
+    handleVerifyProof,
+    handleRejectProof,
   };
 }

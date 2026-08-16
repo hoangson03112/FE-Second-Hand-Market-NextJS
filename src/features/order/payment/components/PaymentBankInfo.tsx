@@ -21,10 +21,9 @@ export interface PaymentBankInfoProps {
   copiedField?: string | null;
 }
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
 
 const label =
-  "text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500";
+  "text-xs font-medium uppercase tracking-[0.15em] text-neutral-800";
 
 /** Hairline copy affordance that confirms in place instead of silently. */
 function CopyButton({
@@ -77,8 +76,7 @@ export function PaymentBankInfo({
       <header className="border-b border-luxury-ink/10 px-5 py-5 sm:px-6">
         <Eyebrow>Hoặc chuyển thủ công</Eyebrow>
         <h2
-          style={serif}
-          className="mt-3 text-lg tracking-tight text-luxury-ink"
+          className="mt-3 font-droid-serif text-xl tracking-tight text-luxury-ink"
         >
           Thông tin chuyển khoản
         </h2>
@@ -103,7 +101,7 @@ export function PaymentBankInfo({
           <dl className="divide-y divide-luxury-ink/8">
             <div className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6">
               <dt className={label}>Ngân hàng</dt>
-              <dd className="text-sm font-medium text-luxury-ink">
+              <dd className="text-sm font-medium text-luxury-ink uppercase">
                 {displayBankInfo.bankName}
               </dd>
             </div>
@@ -112,8 +110,7 @@ export function PaymentBankInfo({
               <dt className={label}>Số tài khoản</dt>
               <dd className="flex items-center gap-3">
                 <span
-                  style={serif}
-                  className="tabular-nums text-base tracking-wide text-luxury-ink"
+                  className="font-droid-serif tabular-nums text-base tracking-wide text-luxury-ink"
                 >
                   {displayBankInfo.accountNumber}
                 </span>
@@ -139,8 +136,7 @@ export function PaymentBankInfo({
               </dt>
               <dd className="flex items-center gap-3">
                 <span
-                  style={serif}
-                  className="tabular-nums text-xl text-luxury-ink"
+                  className="font-droid-serif tabular-nums text-xl text-luxury-ink"
                 >
                   {formatPrice(displayBankInfo.amount)}
                 </span>

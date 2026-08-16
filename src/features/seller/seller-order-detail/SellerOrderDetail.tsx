@@ -27,6 +27,7 @@ import {
 import { OrderTracking } from "@/features/order/components";
 import { SellerProductsCard } from "./components/SellerProductsCard";
 import { SellerRefundCard } from "./components/SellerRefundCard";
+import { SellerPaymentProofCard } from "./components/SellerPaymentProofCard";
 import { SellerActionButtons } from "./components/SellerActionButtons";
 import { useSellerOrderDetail } from "./hooks/useSellerOrderDetail";
 import { formatPrice } from "@/utils/format/price";
@@ -136,12 +137,18 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
     setRejectOpen,
     approveOpen,
     setApproveOpen,
+    isBankTransfer,
+    paymentProof,
+    proofLoading,
+    verifyingProof,
     handleConfirm,
     handleCancel,
     handleApproveRefund,
     handleRejectRefund,
     handleConfirmReturnReceived,
     handleMarkDelivered,
+    handleVerifyProof,
+    handleRejectProof,
   } = useSellerOrderDetail(orderId);
 
   // Seller must inspect the returned parcel before the refund can proceed.
@@ -420,6 +427,19 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
             {/* Refund section */}
             {hasRefundRequest && order.refundRequestId && (
               <SellerRefundCard refund={order.refundRequestId} />
+            )}
+
+            {/* Bank transfer proof — người bán tự đối soát vì tiền vào thẳng
+                tài khoản của họ. Đơn đã hủy thì không còn gì để đối soát. */}
+            {isBankTransfer && order.status !== "cancelled" && (
+              <SellerPaymentProofCard
+                proof={paymentProof}
+                loading={proofLoading}
+                amount={order.totalAmount}
+                submitting={verifyingProof}
+                onVerify={handleVerifyProof}
+                onReject={handleRejectProof}
+              />
             )}
 
             {/* Action buttons */}

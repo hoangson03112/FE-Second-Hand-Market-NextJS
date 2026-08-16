@@ -4,6 +4,7 @@ import type {
   CreateOrderResponse,
   Order,
   OrderStatus,
+  PaymentProof,
   ReturnInspectionCondition,
   SellerBankInfo,
   GHNTrackingData,
@@ -58,6 +59,33 @@ export const OrderService = {
     orderId: string
   ): Promise<{ message: string; order: Order }> => {
     return axiosClient.patch("/orders/update-payment-status", { orderId });
+  },
+
+  /**
+   * Biên lai chuyển khoản của một đơn.
+   * GET /bank-info/:orderId — chỉ người mua, người bán của đơn, hoặc admin.
+   * Trả 404 khi người mua chưa gửi biên lai nào.
+   */
+  getPaymentProof: async (
+    orderId: string
+  ): Promise<{ bankInfo: PaymentProof }> => {
+    return axiosClient.get(`/bank-info/${orderId}`);
+  },
+
+  /**
+   * Người bán đối soát biên lai.
+   * PATCH /bank-info/verify/:orderId — "verified" đánh dấu đơn đã thanh toán
+   * luôn, "rejected" bắt buộc kèm lý do để người mua gửi lại.
+   */
+  verifyPaymentProof: async (
+    orderId: string,
+    status: "verified" | "rejected",
+    rejectReason?: string
+  ): Promise<{ bankInfo: PaymentProof }> => {
+    return axiosClient.patch(`/bank-info/verify/${orderId}`, {
+      status,
+      rejectReason,
+    });
   },
 
   /**

@@ -244,10 +244,11 @@ export function usePayment() {
       form.append("proof", proofFile);
       await axiosClient.post("/bank-info/payment-proof", form);
 
-      // Bank transfer confirmation is done by admin (POST /orders/:id/confirm-bank-transfer).
-      // Buyer only needs to submit the proof; the admin will verify and confirm.
+      // Tiền chuyển thẳng vào tài khoản người bán, nên người bán là người đối
+      // soát biên lai (PATCH /bank-info/verify/:orderId) — không phải admin.
+      // Người mua chỉ cần gửi biên lai lên.
       setPaymentSuccess(
-        "Đã gửi bằng chứng thanh toán thành công. Admin sẽ xác nhận trong vòng 24h.",
+        "Đã gửi biên lai thành công. Người bán sẽ đối soát và xác nhận đơn hàng.",
       );
       setProofFile(null);
       setTimeout(() => {

@@ -36,7 +36,7 @@ function Row({
 }) {
   return (
     <div className="flex items-baseline justify-between gap-4">
-      <span className="text-2xs font-bold uppercase tracking-[0.15em] text-charcoal-800">
+      <span className="text-xs font-bold uppercase tracking-[0.15em] text-charcoal-800">
         {label}
       </span>
       <span
@@ -70,7 +70,7 @@ export default function CheckoutSummary({
         <Eyebrow>Tổng quan</Eyebrow>
         <h2
           style={serif}
-          className="mt-3 text-lg tracking-tight text-luxury-ink"
+          className="mt-3 text-xl tracking-tight text-luxury-ink"
         >
           Tổng đơn hàng
         </h2>
@@ -85,8 +85,8 @@ export default function CheckoutSummary({
             const { label, icon: Icon } = PAYMENT_LABEL[method];
             return (
               <div key={group.sellerId} className="space-y-3 px-5 py-5 sm:px-6">
-                <p className="truncate text-sm font-medium text-luxury-ink">
-                  {group.sellerName}
+                <p className="truncate text-sm font-medium text-neutral-700">
+                 Người bán: <span className="font-bold text-luxury-ink tracking-tight">{group.sellerName}</span>
                 </p>
                 <Row
                   label={`Hàng · ${group.items.length} sp`}
