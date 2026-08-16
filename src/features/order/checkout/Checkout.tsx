@@ -57,8 +57,6 @@ export default function Checkout() {
     handleCheckout,
   } = useCheckout();
 
-  // Entry reveal on mount rather than on scroll: a checkout must never be
-  // hidden behind an IntersectionObserver that has not fired yet.
   const [isRevealed, setIsRevealed] = useState(false);
 
   useEffect(() => {

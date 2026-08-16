@@ -20,10 +20,13 @@ import {
 import { REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER } from "@/constants/refund";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
+import { Eyebrow } from "@/features/order/components";
 import type { Order } from "@/types/order";
 import { cn } from "@/lib/utils";
 
 type RefundDoc = NonNullable<Order["refundRequestId"]>;
+
+const serif = { fontFamily: "var(--font-droid-serif), serif" };
 
 const REASON_LABELS: Record<
   string,
@@ -51,12 +54,45 @@ type StatusKey =
   | "disputed"
   | "cancelled";
 
+/**
+ * The same five tones `OrderStatusChip` uses. The refund flow used to reach for
+ * amber / sky / blue / purple / green straight out of Tailwind, which put six
+ * palettes on a page built from ivory, ink, champagne and one green.
+ */
+type Tone = "progress" | "settled" | "attention" | "failed" | "neutral";
+
+const TONE: Record<Tone, { surface: string; border: string; text: string }> = {
+  progress: {
+    surface: "bg-luxury-ink/[0.04]",
+    border: "border-luxury-ink/15",
+    text: "text-luxury-ink",
+  },
+  settled: {
+    surface: "bg-taupe-50",
+    border: "border-accent/35",
+    text: "text-taupe-700",
+  },
+  attention: {
+    surface: "bg-cream-100",
+    border: "border-luxury-champagne/50",
+    text: "text-neutral-700",
+  },
+  failed: {
+    surface: "bg-blush-50",
+    border: "border-blush-300",
+    text: "text-blush-800",
+  },
+  neutral: {
+    surface: "bg-cream-50",
+    border: "border-luxury-ink/12",
+    text: "text-neutral-600",
+  },
+};
+
 interface StatusStyle {
   label: string;
   sublabel: string;
-  headerBg: string;
-  headerBorder: string;
-  textColor: string;
+  tone: Tone;
   Icon: React.ElementType;
 }
 
@@ -64,100 +100,88 @@ const STATUS_STYLES: Record<StatusKey, StatusStyle> = {
   pending: {
     label: "Đang chờ người bán xem xét",
     sublabel: "Yêu cầu sẽ được xử lý trong vòng 48 giờ làm việc",
-    headerBg: "bg-amber-50",
-    headerBorder: "border-amber-200",
-    textColor: "text-amber-700",
+    tone: "attention",
     Icon: IconClock,
   },
   approved: {
     label: "Yêu cầu được chấp thuận",
     sublabel: `Người bán đã chấp thuận, vui lòng gửi hàng hoàn theo hướng dẫn. ${REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}`,
-    headerBg: "bg-blue-50",
-    headerBorder: "border-blue-200",
-    textColor: "text-blue-700",
+    tone: "progress",
     Icon: IconCircleCheck,
   },
   return_shipping: {
     label: "Đã tạo đơn hoàn trả",
     sublabel: `Vui lòng gửi hàng hoàn theo vận đơn để tiếp tục xử lý hoàn tiền. ${REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}`,
-    headerBg: "bg-sky-50",
-    headerBorder: "border-sky-200",
-    textColor: "text-sky-700",
+    tone: "progress",
     Icon: IconPackage,
   },
   returning: {
     label: "Hàng hoàn đang vận chuyển",
     sublabel: `Đơn vị vận chuyển đang chuyển hàng hoàn về cho người bán. ${REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}`,
-    headerBg: "bg-sky-50",
-    headerBorder: "border-sky-200",
-    textColor: "text-sky-700",
+    tone: "progress",
     Icon: IconPackage,
   },
   returned: {
     label: "Người bán đã nhận hàng hoàn",
     sublabel: "Đang chờ xử lý bước hoàn tiền cuối cùng",
-    headerBg: "bg-blue-50",
-    headerBorder: "border-blue-200",
-    textColor: "text-blue-700",
+    tone: "progress",
     Icon: IconCircleCheck,
   },
   bank_info_required: {
     label: "Cần bổ sung thông tin nhận tiền",
     sublabel: "Vui lòng cung cấp thông tin tài khoản để hoàn tất hoàn tiền",
-    headerBg: "bg-amber-50",
-    headerBorder: "border-amber-200",
-    textColor: "text-amber-700",
+    tone: "attention",
     Icon: IconAlertTriangle,
   },
   processing: {
     label: "Admin đang xử lý hoàn tiền",
     sublabel: "Hệ thống đang xử lý giao dịch hoàn tiền cho bạn",
-    headerBg: "bg-blue-50",
-    headerBorder: "border-blue-200",
-    textColor: "text-blue-700",
+    tone: "progress",
     Icon: IconLoader2,
   },
   completed: {
     label: "Đã hoàn tiền thành công",
     sublabel: "Số tiền đã được hoàn về ví của bạn",
-    headerBg: "bg-green-50",
-    headerBorder: "border-green-200",
-    textColor: "text-green-700",
+    tone: "settled",
     Icon: IconCircleCheck,
   },
   rejected: {
     label: "Người bán từ chối hoàn tiền",
     sublabel: "Bạn có thể yêu cầu admin can thiệp nếu không đồng ý",
-    headerBg: "bg-red-50",
-    headerBorder: "border-red-200",
-    textColor: "text-red-700",
+    tone: "failed",
     Icon: IconCircleX,
   },
   disputed: {
     label: "Đang tranh chấp · Admin xem xét",
     sublabel: "Quản trị viên đang xem xét và sẽ đưa ra quyết định cuối",
-    headerBg: "bg-purple-50",
-    headerBorder: "border-purple-200",
-    textColor: "text-purple-700",
+    tone: "attention",
     Icon: IconShield,
   },
   failed: {
     label: "Hoàn tiền tạm thời thất bại",
     sublabel: "Hệ thống đang yêu cầu xử lý lại giao dịch hoàn tiền",
-    headerBg: "bg-red-50",
-    headerBorder: "border-red-200",
-    textColor: "text-red-700",
+    tone: "failed",
     Icon: IconAlertTriangle,
   },
   cancelled: {
     label: "Yêu cầu đã bị hủy",
     sublabel: "",
-    headerBg: "bg-cream-100",
-    headerBorder: "border-luxury-ink/10",
-    textColor: "text-taupe-500",
+    tone: "neutral",
     Icon: IconCircleX,
   },
 };
+
+const MICRO_LABEL =
+  "text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500";
+
+function Fact({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-4 py-3.5">
+      <p className={MICRO_LABEL}>{label}</p>
+      <div className="mt-2">{children}</div>
+    </div>
+  );
+}
 
 interface RefundDetailCardProps {
   refund: RefundDoc;
@@ -172,6 +196,7 @@ export function RefundDetailCard({
 }: RefundDetailCardProps) {
   const style =
     STATUS_STYLES[refund.status as StatusKey] ?? STATUS_STYLES.pending;
+  const tone = TONE[style.tone];
   const StatusIcon = style.Icon;
   const reasonInfo = REASON_LABELS[refund.reason] ?? {
     label: refund.reason,
@@ -192,110 +217,95 @@ export function RefundDetailCard({
       "failed",
     ].includes(refund.status);
 
-  return (
-    <div
-      className={cn("overflow-hidden border", style.headerBorder)}
-      style={{ borderRadius: "2px" }}
-    >
-      {/* ── STATUS HEADER ── */}
-      <div className={cn("flex items-start gap-4 px-5 py-4", style.headerBg)}>
-        <div
-          className={cn(
-            "flex h-10 w-10 shrink-0 items-center justify-center border",
-            style.headerBorder,
-          )}
-          style={{ borderRadius: "2px" }}
-        >
-          <StatusIcon
-            className={cn("h-5 w-5", style.textColor)}
-            strokeWidth={1.75}
-          />
-        </div>
-        <div className="min-w-0 flex-1">
-          <p
-            className={cn("text-base font-bold leading-snug", style.textColor)}
-          >
-            {style.label}
-          </p>
-          {style.sublabel && (
-            <p className={cn("mt-0.5 text-sm opacity-80", style.textColor)}>
-              {style.sublabel}
-            </p>
-          )}
-        </div>
-        <div
-          className={cn(
-            "shrink-0 border px-3 py-1.5 text-sm font-bold",
-            style.headerBorder,
-            style.textColor,
-            style.headerBg,
-          )}
-          style={{ borderRadius: "2px" }}
-        >
-          {formatPrice(refund.refundAmount)}
-        </div>
-      </div>
+  const sellerApproved = refund.sellerResponse?.decision === "approved";
+  const sellerTone = sellerApproved ? TONE.settled : TONE.failed;
 
-      {/* ── BODY ── */}
-      <div className="space-y-4 bg-white p-5">
-        {/* Reason + Date row */}
-        <div className="grid grid-cols-2 gap-3">
-          <div
-            className="border border-luxury-ink/8 bg-cream-50 p-3.5"
-            style={{ borderRadius: "2px" }}
+  return (
+    <section
+      className={cn(
+        "overflow-hidden rounded-[2px] border bg-white",
+        tone.border,
+      )}
+    >
+      <header
+        className={cn(
+          "flex flex-wrap items-start justify-between gap-x-6 gap-y-4 border-b px-5 py-5 sm:px-6",
+          tone.surface,
+          tone.border,
+        )}
+      >
+        <div className="flex min-w-0 items-start gap-4">
+          <span
+            className={cn(
+              "flex h-10 w-10 shrink-0 items-center justify-center rounded-[2px] border bg-white",
+              tone.border,
+            )}
           >
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-taupe-400">
-              Lý do hoàn tiền
-            </p>
+            <StatusIcon
+              className={cn("h-5 w-5", tone.text)}
+              strokeWidth={1.75}
+            />
+          </span>
+          <div className="min-w-0">
+            <Eyebrow>Hoàn tiền</Eyebrow>
+            <h2
+              style={serif}
+              className={cn("mt-3 text-lg leading-snug tracking-tight", tone.text)}
+            >
+              {style.label}
+            </h2>
+            {style.sublabel && (
+              <p className="mt-2 max-w-xl text-xs leading-relaxed text-neutral-600">
+                {style.sublabel}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="shrink-0 text-right">
+          <p className={MICRO_LABEL}>Số tiền hoàn</p>
+          <p
+            style={serif}
+            className="mt-1.5 tabular-nums text-lg leading-none text-luxury-ink"
+          >
+            {formatPrice(refund.refundAmount)}
+          </p>
+        </div>
+      </header>
+
+      <div className="space-y-5 px-5 py-6 sm:px-6">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <Fact label="Lý do hoàn tiền">
             <div className="flex items-center gap-2">
               <ReasonIcon
-                className="h-4 w-4 shrink-0 text-taupe-500"
+                className="h-4 w-4 shrink-0 text-luxury-champagne"
                 strokeWidth={1.75}
               />
-              <p className="text-sm font-bold text-luxury-ink">
+              <p className="text-sm font-medium text-luxury-ink">
                 {reasonInfo.label}
               </p>
             </div>
-          </div>
-          <div
-            className="border border-luxury-ink/8 bg-cream-50 p-3.5"
-            style={{ borderRadius: "2px" }}
-          >
-            <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-taupe-400">
-              Ngày gửi yêu cầu
-            </p>
-            <p className="text-sm font-bold text-luxury-ink">
+          </Fact>
+          <Fact label="Ngày gửi yêu cầu">
+            <p className="text-sm font-medium text-luxury-ink">
               {format(refund.createdAt)}
             </p>
-          </div>
+          </Fact>
         </div>
 
-        {/* Description */}
-        <div
-          className="border border-luxury-ink/8 bg-cream-50 p-3.5"
-          style={{ borderRadius: "2px" }}
-        >
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-taupe-400">
-            Mô tả vấn đề
-          </p>
+        <Fact label="Mô tả vấn đề">
           <p className="text-sm leading-relaxed text-neutral-700">
             {refund.description}
           </p>
-        </div>
+        </Fact>
 
-        {/* Evidence images */}
         {(refund.evidence?.images?.length ?? 0) > 0 && (
           <div>
-            <div className="mb-2.5 flex items-center gap-1.5">
-              <IconPhoto
-                className="h-3.5 w-3.5 text-taupe-400"
-                strokeWidth={1.75}
-              />
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-taupe-400">
-                Ảnh bằng chứng ({refund.evidence!.images!.length})
-              </p>
-            </div>
-            <div className="grid grid-cols-4 gap-2 sm:grid-cols-6">
+            <p className={cn(MICRO_LABEL, "flex items-center gap-2")}>
+              <IconPhoto className="h-3.5 w-3.5" strokeWidth={1.75} />
+              Ảnh bằng chứng ({refund.evidence!.images!.length})
+            </p>
+            <div className="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-6">
               {refund.evidence!.images!.map((img, idx) => (
                 <a
                   key={idx}
@@ -304,15 +314,12 @@ export function RefundDetailCard({
                   rel="noopener noreferrer"
                   className="group/img block"
                 >
-                  <div
-                    className="relative aspect-square overflow-hidden border border-luxury-ink/10 bg-cream-100"
-                    style={{ borderRadius: "2px" }}
-                  >
+                  <div className="relative aspect-square overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-cream-100 transition-colors duration-300 group-hover/img:border-luxury-champagne/60">
                     <Image
                       src={img.url}
                       alt={img.originalName ?? `Bằng chứng ${idx + 1}`}
                       fill
-                      className="object-cover transition-transform duration-300 group-hover/img:scale-105"
+                      className="object-cover transition-transform duration-[1.2s] ease-out group-hover/img:scale-105"
                       sizes="80px"
                     />
                   </div>
@@ -322,34 +329,24 @@ export function RefundDetailCard({
           </div>
         )}
 
-        {/* Evidence videos */}
         {(refund.evidence?.videos?.length ?? 0) > 0 && (
           <div>
-            <div className="mb-2.5 flex items-center gap-1.5">
-              <IconVideo
-                className="h-3.5 w-3.5 text-taupe-400"
-                strokeWidth={1.75}
-              />
-              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-taupe-400">
-                Video bằng chứng ({refund.evidence!.videos!.length})
-              </p>
-            </div>
-            <div className="space-y-2">
+            <p className={cn(MICRO_LABEL, "flex items-center gap-2")}>
+              <IconVideo className="h-3.5 w-3.5" strokeWidth={1.75} />
+              Video bằng chứng ({refund.evidence!.videos!.length})
+            </p>
+            <div className="mt-3 space-y-2">
               {refund.evidence!.videos!.map((vid, idx) => (
                 <a
                   key={idx}
                   href={vid.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 border border-luxury-ink/8 bg-cream-50 p-3 transition-colors hover:bg-cream-100"
-                  style={{ borderRadius: "2px" }}
+                  className="flex items-center gap-3.5 rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-4 py-3 transition-colors duration-300 hover:border-luxury-champagne/60 hover:bg-cream-100"
                 >
-                  <span
-                    className="flex h-9 w-9 shrink-0 items-center justify-center bg-luxury-ink/5"
-                    style={{ borderRadius: "2px" }}
-                  >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-white">
                     <IconVideo
-                      className="h-4 w-4 text-taupe-500"
+                      className="h-4 w-4 text-luxury-champagne"
                       strokeWidth={1.75}
                     />
                   </span>
@@ -357,12 +354,12 @@ export function RefundDetailCard({
                     <p className="truncate text-sm font-medium text-luxury-ink">
                       {vid.originalName ?? `Video ${idx + 1}`}
                     </p>
-                    <p className="text-xs text-taupe-400">
+                    <p className="mt-0.5 text-xs text-neutral-500">
                       Video bằng chứng · Nhấn để xem
                     </p>
                   </div>
-                  <span className="shrink-0 text-xs font-bold text-luxury-ink">
-                    Xem →
+                  <span className="shrink-0 text-2xs font-bold uppercase tracking-[0.2em] text-luxury-ink">
+                    Xem
                   </span>
                 </a>
               ))}
@@ -370,41 +367,29 @@ export function RefundDetailCard({
           </div>
         )}
 
-        {/* Seller response */}
         {refund.sellerResponse && !showApprovedSellerBannerDupe && (
           <div
             className={cn(
-              "border p-4",
-              refund.sellerResponse.decision === "approved"
-                ? "border-green-200 bg-green-50"
-                : "border-red-200 bg-red-50",
+              "rounded-[2px] border px-4 py-4",
+              sellerTone.border,
+              sellerTone.surface,
             )}
-            style={{ borderRadius: "2px" }}
           >
-            <div className="mb-1.5 flex items-center gap-2">
-              {refund.sellerResponse.decision === "approved" ? (
+            <div className="flex items-center gap-2">
+              {sellerApproved ? (
                 <IconCircleCheck
-                  className="h-4 w-4 shrink-0 text-green-600"
+                  className={cn("h-4 w-4 shrink-0", sellerTone.text)}
                   strokeWidth={1.75}
                 />
               ) : (
                 <IconCircleX
-                  className="h-4 w-4 shrink-0 text-red-600"
+                  className={cn("h-4 w-4 shrink-0", sellerTone.text)}
                   strokeWidth={1.75}
                 />
               )}
-              <p
-                className={cn(
-                  "text-sm font-bold",
-                  refund.sellerResponse.decision === "approved"
-                    ? "text-green-700"
-                    : "text-red-700",
-                )}
-              >
+              <p className={cn("text-sm font-bold", sellerTone.text)}>
                 Người bán đã{" "}
-                {refund.sellerResponse.decision === "approved"
-                  ? "chấp thuận hoàn tiền"
-                  : "từ chối hoàn tiền"}
+                {sellerApproved ? "chấp thuận hoàn tiền" : "từ chối hoàn tiền"}
                 {refund.sellerResponse.respondedAt && (
                   <span className="ml-1.5 font-normal opacity-70">
                     · {format(refund.sellerResponse.respondedAt)}
@@ -412,16 +397,18 @@ export function RefundDetailCard({
                 )}
               </p>
             </div>
+
             {refund.sellerResponse.comment && (
-              <p className="pl-6 text-sm leading-relaxed text-neutral-700">
+              <p className="mt-2 pl-6 text-sm leading-relaxed text-neutral-700">
                 &ldquo;{refund.sellerResponse.comment}&rdquo;
               </p>
             )}
+
             {refund.sellerResponse.decision === "rejected" &&
               !refund.escalatedToAdmin &&
               onEscalateToAdmin && (
-                <div className="mt-3 border-t border-red-200/60 pt-3">
-                  <p className="mb-2 text-xs text-red-700/80">
+                <div className="mt-4 border-t border-blush-300/60 pt-4">
+                  <p className="text-xs leading-relaxed text-blush-800/90">
                     Bạn không đồng ý với quyết định của người bán? Gửi khiếu nại
                     để Admin xem xét.
                   </p>
@@ -429,13 +416,12 @@ export function RefundDetailCard({
                     type="button"
                     onClick={onEscalateToAdmin}
                     disabled={isEscalating}
-                    className="inline-flex items-center gap-2 bg-purple-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-purple-700 disabled:opacity-50"
-                    style={{ borderRadius: "2px" }}
+                    className="mt-3 inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-5 py-2.5 text-2xs font-bold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
                   >
                     {isEscalating ? (
-                      <IconLoader2 className="h-4 w-4 animate-spin" />
+                      <IconLoader2 className="h-4 w-4 animate-spin text-luxury-champagne" />
                     ) : (
-                      <IconShield className="h-4 w-4" />
+                      <IconShield className="h-4 w-4 text-luxury-champagne" />
                     )}
                     Khiếu nại lên Admin
                   </button>
@@ -444,18 +430,14 @@ export function RefundDetailCard({
           </div>
         )}
 
-        {/* Admin intervention */}
         {refund.adminIntervention && (
-          <div
-            className="border border-purple-200 bg-purple-50 p-4"
-            style={{ borderRadius: "2px" }}
-          >
-            <div className="mb-1.5 flex items-center gap-2">
+          <div className="rounded-[2px] border border-luxury-champagne/50 bg-cream-100 px-4 py-4">
+            <div className="flex items-center gap-2">
               <IconShield
-                className="h-4 w-4 shrink-0 text-purple-600"
+                className="h-4 w-4 shrink-0 text-luxury-champagne"
                 strokeWidth={1.75}
               />
-              <p className="text-sm font-bold text-purple-700">
+              <p className="text-sm font-bold text-neutral-700">
                 Admin can thiệp ·{" "}
                 {refund.adminIntervention.decision === "refund"
                   ? "Hoàn tiền"
@@ -468,34 +450,30 @@ export function RefundDetailCard({
               </p>
             </div>
             {refund.adminIntervention.comment && (
-              <p className="pl-6 text-sm leading-relaxed text-neutral-700">
+              <p className="mt-2 pl-6 text-sm leading-relaxed text-neutral-700">
                 &ldquo;{refund.adminIntervention.comment}&rdquo;
               </p>
             )}
           </div>
         )}
 
-        {/* Refunded confirmation */}
         {refund.refundedAt && (
-          <div
-            className="flex items-center gap-3 border border-green-200 bg-green-50 p-3.5"
-            style={{ borderRadius: "2px" }}
-          >
+          <div className="flex items-center gap-3.5 rounded-[2px] border border-accent/35 bg-taupe-50 px-4 py-4">
             <IconCircleCheck
-              className="h-5 w-5 shrink-0 text-green-600"
+              className="h-5 w-5 shrink-0 text-accent"
               strokeWidth={1.75}
             />
             <div>
-              <p className="text-sm font-bold text-green-700">
+              <p className="text-sm font-bold text-taupe-700">
                 Đã hoàn tiền thành công
               </p>
-              <p className="mt-0.5 text-xs text-green-600">
+              <p className="mt-0.5 text-xs text-neutral-600">
                 {formatPrice(refund.refundAmount)} · {format(refund.refundedAt)}
               </p>
             </div>
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }

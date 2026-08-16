@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   IconMessage,
-  IconPackage,
   IconPhone,
   IconStar,
   IconUser,
@@ -15,12 +14,35 @@ import {
 } from "@/utils/format";
 import { openChatWithOrder } from "@/utils/chat";
 import { getAvatarUrl } from "@/utils";
+import { Panel } from "@/features/order/components";
+import { cn } from "@/lib/utils";
 import type { Order } from "@/types/order";
 
 interface OrderProductsCardProps {
   order: Order;
   productReviews: Record<string, { rating: number; comment?: string }>;
   onOpenProductReview: (productId: string, productName: string) => void;
+}
+
+const serif = { fontFamily: "var(--font-droid-serif), serif" };
+
+function Stars({ rating, className }: { rating: number; className?: string }) {
+  return (
+    <span className="flex" aria-label={`${rating} trên 5 sao`}>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <IconStar
+          key={i}
+          aria-hidden
+          className={cn(
+            className,
+            i <= rating
+              ? "fill-luxury-champagne text-luxury-champagne"
+              : "text-neutral-300",
+          )}
+        />
+      ))}
+    </span>
+  );
 }
 
 export function OrderProductsCard({
@@ -33,25 +55,20 @@ export function OrderProductsCard({
   const canReview =
     order.status === "completed" ||
     (!isLocalPickup && order.status === "delivered");
+  const count = order.products?.length ?? 0;
 
   return (
-    <div
-      className="overflow-hidden border border-luxury-ink/8 bg-white/60"
-      style={{ borderRadius: "2px" }}
+    <Panel
+      eyebrow="Đơn hàng"
+      title="Sản phẩm đã đặt"
+      padding="flush"
+      aside={
+        <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
+          {count} sản phẩm
+        </span>
+      }
     >
-      <div className="flex items-center gap-2 border-b border-luxury-ink/8 px-5 py-3">
-        <IconPackage
-          className="h-4 w-4 text-luxury-champagne"
-          strokeWidth={1.75}
-        />
-        <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-600">
-          Sản phẩm đã đặt
-        </span>
-        <span className="ml-auto text-xs text-taupe-400">
-          {order.products?.length || 0} sản phẩm
-        </span>
-      </div>
-      <div className="divide-y divide-luxury-ink/6">
+      <ul className="divide-y divide-luxury-ink/8">
         {order.products?.map((item, idx) => {
           const product = item.productId;
           const productId =
@@ -76,41 +93,36 @@ export function OrderProductsCard({
           const hasReview = productId ? productReviews[productId] : undefined;
           const canReviewProduct = canReview && Boolean(productId);
 
+          const thumbnail = (
+            <Image
+              src={avatar}
+              alt={product?.name || "Sản phẩm"}
+              width={96}
+              height={96}
+              className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+            />
+          );
+
           return (
-            <div key={idx} className="flex gap-3 p-4 sm:gap-4 sm:p-5">
+            <li key={idx} className="flex gap-4 px-5 py-5 sm:px-6">
               {productHref ? (
                 <Link
                   href={productHref}
-                  className="h-16 w-16 shrink-0 overflow-hidden border border-luxury-ink/10 bg-cream-100 transition-colors hover:border-luxury-champagne/60 sm:h-20 sm:w-20"
-                  style={{ borderRadius: "2px" }}
+                  className="group h-20 w-20 shrink-0 overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-cream-100 transition-colors duration-300 hover:border-luxury-champagne/60 sm:h-24 sm:w-24"
                 >
-                  <Image
-                    src={avatar}
-                    alt={product?.name || "Sản phẩm"}
-                    width={80}
-                    height={80}
-                    className="h-full w-full object-cover"
-                  />
+                  {thumbnail}
                 </Link>
               ) : (
-                <div
-                  className="h-16 w-16 shrink-0 overflow-hidden border border-luxury-ink/10 bg-cream-100 sm:h-20 sm:w-20"
-                  style={{ borderRadius: "2px" }}
-                >
-                  <Image
-                    src={avatar}
-                    alt={product?.name || "Sản phẩm"}
-                    width={80}
-                    height={80}
-                    className="h-full w-full object-cover"
-                  />
+                <div className="group h-20 w-20 shrink-0 overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-cream-100 sm:h-24 sm:w-24">
+                  {thumbnail}
                 </div>
               )}
+
               <div className="min-w-0 flex-1">
                 {productHref ? (
                   <Link
                     href={productHref}
-                    className="line-clamp-2 text-sm font-medium leading-snug text-luxury-ink transition-colors hover:text-accent"
+                    className="line-clamp-2 text-sm font-medium leading-snug text-luxury-ink transition-colors duration-300 hover:text-accent"
                   >
                     {product?.name || "Sản phẩm đã ngừng kinh doanh"}
                   </Link>
@@ -119,52 +131,50 @@ export function OrderProductsCard({
                     {product?.name || "Sản phẩm đã ngừng kinh doanh"}
                   </p>
                 )}
+
                 {conditionLabel && badgeColorClass && (
                   <span
-                    className={`mt-1 inline-block border px-2 py-0.5 text-[10px] font-bold ${badgeColorClass}`}
-                    style={{ borderRadius: "2px" }}
+                    className={cn(
+                      "mt-2 inline-block rounded-[2px] border px-2 py-0.5 text-2xs font-bold uppercase tracking-[0.15em]",
+                      badgeColorClass,
+                    )}
                   >
                     {conditionLabel}
                   </span>
                 )}
-                <div className="mt-2 flex items-center gap-3">
-                  <p className="text-xs text-taupe-400">
-                    Số lượng:{" "}
-                    <span className="font-bold text-luxury-ink">
-                      ×{item.quantity}
-                    </span>
-                  </p>
-                  <p className="text-sm font-bold text-luxury-ink">
+
+                <div className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
+                    Số lượng ×{item.quantity}
+                  </span>
+                  <span
+                    style={serif}
+                    className="tabular-nums text-base text-luxury-ink"
+                  >
                     {formatPrice(item.price || product?.price || 0)}
-                  </p>
+                  </span>
                 </div>
+
                 {canReviewProduct && productId && (
-                  <div className="mt-2">
+                  <div className="mt-3">
                     {hasReview ? (
-                      <div className="flex items-center gap-1.5 text-xs text-taupe-400">
-                        <div className="flex">
-                          {[1, 2, 3, 4, 5].map((i) => (
-                            <IconStar
-                              key={i}
-                              className={
-                                i <= hasReview.rating
-                                  ? "h-3.5 w-3.5 fill-luxury-champagne text-luxury-champagne"
-                                  : "h-3.5 w-3.5 text-taupe-200"
-                              }
-                            />
-                          ))}
-                        </div>
+                      <span className="flex items-center gap-2 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
+                        <Stars
+                          rating={hasReview.rating}
+                          className="h-3.5 w-3.5"
+                        />
                         Đã đánh giá
-                      </div>
+                      </span>
                     ) : (
                       <button
+                        type="button"
                         onClick={() =>
                           onOpenProductReview(
                             productId,
                             product.name || "Sản phẩm",
                           )
                         }
-                        className="flex items-center gap-1 text-xs font-medium text-luxury-ink hover:text-accent hover:underline"
+                        className="inline-flex items-center gap-1.5 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ink underline decoration-luxury-champagne underline-offset-4 transition-colors duration-300 hover:text-accent"
                       >
                         <IconStar className="h-3.5 w-3.5 text-luxury-champagne" />
                         Đánh giá sản phẩm
@@ -173,35 +183,38 @@ export function OrderProductsCard({
                   </div>
                 )}
               </div>
-            </div>
+            </li>
           );
         })}
-      </div>
+      </ul>
 
-      {/* Seller row */}
       {order.sellerId && (
-        <div className="flex items-center justify-between border-t border-luxury-ink/8 bg-cream-50 px-5 py-4">
-          <div className="flex items-center gap-3">
-            <span
-              className="flex h-9 w-9 shrink-0 items-center justify-center bg-luxury-ink/5"
-              style={{ borderRadius: "2px" }}
-            >
-              <IconUser className="h-4 w-4 text-taupe-500" strokeWidth={1.75} />
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-luxury-ink/10 bg-cream-50 px-5 py-5 sm:px-6">
+          <div className="flex min-w-0 items-center gap-3.5">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-white">
+              <IconUser
+                className="h-4 w-4 text-neutral-500"
+                strokeWidth={1.75}
+              />
             </span>
-            <div>
-              <p className="text-xs text-taupe-400">Người bán</p>
-              <p className="text-sm font-bold text-luxury-ink">
+            <div className="min-w-0">
+              <p className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
+                Người bán
+              </p>
+              <p className="mt-1 truncate text-sm font-medium text-luxury-ink">
                 {order.sellerId.fullName || "—"}
               </p>
               {order.sellerId.phoneNumber && (
-                <p className="flex items-center gap-1 text-xs text-taupe-400">
-                  <IconPhone className="h-3 w-3" />
+                <p className="mt-0.5 flex items-center gap-1.5 text-xs text-neutral-500">
+                  <IconPhone className="h-3 w-3" strokeWidth={1.75} />
                   {order.sellerId.phoneNumber}
                 </p>
               )}
             </div>
           </div>
+
           <button
+            type="button"
             onClick={() =>
               openChatWithOrder(
                 {
@@ -225,14 +238,13 @@ export function OrderProductsCard({
                 },
               )
             }
-            className="flex items-center gap-1.5 border border-luxury-ink/15 px-3.5 py-2 text-luxury-ink transition-all duration-300 hover:border-luxury-champagne hover:text-accent"
-            style={{ borderRadius: "2px" }}
+            className="inline-flex shrink-0 items-center gap-2 rounded-[2px] border border-luxury-ink/15 bg-white px-4 py-2.5 text-2xs font-bold uppercase tracking-[0.2em] text-luxury-ink transition-all duration-300 hover:border-luxury-champagne hover:text-accent"
           >
             <IconMessage className="h-4 w-4" strokeWidth={1.75} />
-            <span className="text-xs font-bold">Nhắn tin</span>
+            Nhắn tin
           </button>
         </div>
       )}
-    </div>
+    </Panel>
   );
 }

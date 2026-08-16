@@ -1,5 +1,7 @@
-import { IconCircleCheck, IconPackage, IconTruck } from "@tabler/icons-react";
+import { IconCheck, IconExternalLink } from "@tabler/icons-react";
 import { format } from "@/utils/format/date";
+import { cn } from "@/lib/utils";
+import { Eyebrow, InkSurface } from "@/features/order/components";
 
 interface ProgressStep {
   key: string;
@@ -21,6 +23,43 @@ interface OrderStatusHeroProps {
   ghnReturnTrackingUrl?: string | null;
 }
 
+const serif = { fontFamily: "var(--font-droid-serif), serif" };
+
+function TrackingRow({
+  label,
+  code,
+  href,
+}: {
+  label: string;
+  code: string;
+  href: string;
+}) {
+  return (
+    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+      <span className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
+        {label}
+      </span>
+      <span className="font-mono text-sm text-luxury-ink">{code}</span>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group inline-flex items-center gap-1 text-2xs font-bold uppercase tracking-[0.2em] text-luxury-ink underline decoration-luxury-champagne underline-offset-4 transition-colors hover:text-accent"
+      >
+        Theo dõi
+        <IconExternalLink className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+      </a>
+    </div>
+  );
+}
+
+/**
+ * The page's one focal point: status on the dark ink ground (the same treatment
+ * as the checkout total), with the journey laid out beneath it on white.
+ *
+ * `statusConfig.icon` / `.bgColor` are deliberately unused — those carry the
+ * saturated emoji palette of the admin tables, which does not belong here.
+ */
 export function OrderStatusHero({
   status,
   statusConfig,
@@ -50,141 +89,124 @@ export function OrderStatusHero({
     );
 
   return (
-    <div
-      className="overflow-hidden border border-luxury-ink/8 bg-white/60"
-      style={{ borderRadius: "2px" }}
-    >
-      {/* Status row */}
-      <div className="flex items-center gap-4 border-b border-luxury-ink/8 px-5 py-4">
-        <div
-          className={`flex h-11 w-11 shrink-0 items-center justify-center text-xl ${statusConfig.bgColor}`}
-          style={{ borderRadius: "2px" }}
-        >
-          {statusConfig.icon}
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className={`text-sm font-bold ${statusConfig.color}`}>
-            {statusConfig.label}
-          </p>
-          <p className="mt-0.5 text-xs leading-snug text-neutral-500">
-            {descriptionOverride ??
-              statusDescription[status] ??
-              "Đang xử lý đơn hàng."}
-          </p>
-        </div>
-        <span className="hidden shrink-0 text-xs text-taupe-400 sm:block">
-          {format(updatedAt)}
-        </span>
-      </div>
-
-      {/* GHN tracking codes */}
-      {(ghnOrderCode || ghnReturnOrderCode) &&
-        (showGhnOrder || showGhnReturn) && (
-          <div className="flex flex-wrap gap-x-6 gap-y-1.5 border-b border-luxury-ink/8 px-5 py-3">
-            {showGhnOrder && (
-              <p className="flex items-center gap-1.5 font-mono text-xs text-neutral-500">
-                Vận đơn GHN:
-                <span className="font-bold text-luxury-ink">
-                  {ghnOrderCode}
-                </span>
-                <a
-                  href={`https://tracking.ghn.dev/?order_code=${ghnOrderCode}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-luxury-ink underline decoration-luxury-champagne underline-offset-2 hover:text-accent"
-                >
-                  Theo dõi →
-                </a>
-              </p>
-            )}
-            {showGhnReturn && (
-              <p className="flex items-center gap-1.5 font-mono text-xs text-neutral-500">
-                Vận đơn hoàn trả:
-                <span className="font-bold text-luxury-ink">
-                  {ghnReturnOrderCode}
-                </span>
-                <a
-                  href={
-                    ghnReturnTrackingUrl?.trim() ||
-                    `https://tracking.ghn.dev/?order_code=${ghnReturnOrderCode}`
-                  }
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-luxury-ink underline decoration-luxury-champagne underline-offset-2 hover:text-accent"
-                >
-                  Theo dõi →
-                </a>
-              </p>
-            )}
+    <section className="overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white">
+      <InkSurface className="px-5 py-7 sm:px-6 sm:py-8">
+        <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
+          <div className="min-w-0 max-w-xl">
+            <Eyebrow tone="dark">Trạng thái</Eyebrow>
+            <h2
+              style={serif}
+              className="mt-4 text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.1] tracking-tight text-luxury-ivory"
+            >
+              {statusConfig.label}
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-luxury-ivory/65">
+              {descriptionOverride ??
+                statusDescription[status] ??
+                "Đang xử lý đơn hàng."}
+            </p>
           </div>
-        )}
 
-      {/* Progress stepper */}
+          <div className="shrink-0 text-right">
+            <p className="text-2xs font-bold uppercase tracking-[0.2em] text-luxury-champagne">
+              Cập nhật
+            </p>
+            <p className="mt-1.5 text-xs text-luxury-ivory/60">
+              {format(updatedAt)}
+            </p>
+          </div>
+        </div>
+      </InkSurface>
+
+      {(showGhnOrder || showGhnReturn) && (
+        <div className="space-y-2.5 border-b border-luxury-ink/10 bg-cream-50 px-5 py-4 sm:px-6">
+          {showGhnOrder && (
+            <TrackingRow
+              label="Vận đơn GHN"
+              code={ghnOrderCode}
+              href={`https://tracking.ghn.dev/?order_code=${ghnOrderCode}`}
+            />
+          )}
+          {showGhnReturn && (
+            <TrackingRow
+              label="Vận đơn hoàn trả"
+              code={ghnReturnOrderCode}
+              href={
+                ghnReturnTrackingUrl?.trim() ||
+                `https://tracking.ghn.dev/?order_code=${ghnReturnOrderCode}`
+              }
+            />
+          )}
+        </div>
+      )}
+
       {!isTerminal && (
-        <div className="px-5 py-4">
-          <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.18em] text-taupe-400">
-            Tiến trình
-          </p>
-          <div className="flex items-center overflow-x-auto pb-1">
+        <div className="px-5 py-6 sm:px-6">
+          <Eyebrow>Tiến trình</Eyebrow>
+
+          <ol className="mt-6 flex items-start overflow-x-auto pb-1">
             {progressSteps.map((step, i) => {
               const isDone = i < effectiveStepIdx;
               const isActive = i === effectiveStepIdx;
+              const isReached = isDone || isActive;
+
               return (
-                <div
+                <li
                   key={step.key}
-                  className="flex min-w-[72px] flex-1 items-center last:flex-none"
+                  className="flex min-w-[76px] flex-1 items-start last:flex-none"
                 >
-                  <div className="flex flex-col items-center gap-1.5">
-                    <div
-                      className={
-                        isDone || isActive
-                          ? "flex h-7 w-7 items-center justify-center border border-luxury-ink bg-luxury-ink transition-colors"
-                          : "flex h-7 w-7 items-center justify-center border border-luxury-ink/15 bg-white transition-colors"
-                      }
-                      style={{ borderRadius: "2px" }}
+                  <div className="flex w-[76px] shrink-0 flex-col items-center gap-2.5">
+                    <span
+                      aria-hidden
+                      className={cn(
+                        "flex h-7 w-7 items-center justify-center rounded-[2px] border transition-colors duration-500",
+                        isActive &&
+                          "border-luxury-ink bg-luxury-ink ring-2 ring-luxury-champagne/40 ring-offset-2 ring-offset-white",
+                        isDone && "border-luxury-ink bg-luxury-ink",
+                        !isReached && "border-luxury-ink/15 bg-white",
+                      )}
                     >
                       {isDone ? (
-                        <IconCircleCheck
+                        <IconCheck
                           className="h-3.5 w-3.5 text-luxury-champagne"
                           strokeWidth={2.5}
                         />
-                      ) : isActive ? (
-                        <IconTruck
-                          className="h-3.5 w-3.5 text-luxury-champagne"
-                          strokeWidth={1.75}
-                        />
                       ) : (
-                        <IconPackage
-                          className="h-3.5 w-3.5 text-taupe-300"
-                          strokeWidth={1.75}
+                        <span
+                          className={cn(
+                            "h-1.5 w-1.5 rounded-full",
+                            isActive ? "bg-luxury-champagne" : "bg-luxury-ink/20",
+                          )}
                         />
                       )}
-                    </div>
+                    </span>
                     <span
-                      className={
-                        isDone || isActive
-                          ? "w-[60px] text-center text-[10px] font-medium leading-tight text-luxury-ink"
-                          : "w-[60px] text-center text-[10px] leading-tight text-taupe-400"
-                      }
+                      className={cn(
+                        "text-center text-[10px] font-bold uppercase leading-tight tracking-[0.12em]",
+                        isReached ? "text-luxury-ink" : "text-neutral-400",
+                      )}
                     >
                       {step.shortLabel}
                     </span>
                   </div>
+
                   {i < progressSteps.length - 1 && (
-                    <div
-                      className={
+                    <span
+                      aria-hidden
+                      className={cn(
+                        "mt-3.5 h-px flex-1 transition-colors duration-500",
                         i < effectiveStepIdx
-                          ? "mx-0.5 mb-5 h-px flex-1 bg-luxury-champagne"
-                          : "mx-0.5 mb-5 h-px flex-1 bg-luxury-ink/10"
-                      }
+                          ? "bg-luxury-champagne"
+                          : "bg-luxury-ink/10",
+                      )}
                     />
                   )}
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ol>
         </div>
       )}
-    </div>
+    </section>
   );
 }

@@ -13,8 +13,7 @@ export function useAddress() {
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [showNewAddressForm, setShowNewAddressForm] = useState(false);
-
-  // Fetch addresses from API
+  
   const {
     data: addresses = [],
     isLoading,
@@ -23,9 +22,7 @@ export function useAddress() {
   } = useQuery<Address[]>({
     queryKey: [...queryKeys.addresses.list(), "delivery"],
     queryFn: async () => {
-      // if (!accessToken) {
-      //   return [];
-      // }
+    
 
       try {
         const rawAddresses = await AddressService.getAddresses("delivery");

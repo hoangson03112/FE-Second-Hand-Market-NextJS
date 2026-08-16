@@ -1,5 +1,7 @@
 import { IconStar } from "@tabler/icons-react";
 import { FEATURE_INFO } from "@/constants/messages";
+import { Panel } from "@/features/order/components";
+import { cn } from "@/lib/utils";
 
 interface OrderSellerReviewSectionProps {
   existingReview: { _id: string; rating: number; comment?: string } | null;
@@ -12,6 +14,9 @@ interface OrderSellerReviewSectionProps {
   onSubmit: (e: React.FormEvent) => Promise<void>;
 }
 
+const FIELD_LABEL =
+  "mb-2.5 block text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500";
+
 export function OrderSellerReviewSection({
   existingReview,
   showReviewForm,
@@ -23,103 +28,88 @@ export function OrderSellerReviewSection({
   onSubmit,
 }: OrderSellerReviewSectionProps) {
   return (
-    <div
+    <Panel
       id="seller-review-section"
-      className="overflow-hidden border border-luxury-ink/8 bg-white/60"
-      style={{ borderRadius: "2px" }}
+      eyebrow="Trải nghiệm"
+      title="Đánh giá người bán"
+      description={FEATURE_INFO.REVIEW_SELLER_TIP}
     >
-      <div className="border-b border-luxury-ink/8 px-5 py-3">
-        <div className="flex items-center gap-2">
-          <IconStar
-            className="h-4 w-4 text-luxury-champagne"
-            strokeWidth={1.75}
-          />
-          <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-600">
-            Đánh giá người bán
+      {existingReview ? (
+        <div className="rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-5 py-5">
+          <span className="flex gap-1" aria-label={`${existingReview.rating} trên 5 sao`}>
+            {[1, 2, 3, 4, 5].map((i) => (
+              <IconStar
+                key={i}
+                aria-hidden
+                className={cn(
+                  "h-5 w-5",
+                  i <= existingReview.rating
+                    ? "fill-luxury-champagne text-luxury-champagne"
+                    : "text-neutral-300",
+                )}
+              />
+            ))}
           </span>
+          {existingReview.comment && (
+            <p className="mt-3 text-sm leading-relaxed text-neutral-700">
+              {existingReview.comment}
+            </p>
+          )}
         </div>
-        <p className="mt-1 text-xs text-taupe-400">
-          {FEATURE_INFO.REVIEW_SELLER_TIP}
-        </p>
-      </div>
-      <div className="p-5">
-        {existingReview ? (
-          <div
-            className="border border-luxury-ink/8 bg-cream-50 p-4"
-            style={{ borderRadius: "2px" }}
-          >
-            <div className="mb-2 flex gap-1">
+      ) : showReviewForm ? (
+        <form onSubmit={onSubmit} className="space-y-6">
+          <div>
+            <span className={FIELD_LABEL}>Đánh giá của bạn</span>
+            <div className="flex gap-2">
               {[1, 2, 3, 4, 5].map((i) => (
-                <IconStar
+                <button
                   key={i}
-                  className={
-                    i <= existingReview.rating
-                      ? "h-5 w-5 fill-luxury-champagne text-luxury-champagne"
-                      : "h-5 w-5 text-taupe-200"
-                  }
-                />
+                  type="button"
+                  onClick={() => onRatingChange(i)}
+                  aria-label={`Chấm ${i} sao`}
+                  className="rounded-[2px] p-0.5 transition-transform duration-300 hover:-translate-y-0.5"
+                >
+                  <IconStar
+                    className={cn(
+                      "h-9 w-9 transition-colors duration-300",
+                      i <= reviewRating
+                        ? "fill-luxury-champagne text-luxury-champagne"
+                        : "text-neutral-300 hover:text-luxury-champagne/50",
+                    )}
+                  />
+                </button>
               ))}
             </div>
-            {existingReview.comment && (
-              <p className="text-sm leading-relaxed text-neutral-700">
-                {existingReview.comment}
-              </p>
-            )}
           </div>
-        ) : showReviewForm ? (
-          <form onSubmit={onSubmit} className="space-y-4">
-            <div>
-              <label className="mb-2 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
-                Đánh giá của bạn
-              </label>
-              <div className="flex gap-1.5">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => onRatingChange(i)}
-                    className="p-0.5 transition-transform hover:scale-110"
-                  >
-                    <IconStar
-                      className={
-                        i <= reviewRating
-                          ? "h-9 w-9 fill-luxury-champagne text-luxury-champagne"
-                          : "h-9 w-9 text-taupe-200 hover:text-luxury-champagne/40"
-                      }
-                    />
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div>
-              <label className="mb-2 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
-                Nhận xét (tùy chọn)
-              </label>
-              <textarea
-                value={reviewComment}
-                onChange={(e) => onCommentChange(e.target.value)}
-                rows={3}
-                className="w-full resize-none border border-luxury-ink/15 bg-white px-3.5 py-2.5 text-sm text-luxury-ink placeholder:text-taupe-400/70 outline-none transition-colors duration-300 hover:border-luxury-ink/25 focus:border-luxury-champagne"
-                style={{ borderRadius: "2px" }}
-                placeholder="Chia sẻ trải nghiệm mua hàng của bạn..."
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={isSubmittingReview}
-              className="w-full bg-luxury-ink py-2.5 text-sm font-bold text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
-              style={{ borderRadius: "2px" }}
-            >
-              {isSubmittingReview ? "Đang gửi..." : "Gửi đánh giá"}
-            </button>
-          </form>
-        ) : (
-          <div className="flex items-center justify-center gap-2 py-6 text-sm text-taupe-400">
-            <IconStar className="h-5 w-5 text-taupe-200" />
-            Đang tải thông tin đánh giá...
+
+          <div>
+            <label htmlFor="seller-review-comment" className={FIELD_LABEL}>
+              Nhận xét (tùy chọn)
+            </label>
+            <textarea
+              id="seller-review-comment"
+              value={reviewComment}
+              onChange={(e) => onCommentChange(e.target.value)}
+              rows={4}
+              placeholder="Chia sẻ trải nghiệm mua hàng của bạn…"
+              className="w-full resize-none rounded-[2px] border border-luxury-ink/15 bg-white px-4 py-3 text-sm leading-relaxed text-luxury-ink outline-none transition-colors duration-300 placeholder:text-neutral-400 hover:border-luxury-ink/25 focus:border-luxury-champagne"
+            />
           </div>
-        )}
-      </div>
-    </div>
+
+          <button
+            type="submit"
+            disabled={isSubmittingReview}
+            className="w-full rounded-[2px] bg-luxury-ink py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
+          >
+            {isSubmittingReview ? "Đang gửi…" : "Gửi đánh giá"}
+          </button>
+        </form>
+      ) : (
+        <div className="flex items-center justify-center gap-3 py-8 text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
+          <span className="h-3.5 w-3.5 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
+          Đang tải thông tin đánh giá
+        </div>
+      )}
+    </Panel>
   );
 }

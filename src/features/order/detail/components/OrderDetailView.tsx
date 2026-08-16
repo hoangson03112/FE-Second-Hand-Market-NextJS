@@ -1,5 +1,9 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { Container } from "@/components/layout/Container";
+import { cn } from "@/lib/utils";
 import { RefundModal } from "@/features/order/components";
 import { FEATURE_INFO } from "@/constants/messages";
 import { ProductReviewModal } from "./ProductReviewModal";
@@ -368,19 +372,33 @@ export function OrderDetailView({
     hasBankInfo: Boolean(order.refundBankInfo?.buyerAccountNumber),
     isEscalating: isEscalatingToAdmin,
   });
+  // Same tonal vocabulary as `OrderStatusChip` / `RefundDetailCard`, so the page
+  // never introduces a sixth palette for a one-line notice.
   const refundTodoClass =
     refundTodo?.tone === "success"
-      ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+      ? "border-accent/35 bg-taupe-50"
       : refundTodo?.tone === "warning"
-        ? "border-amber-200 bg-amber-50 text-amber-800"
-        : "border-sky-200 bg-sky-50 text-sky-800";
-  const refundTodoStyle = { borderRadius: "2px" } as const;
+        ? "border-luxury-champagne/50 bg-cream-100"
+        : "border-luxury-ink/12 bg-cream-50";
 
   const refundHeroDescription = getBuyerRefundHeroDescription({
     orderStatus: order.status,
     refundStatus: refundDocStatus,
     isLocalPickup,
   });
+
+  // Matches the checkout entry animation — one rAF, then a staggered settle.
+  const [isRevealed, setIsRevealed] = useState(false);
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setIsRevealed(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  const revealClass = cn(
+    "transition-all duration-700 ease-out",
+    isRevealed ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
+  );
+  const delay = (ms: number) => ({ transitionDelay: `${ms}ms` });
 
   return (
     <div className="min-h-screen bg-luxury-ivory">
@@ -390,45 +408,61 @@ export function OrderDetailView({
         onBack={onBack}
       />
 
-      <Container maxWidth="8xl" paddingX="md" paddingY="lg">
-        <div className="space-y-4 sm:space-y-5">
-          <OrderStatusHero
-            status={order.status}
-            statusConfig={statusConfig}
-            statusDescription={statusDescription}
-            descriptionOverride={refundHeroDescription}
-            progressSteps={progressSteps}
-            effectiveStepIdx={effectiveStepIdx}
-            isTerminal={isTerminal}
-            updatedAt={order.updatedAt}
-            ghnOrderCode={order.ghnOrderCode}
-            ghnReturnOrderCode={order.ghnReturnOrderCode}
-            ghnReturnTrackingUrl={order.ghnReturnTrackingUrl}
-          />
+      <Container maxWidth="9xl" paddingX="md" paddingY="lg">
+        <div className="space-y-6">
+          <div style={delay(80)} className={revealClass}>
+            <OrderStatusHero
+              status={order.status}
+              statusConfig={statusConfig}
+              statusDescription={statusDescription}
+              descriptionOverride={refundHeroDescription}
+              progressSteps={progressSteps}
+              effectiveStepIdx={effectiveStepIdx}
+              isTerminal={isTerminal}
+              updatedAt={order.updatedAt}
+              ghnOrderCode={order.ghnOrderCode}
+              ghnReturnOrderCode={order.ghnReturnOrderCode}
+              ghnReturnTrackingUrl={order.ghnReturnTrackingUrl}
+            />
+          </div>
 
           {isRefundFlow && refundTodo && (
             <div
-              className={`border px-4 py-3.5 ${refundTodoClass}`}
-              style={refundTodoStyle}
+              style={delay(140)}
+              className={cn(
+                revealClass,
+                "rounded-[2px] border px-5 py-4",
+                refundTodoClass,
+              )}
             >
-              <p className="text-sm font-bold">{refundTodo.title}</p>
-              <p className="mt-1 text-xs leading-relaxed opacity-90">
+              <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-600">
+                {refundTodo.title}
+              </p>
+              <p className="mt-2 text-xs leading-relaxed text-neutral-700">
                 {refundTodo.description}
               </p>
             </div>
           )}
 
           {showRefundCard && (
-            <RefundDetailCard
-              refund={order.refundRequestId!}
-              onEscalateToAdmin={handleEscalateToAdmin}
-              isEscalating={isEscalatingToAdmin}
-            />
+            <div style={delay(180)} className={revealClass}>
+              <RefundDetailCard
+                refund={order.refundRequestId!}
+                onEscalateToAdmin={handleEscalateToAdmin}
+                isEscalating={isEscalatingToAdmin}
+              />
+            </div>
           )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
+          <div
+            style={delay(220)}
+            className={cn(
+              revealClass,
+              "grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8",
+            )}
+          >
             {/* Left column */}
-            <div className="lg:col-span-7 xl:col-span-8 space-y-4 sm:space-y-5">
+            <div className="space-y-6 lg:col-span-7 xl:col-span-8">
               <OrderProductsCard
                 order={order}
                 productReviews={productReviews}
@@ -455,12 +489,9 @@ export function OrderDetailView({
               />
               {showSellerReview && (
                 <>
-                  <div
-                    className="flex items-start gap-3 border border-luxury-champagne/30 bg-luxury-champagne/8 p-3.5"
-                    style={{ borderRadius: "2px" }}
-                  >
+                  <div className="flex items-start gap-3.5 rounded-[2px] border border-luxury-champagne/40 bg-luxury-champagne/8 px-5 py-4">
                     <IconInfoCircle
-                      className="mt-0.5 h-4 w-4 shrink-0 text-taupe-700"
+                      className="mt-0.5 h-4 w-4 shrink-0 text-luxury-champagne"
                       strokeWidth={1.75}
                     />
                     <p className="text-xs leading-relaxed text-neutral-700">
@@ -483,7 +514,7 @@ export function OrderDetailView({
 
             {/* Right sidebar */}
             <div className="lg:col-span-5 xl:col-span-4">
-              <div className="space-y-4 sm:space-y-5 lg:sticky lg:top-[72px]">
+              <div className="space-y-6 lg:sticky lg:top-24">
                 <OrderMetaCard
                   createdAt={order.createdAt}
                   expectedDeliveryTime={order.expectedDeliveryTime}

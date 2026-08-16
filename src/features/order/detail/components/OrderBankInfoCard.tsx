@@ -1,6 +1,8 @@
-import { IconBuildingBank } from "@tabler/icons-react";
+import { IconBuildingBank, IconExternalLink } from "@tabler/icons-react";
 import { BANK_CODE_MAP } from "@/constants";
 import { REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER } from "@/constants/refund";
+import { Panel } from "@/features/order/components";
+import { cn } from "@/lib/utils";
 
 const BANK_OPTIONS = Object.keys(BANK_CODE_MAP);
 
@@ -26,8 +28,11 @@ interface OrderBankInfoCardProps {
   onSubmitBankInfo: (e: React.FormEvent) => void;
 }
 
-const inputClass =
-  "w-full border border-luxury-ink/15 bg-white px-3 py-2 text-sm text-luxury-ink placeholder:text-taupe-400/70 outline-none transition-colors duration-300 hover:border-luxury-ink/25 focus:border-luxury-champagne";
+const INPUT_CLASS =
+  "w-full rounded-[2px] border border-luxury-ink/15 bg-white px-3.5 py-2.5 text-sm text-luxury-ink outline-none transition-colors duration-300 placeholder:text-neutral-400 hover:border-luxury-ink/25 focus:border-luxury-champagne";
+
+const FIELD_LABEL =
+  "mb-2 block text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500";
 
 export function OrderBankInfoCard({
   status: orderStatus,
@@ -43,7 +48,8 @@ export function OrderBankInfoCard({
   onAccountNumberChange,
   onAccountHolderChange,
   onSubmitBankInfo,
-}: OrderBankInfoCardProps) {  const showGhnSection =
+}: OrderBankInfoCardProps) {
+  const showGhnSection =
     refundStatus === "return_shipping" ||
     refundStatus === "returning" ||
     orderStatus === "returning" ||
@@ -52,9 +58,12 @@ export function OrderBankInfoCard({
   const hasBankInfo = Boolean(refundBankInfo?.buyerAccountNumber);
   const showBankSubmitted =
     hasBankInfo &&
-    (refundStatus === "processing" || refundStatus === "returned" || refundStatus === "bank_info_required");
+    (refundStatus === "processing" ||
+      refundStatus === "returned" ||
+      refundStatus === "bank_info_required");
   const showBankForm =
-    !hasBankInfo && (refundStatus === "returned" || refundStatus === "bank_info_required");
+    !hasBankInfo &&
+    (refundStatus === "returned" || refundStatus === "bank_info_required");
 
   const cardTitle =
     showGhnSection && !showBankForm && !showBankSubmitted
@@ -62,183 +71,169 @@ export function OrderBankInfoCard({
       : "Thông tin ngân hàng nhận tiền";
 
   const legacyBankName =
-    bankName.trim() && !BANK_OPTIONS.includes(bankName)
-      ? bankName.trim()
-      : null;
+    bankName.trim() && !BANK_OPTIONS.includes(bankName) ? bankName.trim() : null;
 
   const accountFields = [
     {
       label: "Số tài khoản",
       value: accountNumber,
       setter: onAccountNumberChange,
-      placeholder: "Nhập số tài khoản...",
+      placeholder: "Nhập số tài khoản…",
     },
     {
       label: "Tên chủ tài khoản",
       value: accountHolder,
       setter: onAccountHolderChange,
-      placeholder: "Tên đầy đủ trên tài khoản...",
+      placeholder: "Tên đầy đủ trên tài khoản…",
     },
   ];
 
   return (
-    <div
-      className="overflow-hidden border border-luxury-ink/8 bg-white/60"
-      style={{ borderRadius: "2px" }}
-    >
-      <div className="flex items-center gap-2 border-b border-luxury-ink/8 px-5 py-3">
-        <IconBuildingBank
-          className="h-4 w-4 text-luxury-champagne"
-          strokeWidth={1.75}
-        />
-        <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-neutral-600">
-          {cardTitle}
-        </span>
-      </div>
-      <div className="p-5">
-        {showGhnSection && (
-          <div className="space-y-3">
-            <p
-              className="border border-luxury-ink/8 bg-cream-50 px-3 py-2 text-xs leading-relaxed text-neutral-600"
-              style={{ borderRadius: "2px" }}
-            >
-              {REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}
-            </p>
-            <p className="text-sm text-neutral-500">
-              Vui lòng đến bưu cục GHN gần nhất để gửi hàng theo mã vận đơn hoàn
-              trả (nếu đơn dùng GHN).
-            </p>
-            {ghnReturnOrderCode && (
-              <div
-                className="border border-luxury-champagne/30 bg-luxury-champagne/8 p-3"
-                style={{ borderRadius: "2px" }}
-              >
-                <p className="mb-1 text-xs text-neutral-500">
-                  Mã vận đơn hoàn trả
-                </p>
-                <p className="font-mono font-bold text-luxury-ink">
-                  {ghnReturnOrderCode}
-                </p>
-                {ghnReturnTrackingUrl && (
-                  <a
-                    href={ghnReturnTrackingUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-1 block text-xs text-luxury-ink underline decoration-luxury-champagne underline-offset-2 hover:text-accent"
-                  >
-                    Xem trên GHN →
-                  </a>
-                )}
-              </div>
-            )}
-          </div>
-        )}
+    <Panel eyebrow="Hoàn tiền" title={cardTitle} bodyClassName="space-y-5">
+      {showGhnSection && (
+        <div className="space-y-4">
+          <p className="rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-4 py-3 text-xs leading-relaxed text-neutral-600">
+            {REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}
+          </p>
+          <p className="text-sm leading-relaxed text-neutral-600">
+            Vui lòng đến bưu cục GHN gần nhất để gửi hàng theo mã vận đơn hoàn
+            trả (nếu đơn dùng GHN).
+          </p>
 
-        {showBankSubmitted && refundBankInfo && (
-          <div
-            className={`border border-emerald-200 bg-emerald-50 p-3 ${showGhnSection ? "mt-4" : ""}`}
-            style={{ borderRadius: "2px" }}
-          >
-            <p className="mb-2 text-xs font-bold text-emerald-700">
-              {refundStatus === "processing"
-                ? "Đã gửi STK — Admin sẽ chuyển khoản hoàn tiền"
-                : "Đã gửi — Chờ admin xử lý hoàn tiền"}
-            </p>
-            <div className="space-y-1 text-sm">
-              <p>
-                <span className="text-neutral-500">Ngân hàng:</span>{" "}
-                <span className="font-bold text-luxury-ink">
-                  {refundBankInfo.buyerBankName}
-                </span>
+          {ghnReturnOrderCode && (
+            <div className="rounded-[2px] border border-luxury-champagne/40 bg-luxury-champagne/8 px-4 py-3.5">
+              <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-600">
+                Mã vận đơn hoàn trả
               </p>
-              <p>
-                <span className="text-neutral-500">Số TK:</span>{" "}
-                <span className="font-mono font-bold text-luxury-ink">
-                  {refundBankInfo.buyerAccountNumber}
-                </span>
+              <p className="mt-1.5 font-mono text-sm font-bold text-luxury-ink">
+                {ghnReturnOrderCode}
               </p>
-              <p>
-                <span className="text-neutral-500">Chủ TK:</span>{" "}
-                <span className="font-bold text-luxury-ink">
-                  {refundBankInfo.buyerAccountHolder}
-                </span>
-              </p>
-            </div>
-          </div>
-        )}
-
-        {showBankForm && (
-          <form
-            onSubmit={onSubmitBankInfo}
-            className={`space-y-3 ${showGhnSection ? "mt-4 border-t border-luxury-ink/8 pt-4" : ""}`}
-          >
-            <p className="text-sm text-neutral-500">
-              Người bán đã xác nhận nhận hàng hoàn. Vui lòng nhập tài khoản ngân
-              hàng của bạn để admin chuyển khoản hoàn tiền (tiền đang được giữ /
-              đối soát theo quy trình sàn).
-            </p>
-            <div>
-              <label className="mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
-                Tên ngân hàng
-              </label>
-              <div className="relative">
-                <select
-                  value={bankName}
-                  onChange={(e) => onBankNameChange(e.target.value)}
-                  required
-                  className={`${inputClass} appearance-none pl-9 pr-3`}
-                  style={{ borderRadius: "2px" }}
+              {ghnReturnTrackingUrl && (
+                <a
+                  href={ghnReturnTrackingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group mt-2.5 inline-flex items-center gap-1.5 text-2xs font-bold uppercase tracking-[0.2em] text-luxury-ink underline decoration-luxury-champagne underline-offset-4 transition-colors hover:text-accent"
                 >
-                  <option value="">Chọn ngân hàng</option>
-                  {legacyBankName && (
-                    <option value={legacyBankName}>{legacyBankName}</option>
-                  )}
-                  {BANK_OPTIONS.map((name) => (
-                    <option key={name} value={name}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
-                <IconBuildingBank
-                  className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-taupe-400"
-                  strokeWidth={1.75}
-                />
-              </div>
+                  Xem trên GHN
+                  <IconExternalLink className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
+              )}
             </div>
-            {accountFields.map(({ label, value, setter, placeholder }) => (
-              <div key={label}>
-                <label className="mb-1 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
-                  {label}
-                </label>
-                <input
-                  type="text"
-                  value={value}
-                  onChange={(e) => setter(e.target.value)}
-                  required
-                  placeholder={placeholder}
-                  className={inputClass}
-                  style={{ borderRadius: "2px" }}
-                />
-              </div>
-            ))}
-            <button
-              type="submit"
-              disabled={
-                isSubmittingBankInfo ||
-                !bankName.trim() ||
-                !accountNumber.trim() ||
-                !accountHolder.trim()
-              }
-              className="w-full bg-luxury-ink py-2.5 text-sm font-bold text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
-              style={{ borderRadius: "2px" }}
-            >
-              {isSubmittingBankInfo
-                ? "Đang gửi..."
-                : "Gửi thông tin nhận hoàn tiền"}
-            </button>
-          </form>
-        )}
-      </div>
-    </div>
+          )}
+        </div>
+      )}
+
+      {showBankSubmitted && refundBankInfo && (
+        <div
+          className={cn(
+            "rounded-[2px] border border-accent/35 bg-taupe-50 px-4 py-4",
+            showGhnSection && "border-t",
+          )}
+        >
+          <p className="text-2xs font-bold uppercase tracking-[0.2em] text-taupe-700">
+            {refundStatus === "processing"
+              ? "Đã gửi STK — admin sẽ chuyển khoản"
+              : "Đã gửi — chờ admin xử lý hoàn tiền"}
+          </p>
+          <dl className="mt-3 space-y-1.5 text-sm">
+            <div className="flex gap-2">
+              <dt className="text-neutral-500">Ngân hàng:</dt>
+              <dd className="font-medium text-luxury-ink">
+                {refundBankInfo.buyerBankName}
+              </dd>
+            </div>
+            <div className="flex gap-2">
+              <dt className="text-neutral-500">Số TK:</dt>
+              <dd className="font-mono font-medium text-luxury-ink">
+                {refundBankInfo.buyerAccountNumber}
+              </dd>
+            </div>
+            <div className="flex gap-2">
+              <dt className="text-neutral-500">Chủ TK:</dt>
+              <dd className="font-medium text-luxury-ink">
+                {refundBankInfo.buyerAccountHolder}
+              </dd>
+            </div>
+          </dl>
+        </div>
+      )}
+
+      {showBankForm && (
+        <form
+          onSubmit={onSubmitBankInfo}
+          className={cn(
+            "space-y-5",
+            showGhnSection && "border-t border-luxury-ink/10 pt-5",
+          )}
+        >
+          <p className="text-sm leading-relaxed text-neutral-600">
+            Người bán đã xác nhận nhận hàng hoàn. Vui lòng nhập tài khoản ngân
+            hàng của bạn để admin chuyển khoản hoàn tiền (tiền đang được giữ /
+            đối soát theo quy trình sàn).
+          </p>
+
+          <div>
+            <label htmlFor="refund-bank-name" className={FIELD_LABEL}>
+              Tên ngân hàng
+            </label>
+            <div className="relative">
+              <select
+                id="refund-bank-name"
+                value={bankName}
+                onChange={(e) => onBankNameChange(e.target.value)}
+                required
+                className={cn(INPUT_CLASS, "appearance-none pl-10")}
+              >
+                <option value="">Chọn ngân hàng</option>
+                {legacyBankName && (
+                  <option value={legacyBankName}>{legacyBankName}</option>
+                )}
+                {BANK_OPTIONS.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+              <IconBuildingBank
+                aria-hidden
+                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-luxury-champagne"
+                strokeWidth={1.75}
+              />
+            </div>
+          </div>
+
+          {accountFields.map(({ label, value, setter, placeholder }) => (
+            <div key={label}>
+              <label htmlFor={`refund-${label}`} className={FIELD_LABEL}>
+                {label}
+              </label>
+              <input
+                id={`refund-${label}`}
+                type="text"
+                value={value}
+                onChange={(e) => setter(e.target.value)}
+                required
+                placeholder={placeholder}
+                className={INPUT_CLASS}
+              />
+            </div>
+          ))}
+
+          <button
+            type="submit"
+            disabled={
+              isSubmittingBankInfo ||
+              !bankName.trim() ||
+              !accountNumber.trim() ||
+              !accountHolder.trim()
+            }
+            className="w-full rounded-[2px] bg-luxury-ink py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
+          >
+            {isSubmittingBankInfo ? "Đang gửi…" : "Gửi thông tin nhận hoàn tiền"}
+          </button>
+        </form>
+      )}
+    </Panel>
   );
 }

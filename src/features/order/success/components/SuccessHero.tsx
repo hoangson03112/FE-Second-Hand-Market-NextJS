@@ -72,7 +72,7 @@ export default function SuccessHero({
           </h1>
 
           <div className="mt-8 inline-flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-luxury-ivory/15 pt-6">
-            <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-luxury-ivory/50">
+            <span className="text-2xs font-medium uppercase tracking-[0.15em] text-luxury-ivory/50">
               Mã đơn
             </span>
             <span
@@ -92,7 +92,7 @@ export default function SuccessHero({
               disabled={isConfirmingReceived}
               className={cn(
                 "inline-flex h-12 items-center justify-center gap-2 rounded-[2px] border border-accent/60 bg-accent/15 px-7",
-                "text-[10px] font-bold uppercase tracking-[0.22em] text-taupe-200",
+                "text-2xs font-medium uppercase tracking-[0.15em] text-taupe-200",
                 "transition-all duration-300 hover:bg-accent/25 disabled:cursor-not-allowed disabled:opacity-50",
               )}
             >

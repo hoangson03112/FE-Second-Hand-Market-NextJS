@@ -1,11 +1,14 @@
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useCheckoutStore, CheckoutItem } from "@/store/useCheckoutStore";
 import { useUser } from "@/features/auth/hooks/useUser";
 import { useCart } from "@/hooks/useCart";
 import { PaymentMethodType } from "@/features/order/checkout/components/PaymentMethod";
 import { Address, ShippingServiceOption } from "@/types/address";
-import { ShippingService } from "@/services/shipping.service";
+import {
+  ShippingService,
+  type ShipmentQuoteRequest,
+} from "@/services/shipping.service";
 import { OrderService } from "@/services/order.service";
 import type { CreateOrderRequest } from "@/types/order";
 import { logger } from "@/infrastructure/monitoring/logger";
@@ -58,6 +61,18 @@ function canGroupCodShip(items: CheckoutItem[]): boolean {
 /** Nhóm có thể giao trực tiếp khi TẤT CẢ sản phẩm hỗ trợ localPickup */
 function canGroupLocalPickup(items: CheckoutItem[]): boolean {
   return items.every((item) => item.product.deliveryOptions?.localPickup !== false);
+}
+
+/** Gộp lỗi từng người bán thành một dòng đọc được, không nuốt seller nào. */
+function formatShippingErrors(
+  errors: Record<string, string>,
+  sellerNames: Record<string, string>
+): string | null {
+  const entries = Object.entries(errors);
+  if (entries.length === 0) return null;
+  return entries
+    .map(([sellerId, message]) => `${sellerNames[sellerId] ?? "Người bán"}: ${message}`)
+    .join(" ");
 }
 
 export function useCheckout() {
@@ -145,6 +160,13 @@ export function useCheckout() {
     []
   );
 
+  // Chỉ huỷ/bỏ qua được request cũ nếu giữ được controller và "chữ ký" của lần
+  // tính gần nhất giữa các render.
+  const quoteAbortRef = useRef<AbortController | null>(null);
+  const quoteKeyRef = useRef<string | null>(null);
+
+  useEffect(() => () => quoteAbortRef.current?.abort(), []);
+
   const updateShippingFromAddress = useCallback(
     async (address: Address) => {
       setSelectedAddressId(address._id);
@@ -158,77 +180,104 @@ export function useCheckout() {
         ward: address.ward || "",
       });
 
-      if (!address.districtId || !address.wardCode || checkoutItems.length === 0) {
+      const toDistrictId = parseInt(address.districtId ?? "", 10);
+      const toWardCode = address.wardCode ?? "";
+
+      if (!Number.isFinite(toDistrictId) || !toWardCode || checkoutItems.length === 0) {
+        quoteAbortRef.current?.abort();
+        quoteKeyRef.current = null;
         setShippingInfoBySeller({});
+        setShippingError(null);
         return;
       }
+
+      const groups = groupCheckoutItemsBySeller(checkoutItems);
+      const shipments: ShipmentQuoteRequest[] = [];
+      const sellerNames: Record<string, string> = {};
+      const localErrors: Record<string, string> = {};
+
+      for (const [sellerId, sellerItems] of groups) {
+        // Chỉ tính GHN cho seller có thể ship COD
+        if (!canGroupCodShip(sellerItems)) continue;
+
+        const firstProduct = sellerItems[0]?.product;
+        const seller = firstProduct?.seller;
+        sellerNames[sellerId] = seller?.fullName ?? "Người bán";
+
+        const pickupAddress = firstProduct?.address;
+        const fromDistrictId = parseInt(
+          pickupAddress?.districtId ?? seller?.from_district_id ?? "",
+          10
+        );
+        const fromWardCode =
+          pickupAddress?.wardCode ?? seller?.from_ward_code ?? "";
+
+        // Địa chỉ gửi hàng hỏng là lỗi của riêng seller đó — các seller còn lại
+        // vẫn phải được báo giá bình thường.
+        if (!Number.isFinite(fromDistrictId) || !fromWardCode) {
+          localErrors[sellerId] = "chưa cấu hình địa chỉ gửi hàng.";
+          continue;
+        }
+
+        shipments.push({
+          id: sellerId,
+          from_district_id: fromDistrictId,
+          from_ward_code: fromWardCode,
+          weight: sellerItems.reduce(
+            (sum, item) =>
+              sum + (item.product?.estimatedWeight?.value ?? 500) * item.quantity,
+            0
+          ),
+        });
+      }
+
+      // Effect gọi hàm này chạy lại mỗi khi `selectedAddress` đổi identity; báo
+      // giá lại một giỏ hàng + địa chỉ không đổi chỉ tốn thêm độ trễ.
+      const quoteKey = JSON.stringify({ toDistrictId, toWardCode, shipments });
+      if (quoteKey === quoteKeyRef.current) return;
+
+      quoteAbortRef.current?.abort();
+
+      if (shipments.length === 0) {
+        quoteKeyRef.current = quoteKey;
+        setShippingInfoBySeller({});
+        setShippingError(formatShippingErrors(localErrors, sellerNames));
+        return;
+      }
+
+      const controller = new AbortController();
+      quoteAbortRef.current = controller;
+      // Đặt trước khi await để một lần gọi trùng lúc đang bay không bắn thêm request.
+      quoteKeyRef.current = quoteKey;
 
       setIsCalculatingShipping(true);
       setShippingError(null);
 
       try {
-        const groups = groupCheckoutItemsBySeller(checkoutItems);
-        const toDistrictId = parseInt(address.districtId);
-        const toWardCode = address.wardCode;
-
-        if (isNaN(toDistrictId) || !toWardCode) {
-          throw new Error("Mã quận/huyện hoặc phường/xã không hợp lệ.");
-        }
-
-        const bySeller: Record<string, ShippingServiceOption> = {};
-
-        for (const [sellerId, sellerItems] of groups) {
-          // Chỉ tính GHN cho seller có thể ship COD
-          if (!canGroupCodShip(sellerItems)) continue;
-
-          const firstProduct = sellerItems[0]?.product;
-          const seller = firstProduct?.seller;
-          const pickupAddress = firstProduct?.address;
-          const fromDistrictId = pickupAddress?.districtId
-            ? parseInt(pickupAddress.districtId)
-            : seller?.from_district_id
-              ? parseInt(seller.from_district_id)
-              : NaN;
-          const fromWardCode =
-            pickupAddress?.wardCode ?? seller?.from_ward_code ?? "";
-
-          if (isNaN(fromDistrictId) || !fromWardCode) {
-            setShippingError(
-              `Người bán ${seller?.fullName ?? sellerId} chưa cấu hình địa chỉ gửi hàng.`
-            );
-            setShippingInfoBySeller({});
-            setIsCalculatingShipping(false);
-            return;
-          }
-
-          const weight = sellerItems.reduce((sum, item) => {
-            const w = item.product?.estimatedWeight?.value ?? 500;
-            return sum + w * item.quantity;
-          }, 0);
-
-          const result = await ShippingService.calculateShippingInfo({
-            from_district_id: fromDistrictId,
-            from_ward_code: fromWardCode,
-            to_district_id: toDistrictId,
-            to_ward_code: toWardCode,
-            weight,
-          });
-
-          bySeller[sellerId] = result;
-        }
-
-        setShippingInfoBySeller(bySeller);
-        logger.info("Shipping calculated for all sellers", {
-          sellerCount: Object.keys(bySeller).length,
+        const { options, errors } = await ShippingService.quoteShipments({
+          to_district_id: toDistrictId,
+          to_ward_code: toWardCode,
+          shipments,
+          signal: controller.signal,
         });
+
+        // Địa chỉ đã đổi trong lúc chờ — kết quả này đã cũ, lần gọi mới đang giữ state.
+        if (controller.signal.aborted) return;
+
+        setShippingInfoBySeller(options);
+        setShippingError(
+          formatShippingErrors({ ...localErrors, ...errors }, sellerNames)
+        );
       } catch (error) {
+        if (controller.signal.aborted) return;
         const message =
           error instanceof Error ? error.message : "Không thể tải phương thức vận chuyển";
         logger.error("Error loading shipping services", error as Error);
+        quoteKeyRef.current = null;
         setShippingError(message);
         setShippingInfoBySeller({});
       } finally {
-        setIsCalculatingShipping(false);
+        if (!controller.signal.aborted) setIsCalculatingShipping(false);
       }
     },
     [account?.email, checkoutItems]

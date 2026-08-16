@@ -1,8 +1,7 @@
-import { OrderStatusBadge } from "@/features/order/components";
+"use client";
+
 import { IconArrowLeft } from "@tabler/icons-react";
-import { Container } from "@/components/layout/Container";
-import {
-} from "@/components/ui";
+import { OrderStatusChip } from "@/features/order/components";
 
 interface OrderDetailHeaderProps {
   orderId: string;
@@ -10,35 +9,49 @@ interface OrderDetailHeaderProps {
   onBack: () => void;
 }
 
+const serif = { fontFamily: "var(--font-droid-serif), serif" };
+
+/**
+ * Mirrors `CheckoutHeader` — same height, same back affordance, same serif
+ * title — so moving from checkout to an order reads as one continuous flow.
+ */
 export function OrderDetailHeader({
   orderId,
   status,
   onBack,
 }: OrderDetailHeaderProps) {
   return (
-    <div className="sticky top-0 z-10 border-b border-luxury-ink/8 bg-luxury-ivory/95 backdrop-blur-md">
-      <Container maxWidth="8xl" paddingX="md">
-        <div className="flex items-center gap-3 py-3.5">
-          <button
-            onClick={onBack}
-            className="group -ml-1.5 flex h-8 w-8 items-center justify-center text-taupe-400 transition-colors hover:text-luxury-ink"
-          >
-            <IconArrowLeft
-              className="h-4 w-4 transition-transform group-hover:-translate-x-0.5"
-              strokeWidth={1.75}
-            />
-          </button>
-          <div className="min-w-0 flex-1">
-            <h1 className="text-[13px] font-bold uppercase tracking-[0.1em] text-luxury-ink">
-              Chi tiết đơn hàng
-            </h1>
-            <p className="font-mono text-xs text-taupe-400">
-              #{orderId.slice(-10).toUpperCase()}
-            </p>
-          </div>
-          <OrderStatusBadge status={status} size="md" />
+    <header className="sticky top-0 z-20 border-b border-luxury-ink/10 bg-luxury-ivory/95 backdrop-blur-md">
+      <div className="mx-auto flex h-16 w-full max-w-9xl items-center gap-4 px-4 sm:px-6">
+        <button
+          type="button"
+          onClick={onBack}
+          aria-label="Quay lại"
+          className="-ml-2 shrink-0 rounded-[2px] p-2 text-luxury-ink transition-colors hover:bg-taupe-50"
+        >
+          <IconArrowLeft className="h-5 w-5" />
+        </button>
+
+        <h1
+          style={serif}
+          className="min-w-0 flex-1 truncate text-xl tracking-tight text-luxury-ink sm:text-2xl"
+        >
+          Chi Tiết Đơn Hàng
+        </h1>
+
+        <div className="hidden shrink-0 text-right sm:block">
+          <p className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
+            Mã đơn
+          </p>
+          <p className="mt-1 font-mono text-sm leading-none text-luxury-ink">
+            #{orderId.slice(-10).toUpperCase()}
+          </p>
         </div>
-      </Container>
-    </div>
+
+        <span aria-hidden className="hidden h-8 w-px bg-luxury-ink/10 sm:block" />
+
+        <OrderStatusChip status={status} />
+      </div>
+    </header>
   );
 }

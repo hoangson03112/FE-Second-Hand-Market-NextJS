@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
 import type { SellerGroup } from "../hooks/useCheckout";
 import type { PaymentMethodType } from "./PaymentMethod";
-import { Eyebrow } from "@/features/order/components";
+import { Eyebrow, InkSurface } from "@/features/order/components";
 
 interface CheckoutSummaryProps {
   subtotal: number;
@@ -139,39 +139,20 @@ export default function CheckoutSummary({
       </div>
 
       {/* Ink cap — the same dark panel treatment as the homepage CTA */}
-      <div className="relative overflow-hidden bg-luxury-ink px-5 py-6 sm:px-6">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-40"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 85% 15%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 10% 90%, color-mix(in srgb, var(--luxury-champagne) 16%, transparent) 0%, transparent 55%)",
-          }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          }}
-        />
-
-        <div className="relative z-10">
-          <Eyebrow tone="dark">Tổng cộng</Eyebrow>
-          <p
-            style={serif}
-            className="mt-3 tabular-nums text-[clamp(1.5rem,2.4vw,2rem)] leading-none text-luxury-ivory"
-          >
-            {formatPrice(total)}
+      <InkSurface className="px-5 py-6 sm:px-6">
+        <Eyebrow tone="dark">Tổng cộng</Eyebrow>
+        <p
+          style={serif}
+          className="mt-3 tabular-nums text-[clamp(1.5rem,2.4vw,2rem)] leading-none text-luxury-ivory"
+        >
+          {formatPrice(total)}
+        </p>
+        {isMultiSeller ? (
+          <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.2em] text-luxury-ivory/50">
+            Cho {sellerGroups.length} đơn từ {sellerGroups.length} người bán
           </p>
-          {isMultiSeller ? (
-            <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.2em] text-luxury-ivory/50">
-              Cho {sellerGroups.length} đơn từ {sellerGroups.length} người bán
-            </p>
-          ) : null}
-        </div>
-      </div>
+        ) : null}
+      </InkSurface>
     </section>
   );
 }

@@ -63,11 +63,22 @@ async function proxy(
     body = JSON.stringify(json);
   }
 
-  const upstream = await fetch(target, {
-    method: req.method,
-    headers,
-    body,
-  });
+  // Without a deadline a stalled GHN holds this handler's socket open for as
+  // long as GHN wants; the browser gives up at 8s either way.
+  let upstream: Response;
+  try {
+    upstream = await fetch(target, {
+      method: req.method,
+      headers,
+      body,
+      signal: AbortSignal.timeout(8000),
+    });
+  } catch {
+    return NextResponse.json(
+      { code: 504, message: "GHN không phản hồi kịp thời" },
+      { status: 504 }
+    );
+  }
 
   const data = await upstream.json().catch(() => null);
   return NextResponse.json(data, { status: upstream.status });
