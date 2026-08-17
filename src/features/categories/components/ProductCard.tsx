@@ -10,6 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
 import type { IProduct } from "@/types/product";
+import { getProvinceName } from "@/utils";
 
 interface ProductCardProps {
   product: IProduct;
@@ -25,14 +26,12 @@ export default function ProductCard({
     <Link
       href={`/products/${product._id}/${product.slug ?? "san-pham"}`}
       className={cn(
-        "group flex flex-col overflow-hidden border border-luxury-ink/8 bg-white p-3 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-luxury-ink/15 hover:shadow-[0_20px_40px_color-mix(in_srgb,var(--luxury-ink)_8%,transparent)]",
+        "group rounded-[2px] flex flex-col overflow-hidden border border-luxury-ink/8 bg-white p-3 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-luxury-ink/15 hover:shadow-[0_20px_40px_color-mix(in_srgb,var(--luxury-ink)_8%,transparent)]",
         className,
       )}
-      style={{ borderRadius: "2px" }}
     >
       <div
-        className="relative aspect-square w-full overflow-hidden bg-cream-100"
-        style={{ borderRadius: "1px" }}
+        className="rounded-[2px] aspect-square w-full overflow-hidden bg-cream-100"
       >
         {imageUrl ? (
           <>
@@ -72,7 +71,7 @@ export default function ProductCard({
           <div className="flex items-center gap-1 text-xs font-medium text-charcoal-500 uppercase tracking-[0.14em]">
             <IconMapPin className="h-3 w-3 text-blush-500 shrink-0" />
             <span className="line-clamp-1">
-              {product?.seller?.province || "Toàn quốc"}
+              {getProvinceName(product?.seller?.from_province_id) || "Toàn quốc"}
             </span>
           </div>
 
