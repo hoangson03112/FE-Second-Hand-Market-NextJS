@@ -10,6 +10,8 @@ import type { Metadata } from "next";
 import { geist } from "@/lib/fonts";
 import localFont from "next/font/local";
 import { ToastProvider } from "@/components/providers/ToastProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const baseUrl =
   process.env.NEXT_PUBLIC_BASE_URL || "https://www.ecomarket.io.vn";
@@ -96,7 +98,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const hasSession = (await cookies()).has(SESSION_COOKIE);
 
   return (
@@ -113,6 +114,8 @@ export default async function RootLayout({
           <ToastProvider>
             <RealtimeNotificationToast />
             <BannedOverlay />
+            <Analytics />
+            <SpeedInsights />
             <ConfirmDialogProvider>
               <SiteLayout>{children}</SiteLayout>
             </ConfirmDialogProvider>
