@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {
-  IconArrowUpRight,
-} from "@tabler/icons-react";
+import { IconArrowUpRight } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "../hooks";
 
@@ -57,13 +55,15 @@ export default function PhilosophySection() {
             <div
               className={cn(
                 "transition-all duration-700 ease-out",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-6",
               )}
               style={{ transitionDelay: "80ms" }}
             >
               <div className="flex items-center gap-3">
                 <span className="h-px w-8 bg-luxury-champagne/80" aria-hidden />
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-neutral-600">
+                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-neutral-600">
                   Triết lí cốt lõi
                 </p>
               </div>
@@ -99,13 +99,15 @@ export default function PhilosophySection() {
             <div
               className={cn(
                 "mt-10 pt-4 transition-all duration-700 ease-out",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-6",
               )}
               style={{ transitionDelay: "220ms" }}
             >
               <Link
                 href="/products"
-                className="group inline-flex items-center gap-3 bg-luxury-ink px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+                className="group inline-flex items-center gap-3 bg-luxury-ink px-7 py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
                 style={{ borderRadius: "2px" }}
               >
                 <span>Khám phá sản phẩm</span>
@@ -121,13 +123,15 @@ export default function PhilosophySection() {
               href={values[0].href}
               className={cn(
                 "group relative flex flex-col justify-between border border-neutral-200 bg-cream-50 p-7 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-neutral-300 hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--luxury-ink)_6%,transparent)]",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8",
               )}
               style={{ transitionDelay: "180ms" }}
             >
               <div>
                 <div className="flex items-center justify-between border-b border-neutral-200 pb-4">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
                     {values[0].tag}
                   </span>
                   <span className="font-ny text-xl italic text-luxury-ink/40 group-hover:text-taupe-700 transition-colors">
@@ -146,7 +150,7 @@ export default function PhilosophySection() {
                 </p>
               </div>
 
-              <div className="mt-8 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-luxury-ink transition-colors group-hover:text-taupe-700">
+              <div className="mt-8 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-luxury-ink transition-colors group-hover:text-taupe-700">
                 <span>Tìm hiểu thêm</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-1">
                   →
@@ -159,7 +163,9 @@ export default function PhilosophySection() {
               href={values[1].href}
               className={cn(
                 "group relative flex flex-col justify-between overflow-hidden bg-luxury-ink p-7 text-white transition-all duration-700 ease-out hover:-translate-y-1 hover:shadow-[0_16px_36px_color-mix(in_srgb,var(--luxury-ink)_20%,transparent)]",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8",
               )}
               style={{ transitionDelay: "280ms" }}
             >
@@ -176,7 +182,7 @@ export default function PhilosophySection() {
 
               <div className="relative z-10">
                 <div className="flex items-center justify-between border-b border-white/15 pb-4">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">
                     {values[1].tag}
                   </span>
                   <span className="font-ny text-xl italic text-white/40 group-hover:text-white transition-colors">
@@ -197,7 +203,7 @@ export default function PhilosophySection() {
                 </p>
               </div>
 
-              <div className="relative z-10 mt-8 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors">
+              <div className="relative z-10 mt-8 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-white transition-colors">
                 <span>Tìm hiểu thêm</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-1">
                   →
@@ -210,14 +216,16 @@ export default function PhilosophySection() {
               href={values[2].href}
               className={cn(
                 "group relative flex flex-col justify-between border border-neutral-200 bg-white p-7 md:col-span-2 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-neutral-300 hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--luxury-ink)_6%,transparent)]",
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8",
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8",
               )}
               style={{ transitionDelay: "380ms" }}
             >
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div className="max-w-md">
                   <div className="flex items-center gap-3">
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
+                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
                       {values[2].tag}
                     </span>
                     <span className="h-1 w-1 rounded-full bg-taupe-700" />

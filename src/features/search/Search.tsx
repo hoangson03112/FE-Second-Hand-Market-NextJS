@@ -22,10 +22,10 @@ export default function Search() {
   } = useSearch();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-cream-50/40">
+    <div className="min-h-screen bg-luxury-ivory">
       <SearchHeader query={q} total={total} />
 
-      <div className="max-w-8xl mx-auto px-4 py-8">
+      <div className="mx-auto w-full max-w-9xl px-4 py-10 sm:px-6 lg:px-8 md:py-12">
         {!q ? (
           <SearchEmpty />
         ) : error ? (

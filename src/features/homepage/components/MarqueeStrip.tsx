@@ -16,7 +16,7 @@ function MarqueeContent() {
       {ITEMS.map((item) => (
         <span
           key={item}
-          className="mx-8 inline-flex items-center gap-8 whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.32em] text-luxury-ivory/85"
+          className="mx-8 inline-flex items-center gap-8 whitespace-nowrap text-[11px] font-bold uppercase tracking-[0.32em] text-luxury-ivory/85"
         >
           {item}
           <span className="text-luxury-champagne" aria-hidden>

@@ -1,103 +1,117 @@
 import { useQuery, type QueryClient } from "@tanstack/react-query";
 import { AddressService } from "@/services/address.service";
 import type { Province, District, Ward } from "@/types/address";
+import { queryKeys } from "@/lib/query-client";
 
 /**
- * Cache GHN provinces data với React Query
- * Chỉ call API 1 lần, sau đó dùng cache
+ * GHN administrative data (provinces / districts / wards).
+ *
+ * This is the single source for that data. It previously lived here *and* in a
+ * parallel `useProvinces.ts` that hit the same endpoints under a different
+ * query key, so the same list could be fetched and cached twice.
+ *
+ * The data is effectively immutable, hence `staleTime: Infinity` — it is
+ * fetched once per session and never refetched.
  */
+
+/** Form inputs hand us strings; callers elsewhere pass numbers. */
+type LocationId = string | number | null | undefined;
+
+/** Normalised so `"202"` and `202` share one cache entry instead of two. */
+function toId(value: LocationId): number | null {
+  if (value === null || value === undefined || value === "") return null;
+  const n = Number(value);
+  return Number.isNaN(n) ? null : n;
+}
+
+const STATIC_QUERY = {
+  staleTime: Infinity,
+  gcTime: Infinity,
+  retry: 2,
+  retryDelay: (attemptIndex: number) =>
+    Math.min(1000 * 2 ** attemptIndex, 10000),
+  refetchOnWindowFocus: false,
+  refetchOnMount: false,
+} as const;
+
 export function useProvinces() {
-  return useQuery({
-    queryKey: ["ghn", "provinces"],
+  return useQuery<Province[], Error>({
+    queryKey: queryKeys.addresses.provinces(),
     queryFn: () => AddressService.getProvinces(),
-    staleTime: Infinity, // Cache forever
-    gcTime: Infinity, // Don't garbage collect
-    retry: 3,
+    ...STATIC_QUERY,
+  });
+}
+
+export function useDistricts(provinceId?: LocationId) {
+  const id = toId(provinceId);
+  return useQuery<District[], Error>({
+    queryKey: queryKeys.addresses.districts(id),
+    queryFn: () => (id === null ? [] : AddressService.getDistricts(id)),
+    enabled: id !== null,
+    ...STATIC_QUERY,
+  });
+}
+
+export function useWards(districtId?: LocationId) {
+  const id = toId(districtId);
+  return useQuery<Ward[], Error>({
+    queryKey: queryKeys.addresses.wards(id),
+    queryFn: () => (id === null ? [] : AddressService.getWards(id)),
+    enabled: id !== null,
+    ...STATIC_QUERY,
   });
 }
 
 /**
- * Cache GHN districts data theo provinceId
- * Mỗi province chỉ call 1 lần
+ * Province autocomplete. Not wired into any screen yet — kept because it is the
+ * only consumer of `AddressService.searchProvinces`.
  */
-export function useDistricts(provinceId?: string | number) {
-  return useQuery({
-    queryKey: ["ghn", "districts", provinceId],
-    queryFn: () => AddressService.getDistricts(Number(provinceId)),
-    enabled: !!provinceId, // Chỉ fetch khi có provinceId
-    staleTime: Infinity,
-    gcTime: Infinity,
-    retry: 3,
+export function useProvinceSearch(query: string) {
+  return useQuery<Province[], Error>({
+    queryKey: queryKeys.addresses.searchProvinces(query),
+    queryFn: () => AddressService.searchProvinces(query),
+    enabled: query.length >= 2,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+    retry: 1,
+    refetchOnWindowFocus: false,
   });
 }
 
-/**
- * Cache GHN wards data theo districtId
- * Mỗi district chỉ call 1 lần
- */
-export function useWards(districtId?: string | number) {
-  return useQuery({
-    queryKey: ["ghn", "wards", districtId],
-    queryFn: () => AddressService.getWards(Number(districtId)),
-    enabled: !!districtId, // Chỉ fetch khi có districtId
-    staleTime: Infinity,
-    gcTime: Infinity,
-    retry: 3,
-  });
-}
+/* -------------------------------------------------------------------------- */
+/* Imperative helpers — read the same cache from outside React                 */
+/* -------------------------------------------------------------------------- */
 
-/**
- * Prefetch districts để sẵn sàng khi user chọn province
- */
-export function usePrefetchDistricts(provinceId?: string | number) {
-  const queryClient = useQuery({
-    queryKey: ["ghn", "districts", provinceId],
-    queryFn: () => AddressService.getDistricts(Number(provinceId)),
-    enabled: false, // Don't auto-fetch
-    staleTime: Infinity,
-    gcTime: Infinity,
-  });
-
-  return queryClient;
-}
-
-/**
- * Helper: Get cached provinces hoặc fetch nếu chưa có
- */
 export async function getCachedProvinces(
-  queryClient: QueryClient
+  queryClient: QueryClient,
 ): Promise<Province[]> {
-  return await queryClient.ensureQueryData({
-    queryKey: ["ghn", "provinces"],
+  return queryClient.ensureQueryData({
+    queryKey: queryKeys.addresses.provinces(),
     queryFn: () => AddressService.getProvinces(),
     staleTime: Infinity,
   });
 }
 
-/**
- * Helper: Get cached districts hoặc fetch nếu chưa có
- */
 export async function getCachedDistricts(
   queryClient: QueryClient,
-  provinceId: string | number
+  provinceId: string | number,
 ): Promise<District[]> {
-  return await queryClient.ensureQueryData({
-    queryKey: ["ghn", "districts", provinceId],
-    queryFn: () => AddressService.getDistricts(Number(provinceId)),
+  const id = toId(provinceId);
+  return queryClient.ensureQueryData({
+    queryKey: queryKeys.addresses.districts(id),
+    queryFn: () => (id === null ? [] : AddressService.getDistricts(id)),
     staleTime: Infinity,
   });
 }
 
-/**
- * Helper: Get cached wards hoặc fetch nếu chưa có
- */
 export async function getCachedWards(
   queryClient: QueryClient,
-  districtId: string | number
+  districtId: string | number,
 ): Promise<Ward[]> {
-  return await queryClient.ensureQueryData({
-    queryKey: ["ghn", "wards", districtId],
-    queryFn: () => AddressService.getWards(Number(districtId)),
+  const id = toId(districtId);
+  return queryClient.ensureQueryData({
+    queryKey: queryKeys.addresses.wards(id),
+    queryFn: () => (id === null ? [] : AddressService.getWards(id)),
     staleTime: Infinity,
   });
 }

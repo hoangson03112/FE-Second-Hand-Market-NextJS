@@ -3,7 +3,7 @@
 import { IconFolders, IconLoader2 } from "@tabler/icons-react";
 import type { AdminCategory } from "@/types/admin";
 import { useAdminCategories } from "./hooks/useAdminCategories";
-import { NoData } from "@/components/shared";
+import { NoData } from "@/features/admin/components";
 import CategoryHeader from "./components/CategoryHeader";
 import AddCategoryForm from "./components/AddCategoryForm";
 import AddSubcategoryForm from "./components/AddSubcategoryForm";

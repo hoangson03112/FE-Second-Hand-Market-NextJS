@@ -1,4 +1,4 @@
-import { IconMessageCircle, IconX } from "@tabler/icons-react";
+import { IconArrowLeft, IconMessageCircle, IconX } from "@tabler/icons-react";
 import type { Conversation } from "@/types/chat";
 
 interface ChatHeaderProps {
@@ -15,42 +15,54 @@ export function ChatHeader({
   onClose,
 }: ChatHeaderProps) {
   return (
-    <div className="bg-gradient-to-r from-primary to-primary/90 text-white px-7 py-5 rounded-t-3xl flex items-center justify-between shrink-0">
-      <div className="flex items-center gap-4 flex-1 min-w-0">
-        <div className="bg-white/20 p-2.5 rounded-full backdrop-blur-sm">
-          <IconMessageCircle className="w-6 h-6" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <span className="font-bold text-lg block truncate">
-            {selectedConversation ? selectedConversation.name : "Tin nhắn"}
-          </span>
-          {selectedConversation && isConnected && (
-            <span className="text-sm text-white/80 flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 bg-primary/70 rounded-full animate-pulse" />
-              Đang hoạt động
-            </span>
-          )}
-        </div>
-      </div>
-
-      <div className="flex items-center gap-2.5">
-        {selectedConversation && (
-          <button
-            onClick={onBack}
-            className="text-sm bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full backdrop-blur-sm transition-colors font-medium"
-          >
-            ← Quay lại
-          </button>
-        )}
-
+    <header className="flex shrink-0 items-center gap-4 bg-luxury-ink px-5 py-4 text-luxury-ivory">
+      {selectedConversation ? (
         <button
-          onClick={onClose}
-          className="hover:bg-white/20 rounded-full p-2.5 transition-colors"
-          aria-label="Close"
+          type="button"
+          onClick={onBack}
+          aria-label="Quay lại danh sách"
+          className="-ml-2 shrink-0 rounded-[2px] p-2 text-luxury-ivory/70 transition-colors hover:bg-luxury-ivory/10 hover:text-luxury-ivory"
         >
-          <IconX className="w-5 h-5" />
+          <IconArrowLeft className="h-4 w-4" />
         </button>
+      ) : (
+        <span
+          aria-hidden
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[2px] border border-luxury-ivory/20 bg-luxury-ivory/5"
+        >
+          <IconMessageCircle className="h-4 w-4" />
+        </span>
+      )}
+
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-sm font-semibold tracking-tight">
+          {selectedConversation ? selectedConversation.name : "Tin nhắn"}
+        </p>
+        {selectedConversation ? (
+          <p className="mt-1 flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-luxury-ivory/50">
+            <span
+              aria-hidden
+              className={`h-1 w-1 rounded-full ${
+                isConnected ? "bg-accent" : "bg-luxury-ivory/40"
+              }`}
+            />
+            {isConnected ? "Đang hoạt động" : "Ngoại tuyến"}
+          </p>
+        ) : (
+          <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.2em] text-luxury-champagne">
+            Hộp thư
+          </p>
+        )}
       </div>
-    </div>
+
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Đóng"
+        className="-mr-2 shrink-0 rounded-[2px] p-2 text-luxury-ivory/70 transition-colors hover:bg-luxury-ivory/10 hover:text-luxury-ivory"
+      >
+        <IconX className="h-4 w-4" />
+      </button>
+    </header>
   );
 }

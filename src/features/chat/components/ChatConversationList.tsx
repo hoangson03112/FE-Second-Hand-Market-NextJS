@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { IconLoader2, IconMessageCircle } from "@tabler/icons-react";
+import { IconLoader2, IconMessage2 } from "@tabler/icons-react";
 import type { Conversation } from "@/types/chat";
 
 interface ChatConversationListProps {
@@ -85,10 +85,10 @@ function ConversationItem({
   return (
     <button
       onClick={() => onSelect(conversation)}
-      className="w-full p-6 hover:bg-primary/5 transition-all duration-200 text-left flex items-center gap-5 group"
+      className="group flex w-full items-center gap-4 px-5 py-4 text-left transition-colors duration-300 hover:bg-cream-50"
     >
       <div className="relative">
-        <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center overflow-hidden shrink-0 ring-2 ring-transparent group-hover:ring-primary/30 transition-all">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-luxury-ink/10 bg-cream-100 transition-colors duration-300 group-hover:border-luxury-ink/30">
           {showAvatarImage ? (
             <img
               src={avatarUrl}
@@ -97,24 +97,24 @@ function ConversationItem({
               onError={() => setAvatarLoadFailed(true)}
             />
           ) : (
-            <span className="text-lg font-bold text-primary">
+            <span className="text-sm font-semibold text-luxury-ink">
               {conversation.name?.charAt(0)?.toUpperCase()}
             </span>
           )}
         </div>
         {conversation.unreadCount && conversation.unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-sm rounded-full min-w-[24px] h-6 px-1.5 flex items-center justify-center font-bold shadow-md">
+          <span className="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-accent px-1.5 text-[10px] font-semibold tabular-nums text-white">
             {conversation.unreadCount}
           </span>
         )}
       </div>
 
       <div className="flex-1 min-w-0">
-        <p className="font-semibold text-lg truncate text-foreground mb-1">
+        <p className="truncate text-sm font-semibold text-luxury-ink">
           {conversation.name}
         </p>
         {conversation.lastMessage && (
-          <p className="text-base text-muted-foreground truncate">
+          <p className="mt-1 truncate text-xs text-neutral-500">
             {conversation.lastMessage}
           </p>
         )}
@@ -131,22 +131,22 @@ export function ChatConversationList({
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-4">
-        <IconLoader2 className="w-12 h-12 animate-spin text-primary" />
-        <p className="text-base text-muted-foreground">Đang tải...</p>
+        <IconLoader2 className="h-4 w-4 animate-spin text-luxury-ink/40" />
+        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-500">Đang tải</p>
       </div>
     );
   }
 
   if (conversations.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-full text-center p-10">
-        <div className="bg-primary/10 p-7 rounded-full mb-5">
-          <IconMessageCircle className="w-20 h-20 text-primary" />
+      <div className="flex h-full flex-col items-center justify-center px-10 text-center">
+        <div className="flex h-12 w-12 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-white">
+          <IconMessage2 className="h-5 w-5 text-luxury-ink" strokeWidth={1.5} />
         </div>
-        <h3 className="font-semibold text-xl text-foreground mb-2">
+        <h3 className="mt-5 text-lg tracking-tight text-luxury-ink font-droid-serif">
           Chưa có cuộc trò chuyện
         </h3>
-        <p className="text-base text-muted-foreground max-w-md">
+        <p className="mx-auto mt-3 max-w-xs text-sm leading-relaxed text-neutral-600">
           Bắt đầu trò chuyện với người bán bằng cách nhấn &quot;Chat với người
           bán&quot; trên trang sản phẩm
         </p>
@@ -160,12 +160,13 @@ export function ChatConversationList({
     <div>
       {groups.map((group) => (
         <div key={group.label}>
-          <div className="sticky top-0 z-10 px-6 py-2 bg-muted/80 backdrop-blur-sm border-y border-border">
-            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          <div className="sticky top-0 z-10 flex items-center gap-3 border-b border-luxury-ink/8 bg-luxury-ivory/95 px-5 py-2.5 backdrop-blur-sm">
+            <span aria-hidden className="h-px w-6 bg-luxury-champagne/70" />
+            <span className="text-[9px] font-semibold uppercase tracking-[0.24em] text-neutral-600">
               {group.label}
             </span>
           </div>
-          <div className="divide-y divide-border">
+          <div className="divide-y divide-luxury-ink/8">
             {group.items.map((conversation) => (
               <ConversationItem
                 key={conversation._id}

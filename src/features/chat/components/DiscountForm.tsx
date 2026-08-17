@@ -22,7 +22,12 @@ interface DiscountFormProps {
   onCancel?: () => void;
 }
 
-export default function DiscountForm({ product, buyerId, onCreated, onCancel }: DiscountFormProps) {
+export default function DiscountForm({
+  product,
+  buyerId,
+  onCreated,
+  onCancel,
+}: DiscountFormProps) {
   const [price, setPrice] = useState("");
   const [percent, setPercent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -70,7 +75,9 @@ export default function DiscountForm({ product, buyerId, onCreated, onCancel }: 
     } catch (err: unknown) {
       const message =
         err && typeof err === "object" && "message" in err
-          ? String((err as { message?: string }).message || "Tạo giảm giá thất bại")
+          ? String(
+              (err as { message?: string }).message || "Tạo giảm giá thất bại",
+            )
           : "Tạo giảm giá thất bại";
       setError(message);
     } finally {
@@ -80,23 +87,27 @@ export default function DiscountForm({ product, buyerId, onCreated, onCancel }: 
 
   if (!product) {
     return (
-      <div className="text-sm text-muted-foreground">
+      <div className="text-sm text-taupe-500">
         Không có sản phẩm khả dụng để tạo ưu đãi.
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white border border-primary/30 rounded-xl p-4 mt-3 flex flex-col gap-4 shadow-lg">
+    <form
+      onSubmit={handleSubmit}
+      className="mt-3 flex flex-col gap-4 rounded-[2px] border border-luxury-ink/12 bg-white p-4"
+    >
       <div className="flex items-center gap-3">
         <input
           type="number"
           value={price}
-          onChange={e => {
+          onChange={(e) => {
             const nextPrice = e.target.value;
             setPrice(nextPrice);
             if (originalPrice && Number(nextPrice) >= 0) {
-              const p = ((originalPrice - Number(nextPrice)) / originalPrice) * 100;
+              const p =
+                ((originalPrice - Number(nextPrice)) / originalPrice) * 100;
               setPercent(formatPercentForInput(p));
             } else {
               setPercent("");
@@ -110,7 +121,7 @@ export default function DiscountForm({ product, buyerId, onCreated, onCancel }: 
         <input
           type="number"
           value={percent}
-          onChange={e => {
+          onChange={(e) => {
             const nextPercent = e.target.value;
             setPercent(nextPercent);
             const percentNumber = Number(nextPercent);
@@ -139,24 +150,32 @@ export default function DiscountForm({ product, buyerId, onCreated, onCancel }: 
           required
         />
       </div>
-      <div className="text-xs text-muted-foreground">
-        Hạn dùng: <span className="font-semibold">24h</span> kể từ bây giờ
+      <div className="text-xs text-taupe-500">
+        Hạn dùng: <span className="font-bold">24h</span> kể từ bây giờ
         {originalPrice != null ? (
           <span className="ml-2">
-            • Giá gốc: <span className="font-semibold">{originalPrice.toLocaleString("vi-VN")}₫</span>
+            • Giá gốc:{" "}
+            <span className="font-bold">
+              {originalPrice.toLocaleString("vi-VN")}₫
+            </span>
           </span>
         ) : null}
       </div>
-      {error && <div className="text-destructive text-sm mt-1">{error}</div>}
+      {error && <div className="text-red-600 text-sm mt-1">{error}</div>}
       <div className="flex gap-2 mt-2">
         <button
           type="submit"
-          className="bg-primary text-white px-4 py-2 rounded font-semibold shadow-sm disabled:opacity-60"
+          className="inline-flex h-10 items-center justify-center rounded-[2px] bg-luxury-ink px-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-40"
           disabled={!canSubmit}
         >
           {loading ? "Đang tạo..." : "Tạo giảm giá"}
         </button>
-        <button type="button" className="bg-muted px-4 py-2 rounded font-semibold" onClick={onCancel} disabled={loading}>
+        <button
+          type="button"
+          className="inline-flex h-10 items-center justify-center rounded-[2px] border border-luxury-ink/15 px-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
+          onClick={onCancel}
+          disabled={loading}
+        >
           Hủy
         </button>
       </div>

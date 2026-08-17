@@ -7,6 +7,7 @@ import type {
   RegisterResponse,
   VerifyRequest,
   VerifyResponse,
+  ResendCodeResponse,
   AccountResponse,
   RefreshResponse,
 } from "@/types/auth";
@@ -24,8 +25,15 @@ export const AuthService = {
     return axiosClient.post("/auth/verify", data);
   },
 
+  resendVerificationCode: async (data: {
+    accountID: string;
+  }): Promise<ResendCodeResponse> => {
+    const res = await axiosClient.post("/auth/resend-verification-code", data);
+    return res as unknown as ResendCodeResponse;
+  },
+
   getAccountInfo: async (): Promise<AccountResponse> => {
-    return axiosClient.get("/auth/auth");
+    return axiosClient.get("/auth/me");
   },
 
   logout: async (): Promise<{ success: boolean; message: string }> => {
@@ -49,37 +57,31 @@ export const AuthService = {
     return axiosClient.put("/accounts/change-password", data);
   },
 
-  /**
-   * Thiết lập mật khẩu cho tài khoản Google (chưa có mật khẩu).
-   * PUT /accounts/set-password
-   */
-  setPassword: async (data: { newPassword: string }): Promise<{ message: string }> => {
+  setPassword: async (data: {
+    newPassword: string;
+  }): Promise<{ message: string }> => {
     return axiosClient.put("/accounts/set-password", data);
   },
 
-  /**
-   * Xác thực OTP email sau đăng nhập Google.
-   * POST /auth/verify-google-email — body: { pending, code }
-   */
   verifyGoogleEmail: async (data: {
     pending: string;
     code: string;
   }): Promise<{ status: string; message?: string; token?: string }> => {
     const res = await axiosClient.post("/auth/verify-google-email", data);
-    return res as unknown as { status: string; message?: string; token?: string };
+    return res as unknown as {
+      status: string;
+      message?: string;
+      token?: string;
+    };
   },
 
   resendGoogleEmailCode: async (data: {
     pending: string;
-  }): Promise<{ status: string; message?: string }> => {
+  }): Promise<ResendCodeResponse> => {
     const res = await axiosClient.post("/auth/resend-google-email-code", data);
-    return res as unknown as { status: string; message?: string };
+    return res as unknown as ResendCodeResponse;
   },
 
-  /**
-   * Gửi khiếu nại khi tài khoản bị khóa (không cần token).
-   * POST /auth/appeal — body: { email, fullName?, message }
-   */
   submitAppeal: async (data: {
     email: string;
     fullName?: string;

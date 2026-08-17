@@ -1,13 +1,15 @@
 import { Suspense } from "react";
-import Payment from "@/features/payment/Payment";
+import Payment from "@/features/order/payment/Payment";
 
 export default function PaymentPage() {
   return (
-    <Suspense fallback={
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent" />
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-luxury-ivory">
+          <span className="h-4 w-4 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
+        </div>
+      }
+    >
       <Payment />
     </Suspense>
   );

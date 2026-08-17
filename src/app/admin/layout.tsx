@@ -1,11 +1,27 @@
 "use client";
 
-import { IconLayoutDashboard, IconPackage, IconShieldCheck, IconChevronRight, IconShoppingCart, IconUsers, IconBuildingStore, IconFolders, IconFlag, IconRobot, IconHome, IconCoinOff, IconCash, IconHistory, IconBellRinging } from "@tabler/icons-react";
+import {
+  IconLayoutDashboard,
+  IconPackage,
+  IconShieldCheck,
+  IconChevronRight,
+  IconShoppingCart,
+  IconUsers,
+  IconBuildingStore,
+  IconFolders,
+  IconFlag,
+  IconRobot,
+  IconHome,
+  IconCoinOff,
+  IconCash,
+  IconHistory,
+  IconBellRinging,
+} from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
-import { useUser } from "@/hooks/useUser";
-import { Spinner } from "@/components/shared";
+import { useUser } from "@/features/auth/hooks/useUser";
+import { Spinner } from "@/components/ui";
 
 export default function AdminLayout({
   children,
@@ -27,7 +43,9 @@ export default function AdminLayout({
     if (!authCheckReady) return;
     if (isLoading) return;
     if (!account) {
-      router.replace(`/login?redirect=${encodeURIComponent(pathname || "/admin")}`);
+      router.replace(
+        `/login?redirect=${encodeURIComponent(pathname || "/admin")}`,
+      );
       return;
     }
     if (account.role !== "admin") {
@@ -53,7 +71,11 @@ export default function AdminLayout({
     { href: "/admin/sellers", label: "Seller", icon: IconBuildingStore },
     { href: "/admin/categories", label: "Danh mục", icon: IconFolders },
     { href: "/admin/reports", label: "Báo cáo", icon: IconFlag },
-    { href: "/admin/notifications", label: "Thông báo hệ thống", icon: IconBellRinging },
+    {
+      href: "/admin/notifications",
+      label: "Thông báo hệ thống",
+      icon: IconBellRinging,
+    },
     { href: "/admin/audit-logs", label: "Audit Logs", icon: IconHistory },
     { href: "/admin/moderation", label: "Kiểm duyệt AI", icon: IconRobot },
   ];
@@ -66,9 +88,7 @@ export default function AdminLayout({
             <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
               <IconShieldCheck className="w-4 h-4 text-primary" />
             </div>
-            <span className="font-semibold text-sm text-foreground">
-              Admin
-            </span>
+            <span className="font-bold text-sm text-foreground">Admin</span>
           </div>
           <Link
             href="/"

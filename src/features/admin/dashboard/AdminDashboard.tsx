@@ -47,7 +47,9 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-xl font-bold text-foreground">Tổng quan hệ thống</h1>
+          <h1 className="text-xl font-bold text-foreground">
+            Tổng quan hệ thống
+          </h1>
           <p className="mt-0.5 text-sm text-muted-foreground">
             Theo dõi hiệu suất đơn hàng, hoàn tiền và rủi ro trong sàn.
           </p>
@@ -105,66 +107,90 @@ export default function AdminDashboard() {
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Orders by status */}
         <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-          <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground">
+          <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-foreground">
             Trạng thái đơn hàng
           </h2>
           <div className="grid grid-cols-2 gap-3 text-xs sm:grid-cols-3">
             <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-muted-foreground">Đang chờ</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">{orders.pending}</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {orders.pending}
+              </p>
             </div>
             <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-muted-foreground">Đã xác nhận</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">{orders.confirmed}</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {orders.confirmed}
+              </p>
             </div>
             <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-muted-foreground">Đang giao</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">{orders.shipping}</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {orders.shipping}
+              </p>
             </div>
             <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-muted-foreground">Đã giao</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">{orders.delivered}</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {orders.delivered}
+              </p>
             </div>
             <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-muted-foreground">Đang hoàn</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">{orders.refund}</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {orders.refund}
+              </p>
             </div>
             <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-muted-foreground">Đã hoàn tiền</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">{orders.refunded}</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {orders.refunded}
+              </p>
             </div>
           </div>
         </div>
 
         {/* Refunds by status */}
         <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-          <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground">
+          <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-foreground">
             Trạng thái hoàn tiền
           </h2>
           <div className="grid grid-cols-2 gap-3 text-xs sm:grid-cols-3">
             <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-muted-foreground">Chờ xử lý</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">{refunds.pending}</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {refunds.pending}
+              </p>
             </div>
             <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-muted-foreground">Đã duyệt</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">{refunds.approved}</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {refunds.approved}
+              </p>
             </div>
             <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-muted-foreground">Đã nhận hàng hoàn</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">{refunds.returned}</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {refunds.returned}
+              </p>
             </div>
             <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-muted-foreground">Đang hoàn tiền</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">{refunds.processing}</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {refunds.processing}
+              </p>
             </div>
             <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-muted-foreground">Hoàn thành</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">{refunds.completed}</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {refunds.completed}
+              </p>
             </div>
             <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-muted-foreground">Lỗi / thất bại</p>
-              <p className="mt-1 text-lg font-semibold text-foreground">{refunds.failed}</p>
+              <p className="mt-1 text-lg font-bold text-foreground">
+                {refunds.failed}
+              </p>
             </div>
           </div>
         </div>
@@ -174,7 +200,7 @@ export default function AdminDashboard() {
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Risk panel */}
         <div className="rounded-xl border border-destructive/40 bg-destructive/5 p-4 shadow-sm">
-          <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-destructive">
+          <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-destructive">
             Rủi ro & khiếu nại
           </h2>
           <div className="space-y-2 text-sm">
@@ -183,21 +209,21 @@ export default function AdminDashboard() {
                 <IconShieldLock className="h-4 w-4 text-destructive" />
                 <span>Tài khoản bị khóa</span>
               </div>
-              <span className="font-semibold">{risk.bannedAccounts}</span>
+              <span className="font-bold">{risk.bannedAccounts}</span>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <IconLayoutDashboard className="h-4 w-4 text-destructive" />
                 <span>Seller bị khóa</span>
               </div>
-              <span className="font-semibold">{risk.bannedSellers}</span>
+              <span className="font-bold">{risk.bannedSellers}</span>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <IconAlertTriangle className="h-4 w-4 text-destructive" />
                 <span>Report đang chờ xử lý</span>
               </div>
-              <span className="font-semibold">{risk.pendingReports}</span>
+              <span className="font-bold">{risk.pendingReports}</span>
             </div>
           </div>
           <div className="mt-4 flex flex-wrap gap-2 text-xs">
@@ -224,7 +250,7 @@ export default function AdminDashboard() {
 
         {/* Quick links */}
         <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-          <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground">
+          <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-foreground">
             Điều hướng nhanh
           </h2>
           <div className="flex flex-wrap gap-2">

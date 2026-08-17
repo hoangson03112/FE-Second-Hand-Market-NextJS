@@ -54,7 +54,8 @@ export default function FilterBar({
   const handleTransactionChange = (value: "meeting" | "shipping") => {
     onFilterChange({
       ...filters,
-      transactionMethod: filters.transactionMethod === value ? undefined : value,
+      transactionMethod:
+        filters.transactionMethod === value ? undefined : value,
       page: 1,
     });
   };
@@ -102,31 +103,31 @@ export default function FilterBar({
   ].filter(Boolean).length;
 
   const activePricePreset = PRICE_PRESETS.find(
-    (p) => p.min === filters.minPrice && p.max === filters.maxPrice
+    (p) => p.min === filters.minPrice && p.max === filters.maxPrice,
   );
 
   const selectedProvince = provinces.find(
-    (p) => String(p.ProvinceID) === String(filters.provinceId)
+    (p) => String(p.ProvinceID) === String(filters.provinceId),
   );
 
   return (
-    <div
-      className="sticky top-[60px] z-[45] border-b border-taupe-200/50 bg-background/90 backdrop-blur-md"
-    >
+    <div className="sticky top-[60px] z-[45] border-b border-taupe-200/50 bg-background/90 backdrop-blur-md">
       <div className="max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-4 py-4 overflow-x-auto no-scrollbar">
           {/* Province - compact */}
           {provinces.length > 0 && (
             <div className="relative shrink-0">
               <select
-                value={filters.provinceId != null ? String(filters.provinceId) : ""}
+                value={
+                  filters.provinceId != null ? String(filters.provinceId) : ""
+                }
                 onChange={(e) => handleProvinceChange(e.target.value)}
                 className="h-10 min-w-[140px] pl-4 pr-10 rounded-full text-[13px] font-medium bg-white border border-taupe-200 text-luxury-ink appearance-none cursor-pointer hover:border-luxury-ink/30 transition-all focus:outline-none focus:ring-1 focus:ring-luxury-ink"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230b0b0a'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "right 14px center",
-                  backgroundSize: "14px"
+                  backgroundSize: "14px",
                 }}
               >
                 <option value="">Toàn quốc</option>
@@ -153,7 +154,7 @@ export default function FilterBar({
                     "h-10 px-5 rounded-full text-[13px] font-medium whitespace-nowrap transition-all border",
                     isActive
                       ? "bg-luxury-ink border-luxury-ink text-background shadow-md shadow-luxury-ink/10"
-                      : "bg-white border-taupe-200 text-taupe-600 hover:border-luxury-ink/30 hover:text-luxury-ink"
+                      : "bg-white border-taupe-200 text-taupe-600 hover:border-luxury-ink/30 hover:text-luxury-ink",
                   )}
                 >
                   {opt.label}
@@ -171,12 +172,14 @@ export default function FilterBar({
               return (
                 <button
                   key={opt.value}
-                  onClick={() => handleSortChange(opt.value as IProductFilters["sortBy"])}
+                  onClick={() =>
+                    handleSortChange(opt.value as IProductFilters["sortBy"])
+                  }
                   className={cn(
                     "h-10 px-5 rounded-full text-[13px] font-medium whitespace-nowrap transition-all border",
                     isActive
                       ? "bg-luxury-ink border-luxury-ink text-background shadow-md shadow-luxury-ink/10"
-                      : "bg-white border-taupe-200 text-taupe-600 hover:border-luxury-ink/30 hover:text-luxury-ink"
+                      : "bg-white border-taupe-200 text-taupe-600 hover:border-luxury-ink/30 hover:text-luxury-ink",
                   )}
                 >
                   {opt.label}
@@ -192,11 +195,21 @@ export default function FilterBar({
               "h-10 px-5 rounded-full text-[13px] font-medium flex items-center gap-2 shrink-0 transition-all border ml-2",
               showFilters || activeFilterCount > 0
                 ? "bg-luxury-ink border-luxury-ink text-background shadow-md shadow-luxury-ink/10"
-                : "bg-white border-taupe-200 text-taupe-600 hover:border-luxury-ink/30 hover:text-luxury-ink"
+                : "bg-white border-taupe-200 text-taupe-600 hover:border-luxury-ink/30 hover:text-luxury-ink",
             )}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+              />
             </svg>
             Bộ lọc
             {activeFilterCount > 0 && (
@@ -218,7 +231,10 @@ export default function FilterBar({
           )}
           {totalProducts !== undefined && (
             <span className="text-[13px] text-taupe-500 shrink-0 ml-4 hidden sm:inline-block">
-              <span className="font-semibold text-luxury-ink">{totalProducts.toLocaleString("vi-VN")}</span> kết quả
+              <span className="font-bold text-luxury-ink">
+                {totalProducts.toLocaleString("vi-VN")}
+              </span>{" "}
+              kết quả
             </span>
           )}
         </div>
@@ -229,40 +245,127 @@ export default function FilterBar({
             {filters.search && (
               <span className="inline-flex items-center gap-1.5 h-7 pl-3 pr-2 rounded-full bg-taupe-100/50 text-luxury-ink text-[12px] font-medium border border-taupe-200">
                 {filters.search}
-                <button onClick={() => onFilterChange({ ...filters, search: undefined, page: 1 })} className="hover:text-destructive transition-colors">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                <button
+                  onClick={() =>
+                    onFilterChange({ ...filters, search: undefined, page: 1 })
+                  }
+                  className="hover:text-destructive transition-colors"
+                >
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
                 </button>
               </span>
             )}
             {selectedProvince && (
               <span className="inline-flex items-center gap-1.5 h-7 pl-3 pr-2 rounded-full bg-taupe-100/50 text-luxury-ink text-[12px] font-medium border border-taupe-200">
                 {selectedProvince.ProvinceName}
-                <button onClick={() => handleProvinceChange("")} className="hover:text-destructive transition-colors">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                <button
+                  onClick={() => handleProvinceChange("")}
+                  className="hover:text-destructive transition-colors"
+                >
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
                 </button>
               </span>
             )}
             {filters.transactionMethod && (
               <span className="inline-flex items-center gap-1.5 h-7 pl-3 pr-2 rounded-full bg-taupe-100/50 text-luxury-ink text-[12px] font-medium border border-taupe-200">
-                {TRANSACTION_OPTIONS.find((o) => o.value === filters.transactionMethod)?.label}
-                <button onClick={() => handleTransactionChange(filters.transactionMethod!)} className="hover:text-destructive transition-colors">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                {
+                  TRANSACTION_OPTIONS.find(
+                    (o) => o.value === filters.transactionMethod,
+                  )?.label
+                }
+                <button
+                  onClick={() =>
+                    handleTransactionChange(filters.transactionMethod!)
+                  }
+                  className="hover:text-destructive transition-colors"
+                >
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
                 </button>
               </span>
             )}
             {filters.condition && (
               <span className="inline-flex items-center gap-1.5 h-7 pl-3 pr-2 rounded-full bg-taupe-100/50 text-luxury-ink text-[12px] font-medium border border-taupe-200">
-                {CONDITION_OPTIONS.find((c) => c.value === filters.condition)?.label}
-                <button onClick={() => handleConditionChange(filters.condition!)} className="hover:text-destructive transition-colors">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                {
+                  CONDITION_OPTIONS.find((c) => c.value === filters.condition)
+                    ?.label
+                }
+                <button
+                  onClick={() => handleConditionChange(filters.condition!)}
+                  className="hover:text-destructive transition-colors"
+                >
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
                 </button>
               </span>
             )}
             {(filters.minPrice || filters.maxPrice) && (
               <span className="inline-flex items-center gap-1.5 h-7 pl-3 pr-2 rounded-full bg-taupe-100/50 text-luxury-ink text-[12px] font-medium border border-taupe-200">
-                {activePricePreset?.label ?? `${filters.minPrice ? (filters.minPrice / 1000).toFixed(0) + "k" : "0"}-${filters.maxPrice ? (filters.maxPrice / 1000).toFixed(0) + "k" : "∞"}`}
-                <button onClick={() => handlePriceRangeChange(undefined, undefined)} className="hover:text-destructive transition-colors">
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                {activePricePreset?.label ??
+                  `${filters.minPrice ? (filters.minPrice / 1000).toFixed(0) + "k" : "0"}-${filters.maxPrice ? (filters.maxPrice / 1000).toFixed(0) + "k" : "∞"}`}
+                <button
+                  onClick={() => handlePriceRangeChange(undefined, undefined)}
+                  className="hover:text-destructive transition-colors"
+                >
+                  <svg
+                    className="w-3.5 h-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
                 </button>
               </span>
             )}
@@ -274,19 +377,28 @@ export default function FilterBar({
           <div className="pb-6 pt-2 border-t border-taupe-200/50 animate-in fade-in slide-in-from-top-2 duration-300">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
               <div>
-                <p className="text-[13px] font-semibold text-luxury-ink uppercase tracking-widest mb-4">Khoảng giá</p>
+                <p className="text-[13px] font-bold text-luxury-ink uppercase tracking-widest mb-4">
+                  Khoảng giá
+                </p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {PRICE_PRESETS.map((preset) => {
-                    const isActive = preset.min === filters.minPrice && preset.max === filters.maxPrice;
+                    const isActive =
+                      preset.min === filters.minPrice &&
+                      preset.max === filters.maxPrice;
                     return (
                       <button
                         key={preset.label}
-                        onClick={() => handlePriceRangeChange(isActive ? undefined : preset.min, isActive ? undefined : preset.max)}
+                        onClick={() =>
+                          handlePriceRangeChange(
+                            isActive ? undefined : preset.min,
+                            isActive ? undefined : preset.max,
+                          )
+                        }
                         className={cn(
                           "h-9 px-4 rounded-full text-[13px] font-medium transition-all border",
                           isActive
                             ? "bg-luxury-ink border-luxury-ink text-background shadow-md shadow-luxury-ink/10"
-                            : "bg-white border-taupe-200 text-taupe-600 hover:border-luxury-ink/30 hover:text-luxury-ink"
+                            : "bg-white border-taupe-200 text-taupe-600 hover:border-luxury-ink/30 hover:text-luxury-ink",
                         )}
                       >
                         {preset.label}
@@ -296,29 +408,45 @@ export default function FilterBar({
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-taupe-400 text-sm">Từ</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-taupe-400 text-sm">
+                      Từ
+                    </span>
                     <input
                       type="number"
                       placeholder="0đ"
                       value={filters.minPrice || ""}
-                      onChange={(e) => handlePriceRangeChange(e.target.value ? Number(e.target.value) : undefined, filters.maxPrice)}
+                      onChange={(e) =>
+                        handlePriceRangeChange(
+                          e.target.value ? Number(e.target.value) : undefined,
+                          filters.maxPrice,
+                        )
+                      }
                       className="w-full h-11 pl-10 pr-4 rounded-xl text-sm bg-white border border-taupe-200 focus:border-luxury-ink focus:ring-0 transition-colors"
                     />
                   </div>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-taupe-400 text-sm">Đến</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-taupe-400 text-sm">
+                      Đến
+                    </span>
                     <input
                       type="number"
                       placeholder="∞"
                       value={filters.maxPrice || ""}
-                      onChange={(e) => handlePriceRangeChange(filters.minPrice, e.target.value ? Number(e.target.value) : undefined)}
+                      onChange={(e) =>
+                        handlePriceRangeChange(
+                          filters.minPrice,
+                          e.target.value ? Number(e.target.value) : undefined,
+                        )
+                      }
                       className="w-full h-11 pl-12 pr-4 rounded-xl text-sm bg-white border border-taupe-200 focus:border-luxury-ink focus:ring-0 transition-colors"
                     />
                   </div>
                 </div>
               </div>
               <div>
-                <p className="text-[13px] font-semibold text-luxury-ink uppercase tracking-widest mb-4">Tình trạng</p>
+                <p className="text-[13px] font-bold text-luxury-ink uppercase tracking-widest mb-4">
+                  Tình trạng
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {CONDITION_OPTIONS.map(({ value, label }) => (
                     <button
@@ -328,7 +456,7 @@ export default function FilterBar({
                         "h-9 px-4 rounded-full text-[13px] font-medium transition-all border",
                         filters.condition === value
                           ? "bg-luxury-ink border-luxury-ink text-background shadow-md shadow-luxury-ink/10"
-                          : "bg-white border-taupe-200 text-taupe-600 hover:border-luxury-ink/30 hover:text-luxury-ink"
+                          : "bg-white border-taupe-200 text-taupe-600 hover:border-luxury-ink/30 hover:text-luxury-ink",
                       )}
                     >
                       {label}

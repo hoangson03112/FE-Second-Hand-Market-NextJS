@@ -18,7 +18,11 @@ export default function AdminNotifications() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const { data: history, refetch: refetchHistory, isLoading: historyLoading } = useQuery({
+  const {
+    data: history,
+    refetch: refetchHistory,
+    isLoading: historyLoading,
+  } = useQuery({
     queryKey: ["admin-broadcast-history", historyPage, startDate, endDate],
     queryFn: () =>
       AdminService.getBroadcastHistory({
@@ -35,7 +39,7 @@ export default function AdminNotifications() {
   const canGoPrev = currentPage > 1;
   const canGoNext = currentPage < totalPages;
 
-  const onSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
     setResult("");
@@ -71,7 +75,10 @@ export default function AdminNotifications() {
     } catch (err: unknown) {
       const message =
         err && typeof err === "object" && "message" in err
-          ? String((err as { message?: string }).message || "Gửi thông báo thất bại.")
+          ? String(
+              (err as { message?: string }).message ||
+                "Gửi thông báo thất bại.",
+            )
           : "Gửi thông báo thất bại.";
       setError(message);
     } finally {
@@ -82,14 +89,16 @@ export default function AdminNotifications() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-foreground">Thông báo hệ thống</h1>
+        <h1 className="text-xl font-bold text-foreground">
+          Thông báo hệ thống
+        </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           Tạo thông báo broadcast gửi đến toàn bộ user theo nhóm vai trò.
         </p>
       </div>
 
       <form
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         className="space-y-4 rounded-xl border border-border bg-card p-4 shadow-sm"
       >
         <div className="space-y-1">
@@ -104,7 +113,9 @@ export default function AdminNotifications() {
         </div>
 
         <div className="space-y-1">
-          <label className="text-sm font-medium text-foreground">Nội dung</label>
+          <label className="text-sm font-medium text-foreground">
+            Nội dung
+          </label>
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -115,7 +126,9 @@ export default function AdminNotifications() {
         </div>
 
         <div className="space-y-1">
-          <label className="text-sm font-medium text-foreground">Đường dẫn (tuỳ chọn)</label>
+          <label className="text-sm font-medium text-foreground">
+            Đường dẫn (tuỳ chọn)
+          </label>
           <input
             value={link}
             onChange={(e) => setLink(e.target.value)}
@@ -177,7 +190,9 @@ export default function AdminNotifications() {
 
       <div className="space-y-3 rounded-xl border border-border bg-card p-4 shadow-sm">
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-foreground">Lịch sử broadcast</h2>
+          <h2 className="text-sm font-bold text-foreground">
+            Lịch sử broadcast
+          </h2>
           <p className="text-xs text-muted-foreground">
             {history?.pagination?.total ?? 0} bản ghi
           </p>
@@ -208,11 +223,18 @@ export default function AdminNotifications() {
         ) : historyItems.length ? (
           <div className="space-y-2">
             {historyItems.map((item) => (
-              <div key={item._id} className="rounded-lg border border-border p-3">
+              <div
+                key={item._id}
+                className="rounded-lg border border-border p-3"
+              >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-sm font-semibold text-foreground">{item.title}</p>
-                    <p className="mt-1 text-sm text-muted-foreground">{item.message}</p>
+                    <p className="text-sm font-bold text-foreground">
+                      {item.title}
+                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {item.message}
+                    </p>
                   </div>
                   <span className="text-xs text-muted-foreground whitespace-nowrap">
                     {new Date(item.createdAt).toLocaleString("vi-VN")}
@@ -248,7 +270,9 @@ export default function AdminNotifications() {
               </span>
               <button
                 type="button"
-                onClick={() => setHistoryPage((p) => Math.min(totalPages, p + 1))}
+                onClick={() =>
+                  setHistoryPage((p) => Math.min(totalPages, p + 1))
+                }
                 disabled={!canGoNext}
                 className="rounded border border-border px-3 py-1 text-xs disabled:opacity-50"
               >
@@ -257,10 +281,11 @@ export default function AdminNotifications() {
             </div>
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground">Chưa có lịch sử broadcast.</p>
+          <p className="text-sm text-muted-foreground">
+            Chưa có lịch sử broadcast.
+          </p>
         )}
       </div>
     </div>
   );
 }
-

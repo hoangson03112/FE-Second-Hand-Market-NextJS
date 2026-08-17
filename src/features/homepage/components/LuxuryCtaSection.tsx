@@ -36,7 +36,7 @@ export default function LuxuryCtaSection() {
           />
 
           <div className="relative z-10 mx-auto max-w-3xl text-center">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-luxury-champagne">
+            <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-luxury-champagne">
               Bắt đầu hành trình
             </p>
             <h2
@@ -48,17 +48,19 @@ export default function LuxuryCtaSection() {
               className="mt-5 text-[clamp(2rem,4.5vw,3.25rem)] text-luxury-ivory"
             >
               Mua bán second-hand
-              <span className="block text-taupe-200">theo cách sang trọng hơn.</span>
+              <span className="block text-taupe-200">
+                theo cách sang trọng hơn.
+              </span>
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-luxury-ivory/70 md:text-base">
-              Tham gia cộng đồng nơi mỗi món đồ đều được tôn trọng, minh bạch
-              và sẵn sàng cho vòng đời mới.
+              Tham gia cộng đồng nơi mỗi món đồ đều được tôn trọng, minh bạch và
+              sẵn sàng cho vòng đời mới.
             </p>
 
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
                 href="/products"
-                className="group inline-flex min-w-[220px] items-center justify-center gap-2 bg-luxury-ivory px-8 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-luxury-ink transition-all duration-300 hover:bg-white"
+                className="group inline-flex min-w-[220px] items-center justify-center gap-2 bg-luxury-ivory px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-luxury-ink transition-all duration-300 hover:bg-white"
                 style={{ borderRadius: "2px" }}
               >
                 Khám phá sản phẩm
@@ -66,7 +68,7 @@ export default function LuxuryCtaSection() {
               </Link>
               <Link
                 href="/sell"
-                className="inline-flex min-w-[220px] items-center justify-center border border-luxury-ivory/25 px-8 py-4 text-[11px] font-semibold uppercase tracking-[0.24em] text-luxury-ivory transition-all duration-300 hover:border-luxury-champagne/60 hover:text-luxury-champagne"
+                className="inline-flex min-w-[220px] items-center justify-center border border-luxury-ivory/25 px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-luxury-ivory transition-all duration-300 hover:border-luxury-champagne/60 hover:text-luxury-champagne"
                 style={{ borderRadius: "2px" }}
               >
                 Trở thành người bán

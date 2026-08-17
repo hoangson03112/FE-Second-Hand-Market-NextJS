@@ -2,12 +2,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import useCategories from "@/hooks/useCategories";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/features/auth/hooks/useUser";
 import { useCart } from "@/hooks/useCart";
-import { useTokenStore } from "@/store/useTokenStore";
 import { useNotificationStore } from "@/store/useNotificationStore";
 import { AuthService } from "@/services/auth.service";
 import { SellerService } from "@/services/seller.service";
+import { announceSession } from "@/lib/session";
 
 function getInitials(name?: string) {
   if (!name) return "U";
@@ -21,19 +21,19 @@ function getInitials(name?: string) {
 
 export function useHeader() {
   const router = useRouter();
-  const { clearAuth } = useTokenStore();
   const { data: categories, isLoading } = useCategories();
-  const { data: account } = useUser();
-  const { itemCount: cartItemCount } = useCart();
-  const unreadNotificationCount = useNotificationStore((state) => state.unreadCount);
-  const accessToken = useTokenStore((state) => state.accessToken);
+  const { data: account, isLoading: isUserLoading } = useUser();
+  const { productCount: productCount } = useCart();
+  const unreadNotificationCount = useNotificationStore(
+    (state) => state.unreadCount,
+  );
 
-  // Check product limit to determine if user can post products
   const { data: productLimit } = useQuery({
     queryKey: ["seller", "product-limit"],
     queryFn: () => SellerService.getProductLimit(),
-    enabled: !!accessToken && !!account && account.role !== "seller",
-    staleTime: 60000, // 1 minute
+    staleTime: 60000,
+    enabled: !isUserLoading && !!account,
+    retry: false,
   });
 
   const [query, setQuery] = useState("");
@@ -64,11 +64,10 @@ export function useHeader() {
 
   const visibleCategories = useMemo(
     () => categories?.slice(0, visibleCategoryLimit),
-    [categories, visibleCategoryLimit]
+    [categories, visibleCategoryLimit],
   );
 
   const handleMouseEnterCategory = useCallback((id: string) => {
-    // Clear any pending hide timeout
     if (categoryLeaveTimeoutRef.current) {
       clearTimeout(categoryLeaveTimeoutRef.current);
       categoryLeaveTimeoutRef.current = null;
@@ -77,14 +76,12 @@ export function useHeader() {
   }, []);
 
   const handleMouseLeaveCategory = useCallback(() => {
-    // Add delay before hiding dropdown
     categoryLeaveTimeoutRef.current = setTimeout(() => {
       setActiveCategory(null);
-    }, 200); // 500ms delay - easier to move mouse
+    }, 200);
   }, []);
 
   const handleShowAllCategories = useCallback(() => {
-    // Clear any pending hide timeout
     if (allCategoriesLeaveTimeoutRef.current) {
       clearTimeout(allCategoriesLeaveTimeoutRef.current);
       allCategoriesLeaveTimeoutRef.current = null;
@@ -93,10 +90,9 @@ export function useHeader() {
   }, []);
 
   const handleHideAllCategories = useCallback(() => {
-    // Add delay before hiding dropdown
     allCategoriesLeaveTimeoutRef.current = setTimeout(() => {
       setShowAllCategories(false);
-    }, 200); // 500ms delay - easier to move mouse
+    }, 200);
   }, []);
 
   const handleSearch = useCallback(
@@ -105,7 +101,7 @@ export function useHeader() {
         router.push(`/search?q=${encodeURIComponent(q)}`);
       }
     },
-    [router]
+    [router],
   );
 
   const submitSearch = useCallback(
@@ -113,7 +109,7 @@ export function useHeader() {
       e?.preventDefault();
       if (query.trim()) handleSearch(query.trim());
     },
-    [query, handleSearch]
+    [query, handleSearch],
   );
 
   const toggleUserDropdown = useCallback(() => {
@@ -124,17 +120,21 @@ export function useHeader() {
     setShowUserDropdown(false);
   }, []);
 
-  const handleLogout = useCallback(async () => {
+  const handleLogout = async () => {
     try {
+      // Backend xoá cookie httpOnly — JS không tự xoá được chúng.
       await AuthService.logout();
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
-      clearAuth();
       setShowUserDropdown(false);
-      window.location.href = "/";
+      // Cookie httpOnly do backend xoá qua Set-Cookie; ở đây chỉ báo cho tab
+      // này và các tab khác cùng chuyển về trạng thái khách.
+      announceSession("signed-out");
+      router.replace("/login");
+      router.refresh();
     }
-  }, [clearAuth]);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -152,7 +152,6 @@ export function useHeader() {
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      // Cleanup timeouts on unmount
       if (categoryLeaveTimeoutRef.current) {
         clearTimeout(categoryLeaveTimeoutRef.current);
       }
@@ -162,7 +161,6 @@ export function useHeader() {
     };
   }, [showUserDropdown]);
 
-  // Determine sell button text and href
   const canPostProducts = useMemo(() => {
     if (!account) return false;
     if (account.role === "seller") return true;
@@ -191,7 +189,7 @@ export function useHeader() {
     visibleCategories: visibleCategories ?? [],
     activeCategory,
     showAllCategories,
-    cartItemCount: cartItemCount ?? 0,
+    productCount: productCount ?? 0,
     query,
     setQuery,
     showUserDropdown,

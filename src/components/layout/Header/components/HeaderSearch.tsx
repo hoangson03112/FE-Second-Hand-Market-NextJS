@@ -1,33 +1,94 @@
-import { IconSearch } from "@tabler/icons-react";
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { IconSearch, IconX } from "@tabler/icons-react";
+import { cn } from "@/lib/utils";
 
 interface HeaderSearchProps {
   query: string;
   setQuery: (value: string) => void;
-  submitSearch: (event?: React.FormEvent) => void;
+  submitSearch: (event: React.FormEvent) => void;
+  className?: string;
 }
 
-export function HeaderSearch({
+export default function HeaderSearch({
   query,
   setQuery,
   submitSearch,
+  className,
 }: HeaderSearchProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isOpen) inputRef.current?.focus();
+  }, [isOpen]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node) &&
+        !query
+      ) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [query]);
+
   return (
-    <form
-      onSubmit={submitSearch}
-      role="search"
-      className="hidden xl:flex min-w-0 flex-1 max-w-[320px] 2xl:max-w-[420px]"
+    <div
+      ref={wrapperRef}
+      className={cn("relative flex items-center justify-end", className)}
     >
-      <div className="relative w-full">
-        <IconSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-muted-foreground" />
+      <form
+        onSubmit={submitSearch}
+        className={cn(
+          "flex items-center overflow-hidden border transition-all duration-300 ease-out",
+          isOpen
+            ? "w-56 border-luxury-ink/15 bg-cream-50/70 pl-3.5 sm:w-72 focus-within:border-luxury-champagne focus-within:bg-white"
+            : "w-9 border-transparent bg-transparent",
+        )}
+        style={{ borderRadius: "2px" }}
+      >
+        <button
+          type={isOpen ? "submit" : "button"}
+          onClick={() => !isOpen && setIsOpen(true)}
+          aria-label="Tìm kiếm"
+          className={cn(
+            "flex h-9 w-9 shrink-0 items-center justify-center text-luxury-ink transition-colors",
+            !isOpen && "hover:text-luxury-champagne",
+          )}
+        >
+          <IconSearch className="h-[18px] w-[18px]" strokeWidth={1.75} />
+        </button>
+
         <input
-          name="search"
-          type="search"
+          ref={inputRef}
+          type="text"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Tìm kiếm..."
-          className="h-9 w-full   bg-taupe-50 pl-9 pr-4 text-sm font-medium  transition-all duration-200 focus:outline-none border border-neutral-200 hover:border-neutral-300 focus:ring-2 focus:ring-primary/15"
+          placeholder="Tìm kiếm sản phẩm..."
+          className={cn(
+            "h-9 bg-transparent text-[13px] font-medium text-luxury-ink placeholder:font-normal placeholder:text-taupe-400/80 focus:outline-none transition-all duration-300",
+            isOpen ? "w-full px-2 opacity-100" : "w-0 px-0 opacity-0",
+          )}
         />
-      </div>
-    </form>
+
+        {isOpen && query && (
+          <button
+            type="button"
+            onClick={() => setQuery("")}
+            className="mr-2 shrink-0 p-1 text-text-luxury-ink transition-colors hover:text-luxury-ink-70"
+            aria-label="Xóa tìm kiếm"
+          >
+            <IconX className="h-3.5 w-3.5" strokeWidth={2} />
+          </button>
+        )}
+      </form>
+    </div>
   );
 }

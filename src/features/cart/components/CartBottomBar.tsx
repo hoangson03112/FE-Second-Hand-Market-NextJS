@@ -1,7 +1,6 @@
 "use client";
 
 import { formatPrice } from "@/utils/format/price";
-import { Button } from "@/components/shared";
 
 interface CartBottomBarProps {
   allSelected: boolean;
@@ -50,7 +49,7 @@ export default function CartBottomBar({
               <span className="text-xs uppercase tracking-[0.13em] font-medium text-luxury-ink hidden sm:block">
                 Tổng thanh toán ({selectedCount} sản phẩm):
               </span>
-              <span className="text-[10px] uppercase tracking-[0.2em] font-semibold  sm:hidden">
+              <span className="text-[10px] uppercase tracking-[0.2em] font-bold  sm:hidden">
                 Tổng ({selectedCount}):
               </span>
               <span className="text-xl sm:text-2xl font-medium text-luxury-ink mt-1">
@@ -71,7 +70,7 @@ export default function CartBottomBar({
               <button
                 type="button"
                 disabled
-                className="h-11 sm:h-12 px-6 sm:px-12 bg-charcoal-400 text-charcoal-50 uppercase tracking-[0.1em] text-sm font-semibold rounded-[2px] cursor-not-allowed whitespace-nowrap"
+                className="h-11 sm:h-12 px-6 sm:px-12 bg-charcoal-400 text-charcoal-50 uppercase tracking-[0.1em] text-sm font-bold rounded-[2px] cursor-not-allowed whitespace-nowrap"
               >
                 Mua Hàng
               </button>

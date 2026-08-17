@@ -55,5 +55,6 @@ export interface UpdateBankInfoPayload {
   bankName: string;
   accountNumber: string;
   accountHolder: string;
+  /** VietQR bank BIN — preferred over the derived bank code when building QR. */
   bankBin?: string;
 }

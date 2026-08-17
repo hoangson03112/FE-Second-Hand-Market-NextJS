@@ -1,12 +1,8 @@
 ﻿"use client";
 
 import { useState } from "react";
-import {
-  IconLoader2,
-  IconCash,
-  IconClock,
-} from "@tabler/icons-react";
-import { useToast } from "@/components/shared";
+import { IconLoader2, IconCash, IconClock } from "@tabler/icons-react";
+import { useToast } from "@/components/ui";
 import { format } from "@/utils/format/date";
 import { formatPrice } from "@/utils/format/price";
 import { useAdminPayouts } from "./hooks/useAdminPayouts";
@@ -14,7 +10,8 @@ import type { SellerPayout } from "@/types/order";
 import { ADMIN_MESSAGES } from "@/constants/messages";
 
 export default function AdminPayouts() {
-  const { payouts, isLoading, error, triggerPayout, isTriggering } = useAdminPayouts();
+  const { payouts, isLoading, error, triggerPayout, isTriggering } =
+    useAdminPayouts();
   const toast = useToast();
   const [processingId, setProcessingId] = useState<string | null>(null);
 
@@ -47,12 +44,17 @@ export default function AdminPayouts() {
     );
   }
 
-  const totalPending = payouts.reduce((sum: number, p: SellerPayout) => sum + (p.totalAmount || 0), 0);
+  const totalPending = payouts.reduce(
+    (sum: number, p: SellerPayout) => sum + (p.totalAmount || 0),
+    0,
+  );
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-lg font-bold text-foreground">Quản lý thanh toán Seller</h1>
+        <h1 className="text-lg font-bold text-foreground">
+          Quản lý thanh toán Seller
+        </h1>
         <p className="text-xs text-muted-foreground mt-0.5">
           Kích hoạt payouts cho seller sau khi đơn hàng hoàn thành
         </p>
@@ -65,7 +67,9 @@ export default function AdminPayouts() {
           <p className="text-xs text-primary/70 mt-1">Chờ thanh toán</p>
         </div>
         <div className="rounded-xl border border-primary/20 bg-primary/8 p-4 text-center">
-          <p className="text-sm font-bold text-primary">{formatPrice(totalPending)}</p>
+          <p className="text-sm font-bold text-primary">
+            {formatPrice(totalPending)}
+          </p>
           <p className="text-xs text-primary/70 mt-1">Tổng số tiền chờ</p>
         </div>
       </div>
@@ -73,7 +77,7 @@ export default function AdminPayouts() {
       {/* Pending payouts */}
       {payouts.length > 0 ? (
         <section>
-          <h2 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+          <h2 className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
             <IconClock className="w-4 h-4 text-primary" />
             Chờ thanh toán ({payouts.length})
           </h2>
@@ -83,26 +87,43 @@ export default function AdminPayouts() {
                 <thead>
                   <tr className="border-b border-border bg-muted/50">
                     <th className="text-left px-4 py-3 font-medium">Seller</th>
-                    <th className="text-left px-4 py-3 font-medium hidden md:table-cell">Đơn hàng #</th>
+                    <th className="text-left px-4 py-3 font-medium hidden md:table-cell">
+                      Đơn hàng #
+                    </th>
                     <th className="text-left px-4 py-3 font-medium">Số tiền</th>
-                    <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">Hình thức</th>
-                    <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">Hoàn thành</th>
-                    <th className="text-right px-4 py-3 font-medium">Thao tác</th>
+                    <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">
+                      Hình thức
+                    </th>
+                    <th className="text-left px-4 py-3 font-medium hidden sm:table-cell">
+                      Hoàn thành
+                    </th>
+                    <th className="text-right px-4 py-3 font-medium">
+                      Thao tác
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {(payouts as SellerPayout[]).map((payout) => (
-                    <tr key={payout._id} className="border-b border-border last:border-0 hover:bg-muted/30">
+                    <tr
+                      key={payout._id}
+                      className="border-b border-border last:border-0 hover:bg-muted/30"
+                    >
                       <td className="px-4 py-3">
-                        <p className="font-medium text-foreground">{payout.sellerId?.fullName ?? payout.sellerId?.businessName ?? "—"}</p>
-                        <p className="text-xs text-muted-foreground">{payout.sellerId?.email ?? ""}</p>
+                        <p className="font-medium text-foreground">
+                          {payout.sellerId?.fullName ??
+                            payout.sellerId?.businessName ??
+                            "—"}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {payout.sellerId?.email ?? ""}
+                        </p>
                       </td>
                       <td className="px-4 py-3 hidden md:table-cell">
                         <span className="font-mono text-xs text-muted-foreground">
                           #{payout._id.slice(-8).toUpperCase()}
                         </span>
                       </td>
-                      <td className="px-4 py-3 font-semibold text-foreground">
+                      <td className="px-4 py-3 font-bold text-foreground">
                         {formatPrice(payout.totalAmount)}
                       </td>
                       <td className="px-4 py-3 hidden sm:table-cell text-xs text-muted-foreground capitalize">
@@ -115,11 +136,13 @@ export default function AdminPayouts() {
                         <button
                           onClick={() => handleTrigger(payout._id)}
                           disabled={processingId === payout._id || isTriggering}
-                          className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-primary-foreground rounded-lg text-xs font-semibold hover:bg-primary/90 disabled:opacity-50 transition-colors ml-auto"
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-primary-foreground rounded-lg text-xs font-bold hover:bg-primary/90 disabled:opacity-50 transition-colors ml-auto"
                         >
-                          {processingId === payout._id
-                            ? <IconLoader2 className="w-3.5 h-3.5 animate-spin" />
-                            : <IconCash className="w-3.5 h-3.5" />}
+                          {processingId === payout._id ? (
+                            <IconLoader2 className="w-3.5 h-3.5 animate-spin" />
+                          ) : (
+                            <IconCash className="w-3.5 h-3.5" />
+                          )}
                           Thanh toán
                         </button>
                       </td>
@@ -133,8 +156,12 @@ export default function AdminPayouts() {
       ) : (
         <div className="rounded-xl border border-border bg-card p-12 text-center">
           <IconCash className="w-10 h-10 text-neutral-300 mx-auto mb-3" />
-          <p className="text-sm font-medium text-foreground">Không có giao dịch thanh toán chờ xử lý</p>
-          <p className="text-xs text-muted-foreground mt-1">Payouts sẽ xuất hiện khi đơn hàng hoàn thành</p>
+          <p className="text-sm font-medium text-foreground">
+            Không có giao dịch thanh toán chờ xử lý
+          </p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Payouts sẽ xuất hiện khi đơn hàng hoàn thành
+          </p>
         </div>
       )}
     </div>

@@ -15,12 +15,12 @@ import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import { CONDITION_LABEL, STATUS_BADGE } from "../constants";
 
-type Props = {
+type ProductDrawerHeaderProps = {
   product: IProduct;
   onClose: () => void;
 };
 
-export function ProductDrawerHeader({ product, onClose }: Props) {
+export function ProductDrawerHeader({ product, onClose }: ProductDrawerHeaderProps) {
   const statusInfo = STATUS_BADGE[product.status] ?? {
     label: product.status,
     dot: "bg-muted-foreground",
@@ -34,14 +34,20 @@ export function ProductDrawerHeader({ product, onClose }: Props) {
       <div className="flex items-center justify-between px-5 py-3 border-b border-border/50">
         <div className="flex items-center gap-2">
           <span
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${statusInfo.chip}`}
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${statusInfo.chip}`}
           >
             <span className={`w-1.5 h-1.5 rounded-full ${statusInfo.dot}`} />
             {statusInfo.label}
           </span>
           {ai?.rejectionReason && product.status === "review_requested" && (
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-destructive/10 text-destructive" title={ai.rejectionReason}>
-              Lý do từ chối trước: {ai.rejectionReason.length > 40 ? ai.rejectionReason.slice(0, 40) + "…" : ai.rejectionReason}
+            <span
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-destructive/10 text-destructive"
+              title={ai.rejectionReason}
+            >
+              Lý do từ chối trước:{" "}
+              {ai.rejectionReason.length > 40
+                ? ai.rejectionReason.slice(0, 40) + "…"
+                : ai.rejectionReason}
             </span>
           )}
         </div>
@@ -113,7 +119,8 @@ export function ProductDrawerHeader({ product, onClose }: Props) {
               {product.category?.name && (
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-primary/5 border border-primary/15 text-xs text-primary/80 font-medium">
                   {product.category.name}
-                  {product.subcategory?.name && ` › ${product.subcategory.name}`}
+                  {product.subcategory?.name &&
+                    ` › ${product.subcategory.name}`}
                 </span>
               )}
             </div>

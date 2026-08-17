@@ -42,7 +42,7 @@ export function useAllPublicProducts(filters?: IProductFilters) {
   });
 }
 
-export function useFeaturedProducts(limit = 4) {
+export function useFeaturedProducts(limit = 5) {
   return useQuery({
     queryKey: [...queryKeys.products.all, "featured", limit],
     queryFn: async () => ProductService.getFeatured(limit),

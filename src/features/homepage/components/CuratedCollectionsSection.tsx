@@ -35,8 +35,7 @@ export default function CuratedCollectionsSection() {
             eyebrow="Gợi ý chọn lọc"
             title={
               <>
-                Bộ sưu tập{" "}
-                <span className="text-accent">được tuyển chọn</span>
+                Bộ sưu tập <span className="text-accent">được tuyển chọn</span>
               </>
             }
             action={{ label: "Xem tất cả", href: "/products" }}
@@ -78,7 +77,7 @@ export default function CuratedCollectionsSection() {
                 <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 transition-all duration-500 group-hover:ring-luxury-champagne/35" />
 
                 <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8 text-cream-50">
-                  <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-luxury-champagne/90">
+                  <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-luxury-champagne/90">
                     Bộ sưu tập {String(index + 1).padStart(2, "0")}
                   </p>
 
@@ -95,7 +94,7 @@ export default function CuratedCollectionsSection() {
                     {item.description}
                   </p>
 
-                  <div className="mt-5 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-luxury-champagne/90 transition-transform duration-500 ease-out group-hover:-translate-y-1">
+                  <div className="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-champagne/90 transition-transform duration-500 ease-out group-hover:-translate-y-1">
                     <span>Khám phá</span>
 
                     <svg

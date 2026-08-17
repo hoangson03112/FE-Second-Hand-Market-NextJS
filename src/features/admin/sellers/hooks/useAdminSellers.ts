@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AdminService } from "@/services/admin.service";
 import type { AdminSeller, GetAdminSellersParams } from "@/types/admin";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 import { SELLER_MESSAGES } from "@/constants/messages";
 
 const LIMIT = 10;

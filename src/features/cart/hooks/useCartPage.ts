@@ -9,7 +9,7 @@ import {
   groupCartBySeller,
   type CartGroupBySeller,
 } from "@/utils/cartUtils";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 import { CART_MESSAGES } from "@/constants/messages";
 
 export function useCartPage() {

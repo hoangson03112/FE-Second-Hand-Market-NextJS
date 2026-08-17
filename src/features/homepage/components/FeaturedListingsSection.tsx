@@ -1,35 +1,17 @@
 "use client";
 
-
-import {
-
-  IconPackageOff,
-} from "@tabler/icons-react";
+import { IconPackageOff } from "@tabler/icons-react";
 import { useFeaturedProducts } from "@/hooks/useProducts";
-import { useProvinces } from "@/hooks/useGHNLocation";
 import { cn } from "@/lib/utils";
-import type { IProduct } from "@/types/product";
 import { useScrollReveal } from "../hooks";
-import { Skeleton } from "@/components/shared";
+import { Skeleton } from "@/components/ui";
 import SectionHeader from "./SectionHeader";
 import { ProductCard } from "@/features/categories/components";
 
 export default function FeaturedListingsSection() {
   const { data, isLoading } = useFeaturedProducts(5);
-  const { data: provinces = [] } = useProvinces();
   const { ref, isVisible } = useScrollReveal({ threshold: 0.1, delay: 160 });
   const featuredProducts = data?.data ?? [];
-
-  const getProvinceName = (item: IProduct) => {
-    if (item.seller?.province) return item.seller.province;
-    if (item.seller?.from_province_id) {
-      const match = provinces.find(
-        (p) => String(p.ProvinceID) === String(item.seller?.from_province_id),
-      );
-      if (match) return match.ProvinceName;
-    }
-    return "Toàn quốc";
-  };
 
   return (
     <section className="relative w-full border-t border-luxury-ink/6 py-20 md:py-28">
@@ -77,17 +59,9 @@ export default function FeaturedListingsSection() {
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-5 lg:gap-5">
-            {featuredProducts.map((item, index) => {
-              const provinceName = getProvinceName(item);
-
-              return (
-                <ProductCard
-                  key={index}
-                  product={item}
-                  provinceName={provinceName}
-                ></ProductCard>
-              );
-            })}
+            {featuredProducts.map((item, index) => (
+              <ProductCard key={item._id ?? index} product={item} />
+            ))}
           </div>
         )}
       </div>

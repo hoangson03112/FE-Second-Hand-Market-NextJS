@@ -101,7 +101,7 @@ export function AIProductAssistantPanel({
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-cream-50/30 to-transparent">
+      <div className="flex-1 space-y-3 overflow-y-auto bg-luxury-ivory/40 px-4 py-5">
         {messages.map((message) => {
           const isUser = message.sender === "user";
           return (
@@ -110,68 +110,74 @@ export function AIProductAssistantPanel({
               className={`flex ${isUser ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[88%] rounded-2xl px-5 py-3.5 shadow-sm ${
+                className={`max-w-[88%] rounded-[2px] px-4 py-3 ${
                   isUser
-                    ? "bg-gradient-to-br from-primary to-primary/90 text-white rounded-br-md"
-                    : "bg-white border border-border text-foreground rounded-bl-md"
+                    ? "bg-luxury-ink text-luxury-ivory"
+                    : "border border-luxury-ink/10 bg-white text-luxury-ink"
                 }`}
               >
                 {!isUser && (
                   <div className="mb-2 flex items-center gap-2 text-primary">
                     <IconSparkles className="w-4 h-4" />
-                    <span className="text-xs font-semibold uppercase tracking-wide">
+                    <span className="text-xs font-bold uppercase tracking-wide">
                       AI Assistant
                     </span>
                   </div>
                 )}
-                <p className="text-base leading-relaxed whitespace-pre-wrap">
+                <p className="text-sm leading-relaxed whitespace-pre-wrap">
                   {message.text}
                 </p>
 
-                {Array.isArray(message.products) && message.products.length > 0 && (
-                  <div className="mt-3 space-y-2">
-                    {message.products.map((product) => (
-                      <a
-                        key={product._id}
-                        href={`/products/${product._id}/${product.slug || "product"}`}
-                        onClick={() => {
-                          if (!message.searchLogId) return;
-                          const rank = message.products?.findIndex((p) => p._id === product._id);
-                          void ChatService.trackSearchProductClick({
-                            searchLogId: message.searchLogId,
-                            productId: String(product._id),
-                            rank: rank != null && rank >= 0 ? rank + 1 : undefined,
-                          }).catch(() => {});
-                        }}
-                        className="flex items-center gap-3 p-2 rounded-xl border border-border hover:border-primary/40 hover:bg-primary/5 transition-colors bg-background"
-                      >
-                        <Image
-                          src={getProductImage(product)}
-                          alt={product.name}
-                          width={56}
-                          height={56}
-                          className="w-14 h-14 rounded-lg object-cover border border-border"
-                          unoptimized
-                        />
-                        <div className="min-w-0">
-                          <p className="text-sm font-semibold text-foreground truncate">
-                            {product.name}
-                          </p>
-                          <p className="text-sm text-primary font-medium">
-                            {product.price.toLocaleString("vi-VN")}đ
-                          </p>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                )}
+                {Array.isArray(message.products) &&
+                  message.products.length > 0 && (
+                    <div className="mt-3 space-y-2">
+                      {message.products.map((product) => (
+                        <a
+                          key={product._id}
+                          href={`/products/${product._id}/${product.slug || "product"}`}
+                          onClick={() => {
+                            if (!message.searchLogId) return;
+                            const rank = message.products?.findIndex(
+                              (p) => p._id === product._id,
+                            );
+                            void ChatService.trackSearchProductClick({
+                              searchLogId: message.searchLogId,
+                              productId: String(product._id),
+                              rank:
+                                rank != null && rank >= 0
+                                  ? rank + 1
+                                  : undefined,
+                            }).catch(() => {});
+                          }}
+                          className="flex items-center gap-3 rounded-[2px] border border-luxury-ink/10 bg-white p-2 transition-colors duration-300 hover:border-luxury-ink/30"
+                        >
+                          <Image
+                            src={getProductImage(product)}
+                            alt={product.name}
+                            width={56}
+                            height={56}
+                            className="w-14 h-14 rounded-lg object-cover border border-border"
+                            unoptimized
+                          />
+                          <div className="min-w-0">
+                            <p className="text-sm font-bold text-taupe-900 truncate">
+                              {product.name}
+                            </p>
+                            <p className="text-sm text-primary font-medium">
+                              {product.price.toLocaleString("vi-VN")}đ
+                            </p>
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                  )}
               </div>
             </div>
           );
         })}
 
         {loading && (
-          <div className="flex items-center gap-2 text-muted-foreground text-sm">
+          <div className="flex items-center gap-2 text-taupe-500 text-sm">
             <IconLoader2 className="w-4 h-4 animate-spin" />
             <span>AI đang tìm sản phẩm...</span>
           </div>

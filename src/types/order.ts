@@ -1,3 +1,4 @@
+
 export type OrderStatus =
   | "pending"
   | "confirmed"
@@ -9,12 +10,27 @@ export type OrderStatus =
   | "cancelled"
   | "delivery_failed"
   | "returning"
-  | "return_shipping"
   | "returned"
   | "refund"
-  | "refund_requested"
-  | "refund_approved"
   | "refunded";
+
+
+export type OrderDisplayStatus =
+  | OrderStatus
+  | "return_shipping"
+  | "refund_requested"
+  | "refund_approved";
+
+
+/**
+ * What the seller found when they opened the returned parcel. Only `intact`
+ * obliges them to refund; anything else routes the request to an admin.
+ */
+export type ReturnInspectionCondition =
+  | "intact"
+  | "damaged"
+  | "missing_parts"
+  | "wrong_item";
 
 export interface CreateOrderRequest {
   products: Array<{
@@ -22,16 +38,15 @@ export interface CreateOrderRequest {
     quantity: number;
   }>;
   totalAmount: number;
-  shippingAddress: string; // Address ID
+  shippingAddress: string; 
   shippingMethod: string;
   sellerId: string;
   paymentMethod: string;
-  // Optional extra info (Order model already supports these)
   shippingFee?: number;
   insuranceFee?: number;
   codFee?: number;
   totalShippingFee?: number;
-  expectedDeliveryTime?: string; // ISO string
+  expectedDeliveryTime?: string;
 }
 
 export interface CreateOrderResponse {
@@ -72,17 +87,18 @@ export interface Order {
   ghnOrderCode?: string;
   ghnReturnOrderCode?: string;
   ghnReturnTrackingUrl?: string;
-  /** Snapshot GHN API `data` after creating return shipment (optional, for ops/debug). */
   ghnReturnOrderInfo?: Record<string, unknown>;
   products: Array<{
     productId: {
       _id: string;
       name: string;
       price: number;
-      avatar: {
-        url: string;
-        alt?: string;
-      } | string;
+      avatar:
+        | {
+            url: string;
+            alt?: string;
+          }
+        | string;
       images?: Array<{
         url: string;
         alt?: string;
@@ -112,7 +128,7 @@ export interface Order {
   paymentMethod: string;
   paymentStatus: "pending" | "paid" | "refunded";
   payoutStatus: "pending" | "paid";
-  status: OrderStatus;
+  status: OrderDisplayStatus;
   statusPayment: boolean;
   expectedDeliveryTime?: string;
   cancelReason?: string;
@@ -137,8 +153,20 @@ export interface Order {
       | "disputed"
       | "cancelled";
     evidence?: {
-      images?: Array<{ url: string; publicId?: string; originalName?: string; type?: string; size?: number }>;
-      videos?: Array<{ url: string; publicId?: string; originalName?: string; type?: string; size?: number }>;
+      images?: Array<{
+        url: string;
+        publicId?: string;
+        originalName?: string;
+        type?: string;
+        size?: number;
+      }>;
+      videos?: Array<{
+        url: string;
+        publicId?: string;
+        originalName?: string;
+        type?: string;
+        size?: number;
+      }>;
     };
     refundAmount: number;
     refundMethod?: string;
@@ -213,7 +241,12 @@ export interface RefundRequest {
 
 export interface SellerPayout {
   _id: string;
-  sellerId: { _id: string; fullName?: string; email?: string; businessName?: string };
+  sellerId: {
+    _id: string;
+    fullName?: string;
+    email?: string;
+    businessName?: string;
+  };
   buyerId?: { _id: string; fullName: string; email: string };
   productAmount: number;
   platformFee: number;
@@ -256,3 +289,34 @@ export interface SellerBankInfo {
   orderId: string;
 }
 
+export type PaymentProofStatus = "pending" | "verified" | "rejected";
+
+/**
+ * Biên lai chuyển khoản người mua tải lên. Tiền vào thẳng tài khoản người bán
+ * nên chính người bán là người đối soát và duyệt, không phải admin.
+ */
+export interface PaymentProof {
+  _id: string;
+  orderId: string;
+  buyerId?: {
+    _id: string;
+    fullName?: string;
+    email?: string;
+  } | null;
+  sellerBankSnapshot?: {
+    bankName?: string;
+    accountNumber?: string;
+    accountHolder?: string;
+  } | null;
+  proofImage?: {
+    url: string;
+    originalName?: string;
+  } | null;
+  transferredAt?: string;
+  status: PaymentProofStatus;
+  verifiedBy?: { _id: string; fullName?: string } | null;
+  verifiedAt?: string | null;
+  rejectReason?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+}

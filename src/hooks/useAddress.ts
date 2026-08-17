@@ -4,19 +4,16 @@ import type { Address, CreateAddressRequest } from "@/types/address";
 import { AddressService } from "@/services/address.service";
 import { queryKeys } from "@/lib/query-client";
 import { serverStateConfig } from "@/lib/state";
-import { useTokenStore } from "@/store/useTokenStore";
 import { enrichAddresses } from "@/utils/addressTransform";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 
 export function useAddress() {
-  const accessToken = useTokenStore((state) => state.accessToken);
   const queryClient = useQueryClient();
   const toast = useToast();
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [showNewAddressForm, setShowNewAddressForm] = useState(false);
-
-  // Fetch addresses from API
+  
   const {
     data: addresses = [],
     isLoading,
@@ -25,9 +22,7 @@ export function useAddress() {
   } = useQuery<Address[]>({
     queryKey: [...queryKeys.addresses.list(), "delivery"],
     queryFn: async () => {
-      if (!accessToken) {
-        return [];
-      }
+    
 
       try {
         const rawAddresses = await AddressService.getAddresses("delivery");
@@ -42,7 +37,7 @@ export function useAddress() {
         return [];
       }
     },
-    enabled: !!accessToken, // Only fetch if user is authenticated
+    enabled: true, // Auto fetch since token might be managed differently
     staleTime: serverStateConfig.staleTime.dynamic, // 1 minute
     gcTime: serverStateConfig.gcTime.dynamic, // 10 minutes
   });

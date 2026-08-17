@@ -35,31 +35,57 @@ function toDealProduct(p: MyListingProduct): Product {
 }
 
 // ─── Product Card for Popover ─────────────────────────────────────────────
-function ProductCard({ product, selected, onSelect }: { product: Product; selected: boolean; onSelect: () => void }) {
+function ProductCard({
+  product,
+  selected,
+  onSelect,
+}: {
+  product: Product;
+  selected: boolean;
+  onSelect: () => void;
+}) {
   return (
     <button
       type="button"
       onClick={onSelect}
-      className={`flex items-center gap-3 w-full p-2 rounded-lg border transition-all shadow-sm hover:border-violet-300 bg-white ${selected ? "border-violet-400 ring-2 ring-violet-200" : "border-slate-200"}`}
+      className={`flex w-full items-center gap-3 rounded-[2px] border bg-white p-2 transition-all duration-300 hover:border-luxury-ink/40 ${selected ? "border-luxury-ink" : "border-luxury-ink/12"}`}
     >
       {product.imageUrl ? (
-        <img src={product.imageUrl} alt={product.name} className="w-10 h-10 rounded-lg object-cover border border-slate-100" />
+        <img
+          src={product.imageUrl}
+          alt={product.name}
+          className="w-10 h-10 rounded-lg object-cover border border-border"
+        />
       ) : (
-        <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-300 font-bold text-lg">?</div>
+        <div className="flex h-10 w-10 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-taupe-50 text-sm font-semibold text-taupe-300">
+          ?
+        </div>
       )}
       <div className="flex-1 min-w-0 text-left">
-        <div className="font-medium text-slate-800 truncate">{product.name}</div>
-        <div className="text-xs text-slate-400 truncate">{product.category}</div>
-        <div className="text-violet-600 font-semibold text-sm">{product.price.toLocaleString("vi-VN")}₫</div>
+        <div className="font-medium text-taupe-900 truncate">
+          {product.name}
+        </div>
+        <div className="text-xs text-taupe-400 truncate">
+          {product.category}
+        </div>
+        <div className="text-primary font-bold text-sm">
+          {product.price.toLocaleString("vi-VN")}₫
+        </div>
       </div>
-      {selected && <IconCheck className="w-4 h-4 text-violet-500" />}
+      {selected && <IconCheck className="w-4 h-4 text-primary" />}
     </button>
   );
 }
 
 // ─── Main Component ─────────────────────────────────────────────────────────
 
-export default function SellerDiscountInline({ buyerId, buyerName, sellerId, onCreated, onCancel }: SellerDiscountInlineProps) {
+export default function SellerDiscountInline({
+  buyerId,
+  buyerName,
+  sellerId,
+  onCreated,
+  onCancel,
+}: SellerDiscountInlineProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<string>("");
   const [loading, setLoading] = useState(false);
@@ -107,42 +133,47 @@ export default function SellerDiscountInline({ buyerId, buyerName, sellerId, onC
   };
 
   return (
-    <div className="border-t border-border bg-white p-4">
-      <div className="flex items-center justify-between pb-3 border-b border-violet-100">
-        <div className="font-semibold text-slate-800 text-sm leading-tight">
-          Tạo ưu đãi riêng {buyerName && <span className="text-violet-600">cho {buyerName}</span>}
+    <div className="border-t-2 border-border bg-white p-4">
+      <div className="flex items-center justify-between pb-3 border-b border-border">
+        <div className="font-bold text-taupe-900 text-sm leading-tight">
+          Tạo ưu đãi riêng{" "}
+          {buyerName && <span className="text-primary">cho {buyerName}</span>}
         </div>
         <button
           type="button"
           onClick={handleCancel}
-          className="w-7 h-7 rounded-full hover:bg-slate-200 flex items-center justify-center transition-colors text-slate-400 hover:text-slate-600"
+          className="w-7 h-7 rounded-full hover:bg-taupe-100 flex items-center justify-center transition-colors text-taupe-400 hover:text-taupe-600"
         >
           <IconX className="w-4 h-4" />
         </button>
       </div>
 
       {created ? (
-        <div className="px-6 py-6 flex flex-col items-center justify-center gap-2 bg-emerald-50 border border-emerald-100 rounded-xl mt-3">
+        <div className="mt-3 flex flex-col items-center justify-center gap-2 rounded-[2px] border border-accent/40 bg-taupe-50 px-6 py-6">
           <span className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
             <IconCheck className="w-7 h-7 text-emerald-600" />
           </span>
-          <div className="text-emerald-700 font-semibold text-base">Ưu đãi đã được tạo thành công!</div>
+          <div className="text-sm font-semibold text-taupe-800">
+            Ưu đãi đã được tạo thành công!
+          </div>
         </div>
       ) : (
         <div className="pt-3">
           <div className="mb-3">
-            <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
+            <div className="text-xs font-bold text-taupe-500 uppercase tracking-wide mb-2">
               Chọn sản phẩm áp dụng
             </div>
             {loading ? (
-              <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-400">
-                <span className="w-4 h-4 border-2 border-violet-300 border-t-violet-600 rounded-full animate-spin" />
+              <div className="flex items-center gap-2 rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 px-3 py-2.5 text-xs text-neutral-500">
+                <span className="h-3.5 w-3.5 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
                 Đang tải sản phẩm…
               </div>
             ) : loadError ? (
-              <div className="text-xs text-center text-red-500 py-2">{loadError}</div>
+              <div className="text-xs text-center text-red-600 py-2">
+                {loadError}
+              </div>
             ) : products.length === 0 ? (
-              <div className="text-xs text-center text-slate-400 py-2">
+              <div className="text-xs text-center text-taupe-400 py-2">
                 Bạn chưa có sản phẩm nào để tạo ưu đãi.
               </div>
             ) : (
@@ -161,12 +192,14 @@ export default function SellerDiscountInline({ buyerId, buyerName, sellerId, onC
 
           {selectedProduct ? (
             <div className="mt-2 animate-in fade-in slide-in-from-top-1 duration-200">
-              <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
+              <div className="text-xs font-bold text-taupe-500 uppercase tracking-wide mb-1">
                 Cấu hình ưu đãi
               </div>
-              <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-3">
+              <div className="rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 p-3">
                 <DiscountForm
-                  product={products.find((p) => p._id === selectedProduct) || null}
+                  product={
+                    products.find((p) => p._id === selectedProduct) || null
+                  }
                   buyerId={buyerId}
                   onCreated={handleCreated}
                   onCancel={handleCancel}
@@ -175,7 +208,7 @@ export default function SellerDiscountInline({ buyerId, buyerName, sellerId, onC
             </div>
           ) : (
             products.length > 0 && (
-              <p className="text-xs text-slate-400 text-center pb-1 mt-2">
+              <p className="text-xs text-taupe-400 text-center pb-1 mt-2">
                 Chọn sản phẩm để tiếp tục cấu hình ưu đãi
               </p>
             )

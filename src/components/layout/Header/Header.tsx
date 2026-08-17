@@ -1,20 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import { HeaderLogo } from "./components/HeaderLogo";
 import { CategoryMegaMenu } from "./components/CategoryMegaMenu";
-import { HeaderSearch } from "./components/HeaderSearch";
 import { HeaderGuestActions } from "./components/HeaderGuestActions";
 import { HeaderAccountActions } from "./components/HeaderAccountActions";
 import { useHeader } from "./hooks/useHeader";
+import SearchForm from "./components/HeaderSearch";
 
 export default function Header() {
   const {
     account,
     categories,
     showAllCategories,
-    cartItemCount,
+    productCount,
     query,
     setQuery,
     showUserDropdown,
@@ -31,7 +30,6 @@ export default function Header() {
   } = useHeader();
 
   const [isScrolled, setIsScrolled] = useState(false);
-  const pathname = usePathname();
 
   useEffect(() => {
     const mainContainer = document.getElementById("main-scroll-container");
@@ -68,7 +66,7 @@ export default function Header() {
 
           <div className="ml-auto flex min-w-0 items-center gap-1 sm:gap-2">
             <div className="min-w-0">
-              <HeaderSearch
+              <SearchForm
                 query={query}
                 submitSearch={submitSearch}
                 setQuery={setQuery}
@@ -82,7 +80,7 @@ export default function Header() {
                   account={account}
                   sellButtonHref={sellButtonHref}
                   sellButtonText={sellButtonText}
-                  cartItemCount={cartItemCount}
+                  productCount={productCount}
                   showUserDropdown={showUserDropdown}
                   dropdownRef={dropdownRef}
                   toggleUserDropdown={toggleUserDropdown}

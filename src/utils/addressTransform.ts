@@ -7,10 +7,7 @@ import {
   useProvinces,
 } from "@/hooks/useGHNLocation";
 
-/**
- * Transform address IDs/codes to readable names using cached GHN data
- * Sử dụng React Query cache để tránh call API nhiều lần
- */
+
 export async function enrichAddressWithNames(
   address: Address,
   queryClient: QueryClient,
@@ -18,7 +15,6 @@ export async function enrichAddressWithNames(
   try {
     const enrichedAddress = { ...address };
 
-    // Nếu đã có tên rồi thì không cần fetch
     if (address.province && address.district && address.ward) {
       return enrichedAddress;
     }

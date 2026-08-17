@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import SellerOrderDetail from "@/features/seller-order-detail/SellerOrderDetail";
+import SellerOrderDetail from "@/features/seller/seller-order-detail/SellerOrderDetail";
 
 export default function SellerOrderDetailPage() {
   const params = useParams<{ id: string }>();

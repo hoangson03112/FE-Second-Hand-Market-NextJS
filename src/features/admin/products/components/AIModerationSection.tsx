@@ -2,23 +2,23 @@
 
 import type { IProduct } from "@/types/product";
 
-type Props = {
+type AIModerationSectionProps = {
   ai: NonNullable<IProduct["aiModerationResult"]>;
   estimatedWeight?: IProduct["estimatedWeight"];
 };
 
-export function AIModerationSection({ ai, estimatedWeight }: Props) {
+export function AIModerationSection({ ai, estimatedWeight }: AIModerationSectionProps) {
   const isApproved = ai.approved === true;
   const isRejected = ai.approved === false;
 
   return (
     <section className="rounded-xl border border-border bg-muted/30 p-4 space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider">
+        <h3 className="text-xs font-bold text-foreground uppercase tracking-wider">
           AI Kiểm duyệt
         </h3>
         <span
-          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold ${
+          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
             ai.bypassAI
               ? "bg-muted text-muted-foreground"
               : isApproved
@@ -74,7 +74,8 @@ export function AIModerationSection({ ai, estimatedWeight }: Props) {
 
       {estimatedWeight && (
         <p className="text-xs text-muted-foreground">
-          Cân nặng ước tính: <strong className="text-foreground">{estimatedWeight.value}g</strong>{" "}
+          Cân nặng ước tính:{" "}
+          <strong className="text-foreground">{estimatedWeight.value}g</strong>{" "}
           ({Math.round(estimatedWeight.confidence * 100)}% tin cậy)
         </p>
       )}

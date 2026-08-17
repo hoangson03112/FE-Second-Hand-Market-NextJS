@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/features/auth/hooks/useUser";
 import { AuthService } from "@/services/auth.service";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 import { queryKeys } from "@/lib/query-client";
 import type { ProfileFormData } from "../types";
 import { PROFILE_MESSAGES } from "@/constants";

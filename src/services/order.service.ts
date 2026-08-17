@@ -4,6 +4,8 @@ import type {
   CreateOrderResponse,
   Order,
   OrderStatus,
+  PaymentProof,
+  ReturnInspectionCondition,
   SellerBankInfo,
   GHNTrackingData,
 } from "@/types/order";
@@ -57,6 +59,33 @@ export const OrderService = {
     orderId: string
   ): Promise<{ message: string; order: Order }> => {
     return axiosClient.patch("/orders/update-payment-status", { orderId });
+  },
+
+  /**
+   * Biên lai chuyển khoản của một đơn.
+   * GET /bank-info/:orderId — chỉ người mua, người bán của đơn, hoặc admin.
+   * Trả 404 khi người mua chưa gửi biên lai nào.
+   */
+  getPaymentProof: async (
+    orderId: string
+  ): Promise<{ bankInfo: PaymentProof }> => {
+    return axiosClient.get(`/bank-info/${orderId}`);
+  },
+
+  /**
+   * Người bán đối soát biên lai.
+   * PATCH /bank-info/verify/:orderId — "verified" đánh dấu đơn đã thanh toán
+   * luôn, "rejected" bắt buộc kèm lý do để người mua gửi lại.
+   */
+  verifyPaymentProof: async (
+    orderId: string,
+    status: "verified" | "rejected",
+    rejectReason?: string
+  ): Promise<{ bankInfo: PaymentProof }> => {
+    return axiosClient.patch(`/bank-info/verify/${orderId}`, {
+      status,
+      rejectReason,
+    });
   },
 
   /**
@@ -160,11 +189,35 @@ export const OrderService = {
   },
 
   /**
-   * Seller: confirm item received from buyer return shipment → status "returned"
+   * Seller: confirm the returned parcel arrived, and record what was inside.
    * POST /orders/:id/confirm-return-received
+   *
+   * The refund is only owed when the goods come back intact. Reporting any
+   * other condition sends the refund to `disputed` for an admin to settle
+   * instead of obliging the seller to transfer the money.
    */
-  confirmReturnReceived: async (orderId: string): Promise<{ message: string }> => {
-    return axiosClient.post(`/orders/${orderId}/confirm-return-received`);
+  confirmReturnReceived: async (
+    orderId: string,
+    inspection?: {
+      condition?: ReturnInspectionCondition;
+      inspectionComment?: string;
+      images?: File[];
+    },
+  ): Promise<{ message: string }> => {
+    const { condition = "intact", inspectionComment, images } = inspection ?? {};
+
+    if (images?.length) {
+      const form = new FormData();
+      form.append("condition", condition);
+      if (inspectionComment) form.append("inspectionComment", inspectionComment);
+      images.forEach((f) => form.append("images", f));
+      return axiosClient.post(`/orders/${orderId}/confirm-return-received`, form);
+    }
+
+    return axiosClient.post(`/orders/${orderId}/confirm-return-received`, {
+      condition,
+      inspectionComment,
+    });
   },
 
   /**

@@ -1,11 +1,13 @@
 import { type ReactNode, useEffect, useMemo } from "react";
 import Image from "next/image";
 import {
+  IconAlertTriangle,
   IconLoader2,
   IconPaperclip,
   IconSend,
   IconX,
 } from "@tabler/icons-react";
+import { cn } from "@/lib/utils";
 
 interface ChatInputProps {
   value: string;
@@ -28,7 +30,7 @@ export function ChatInput({
   errorMessage,
   selectedFiles,
   extraActions,
-  placeholder = "Nhập tin nhắn...",
+  placeholder = "Nhập tin nhắn…",
   showAttachment = true,
   onChange,
   onFilesChange,
@@ -57,28 +59,31 @@ export function ChatInput({
   return (
     <form
       onSubmit={onSubmit}
-      className="border-t-2 border-border bg-white p-6 rounded-b-3xl"
+      className="shrink-0 border-t border-luxury-ink/10 bg-white px-4 py-4"
     >
-      {errorMessage && (
-        <div className="mb-3 rounded-lg border border-destructive/20 bg-destructive/8 px-3 py-2 text-sm text-destructive">
-          {errorMessage}
+      {errorMessage ? (
+        <div className="mb-3 flex items-start gap-2.5 rounded-[2px] border border-blush-300 bg-blush-50 px-3 py-2.5">
+          <IconAlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-blush-700" />
+          <p className="text-xs leading-relaxed text-blush-800">
+            {errorMessage}
+          </p>
         </div>
-      )}
+      ) : null}
 
-      {selectedFiles.length > 0 && (
-        <div className="mb-3 rounded-xl border border-border bg-muted/30 p-3">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-sm font-medium text-foreground">
+      {selectedFiles.length > 0 ? (
+        <div className="mb-3 rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 p-3">
+          <div className="mb-2.5 flex items-center justify-between">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-600">
               Đã chọn {selectedFiles.length} tệp
             </p>
             <button
               type="button"
               onClick={onClearFiles}
-              className="ml-3 text-muted-foreground hover:text-foreground"
+              className="rounded-[2px] p-1 text-neutral-500 transition-colors hover:text-blush-700"
               disabled={sending}
               aria-label="Xóa tệp đã chọn"
             >
-              <IconX className="w-4 h-4" />
+              <IconX className="h-3.5 w-3.5" />
             </button>
           </div>
 
@@ -86,12 +91,12 @@ export function ChatInput({
             {previewItems.map((item, index) => (
               <div
                 key={`${item.name}-${index}`}
-                className="relative rounded-lg overflow-hidden border border-border bg-white"
+                className="relative overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white"
               >
                 {item.isVideo ? (
                   <video
                     src={item.previewUrl}
-                    className="w-full h-20 object-cover"
+                    className="h-20 w-full object-cover"
                     muted
                   />
                 ) : (
@@ -101,27 +106,35 @@ export function ChatInput({
                     width={160}
                     height={80}
                     unoptimized
-                    className="w-full h-20 object-cover"
+                    className="h-20 w-full object-cover"
                   />
                 )}
                 <button
                   type="button"
                   onClick={() => onRemoveFile(index)}
-                  className="absolute top-1 right-1 bg-black/60 text-white rounded-full p-1"
+                  className="absolute right-1 top-1 rounded-[2px] bg-luxury-ink/75 p-1 text-luxury-ivory transition-colors hover:bg-luxury-ink"
                   disabled={sending}
                   aria-label={`Xóa tệp ${item.name}`}
                 >
-                  <IconX className="w-3 h-3" />
+                  <IconX className="h-3 w-3" />
                 </button>
               </div>
             ))}
           </div>
         </div>
-      )}
+      ) : null}
 
-      <div className="flex gap-3">
-        {showAttachment && (
-          <label className="cursor-pointer border-2 border-border px-4 py-3.5 rounded-xl hover:bg-muted/50 transition-all">
+      <div className="flex items-center gap-2">
+        {showAttachment ? (
+          <label
+            className={cn(
+              "flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-[2px] border border-luxury-ink/15 text-luxury-ink transition-all duration-300",
+              sending
+                ? "cursor-not-allowed opacity-40"
+                : "hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory",
+            )}
+            aria-label="Đính kèm ảnh hoặc video"
+          >
             <input
               type="file"
               accept="image/*,video/*"
@@ -135,32 +148,31 @@ export function ChatInput({
                 event.currentTarget.value = "";
               }}
             />
-            <span className="flex items-center gap-2 text-sm font-medium text-foreground">
-              <IconPaperclip className="w-5 h-5" />
-            </span>
+            <IconPaperclip className="h-4 w-4" />
           </label>
-        )}
+        ) : null}
 
         <input
           type="text"
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
-          className="flex-1 px-5 py-3.5 border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base transition-all"
+          className="h-11 flex-1 rounded-[2px] border border-luxury-ink/15 bg-white px-3.5 text-sm text-luxury-ink outline-none transition-colors duration-200 placeholder:text-neutral-400 focus:border-luxury-ink disabled:cursor-not-allowed disabled:bg-cream-100/60"
           disabled={sending}
         />
 
-        {extraActions && <div className="shrink-0">{extraActions}</div>}
+        {extraActions ? <div className="shrink-0">{extraActions}</div> : null}
 
         <button
           type="submit"
           disabled={!hasContent || sending}
-          className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground px-6 py-3.5 rounded-xl hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-200 font-medium"
+          aria-label="Gửi tin nhắn"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[2px] bg-luxury-ink text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:bg-luxury-ink/25"
         >
           {sending ? (
-            <IconLoader2 className="w-6 h-6 animate-spin" />
+            <IconLoader2 className="h-4 w-4 animate-spin" />
           ) : (
-            <IconSend className="w-6 h-6" />
+            <IconSend className="h-4 w-4" />
           )}
         </button>
       </div>

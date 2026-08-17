@@ -36,7 +36,7 @@ export default function SectionHeader({
           )}
         >
           <span className="h-px w-8 bg-luxury-champagne/80" aria-hidden />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-neutral-600">
+          <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-neutral-600">
             {eyebrow}
           </p>
         </div>
@@ -55,7 +55,7 @@ export default function SectionHeader({
       {action ? (
         <Link
           href={action.href}
-          className="group inline-flex shrink-0 items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-accent"
+          className="group inline-flex shrink-0 items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-accent"
         >
           {action.label}
           <IconArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

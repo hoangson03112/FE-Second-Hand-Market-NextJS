@@ -4,7 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ICategory, ISubCategory } from "@/types/category";
-import { IconChevronRight, IconHome, IconLayoutGrid } from "@tabler/icons-react";
+import {
+  IconChevronRight,
+  IconHome,
+  IconLayoutGrid,
+} from "@tabler/icons-react";
 
 interface CategoryHeaderProps {
   category?: ICategory;
@@ -12,7 +16,10 @@ interface CategoryHeaderProps {
   breadcrumbs?: Array<{ label: string; href: string }>;
 }
 
-export default function CategoryHeader({ category, subCategory }: CategoryHeaderProps) {
+export default function CategoryHeader({
+  category,
+  subCategory,
+}: CategoryHeaderProps) {
   const isSubCategoryView = !!subCategory;
 
   return (
@@ -24,28 +31,43 @@ export default function CategoryHeader({ category, subCategory }: CategoryHeader
       <div className="relative max-w-8xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 md:py-10">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-xs text-taupe-400 mb-5">
-          <Link href="/" className="flex items-center gap-1 hover:text-primary transition-colors">
+          <Link
+            href="/"
+            className="flex items-center gap-1 hover:text-primary transition-colors"
+          >
             <IconHome className="w-3.5 h-3.5" />
             <span>Trang chủ</span>
           </Link>
           <IconChevronRight className="w-3 h-3 text-taupe-300" />
-          <Link href="/categories" className="hover:text-primary transition-colors">Danh mục</Link>
+          <Link
+            href="/categories"
+            className="hover:text-primary transition-colors"
+          >
+            Danh mục
+          </Link>
           {category && (
             <>
               <IconChevronRight className="w-3 h-3 text-taupe-300" />
               {isSubCategoryView ? (
-                <Link href={`/categories/${category.slug}`} className="hover:text-primary transition-colors">
+                <Link
+                  href={`/categories/${category.slug}`}
+                  className="hover:text-primary transition-colors"
+                >
                   {category.name}
                 </Link>
               ) : (
-                <span className="text-taupe-700 font-medium">{category.name}</span>
+                <span className="text-taupe-700 font-medium">
+                  {category.name}
+                </span>
               )}
             </>
           )}
           {subCategory && (
             <>
               <IconChevronRight className="w-3 h-3 text-taupe-300" />
-              <span className="text-taupe-700 font-medium">{subCategory.name}</span>
+              <span className="text-taupe-700 font-medium">
+                {subCategory.name}
+              </span>
             </>
           )}
         </nav>
@@ -77,35 +99,37 @@ export default function CategoryHeader({ category, subCategory }: CategoryHeader
         </p>
 
         {/* Subcategory navigation chips */}
-        {category && category.subCategories && category.subCategories.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {!isSubCategoryView && (
-              <Link
-                href={`/categories/${category.slug}`}
-                className="px-4 py-1.5 rounded-full border-2 border-primary bg-primary text-primary-foreground text-sm font-semibold shadow-sm"
-              >
-                Tất cả
-              </Link>
-            )}
-            {category.subCategories.map((sub) => {
-              const isActive = subCategory?._id === sub._id;
-              return (
+        {category &&
+          category.subCategories &&
+          category.subCategories.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {!isSubCategoryView && (
                 <Link
-                  key={sub._id}
-                  href={`/categories/${category.slug}/sub/${sub.slug}`}
-                  className={cn(
-                    "px-4 py-1.5 rounded-full border-2 text-sm font-medium transition-all duration-200",
-                    isActive
-                      ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                      : "border-border bg-card/70 text-muted-foreground hover:border-primary/60 hover:text-primary hover:bg-primary/5"
-                  )}
+                  href={`/categories/${category.slug}`}
+                  className="px-4 py-1.5 rounded-full border-2 border-primary bg-primary text-primary-foreground text-sm font-bold shadow-sm"
                 >
-                  {sub.name}
+                  Tất cả
                 </Link>
-              );
-            })}
-          </div>
-        )}
+              )}
+              {category.subCategories.map((sub) => {
+                const isActive = subCategory?._id === sub._id;
+                return (
+                  <Link
+                    key={sub._id}
+                    href={`/categories/${category.slug}/sub/${sub.slug}`}
+                    className={cn(
+                      "px-4 py-1.5 rounded-full border-2 text-sm font-medium transition-all duration-200",
+                      isActive
+                        ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                        : "border-border bg-card/70 text-muted-foreground hover:border-primary/60 hover:text-primary hover:bg-primary/5",
+                    )}
+                  >
+                    {sub.name}
+                  </Link>
+                );
+              })}
+            </div>
+          )}
       </div>
     </div>
   );

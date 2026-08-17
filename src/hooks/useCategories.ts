@@ -1,9 +1,4 @@
-/**
- * Categories Hook (Server State)
- * 
- * Fetches categories from API using TanStack Query
- * This is SERVER STATE because it's data from API
- */
+
 import { CategoryService } from "@/services/category.service";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/query-client";
@@ -15,8 +10,8 @@ export function useCategories() {
     queryKey: queryKeys.categories.all,
     queryFn: async () => {
       const response = await CategoryService.getAll();
+      
       const all: ICategory[] = response.data;
-      // chỉ lấy danh mục đang active
       return all
         .filter((c) => c.status !== "inactive")
         .map((c) => ({
@@ -25,7 +20,6 @@ export function useCategories() {
             c.subCategories?.filter((s) => s.status !== "inactive") ?? [],
         }));
     },
-    // Use config for static data (categories rarely change)
     staleTime: serverStateConfig.staleTime.static,
     gcTime: serverStateConfig.gcTime.static,
   });

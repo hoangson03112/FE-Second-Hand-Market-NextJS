@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AllProducts from "@/features/products/AllProducts";
+import AllProducts from "@/features/product-list/AllProducts";
 
 export const metadata: Metadata = {
   title: "Tất cả sản phẩm | Eco Market",

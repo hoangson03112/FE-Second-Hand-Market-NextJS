@@ -4,9 +4,18 @@ import { logger } from "@/infrastructure/monitoring/logger";
 
 let circuitBreakerOpen = false;
 let failureCount = 0;
-const FAILURE_THRESHOLD = 3;
+const FAILURE_THRESHOLD = 5;
 const CIRCUIT_RESET_TIME = 30000;
 const pendingRequests = new Map<string, Promise<unknown>>();
+
+/**
+ * A 4xx means our payload is wrong, not that GHN is down. Counting those toward
+ * the breaker (and retrying them) took the whole client offline for 30s over
+ * errors that repeating the request can never fix.
+ */
+function isTransientFailure(error: AxiosError): boolean {
+  return !error.response || error.response.status >= 500;
+}
 
 // GHN is proxied through our own Route Handler (`/api/ghn`) so the secret GHN
 // Token stays server-side and never ships to the browser. On the server (SSR /
@@ -18,7 +27,9 @@ const GHN_PROXY_BASE_URL =
 
 export const externalApiClient = axios.create({
   baseURL: GHN_PROXY_BASE_URL,
-  timeout: 15000,
+  // 8s x (1 try + 1 retry) keeps the worst case near 17s. The old 15s x 3 tries
+  // let a stalled GHN hold the UI for the better part of a minute.
+  timeout: 8000,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -68,12 +79,13 @@ externalApiClient.interceptors.response.use(
   },
   async (error: AxiosError) => {
     const config = error.config as AxiosRequestConfig & { _retry?: number };
+    const transient = isTransientFailure(error);
 
     // Track failure
-    failureCount++;
+    if (transient) failureCount++;
 
     // Open circuit breaker if threshold reached
-    if (failureCount >= FAILURE_THRESHOLD) {
+    if (transient && failureCount >= FAILURE_THRESHOLD) {
       circuitBreakerOpen = true;
 
       // Reset circuit breaker after timeout
@@ -104,30 +116,19 @@ externalApiClient.interceptors.response.use(
       failureCount,
     });
 
-    // Retry logic for network errors and 5xx errors
-    const shouldRetry =
-      !config?._retry && // Haven't retried yet
-      (!error.response || error.response.status >= 500) && // Network error or server error
-      config; // Config exists
+    // Retry once for network errors and 5xx errors. A second retry only ever
+    // added latency to requests a user is actively waiting on.
+    if (config && transient && !config._retry) {
+      config._retry = 1;
+      const retryDelay = 500;
 
-    if (shouldRetry) {
-      config._retry = (config._retry || 0) + 1;
+      logger.info(`Retrying request (attempt ${config._retry})`, {
+        url: config.url,
+        delay: retryDelay,
+      });
 
-      if (config._retry <= 2) {
-        // Max 2 retries
-        const retryDelay = Math.min(
-          1000 * Math.pow(2, config._retry - 1),
-          5000,
-        );
-
-        logger.info(`Retrying request (attempt ${config._retry})`, {
-          url: config.url,
-          delay: retryDelay,
-        });
-
-        await new Promise((resolve) => setTimeout(resolve, retryDelay));
-        return externalApiClient(config);
-      }
+      await new Promise((resolve) => setTimeout(resolve, retryDelay));
+      return externalApiClient(config);
     }
 
     return Promise.reject(error);
@@ -138,7 +139,11 @@ export async function dedupedRequest<T>(
   url: string,
   config?: AxiosRequestConfig,
 ): Promise<T> {
-  const cacheKey = `${config?.method || "GET"}:${url}`;
+  // The body has to be part of the key: two POSTs to the same URL with different
+  // payloads are different requests, and keying on the URL alone silently handed
+  // the second caller the first caller's response.
+  const body = config?.data === undefined ? "" : JSON.stringify(config.data);
+  const cacheKey = `${config?.method || "GET"}:${url}:${body}`;
 
   // Check if request is already pending
   if (pendingRequests.has(cacheKey)) {

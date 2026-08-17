@@ -13,7 +13,7 @@ import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import { CONDITION_LABEL, STATUS_TABLE_BADGE } from "../constants";
 
-type Props = {
+type ProductTableProps = {
   products: IProduct[];
   isUpdating: boolean;
   onView: (product: IProduct) => void;
@@ -29,7 +29,7 @@ export function ProductTable({
   onApprove,
   onReject,
   onToggleVisibility,
-}: Props) {
+}: ProductTableProps) {
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden">
       <div className="overflow-x-auto">

@@ -2,12 +2,12 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { CartService } from "@/services/cart.service";
 import { queryKeys } from "@/lib/query-client";
 import { serverStateConfig } from "@/lib/state";
-import { useTokenStore } from "@/store/useTokenStore";
 import type { CartItem } from "@/types/cart";
+import { useUser } from "@/features/auth/hooks/useUser";
 
 export function useCart() {
-  const accessToken = useTokenStore((state) => state.accessToken);
   const queryClient = useQueryClient();
+  const { data: account, isLoading: isUserLoading } = useUser();
 
   const {
     data: cartItems = [],
@@ -23,9 +23,10 @@ export function useCart() {
       }
       return [];
     },
-    enabled: !!accessToken,
     staleTime: serverStateConfig.staleTime.dynamic,
     gcTime: serverStateConfig.gcTime.dynamic,
+    enabled: !isUserLoading && !!account,
+    retry: false,
   });
 
   const invalidateCartAndUser = () => {
@@ -34,8 +35,13 @@ export function useCart() {
   };
 
   const updateQuantityMutation = useMutation({
-    mutationFn: ({ productId, quantity }: { productId: string; quantity: number }) =>
-      CartService.updateQuantity(productId, quantity),
+    mutationFn: ({
+      productId,
+      quantity,
+    }: {
+      productId: string;
+      quantity: number;
+    }) => CartService.updateQuantity(productId, quantity),
     onSuccess: invalidateCartAndUser,
   });
 
@@ -63,17 +69,18 @@ export function useCart() {
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + (item.productId?.price ?? 0) * item.quantity,
-    0
+    0,
   );
 
   const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-
+  const productCount=cartItems.length;
   return {
     cartItems,
     isLoadingCart,
     cartError,
     refetchCart,
     subtotal,
+    productCount,
     itemCount,
     updateQuantity,
     removeItems,

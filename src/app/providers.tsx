@@ -1,110 +1,78 @@
 "use client";
 
-import { QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
-import { createQueryClient } from "@/lib/query-client";
-import { useUser } from "@/hooks/useUser";
-import { useWebSocket } from "@/hooks/useWebSocket";
-import { useNotificationStore } from "@/store/useNotificationStore";
-import { useBannedStore } from "@/store/useBannedStore";
-import { useTokenStore } from "@/store/useTokenStore";
-import { NotificationService } from "@/services/notification.service";
-// import { Analytics } from '@vercel/analytics/react';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
-/** Listens for realtime socket messages and adds to store */
-function NotificationListener() {
-  const { data: account } = useUser();
-  const { lastMessage } = useWebSocket(account?.accountID ?? null);
-  const addNotification = useNotificationStore((s) => s.addNotification);
-  const hydrate        = useNotificationStore((s) => s.hydrate);
-  const reset          = useNotificationStore((s) => s.reset);
-  const hydratedFor    = useRef<string | null>(null);
+import { queryKeys } from "@/lib/query-client";
+import { SessionContext } from "@/components/providers/SessionContext";
+import {
+  SESSION_CHANGED_EVENT,
+  SESSION_CHANNEL,
+  type SessionSignal,
+} from "@/lib/session";
 
-  // Hydrate from DB once per user login
+export default function Providers({
+  children,
+  hasSession: initialHasSession,
+}: {
+  children: React.ReactNode;
+  hasSession: boolean;
+}) {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 60 * 1000,
+            retry: 1,
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  );
+
+  const [hasSession, setHasSession] = useState(initialHasSession);
+
+  // router.refresh() sau khi đăng nhập/đăng xuất khiến server layout đọc lại
+  // cookie và đẩy giá trị mới xuống đây.
+  useEffect(() => setHasSession(initialHasSession), [initialHasSession]);
+
   useEffect(() => {
-    if (!account?.accountID) {
-      hydratedFor.current = null;
-      return;
+    const apply = (signal: SessionSignal) => {
+      setHasSession(signal === "signed-in");
+
+      if (signal === "signed-out") {
+        // Về trạng thái khách ngay: header, guard, giỏ hàng cùng cập nhật.
+        queryClient.setQueryData(queryKeys.users.current(), null);
+        queryClient.removeQueries({ queryKey: queryKeys.cart.all });
+      } else {
+        queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });
+        queryClient.invalidateQueries({ queryKey: queryKeys.cart.all });
+      }
+    };
+
+    const handleLocalSessionChange = (event: Event) =>
+      apply((event as CustomEvent<SessionSignal>).detail);
+
+    window.addEventListener(SESSION_CHANGED_EVENT, handleLocalSessionChange);
+
+    // Đồng bộ giữa các tab: đăng xuất ở tab này thì tab kia cũng thoát.
+    const channel =
+      "BroadcastChannel" in window ? new BroadcastChannel(SESSION_CHANNEL) : null;
+    if (channel) {
+      channel.onmessage = (event: MessageEvent<SessionSignal>) =>
+        apply(event.data);
     }
-    if (hydratedFor.current === account.accountID) return;
-    hydratedFor.current = account.accountID;
 
-    NotificationService.getMyNotifications(1, 50)
-      .then((res) => {
-        const mapped = res.notifications.map(NotificationService.toAppNotification);
-        hydrate(mapped);
-      })
-      .catch(() => {});
-  }, [account?.accountID, hydrate]);
-
-  // Reset store on logout
-  useEffect(() => {
-    if (!account) {
-      hydratedFor.current = null;
-      reset();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account]);
-
-  // Handle realtime socket messages
-  useEffect(() => {
-    if (!lastMessage) return;
-    const data = lastMessage.data as Record<string, unknown>;
-
-    if (lastMessage.type === "order:notification") {
-      if (!data?.title || !data?.message) return;
-      addNotification({
-        id: data._id ? String(data._id) : undefined,
-        type: "order",
-        title: String(data.title),
-        message: String(data.message),
-        link: data.link ? String(data.link) : undefined,
-        dedupeKey: data._id ? `db-${data._id}` : (data.orderId ? `order-${data.orderId}-${data.title}` : undefined),
-        metadata: data.orderId ? { orderId: String(data.orderId) } : undefined,
-      });
-    } else if (lastMessage.type === "product:notification") {
-      if (!data?.title || !data?.message) return;
-      addNotification({
-        type: "product",
-        title: String(data.title),
-        message: String(data.message),
-        link: data.link ? String(data.link) : undefined,
-        dedupeKey: data.productId ? `product-${data.productId}-${data.title}` : undefined,
-        metadata: data.productId ? { productId: String(data.productId) } : undefined,
-      });
-    } else if (lastMessage.type === "system:notification") {
-      if (!data?.title || !data?.message) return;
-      addNotification({
-        id: data._id ? String(data._id) : undefined,
-        type: "system",
-        title: String(data.title),
-        message: String(data.message),
-        link: data.link ? String(data.link) : undefined,
-        dedupeKey: data._id ? `db-${data._id}` : `system-${data.title}`,
-      });
-    } else if (lastMessage.type === "account:banned") {
-      useBannedStore.getState().setBanned(true);
-      useTokenStore.getState().clearAuth();
-    }
-  }, [lastMessage, addNotification]);
-
-  return null;
-}
-
-export default function Providers({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => createQueryClient());
-  const hydrateAccessToken = useTokenStore((s) => s.hydrateAccessToken);
-
-  useEffect(() => {
-    hydrateAccessToken();
-  }, [hydrateAccessToken]);
+    return () => {
+      window.removeEventListener(SESSION_CHANGED_EVENT, handleLocalSessionChange);
+      channel?.close();
+    };
+  }, [queryClient]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <NotificationListener />
-      {children}
-      {/* <Analytics /> */}
-    </QueryClientProvider>
+    <SessionContext.Provider value={hasSession}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </SessionContext.Provider>
   );
 }
-

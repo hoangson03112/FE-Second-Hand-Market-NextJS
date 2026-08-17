@@ -1,13 +1,16 @@
 import "./globals.css";
+import { cookies } from "next/headers";
 import Providers from "./providers";
-import { ToastProvider } from "@/components/shared";
-import { ConfirmDialogProvider } from "@/components/shared";
+import { SESSION_COOKIE } from "@/lib/session";
+import { ConfirmDialogProvider } from "@/components/ui";
 import SiteLayout from "@/components/layout/SiteLayout";
-import { RealtimeNotificationToast } from "@/components/shared/RealtimeNotificationToast";
-import { BannedOverlay } from "@/components/shared/BannedOverlay";
+import { RealtimeNotificationToast } from "@/components/layout/RealtimeNotificationToast";
+import { BannedOverlay } from "@/components/layout/BannedOverlay";
 import type { Metadata } from "next";
 import { geist } from "@/lib/fonts";
 import localFont from "next/font/local";
+import { ToastProvider } from "@/components/providers/ToastProvider";
+
 const baseUrl =
   process.env.NEXT_PUBLIC_BASE_URL || "https://www.ecomarket.io.vn";
 
@@ -60,7 +63,7 @@ export const metadata: Metadata = {
       "Mua bán đồ cũ uy tín, chất lượng. Tiết kiệm chi phí, bảo vệ môi trường.",
     images: [
       {
-        url: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1784993079/Gemini_Generated_Image_rg4xa9rg4xa9rg4x_1_mtjahn.png",
+        url: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1786062984/FullLogo_x8qtac.jpg",
         width: 1200,
         height: 630,
         alt: "Eco Marketplace",
@@ -73,36 +76,40 @@ export const metadata: Metadata = {
     description:
       "Mua bán đồ cũ uy tín, chất lượng. Tiết kiệm chi phí, bảo vệ môi trường.",
     images: [
-      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1784993079/Gemini_Generated_Image_rg4xa9rg4xa9rg4x_1_mtjahn.png",
+      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1786062984/FullLogo_x8qtac.jpg",
     ],
     creator: "@ecomarketplace",
   },
-  verification: {
-    google: "your-google-verification-code",
-  },
-  alternates: {
-    canonical: "https://www.ecomarket.io.vn",
-  },
+  verification: { google: "your-google-verification-code" },
+  alternates: { canonical: "https://www.ecomarket.io.vn" },
   icons: {
-    icon: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1784993079/Gemini_Generated_Image_rg4xa9rg4xa9rg4x_1_mtjahn.png",
+    icon: "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1786062984/FullLogo_x8qtac.jpg",
     shortcut:
-      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1784993079/Gemini_Generated_Image_rg4xa9rg4xa9rg4x_1_mtjahn.png",
+      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1786062984/FullLogo_x8qtac.jpg",
     apple:
-      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1784993079/Gemini_Generated_Image_rg4xa9rg4xa9rg4x_1_mtjahn.png",
+      "https://res.cloudinary.com/dqvtj4uxo/image/upload/v1786062984/FullLogo_x8qtac.jpg",
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const hasSession = (await cookies()).has(SESSION_COOKIE);
+
   return (
-    <html lang="vi" className={`h-full ${geist.variable}`}>
+    <html
+      lang="vi"
+      className={`h-full ${geist.variable}`}
+      suppressHydrationWarning
+    >
       <body
-        className={`h-full overflow-hidden bg-background text-foreground antialiased ${droidSerifWGL.variable}`}
+        suppressHydrationWarning
+        className={`h-full overflow-hidden bg-luxury-ivory text-foreground antialiased ${droidSerifWGL.variable}`}
       >
-        <Providers>
+        <Providers hasSession={hasSession}>
           <ToastProvider>
             <RealtimeNotificationToast />
             <BannedOverlay />

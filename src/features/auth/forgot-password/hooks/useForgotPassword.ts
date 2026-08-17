@@ -1,0 +1,53 @@
+import { useState } from "react";
+import { useToast } from "@/components/ui";
+import { AUTH_MESSAGES } from "@/constants/messages";
+import axiosClient from "@/lib/axios";
+
+interface UseForgotPasswordReturn {
+  email: string;
+  setEmail: (email: string) => void;
+  isLoading: boolean;
+  isSuccess: boolean;
+  handleSubmit: (e: React.FormEvent) => Promise<void>;
+  resetForm: () => void;
+}
+
+export function useForgotPassword(): UseForgotPasswordReturn {
+  const toast = useToast();
+  const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      // Use unified axios client + correct backend route.
+      await axiosClient.post("/auth/forgot-password", { email });
+      setIsSuccess(true);
+      toast.success( AUTH_MESSAGES.FORGOT_PASSWORD_EMAIL_SENT);
+    } catch (err: unknown) {
+      const message =
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message || "Không thể kết nối đến server";
+      toast.error(message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const resetForm = () => {
+    setIsSuccess(false);
+    setEmail("");
+  };
+
+  return {
+    email,
+    setEmail,
+    isLoading,
+    isSuccess,
+    handleSubmit,
+    resetForm,
+  };
+}

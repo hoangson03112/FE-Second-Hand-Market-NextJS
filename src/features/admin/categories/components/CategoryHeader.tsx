@@ -49,10 +49,8 @@ export default function CategoryHeader({
         ) : (
           <div>
             <p
-              className={`text-sm font-semibold ${
-                isCategoryInactive
-                  ? "text-muted-foreground"
-                  : "text-foreground"
+              className={`text-sm font-bold ${
+                isCategoryInactive ? "text-muted-foreground" : "text-foreground"
               }`}
             >
               {category.name}

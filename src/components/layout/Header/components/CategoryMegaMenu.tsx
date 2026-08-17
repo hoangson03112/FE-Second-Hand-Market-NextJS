@@ -61,7 +61,7 @@ export function CategoryMegaMenu({
                       <span className="text-[10px] font-medium tabular-nums shrink-0 text-primary">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      <span className="text-[13px] font-semibold truncate transition-colors text-foreground group-hover:text-primary">
+                      <span className="text-[13px] font-bold truncate transition-colors text-foreground group-hover:text-primary">
                         {category.name}
                       </span>
                     </Link>

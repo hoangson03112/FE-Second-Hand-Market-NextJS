@@ -7,12 +7,12 @@ import {
   useWards,
 } from "@/hooks/useGHNLocation";
 
-type Props = {
+type AddressDetailProps = {
   address: NonNullable<IProduct["address"]>;
   sellerName?: string;
 };
 
-export function AddressDetail({ address, sellerName }: Props) {
+export function AddressDetail({ address, sellerName }: AddressDetailProps) {
   const { data: provinces = [] } = useProvinces();
   const { data: districts = [] } = useDistricts(address.provinceId);
   const { data: wards = [] } = useWards(address.districtId);

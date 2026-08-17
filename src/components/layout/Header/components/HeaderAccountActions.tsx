@@ -14,7 +14,7 @@ interface HeaderAccountActionsProps {
   account: HeaderAccount;
   sellButtonHref: string;
   sellButtonText: string;
-  cartItemCount: number;
+  productCount: number;
   showUserDropdown: boolean;
   dropdownRef: React.RefObject<HTMLDivElement | null>;
   toggleUserDropdown: () => void;
@@ -27,7 +27,7 @@ export function HeaderAccountActions({
   account,
   sellButtonHref,
   sellButtonText,
-  cartItemCount,
+  productCount,
   showUserDropdown,
   dropdownRef,
   toggleUserDropdown,
@@ -55,7 +55,7 @@ export function HeaderAccountActions({
           className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full transition-all duration-150 text-muted-foreground hover:text-foreground hover:bg-primary/10"
         >
           <IconShoppingCart className="w-[17px] h-[17px]" />
-          {cartItemCount > 0 && (
+          {productCount > 0 && (
             <span
               className="absolute top-0 right-0 min-w-[16px] h-4 flex items-center justify-center text-white text-[9px] font-bold"
               style={{
@@ -66,7 +66,7 @@ export function HeaderAccountActions({
                 boxShadow: "0 1px 4px oklch(0.48 0.12 35 / 0.4)",
               }}
             >
-              {cartItemCount > 99 ? "99+" : cartItemCount}
+              {productCount > 99 ? "99+" : productCount}
             </span>
           )}
         </Link>

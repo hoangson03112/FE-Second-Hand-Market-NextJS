@@ -2,9 +2,9 @@
 
 import { IconLoader2, IconSearch, IconShoppingCart } from "@tabler/icons-react";
 import { useAdminOrders } from "./hooks/useAdminOrders";
-import { NoData } from "@/components/shared";
+import { NoData } from "@/features/admin/components";
 import OrdersTable from "./components/OrdersTable";
-import { Pagination } from "@/components/shared";
+import { Pagination } from "@/components/ui";
 import { ORDER_TABS } from "@/constants/orderStatus";
 
 export default function AdminOrders() {

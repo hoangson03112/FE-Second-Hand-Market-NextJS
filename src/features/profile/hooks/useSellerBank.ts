@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/features/auth/hooks/useUser";
 import { SellerService } from "@/services/seller.service";
-import { useToast } from "@/components/shared";
+import { useToast } from "@/components/ui";
 import { PROFILE_MESSAGES } from "@/constants";
 import type { BankFormData } from "../types";
 

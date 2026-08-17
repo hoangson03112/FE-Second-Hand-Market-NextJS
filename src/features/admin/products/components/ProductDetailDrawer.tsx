@@ -13,12 +13,13 @@ import { AIModerationSection } from "./AIModerationSection";
 import { SellerSection } from "./SellerSection";
 import { ProductDrawerHeader } from "./ProductDrawerHeader";
 import { ProductDrawerFooter } from "./ProductDrawerFooter";
-import { SectionTitle, InfoRow } from "./DrawerHelpers";
+import { SectionTitle } from "./SectionTitle";
+import { InfoRow } from "./InfoRow";
 import { CONDITION_LABEL, STATUS_BADGE } from "../constants";
 
 export { CONDITION_LABEL, STATUS_BADGE };
 
-type Props = {
+type ProductDetailDrawerProps = {
   product: IProduct;
   onClose: () => void;
   onApprove: (p: IProduct) => void;
@@ -32,7 +33,7 @@ export function ProductDetailDrawer({
   onApprove,
   onReject,
   isUpdating,
-}: Props) {
+}: ProductDetailDrawerProps) {
   const ai = product.aiModerationResult;
 
   return (
