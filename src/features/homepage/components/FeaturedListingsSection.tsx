@@ -12,7 +12,7 @@ export default function FeaturedListingsSection() {
   const { data, isLoading } = useFeaturedProducts(5);
   const { ref, isVisible } = useScrollReveal({ threshold: 0.1, delay: 160 });
   const featuredProducts = data?.data ?? [];
-
+  
   return (
     <section className="relative w-full border-t border-luxury-ink/6 py-20 md:py-28">
       <div
