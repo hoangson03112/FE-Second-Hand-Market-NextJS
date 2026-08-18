@@ -1,5 +1,17 @@
-import { IconEdit, IconEye, IconRefresh, IconTrash } from "@tabler/icons-react";
+import {
+  IconEdit,
+  IconEye,
+  IconLoader2,
+  IconRefresh,
+  IconTrash,
+} from "@tabler/icons-react";
 import Link from "next/link";
+import {
+  dangerActionSm,
+  outlineActionSm,
+  primaryActionSm,
+} from "@/features/order/components";
+import { cn } from "@/lib/utils";
 import type { MyListingProduct } from "@/types/myProducts";
 
 interface ProductCardActionsProps {
@@ -11,7 +23,7 @@ interface ProductCardActionsProps {
   isRequestingReview: boolean;
   onDelete: (productId: string, productName: string) => void;
   isDeleting: boolean;
-  /** grid: icon-only delete, flex-1 buttons. list: labeled delete, inline gap. */
+  /** grid: buttons share the row width, delete is icon-only. list: inline, labelled. */
   variant?: "grid" | "list";
 }
 
@@ -26,59 +38,63 @@ export function ProductCardActions({
   isDeleting,
   variant = "list",
 }: ProductCardActionsProps) {
-  const btnBase =
-    variant === "grid"
-      ? "flex-1 inline-flex items-center justify-center gap-1.5 px-2.5 py-2 rounded-lg text-xs font-medium transition-colors"
-      : "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors";
+  const isGrid = variant === "grid";
+  /** In the grid the row is narrow, so the labelled actions stretch to fill it. */
+  const grow = isGrid ? "flex-1" : undefined;
 
   return (
-    <div className={variant === "grid" ? "flex gap-1.5" : "flex items-center gap-1.5"}>
-      {canEdit && (
+    <div className="flex items-center gap-2">
+      {canEdit ? (
         <Link
           href={`/sell?edit=${product._id}`}
-          className={`${btnBase} bg-taupe-100 hover:bg-taupe-200 text-taupe-900`}
+          className={cn(outlineActionSm, grow)}
         >
-          <IconEdit className="w-3.5 h-3.5" />
+          <IconEdit className="h-3.5 w-3.5" />
           Sửa
         </Link>
-      )}
+      ) : null}
 
-      {canRequestReview && onRequestReview && (
+      {canRequestReview && onRequestReview ? (
         <button
           type="button"
           onClick={() => onRequestReview(product._id)}
           disabled={isRequestingReview}
-          className={`${btnBase} bg-white hover:bg-taupe-50 text-taupe-700 border-2 border-border disabled:opacity-50`}
+          className={cn(primaryActionSm, grow)}
         >
-          <IconRefresh className="w-3.5 h-3.5" />
-          {isRequestingReview ? "..." : variant === "grid" ? "Duyệt lại" : "Yêu cầu duyệt lại"}
+          {isRequestingReview ? (
+            <IconLoader2 className="h-3.5 w-3.5 animate-spin" />
+          ) : (
+            <IconRefresh className="h-3.5 w-3.5" />
+          )}
+          {isGrid ? "Duyệt lại" : "Yêu cầu duyệt lại"}
         </button>
-      )}
+      ) : null}
 
-      {isVisibleOnSite && product.slug && (
+      {isVisibleOnSite && product.slug ? (
         <Link
           href={`/products/${product._id}/${product.slug}`}
           target="_blank"
           rel="noopener noreferrer"
-          className={`${btnBase} bg-taupe-100 hover:bg-taupe-200 text-taupe-900`}
+          className={cn(outlineActionSm, grow)}
         >
-          <IconEye className="w-3.5 h-3.5" />
+          <IconEye className="h-3.5 w-3.5" />
           Xem
         </Link>
-      )}
+      ) : null}
 
       <button
         type="button"
         onClick={() => onDelete(product._id, product.name)}
         disabled={isDeleting}
-        className={
-          variant === "grid"
-            ? "px-2.5 py-2 rounded-lg text-xs font-medium text-red-500 hover:bg-red-50 disabled:opacity-50 transition-colors"
-            : `${btnBase} text-red-500 hover:bg-red-50 disabled:opacity-50`
-        }
+        aria-label={isGrid ? `Xóa ${product.name}` : undefined}
+        className={cn(dangerActionSm, isGrid && "w-9 shrink-0 px-0")}
       >
-        <IconTrash className="w-3.5 h-3.5" />
-        {variant === "list" && (isDeleting ? "..." : "Xóa")}
+        {isDeleting ? (
+          <IconLoader2 className="h-3.5 w-3.5 animate-spin" />
+        ) : (
+          <IconTrash className="h-3.5 w-3.5" />
+        )}
+        {isGrid ? null : "Xóa"}
       </button>
     </div>
   );

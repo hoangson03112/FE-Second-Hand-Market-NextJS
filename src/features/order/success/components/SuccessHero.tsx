@@ -59,11 +59,10 @@ export default function SuccessHero({
 
           <h1
             style={{
-              fontFamily: "var(--font-droid-serif), serif",
               fontWeight: 400,
               lineHeight: 1.06,
             }}
-            className="mt-6 text-[clamp(2rem,4.5vw,3.25rem)] tracking-tight text-luxury-ivory"
+            className="font-droid-serif mt-6 text-[clamp(2rem,4.5vw,3.25rem)] tracking-tight text-luxury-ivory"
           >
             Đặt hàng thành công.
             <span className="block text-taupe-200">
@@ -76,8 +75,7 @@ export default function SuccessHero({
               Mã đơn
             </span>
             <span
-              style={{ fontFamily: "var(--font-droid-serif), serif" }}
-              className="select-all text-lg tracking-wide text-luxury-ivory"
+              className="font-droid-serif select-all text-lg tracking-wide text-luxury-ivory"
             >
               #{orderCode}
             </span>

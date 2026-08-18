@@ -9,8 +9,6 @@ interface OrderDetailHeaderProps {
   onBack: () => void;
 }
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 /**
  * Mirrors `CheckoutHeader` — same height, same back affordance, same serif
  * title — so moving from checkout to an order reads as one continuous flow.
@@ -32,9 +30,8 @@ export function OrderDetailHeader({
           <IconArrowLeft className="h-5 w-5" />
         </button>
 
-        <h1
-          style={serif}
-          className="min-w-0 flex-1 truncate text-xl tracking-tight text-luxury-ink sm:text-2xl"
+        <h1
+          className="font-droid-serif min-w-0 flex-1 truncate text-xl tracking-tight text-luxury-ink sm:text-2xl"
         >
           Chi Tiết Đơn Hàng
         </h1>

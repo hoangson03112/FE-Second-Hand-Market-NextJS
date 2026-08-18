@@ -24,10 +24,9 @@ export default function SearchHeader({ query, total }: SearchHeaderProps) {
 
         <h1
           style={{
-            fontFamily: "var(--font-droid-serif), serif",
             fontWeight: 400,
           }}
-          className="mt-3 text-[clamp(1.4rem,3vw,2rem)] leading-tight text-luxury-ink"
+          className="font-droid-serif mt-3 text-[clamp(1.4rem,3vw,2rem)] leading-tight text-luxury-ink"
         >
           &ldquo;{query || "..."}&rdquo;
         </h1>

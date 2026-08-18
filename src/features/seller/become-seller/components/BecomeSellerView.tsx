@@ -134,10 +134,9 @@ export function BecomeSellerView({
               </p>
               <h1
                 style={{
-                  fontFamily: "var(--font-droid-serif), serif",
                   fontWeight: 400,
                 }}
-                className="mt-2 text-[clamp(1.4rem,3vw,1.9rem)] leading-tight text-luxury-ivory"
+                className="font-droid-serif mt-2 text-[clamp(1.4rem,3vw,1.9rem)] leading-tight text-luxury-ivory"
               >
                 {requiresVerification
                   ? "Xác minh tài khoản Seller"
@@ -373,11 +372,10 @@ function StatusCard({
       </div>
       <div className="min-w-0">
         <h3
-          style={{ fontFamily: "var(--font-droid-serif), serif" }}
           className={
             isPending
-              ? "text-base font-normal text-luxury-ink"
-              : "text-base font-normal text-red-700"
+              ? "font-droid-serif text-base font-normal text-luxury-ink"
+              : "font-droid-serif text-base font-normal text-red-700"
           }
         >
           {title}

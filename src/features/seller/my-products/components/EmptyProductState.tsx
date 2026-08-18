@@ -1,41 +1,37 @@
-import { IconPackage, IconPlus } from "@tabler/icons-react";
+import { IconArrowUpRight, IconPackage } from "@tabler/icons-react";
 import Link from "next/link";
 import { PRODUCT_MESSAGES } from "@/constants";
 
 export function EmptyProductState() {
   return (
-    <div className="rounded-2xl bg-gradient-to-br from-cream-50 to-white border-2 border-border p-20 text-center shadow-md">
-      <div className="max-w-md mx-auto space-y-6">
-        <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-          <IconPackage className="w-10 h-10 text-primary" />
-        </div>
+    <div className="rounded-[2px] border border-dashed border-luxury-ink/15 bg-white px-6 py-20 text-center">
+      <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-cream-50">
+        <IconPackage className="h-6 w-6 text-luxury-ink" />
+      </span>
 
-        <div className="space-y-2">
-          <h2 className="text-xl font-bold text-taupe-900">
-            {PRODUCT_MESSAGES.NO_PRODUCTS}
-          </h2>
-          <p className="text-sm text-taupe-500">
-            {PRODUCT_MESSAGES.NO_PRODUCTS_DESC ||
-              "Bắt đầu bằng cách đăng sản phẩm đầu tiên của bạn"}
-          </p>
-        </div>
+      <h2 className="font-droid-serif mt-7 text-xl tracking-tight text-luxury-ink">
+        {PRODUCT_MESSAGES.NO_PRODUCTS}
+      </h2>
 
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link
-            href="/sell"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 hover:shadow-md transition-all duration-200 active:scale-[0.98]"
-          >
-            <IconPlus className="w-4 h-4" />
-            Đăng sản phẩm
-          </Link>
+      <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-neutral-600">
+        {PRODUCT_MESSAGES.NO_PRODUCTS_DESC}
+      </p>
 
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold border-2 border-taupe-300/80 text-taupe-700 rounded-xl hover:bg-taupe-50 hover:border-taupe-500/70 transition-all duration-200"
-          >
-            Khám phá chợ
-          </Link>
-        </div>
+      <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <Link
+          href="/sell"
+          className="group inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-7 py-3.5 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+        >
+          Đăng sản phẩm
+          <IconArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        </Link>
+
+        <Link
+          href="/products"
+          className="inline-flex items-center gap-2 rounded-[2px] border border-luxury-ink/15 px-7 py-3.5 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
+        >
+          Khám phá chợ
+        </Link>
       </div>
     </div>
   );

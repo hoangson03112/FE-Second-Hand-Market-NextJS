@@ -70,11 +70,10 @@ export default function PhilosophySection() {
 
               <h2
                 style={{
-                  fontFamily: "var(--font-droid-serif), serif",
                   fontWeight: 400,
                   lineHeight: 1.08,
                 }}
-                className="mt-4 text-[clamp(1.75rem,3vw,2.5rem)] tracking-tight text-luxury-ink"
+                className="font-droid-serif mt-4 text-[clamp(1.75rem,3vw,2.5rem)] tracking-tight text-luxury-ink"
               >
                 Mỗi món đồ cũ đều xứng đáng{" "}
                 <span className="text-accent">một hành trình mới.</span>
@@ -140,8 +139,7 @@ export default function PhilosophySection() {
                 </div>
 
                 <h3
-                  style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                  className="mt-5 text-xl font-normal text-luxury-ink"
+                  className="font-droid-serif mt-5 text-xl font-normal text-luxury-ink"
                 >
                   {values[0].title}
                 </h3>
@@ -193,8 +191,7 @@ export default function PhilosophySection() {
                 <div className="mt-5 h-px w-6 bg-luxury-champagne" />
 
                 <h3
-                  style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                  className="mt-3 text-xl font-normal text-white"
+                  className="font-droid-serif mt-3 text-xl font-normal text-white"
                 >
                   {values[1].title}
                 </h3>
@@ -235,8 +232,7 @@ export default function PhilosophySection() {
                   </div>
 
                   <h3
-                    style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                    className="mt-3 text-xl font-normal text-luxury-ink"
+                    className="font-droid-serif mt-3 text-xl font-normal text-luxury-ink"
                   >
                     {values[2].title}
                   </h3>

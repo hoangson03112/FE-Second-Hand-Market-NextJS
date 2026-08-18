@@ -15,8 +15,7 @@ export function PaymentNotes() {
           <li key={note} className="flex gap-3">
             <span
               aria-hidden
-              style={{ fontFamily: "var(--font-droid-serif), serif" }}
-              className="shrink-0 text-xs italic text-luxury-ink/35"
+              className="font-droid-serif shrink-0 text-xs italic text-luxury-ink/35"
             >
               {String(index + 1).padStart(2, "0")}
             </span>

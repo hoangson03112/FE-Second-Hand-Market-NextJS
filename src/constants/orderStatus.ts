@@ -336,6 +336,53 @@ export const ORDER_TABS: readonly OrderTab[] = [
   ...ORDER_STATUS_KEYS.map((key) => ({ key, label: getOrderStatusLabel(key) })),
 ];
 
+/**
+ * Buyer-facing filter groups.
+ *
+ * One tab per status gives the buyer list fourteen chips, and nobody shopping
+ * thinks in `picked_up` vs `out_for_delivery` vs `shipping` — that vocabulary is
+ * the fulfilment pipeline's, not theirs. These six groups are what a buyer
+ * actually looks for; the exact stage is shown per order on the card's progress
+ * rail, where it is information rather than navigation noise.
+ *
+ * `ORDER_TABS` above is deliberately left alone: the admin screen does need one
+ * entry per status.
+ *
+ * `action` carries no status list — it is computed per order by
+ * `getBuyerTodo()`, because "needs me to do something" cuts across statuses.
+ */
+export const BUYER_TAB_STATUSES: Record<string, readonly string[]> = {
+  all: [],
+  action: [],
+  active: [
+    "pending",
+    "confirmed",
+    "picked_up",
+    "shipping",
+    "out_for_delivery",
+  ],
+  received: ["delivered", "completed"],
+  refund: [
+    "refund",
+    "refund_requested",
+    "refund_approved",
+    "returning",
+    "return_shipping",
+    "returned",
+    "refunded",
+  ],
+  cancelled: ["cancelled", "delivery_failed"],
+};
+
+export const BUYER_ORDER_TABS: readonly OrderTab[] = [
+  { key: "all", label: "Tất cả" },
+  { key: "action", label: "Cần xử lý" },
+  { key: "active", label: "Đang đến" },
+  { key: "received", label: "Đã nhận" },
+  { key: "refund", label: "Hoàn trả" },
+  { key: "cancelled", label: "Đã hủy" },
+];
+
 
 /**
  * Project a Refund document's status onto the pseudo order status the seller

@@ -73,8 +73,8 @@ export function PaymentTimer({
           {label}
         </p>
         <p
-          style={{ fontFamily: "var(--font-droid-serif), serif" }}
           className={cn(
+            "font-droid-serif",
             "mt-1.5 text-2xl leading-none tabular-nums",
             isExpired
               ? isDark

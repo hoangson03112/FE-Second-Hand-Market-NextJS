@@ -11,8 +11,6 @@ interface OrderProgressTrailProps {
   failedNotice?: string | null;
 }
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 const twoDigits = (value: number) => String(value).padStart(2, "0");
 
 type NodeState = "done" | "active" | "todo";
@@ -39,7 +37,7 @@ function Node({ state, index }: { state: NodeState; index: number }) {
       {state === "done" ? (
         <IconCheck className="h-3.5 w-3.5" strokeWidth={2.5} />
       ) : (
-        <span style={serif} className="text-[13px] leading-none">
+        <span className="font-droid-serif text-[13px] leading-none">
           {twoDigits(index + 1)}
         </span>
       )}

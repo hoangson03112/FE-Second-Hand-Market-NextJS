@@ -42,11 +42,10 @@ export default function SectionHeader({
         </div>
         <h2
           style={{
-            fontFamily: "var(--font-droid-serif), serif",
             fontWeight: 400,
             lineHeight: 1.08,
           }}
-          className="mt-4 text-[clamp(1.75rem,3.5vw,2.75rem)] tracking-tight text-luxury-ink"
+          className="font-droid-serif mt-4 text-[clamp(1.75rem,3.5vw,2.75rem)] tracking-tight text-luxury-ink"
         >
           {title}
         </h2>

@@ -19,6 +19,10 @@ interface OrderTabsProps {
   tabCounts: Record<string, number>;
 }
 
+/**
+ * Hairline 2px chips with a serif count — the same tab language as the buyer
+ * order list, so both sides of a transaction are navigated the same way.
+ */
 export default function OrderTabs({
   activeTab,
   onTabChange,
@@ -35,12 +39,12 @@ export default function OrderTabs({
   }, [activeTab]);
 
   return (
-    <div className="mb-5 overflow-hidden rounded-xl border border-border bg-muted/20 p-1">
-      <div className="overflow-x-auto scrollbar-hide">
+    <div className="border-t border-luxury-ink/6">
+      <div className="mx-auto w-full max-w-9xl overflow-x-auto scrollbar-hide">
         <div
           role="tablist"
           aria-label="Lọc đơn hàng theo trạng thái"
-          className="inline-flex min-w-full items-center gap-1"
+          className="inline-flex min-w-full gap-2 px-4 py-3 sm:px-6"
         >
           {SELLER_TABS.map(({ key, label }) => {
             const count = tabCounts[key] ?? 0;
@@ -54,37 +58,33 @@ export default function OrderTabs({
                 aria-selected={isActive}
                 onClick={() => onTabChange(key)}
                 className={cn(
-                  "relative flex shrink-0 items-center gap-2 rounded-lg px-3 py-1.5",
-                  "text-sm whitespace-nowrap",
-                  "transition-colors duration-150",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-inset",
+                  "relative flex shrink-0 items-center gap-2 rounded-[2px] border px-4 py-2 transition-all duration-300",
+                  "focus-visible:border-luxury-champagne focus-visible:outline-none",
                   isActive
-                    ? "bg-primary text-primary-foreground font-bold"
-                    : "bg-transparent font-medium text-muted-foreground hover:bg-background hover:text-foreground",
+                    ? "border-luxury-ink bg-luxury-ink text-luxury-ivory"
+                    : "border-luxury-ink/12 bg-white text-neutral-500 hover:border-luxury-ink/40 hover:text-luxury-ink",
                 )}
               >
-                {label}
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
+                  {label}
+                </span>
 
-                {count > 0 && (
+                {count > 0 ? (
                   <span
                     className={cn(
-                      "inline-flex items-center justify-center",
-                      "min-w-[20px] h-5 px-1.5 rounded-md",
-                      "text-xs font-bold tabular-nums",
-                      "transition-colors duration-150",
-                      isActive
-                        ? "bg-primary-foreground/20 text-primary-foreground"
-                        : "bg-background text-muted-foreground/70",
+                      "font-droid-serif",
+                      "text-[13px] leading-none tabular-nums transition-colors duration-300",
+                      isActive ? "text-luxury-champagne" : "text-luxury-ink/40",
                     )}
                   >
                     {count}
                   </span>
-                )}
+                ) : null}
               </button>
             );
           })}
-          {/* Trailing spacer — ensures last tab is never clipped */}
-          <div className="shrink-0 w-4" aria-hidden="true" />
+          {/* Trailing spacer — ensures the last tab is never clipped */}
+          <div className="w-2 shrink-0" aria-hidden="true" />
         </div>
       </div>
     </div>

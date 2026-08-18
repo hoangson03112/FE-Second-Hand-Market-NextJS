@@ -73,9 +73,8 @@ export default function AuthEditorialPanel({
           </div>
 
           <h2
-            className="mt-5 text-luxury-ivory"
+            className="font-droid-serif mt-5 text-luxury-ivory"
             style={{
-              fontFamily: "var(--font-droid-serif), serif",
               fontSize: "clamp(2.25rem, 3.4vw, 3.25rem)",
               fontWeight: 400,
               lineHeight: 1.08,
@@ -112,8 +111,7 @@ export default function AuthEditorialPanel({
                     {item.tag}
                   </p>
                   <h3
-                    className="mt-2 text-lg font-normal text-luxury-ivory"
-                    style={{ fontFamily: "var(--font-droid-serif), serif" }}
+                    className="font-droid-serif mt-2 text-lg font-normal text-luxury-ivory"
                   >
                     {item.title}
                   </h3>

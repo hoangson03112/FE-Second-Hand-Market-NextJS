@@ -6,3 +6,14 @@ export { InkSurface } from "./InkSurface";
 export { OrderStatusBadge } from "./OrderStatusBadge";
 export { OrderTracking } from "./OrderTracking";
 export { CancelOrderReasonDialog } from "./CancelOrderReasonDialog";
+export {
+  microCaps,
+  primaryAction,
+  outlineAction,
+  dangerAction,
+  primaryActionSm,
+  outlineActionSm,
+  dangerActionSm,
+  NOTICE_TONE_CLASS,
+  type NoticeTone,
+} from "./editorialStyles";

@@ -26,8 +26,6 @@ import { cn } from "@/lib/utils";
 
 type RefundDoc = NonNullable<Order["refundRequestId"]>;
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 const REASON_LABELS: Record<
   string,
   { label: string; Icon: React.ElementType }
@@ -248,9 +246,9 @@ export function RefundDetailCard({
           </span>
           <div className="min-w-0">
             <Eyebrow>Hoàn tiền</Eyebrow>
-            <h2
-              style={serif}
-              className={cn("mt-3 text-lg leading-snug tracking-tight", tone.text)}
+            <h2
+              className={cn(
+"font-droid-serif","mt-3 text-lg leading-snug tracking-tight", tone.text)}
             >
               {style.label}
             </h2>
@@ -264,9 +262,8 @@ export function RefundDetailCard({
 
         <div className="shrink-0 text-right">
           <p className={MICRO_LABEL}>Số tiền hoàn</p>
-          <p
-            style={serif}
-            className="mt-1.5 tabular-nums text-lg leading-none text-luxury-ink"
+          <p
+            className="font-droid-serif mt-1.5 tabular-nums text-lg leading-none text-luxury-ink"
           >
             {formatPrice(refund.refundAmount)}
           </p>

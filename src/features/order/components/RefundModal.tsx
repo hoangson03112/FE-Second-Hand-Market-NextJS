@@ -139,8 +139,7 @@ export function RefundModal({
         <div className="relative flex items-start justify-between border-b border-luxury-ink/8 px-6 py-5">
           <div className="flex items-center gap-3.5">
             <span
-              className="flex h-10 w-10 shrink-0 items-center justify-center border border-luxury-champagne/30 bg-luxury-champagne/10"
-              style={{ borderRadius: "2px" }}
+              className="flex rounded-[2px] h-10 w-10 shrink-0 items-center justify-center border border-luxury-champagne/30 bg-luxury-champagne/10"
             >
               <IconAlertCircle
                 className="h-5 w-5 text-luxury-champagne"
@@ -150,10 +149,9 @@ export function RefundModal({
             <div>
               <h2
                 style={{
-                  fontFamily: "var(--font-droid-serif), serif",
                   fontWeight: 400,
                 }}
-                className="text-lg leading-tight text-luxury-ink"
+                className="font-droid-serif text-lg leading-tight text-luxury-ink"
               >
                 Yêu cầu hoàn tiền
               </h2>
@@ -173,7 +171,6 @@ export function RefundModal({
           </button>
         </div>
 
-        {/* ── STEPPER — editorial numbered, nối bằng đường champagne ── */}
         <div className="flex items-center gap-1 border-b border-luxury-ink/8 bg-white/60 px-6 py-4">
           {STEPS.map((label, i) => {
             const stepNum = i + 1;
@@ -188,10 +185,10 @@ export function RefundModal({
                   <span
                     className={
                       isCurrent
-                        ? "flex h-6 w-6 shrink-0 items-center justify-center bg-luxury-ink text-[11px] font-bold text-luxury-champagne"
+                        ? "flex h-6 w-6 shrink-0 items-center justify-center bg-luxury-ink text-xs font-medium text-luxury-champagne"
                         : isDone
                           ? "flex h-6 w-6 shrink-0 items-center justify-center bg-luxury-champagne text-luxury-ink"
-                          : "flex h-6 w-6 shrink-0 items-center justify-center border border-luxury-ink/20 text-[11px] font-bold text-taupe-400"
+                          : "flex h-6 w-6 shrink-0 items-center justify-center border border-luxury-ink/20 text-xs font-medium text-taupe-400"
                     }
                     style={{ borderRadius: "2px" }}
                   >
@@ -204,8 +201,8 @@ export function RefundModal({
                   <span
                     className={
                       isCurrent
-                        ? "hidden text-[11px] font-bold uppercase tracking-[0.12em] text-luxury-ink sm:inline"
-                        : "hidden text-[11px] font-medium uppercase tracking-[0.12em] text-taupe-400 sm:inline"
+                        ? "hidden text-xs font-bold uppercase tracking-[0.12em] text-luxury-ink sm:inline"
+                        : "hidden text-xs font-medium uppercase tracking-[0.12em] text-taupe-400 sm:inline"
                     }
                   >
                     {label}
@@ -236,8 +233,7 @@ export function RefundModal({
                 <div className="space-y-4">
                   <div>
                     <h4
-                      style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                      className="text-base text-luxury-ink"
+                      className="font-droid-serif text-base text-luxury-ink"
                     >
                       Chọn lý do hoàn tiền
                     </h4>
@@ -310,8 +306,7 @@ export function RefundModal({
                   </div>
 
                   <div
-                    className="flex gap-2.5 border border-luxury-ink/8 bg-white/60 p-3.5"
-                    style={{ borderRadius: "2px" }}
+                    className="rounded-[2px] flex gap-2.5 border border-luxury-ink/8 bg-white/60 p-3.5"
                   >
                     <IconAlertCircle
                       className="mt-0.5 h-4 w-4 shrink-0 text-taupe-400"
@@ -331,8 +326,7 @@ export function RefundModal({
                 <div className="space-y-5">
                   <div>
                     <h4
-                      style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                      className="text-base text-luxury-ink"
+                      className="font-droid-serif text-base text-luxury-ink"
                     >
                       Mô tả &amp; Bằng chứng
                     </h4>
@@ -342,7 +336,7 @@ export function RefundModal({
                   </div>
 
                   <div>
-                    <label className="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
+                    <label className="mb-1.5 block text-xs font-medium uppercase tracking-[0.08em] text-neutral-500">
                       Mô tả chi tiết <span className="text-accent">*</span>
                     </label>
                     <textarea
@@ -383,12 +377,12 @@ export function RefundModal({
 
                   <div>
                     <div className="mb-2 flex items-center justify-between">
-                      <label className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
+                      <label className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.08em] text-neutral-500">
                         <IconPhoto className="h-3.5 w-3.5" strokeWidth={1.75} />
                         Ảnh bằng chứng
                       </label>
                       <span
-                        className="border border-luxury-ink/10 bg-cream-50 px-2 py-0.5 text-[10px] font-medium text-taupe-500"
+                        className="border border-luxury-ink/10 bg-cream-50 px-2 py-0.5 text-2xs font-medium text-taupe-500"
                         style={{ borderRadius: "2px" }}
                       >
                         {images.length}/{REFUND_MAX_IMAGES}
@@ -425,7 +419,7 @@ export function RefundModal({
                               strokeWidth={1.5}
                             />
                           </span>
-                          <p className="text-[13px] font-medium text-neutral-600">
+                          <p className="text-sm font-medium text-neutral-600">
                             {isDragging
                               ? "Thả ảnh vào đây"
                               : "Kéo & thả, hoặc click để chọn"}
@@ -440,8 +434,7 @@ export function RefundModal({
                             {images.map((file, i) => (
                               <div
                                 key={i}
-                                className="group relative aspect-square overflow-hidden border border-luxury-ink/10"
-                                style={{ borderRadius: "2px" }}
+                                className="rounded-[2px] group relative aspect-square overflow-hidden border border-luxury-ink/10"
                               >
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img
@@ -471,8 +464,7 @@ export function RefundModal({
                                 type="button"
                                 onClick={() => imageInputRef.current?.click()}
                                 disabled={isSubmitting}
-                                className="flex aspect-square items-center justify-center border border-dashed border-luxury-ink/20 transition-colors hover:border-luxury-champagne hover:bg-cream-50"
-                                style={{ borderRadius: "2px" }}
+                                className="flex aspect-square rounded-[2px] items-center justify-center border border-dashed border-luxury-ink/20 transition-colors hover:border-luxury-champagne hover:bg-cream-50"
                               >
                                 <IconUpload
                                   className="h-4 w-4 text-taupe-400"
@@ -496,13 +488,12 @@ export function RefundModal({
 
                   <div>
                     <div className="mb-2 flex items-center justify-between">
-                      <label className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
+                      <label className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.08em] text-neutral-500">
                         <IconVideo className="h-3.5 w-3.5" strokeWidth={1.75} />
                         Video bằng chứng
                       </label>
                       <span
-                        className="border border-luxury-ink/10 bg-cream-50 px-2 py-0.5 text-[10px] font-medium text-taupe-500"
-                        style={{ borderRadius: "2px" }}
+                        className="border rounded-[2px] border-luxury-ink/10 bg-cream-50 px-2 py-0.5 text-2xs font-medium text-taupe-500"
                       >
                         {videos.length}/{REFUND_MAX_VIDEOS}
                       </span>
@@ -512,12 +503,10 @@ export function RefundModal({
                         {videos.map((file, i) => (
                           <li
                             key={i}
-                            className="flex items-center gap-3 border border-luxury-ink/10 bg-white/60 px-3 py-2.5"
-                            style={{ borderRadius: "2px" }}
+                            className="flex rounded items-center gap-3 border border-luxury-ink/10 bg-white/60 px-3 py-2.5"
                           >
                             <span
-                              className="flex h-8 w-8 shrink-0 items-center justify-center bg-luxury-ink/5"
-                              style={{ borderRadius: "2px" }}
+                              className="flex h-8 w-8 shrink-0 items-center justify-center bg-luxury-ink/5 rounded-[2px]"
                             >
                               <IconVideo
                                 className="h-4 w-4 text-taupe-500"
@@ -562,8 +551,7 @@ export function RefundModal({
                           type="button"
                           onClick={() => videoInputRef.current?.click()}
                           disabled={isSubmitting}
-                          className="flex w-full items-center justify-center gap-2 border border-dashed border-luxury-ink/20 px-4 py-3 text-sm text-neutral-500 transition-all duration-300 hover:border-luxury-champagne hover:bg-cream-50 disabled:opacity-50"
-                          style={{ borderRadius: "2px" }}
+                          className="flex w-full rounded-[2px] items-center justify-center gap-2 border border-dashed border-luxury-ink/20 px-4 py-3 text-sm text-neutral-500 transition-all duration-300 hover:border-luxury-champagne hover:bg-cream-50 disabled:opacity-50"
                         >
                           <IconUpload className="h-4 w-4" strokeWidth={1.5} />
                           Thêm video
@@ -582,8 +570,7 @@ export function RefundModal({
                 <div className="space-y-4">
                   <div>
                     <h4
-                      style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                      className="text-base text-luxury-ink"
+                      className="font-droid-serif text-base text-luxury-ink"
                     >
                       Thông tin ngân hàng
                     </h4>
@@ -594,8 +581,7 @@ export function RefundModal({
                   </div>
 
                   <div
-                    className="flex items-start gap-3 border border-luxury-champagne/30 bg-luxury-champagne/8 p-4"
-                    style={{ borderRadius: "2px" }}
+                    className="flex items-start rounded-[2px] gap-3 border border-luxury-champagne/30 bg-luxury-champagne/8 p-4"
                   >
                     <IconBuildingBank
                       className="mt-0.5 h-4.5 w-4.5 shrink-0 text-taupe-700"
@@ -608,7 +594,7 @@ export function RefundModal({
                   </div>
 
                   <div>
-                    <label className="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
+                    <label className="mb-1.5 block text-xs font-medium uppercase tracking-[0.08em] text-neutral-500">
                       Tên ngân hàng
                     </label>
                     <div className="relative">
@@ -617,8 +603,7 @@ export function RefundModal({
                         onChange={(e) => setBankName(e.target.value)}
                         disabled={isSubmitting}
                         required
-                        className={`${inputClass} appearance-none pl-10 pr-9 disabled:opacity-50`}
-                        style={{ borderRadius: "2px" }}
+                        className={`${inputClass} appearance-none rounded-[2px] pl-10 pr-9 disabled:opacity-50`}
                       >
                         <option value="">Chọn ngân hàng</option>
                         {bankName.trim() &&
@@ -639,7 +624,7 @@ export function RefundModal({
                   </div>
 
                   <div>
-                    <label className="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
+                    <label className="mb-1.5 block text-sm font-medium uppercase tracking-[0.08em] text-neutral-500">
                       Số tài khoản
                     </label>
                     <input
@@ -648,13 +633,12 @@ export function RefundModal({
                       onChange={(e) => setAccountNumber(e.target.value)}
                       disabled={isSubmitting}
                       placeholder="Nhập số tài khoản..."
-                      className={`${inputClass} font-mono disabled:opacity-50`}
-                      style={{ borderRadius: "2px" }}
+                      className={`${inputClass} font-mono rounded-[2px] disabled:opacity-50`}
                     />
                   </div>
 
                   <div>
-                    <label className="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
+                    <label className="mb-1.5 block text-sm font-medium uppercase tracking-[0.08em] text-neutral-500">
                       Tên chủ tài khoản
                     </label>
                     <input
@@ -663,8 +647,7 @@ export function RefundModal({
                       onChange={(e) => setAccountHolder(e.target.value)}
                       disabled={isSubmitting}
                       placeholder="Tên đầy đủ (in hoa) trên tài khoản..."
-                      className={`${inputClass} uppercase placeholder:normal-case disabled:opacity-50`}
-                      style={{ borderRadius: "2px" }}
+                      className={`${inputClass} uppercase placeholder:normal-case rounded-[2px] disabled:opacity-50`}
                     />
                   </div>
                 </div>
@@ -675,8 +658,7 @@ export function RefundModal({
                 <div className="space-y-4">
                   <div>
                     <h4
-                      style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                      className="text-base text-luxury-ink"
+                      className="font-droid-serif text-base text-luxury-ink"
                     >
                       Xác nhận yêu cầu
                     </h4>
@@ -687,12 +669,10 @@ export function RefundModal({
 
                   {selectedReason && SelectedIcon && (
                     <div
-                      className="flex items-center gap-3 border border-luxury-champagne/40 bg-cream-50 p-4"
-                      style={{ borderRadius: "2px" }}
+                      className="flex rounded-[2px] items-center gap-3 border border-luxury-champagne/40 bg-cream-50 p-4"
                     >
                       <div
-                        className="flex h-10 w-10 shrink-0 items-center justify-center bg-luxury-ink"
-                        style={{ borderRadius: "2px" }}
+                        className="flex rounded-[2px] h-10 w-10 shrink-0 items-center justify-center bg-luxury-ink"
                       >
                         <SelectedIcon
                           className="h-5 w-5 text-luxury-champagne"
@@ -700,7 +680,7 @@ export function RefundModal({
                         />
                       </div>
                       <div>
-                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-taupe-400">
+                        <p className="text-2xs font-bold uppercase tracking-[0.18em] text-taupe-400">
                           Lý do
                         </p>
                         <p className="text-sm font-medium text-luxury-ink">
@@ -714,10 +694,9 @@ export function RefundModal({
                   )}
 
                   <div
-                    className="border border-luxury-ink/8 bg-white/60 p-4"
-                    style={{ borderRadius: "2px" }}
+                    className="border rounded-[2px] border-luxury-ink/8 bg-white/60 p-4"
                   >
-                    <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-taupe-400">
+                    <p className="mb-2 text-2xs font-bold uppercase tracking-[0.18em] text-taupe-400">
                       Mô tả
                     </p>
                     <p className="text-sm leading-relaxed text-neutral-700">
@@ -727,15 +706,14 @@ export function RefundModal({
 
                   {bankName && accountNumber && accountHolder && (
                     <div
-                      className="border border-luxury-ink/8 bg-white/60 p-4"
-                      style={{ borderRadius: "2px" }}
+                      className="border rounded-[2px] border-luxury-ink/8 bg-white/60 p-4"
                     >
                       <div className="mb-2 flex items-center gap-2">
                         <IconBuildingBank
                           className="h-4 w-4 text-luxury-champagne"
                           strokeWidth={1.75}
                         />
-                        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-taupe-400">
+                        <p className="text-2xs  font-bold uppercase tracking-[0.18em] text-taupe-400">
                           Ngân hàng nhận hoàn
                         </p>
                       </div>
@@ -764,12 +742,10 @@ export function RefundModal({
 
                   <div className="grid grid-cols-2 gap-3">
                     <div
-                      className="flex items-center gap-3 border border-luxury-ink/8 bg-white/60 p-4"
-                      style={{ borderRadius: "2px" }}
+                      className="flex items-center rounded-[2px] gap-3 border border-luxury-ink/8 bg-white/60 p-4"
                     >
                       <div
-                        className="flex h-9 w-9 shrink-0 items-center justify-center bg-luxury-ink/5"
-                        style={{ borderRadius: "2px" }}
+                        className="flex h-9 w-9 shrink-0 rounded-[2px] items-center justify-center bg-luxury-ink/5"
                       >
                         <IconPhoto
                           className="h-4.5 w-4.5 text-taupe-500"
@@ -789,12 +765,10 @@ export function RefundModal({
                       </div>
                     </div>
                     <div
-                      className="flex items-center gap-3 border border-luxury-ink/8 bg-white/60 p-4"
-                      style={{ borderRadius: "2px" }}
+                      className="flex items-center rounded-[2px] gap-3 border border-luxury-ink/8 bg-white/60 p-4"
                     >
                       <div
-                        className="flex h-9 w-9 shrink-0 items-center justify-center bg-luxury-ink/5"
-                        style={{ borderRadius: "2px" }}
+                        className="flex h-9 w-9 shrink-0 rounded-[2px] items-center justify-center bg-luxury-ink/5"
                       >
                         <IconVideo
                           className="h-4.5 w-4.5 text-taupe-500"
@@ -820,8 +794,7 @@ export function RefundModal({
                       {images.slice(0, 5).map((file, i) => (
                         <div
                           key={i}
-                          className="aspect-square overflow-hidden border border-luxury-ink/10"
-                          style={{ borderRadius: "2px" }}
+                          className="aspect-square overflow-hidden border border-luxury-ink/10 rounded-[2px]"
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
@@ -833,8 +806,7 @@ export function RefundModal({
                       ))}
                       {images.length > 5 && (
                         <div
-                          className="flex aspect-square items-center justify-center border border-luxury-ink/10 bg-cream-50"
-                          style={{ borderRadius: "2px" }}
+                          className="flex aspect-square items-center justify-center border border-luxury-ink/10 bg-cream-50 rounded-[2px]   "
                         >
                           <span className="text-sm font-bold text-taupe-500">
                             +{images.length - 5}
@@ -845,8 +817,7 @@ export function RefundModal({
                   )}
 
                   <div
-                    className="flex gap-3 border border-luxury-ink/8 bg-white/60 p-4"
-                    style={{ borderRadius: "2px" }}
+                    className="flex gap-3 border border-luxury-ink/8 bg-white/60 p-4 rounded-[2px]"
                   >
                     <IconShield
                       className="mt-0.5 h-5 w-5 shrink-0 text-luxury-champagne"
@@ -880,8 +851,7 @@ export function RefundModal({
                   type="button"
                   onClick={() => setStep((s) => s - 1)}
                   disabled={isSubmitting}
-                  className="flex items-center gap-1.5 border border-luxury-ink/15 px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-neutral-600 transition-all duration-300 hover:border-luxury-ink/30 hover:text-luxury-ink disabled:opacity-50"
-                  style={{ borderRadius: "2px" }}
+                  className="flex items-center gap-1.5 rounded-[2px] border border-luxury-ink/15 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-neutral-600 transition-all duration-300 hover:border-luxury-ink/30 hover:text-luxury-ink disabled:opacity-50"
                 >
                   <IconArrowLeft className="h-3.5 w-3.5" strokeWidth={1.75} />
                   Quay lại
@@ -891,15 +861,14 @@ export function RefundModal({
                   type="button"
                   onClick={onClose}
                   disabled={isSubmitting}
-                  className="border border-luxury-ink/15 px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-neutral-600 transition-all duration-300 hover:border-luxury-ink/30 hover:text-luxury-ink disabled:opacity-50"
-                  style={{ borderRadius: "2px" }}
+                  className="border border-luxury-ink/15 px-5 py-2.5 rounded-[2px] text-xs font-bold uppercase tracking-[0.14em] text-neutral-600 transition-all duration-300 hover:border-luxury-ink/30 hover:text-luxury-ink disabled:opacity-50"
                 >
                   Hủy
                 </button>
               )}
 
               <span className="flex-1" />
-              <span className="hidden text-[11px] font-medium uppercase tracking-[0.14em] text-taupe-400 sm:inline">
+              <span className="hidden text-xs font-medium uppercase tracking-[0.14em] text-taupe-400 sm:inline">
                 Bước {step}/{STEPS.length}
               </span>
               <span className="flex-1" />
@@ -909,8 +878,7 @@ export function RefundModal({
                   type="button"
                   onClick={() => setStep((s) => s + 1)}
                   disabled={!canProceed}
-                  className="group flex items-center gap-2 bg-luxury-ink px-6 py-2.5 text-[11px] font-bold uppercase tracking-[0.18em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-30"
-                  style={{ borderRadius: "2px" }}
+                  className="group flex items-center gap-2 bg-luxury-ink px-6 py-2.5 text-xs font-bold uppercase tracking-[0.15em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-30"
                 >
                   Tiếp theo
                   <IconArrowRight
@@ -927,8 +895,7 @@ export function RefundModal({
                     } as React.FormEvent)
                   }
                   disabled={isSubmitting}
-                  className="group flex items-center gap-2 bg-luxury-ink px-6 py-2.5 text-[11px] font-bold uppercase tracking-[0.18em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-50"
-                  style={{ borderRadius: "2px" }}
+                  className="group flex items-center gap-2 bg-luxury-ink rounded-[2px] px-6 py-2.5 text-xs font-bold uppercase tracking-[0.15em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>

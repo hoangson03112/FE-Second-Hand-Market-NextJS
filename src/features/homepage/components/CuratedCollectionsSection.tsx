@@ -84,8 +84,7 @@ export default function CuratedCollectionsSection() {
                   <div className="mb-3 h-px w-8 bg-luxury-champagne/70 transition-all duration-500 ease-out group-hover:w-14 group-hover:bg-luxury-champagne" />
 
                   <h3
-                    style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                    className="text-2xl font-normal tracking-tight text-cream-50 transition-transform duration-500 ease-out group-hover:-translate-y-1 md:text-3xl"
+                    className="font-droid-serif text-2xl font-normal tracking-tight text-cream-50 transition-transform duration-500 ease-out group-hover:-translate-y-1 md:text-3xl"
                   >
                     {item.title}
                   </h3>

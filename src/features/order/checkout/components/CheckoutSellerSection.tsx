@@ -30,8 +30,6 @@ interface CheckoutSellerSectionProps {
   totalGroups?: number;
 }
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 const twoDigits = (value: number) => String(value).padStart(2, "0");
 
 function MoneyRow({
@@ -53,9 +51,9 @@ function MoneyRow({
       >
         {label}
       </span>
-      <span
-        style={serif}
+      <span
         className={cn(
+"font-droid-serif",
           "tabular-nums text-luxury-ink",
           emphasis ? "text-xl" : "text-sm",
         )}
@@ -136,9 +134,8 @@ export default function CheckoutSellerSection({
           </p>
         </div>
         {showMarker ? (
-          <span
-            style={serif}
-            className="shrink-0 text-sm italic text-luxury-ink/30"
+          <span
+            className="font-droid-serif shrink-0 text-sm italic text-luxury-ink/30"
           >
             {twoDigits(index + 1)} / {twoDigits(totalGroups)}
           </span>
@@ -182,9 +179,8 @@ export default function CheckoutSellerSection({
                     <span className="text-xs font-medium uppercase tracking-[0.15em] text-neutral-500">
                       Số lượng: {item.quantity} sản phẩm
                     </span>
-                    <span
-                      style={serif}
-                      className="tabular-nums text-base text-luxury-ink"
+                    <span
+                      className="font-droid-serif tabular-nums text-base text-luxury-ink"
                     >
                       {formatPrice(item.product.price * item.quantity)}
                     </span>
@@ -248,9 +244,8 @@ export default function CheckoutSellerSection({
                   <p className="text-sm font-medium text-luxury-ink">
                     GHN — {shippingInfo?.short_name ?? "Chuẩn"}
                   </p>
-                  <span
-                    style={serif}
-                    className="tabular-nums text-sm text-luxury-ink"
+                  <span
+                    className="font-droid-serif tabular-nums text-sm text-luxury-ink"
                   >
                     {shippingFee > 0 ? formatPrice(shippingFee) : "Đang tính…"}
                   </span>

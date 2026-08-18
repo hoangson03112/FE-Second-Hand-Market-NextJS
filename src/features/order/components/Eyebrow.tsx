@@ -24,7 +24,7 @@ export function Eyebrow({ children, tone = "light", className }: EyebrowProps) {
       />
       <p
         className={cn(
-          "text-2xs font-bold uppercase tracking-[0.24em]",
+          "text-2xs font-medium uppercase tracking-[0.15em]",
           tone === "dark" ? "text-luxury-champagne" : "text-neutral-600",
         )}
       >

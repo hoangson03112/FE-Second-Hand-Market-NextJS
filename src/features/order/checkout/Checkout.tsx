@@ -173,8 +173,7 @@ export default function Checkout() {
                 )}
               >
                 <h3
-                  style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                  className="text-xl text-luxury-ink"
+                  className="font-droid-serif text-xl text-luxury-ink"
                 >
                   Chưa có gì để thanh toán
                 </h3>

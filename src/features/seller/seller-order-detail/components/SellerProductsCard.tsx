@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { IconPackage } from "@tabler/icons-react";
+import { IconArrowUpRight } from "@tabler/icons-react";
+import { Panel, microCaps } from "@/features/order/components";
+import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
-import { getConditionBadgeColor, getConditionLabel } from "@/utils/format";
+import { getConditionLabel } from "@/utils/format";
 import type { Order } from "@/types/order";
 
 function getAvatar(product: Order["products"][number]["productId"]): string {
@@ -31,111 +33,101 @@ interface SellerProductsCardProps {
   order: Order;
 }
 
+/**
+ * The items in the order. The price breakdown that used to repeat at the bottom
+ * of this card now lives once, on the ink panel — it was printed twice on the
+ * same screen.
+ */
 export function SellerProductsCard({ order }: SellerProductsCardProps) {
-  return (
-    <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-sm">
-      <div className="flex items-center gap-3 px-5 py-4 border-b border-border bg-muted/20">
-        <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-          <IconPackage className="w-4.5 h-4.5 text-primary" />
-        </div>
-        <div>
-          <h2 className="text-sm font-bold text-foreground">
-            Sản phẩm trong đơn
-          </h2>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            {order.products.length} sản phẩm
-          </p>
-        </div>
-      </div>
+  const products = order.products ?? [];
 
-      <div className="p-4 space-y-3">
-        {order.products.map((item, idx) => {
+  return (
+    <Panel
+      eyebrow="Trong đơn"
+      title={`${products.length} sản phẩm`}
+      padding="flush"
+    >
+      <div className="divide-y divide-luxury-ink/8">
+        {products.map((item, idx) => {
           const product = item.productId;
-          const avatar = getAvatar(product);
-          const condition = product?.condition;
-          const conditionLabel = condition
-            ? getConditionLabel(condition)
+          const name = product?.name || "Sản phẩm";
+          const conditionLabel = product?.condition
+            ? getConditionLabel(product.condition)
             : null;
-          const badgeColor = condition
-            ? getConditionBadgeColor(condition)
-            : null;
+          const href = product?._id ? `/products/${product._id}` : null;
+
+          const thumbnail = (
+            <Image
+              src={getAvatar(product)}
+              alt={name}
+              fill
+              sizes="64px"
+              className="object-cover transition-transform duration-700 ease-out group-hover/item:scale-105"
+            />
+          );
+          const thumbClass =
+            "relative h-16 w-16 shrink-0 overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-taupe-50";
 
           return (
             <div
               key={idx}
-              className="flex gap-3 p-3 rounded-xl border border-border hover:bg-muted/30 transition-colors group"
+              className="group/item flex gap-4 px-5 py-4 sm:px-6"
             >
-              <div className="w-20 h-20 rounded-xl overflow-hidden bg-muted shrink-0 border border-border">
-                <Image
-                  src={avatar}
-                  alt={product?.name || "Sản phẩm"}
-                  width={80}
-                  height={80}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-2 mb-1.5">
-                  <h4 className="font-bold text-foreground text-sm line-clamp-2 leading-snug">
-                    {product?.name || "Sản phẩm"}
-                  </h4>
-                  {product?._id && (
+              {href ? (
+                <Link
+                  href={href}
+                  target="_blank"
+                  className={cn(
+                    thumbClass,
+                    "transition-colors duration-300 hover:border-luxury-ink/30",
+                  )}
+                >
+                  {thumbnail}
+                </Link>
+              ) : (
+                <div className={thumbClass}>{thumbnail}</div>
+              )}
+
+              <div className="min-w-0 flex-1">
+                <div className="flex items-start justify-between gap-4">
+                  <p className="line-clamp-2 text-sm font-medium leading-relaxed text-luxury-ink">
+                    {name}
+                  </p>
+                  {href ? (
                     <Link
-                      href={`/products/${product._id}`}
+                      href={href}
                       target="_blank"
-                      className="shrink-0 text-[10px] text-primary font-medium hover:underline"
+                      className="group/link inline-flex shrink-0 items-center gap-1.5 text-2xs font-bold uppercase tracking-[0.18em] text-luxury-ink transition-colors hover:text-taupe-700"
                     >
-                      Xem →
+                      Xem
+                      <IconArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
                     </Link>
-                  )}
+                  ) : null}
                 </div>
-                <div className="flex items-center gap-2 flex-wrap">
-                  {conditionLabel && badgeColor && (
-                    <span
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${badgeColor}`}
-                    >
-                      {conditionLabel}
+
+                <div className="mt-2.5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+                  <div className="flex items-center gap-2.5">
+                    {conditionLabel ? (
+                      <span className="inline-flex items-center rounded-[2px] border border-luxury-ink/12 bg-cream-50 px-2 py-0.5 text-2xs font-bold uppercase tracking-[0.18em] text-neutral-600">
+                        {conditionLabel}
+                      </span>
+                    ) : null}
+                    <span className={cn(microCaps, "text-neutral-500")}>
+                      Số lượng ×{item.quantity}
                     </span>
-                  )}
-                  <span className="text-xs text-muted-foreground">
-                    Số lượng:{" "}
-                    <span className="font-bold text-foreground">
-                      ×{item.quantity}
-                    </span>
+                  </div>
+
+                  <span className="font-droid-serif tabular-nums text-base text-luxury-ink">
+                    {formatPrice(
+                      (item.price || product?.price || 0) * (item.quantity || 1),
+                    )}
                   </span>
                 </div>
-                <p className="text-base font-bold text-primary mt-1.5">
-                  {formatPrice(item.price || product?.price || 0)}
-                </p>
               </div>
             </div>
           );
         })}
       </div>
-
-      {/* Price summary */}
-      <div className="px-5 pb-5 space-y-1.5">
-        <div className="flex justify-between text-sm text-muted-foreground pt-3 border-t border-border">
-          <span>Tiền hàng</span>
-          <span>{formatPrice(order.productAmount || 0)}</span>
-        </div>
-        <div className="flex justify-between text-sm text-muted-foreground">
-          <span>Phí vận chuyển</span>
-          <span>{formatPrice(order.shippingFee || 0)}</span>
-        </div>
-        {(order.codFee ?? 0) > 0 && (
-          <div className="flex justify-between text-sm text-muted-foreground">
-            <span>Phí COD</span>
-            <span>{formatPrice(order.codFee!)}</span>
-          </div>
-        )}
-        <div className="flex justify-between items-center pt-2 mt-1 border-t border-border">
-          <span className="text-sm font-bold text-foreground">Tổng cộng</span>
-          <span className="text-lg font-bold text-primary">
-            {formatPrice(order.totalAmount)}
-          </span>
-        </div>
-      </div>
-    </div>
+    </Panel>
   );
 }

@@ -21,7 +21,7 @@ export function SellFormHeader({
             {isEditMode ? "Chỉnh sửa tin đăng" : "Tin đăng mới"}
           </p>
         </div>
-        <h1 style={{ fontFamily: "var(--font-droid-serif), serif", fontWeight: 400 }} className="mt-3 text-[clamp(1.5rem,3vw,2rem)] tracking-tight text-luxury-ink">
+        <h1 style={{ fontWeight: 400 }} className="font-droid-serif mt-3 text-[clamp(1.5rem,3vw,2rem)] tracking-tight text-luxury-ink">
           {isEditMode ? "Cập nhật sản phẩm" : "Đăng sản phẩm"}
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-neutral-600">

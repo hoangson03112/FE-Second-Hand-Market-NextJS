@@ -41,11 +41,10 @@ export default function LuxuryCtaSection() {
             </p>
             <h2
               style={{
-                fontFamily: "var(--font-droid-serif), serif",
                 fontWeight: 400,
                 lineHeight: 1.08,
               }}
-              className="mt-5 text-[clamp(2rem,4.5vw,3.25rem)] text-luxury-ivory"
+              className="font-droid-serif mt-5 text-[clamp(2rem,4.5vw,3.25rem)] text-luxury-ivory"
             >
               Mua bán second-hand
               <span className="block text-taupe-200">

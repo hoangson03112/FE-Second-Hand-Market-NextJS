@@ -32,8 +32,7 @@ export function PaymentProofUpload({
     <section className="rounded-[2px] border border-luxury-ink/10 bg-white px-5 py-6 sm:px-6">
       <Eyebrow>Bước cuối</Eyebrow>
       <h2
-        style={{ fontFamily: "var(--font-droid-serif), serif" }}
-        className="mt-3 text-lg tracking-tight text-luxury-ink"
+        className="font-droid-serif mt-3 text-lg tracking-tight text-luxury-ink"
       >
         Gửi biên lai chuyển khoản
       </h2>

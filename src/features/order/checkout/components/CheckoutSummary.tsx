@@ -23,8 +23,6 @@ const PAYMENT_LABEL: Record<
   bank_transfer: { label: "Chuyển khoản", icon: IconBuilding },
 };
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 function Row({
   label,
   value,
@@ -39,9 +37,9 @@ function Row({
       <span className="text-xs font-bold uppercase tracking-[0.15em] text-charcoal-800">
         {label}
       </span>
-      <span
-        style={serif}
+      <span
         className={cn(
+"font-droid-serif",
           "tabular-nums text-sm",
           tone === "blush" ? "text-blush-700" : "text-luxury-ink",
         )}
@@ -68,9 +66,8 @@ export default function CheckoutSummary({
     <section className="overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white">
       <header className="border-b border-luxury-ink/10 px-5 py-5 sm:px-6">
         <Eyebrow>Tổng quan</Eyebrow>
-        <h2
-          style={serif}
-          className="mt-3 text-xl tracking-tight text-luxury-ink"
+        <h2
+          className="font-droid-serif mt-3 text-xl tracking-tight text-luxury-ink"
         >
           Tổng đơn hàng
         </h2>
@@ -141,9 +138,8 @@ export default function CheckoutSummary({
       {/* Ink cap — the same dark panel treatment as the homepage CTA */}
       <InkSurface className="px-5 py-6 sm:px-6">
         <Eyebrow tone="dark">Tổng cộng</Eyebrow>
-        <p
-          style={serif}
-          className="mt-3 tabular-nums text-[clamp(1.5rem,2.4vw,2rem)] leading-none text-luxury-ivory"
+        <p
+          className="font-droid-serif mt-3 tabular-nums text-[clamp(1.5rem,2.4vw,2rem)] leading-none text-luxury-ivory"
         >
           {formatPrice(total)}
         </p>

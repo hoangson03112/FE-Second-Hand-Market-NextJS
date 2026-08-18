@@ -103,8 +103,7 @@ export default function CartEmpty() {
                   GỢI Ý NHANH
                 </div>
                 <div
-                  className="mt-2 text-lg text-luxury-ink"
-                  style={{ fontFamily: "var(--font-droid-serif), serif" }}
+                  className="font-droid-serif mt-2 text-lg text-luxury-ink"
                 >
                   Bắt đầu từ danh mục
                 </div>

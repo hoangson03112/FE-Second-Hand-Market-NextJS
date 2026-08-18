@@ -10,15 +10,13 @@ interface OrderPriceSummaryProps {
   isLocalPickup: boolean;
 }
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-baseline justify-between gap-4">
       <span className="text-2xs font-bold uppercase tracking-[0.15em] text-charcoal-800">
         {label}
       </span>
-      <span style={serif} className="tabular-nums text-sm text-luxury-ink">
+      <span className="font-droid-serif tabular-nums text-sm text-luxury-ink">
         {value}
       </span>
     </div>
@@ -51,9 +49,8 @@ export function OrderPriceSummary({
 
       <InkSurface className="px-5 py-6 sm:px-6">
         <Eyebrow tone="dark">Tổng cộng</Eyebrow>
-        <p
-          style={serif}
-          className="mt-3 tabular-nums text-[clamp(1.5rem,2.4vw,2rem)] leading-none text-luxury-ivory"
+        <p
+          className="font-droid-serif mt-3 tabular-nums text-[clamp(1.5rem,2.4vw,2rem)] leading-none text-luxury-ivory"
         >
           {formatPrice(totalAmount)}
         </p>

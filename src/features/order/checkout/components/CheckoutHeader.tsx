@@ -9,8 +9,6 @@ interface CheckoutHeaderProps {
   sellerCount: number;
 }
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 export default function CheckoutHeader({
   onBack,
   isEmpty,
@@ -29,9 +27,8 @@ export default function CheckoutHeader({
           <IconArrowLeft className="h-5 w-5" />
         </button>
 
-        <h1
-          style={serif}
-          className="min-w-0 flex-1 truncate text-xl tracking-tight text-luxury-ink sm:text-2xl"
+        <h1
+          className="font-droid-serif min-w-0 flex-1 truncate text-xl tracking-tight text-luxury-ink sm:text-2xl"
         >
           Xác Nhận Đơn Hàng
         </h1>
@@ -42,9 +39,8 @@ export default function CheckoutHeader({
               <dt className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
                 Sản phẩm
               </dt>
-              <dd
-                style={serif}
-                className="mt-1 text-xl leading-none tabular-nums text-luxury-ink"
+              <dd
+                className="font-droid-serif mt-1 text-xl leading-none tabular-nums text-luxury-ink"
               >
                 {itemCount}
               </dd>
@@ -56,9 +52,8 @@ export default function CheckoutHeader({
               <dt className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
                 Người bán
               </dt>
-              <dd
-                style={serif}
-                className="mt-1 text-xl leading-none tabular-nums text-luxury-ink"
+              <dd
+                className="font-droid-serif mt-1 text-xl leading-none tabular-nums text-luxury-ink"
               >
                 {sellerCount}
               </dd>

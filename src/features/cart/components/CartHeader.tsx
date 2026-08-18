@@ -18,7 +18,7 @@ export default function CartHeader({ onBack }: CartHeaderProps) {
         >
           <IconArrowLeft className="h-5 w-5 text-luxury-ink" />
         </button>
-        <h1 className="text-2xl text-luxury-ink flex-1" style={{ fontFamily: "var(--font-droid-serif), serif" }}>Giỏ Hàng</h1>
+        <h1 className="font-droid-serif text-2xl text-luxury-ink flex-1" >Giỏ Hàng</h1>
       </div>
     </header>
   );

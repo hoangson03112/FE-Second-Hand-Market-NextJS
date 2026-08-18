@@ -28,8 +28,7 @@ export default function AddressList({
           <IconMapPin className="h-6 w-6 text-luxury-ink" />
         </span>
         <h3
-          style={{ fontFamily: "var(--font-droid-serif), serif" }}
-          className="mt-6 text-xl tracking-tight text-luxury-ink"
+          className="font-droid-serif mt-6 text-xl tracking-tight text-luxury-ink"
         >
           Chưa có địa chỉ nào
         </h3>

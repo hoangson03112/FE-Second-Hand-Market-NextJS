@@ -2,20 +2,26 @@
 
 import { Dispatch, SetStateAction } from "react";
 import {
-  IconCheck,
-  IconX,
-  IconTruck,
-  IconMessage,
   IconAlertTriangle,
-  IconCircleCheck,
   IconBan,
-  IconRefresh,
+  IconCheck,
+  IconCircleCheck,
   IconHandStop,
+  IconMessage,
+  IconTruck,
+  IconX,
 } from "@tabler/icons-react";
 import { createPortal } from "react-dom";
-import { CancelOrderReasonDialog } from "@/features/order/components";
+import {
+  CancelOrderReasonDialog,
+  Eyebrow,
+  dangerAction,
+  outlineAction,
+  primaryAction,
+} from "@/features/order/components";
 import { ConfirmWithReasonDialog } from "@/components/ui";
 import { sellerDisplayStatusFromRefund } from "@/constants/orderStatus";
+import { cn } from "@/lib/utils";
 import type { Order } from "@/types/order";
 
 interface SellerActionButtonsProps {
@@ -37,6 +43,64 @@ interface SellerActionButtonsProps {
   onMarkDelivered?: () => void;
   isLocalPickup?: boolean;
   onChatClick?: () => void;
+}
+
+type Tone = "attention" | "info" | "success" | "failed";
+
+const TONE_BORDER: Record<Tone, string> = {
+  attention: "border-luxury-champagne/45",
+  info: "border-luxury-ink/10",
+  success: "border-accent/35",
+  failed: "border-blush-300",
+};
+
+const TONE_GROUND: Record<Tone, string> = {
+  attention: "border-luxury-champagne/45 bg-cream-100/70",
+  info: "border-luxury-ink/10 bg-cream-50/70",
+  success: "border-accent/25 bg-taupe-50",
+  failed: "border-blush-200 bg-blush-50",
+};
+
+/**
+ * One shape for every state the order can be in: a tonal header saying where
+ * things stand, and the actions that state allows underneath. Nine near-identical
+ * card variants used to be spelled out by hand, each drifting a little.
+ */
+function ActionPanel({
+  tone,
+  eyebrow,
+  title,
+  description,
+  children,
+}: {
+  tone: Tone;
+  eyebrow: string;
+  title: string;
+  description?: string;
+  children?: React.ReactNode;
+}) {
+  return (
+    <section
+      className={cn(
+        "overflow-hidden rounded-[2px] border bg-white",
+        TONE_BORDER[tone],
+      )}
+    >
+      <header className={cn("border-b px-5 py-4 sm:px-6", TONE_GROUND[tone])}>
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <p className="mt-2.5 text-sm font-medium text-luxury-ink">{title}</p>
+        {description ? (
+          <p className="mt-1.5 text-xs leading-relaxed text-neutral-600">
+            {description}
+          </p>
+        ) : null}
+      </header>
+
+      {children ? (
+        <div className="flex flex-wrap gap-3 px-5 py-5 sm:px-6">{children}</div>
+      ) : null}
+    </section>
+  );
 }
 
 export function SellerActionButtons({
@@ -68,6 +132,13 @@ export function SellerActionButtons({
     order.refundRequestId?.status,
   );
 
+  const chatButton = onChatClick ? (
+    <button type="button" onClick={onChatClick} className={outlineAction}>
+      <IconMessage className="h-4 w-4" />
+      Nhắn tin người mua
+    </button>
+  ) : null;
+
   /* ── Dialogs always rendered ─────────────────────────────────── */
   const dialogs = (
     <>
@@ -95,39 +166,35 @@ export function SellerActionButtons({
         createPortal(
           <>
             <div
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] animate-in fade-in"
+              className="fixed inset-0 z-[9999] bg-luxury-ink/50 backdrop-blur-sm"
               onClick={() => setApproveOpen(false)}
             />
             <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
               <div
-                className="relative bg-background rounded-2xl shadow-xl w-full max-w-sm border border-border animate-in zoom-in-95 slide-in-from-bottom-4"
+                className="relative w-full max-w-md overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white shadow-[0_24px_64px_color-mix(in_srgb,var(--luxury-ink)_18%,transparent)]"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="flex items-start gap-4 p-6 border-b border-border">
-                  <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center shrink-0">
-                    <IconCircleCheck className="w-5 h-5 text-emerald-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-bold text-foreground">
-                      Chấp thuận hoàn tiền?
-                    </h3>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Đơn hàng #{order._id.slice(-8).toUpperCase()} sẽ chuyển
-                      sang trạng thái &ldquo;Đang hoàn hàng&rdquo;.{" "}
-                      {isLocalPickup
-                        ? "Người mua sẽ trực tiếp trả lại hàng cho bạn."
-                        : "GHN return shipment sẽ được tạo tự động."}
-                    </p>
-                  </div>
+                <div className="border-b border-luxury-ink/10 bg-cream-50/70 px-6 py-5">
+                  <Eyebrow>Hoàn tiền</Eyebrow>
+                  <h3 className="font-droid-serif mt-2.5 text-lg tracking-tight text-luxury-ink">
+                    Chấp thuận hoàn tiền?
+                  </h3>
+                  <p className="mt-2.5 text-xs leading-relaxed text-neutral-600">
+                    Đơn #{order._id.slice(-8).toUpperCase()} sẽ chuyển sang
+                    trạng thái &ldquo;Đang hoàn hàng&rdquo;.{" "}
+                    {isLocalPickup
+                      ? "Người mua sẽ trực tiếp trả lại hàng cho bạn."
+                      : "Vận đơn hoàn GHN sẽ được tạo tự động."}
+                  </p>
                 </div>
-                <div className="flex items-center gap-3 p-4">
+                <div className="flex gap-3 px-6 py-5">
                   <button
                     type="button"
                     onClick={() => setApproveOpen(false)}
                     disabled={updatingStatus}
-                    className="flex-1 px-4 py-2 rounded-lg border border-border text-foreground font-medium hover:bg-muted transition-colors disabled:opacity-50"
+                    className={cn(outlineAction, "flex-1")}
                   >
-                    Hủy
+                    Để sau
                   </button>
                   <button
                     type="button"
@@ -136,9 +203,9 @@ export function SellerActionButtons({
                       onApproveRefund();
                     }}
                     disabled={updatingStatus}
-                    className="flex-1 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium transition-colors disabled:opacity-50"
+                    className={cn(primaryAction, "flex-1")}
                   >
-                    {updatingStatus ? "Đang xử lý..." : "Chấp thuận"}
+                    {updatingStatus ? "Đang xử lý…" : "Chấp thuận"}
                   </button>
                 </div>
               </div>
@@ -154,37 +221,31 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-card rounded-2xl border border-border shadow-sm overflow-hidden">
-          <div className="p-4 bg-amber-50 border-b border-amber-200">
-            <div className="flex items-center gap-2 text-amber-700">
-              <IconAlertTriangle className="w-4 h-4 shrink-0" />
-              <p className="text-sm font-medium">
-                Đơn hàng mới đang chờ xác nhận
-              </p>
-            </div>
-            <p className="text-xs text-amber-600 mt-1 ml-6">
-              Vui lòng xác nhận hoặc hủy đơn trong thời gian sớm nhất.
-            </p>
-          </div>
-          <div className="p-4 flex gap-3">
-            <button
-              onClick={() => setCancelOpen(true)}
-              disabled={updatingStatus}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-destructive/40 text-destructive hover:bg-destructive/5 font-bold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <IconX className="w-4 h-4" />
-              Hủy đơn
-            </button>
-            <button
-              onClick={onConfirm}
-              disabled={updatingStatus}
-              className="flex-[2] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-            >
-              <IconCheck className="w-4 h-4" />
-              {updatingStatus ? "Đang xử lý..." : "Xác nhận đơn"}
-            </button>
-          </div>
-        </div>
+        <ActionPanel
+          tone="attention"
+          eyebrow="Việc cần làm"
+          title="Đơn hàng mới đang chờ bạn xác nhận"
+          description="Xác nhận hoặc hủy đơn trong thời gian sớm nhất để không quá SLA xử lý."
+        >
+          <button
+            type="button"
+            onClick={onConfirm}
+            disabled={updatingStatus}
+            className={cn(primaryAction, "flex-1")}
+          >
+            <IconCheck className="h-4 w-4" />
+            {updatingStatus ? "Đang xử lý…" : "Xác nhận đơn"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setCancelOpen(true)}
+            disabled={updatingStatus}
+            className={dangerAction}
+          >
+            <IconX className="h-4 w-4" />
+            Hủy đơn
+          </button>
+        </ActionPanel>
       </>
     );
   }
@@ -198,72 +259,70 @@ export function SellerActionButtons({
   ) {
     const showMarkDelivered =
       isLocalPickup && status === "confirmed" && !!onMarkDelivered;
+
     return (
       <>
         {dialogs}
-        <div className="bg-card rounded-2xl border border-border shadow-sm p-4 flex flex-col gap-3">
-          {showMarkDelivered && (
-            <>
-              <div className="flex items-center gap-2 p-3 bg-emerald-50 rounded-xl border border-emerald-200">
-                <span className="text-base">🤝</span>
-                <p className="text-xs text-emerald-700">
-                  Sau khi gặp mặt và trao hàng cho người mua, nhấn nút bên dưới
-                  để xác nhận.
-                </p>
-              </div>
-              <button
-                onClick={onMarkDelivered}
-                disabled={updatingStatus}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-bold text-sm transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <IconHandStop className="w-4 h-4" />
-                {updatingStatus ? "Đang xử lý..." : "Xác nhận đã giao hàng"}
-              </button>
-            </>
-          )}
-          {onTrackingClick && (
+        <ActionPanel
+          tone={showMarkDelivered ? "attention" : "info"}
+          eyebrow={showMarkDelivered ? "Việc cần làm" : "Đang xử lý"}
+          title={
+            showMarkDelivered
+              ? "Hẹn gặp người mua để trao hàng"
+              : "Đơn hàng đang trên đường tới người mua"
+          }
+          description={
+            showMarkDelivered
+              ? "Sau khi gặp mặt và trao hàng, nhấn xác nhận đã giao hàng."
+              : "Theo dõi vận đơn để biết đơn đã tới đâu."
+          }
+        >
+          {showMarkDelivered ? (
             <button
-              onClick={onTrackingClick}
-              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-sm transition-colors shadow-sm"
+              type="button"
+              onClick={onMarkDelivered}
+              disabled={updatingStatus}
+              className={cn(primaryAction, "flex-1")}
             >
-              <IconTruck className="w-4 h-4" />
+              <IconHandStop className="h-4 w-4" />
+              {updatingStatus ? "Đang xử lý…" : "Xác nhận đã giao hàng"}
+            </button>
+          ) : null}
+          {onTrackingClick ? (
+            <button
+              type="button"
+              onClick={onTrackingClick}
+              className={showMarkDelivered ? outlineAction : primaryAction}
+            >
+              <IconTruck className="h-4 w-4" />
               Theo dõi vận chuyển
             </button>
-          )}
-          {onChatClick && (
-            <button
-              onClick={onChatClick}
-              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-bold text-sm transition-colors"
-            >
-              <IconMessage className="w-4 h-4" />
-              Nhắn tin người mua
-            </button>
-          )}
-        </div>
+          ) : null}
+          {chatButton}
+        </ActionPanel>
       </>
     );
   }
 
   /* ── refund_requested ────────────────────────────────────────── */
   if (status === "refund_requested") {
-    // Seller already rejected — show info banner
+    // Seller already rejected — nothing left to act on.
     if (order.refundRequestId?.status === "rejected") {
       return (
         <>
           {dialogs}
-          <div className="bg-rose-50 rounded-2xl border border-rose-200 shadow-sm p-4 flex items-center gap-3">
-            <IconX className="w-5 h-5 text-rose-500 shrink-0" />
-            <div>
-              <p className="text-sm font-medium text-rose-700">
-                Đã từ chối yêu cầu hoàn tiền
-              </p>
-              {order.refundRequestId.sellerResponse?.comment && (
-                <p className="text-xs text-rose-600 mt-0.5">
-                  Lý do: {order.refundRequestId.sellerResponse.comment}
-                </p>
-              )}
-            </div>
-          </div>
+          <ActionPanel
+            tone="failed"
+            eyebrow="Hoàn tiền"
+            title="Bạn đã từ chối yêu cầu hoàn tiền"
+            description={
+              order.refundRequestId.sellerResponse?.comment
+                ? `Lý do: ${order.refundRequestId.sellerResponse.comment}`
+                : "Người mua có thể khiếu nại lên admin. Theo dõi thông báo nếu có tranh chấp."
+            }
+          >
+            {chatButton}
+          </ActionPanel>
         </>
       );
     }
@@ -271,37 +330,31 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-card rounded-2xl border border-orange-200 shadow-sm overflow-hidden">
-          <div className="p-4 bg-orange-50 border-b border-orange-200">
-            <div className="flex items-center gap-2 text-orange-700">
-              <IconRefresh className="w-4 h-4 shrink-0" />
-              <p className="text-sm font-medium">
-                Người mua đã yêu cầu hoàn tiền
-              </p>
-            </div>
-            <p className="text-xs text-orange-600 mt-1 ml-6">
-              Xem yêu cầu bên dưới và chọn hành động phù hợp.
-            </p>
-          </div>
-          <div className="p-4 flex gap-3">
-            <button
-              onClick={() => setRejectOpen(true)}
-              disabled={updatingStatus}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-destructive/40 text-destructive hover:bg-destructive/5 font-bold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <IconX className="w-4 h-4" />
-              Từ chối
-            </button>
-            <button
-              onClick={() => setApproveOpen(true)}
-              disabled={updatingStatus}
-              className="flex-[2] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-bold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-            >
-              <IconCircleCheck className="w-4 h-4" />
-              {updatingStatus ? "Đang xử lý..." : "Chấp thuận hoàn tiền"}
-            </button>
-          </div>
-        </div>
+        <ActionPanel
+          tone="attention"
+          eyebrow="Việc cần làm"
+          title="Người mua đã yêu cầu hoàn tiền"
+          description="Xem bằng chứng ở phần yêu cầu hoàn tiền, rồi chọn chấp thuận hoặc từ chối."
+        >
+          <button
+            type="button"
+            onClick={() => setApproveOpen(true)}
+            disabled={updatingStatus}
+            className={cn(primaryAction, "flex-1")}
+          >
+            <IconCircleCheck className="h-4 w-4" />
+            {updatingStatus ? "Đang xử lý…" : "Chấp thuận hoàn tiền"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setRejectOpen(true)}
+            disabled={updatingStatus}
+            className={dangerAction}
+          >
+            <IconX className="h-4 w-4" />
+            Từ chối
+          </button>
+        </ActionPanel>
       </>
     );
   }
@@ -311,23 +364,14 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-card rounded-2xl border border-border shadow-sm p-4">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <IconTruck className="w-4 h-4 shrink-0" />
-            <p className="text-sm">
-              Đơn hàng đã giao tới người mua. Đang chờ xác nhận hoàn thành.
-            </p>
-          </div>
-          {onChatClick && (
-            <button
-              onClick={onChatClick}
-              className="flex items-center justify-center gap-2 w-full mt-3 px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-bold text-sm transition-colors"
-            >
-              <IconMessage className="w-4 h-4" />
-              Nhắn tin người mua
-            </button>
-          )}
-        </div>
+        <ActionPanel
+          tone="info"
+          eyebrow="Đang chờ"
+          title="Đã giao tới người mua"
+          description="Đang chờ người mua xác nhận hoàn thành đơn hàng."
+        >
+          {chatButton}
+        </ActionPanel>
       </>
     );
   }
@@ -337,12 +381,12 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-emerald-50 rounded-2xl border border-emerald-200 shadow-sm p-4 flex items-center gap-3">
-          <IconCircleCheck className="w-5 h-5 text-emerald-600 shrink-0" />
-          <p className="text-sm font-medium text-emerald-700">
-            Đơn hàng đã hoàn thành thành công.
-          </p>
-        </div>
+        <ActionPanel
+          tone="success"
+          eyebrow="Hoàn tất"
+          title="Đơn hàng đã hoàn thành"
+          description="Doanh thu của đơn này sẽ vào kỳ đối soát gần nhất."
+        />
       </>
     );
   }
@@ -352,17 +396,17 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-rose-50 rounded-2xl border border-rose-200 shadow-sm p-4 flex items-center gap-3">
-          <IconBan className="w-5 h-5 text-rose-500 shrink-0" />
+        <div className="flex gap-4 rounded-[2px] border border-blush-300 bg-blush-50 px-5 py-4 sm:px-6">
+          <IconBan className="mt-0.5 h-4 w-4 shrink-0 text-blush-600" />
           <div>
-            <p className="text-sm font-medium text-rose-700">
+            <p className="text-sm font-medium text-blush-800">
               Đơn hàng đã bị hủy
             </p>
-            {order.cancelReason && (
-              <p className="text-xs text-rose-600 mt-0.5">
+            {order.cancelReason ? (
+              <p className="mt-1.5 text-xs leading-relaxed text-blush-800/80">
                 Lý do: {order.cancelReason}
               </p>
-            )}
+            ) : null}
           </div>
         </div>
       </>
@@ -374,53 +418,43 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-card rounded-2xl border border-blue-200 shadow-sm overflow-hidden">
-          <div className="p-4 bg-blue-50 border-b border-blue-200">
-            <div className="flex items-center gap-2 text-blue-700">
-              <IconRefresh className="w-4 h-4 shrink-0" />
-              <p className="text-sm font-medium">
-                {isLocalPickup
-                  ? "Người mua đang chuẩn bị trả hàng"
-                  : "Người mua đang gửi hàng hoàn"}
-              </p>
-            </div>
-            <p className="text-xs text-blue-600 mt-1 ml-6">
-              {isLocalPickup
-                ? "Liên hệ người mua để thống nhất thời gian nhận lại hàng trực tiếp."
-                : "Theo dõi vận đơn hoàn để biết khi hàng đến nơi, rồi xác nhận nhận hàng."}
-            </p>
-          </div>
-          <div className="p-4 flex flex-col gap-3">
-            {!isLocalPickup && onReturnTrackingClick && (
-              <button
-                onClick={onReturnTrackingClick}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-blue-600 text-white hover:bg-blue-700 font-bold text-sm transition-colors shadow-sm"
-              >
-                <IconTruck className="w-4 h-4" />
-                Xem vận đơn hoàn
-              </button>
-            )}
-            {onConfirmReturnReceived && (
-              <button
-                onClick={onConfirmReturnReceived}
-                disabled={updatingStatus}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-bold text-sm transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <IconCircleCheck className="w-4 h-4" />
-                {updatingStatus ? "Đang xử lý..." : "Xác nhận đã nhận lại hàng"}
-              </button>
-            )}
-            {onChatClick && (
-              <button
-                onClick={onChatClick}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-bold text-sm transition-colors"
-              >
-                <IconMessage className="w-4 h-4" />
-                Nhắn tin người mua
-              </button>
-            )}
-          </div>
-        </div>
+        <ActionPanel
+          tone="attention"
+          eyebrow="Việc cần làm"
+          title={
+            isLocalPickup
+              ? "Người mua đang chuẩn bị trả hàng"
+              : "Người mua đang gửi hàng hoàn"
+          }
+          description={
+            isLocalPickup
+              ? "Liên hệ người mua để thống nhất thời gian nhận lại hàng trực tiếp."
+              : "Theo dõi vận đơn hoàn để biết khi hàng đến nơi, rồi xác nhận đã nhận lại."
+          }
+        >
+          {onConfirmReturnReceived ? (
+            <button
+              type="button"
+              onClick={onConfirmReturnReceived}
+              disabled={updatingStatus}
+              className={cn(primaryAction, "flex-1")}
+            >
+              <IconCircleCheck className="h-4 w-4" />
+              {updatingStatus ? "Đang xử lý…" : "Xác nhận đã nhận lại hàng"}
+            </button>
+          ) : null}
+          {!isLocalPickup && onReturnTrackingClick ? (
+            <button
+              type="button"
+              onClick={onReturnTrackingClick}
+              className={outlineAction}
+            >
+              <IconTruck className="h-4 w-4" />
+              Xem vận đơn hoàn
+            </button>
+          ) : null}
+          {chatButton}
+        </ActionPanel>
       </>
     );
   }
@@ -430,30 +464,14 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-card rounded-2xl border border-emerald-200 shadow-sm overflow-hidden">
-          <div className="p-4 bg-emerald-50 border-b border-emerald-200">
-            <div className="flex items-center gap-2 text-emerald-700">
-              <IconCircleCheck className="w-4 h-4 shrink-0" />
-              <p className="text-sm font-medium">
-                Đã nhận hàng hoàn — chờ admin xử lý hoàn tiền
-              </p>
-            </div>
-            <p className="text-xs text-emerald-600 mt-1 ml-6">
-              Admin sẽ xử lý hoàn tiền cho người mua trong thời gian sớm nhất.
-            </p>
-          </div>
-          {onChatClick && (
-            <div className="p-4">
-              <button
-                onClick={onChatClick}
-                className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl border border-border hover:bg-muted/50 font-bold text-sm transition-colors"
-              >
-                <IconMessage className="w-4 h-4" />
-                Nhắn tin người mua
-              </button>
-            </div>
-          )}
-        </div>
+        <ActionPanel
+          tone="success"
+          eyebrow="Đang chờ"
+          title="Đã nhận hàng hoàn — chờ xử lý hoàn tiền"
+          description="Người mua sẽ gửi số tài khoản để hoàn tiền. Theo dõi thông báo để hoàn tất."
+        >
+          {chatButton}
+        </ActionPanel>
       </>
     );
   }
@@ -463,18 +481,36 @@ export function SellerActionButtons({
     return (
       <>
         {dialogs}
-        <div className="bg-blue-50 rounded-2xl border border-blue-200 shadow-sm p-4 flex items-center gap-3">
-          <IconRefresh className="w-5 h-5 text-blue-500 shrink-0" />
-          <p className="text-sm font-medium text-blue-700">
-            {status === "refunded"
-              ? "Đơn hàng đã được hoàn tiền."
-              : "Yêu cầu hoàn tiền đã được chấp thuận."}
-          </p>
-        </div>
+        <ActionPanel
+          tone={status === "refunded" ? "success" : "info"}
+          eyebrow="Hoàn tiền"
+          title={
+            status === "refunded"
+              ? "Đơn hàng đã được hoàn tiền"
+              : "Yêu cầu hoàn tiền đã được chấp thuận"
+          }
+          description={
+            status === "refunded"
+              ? undefined
+              : "Chờ người mua gửi hàng hoàn về theo vận đơn."
+          }
+        >
+          {chatButton}
+        </ActionPanel>
       </>
     );
   }
 
   /* ── fallback ────────────────────────────────────────────────── */
-  return <>{dialogs}</>;
+  return (
+    <>
+      {dialogs}
+      <div className="flex gap-4 rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 px-5 py-4 sm:px-6">
+        <IconAlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-luxury-ink/40" />
+        <p className="text-xs leading-relaxed text-neutral-600">
+          Đơn hàng hiện không có thao tác nhanh nào.
+        </p>
+      </div>
+    </>
+  );
 }

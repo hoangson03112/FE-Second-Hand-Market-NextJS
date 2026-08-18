@@ -1,8 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Eyebrow } from "./Eyebrow";
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 interface PanelProps {
   eyebrow?: string;
   title?: React.ReactNode;
@@ -52,9 +50,9 @@ export function Panel({
           <div className="min-w-0">
             {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
             {title ? (
-              <h2
-                style={serif}
+              <h2
                 className={cn(
+"font-droid-serif",
                   "text-lg tracking-tight text-luxury-ink",
                   eyebrow && "mt-3",
                 )}

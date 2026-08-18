@@ -41,8 +41,7 @@ export default function OrderDetail({
           />
         </span>
         <h1
-          style={{ fontFamily: "var(--font-droid-serif), serif" }}
-          className="text-xl tracking-tight text-luxury-ink"
+          className="font-droid-serif text-xl tracking-tight text-luxury-ink"
         >
           Không tìm thấy đơn hàng
         </h1>
