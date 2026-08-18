@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Container } from "@/components/layout/Container";
 import { cn } from "@/lib/utils";
-import { ORDER_TABS } from "@/constants/orderStatus";
+import { BUYER_ORDER_TABS } from "@/constants/orderStatus";
 import { useOrders, PAGE_SIZE } from "./hooks/useOrders";
 import { OrdersHeader } from "./components/OrdersHeader";
 import { OrdersTabs } from "./components/OrdersTabs";
 import { OrdersEmpty } from "./components/OrdersEmpty";
+import { OrdersSearch } from "./components/OrdersSearch";
 import { OrderCard } from "./components/OrderCard";
+import { microCaps } from "@/features/order/components";
 import { CancelOrderReasonDialog } from "@/features/order/components";
 import { RefundModal } from "@/features/order/components";
 import { Pagination } from "@/components/ui";
@@ -58,6 +60,9 @@ export default function Orders() {
     isLoading,
     activeTab,
     setActiveTab,
+    tabCounts,
+    searchQuery,
+    setSearchQuery,
     cancellingId,
     cancelTargetOrder,
     openCancelDialog,
@@ -114,23 +119,34 @@ export default function Orders() {
 
   return (
     <>
-      <div className="min-h-screen bg-luxury-ivory">
-        {/* Header and tabs travel together, so they share one sticky block
-            instead of each carrying its own hard-coded offset. */}
+      <div className="min-h-screen">
+        <OrdersHeader
+          onBack={() => router.back()}
+          totalCount={orders.length}
+          actionCount={tabCounts.action ?? 0}
+        />
+
+        {/* The tab strip is the one control that must stay reachable while the
+            list scrolls, so it sticks on its own rather than dragging the
+            editorial header along with it. */}
         <div className="sticky top-0 z-20 border-b border-luxury-ink/10 bg-luxury-ivory/95 backdrop-blur-md">
-          <OrdersHeader
-            onBack={() => router.back()}
-            totalCount={orders.length}
-          />
           <OrdersTabs
-            tabs={ORDER_TABS}
-            orders={orders}
+            tabs={BUYER_ORDER_TABS}
+            counts={tabCounts}
             activeTab={activeTab}
             onChange={setActiveTab}
           />
         </div>
 
         <Container maxWidth="9xl" paddingX="md" paddingY="lg">
+          {orders.length > 0 ? (
+            <OrdersSearch
+              value={searchQuery}
+              onChange={setSearchQuery}
+              resultCount={filteredOrders.length}
+            />
+          ) : null}
+
           {isLoading ? (
             <div className="flex flex-col items-center gap-5 py-24">
               <span className="h-4 w-4 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
@@ -140,15 +156,19 @@ export default function Orders() {
             </div>
           ) : filteredOrders.length === 0 ? (
             <div className={revealClass}>
-              <OrdersEmpty activeTab={activeTab} tabs={ORDER_TABS} />
+              <OrdersEmpty
+                activeTab={activeTab}
+                tabs={BUYER_ORDER_TABS}
+                searchQuery={searchQuery}
+              />
             </div>
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-5">
               {paginatedOrders.map((order, index) => (
                 <div
                   key={order._id}
                   className={revealClass}
-                  style={{ transitionDelay: `${index * 80}ms` }}
+                  style={{ transitionDelay: `${Math.min(index, 6) * 60}ms` }}
                 >
                   <OrderCard
                     order={order}
@@ -163,7 +183,7 @@ export default function Orders() {
 
               {/* Pagination footer */}
               <div className="flex flex-col items-center gap-6 border-t border-luxury-ink/6 pt-8">
-                <p className="text-[10px] font-bold uppercase tracking-[0.22em] tabular-nums text-neutral-500">
+                <p className={cn(microCaps, "tabular-nums text-neutral-500")}>
                   Hiển thị{" "}
                   <span className="text-luxury-ink">
                     {(currentPage - 1) * PAGE_SIZE + 1}–
@@ -178,6 +198,7 @@ export default function Orders() {
 
                 {totalPages > 1 ? (
                   <Pagination
+                    variant="luxury"
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={setCurrentPage}

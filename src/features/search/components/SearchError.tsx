@@ -14,10 +14,9 @@ export default function SearchError() {
 
       <h3
         style={{
-          fontFamily: "var(--font-droid-serif), serif",
           fontWeight: 400,
         }}
-        className="mt-6 text-xl text-luxury-ink"
+        className="font-droid-serif mt-6 text-xl text-luxury-ink"
       >
         Có lỗi xảy ra
       </h3>

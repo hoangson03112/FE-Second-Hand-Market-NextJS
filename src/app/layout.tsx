@@ -114,13 +114,14 @@ export default async function RootLayout({
           <ToastProvider>
             <RealtimeNotificationToast />
             <BannedOverlay />
-            <Analytics />
-            <SpeedInsights />
+
             <ConfirmDialogProvider>
               <SiteLayout>{children}</SiteLayout>
             </ConfirmDialogProvider>
           </ToastProvider>
         </Providers>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

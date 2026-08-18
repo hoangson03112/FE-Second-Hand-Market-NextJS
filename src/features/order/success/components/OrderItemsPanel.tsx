@@ -9,8 +9,6 @@ interface OrderItemsPanelProps {
   order: Order;
 }
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 function resolveImage(product: Order["products"][number]["productId"]) {
   const avatar =
     typeof product?.avatar === "string" ? product.avatar : product?.avatar?.url;
@@ -27,9 +25,8 @@ export default function OrderItemsPanel({ order }: OrderItemsPanelProps) {
       <header className="flex flex-wrap items-end justify-between gap-4 border-b border-luxury-ink/10 px-5 py-5 sm:px-6">
         <div>
           <Eyebrow>Đã đặt</Eyebrow>
-          <h2
-            style={serif}
-            className="mt-3 text-lg tracking-tight text-luxury-ink"
+          <h2
+            className="font-droid-serif mt-3 text-lg tracking-tight text-luxury-ink"
           >
             Sản phẩm trong đơn
           </h2>
@@ -62,9 +59,8 @@ export default function OrderItemsPanel({ order }: OrderItemsPanelProps) {
                   <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
                     Số lượng ×{item.quantity}
                   </span>
-                  <span
-                    style={serif}
-                    className="tabular-nums text-base text-luxury-ink"
+                  <span
+                    className="font-droid-serif tabular-nums text-base text-luxury-ink"
                   >
                     {formatPrice(item.price ?? product?.price ?? 0)}
                   </span>

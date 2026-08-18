@@ -1,16 +1,11 @@
-import {
-  IconPackage,
-  IconCalendar,
-  IconAlertCircle,
-  IconTag,
-} from "@tabler/icons-react";
+import { IconAlertTriangle, IconSparkles } from "@tabler/icons-react";
 import Image from "next/image";
+import { microCaps } from "@/features/order/components";
+import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format";
-import { PRODUCT_STATUS_CONFIG } from "@/constants";
 import type { MyListingProduct } from "@/types/myProducts";
-import type { ProductStatusFilter } from "@/types/product";
-import { ProductStatusBadge } from "./ProductStatusBadge";
+import { ProductStatusChip } from "./ProductStatusChip";
 import { ProductDiscountList } from "./ProductDiscountList";
 import { ProductCardActions } from "./ProductCardActions";
 
@@ -25,6 +20,77 @@ interface ProductCardProps {
   viewMode?: "list" | "grid";
 }
 
+const SHEET =
+  "group relative overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white transition-all duration-500 hover:border-luxury-ink/25 hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--luxury-ink)_6%,transparent)]";
+
+/** Photo on a cream ground, contained rather than cropped — as on the storefront. */
+function Thumbnail({
+  product,
+  className,
+  sizes,
+}: {
+  product: MyListingProduct;
+  className?: string;
+  sizes: string;
+}) {
+  const imageUrl = product.avatar?.url;
+
+  return (
+    <div className={cn("relative overflow-hidden bg-cream-100", className)}>
+      {imageUrl ? (
+        <>
+          <Image
+            src={imageUrl}
+            alt=""
+            fill
+            aria-hidden
+            className="scale-125 object-cover opacity-30 blur-lg"
+            sizes={sizes}
+          />
+          <div className="absolute inset-0 p-2">
+            <div className="relative h-full w-full">
+              <Image
+                src={imageUrl}
+                alt={product.name}
+                fill
+                sizes={sizes}
+                className="object-contain transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="flex h-full items-center justify-center text-neutral-400">
+          <IconSparkles className="h-7 w-7 opacity-40" />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Why the moderator turned the listing down — blush ramp, never raw red. */
+function RejectionNote({
+  reason,
+  lines,
+}: {
+  reason: string;
+  lines: "one" | "two";
+}) {
+  return (
+    <div className="flex gap-2.5 rounded-[2px] border border-blush-300 bg-blush-50 px-3 py-2.5">
+      <IconAlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-blush-600" />
+      <p
+        className={cn(
+          "text-xs leading-relaxed text-blush-800",
+          lines === "one" ? "line-clamp-1" : "line-clamp-2",
+        )}
+      >
+        {reason}
+      </p>
+    </div>
+  );
+}
+
 export function ProductCard({
   product,
   onDelete,
@@ -36,9 +102,6 @@ export function ProductCard({
   viewMode = "list",
 }: ProductCardProps) {
   const discounts = product.personalDiscounts ?? [];
-  const statusCfg =
-    PRODUCT_STATUS_CONFIG[product.status as ProductStatusFilter] ??
-    PRODUCT_STATUS_CONFIG.pending;
 
   const isVisibleOnSite =
     product.status === "approved" ||
@@ -55,6 +118,11 @@ export function ProductCard({
     product.status === "rejected" &&
     !product.aiModerationResult?.humanReviewRequested;
 
+  const rejectionReason =
+    product.status === "rejected"
+      ? product.aiModerationResult?.rejectionReason
+      : null;
+
   const actionProps = {
     product,
     canEdit,
@@ -68,146 +136,117 @@ export function ProductCard({
 
   if (viewMode === "grid") {
     return (
-      <div className="group relative rounded-2xl bg-gradient-to-br from-cream-50 to-white border-2 border-border hover:border-primary/40 overflow-hidden transition-all duration-200 hover:shadow-md">
-        <div className="relative w-full aspect-square bg-taupe-100 overflow-hidden">
-          {product.avatar?.url ? (
-            <Image
-              src={product.avatar.url}
-              alt={product.name}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <IconPackage className="w-12 h-12 text-taupe-300" />
-            </div>
-          )}
-
-          <div className="absolute top-2 right-2">
-            <ProductStatusBadge statusCfg={statusCfg} variant="grid" />
-          </div>
+      <article className={cn(SHEET, "flex flex-col")}>
+        <div className="relative">
+          <Thumbnail
+            product={product}
+            className="aspect-square w-full"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          />
+          <ProductStatusChip
+            status={product.status}
+            className="absolute left-2.5 top-2.5 z-10"
+          />
         </div>
 
-        <div className="p-3.5">
-          <h3 className="font-medium text-taupe-900 line-clamp-2 text-sm mb-2 leading-snug">
+        <div className="flex flex-1 flex-col gap-3 p-4">
+          {product.categoryId?.name ? (
+            <p className={cn(microCaps, "truncate text-neutral-500")}>
+              {product.categoryId.name}
+            </p>
+          ) : null}
+
+          <h3 className="line-clamp-2 text-sm font-medium leading-relaxed text-luxury-ink">
             {product.name}
           </h3>
 
-          {product.categoryId?.name && (
-            <div className="flex items-center gap-1 text-xs text-taupe-500 mb-3">
-              <IconTag className="w-3 h-3" />
-              <span className="line-clamp-1">{product.categoryId.name}</span>
-            </div>
-          )}
+          {rejectionReason ? (
+            <RejectionNote reason={rejectionReason} lines="two" />
+          ) : null}
 
-          {product.status === "rejected" &&
-            product.aiModerationResult?.rejectionReason && (
-              <div className="p-2 rounded-lg bg-red-50 border border-red-200 mb-3">
-                <div className="flex items-start gap-1.5">
-                  <IconAlertCircle className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
-                  <p className="text-xs text-red-600/90 line-clamp-2">
-                    {product.aiModerationResult.rejectionReason}
-                  </p>
-                </div>
-              </div>
-            )}
-
-          <div className="flex items-center justify-between mb-3 pt-2 border-t-2 border-border">
-            <span className="text-lg font-bold text-primary tabular-nums">
+          <div className="mt-auto flex items-baseline justify-between gap-3 border-t border-luxury-ink/8 pt-3">
+            <span
+              className="font-droid-serif tabular-nums text-lg text-luxury-ink"
+            >
               {formatPrice(product.price)}
             </span>
-            {product.createdAt && (
-              <span className="text-xs text-taupe-400">
+            {product.createdAt ? (
+              <span className="shrink-0 text-2xs tabular-nums text-neutral-500">
                 {format(product.createdAt)}
               </span>
-            )}
+            ) : null}
           </div>
 
-          <ProductDiscountList
-            discounts={discounts}
-            onDelete={onDeleteDiscount}
-            isDeletingId={isDeletingDiscount}
-            variant="grid"
-          />
+          {discounts.length > 0 ? (
+            <ProductDiscountList
+              discounts={discounts}
+              onDelete={onDeleteDiscount}
+              isDeletingId={isDeletingDiscount}
+              variant="grid"
+            />
+          ) : null}
 
           <ProductCardActions {...actionProps} variant="grid" />
         </div>
-      </div>
+      </article>
     );
   }
 
   return (
-    <div className="group relative rounded-2xl bg-gradient-to-br from-cream-50 to-white border-2 border-border hover:border-primary/40 overflow-hidden transition-all duration-200 hover:shadow-md">
-      <div className="flex items-center gap-4 p-4">
-        <div className="relative w-20 h-20 rounded-xl bg-taupe-100 shrink-0 overflow-hidden">
-          {product.avatar?.url ? (
-            <Image
-              src={product.avatar.url}
-              alt={product.name}
-              fill
-              className="object-cover"
-              sizes="80px"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <IconPackage className="w-8 h-8 text-taupe-300" />
-            </div>
-          )}
-        </div>
+    <article className={SHEET}>
+      <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-start sm:gap-5 sm:p-5">
+        <Thumbnail
+          product={product}
+          className="h-24 w-24 shrink-0 rounded-[2px] border border-luxury-ink/10"
+          sizes="96px"
+        />
 
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-4 mb-2">
-            <div className="flex-1 min-w-0">
-              <h3 className="font-bold text-taupe-900 text-base line-clamp-1 mb-1">
+        <div className="min-w-0 flex-1 space-y-3">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <h3 className="line-clamp-1 text-sm font-medium leading-relaxed text-luxury-ink sm:text-base">
                 {product.name}
               </h3>
-              <div className="flex items-center gap-3 text-xs text-taupe-500">
-                {product.categoryId?.name && (
-                  <span className="flex items-center gap-1">
-                    <IconTag className="w-3 h-3" />
+              <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1">
+                {product.categoryId?.name ? (
+                  <span className={cn(microCaps, "text-neutral-500")}>
                     {product.categoryId.name}
                   </span>
-                )}
-                {product.createdAt && (
-                  <span className="flex items-center gap-1">
-                    <IconCalendar className="w-3 h-3" />
+                ) : null}
+                {product.createdAt ? (
+                  <span className="text-2xs tabular-nums text-neutral-500">
                     {format(product.createdAt)}
                   </span>
-                )}
+                ) : null}
               </div>
             </div>
 
-            <ProductStatusBadge statusCfg={statusCfg} variant="list" />
+            <ProductStatusChip status={product.status} />
           </div>
 
-          {product.status === "rejected" &&
-            product.aiModerationResult?.rejectionReason && (
-              <div className="p-2 rounded-lg bg-red-50 border border-red-200 mb-2">
-                <div className="flex items-start gap-1.5">
-                  <IconAlertCircle className="w-3.5 h-3.5 text-red-500 shrink-0 mt-0.5" />
-                  <p className="text-xs text-red-600/90 line-clamp-1">
-                    {product.aiModerationResult.rejectionReason}
-                  </p>
-                </div>
-              </div>
-            )}
+          {rejectionReason ? (
+            <RejectionNote reason={rejectionReason} lines="one" />
+          ) : null}
 
-          <ProductDiscountList
-            discounts={discounts}
-            onDelete={onDeleteDiscount}
-            isDeletingId={isDeletingDiscount}
-            variant="list"
-          />
+          {discounts.length > 0 ? (
+            <ProductDiscountList
+              discounts={discounts}
+              onDelete={onDeleteDiscount}
+              isDeletingId={isDeletingDiscount}
+              variant="list"
+            />
+          ) : null}
 
-          <div className="flex items-center justify-between">
-            <span className="text-xl font-bold text-primary tabular-nums">
+          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-luxury-ink/8 pt-3">
+            <span
+              className="font-droid-serif tabular-nums text-xl text-luxury-ink"
+            >
               {formatPrice(product.price)}
             </span>
             <ProductCardActions {...actionProps} variant="list" />
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 }

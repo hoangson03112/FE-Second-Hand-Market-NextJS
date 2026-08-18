@@ -18,8 +18,7 @@ export function PaymentOrderSummary({ totalAmount }: PaymentOrderSummaryProps) {
             Tổng tiền hàng
           </span>
           <span
-            style={{ fontFamily: "var(--font-droid-serif), serif" }}
-            className="tabular-nums text-sm text-luxury-ink"
+            className="font-droid-serif tabular-nums text-sm text-luxury-ink"
           >
             {formatPrice(totalAmount)}
           </span>
@@ -31,8 +30,7 @@ export function PaymentOrderSummary({ totalAmount }: PaymentOrderSummaryProps) {
           Tổng thanh toán
         </span>
         <span
-          style={{ fontFamily: "var(--font-droid-serif), serif" }}
-          className="tabular-nums text-2xl leading-none text-luxury-ink"
+          className="font-droid-serif tabular-nums text-2xl leading-none text-luxury-ink"
         >
           {formatPrice(totalAmount)}
         </span>

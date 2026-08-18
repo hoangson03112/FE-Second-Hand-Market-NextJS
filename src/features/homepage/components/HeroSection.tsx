@@ -368,9 +368,8 @@ export default function HeroSection() {
         </motion.div>
 
         <h1
-          className="mb-8 text-luxury-ink"
+          className="font-droid-serif mb-8 text-luxury-ink"
           style={{
-            fontFamily: "var(--font-droid-serif), serif",
             fontSize: "clamp(3rem, 7.5vw, 5.5rem)",
             fontWeight: 300,
             lineHeight: 1.05,

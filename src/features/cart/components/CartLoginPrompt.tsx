@@ -10,8 +10,7 @@ export default function CartLoginPrompt() {
         <IconLogin className="w-10 h-10 text-luxury-ink" />
       </div>
       <h3
-        className="text-2xl text-luxury-ink mb-3"
-        style={{ fontFamily: "var(--font-droid-serif), serif" }}
+        className="font-droid-serif text-2xl text-luxury-ink mb-3"
       >
         Đăng nhập để xem giỏ hàng
       </h3>

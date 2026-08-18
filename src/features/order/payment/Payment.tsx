@@ -75,8 +75,7 @@ export default function Payment() {
       >
         <div className="w-full max-w-md rounded-[2px] border border-dashed border-luxury-ink/15 bg-white px-8 py-14 text-center">
           <h1
-            style={{ fontFamily: "var(--font-droid-serif), serif" }}
-            className="text-xl tracking-tight text-luxury-ink"
+            className="font-droid-serif text-xl tracking-tight text-luxury-ink"
           >
             Không tải được đơn hàng
           </h1>

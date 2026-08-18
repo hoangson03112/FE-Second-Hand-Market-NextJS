@@ -30,15 +30,19 @@ export default function ProductCard({
         className,
       )}
     >
-      <div
-        className="rounded-[2px] aspect-square w-full overflow-hidden bg-cream-100"
-      >
+      {/* `relative` is load-bearing: everything inside is absolutely positioned
+          (`fill` images, the inset wrapper, the category tag). Without it they
+          resolve against the nearest positioned ancestor — on the homepage that
+          is the section itself, so every card's artwork escapes and paints over
+          the whole "Sản phẩm nổi bật" block. */}
+      <div className="relative rounded-[2px] aspect-square w-full overflow-hidden bg-cream-100">
         {imageUrl ? (
           <>
             <Image
               src={imageUrl}
               alt=""
               fill
+              sizes="(max-width: 640px) 50vw, 20vw"
               className="object-cover opacity-30 blur-lg scale-125"
               aria-hidden="true"
             />

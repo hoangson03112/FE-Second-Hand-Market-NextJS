@@ -14,8 +14,6 @@ interface ProductReviewModalProps {
   onSubmit: (e: React.FormEvent) => Promise<void>;
 }
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 const FIELD_LABEL =
   "mb-2.5 block text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500";
 
@@ -41,7 +39,7 @@ export function ProductReviewModal({
         <header className="flex items-start justify-between gap-4 border-b border-luxury-ink/10 px-6 py-5">
           <div className="min-w-0">
             <Eyebrow>Đánh giá</Eyebrow>
-            <h3 style={serif} className="mt-3 text-lg tracking-tight text-luxury-ink">
+            <h3 className="font-droid-serif mt-3 text-lg tracking-tight text-luxury-ink">
               Đánh giá sản phẩm
             </h3>
             <p className="mt-2 truncate text-xs text-neutral-500">

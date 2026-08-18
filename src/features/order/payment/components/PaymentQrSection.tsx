@@ -111,8 +111,7 @@ export function PaymentQrSection({
         <div>
           <Eyebrow>Cách nhanh nhất</Eyebrow>
           <h2
-            style={{ fontFamily: "var(--font-droid-serif), serif" }}
-            className="mt-3 text-lg tracking-tight text-luxury-ink"
+            className="font-droid-serif mt-3 text-lg tracking-tight text-luxury-ink"
           >
             Quét mã để chuyển khoản
           </h2>

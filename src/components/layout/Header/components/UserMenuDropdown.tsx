@@ -12,7 +12,6 @@ import { RefObject } from "react";
 import { getAvatarUrl } from "@/utils";
 
 interface HeaderAccount {
-  /** URL string hoặc object { url } từ API (local upload hoặc Google) */
   avatar?: string | { url?: string };
   fullName?: string;
   email?: string;
@@ -44,7 +43,7 @@ export function UserMenuDropdown({
       <button
         type="button"
         onClick={toggleUserDropdown}
-        className={`flex items-center gap-1 sm:gap-1.5 h-8 sm:h-9 pl-0.5 sm:pl-1 pr-1.5 sm:pr-2.5 rounded-full transition-all duration-150 focus:outline-none hover:bg-primary/10 ${showUserDropdown ? "bg-primary/10" : ""}`}
+        className={`flex items-center shadow-sm gap-1 sm:gap-1.5 h-8 sm:h-9 pl-0.5 sm:pl-1 pr-1.5 sm:pr-2.5 rounded-full transition-all duration-150 focus:outline-none hover:bg-primary/10 ${showUserDropdown ? "bg-primary/10" : ""}`}
         aria-expanded={showUserDropdown}
         aria-haspopup="true"
       >

@@ -82,8 +82,7 @@ export function ProfileSidebar({
               />
             </div>
             <h3
-              className="text-xl text-luxury-ink mb-1 line-clamp-1"
-              style={{ fontFamily: "var(--font-droid-serif), serif" }}
+              className="font-droid-serif text-xl text-luxury-ink mb-1 line-clamp-1"
             >
               {fullName || "Người dùng"}
             </h3>

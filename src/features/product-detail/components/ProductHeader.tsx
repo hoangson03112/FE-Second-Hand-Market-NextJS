@@ -87,8 +87,7 @@ export default function ProductHeader({
 
       {/* Product Name */}
       <h1
-        className="text-3xl lg:text-4xl text-luxury-ink leading-[1.1] mb-5 tracking-tight"
-        style={{ fontFamily: "var(--font-droid-serif), serif" }}
+        className="font-droid-serif text-3xl lg:text-4xl text-luxury-ink leading-[1.1] mb-5 tracking-tight"
       >
         {name}
       </h1>

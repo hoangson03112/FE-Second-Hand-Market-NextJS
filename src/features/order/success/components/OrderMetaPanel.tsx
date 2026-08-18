@@ -18,8 +18,6 @@ interface OrderMetaPanelProps {
   isLocalPickup: boolean;
 }
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 /** One labelled row: icon, micro-caps label, then the value block. */
 function MetaRow({
   icon: Icon,
@@ -87,9 +85,8 @@ export default function OrderMetaPanel({
     <section className="overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white">
       <header className="border-b border-luxury-ink/10 px-5 py-5 sm:px-6">
         <Eyebrow>Thông tin đơn</Eyebrow>
-        <h2
-          style={serif}
-          className="mt-3 text-lg tracking-tight text-luxury-ink"
+        <h2
+          className="font-droid-serif mt-3 text-lg tracking-tight text-luxury-ink"
         >
           Giao nhận &amp; liên hệ
         </h2>

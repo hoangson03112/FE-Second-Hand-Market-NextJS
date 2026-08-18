@@ -24,8 +24,6 @@ interface OrderProductsCardProps {
   onOpenProductReview: (productId: string, productName: string) => void;
 }
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 function Stars({ rating, className }: { rating: number; className?: string }) {
   return (
     <span className="flex" aria-label={`${rating} trên 5 sao`}>
@@ -147,9 +145,8 @@ export function OrderProductsCard({
                   <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
                     Số lượng ×{item.quantity}
                   </span>
-                  <span
-                    style={serif}
-                    className="tabular-nums text-base text-luxury-ink"
+                  <span
+                    className="font-droid-serif tabular-nums text-base text-luxury-ink"
                   >
                     {formatPrice(item.price || product?.price || 0)}
                   </span>

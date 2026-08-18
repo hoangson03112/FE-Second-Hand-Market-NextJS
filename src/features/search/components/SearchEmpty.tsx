@@ -25,10 +25,9 @@ export default function SearchEmpty() {
 
       <h2
         style={{
-          fontFamily: "var(--font-droid-serif), serif",
           fontWeight: 400,
         }}
-        className="mt-6 text-xl text-luxury-ink"
+        className="font-droid-serif mt-6 text-xl text-luxury-ink"
       >
         Nhập từ khóa để tìm kiếm
       </h2>

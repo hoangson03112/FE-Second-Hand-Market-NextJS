@@ -1,14 +1,6 @@
 import { getOrderStatusLabel } from "@/constants/orderStatus";
 import { cn } from "@/lib/utils";
 
-/**
- * Order status in the quiet-luxury language: a hairline 2px chip with a single
- * tonal dot, instead of the saturated pills used on the admin/seller screens.
- *
- * Kept separate from `StatusBadge` on purpose — that one is shared with admin
- * and seller surfaces whose look should not shift.
- */
-
 type Tone = "progress" | "settled" | "attention" | "failed" | "neutral";
 
 const TONE_BY_STATUS: Record<string, Tone> = {
@@ -63,7 +55,7 @@ export function OrderStatusChip({ status, className }: OrderStatusChipProps) {
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 items-center gap-2 rounded-[2px] border px-2.5 py-1 text-2xs font-bold uppercase tracking-[0.2em]",
+        "inline-flex shrink-0 items-center gap-2 rounded-[2px] border px-2.5 py-1 text-2xs font-bold uppercase tracking-[0.15em]",
         CHIP_CLASSES[tone],
         className,
       )}

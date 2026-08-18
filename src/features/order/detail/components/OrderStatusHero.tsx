@@ -23,8 +23,6 @@ interface OrderStatusHeroProps {
   ghnReturnTrackingUrl?: string | null;
 }
 
-const serif = { fontFamily: "var(--font-droid-serif), serif" };
-
 function TrackingRow({
   label,
   code,
@@ -94,9 +92,8 @@ export function OrderStatusHero({
         <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
           <div className="min-w-0 max-w-xl">
             <Eyebrow tone="dark">Trạng thái</Eyebrow>
-            <h2
-              style={serif}
-              className="mt-4 text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.1] tracking-tight text-luxury-ivory"
+            <h2
+              className="font-droid-serif mt-4 text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.1] tracking-tight text-luxury-ivory"
             >
               {statusConfig.label}
             </h2>

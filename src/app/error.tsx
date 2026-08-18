@@ -34,11 +34,10 @@ export default function Error({
 
         <h1
           style={{
-            fontFamily: "var(--font-droid-serif), serif",
             fontWeight: 400,
             lineHeight: 1.1,
           }}
-          className="mt-6 text-[clamp(1.75rem,4vw,2.5rem)] tracking-tight text-luxury-ink"
+          className="font-droid-serif mt-6 text-[clamp(1.75rem,4vw,2.5rem)] tracking-tight text-luxury-ink"
         >
           Trang này đang gặp trục trặc.
         </h1>

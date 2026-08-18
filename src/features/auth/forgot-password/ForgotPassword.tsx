@@ -20,9 +20,8 @@ export default function ForgotPassword() {
               
               <div className="flex flex-col justify-center px-2 lg:px-0 pointer-events-none">
                 <h1
-                  className="mb-8 text-luxury-ink drop-shadow-sm"
+                  className="font-droid-serif mb-8 text-luxury-ink drop-shadow-sm"
                   style={{
-                    fontFamily: "var(--font-droid-serif), serif",
                     fontSize: "clamp(3rem, 6vw, 5.5rem)",
                     fontWeight: 300,
                     lineHeight: 1.05,
@@ -84,12 +83,11 @@ export default function ForgotPassword() {
                   <div className="space-y-1 text-center">
                     <h2
                       style={{
-                        fontFamily: "var(--font-droid-serif), serif",
                         fontWeight: 300,
                         lineHeight: 1.05,
                         letterSpacing: "-0.03em",
                       }}
-                      className="text-4xl mb-8 text-luxury-ink"
+                      className="font-droid-serif text-4xl mb-8 text-luxury-ink"
                     >
                       {isSuccess ? "Email đã được gửi" : "Quên mật khẩu"}
                     </h2>

@@ -4,13 +4,19 @@ import Image from "next/image";
 import { useState } from "react";
 import {
   IconAlertTriangle,
+  IconArrowUpRight,
   IconCircleCheck,
   IconClock,
-  IconExternalLink,
-  IconReceipt,
   IconX,
 } from "@tabler/icons-react";
 import { ConfirmWithReasonDialog } from "@/components/ui";
+import {
+  Panel,
+  dangerAction,
+  microCaps,
+  primaryAction,
+} from "@/features/order/components";
+import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
 import { format } from "@/utils/format/date";
 import type { PaymentProof } from "@/types/order";
@@ -25,6 +31,41 @@ interface SellerPaymentProofCardProps {
   onReject: (reason: string) => void;
 }
 
+/** Same three tones as `OrderStatusChip`: settled, attention, failed. */
+const STATUS_TONE = {
+  pending: {
+    chip: "border-luxury-champagne/50 bg-cream-100 text-neutral-700",
+    dot: "bg-luxury-champagne",
+    label: "Chờ bạn đối soát",
+    Icon: IconClock,
+  },
+  verified: {
+    chip: "border-accent/35 bg-taupe-50 text-taupe-700",
+    dot: "bg-accent",
+    label: "Đã nhận tiền",
+    Icon: IconCircleCheck,
+  },
+  rejected: {
+    chip: "border-blush-300 bg-blush-50 text-blush-800",
+    dot: "bg-blush-600",
+    label: "Đã từ chối",
+    Icon: IconX,
+  },
+} as const;
+
+function MetaRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-baseline justify-between gap-4">
+      <span className={cn(microCaps, "shrink-0 text-neutral-500")}>
+        {label}
+      </span>
+      <span className="min-w-0 truncate text-right text-sm text-luxury-ink">
+        {value}
+      </span>
+    </div>
+  );
+}
+
 export function SellerPaymentProofCard({
   proof,
   loading,
@@ -37,72 +78,40 @@ export function SellerPaymentProofCard({
 
   if (loading) {
     return (
-      <div className="bg-card rounded-2xl border border-border shadow-sm p-5 flex items-center gap-3">
-        <span className="w-4 h-4 rounded-full border-2 border-muted border-t-primary animate-spin shrink-0" />
-        <p className="text-sm text-muted-foreground">Đang tải biên lai...</p>
-      </div>
+      <Panel eyebrow="Thanh toán" title="Biên lai chuyển khoản">
+        <div className="flex items-center gap-3">
+          <span className="h-4 w-4 shrink-0 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
+          <p className={cn(microCaps, "text-neutral-500")}>
+            Đang tải biên lai
+          </p>
+        </div>
+      </Panel>
     );
   }
 
   // Người mua chưa chuyển khoản — chưa có gì để đối soát.
   if (!proof) {
     return (
-      <div className="bg-card rounded-2xl border border-amber-200 shadow-sm p-5 flex items-start gap-3">
-        <IconClock className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-        <div>
-          <p className="text-sm font-bold text-amber-700">
-            Chờ người mua chuyển khoản
-          </p>
-          <p className="text-xs text-amber-600 mt-0.5">
-            Khi người mua tải biên lai lên, bạn sẽ đối soát và xác nhận tại đây.
-          </p>
+      <Panel eyebrow="Thanh toán" title="Biên lai chuyển khoản">
+        <div className="flex gap-4 rounded-[2px] border border-luxury-champagne/45 bg-cream-100/70 px-4 py-3.5">
+          <IconClock className="mt-0.5 h-4 w-4 shrink-0 text-luxury-champagne" />
+          <div>
+            <p className="text-xs font-bold text-luxury-ink">
+              Chờ người mua chuyển khoản
+            </p>
+            <p className="mt-1.5 text-xs leading-relaxed text-neutral-600">
+              Khi người mua tải biên lai lên, bạn sẽ đối soát và xác nhận tại
+              đây.
+            </p>
+          </div>
         </div>
-      </div>
+      </Panel>
     );
   }
 
+  const tone = STATUS_TONE[proof.status];
   const snapshot = proof.sellerBankSnapshot;
   const isPending = proof.status === "pending";
-
-  const statusStyles = {
-    pending: {
-      wrap: "border-amber-200",
-      head: "bg-amber-50 border-amber-100",
-      iconWrap: "bg-amber-100",
-      icon: "text-amber-600",
-      title: "text-amber-800",
-      sub: "text-amber-500",
-      label: "Chờ bạn đối soát",
-      hint: "Kiểm tra tài khoản ngân hàng của bạn rồi xác nhận",
-    },
-    verified: {
-      wrap: "border-emerald-200",
-      head: "bg-emerald-50 border-emerald-100",
-      iconWrap: "bg-emerald-100",
-      icon: "text-emerald-600",
-      title: "text-emerald-800",
-      sub: "text-emerald-500",
-      label: "Đã xác nhận nhận tiền",
-      hint: proof.verifiedAt ? `Xác nhận lúc ${format(proof.verifiedAt)}` : "",
-    },
-    rejected: {
-      wrap: "border-rose-200",
-      head: "bg-rose-50 border-rose-100",
-      iconWrap: "bg-rose-100",
-      icon: "text-rose-600",
-      title: "text-rose-800",
-      sub: "text-rose-500",
-      label: "Đã từ chối biên lai",
-      hint: "Người mua có thể gửi lại biên lai khác",
-    },
-  }[proof.status];
-
-  const StatusIcon =
-    proof.status === "verified"
-      ? IconCircleCheck
-      : proof.status === "rejected"
-        ? IconX
-        : IconClock;
 
   return (
     <>
@@ -123,157 +132,139 @@ export function SellerPaymentProofCard({
         isLoading={submitting}
       />
 
-      <div
-        className={`bg-card rounded-2xl border ${statusStyles.wrap} overflow-hidden shadow-sm`}
-      >
-        {/* Header */}
-        <div
-          className={`flex items-center gap-3 px-5 py-4 border-b ${statusStyles.head}`}
-        >
-          <div
-            className={`w-9 h-9 rounded-xl ${statusStyles.iconWrap} flex items-center justify-center shrink-0`}
-          >
-            <IconReceipt className={`w-4.5 h-4.5 ${statusStyles.icon}`} />
-          </div>
-          <div className="min-w-0">
-            <p className={`text-sm font-bold ${statusStyles.title}`}>
-              Biên lai chuyển khoản
-            </p>
-            <p className={`text-xs ${statusStyles.sub} mt-0.5 truncate`}>
-              {statusStyles.label}
-              {statusStyles.hint ? ` — ${statusStyles.hint}` : ""}
-            </p>
-          </div>
-          <StatusIcon
-            className={`w-5 h-5 ${statusStyles.icon} shrink-0 ml-auto`}
-          />
-        </div>
-
-        <div className="p-5 space-y-4">
-          {/* Số tiền cần đối chiếu */}
-          <div className="flex items-center justify-between p-3.5 rounded-xl bg-muted/40 border border-border">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                Số tiền cần nhận
-              </p>
-              <p className="text-base font-bold text-foreground mt-0.5">
-                {formatPrice(amount)}
-              </p>
-            </div>
-            {proof.transferredAt && (
-              <div className="text-right">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                  Người mua báo đã chuyển
-                </p>
-                <p className="text-sm text-foreground mt-0.5">
-                  {format(proof.transferredAt)}
-                </p>
-              </div>
+      <Panel
+        eyebrow="Thanh toán"
+        title="Biên lai chuyển khoản"
+        aside={
+          <span
+            className={cn(
+              "inline-flex shrink-0 items-center gap-2 rounded-[2px] border px-2.5 py-1 text-2xs font-bold uppercase tracking-[0.18em]",
+              tone.chip,
             )}
+          >
+            <span
+              aria-hidden
+              className={cn("h-1 w-1 shrink-0 rounded-full", tone.dot)}
+            />
+            {tone.label}
+          </span>
+        }
+      >
+        {/* Số tiền cần đối chiếu */}
+        <div className="flex flex-wrap items-end justify-between gap-4 rounded-[2px] border border-luxury-ink/10 bg-cream-50/60 px-4 py-3.5">
+          <div>
+            <p className={cn(microCaps, "text-neutral-500")}>
+              Số tiền cần nhận
+            </p>
+            <p className="font-droid-serif mt-1.5 text-lg leading-none tabular-nums text-luxury-ink">
+              {formatPrice(amount)}
+            </p>
           </div>
-
-          {/* Tài khoản người mua đã chuyển tới */}
-          {snapshot && (
-            <div className="rounded-xl border border-border bg-muted/30 p-3.5 space-y-1.5">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                Chuyển tới tài khoản
+          {proof.transferredAt ? (
+            <div className="text-right">
+              <p className={cn(microCaps, "text-neutral-500")}>
+                Người mua báo đã chuyển
               </p>
-              <div className="flex justify-between text-sm gap-3">
-                <span className="text-muted-foreground shrink-0">Ngân hàng</span>
-                <span className="font-medium text-foreground text-right">
-                  {snapshot.bankName || "—"}
-                </span>
-              </div>
-              <div className="flex justify-between text-sm gap-3">
-                <span className="text-muted-foreground shrink-0">Số tài khoản</span>
-                <span className="font-mono font-bold text-foreground text-right">
-                  {snapshot.accountNumber || "—"}
-                </span>
-              </div>
-              <div className="flex justify-between text-sm gap-3">
-                <span className="text-muted-foreground shrink-0">Chủ tài khoản</span>
-                <span className="font-medium text-foreground text-right truncate">
-                  {snapshot.accountHolder || "—"}
-                </span>
-              </div>
-            </div>
-          )}
-
-          {/* Ảnh biên lai */}
-          {proof.proofImage?.url && (
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
-                Ảnh biên lai
+              <p className="mt-1.5 text-xs tabular-nums text-luxury-ink">
+                {format(proof.transferredAt)}
               </p>
-              <a
-                href={proof.proofImage.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block group/proof"
-              >
-                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-border bg-muted">
-                  <Image
-                    src={proof.proofImage.url}
-                    alt={proof.proofImage.originalName ?? "Biên lai chuyển khoản"}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-contain"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover/proof:bg-black/20 transition-colors flex items-center justify-center">
-                    <span className="flex items-center gap-1.5 text-white text-xs font-bold opacity-0 group-hover/proof:opacity-100 transition-opacity">
-                      <IconExternalLink className="w-3.5 h-3.5" />
-                      Mở ảnh gốc
-                    </span>
-                  </div>
-                </div>
-              </a>
             </div>
-          )}
-
-          {/* Lý do từ chối trước đó */}
-          {proof.status === "rejected" && proof.rejectReason && (
-            <div className="flex items-start gap-2.5 p-3 rounded-xl bg-rose-50 border border-rose-200">
-              <IconAlertTriangle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-xs font-bold text-rose-700">Lý do từ chối</p>
-                <p className="text-xs text-rose-600 mt-0.5 leading-relaxed">
-                  {proof.rejectReason}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* Hành động — chỉ khi còn chờ đối soát */}
-          {isPending && (
-            <>
-              <p className="text-xs text-muted-foreground leading-relaxed border-t border-border pt-3">
-                Chỉ xác nhận khi bạn đã thực sự thấy tiền vào tài khoản. Xác nhận
-                sẽ đánh dấu đơn hàng là đã thanh toán.
-              </p>
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => setRejectOpen(true)}
-                  disabled={submitting}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-destructive/40 text-destructive hover:bg-destructive/5 font-bold text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <IconX className="w-4 h-4" />
-                  Chưa nhận được
-                </button>
-                <button
-                  type="button"
-                  onClick={onVerify}
-                  disabled={submitting}
-                  className="flex-[2] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 font-bold text-sm transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <IconCircleCheck className="w-4 h-4" />
-                  {submitting ? "Đang xử lý..." : "Xác nhận đã nhận tiền"}
-                </button>
-              </div>
-            </>
-          )}
+          ) : null}
         </div>
-      </div>
+
+        {/* Tài khoản người mua đã chuyển tới */}
+        {snapshot ? (
+          <div className="mt-4 space-y-3 border-t border-luxury-ink/8 pt-4">
+            <p className={cn(microCaps, "text-neutral-500")}>
+              Chuyển tới tài khoản
+            </p>
+            <MetaRow label="Ngân hàng" value={snapshot.bankName || "—"} />
+            <MetaRow
+              label="Số tài khoản"
+              value={snapshot.accountNumber || "—"}
+            />
+            <MetaRow
+              label="Chủ tài khoản"
+              value={snapshot.accountHolder || "—"}
+            />
+          </div>
+        ) : null}
+
+        {/* Ảnh biên lai */}
+        {proof.proofImage?.url ? (
+          <div className="mt-4 border-t border-luxury-ink/8 pt-4">
+            <p className={cn(microCaps, "text-neutral-500")}>Ảnh biên lai</p>
+            <a
+              href={proof.proofImage.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/proof relative mt-2.5 block aspect-[4/3] w-full overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-cream-50 transition-colors duration-300 hover:border-luxury-ink/30"
+            >
+              <Image
+                src={proof.proofImage.url}
+                alt={proof.proofImage.originalName ?? "Biên lai chuyển khoản"}
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-contain"
+              />
+              <span className="absolute inset-0 flex items-center justify-center gap-1.5 bg-luxury-ink/0 text-2xs font-bold uppercase tracking-[0.18em] text-transparent transition-all duration-300 group-hover/proof:bg-luxury-ink/50 group-hover/proof:text-cream-50">
+                Mở ảnh gốc
+                <IconArrowUpRight className="h-3.5 w-3.5" />
+              </span>
+            </a>
+          </div>
+        ) : null}
+
+        {/* Lý do từ chối trước đó */}
+        {proof.status === "rejected" && proof.rejectReason ? (
+          <div className="mt-4 flex gap-3 rounded-[2px] border border-blush-300 bg-blush-50 px-4 py-3.5">
+            <IconAlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-blush-600" />
+            <div>
+              <p className="text-xs font-bold text-blush-800">Lý do từ chối</p>
+              <p className="mt-1.5 text-xs leading-relaxed text-blush-800/80">
+                {proof.rejectReason}
+              </p>
+            </div>
+          </div>
+        ) : null}
+
+        {proof.status === "verified" && proof.verifiedAt ? (
+          <p className={cn(microCaps, "mt-4 text-neutral-500")}>
+            Xác nhận lúc{" "}
+            <span className="text-luxury-ink">{format(proof.verifiedAt)}</span>
+          </p>
+        ) : null}
+
+        {/* Hành động — chỉ khi còn chờ đối soát */}
+        {isPending ? (
+          <div className="mt-5 border-t border-luxury-ink/8 pt-5">
+            <p className="text-xs leading-relaxed text-neutral-600">
+              Chỉ xác nhận khi bạn đã thực sự thấy tiền vào tài khoản. Xác nhận
+              sẽ đánh dấu đơn hàng là đã thanh toán.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={onVerify}
+                disabled={submitting}
+                className={cn(primaryAction, "flex-1")}
+              >
+                <IconCircleCheck className="h-4 w-4" />
+                {submitting ? "Đang xử lý…" : "Đã nhận tiền"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setRejectOpen(true)}
+                disabled={submitting}
+                className={dangerAction}
+              >
+                <IconX className="h-4 w-4" />
+                Chưa nhận được
+              </button>
+            </div>
+          </div>
+        ) : null}
+      </Panel>
     </>
   );
 }

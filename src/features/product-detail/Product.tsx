@@ -89,8 +89,7 @@ export default function Product({ id }: ProductProps) {
         <div className="max-w-md w-full text-center py-12 px-8 rounded-[2px] border border-luxury-ink/10 bg-white">
           <IconAlertCircle className="w-12 h-12 text-taupe-400 mx-auto mb-4 stroke-[1.5]" />
           <h2
-            className="text-xl text-luxury-ink mb-2"
-            style={{ fontFamily: "var(--font-droid-serif), serif" }}
+            className="font-droid-serif text-xl text-luxury-ink mb-2"
           >
             Không tìm thấy sản phẩm
           </h2>

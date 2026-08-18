@@ -94,8 +94,7 @@ export default function CartItem({
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-0.5">
               <span
-                className="text-base font-bold text-luxury-ink"
-                style={{ fontFamily: "var(--font-droid-serif), serif" }}
+                className="font-droid-serif text-base font-bold text-luxury-ink"
               >
                 {formatPrice(product.price)}
               </span>
@@ -145,8 +144,7 @@ export default function CartItem({
             </div>
 
             <span
-              className="text-base font-bold text-luxury-ink"
-              style={{ fontFamily: "var(--font-droid-serif), serif" }}
+              className="font-droid-serif text-base font-bold text-luxury-ink"
             >
               {formatPrice(product.price * item.quantity)}
             </span>

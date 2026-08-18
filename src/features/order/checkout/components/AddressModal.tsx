@@ -106,8 +106,7 @@ export default function AddressModal({
               <div className="min-w-0">
                 <Eyebrow>{eyebrow}</Eyebrow>
                 <h2
-                  style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                  className="mt-3 truncate text-xl tracking-tight text-luxury-ink"
+                  className="font-droid-serif mt-3 truncate text-xl tracking-tight text-luxury-ink"
                 >
                   {title}
                 </h2>

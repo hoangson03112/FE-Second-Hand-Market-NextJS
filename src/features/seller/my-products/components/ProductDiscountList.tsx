@@ -1,4 +1,6 @@
-import { IconTicket, IconX } from "@tabler/icons-react";
+import { IconLoader2, IconX } from "@tabler/icons-react";
+import { microCaps } from "@/features/order/components";
+import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
 import { formatDateOnly } from "@/utils/format";
 import type { MyListingProduct } from "@/types/myProducts";
@@ -9,10 +11,15 @@ interface ProductDiscountListProps {
   discounts: Discount[];
   onDelete?: (discountId: string) => void;
   isDeletingId?: string | null;
-  /** grid: stacked rows with buyer name on its own line. list: compact inline pills. */
+  /** grid: stacked rows. list: a single wrapping line of pills. */
   variant?: "grid" | "list";
 }
 
+/**
+ * Personal offers sit on the champagne/cream ground reserved for "needs
+ * attention but not wrong" — the same tone the order screens use for a refund
+ * in progress.
+ */
 export function ProductDiscountList({
   discounts,
   onDelete,
@@ -21,71 +28,55 @@ export function ProductDiscountList({
 }: ProductDiscountListProps) {
   if (discounts.length === 0) return null;
 
+  const isGrid = variant === "grid";
+
   return (
-    <div className={variant === "grid" ? "mb-3 space-y-1.5" : "mb-2 space-y-1"}>
-      <p className="text-[11px] font-bold text-taupe-500 uppercase tracking-wide flex items-center gap-1">
-        <IconTicket className="w-3 h-3" />
-        Ưu đãi ({discounts.length})
+    <div>
+      <p className={cn(microCaps, "text-neutral-500")}>
+        Ưu đãi riêng · {discounts.length}
       </p>
 
-      <div
-        className={variant === "grid" ? "space-y-1.5" : "flex flex-wrap gap-2"}
-      >
-        {discounts.map((d) => (
+      <div className={cn("mt-2", isGrid ? "space-y-1.5" : "flex flex-wrap gap-2")}>
+        {discounts.map((discount) => (
           <div
-            key={d._id}
-            className={
-              variant === "grid"
-                ? "flex items-center justify-between gap-2 py-1.5 px-2 rounded-lg bg-primary/5 border border-primary/20 text-xs"
-                : "inline-flex items-center gap-2 py-1 px-2 rounded-lg bg-primary/5 border border-primary/20 text-xs"
-            }
-          >
-            {variant === "grid" ? (
-              <div className="min-w-0 flex-1">
-                <span className="font-bold text-primary">
-                  {formatPrice(d.price)}
-                </span>
-                {d.buyerId?.fullName && (
-                  <span className="text-taupe-500 ml-1 truncate block">
-                    → {d.buyerId.fullName}
-                  </span>
-                )}
-                <span className="text-taupe-400 text-[10px]">
-                  Hết hạn: {formatDateOnly(d.endDate)}
-                </span>
-              </div>
-            ) : (
-              <>
-                <span className="font-bold text-primary">
-                  {formatPrice(d.price)}
-                </span>
-                {d.buyerId?.fullName && (
-                  <span className="text-taupe-500 truncate max-w-[80px]">
-                    {d.buyerId.fullName}
-                  </span>
-                )}
-                <span className="text-taupe-400 text-[10px]">
-                  {formatDateOnly(d.endDate)}
-                </span>
-              </>
+            key={discount._id}
+            className={cn(
+              "flex items-center gap-2.5 rounded-[2px] border border-luxury-champagne/40 bg-cream-100/70 px-2.5 py-1.5",
+              isGrid && "justify-between",
             )}
-            {onDelete && (
+          >
+            <div className="flex min-w-0 items-baseline gap-2">
+              <span
+                className="font-droid-serif shrink-0 tabular-nums text-sm text-taupe-700"
+              >
+                {formatPrice(discount.price)}
+              </span>
+              {discount.buyerId?.fullName ? (
+                <span className="truncate text-xs text-neutral-600">
+                  {discount.buyerId.fullName}
+                </span>
+              ) : null}
+              <span className="shrink-0 text-2xs tabular-nums text-neutral-500">
+                {formatDateOnly(discount.endDate)}
+              </span>
+            </div>
+
+            {onDelete ? (
               <button
                 type="button"
-                onClick={() => onDelete(d._id)}
-                disabled={isDeletingId === d._id}
-                className={
-                  variant === "grid"
-                    ? "p-1 rounded text-red-500 hover:bg-red-50 disabled:opacity-50 shrink-0"
-                    : "p-0.5 rounded text-red-500 hover:bg-red-50 disabled:opacity-50"
-                }
+                onClick={() => onDelete(discount._id)}
+                disabled={isDeletingId === discount._id}
                 title="Xóa ưu đãi"
+                aria-label="Xóa ưu đãi"
+                className="shrink-0 rounded-[2px] p-1 text-blush-600 transition-colors hover:bg-blush-50 disabled:opacity-40"
               >
-                <IconX
-                  className={variant === "grid" ? "w-3.5 h-3.5" : "w-3 h-3"}
-                />
+                {isDeletingId === discount._id ? (
+                  <IconLoader2 className="h-3 w-3 animate-spin" />
+                ) : (
+                  <IconX className="h-3 w-3" />
+                )}
               </button>
-            )}
+            ) : null}
           </div>
         ))}
       </div>

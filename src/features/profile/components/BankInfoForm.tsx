@@ -40,8 +40,7 @@ export function BankInfoForm({
     <div>
       <div className="px-6 py-6 border-b border-luxury-ink/10">
         <h2
-          className="text-2xl text-luxury-ink flex items-center gap-2"
-          style={{ fontFamily: "var(--font-droid-serif), serif" }}
+          className="font-droid-serif text-2xl text-luxury-ink flex items-center gap-2"
         >
           <IconBuildingBank className="w-6 h-6 text-luxury-ink" />
           Thông tin ngân hàng

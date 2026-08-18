@@ -53,11 +53,10 @@ export function PaymentHeader({
             <Eyebrow tone="dark">Chuyển khoản ngân hàng</Eyebrow>
             <h1
               style={{
-                fontFamily: "var(--font-droid-serif), serif",
                 fontWeight: 400,
                 lineHeight: 1.08,
               }}
-              className="mt-5 text-[clamp(1.85rem,4vw,2.85rem)] tracking-tight text-luxury-ivory"
+              className="font-droid-serif mt-5 text-[clamp(1.85rem,4vw,2.85rem)] tracking-tight text-luxury-ivory"
             >
               Hoàn tất thanh toán
             </h1>
@@ -68,8 +67,7 @@ export function PaymentHeader({
                   Mã đơn nội bộ
                 </span>
                 <span
-                  style={{ fontFamily: "var(--font-droid-serif), serif" }}
-                  className="select-all break-all text-sm tracking-wide text-luxury-ivory/90"
+                  className="font-droid-serif select-all break-all text-sm tracking-wide text-luxury-ivory/90"
                 >
                   {orderId}
                 </span>

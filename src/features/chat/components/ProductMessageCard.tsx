@@ -47,8 +47,7 @@ export default function ProductMessageCard({
             {productName}
           </p>
           <p
-            style={{ fontFamily: "var(--font-droid-serif), serif" }}
-            className="mt-1.5 tabular-nums text-base text-luxury-ink"
+            className="font-droid-serif mt-1.5 tabular-nums text-base text-luxury-ink"
           >
             {formatPrice(productPrice)}
           </p>
