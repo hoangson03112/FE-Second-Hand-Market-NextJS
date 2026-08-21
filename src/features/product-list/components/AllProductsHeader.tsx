@@ -14,7 +14,7 @@ export default function AllProductsHeader({ total }: AllProductsHeaderProps) {
         <div className="space-y-4">
           <nav
             aria-label="Breadcrumb"
-            className="flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-charcoal-400 uppercase flex-wrap"
+            className="flex items-center gap-2 text-xs font-bold tracking-[0.15em] text-charcoal-400 uppercase flex-wrap"
           >
             <Link href="/" className="hover:text-luxury-ink transition-colors">
               Trang chủ

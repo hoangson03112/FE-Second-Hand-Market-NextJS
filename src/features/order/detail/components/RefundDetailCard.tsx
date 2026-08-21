@@ -170,7 +170,7 @@ const STATUS_STYLES: Record<StatusKey, StatusStyle> = {
 };
 
 const MICRO_LABEL =
-  "text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500";
+  "text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500";
 
 function Fact({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -246,7 +246,8 @@ export function RefundDetailCard({
           </span>
           <div className="min-w-0">
             <Eyebrow>Hoàn tiền</Eyebrow>
-            <h2
+            <h2
+
               className={cn(
 "font-droid-serif","mt-3 text-lg leading-snug tracking-tight", tone.text)}
             >
@@ -262,7 +263,8 @@ export function RefundDetailCard({
 
         <div className="shrink-0 text-right">
           <p className={MICRO_LABEL}>Số tiền hoàn</p>
-          <p
+          <p
+
             className="font-droid-serif mt-1.5 tabular-nums text-lg leading-none text-luxury-ink"
           >
             {formatPrice(refund.refundAmount)}
@@ -353,9 +355,9 @@ export function RefundDetailCard({
                     </p>
                     <p className="mt-0.5 text-xs text-neutral-500">
                       Video bằng chứng · Nhấn để xem
-                    </p>
+                    </p>[0.15em]
                   </div>
-                  <span className="shrink-0 text-2xs font-bold uppercase tracking-[0.2em] text-luxury-ink">
+                  <span className="shrink-0 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ink">
                     Xem
                   </span>
                 </a>
@@ -411,9 +413,9 @@ export function RefundDetailCard({
                   </p>
                   <button
                     type="button"
-                    onClick={onEscalateToAdmin}
+                    onClick={onEscalateToAdmin}[0.15em]
                     disabled={isEscalating}
-                    className="mt-3 inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-5 py-2.5 text-2xs font-bold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
+                    className="mt-3 inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-5 py-2.5 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
                   >
                     {isEscalating ? (
                       <IconLoader2 className="h-4 w-4 animate-spin text-luxury-champagne" />

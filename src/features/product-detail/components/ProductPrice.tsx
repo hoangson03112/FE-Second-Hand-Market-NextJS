@@ -23,7 +23,7 @@ export default function ProductPrice({
             <span className="text-4xl font-normal tracking-tight text-primary md:text-base group-hover:text-blush-600">
               {formattedPrice || "Liên hệ"}
             </span>
-            <span className="px-2 py-0.5 text-xs font-bold uppercase tracking-[0.2em] text-blush-600 bg-blush-50 border border-blush-200 rounded-[2px]">
+            <span className="px-2 py-0.5 text-xs font-bold uppercase tracking-[0.15em] text-blush-600 bg-blush-50 border border-blush-200 rounded-[2px]">
               Giá đặc biệt
             </span>
           </div>

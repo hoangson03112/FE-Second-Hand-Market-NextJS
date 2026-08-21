@@ -87,7 +87,7 @@ export function PaymentQrSection({
         <div
           className={`${frame} border-dashed border-luxury-ink/15 bg-cream-50`}
         >
-          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
+          <p className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-500">
             Đang tạo mã QR
           </p>
         </div>
@@ -110,14 +110,12 @@ export function PaymentQrSection({
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <Eyebrow>Cách nhanh nhất</Eyebrow>
-          <h2
-            className="font-droid-serif mt-3 text-lg tracking-tight text-luxury-ink"
-          >
+          <h2 className="font-droid-serif mt-3 text-lg tracking-tight text-luxury-ink">
             Quét mã để chuyển khoản
           </h2>
         </div>
         {bankInfo?.bankName ? (
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+          <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
             {bankInfo.bankName}
           </span>
         ) : null}

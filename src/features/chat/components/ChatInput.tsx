@@ -73,7 +73,7 @@ export function ChatInput({
       {selectedFiles.length > 0 ? (
         <div className="mb-3 rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 p-3">
           <div className="mb-2.5 flex items-center justify-between">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-600">
+            <p className="text-2xs font-semibold uppercase tracking-[0.15em] text-neutral-600">
               Đã chọn {selectedFiles.length} tệp
             </p>
             <button

@@ -1,6 +1,6 @@
 "use client";
 
-import { Toaster, toast as sonnerToast, ToastT } from "sonner";
+import { Toaster, toast as sonnerToast } from "sonner";
 import { ReactNode } from "react";
 
 type ToastProps = {

@@ -10,8 +10,7 @@ import {
   IconPackage,
 } from "@tabler/icons-react";
 import type { Order } from "@/types/order";
-import {
-} from "@/components/ui";
+import {} from "@/components/ui";
 import { formatPrice } from "@/utils/format/price";
 import { getProductImage } from "../utils/orderUtils";
 import OrderActions from "./OrderActions";
@@ -116,7 +115,7 @@ export default function OrderCard({
             </div>
           )}
           {order.products.length > 1 && (
-            <span className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-black/60 text-white backdrop-blur-sm">
+            <span className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded-md text-2xs font-bold bg-black/60 text-white backdrop-blur-sm">
               +{order.products.length - 1}
             </span>
           )}

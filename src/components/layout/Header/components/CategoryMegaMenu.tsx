@@ -58,7 +58,7 @@ export function CategoryMegaMenu({
                       className="flex items-center gap-2.5 mb-2 py-1"
                       onClick={onHideAllCategories}
                     >
-                      <span className="text-[10px] font-medium tabular-nums shrink-0 text-primary">
+                      <span className="text-2xs font-medium tabular-nums shrink-0 text-primary">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       <span className="text-[13px] font-bold truncate transition-colors text-foreground group-hover:text-primary">

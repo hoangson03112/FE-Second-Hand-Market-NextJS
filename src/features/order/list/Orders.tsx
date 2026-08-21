@@ -32,7 +32,7 @@ function OrdersPlaceholder({
         {spinner ? (
           <span className="h-4 w-4 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
         ) : null}
-        <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">
+        <p className="text-2xs font-bold uppercase tracking-[0.24em] text-neutral-500">
           {title}
         </p>
         {subtitle ? (
@@ -150,7 +150,7 @@ export default function Orders() {
           {isLoading ? (
             <div className="flex flex-col items-center gap-5 py-24">
               <span className="h-4 w-4 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
-              <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">
+              <p className="text-2xs font-bold uppercase tracking-[0.24em] text-neutral-500">
                 Đang tải đơn hàng
               </p>
             </div>

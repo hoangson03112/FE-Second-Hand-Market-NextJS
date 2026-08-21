@@ -35,7 +35,7 @@ export function announceSession(signal: SessionSignal): void {
     new CustomEvent<SessionSignal>(SESSION_CHANGED_EVENT, { detail: signal }),
   );
 
-  if ("BroadcastChannel" in window) {
+  if (typeof window !== "undefined" && "BroadcastChannel" in window) {
     const channel = new BroadcastChannel(SESSION_CHANNEL);
     channel.postMessage(signal);
     channel.close();

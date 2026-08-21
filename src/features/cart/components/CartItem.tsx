@@ -93,13 +93,11 @@ export default function CartItem({
         <div className="mt-auto space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex flex-col gap-0.5">
-              <span
-                className="font-droid-serif text-base font-bold text-luxury-ink"
-              >
+              <span className="font-droid-serif text-base font-bold text-luxury-ink">
                 {formatPrice(product.price)}
               </span>
               {product.hasPersonalDiscount && product.originalPrice != null && (
-                <span className="text-[10px] text-taupe-400 line-through">
+                <span className="text-2xs text-taupe-400 line-through">
                   {formatPrice(product.originalPrice)}
                 </span>
               )}
@@ -143,9 +141,7 @@ export default function CartItem({
               </button>
             </div>
 
-            <span
-              className="font-droid-serif text-base font-bold text-luxury-ink"
-            >
+            <span className="font-droid-serif text-base font-bold text-luxury-ink">
               {formatPrice(product.price * item.quantity)}
             </span>
           </div>

@@ -59,7 +59,8 @@ export function ReturnInspectionModal({
   onClose,
   onSubmit,
 }: ReturnInspectionModalProps) {
-  const [condition, setCondition] = useState<ReturnInspectionCondition>("intact");
+  const [condition, setCondition] =
+    useState<ReturnInspectionCondition>("intact");
   const [comment, setComment] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -70,7 +71,9 @@ export function ReturnInspectionModal({
 
   const handleFiles = (fileList: FileList | null) => {
     if (!fileList) return;
-    setImages((prev) => [...prev, ...Array.from(fileList)].slice(0, MAX_IMAGES));
+    setImages((prev) =>
+      [...prev, ...Array.from(fileList)].slice(0, MAX_IMAGES),
+    );
   };
 
   const handleSubmit = async () => {
@@ -101,7 +104,7 @@ export function ReturnInspectionModal({
       >
         <div className="sticky top-0 z-10 flex items-center justify-between px-5 py-4 border-b-2 border-luxury-ink/10 bg-cream-50 rounded-t-2xl">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-neutral-500">
+            <p className="text-2xs font-semibold uppercase tracking-[0.24em] text-neutral-500">
               Kiểm hàng hoàn
             </p>
             <h2 className="mt-1 font-serif text-lg text-luxury-ink">
@@ -126,7 +129,7 @@ export function ReturnInspectionModal({
           </p>
 
           <fieldset className="space-y-2">
-            <legend className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-600">
+            <legend className="mb-2 block text-2xs font-semibold uppercase tracking-[0.15em] text-neutral-600">
               Tình trạng hàng
             </legend>
             {CONDITIONS.map((option) => {
@@ -167,7 +170,7 @@ export function ReturnInspectionModal({
           <div>
             <label
               htmlFor="inspection-comment"
-              className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-600"
+              className="mb-2 block text-2xs font-semibold uppercase tracking-[0.15em] text-neutral-600"
             >
               Mô tả {isIntact ? "(không bắt buộc)" : "(bắt buộc)"}
             </label>
@@ -190,7 +193,7 @@ export function ReturnInspectionModal({
           </div>
 
           <div>
-            <span className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-600">
+            <span className="mb-2 block text-2xs font-semibold uppercase tracking-[0.15em] text-neutral-600">
               Ảnh chụp lúc mở kiện {!isIntact && "— nên có để làm bằng chứng"}
             </span>
 
@@ -247,7 +250,7 @@ export function ReturnInspectionModal({
             type="button"
             onClick={onClose}
             disabled={submitting}
-            className="flex-1 rounded-[2px] border border-luxury-ink/20 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-luxury-ink transition-colors hover:bg-taupe-50 disabled:opacity-40"
+            className="flex-1 rounded-[2px] border border-luxury-ink/20 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-luxury-ink transition-colors hover:bg-taupe-50 disabled:opacity-40"
           >
             Huỷ
           </button>
@@ -255,7 +258,7 @@ export function ReturnInspectionModal({
             type="button"
             onClick={handleSubmit}
             disabled={submitting}
-            className="flex-1 rounded-[2px] bg-luxury-ink px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-cream-50 transition-opacity hover:opacity-90 disabled:opacity-40"
+            className="flex-1 rounded-[2px] bg-luxury-ink px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-cream-50 transition-opacity hover:opacity-90 disabled:opacity-40"
           >
             {submitting
               ? "Đang gửi..."

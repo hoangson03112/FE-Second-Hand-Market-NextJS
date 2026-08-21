@@ -13,7 +13,7 @@ export default function QuantitySelector({
 }: QuantitySelectorProps) {
   return (
     <div className="flex items-center justify-between py-3 px-4 rounded-[2px] border border-luxury-ink/10 bg-taupe-50/50 mb-4">
-      <span className="text-xs font-bold uppercase tracking-[0.2em] text-luxury-ink">
+      <span className="text-xs font-bold uppercase tracking-[0.15em] text-luxury-ink">
         Số lượng
       </span>
       <div className="flex items-center gap-3">

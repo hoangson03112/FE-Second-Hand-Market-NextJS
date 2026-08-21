@@ -59,7 +59,7 @@ export function ProductStatusChip({
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 items-center gap-2 rounded-[2px] border px-2.5 py-1 text-2xs font-bold uppercase tracking-[0.18em]",
+        "inline-flex shrink-0 items-center gap-2 rounded-[2px] border px-2.5 py-1 text-2xs font-medium uppercase tracking-[0.15em]",
         CHIP_CLASSES[tone],
         className,
       )}

@@ -44,7 +44,7 @@ export default function CheckoutSuccess() {
       >
         <div className="flex flex-col items-center gap-5">
           <span className="h-4 w-4 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
-          <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-neutral-500">
+          <p className="text-2xs font-bold uppercase tracking-[0.24em] text-neutral-500">
             Đang tải đơn hàng
           </p>
         </div>
@@ -59,9 +59,7 @@ export default function CheckoutSuccess() {
         className="flex min-h-screen items-center justify-center bg-luxury-ivory px-4"
       >
         <div className="w-full max-w-md rounded-[2px] border border-dashed border-luxury-ink/15 bg-white px-8 py-14 text-center">
-          <h1
-            className="font-droid-serif text-xl tracking-tight text-luxury-ink"
-          >
+          <h1 className="font-droid-serif text-xl tracking-tight text-luxury-ink">
             Không tìm thấy đơn hàng
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-neutral-600">
@@ -69,7 +67,7 @@ export default function CheckoutSuccess() {
           </p>
           <Link
             href="/orders"
-            className="group mt-8 inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-7 py-3.5 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+            className="group mt-8 inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-7 py-3.5 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
           >
             Xem tất cả đơn hàng
             <IconArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

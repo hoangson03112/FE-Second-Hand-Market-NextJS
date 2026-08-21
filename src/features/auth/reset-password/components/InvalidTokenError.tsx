@@ -16,7 +16,7 @@ export default function InvalidTokenError({ message }: InvalidTokenErrorProps) {
       <div className="text-center space-y-4">
         <div className="relative mx-auto flex h-24 w-24 items-center justify-center">
           <div className="absolute inset-0 rounded-full bg-gradient-to-br from-destructive/20 to-orange-200/60" />
-          <div className="absolute inset-[10px] rounded-full bg-white/90" />
+          <div className="absolute inset-2xs rounded-full bg-white/90" />
           <span className="relative text-4xl">⚠️</span>
         </div>
 

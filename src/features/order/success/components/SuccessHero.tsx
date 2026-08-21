@@ -74,9 +74,7 @@ export default function SuccessHero({
             <span className="text-2xs font-medium uppercase tracking-[0.15em] text-luxury-ivory/50">
               Mã đơn
             </span>
-            <span
-              className="font-droid-serif select-all text-lg tracking-wide text-luxury-ivory"
-            >
+            <span className="font-droid-serif select-all text-lg tracking-wide text-luxury-ivory">
               #{orderCode}
             </span>
           </div>
@@ -105,7 +103,7 @@ export default function SuccessHero({
 
           <Link
             href={`/orders/${orderId}`}
-            className="group inline-flex h-12 items-center justify-center gap-2 rounded-[2px] bg-luxury-ivory px-7 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:bg-white"
+            className="group inline-flex h-12 items-center justify-center gap-2 rounded-[2px] bg-luxury-ivory px-7 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:bg-white"
           >
             Xem chi tiết đơn
             <IconArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -113,7 +111,7 @@ export default function SuccessHero({
 
           <Link
             href="/"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-[2px] border border-luxury-ivory/25 px-7 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:border-luxury-champagne/60 hover:text-luxury-champagne"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-[2px] border border-luxury-ivory/25 px-7 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:border-luxury-champagne/60 hover:text-luxury-champagne"
           >
             <IconHome className="h-4 w-4" />
             Trang chủ

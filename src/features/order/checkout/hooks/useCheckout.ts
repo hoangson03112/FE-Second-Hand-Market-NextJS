@@ -424,12 +424,14 @@ export function useCheckout() {
       setIsSubmitting(false);
     }
   }, [
+    allLocalPickup,
     shippingData,
     selectedAddressId,
     shippingInfoBySeller,
     sellerGroups,
     getPaymentMethodForSeller,
     checkoutItems,
+    checkoutSource,
     removeItems,
     clearCheckout,
     router,

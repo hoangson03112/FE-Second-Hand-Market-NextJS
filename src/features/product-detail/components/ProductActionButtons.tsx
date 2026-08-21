@@ -51,7 +51,7 @@ export default function ProductActionButtons({
 
   if (isOutOfStock) {
     return (
-      <div className="w-full py-4 rounded-[2px] bg-taupe-50 text-taupe-400 border border-luxury-ink/10 font-bold text-[11px] uppercase tracking-[0.2em] text-center">
+      <div className="w-full py-4 rounded-[2px] bg-taupe-50 text-taupe-400 border border-luxury-ink/10 font-bold text-[11px] uppercase tracking-[0.15em] text-center">
         Hết hàng
       </div>
     );
@@ -63,7 +63,7 @@ export default function ProductActionButtons({
       <button
         onClick={onAddToCart}
         disabled={disabled}
-        className="flex-1 flex items-center justify-center gap-2 py-4 rounded-[2px] bg-white border border-luxury-ink/20 text-luxury-ink font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-taupe-50 hover:border-luxury-ink/40 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+        className="flex-1 flex items-center justify-center gap-2 py-4 rounded-[2px] bg-white border border-luxury-ink/20 text-luxury-ink font-bold text-[11px] uppercase tracking-[0.15em] hover:bg-taupe-50 hover:border-luxury-ink/40 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
       >
         <IconShoppingCart className="w-4 h-4 shrink-0" />
         {actionLoading ? "Đang thêm..." : "Thêm vào giỏ"}
@@ -73,7 +73,7 @@ export default function ProductActionButtons({
       <button
         onClick={onBuyNow}
         disabled={disabled}
-        className="flex-1 flex items-center justify-center gap-2 py-4 rounded-[2px] bg-luxury-ink text-white font-bold text-[11px] uppercase tracking-[0.2em] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:bg-luxury-ink/90"
+        className="flex-1 flex items-center justify-center gap-2 py-4 rounded-[2px] bg-luxury-ink text-white font-bold text-[11px] uppercase tracking-[0.15em] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:bg-luxury-ink/90"
       >
         <IconBolt className="w-4 h-4 shrink-0" />
         {actionLoading ? "Đang xử lý..." : "Mua ngay"}

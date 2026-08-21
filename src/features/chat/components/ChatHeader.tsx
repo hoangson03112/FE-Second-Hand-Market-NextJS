@@ -39,7 +39,7 @@ export function ChatHeader({
           {selectedConversation ? selectedConversation.name : "Tin nhắn"}
         </p>
         {selectedConversation ? (
-          <p className="mt-1 flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-luxury-ivory/50">
+          <p className="mt-1 flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[0.15em] text-luxury-ivory/50">
             <span
               aria-hidden
               className={`h-1 w-1 rounded-full ${
@@ -49,7 +49,7 @@ export function ChatHeader({
             {isConnected ? "Đang hoạt động" : "Ngoại tuyến"}
           </p>
         ) : (
-          <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.2em] text-luxury-champagne">
+          <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.15em] text-luxury-champagne">
             Hộp thư
           </p>
         )}

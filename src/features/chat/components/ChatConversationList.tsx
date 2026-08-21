@@ -90,6 +90,7 @@ function ConversationItem({
       <div className="relative">
         <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-luxury-ink/10 bg-cream-100 transition-colors duration-300 group-hover:border-luxury-ink/30">
           {showAvatarImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={avatarUrl}
               alt={conversation.name}
@@ -103,7 +104,7 @@ function ConversationItem({
           )}
         </div>
         {conversation.unreadCount && conversation.unreadCount > 0 && (
-          <span className="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-accent px-1.5 text-[10px] font-semibold tabular-nums text-white">
+          <span className="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-accent px-1.5 text-2xs font-semibold tabular-nums text-white">
             {conversation.unreadCount}
           </span>
         )}
@@ -132,7 +133,9 @@ export function ChatConversationList({
     return (
       <div className="flex flex-col items-center justify-center h-full gap-4">
         <IconLoader2 className="h-4 w-4 animate-spin text-luxury-ink/40" />
-        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-500">Đang tải</p>
+        <p className="text-2xs font-semibold uppercase tracking-[0.22em] text-neutral-500">
+          Đang tải
+        </p>
       </div>
     );
   }

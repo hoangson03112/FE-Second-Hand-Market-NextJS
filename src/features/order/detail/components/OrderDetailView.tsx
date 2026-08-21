@@ -435,7 +435,7 @@ export function OrderDetailView({
                 refundTodoClass,
               )}
             >
-              <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-600">
+              <p className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
                 {refundTodo.title}
               </p>
               <p className="mt-2 text-xs leading-relaxed text-neutral-700">

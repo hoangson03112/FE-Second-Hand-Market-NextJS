@@ -68,7 +68,7 @@ export default function UsersTable({
                 <ToneBadge
                   tone={ROLE_TONES[acc.role ?? "buyer"] ?? "muted"}
                   dot={false}
-                  className="text-[10px]"
+                  className="text-2xs"
                 >
                   {ROLE_LABELS[acc.role ?? "buyer"] ?? acc.role}
                 </ToneBadge>
@@ -156,4 +156,3 @@ export default function UsersTable({
     />
   );
 }
-

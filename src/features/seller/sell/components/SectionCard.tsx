@@ -21,7 +21,7 @@ export function SectionCard({
         <div className="flex h-7 w-7 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-white">
           <Icon className="h-3.5 w-3.5 text-luxury-ink" />
         </div>
-        <h3 className="text-[10px] font-semibold uppercase tracking-[0.22em] text-luxury-ink">
+        <h3 className="text-2xs font-semibold uppercase tracking-[0.22em] text-luxury-ink">
           {title}
         </h3>
       </div>

@@ -2,7 +2,12 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { IconUpload, IconVideo, IconMovie, IconTrash } from "@tabler/icons-react";
+import {
+  IconUpload,
+  IconVideo,
+  IconMovie,
+  IconTrash,
+} from "@tabler/icons-react";
 
 interface ProductMediaProps {
   existingImages: string[];
@@ -32,7 +37,9 @@ export function ProductMedia({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
-    const images = files.filter((f) => f.type.startsWith("image/")).slice(0, 10);
+    const images = files
+      .filter((f) => f.type.startsWith("image/"))
+      .slice(0, 10);
     onImagesChange(images);
     e.target.value = "";
   };
@@ -59,7 +66,9 @@ export function ProductMedia({
       <div className="flex-shrink-0">
         <p className="text-xs font-medium text-taupe-700 mb-2">
           Ảnh sản phẩm <span className="text-red-500">*</span>{" "}
-          <span className="text-neutral-400 font-normal">(ít nhất 1, tối đa 10)</span>
+          <span className="text-neutral-400 font-normal">
+            (ít nhất 1, tối đa 10)
+          </span>
         </p>
 
         <input
@@ -78,7 +87,9 @@ export function ProductMedia({
           className="rounded-[2px] border border-dashed border-luxury-ink/20 bg-cream-50/70 px-4 py-4 text-center cursor-pointer hover:border-luxury-ink/40 hover:bg-cream-50 transition-colors"
         >
           <IconUpload className="w-7 h-7 mx-auto text-neutral-400 mb-1" />
-          <p className="text-xs font-medium text-taupe-700">Chọn ảnh hoặc kéo thả ảnh vào đây</p>
+          <p className="text-xs font-medium text-taupe-700">
+            Chọn ảnh hoặc kéo thả ảnh vào đây
+          </p>
         </div>
 
         {/* Existing images (edit mode) */}
@@ -162,7 +173,9 @@ export function ProductMedia({
         <p className="text-xs font-medium text-taupe-700 mb-2 flex items-center gap-1.5">
           <IconMovie className="w-3.5 h-3.5" />
           Video{" "}
-          <span className="text-neutral-400 font-normal">(tùy chọn, tối đa 50MB)</span>
+          <span className="text-neutral-400 font-normal">
+            (tùy chọn, tối đa 50MB)
+          </span>
         </p>
 
         <input
@@ -180,8 +193,10 @@ export function ProductMedia({
               <IconVideo className="w-5 h-5 text-neutral-400" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-medium text-luxury-ink">Video hiện tại</p>
-              <p className="text-[10px] text-neutral-500">Đã tải lên</p>
+              <p className="text-xs font-medium text-luxury-ink">
+                Video hiện tại
+              </p>
+              <p className="text-2xs text-neutral-500">Đã tải lên</p>
             </div>
             <button
               type="button"
@@ -201,8 +216,10 @@ export function ProductMedia({
               <IconVideo className="w-5 h-5 text-neutral-400" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-medium text-luxury-ink truncate">{newVideo.name}</p>
-              <p className="text-[10px] text-neutral-500">
+              <p className="text-xs font-medium text-luxury-ink truncate">
+                {newVideo.name}
+              </p>
+              <p className="text-2xs text-neutral-500">
                 {(newVideo.size / 1024 / 1024).toFixed(2)} MB
               </p>
             </div>
@@ -222,7 +239,9 @@ export function ProductMedia({
             className="w-full rounded-[2px] border border-dashed border-luxury-ink/20 bg-cream-50/70 px-4 py-4 text-center hover:border-luxury-ink/40 hover:bg-cream-50 transition-colors flex flex-col items-center gap-1"
           >
             <IconVideo className="w-7 h-7 text-neutral-400" />
-            <span className="text-xs font-medium text-taupe-700">Chọn video</span>
+            <span className="text-xs font-medium text-taupe-700">
+              Chọn video
+            </span>
           </button>
         ) : null}
 
@@ -234,7 +253,9 @@ export function ProductMedia({
             className="w-full mt-2 rounded-[2px] border border-dashed border-luxury-ink/20 bg-cream-50/70 px-4 py-2 text-center hover:border-luxury-ink/40 hover:bg-cream-50 transition-colors flex flex-col items-center gap-1"
           >
             <IconVideo className="w-5 h-5 text-neutral-400" />
-            <span className="text-xs font-medium text-taupe-700">Thay thế video</span>
+            <span className="text-xs font-medium text-taupe-700">
+              Thay thế video
+            </span>
           </button>
         )}
       </div>

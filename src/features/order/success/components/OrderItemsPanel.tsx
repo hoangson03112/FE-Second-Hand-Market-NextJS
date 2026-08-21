@@ -25,13 +25,14 @@ export default function OrderItemsPanel({ order }: OrderItemsPanelProps) {
       <header className="flex flex-wrap items-end justify-between gap-4 border-b border-luxury-ink/10 px-5 py-5 sm:px-6">
         <div>
           <Eyebrow>Đã đặt</Eyebrow>
-          <h2
+          <h2
+
             className="font-droid-serif mt-3 text-lg tracking-tight text-luxury-ink"
           >
             Sản phẩm trong đơn
           </h2>
-        </div>
-        <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
+        </div>2xs
+        <span className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-500">
           {items.length} sản phẩm
         </span>
       </header>
@@ -55,11 +56,12 @@ export default function OrderItemsPanel({ order }: OrderItemsPanelProps) {
                 <p className="line-clamp-2 text-sm font-medium leading-relaxed text-luxury-ink">
                   {product?.name ?? "Sản phẩm"}
                 </p>
-                <div className="mt-3 flex items-baseline justify-between gap-4">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
+                <div className="mt-3 fle2xss-baseline justify-between gap-4">
+                  <span className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-500">
                     Số lượng ×{item.quantity}
                   </span>
-                  <span
+                  <span
+
                     className="font-droid-serif tabular-nums text-base text-luxury-ink"
                   >
                     {formatPrice(item.price ?? product?.price ?? 0)}

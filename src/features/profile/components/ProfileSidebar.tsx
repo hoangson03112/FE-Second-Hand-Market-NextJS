@@ -81,9 +81,7 @@ export function ProfileSidebar({
                 size="large"
               />
             </div>
-            <h3
-              className="font-droid-serif text-xl text-luxury-ink mb-1 line-clamp-1"
-            >
+            <h3 className="font-droid-serif text-xl text-luxury-ink mb-1 line-clamp-1">
               {fullName || "Người dùng"}
             </h3>
             <p className="text-xs text-muted-foreground mb-4 line-clamp-1">
@@ -134,7 +132,7 @@ export function ProfileSidebar({
 
         {isSeller && (
           <div className="p-4 border-b border-luxury-ink/10">
-            <p className="px-2 py-2 text-[10px] font-bold text-taupe-500 uppercase tracking-[0.2em]">
+            <p className="px-2 py-2 text-2xs font-bold text-taupe-500 uppercase tracking-[0.15em]">
               Seller
             </p>
             <div className="space-y-1">

@@ -126,7 +126,7 @@ export function ChatMessages({
     return (
       <div className="flex h-full flex-col items-center justify-center gap-4">
         <IconLoader2 className="h-4 w-4 animate-spin text-luxury-ink/40" />
-        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-500">
+        <p className="text-2xs font-semibold uppercase tracking-[0.22em] text-neutral-500">
           Đang tải tin nhắn
         </p>
       </div>

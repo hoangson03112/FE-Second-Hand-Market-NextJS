@@ -52,7 +52,7 @@ export default function AuthEditorialPanel({
 
         <Link
           href="/"
-          className="group inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory/60 transition-colors hover:text-luxury-champagne"
+          className="group inline-flex items-center gap-2 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ivory/60 transition-colors hover:text-luxury-champagne"
         >
           <IconArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-1" />
           Về trang chủ
@@ -107,12 +107,10 @@ export default function AuthEditorialPanel({
                   {item.number}
                 </span>
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-luxury-ivory/60">
+                  <p className="text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ivory/60">
                     {item.tag}
                   </p>
-                  <h3
-                    className="font-droid-serif mt-2 text-lg font-normal text-luxury-ivory"
-                  >
+                  <h3 className="font-droid-serif mt-2 text-lg font-normal text-luxury-ivory">
                     {item.title}
                   </h3>
                   <p className="mt-1.5 text-xs leading-relaxed text-luxury-ivory/70">
@@ -134,7 +132,7 @@ export default function AuthEditorialPanel({
         {AUTH_PANEL_TAGS.map((tag, index) => (
           <span
             key={tag}
-            className="inline-flex items-center gap-5 text-[10px] font-bold uppercase tracking-[0.28em] text-luxury-ivory/50"
+            className="inline-flex items-center gap-5 text-2xs font-bold uppercase tracking-[0.28em] text-luxury-ivory/50"
           >
             {tag}
             {index < AUTH_PANEL_TAGS.length - 1 ? (

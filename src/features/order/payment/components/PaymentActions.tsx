@@ -58,14 +58,14 @@ export function PaymentActions({
       </button>
 
       {hint ? (
-        <p className="text-center text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500">
+        <p className="text-center text-2xs font-bold uppercase tracking-[0.18em] text-neutral-500">
           {hint}
         </p>
       ) : null}
 
       <Link
         href="/"
-        className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-[2px] border border-luxury-ink/15 px-6 text-[10px] font-bold uppercase tracking-[0.2em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
+        className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-[2px] border border-luxury-ink/15 px-6 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
       >
         Về trang chủ
         <IconArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

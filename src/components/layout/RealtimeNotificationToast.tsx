@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import { useNotificationStore } from "@/store/useNotificationStore";
 import type { NotificationType } from "@/store/useNotificationStore";
 import { useToast } from "@/components/providers/ToastProvider";

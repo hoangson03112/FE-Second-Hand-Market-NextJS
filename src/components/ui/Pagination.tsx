@@ -59,7 +59,7 @@ export default function Pagination({
     /* Nút Trước/Sau — dạng chữ editorial, gạch chân hairline khi hover */
     const arrowClass = (disabled: boolean) =>
       cn(
-        "group inline-flex items-center gap-2 py-1 text-[11px] font-bold uppercase tracking-[0.2em]",
+        "group inline-flex items-center gap-2 py-1 text-[11px] font-bold uppercase tracking-[0.15em]",
         "outline-none transition-colors duration-300 ease-out",
         "focus-visible:text-luxury-ink",
         disabled

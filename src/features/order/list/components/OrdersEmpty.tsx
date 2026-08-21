@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { IconArrowUpRight, IconCircleCheck, IconPackage } from "@tabler/icons-react";
+import {
+  IconArrowUpRight,
+  IconCircleCheck,
+  IconPackage,
+} from "@tabler/icons-react";
 import type { OrderTab } from "@/constants/orderStatus";
 
 interface OrdersEmptyProps {
@@ -32,7 +36,11 @@ const TAB_COPY: Record<string, { heading: string; body: string }> = {
   },
 };
 
-export function OrdersEmpty({ activeTab, tabs, searchQuery }: OrdersEmptyProps) {
+export function OrdersEmpty({
+  activeTab,
+  tabs,
+  searchQuery,
+}: OrdersEmptyProps) {
   const isAll = activeTab === "all";
   const isSearch = Boolean(searchQuery?.trim());
   const isAllClear = activeTab === "action";
@@ -73,7 +81,7 @@ export function OrdersEmpty({ activeTab, tabs, searchQuery }: OrdersEmptyProps) 
       {isAll && !isSearch ? (
         <Link
           href="/products"
-          className="group mt-8 inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-7 py-3.5 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+          className="group mt-8 inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-7 py-3.5 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
         >
           Khám phá sản phẩm
           <IconArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

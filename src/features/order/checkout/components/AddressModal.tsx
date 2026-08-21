@@ -105,9 +105,7 @@ export default function AddressModal({
               ) : null}
               <div className="min-w-0">
                 <Eyebrow>{eyebrow}</Eyebrow>
-                <h2
-                  className="font-droid-serif mt-3 truncate text-xl tracking-tight text-luxury-ink"
-                >
+                <h2 className="font-droid-serif mt-3 truncate text-xl tracking-tight text-luxury-ink">
                   {title}
                 </h2>
               </div>
@@ -142,7 +140,7 @@ export default function AddressModal({
                   className="group flex w-full items-center justify-center gap-3 rounded-[2px] border border-dashed border-luxury-ink/20 bg-white/60 px-4 py-5 transition-all duration-300 hover:border-luxury-ink/40 hover:bg-white"
                 >
                   <IconPlus className="h-4 w-4 text-luxury-ink" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink">
+                  <span className="text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink">
                     Thêm địa chỉ mới
                   </span>
                 </button>

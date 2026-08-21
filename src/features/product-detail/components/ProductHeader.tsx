@@ -48,7 +48,7 @@ export default function ProductHeader({
         {(category || subcategory) && (
           <nav
             aria-label="Breadcrumb"
-            className="flex items-center gap-2 text-xs font-bold tracking-[0.2em] text-charcoal-400 uppercase flex-wrap"
+            className="flex items-center gap-2 text-xs font-bold tracking-[0.15em] text-charcoal-400 uppercase flex-wrap"
           >
             <Link href="/" className="hover:text-luxury-ink transition-colors">
               Trang chủ
@@ -86,9 +86,7 @@ export default function ProductHeader({
       </div>
 
       {/* Product Name */}
-      <h1
-        className="font-droid-serif text-3xl lg:text-4xl text-luxury-ink leading-[1.1] mb-5 tracking-tight"
-      >
+      <h1 className="font-droid-serif text-3xl lg:text-4xl text-luxury-ink leading-[1.1] mb-5 tracking-tight">
         {name}
       </h1>
 

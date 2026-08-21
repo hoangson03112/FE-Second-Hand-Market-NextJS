@@ -104,7 +104,7 @@ export function SellerSection({ seller, addressPhone }: SellerSectionProps) {
                   {Number(rating).toFixed(1)}
                 </span>
               </div>
-              <span className="text-[10px] text-muted-foreground">
+              <span className="text-2xs text-muted-foreground">
                 {reviewCount} đánh giá
               </span>
             </div>
@@ -117,19 +117,17 @@ export function SellerSection({ seller, addressPhone }: SellerSectionProps) {
             <p className="text-base font-bold text-foreground">
               {productCount}
             </p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">
-              SP đang bán
-            </p>
+            <p className="text-2xs text-muted-foreground mt-0.5">SP đang bán</p>
           </div>
           <div className="py-3 text-center">
             <p className="text-base font-bold text-foreground">{reviewCount}</p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">Đánh giá</p>
+            <p className="text-2xs text-muted-foreground mt-0.5">Đánh giá</p>
           </div>
           <div className="py-3 text-center">
             <p className="text-base font-bold text-foreground">
               {rating > 0 ? Number(rating).toFixed(1) : "—"}
             </p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">Điểm TB</p>
+            <p className="text-2xs text-muted-foreground mt-0.5">Điểm TB</p>
           </div>
         </div>
 

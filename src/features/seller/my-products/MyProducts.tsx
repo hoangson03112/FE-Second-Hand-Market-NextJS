@@ -9,7 +9,7 @@ import {
   useMyProducts,
   useDeleteProduct,
   useDeleteDiscount,
-  useProductsFilter,
+  MY_PRODUCTS_QUERY_KEY,
 } from "./hooks";
 import {
   ProductListHeader,
@@ -21,22 +21,32 @@ import {
 import { Container } from "@/components/layout/Container";
 import { microCaps } from "@/features/order/components";
 import { useRequestReview } from "@/features/seller/sell/hooks";
-import { usePagination } from "@/hooks/usePagination";
 import { Pagination } from "@/components/ui";
 import type { MyListingsResponse } from "@/types/myProducts";
 
-const PAGE_SIZE = 12;
-
 export default function MyProducts() {
   const queryClient = useQueryClient();
-  const { products, isLoading, error, refetch } = useMyProducts();
-  const { deletingId, handleDelete } = useDeleteProduct(refetch);
+  const {
+    products,
+    stats,
+    activeFilter,
+    setActiveFilter,
+    page,
+    setPage,
+    totalPages,
+    totalItems,
+    pageStart,
+    pageEnd,
+    isLoading,
+    isFetching,
+    error,
+    refresh,
+  } = useMyProducts();
+  const { deletingId, handleDelete } = useDeleteProduct(refresh);
   const {
     deletingId: deletingDiscountId,
     handleDelete: handleDeleteDiscount,
-  } = useDeleteDiscount(refetch);
-  const { activeFilter, setActiveFilter, stats, filteredProducts } =
-    useProductsFilter(products);
+  } = useDeleteDiscount(refresh);
   const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
   const [requestingReviewId, setRequestingReviewId] = useState<string | null>(
     null,
@@ -44,27 +54,15 @@ export default function MyProducts() {
   const [isRevealed, setIsRevealed] = useState(false);
   const { handleRequestReview: _requestReview } = useRequestReview();
 
-  const totalPages = Math.max(
-    1,
-    Math.ceil(filteredProducts.length / PAGE_SIZE),
-  );
-  const { page, setPage, resetPage } = usePagination(totalPages);
-
-  const handleFilterChange = useCallback(
-    (filter: string) => {
-      setActiveFilter(filter as Parameters<typeof setActiveFilter>[0]);
-      resetPage();
+  const handlePageChange = useCallback(
+    (nextPage: number) => {
+      setPage(nextPage);
+      // Điều khiển phân trang nằm dưới cùng grid, nên đưa người dùng về đầu
+      // danh sách khi trang mới được tải.
+      window.scrollTo({ top: 0, behavior: "smooth" });
     },
-    [setActiveFilter, resetPage],
+    [setPage],
   );
-
-  const paginatedProducts = filteredProducts.slice(
-    (page - 1) * PAGE_SIZE,
-    page * PAGE_SIZE,
-  );
-  const pageStart =
-    filteredProducts.length === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
-  const pageEnd = Math.min(page * PAGE_SIZE, filteredProducts.length);
 
   useEffect(() => {
     if (isLoading) return;
@@ -76,26 +74,30 @@ export default function MyProducts() {
     setRequestingReviewId(productId);
     await _requestReview(productId);
     setRequestingReviewId(null);
-    // Optimistic update: đổi status ngay lập tức, rồi refetch nền
-    queryClient.setQueryData<MyListingsResponse>(["my", "products"], (old) => {
-      if (!old) return old;
-      return {
-        ...old,
-        data: old.data.map((p) =>
-          p._id === productId
-            ? {
-                ...p,
-                status: "review_requested" as const,
-                aiModerationResult: {
-                  ...p.aiModerationResult,
-                  humanReviewRequested: true,
-                },
-              }
-            : p,
-        ),
-      };
-    });
-    refetch();
+    // Optimistic update: đổi status ngay lập tức trên mọi trang đang cache,
+    // rồi làm mới nền (đổi status có thể khiến tin rời khỏi tab hiện tại).
+    queryClient.setQueriesData<MyListingsResponse>(
+      { queryKey: MY_PRODUCTS_QUERY_KEY },
+      (old) => {
+        if (!old?.data) return old;
+        return {
+          ...old,
+          data: old.data.map((p) =>
+            p._id === productId
+              ? {
+                  ...p,
+                  status: "review_requested" as const,
+                  aiModerationResult: {
+                    ...p.aiModerationResult,
+                    humanReviewRequested: true,
+                  },
+                }
+              : p,
+          ),
+        };
+      },
+    );
+    refresh();
   };
 
   const revealClass = cn(
@@ -118,7 +120,7 @@ export default function MyProducts() {
         <ProductFilterTabs
           stats={stats}
           activeFilter={activeFilter}
-          onFilterChange={handleFilterChange}
+          onFilterChange={setActiveFilter}
         />
       </div>
 
@@ -134,11 +136,11 @@ export default function MyProducts() {
 
         {isLoading ? (
           <ProductLoadingState viewMode={viewMode} />
-        ) : products.length === 0 ? (
+        ) : stats.all === 0 && totalItems === 0 ? (
           <div className={revealClass}>
             <EmptyProductState />
           </div>
-        ) : filteredProducts.length === 0 ? (
+        ) : products.length === 0 ? (
           <div
             className={cn(
               revealClass,
@@ -163,12 +165,16 @@ export default function MyProducts() {
             <div
               className={cn(
                 revealClass,
+                // Trang cũ vẫn hiển thị trong lúc trang mới đang về — làm mờ
+                // nhẹ để người dùng biết dữ liệu đang được tải.
+                isFetching ? "opacity-50" : "opacity-100",
                 viewMode === "grid"
                   ? "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
                   : "space-y-4",
               )}
+              aria-busy={isFetching}
             >
-              {paginatedProducts.map((product) => (
+              {products.map((product) => (
                 <ProductCard
                   key={product._id}
                   product={product}
@@ -190,10 +196,7 @@ export default function MyProducts() {
                   {pageStart}–{pageEnd}
                 </span>{" "}
                 trong{" "}
-                <span className="text-luxury-ink">
-                  {filteredProducts.length}
-                </span>{" "}
-                tin đăng
+                <span className="text-luxury-ink">{totalItems}</span> tin đăng
               </p>
 
               {totalPages > 1 ? (
@@ -201,7 +204,7 @@ export default function MyProducts() {
                   variant="luxury"
                   currentPage={page}
                   totalPages={totalPages}
-                  onPageChange={setPage}
+                  onPageChange={handlePageChange}
                 />
               ) : null}
             </div>

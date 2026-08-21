@@ -6,7 +6,7 @@ import type {
   AdminProductListParams,
   AdminProductListResponse,
 } from "@/types/product";
-import type { MyListingsResponse } from "@/types/myProducts";
+import type { MyListingsParams, MyListingsResponse } from "@/types/myProducts";
 import type {
   CreateProductPayload,
   UpdateProductPayload,
@@ -172,13 +172,16 @@ export const ProductService = {
   },
 
   /** User: danh sách sản phẩm đã đăng (chỉ fields cho list). Chi tiết đầy đủ khi bấm Edit gọi getById. */
-  getMyListings: async (params?: {
-    page?: number;
-    limit?: number;
-  }): Promise<MyListingsResponse> => {
+  getMyListings: async (
+    params?: MyListingsParams,
+  ): Promise<MyListingsResponse> => {
     const qs = new URLSearchParams();
     if (params?.page) qs.set("page", String(params.page));
     if (params?.limit) qs.set("limit", String(params.limit));
+    // "all" là mặc định của server nên không cần gửi.
+    if (params?.status && params.status !== "all") {
+      qs.set("status", params.status);
+    }
     const query = qs.toString();
     const response = await axiosClient.get(
       `/products/my/listings${query ? `?${query}` : ""}`,

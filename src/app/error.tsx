@@ -26,7 +26,7 @@ export default function Error({
       <div className="w-full max-w-lg text-center">
         <div className="flex items-center justify-center gap-3">
           <span aria-hidden className="h-px w-8 bg-luxury-champagne/80" />
-          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-neutral-600">
+          <p className="text-2xs font-semibold uppercase tracking-[0.24em] text-neutral-600">
             Đã có lỗi xảy ra
           </p>
           <span aria-hidden className="h-px w-8 bg-luxury-champagne/80" />
@@ -48,7 +48,7 @@ export default function Error({
         </p>
 
         {error.digest ? (
-          <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-400">
+          <p className="mt-5 text-2xs font-semibold uppercase tracking-[0.15em] text-neutral-400">
             Mã lỗi · <span className="tabular-nums">{error.digest}</span>
           </p>
         ) : null}
@@ -57,7 +57,7 @@ export default function Error({
           <button
             type="button"
             onClick={reset}
-            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-[2px] bg-luxury-ink px-7 text-[10px] font-semibold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 sm:w-auto"
+            className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-[2px] bg-luxury-ink px-7 text-2xs font-semibold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 sm:w-auto"
           >
             <IconRefresh className="h-4 w-4" />
             Thử lại
@@ -65,7 +65,7 @@ export default function Error({
 
           <Link
             href="/"
-            className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-[2px] border border-luxury-ink/15 px-7 text-[10px] font-semibold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory sm:w-auto"
+            className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-[2px] border border-luxury-ink/15 px-7 text-2xs font-semibold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory sm:w-auto"
           >
             Về trang chủ
             <IconArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

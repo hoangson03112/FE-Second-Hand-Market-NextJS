@@ -56,7 +56,7 @@ export default function OrderProgressTrail({
     <section className="rounded-[2px] border border-luxury-ink/10 bg-white px-5 py-6 sm:px-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <Eyebrow>Tiến trình đơn hàng</Eyebrow>
-        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
+        <p className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-500">
           Hiện tại · <span className="text-luxury-ink">{currentLabel}</span>
         </p>
       </div>

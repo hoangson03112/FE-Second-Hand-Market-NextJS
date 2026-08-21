@@ -30,7 +30,7 @@ export function SellerLimitInfoBox({
         {!isSeller && (
           <Link
             href="/become-seller"
-            className="mt-2 inline-block text-[10px] font-semibold uppercase tracking-[0.2em] text-luxury-ink transition-colors hover:text-taupe-700"
+            className="mt-2 inline-block text-2xs font-semibold uppercase tracking-[0.15em] text-luxury-ink transition-colors hover:text-taupe-700"
           >
             Đăng ký Seller →
           </Link>

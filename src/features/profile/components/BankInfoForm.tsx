@@ -39,13 +39,11 @@ export function BankInfoForm({
   return (
     <div>
       <div className="px-6 py-6 border-b border-luxury-ink/10">
-        <h2
-          className="font-droid-serif text-2xl text-luxury-ink flex items-center gap-2"
-        >
+        <h2 className="font-droid-serif text-2xl text-luxury-ink flex items-center gap-2">
           <IconBuildingBank className="w-6 h-6 text-luxury-ink" />
           Thông tin ngân hàng
         </h2>
-        <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-taupe-500 mt-2">
+        <p className="text-2xs uppercase tracking-[0.15em] font-bold text-taupe-500 mt-2">
           Tài khoản nhận tiền khi bán hàng. Chỉ hiển thị và chỉnh sửa được với
           tài khoản Seller.
         </p>
@@ -67,7 +65,10 @@ export function BankInfoForm({
           </div>
         </div>
 
-        <form onSubmit={onSubmit} className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2">
+        <form
+          onSubmit={onSubmit}
+          className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2"
+        >
           <div>
             <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
               Tên ngân hàng <span className="text-blush-600">*</span>
@@ -134,7 +135,7 @@ export function BankInfoForm({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.2em] text-[11px] font-bold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
+              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.15em] text-[11px] font-bold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
             >
               {isSubmitting ? (
                 <>

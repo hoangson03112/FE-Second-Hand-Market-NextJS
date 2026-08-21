@@ -406,7 +406,7 @@ export default function FloatingChatBox() {
         >
           <IconMessageCircle className="h-5 w-5" />
           {unreadCount > 0 && (
-            <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-accent px-1.5 text-[10px] font-semibold tabular-nums text-white">
+            <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-accent px-1.5 text-2xs font-semibold tabular-nums text-white">
               {unreadCount}
             </span>
           )}
@@ -432,7 +432,7 @@ export default function FloatingChatBox() {
           />
 
           {!isConnected && (
-            <div className="flex shrink-0 items-center justify-center gap-2 border-b border-luxury-champagne/30 bg-cream-100/80 px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-600">
+            <div className="flex shrink-0 items-center justify-center gap-2 border-b border-luxury-champagne/30 bg-cream-100/80 px-5 py-2 text-2xs font-semibold uppercase tracking-[0.15em] text-neutral-600">
               <IconLoader2 className="h-3 w-3 animate-spin" />
               <span>Đang kết nối lại...</span>
             </div>
@@ -455,7 +455,7 @@ export default function FloatingChatBox() {
                     }}
                     className="group w-full rounded-[2px] border border-luxury-ink/12 bg-white px-4 py-3.5 text-left transition-all duration-300 hover:border-luxury-ink/35"
                   >
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-luxury-champagne">
+                    <p className="text-2xs font-semibold uppercase tracking-[0.22em] text-luxury-champagne">
                       Trợ lý AI tìm sản phẩm
                     </p>
                     <p className="mt-2 text-sm leading-relaxed text-neutral-600">
@@ -550,7 +550,7 @@ export default function FloatingChatBox() {
                         <button
                           type="button"
                           onClick={() => setIsDealMode(true)}
-                          className="inline-flex h-11 items-center gap-1.5 rounded-[2px] border border-luxury-ink/15 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
+                          className="inline-flex h-11 items-center gap-1.5 rounded-[2px] border border-luxury-ink/15 px-3 text-2xs font-semibold uppercase tracking-[0.16em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
                         >
                           <IconPercentage className="h-4 w-4" />
                           Deal

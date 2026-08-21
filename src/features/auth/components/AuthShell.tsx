@@ -98,7 +98,7 @@ export default function AuthShell({
                 </Link>
                 <Link
                   href="/"
-                  className="group inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500 transition-colors hover:text-luxury-ink"
+                  className="group inline-flex items-center gap-2 text-2xs font-bold uppercase tracking-[0.22em] text-neutral-500 transition-colors hover:text-luxury-ink"
                 >
                   <IconArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-1" />
                   Trang chủ

@@ -37,7 +37,7 @@ export default function SearchEmpty() {
       </p>
 
       <div className="mt-8 flex flex-col items-center gap-3">
-        <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-taupe-400">
+        <p className="flex items-center gap-1.5 text-2xs font-bold uppercase tracking-[0.18em] text-taupe-400">
           <IconSparkles
             className="h-3.5 w-3.5 text-luxury-champagne"
             strokeWidth={1.75}

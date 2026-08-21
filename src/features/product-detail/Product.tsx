@@ -74,7 +74,7 @@ export default function Product({ id }: ProductProps) {
       <div className="min-h-screen bg-luxury-ivory flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-8 h-8 border-2 border-luxury-ink/20 border-t-luxury-ink rounded-full animate-spin" />
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-taupe-500">
+          <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-taupe-500">
             Đang tải thông tin sản phẩm...
           </p>
         </div>
@@ -88,9 +88,7 @@ export default function Product({ id }: ProductProps) {
       <div className="min-h-screen bg-luxury-ivory flex items-center justify-center p-4">
         <div className="max-w-md w-full text-center py-12 px-8 rounded-[2px] border border-luxury-ink/10 bg-white">
           <IconAlertCircle className="w-12 h-12 text-taupe-400 mx-auto mb-4 stroke-[1.5]" />
-          <h2
-            className="font-droid-serif text-xl text-luxury-ink mb-2"
-          >
+          <h2 className="font-droid-serif text-xl text-luxury-ink mb-2">
             Không tìm thấy sản phẩm
           </h2>
           <p className="text-sm text-taupe-600 mb-8 leading-relaxed">
@@ -98,7 +96,7 @@ export default function Product({ id }: ProductProps) {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center justify-center h-12 px-8 rounded-[2px] bg-luxury-ink text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-luxury-ink/90 transition-colors"
+            className="inline-flex items-center justify-center h-12 px-8 rounded-[2px] bg-luxury-ink text-white text-[11px] uppercase tracking-[0.15em] font-bold hover:bg-luxury-ink/90 transition-colors"
           >
             Quay lại trang chủ
           </Link>
@@ -122,7 +120,7 @@ export default function Product({ id }: ProductProps) {
       <main className="max-w-9xl mx-auto px-4 md:px-8 py-10">
         <button
           onClick={() => router.back()}
-          className="font-droid-serif inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.2em] text-foreground hover:text-luxury-ink transition-colors mb-8 group"
+          className="font-droid-serif inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.15em] text-foreground hover:text-luxury-ink transition-colors mb-8 group"
         >
           <IconArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
           Trở lại

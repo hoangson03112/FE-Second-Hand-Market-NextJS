@@ -44,7 +44,7 @@ export default function GoogleCallbackClient() {
   return (
     <div className="flex min-h-[60svh] flex-col items-center justify-center gap-4 bg-luxury-ivory">
       <div className="h-10 w-10 animate-spin rounded-full border border-luxury-ink/15 border-t-luxury-ink" />
-      <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
+      <p className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
         Đang hoàn tất đăng nhập
       </p>
     </div>
