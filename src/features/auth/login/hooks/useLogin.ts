@@ -5,7 +5,8 @@ import { AuthService } from "@/services/auth.service";
 import { useBannedStore } from "@/store/useBannedStore";
 import { queryKeys } from "@/lib/query-client";
 import { announceSession } from "@/lib/session";
-import type { LoginRequest } from "@/types/auth";
+import type { InactiveLoginPayload, LoginRequest } from "@/types/auth";
+import { saveVerificationSession } from "@/lib/verification-session";
 import { loginSchema } from "@/schemas/auth.schema";
 import { getGoogleLoginUrl } from "@/constants";
 import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
@@ -55,8 +56,6 @@ export function useLogin() {
       google_failed: "Đăng nhập Google thất bại. Vui lòng thử lại.",
       google_no_user: "Không lấy được thông tin tài khoản Google.",
       google_not_configured: "Chức năng đăng nhập Google chưa được cấu hình.",
-      google_verify_invalid:
-        "Phiên xác minh không hợp lệ. Vui lòng đăng nhập lại bằng Google.",
     };
     toast.error(messages[errorParam] || "Có lỗi xảy ra khi xác thực Google.");
   }, [searchParams, router, queryClient, setBanned, toast]);
@@ -98,10 +97,28 @@ export function useLogin() {
       router.replace(safeRedirect(searchParams.get("redirect")));
       router.refresh();
     } catch (err: unknown) {
-      const statusCode = (err as { response?: { status?: number } }).response
-        ?.status;
+      const response = (
+        err as {
+          response?: { status?: number; data?: InactiveLoginPayload };
+        }
+      ).response;
+      const statusCode = response?.status;
 
-      if (statusCode === 403) {
+      // BE dùng 403 cho cả hai trạng thái chặn đăng nhập, phân biệt bằng `type`.
+      // Không đọc `type` thì tài khoản chưa xác minh sẽ thấy màn hình bị khoá.
+      if (statusCode === 403 && response?.data?.type === "inactive") {
+        const saved = saveVerificationSession(
+          response.data.verificationToken,
+          response.data.maskedEmail,
+        );
+        toast.error(
+          response.data.message ||
+            "Tài khoản chưa xác minh. Vui lòng nhập mã trong email.",
+        );
+        // Không có ticket (Redis lỗi, hoặc sessionStorage bị chặn) thì đừng đẩy
+        // sang màn hình nhập mã để nó lại bật về đây — giữ người dùng ở lại.
+        if (saved) router.push("/verify-email");
+      } else if (statusCode === 403) {
         setBanned(true);
         router.push("/");
       } else if (statusCode === 401) {
