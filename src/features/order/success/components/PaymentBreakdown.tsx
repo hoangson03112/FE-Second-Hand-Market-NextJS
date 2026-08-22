@@ -48,7 +48,7 @@ export default function PaymentBreakdown({
         />
       </div>
 
-      <div className="flex ite2xseline justify-between gap-4 border-t border-luxury-ink/10 bg-cream-50/70 px-5 py-5 sm:px-6">
+      <div className="flex items-baseline justify-between gap-4 border-t border-luxury-ink/10 bg-cream-50/70 px-5 py-5 sm:px-6">
         <span className="text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink">
           Tổng cộng
         </span>

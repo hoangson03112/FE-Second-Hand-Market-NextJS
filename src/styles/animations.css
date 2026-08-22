@@ -59,3 +59,22 @@
 .animate-hero-glow {
   animation: hero-glow 8s ease-in-out infinite;
 }
+
+/* Route-level loading indicator — see components/ui/Loading.tsx (PageLoader) */
+@keyframes loading-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(320%); }
+}
+
+.animate-loading-sweep {
+  animation: loading-sweep 1.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+/* base.css neutralises infinite animations under reduced motion; keep the
+   track readable as a static, determinate-looking bar instead of an empty rule. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-loading-sweep {
+    width: 100%;
+    opacity: 0.4;
+  }
+}

@@ -178,7 +178,7 @@ export default function Footer() {
               <Link
                 key={i}
                 href={`/${label.toLowerCase().replace(/\s/g, "-")}`}
-                className="text-xs text-taupe-300 hover:text-cream-100 transition-colors duration-200 font-bold uppercase tracking-[0.08em]"
+                className="text-xs text-taupe-300 hover:text-cream-100 transition-colors duration-200 font-bold uppercase tracking-wider"
               >
                 {label}
               </Link>

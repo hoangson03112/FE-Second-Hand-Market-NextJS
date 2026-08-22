@@ -235,7 +235,7 @@ export function OrderProductsCard({
                   totalAmount: order.totalAmount,
                 },
               )
-            }[0.15em]
+            }
             className="inline-flex shrink-0 items-center gap-2 rounded-[2px] border border-luxury-ink/15 bg-white px-4 py-2.5 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ink transition-all duration-300 hover:border-luxury-champagne hover:text-accent"
           >
             <IconMessage className="h-4 w-4" strokeWidth={1.75} />

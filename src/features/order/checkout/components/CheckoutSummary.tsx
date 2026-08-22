@@ -100,7 +100,6 @@ export default function CheckoutSummary({
                         : "—"
                   }
                 />
-                2xs
                 <div className="flex items-center justify-between gap-4">
                   <span className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-500">
                     Thanh toán
@@ -141,7 +140,7 @@ export default function CheckoutSummary({
       <InkSurface className="px-5 py-6 sm:px-6">
         <Eyebrow tone="dark">Tổng cộng</Eyebrow>
         <p className="font-droid-serif mt-3 tabular-nums text-[clamp(1.5rem,2.4vw,2rem)] leading-none text-luxury-ivory">
-          {formatPrice(total)}2xs
+          {formatPrice(total)}
         </p>
         {isMultiSeller ? (
           <p className="mt-3 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ivory/50">

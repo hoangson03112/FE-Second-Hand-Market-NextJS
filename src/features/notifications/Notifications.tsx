@@ -17,7 +17,7 @@ import { useUser } from "@/features/auth/hooks/useUser";
 import { useNotificationStore } from "@/store/useNotificationStore";
 import { NotificationService } from "@/services/notification.service";
 import { usePagination } from "@/hooks/usePagination";
-import { Pagination } from "@/components/ui";
+import { PageLoader, Pagination } from "@/components/ui";
 import type { NotificationType } from "@/store/useNotificationStore";
 import { formatTimeAgo } from "@/utils/format/date";
 
@@ -77,9 +77,11 @@ export default function Notifications() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent" />
-      </div>
+      <PageLoader
+        fullScreen
+        eyebrow="Thông báo"
+        title="Đang tải thông báo của bạn."
+      />
     );
   }
 

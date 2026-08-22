@@ -8,22 +8,10 @@ import {
 } from "@/lib/server/ghn";
 import type { ShipmentQuote, ShipmentQuoteResult } from "@/types/shipping";
 
-/**
- * Batched shipping quote.
- *
- * Checkout needs a fee per seller, and each fee used to cost the browser three
- * sequential GHN round trips (available-services, then fee + leadtime) — times
- * the number of sellers, all serialised. This endpoint takes every shipment at
- * once and resolves them in parallel next to GHN, so the browser pays for one
- * request no matter how many sellers are in the cart.
- */
-
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-/** A cart with more sellers than this is not a real checkout. */
 const MAX_SHIPMENTS = 20;
-/** GHN rejects sub-100g parcels outright. */
 const MIN_WEIGHT_G = 100;
 const MAX_WEIGHT_G = 30_000;
 const DEFAULT_WEIGHT_G = 500;
@@ -64,7 +52,7 @@ function errorMessage(error: unknown): string {
 async function quoteShipment(
   shipment: ShipmentInput,
   toDistrictId: number,
-  toWardCode: string
+  toWardCode: string,
 ): Promise<ShipmentQuote> {
   const fromDistrictId = toPositiveInt(shipment.from_district_id);
   const fromWardCode = String(shipment.from_ward_code ?? "").trim();
@@ -76,7 +64,7 @@ async function quoteShipment(
   const services = await getAvailableServices(fromDistrictId, toDistrictId);
   if (!services.length) {
     throw new Error(
-      "Không có phương thức vận chuyển khả dụng cho địa chỉ này."
+      "Không có phương thức vận chuyển khả dụng cho địa chỉ này.",
     );
   }
 
@@ -89,7 +77,6 @@ async function quoteShipment(
   const weight = clampWeight(shipment.weight);
   const insuranceValue = toPositiveInt(shipment.insurance_value) ?? undefined;
 
-  // Fee and leadtime are independent — no reason to serialise them.
   const [fee, leadtime] = await Promise.all([
     calculateFee({
       from_district_id: fromDistrictId,
@@ -123,7 +110,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   if (!isGhnConfigured()) {
     return NextResponse.json(
       { success: false, message: "GHN chưa được cấu hình trên máy chủ." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -135,7 +122,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   if (!toDistrictId || !toWardCode) {
     return NextResponse.json(
       { success: false, message: "Địa chỉ nhận hàng không hợp lệ." },
-      { status: 400 }
+      { status: 400 },
     );
   }
   if (!shipments.length) {
@@ -144,16 +131,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   if (shipments.length > MAX_SHIPMENTS) {
     return NextResponse.json(
       { success: false, message: "Quá nhiều người bán trong một đơn." },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
-  // allSettled, not all: one seller with a broken pickup address must not wipe
-  // out the quotes for every other seller in the cart.
   const settled = await Promise.allSettled(
     (shipments as ShipmentInput[]).map((shipment) =>
-      quoteShipment(shipment, toDistrictId, toWardCode)
-    )
+      quoteShipment(shipment, toDistrictId, toWardCode),
+    ),
   );
 
   const results: ShipmentQuoteResult[] = settled.map((outcome, index) => {

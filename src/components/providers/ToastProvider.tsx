@@ -10,44 +10,50 @@ type ToastProps = {
   action?: ReactNode;
 };
 
-export const useToast = () => {
-  const toastFn = (props: ToastProps | string) => {
-    if (typeof props === "string") {
-      return sonnerToast(props);
-    }
+const toastFn = (props: ToastProps | string) => {
+  if (typeof props === "string") {
+    return sonnerToast(props);
+  }
 
-    const { title, description, variant, action } = props;
-    const options = { description, action };
+  const { title, description, variant, action } = props;
+  const options = { description, action };
 
-    if (variant === "destructive") {
-      return sonnerToast.error(title || "Error", options);
-    }
-    if (variant === "success") {
-      return sonnerToast.success(title || "Success", options);
-    }
+  if (variant === "destructive") {
+    return sonnerToast.error(title || "Error", options);
+  }
+  if (variant === "success") {
+    return sonnerToast.success(title || "Success", options);
+  }
 
-    return sonnerToast(title || "Message", options);
-  };
-
-  const toast = Object.assign(toastFn, {
-    success: sonnerToast.success,
-    error: sonnerToast.error,
-    loading: sonnerToast.loading,
-    promise: sonnerToast.promise,
-    custom: sonnerToast.custom,
-    dismiss: sonnerToast.dismiss,
-  });
-
-  return {
-    toast,
-    success: sonnerToast.success,
-    error: sonnerToast.error,
-    loading: sonnerToast.loading,
-    promise: sonnerToast.promise,
-    custom: sonnerToast.custom,
-    dismiss: sonnerToast.dismiss,
-  };
+  return sonnerToast(title || "Message", options);
 };
+
+const toast = Object.assign(toastFn, {
+  success: sonnerToast.success,
+  error: sonnerToast.error,
+  loading: sonnerToast.loading,
+  promise: sonnerToast.promise,
+  custom: sonnerToast.custom,
+  dismiss: sonnerToast.dismiss,
+});
+
+/*
+  API của sonner không phụ thuộc state nào, nên dựng sẵn một lần ở module scope
+  và luôn trả về đúng object đó. Nếu tạo mới mỗi lần render, mọi
+  useEffect/useCallback nhận toast làm dependency sẽ chạy lại sau từng render
+  — đủ để một effect fetch-rồi-setState tự gọi lại chính nó vô hạn.
+*/
+const toastApi = {
+  toast,
+  success: sonnerToast.success,
+  error: sonnerToast.error,
+  loading: sonnerToast.loading,
+  promise: sonnerToast.promise,
+  custom: sonnerToast.custom,
+  dismiss: sonnerToast.dismiss,
+} as const;
+
+export const useToast = () => toastApi;
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   return (

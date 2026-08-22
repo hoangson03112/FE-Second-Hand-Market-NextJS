@@ -355,7 +355,7 @@ export function RefundDetailCard({
                     </p>
                     <p className="mt-0.5 text-xs text-neutral-500">
                       Video bằng chứng · Nhấn để xem
-                    </p>[0.15em]
+                    </p>
                   </div>
                   <span className="shrink-0 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ink">
                     Xem
@@ -413,7 +413,7 @@ export function RefundDetailCard({
                   </p>
                   <button
                     type="button"
-                    onClick={onEscalateToAdmin}[0.15em]
+                    onClick={onEscalateToAdmin}
                     disabled={isEscalating}
                     className="mt-3 inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-5 py-2.5 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
                   >

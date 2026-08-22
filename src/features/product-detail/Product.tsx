@@ -1,13 +1,7 @@
 "use client";
 
-import {
-  IconArrowLeft,
-  IconTruck,
-  IconMapPin,
-  IconAlertCircle,
-} from "@tabler/icons-react";
+import { IconArrowLeft, IconTruck, IconMapPin } from "@tabler/icons-react";
 import { useState, useCallback, useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUser } from "@/features/auth/hooks/useUser";
@@ -28,6 +22,7 @@ import {
   ProductReviewsSection,
 } from "./components";
 import { useProduct, useProductReviews } from "@/hooks";
+import { NotFoundView, PageLoader } from "@/components/ui";
 import { useProductActions } from "./hooks/useProductActions";
 
 interface ProductProps {
@@ -71,37 +66,26 @@ export default function Product({ id }: ProductProps) {
   /* ── MÀN HÌNH LOADING ── */
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-luxury-ivory flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-8 h-8 border-2 border-luxury-ink/20 border-t-luxury-ink rounded-full animate-spin" />
-          <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-taupe-500">
-            Đang tải thông tin sản phẩm...
-          </p>
-        </div>
-      </div>
+      <PageLoader
+        fullScreen
+        eyebrow="Sản phẩm"
+        title="Đang tải thông tin sản phẩm."
+      />
     );
   }
 
   /* ── MÀN HÌNH LỖI / KHÔNG TÌM THẤY SẢN PHẨM ── */
   if (error || !product) {
     return (
-      <div className="min-h-screen bg-luxury-ivory flex items-center justify-center p-4">
-        <div className="max-w-md w-full text-center py-12 px-8 rounded-[2px] border border-luxury-ink/10 bg-white">
-          <IconAlertCircle className="w-12 h-12 text-taupe-400 mx-auto mb-4 stroke-[1.5]" />
-          <h2 className="font-droid-serif text-xl text-luxury-ink mb-2">
-            Không tìm thấy sản phẩm
-          </h2>
-          <p className="text-sm text-taupe-600 mb-8 leading-relaxed">
-            Sản phẩm này có thể đã bị xóa hoặc không tồn tại trên hệ thống.
-          </p>
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center h-12 px-8 rounded-[2px] bg-luxury-ink text-white text-[11px] uppercase tracking-[0.15em] font-bold hover:bg-luxury-ink/90 transition-colors"
-          >
-            Quay lại trang chủ
-          </Link>
-        </div>
-      </div>
+      <NotFoundView
+        code=""
+        eyebrow="Không tìm thấy sản phẩm"
+        title="Sản phẩm này không còn khả dụng."
+        description="Sản phẩm có thể đã bị xóa, đã bán hoặc không tồn tại trên hệ thống. Bạn có thể tìm một sản phẩm tương tự."
+        primaryAction={{ href: "/products", label: "Xem sản phẩm khác" }}
+        secondaryAction={{ href: "/", label: "Về trang chủ" }}
+        className="min-h-screen"
+      />
     );
   }
 

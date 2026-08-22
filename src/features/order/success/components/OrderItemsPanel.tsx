@@ -31,7 +31,7 @@ export default function OrderItemsPanel({ order }: OrderItemsPanelProps) {
           >
             Sản phẩm trong đơn
           </h2>
-        </div>2xs
+        </div>
         <span className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-500">
           {items.length} sản phẩm
         </span>
@@ -56,7 +56,7 @@ export default function OrderItemsPanel({ order }: OrderItemsPanelProps) {
                 <p className="line-clamp-2 text-sm font-medium leading-relaxed text-luxury-ink">
                   {product?.name ?? "Sản phẩm"}
                 </p>
-                <div className="mt-3 fle2xss-baseline justify-between gap-4">
+                <div className="mt-3 flex items-baseline justify-between gap-4">
                   <span className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-500">
                     Số lượng ×{item.quantity}
                   </span>

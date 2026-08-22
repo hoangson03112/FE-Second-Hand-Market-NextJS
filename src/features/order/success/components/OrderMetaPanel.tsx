@@ -156,7 +156,7 @@ export default function OrderMetaPanel({
 
       <div className="border-t border-luxury-ink/10 bg-cream-50/70 px-5 py-5 sm:px-6">
         <Link
-          href={`/orders/${orderId}`}2xs
+          href={`/orders/${orderId}`}
           className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-[2px] bg-luxury-ink px-6 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
         >
           Xem chi tiết đơn hàng

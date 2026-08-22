@@ -14,7 +14,7 @@ import { OrderCard } from "./components/OrderCard";
 import { microCaps } from "@/features/order/components";
 import { CancelOrderReasonDialog } from "@/features/order/components";
 import { RefundModal } from "@/features/order/components";
-import { Pagination } from "@/components/ui";
+import { ListSkeleton, Pagination } from "@/components/ui";
 
 /** Centered ivory state used for the auth / initial-load screens. */
 function OrdersPlaceholder({
@@ -148,12 +148,7 @@ export default function Orders() {
           ) : null}
 
           {isLoading ? (
-            <div className="flex flex-col items-center gap-5 py-24">
-              <span className="h-4 w-4 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
-              <p className="text-2xs font-bold uppercase tracking-[0.24em] text-neutral-500">
-                Đang tải đơn hàng
-              </p>
-            </div>
+            <ListSkeleton className="py-6" rows={4} />
           ) : filteredOrders.length === 0 ? (
             <div className={revealClass}>
               <OrdersEmpty

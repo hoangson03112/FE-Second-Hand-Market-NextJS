@@ -81,7 +81,7 @@ function DeliveryOption({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={cn(2xs
+      className={cn(
         "flex items-center justify-center gap-2 rounded-[2px] border px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] transition-all duration-300",
         active
           ? "border-luxury-ink bg-luxury-ink text-luxury-ivory"

@@ -179,7 +179,7 @@ export function OrderStatusHero({
                       )}
                     </span>
                     <span
-                      className={cn(2xs
+                      className={cn(
                         "text-center text-2xs font-bold uppercase leading-tight tracking-[0.12em]",
                         isReached ? "text-luxury-ink" : "text-neutral-400",
                       )}

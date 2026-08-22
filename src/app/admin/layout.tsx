@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useUser } from "@/features/auth/hooks/useUser";
-import { Spinner } from "@/components/ui";
+import { PageLoader } from "@/components/ui";
 
 export default function AdminLayout({
   children,
@@ -55,9 +55,11 @@ export default function AdminLayout({
 
   if (!authCheckReady || isLoading || !account || account.role !== "admin") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-muted/30">
-        <Spinner label="Đang kiểm tra quyền..." />
-      </div>
+      <PageLoader
+        fullScreen
+        eyebrow="Khu vực quản trị"
+        title="Đang kiểm tra quyền truy cập."
+      />
     );
   }
 
