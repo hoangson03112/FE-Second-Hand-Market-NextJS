@@ -4,6 +4,7 @@ import { AuthService } from "@/services/auth.service";
 import type { RegisterRequest } from "@/types/auth";
 import { registerSchema, RegisterInput } from "@/schemas/auth.schema";
 import { sanitizeFieldInput, sanitizeFormValues } from "@/utils";
+import { saveVerificationSession } from "@/lib/verification-session";
 import { useToast } from "@/components/ui";
 
 export function useRegister() {
@@ -69,7 +70,8 @@ export function useRegister() {
       const { confirmPassword, ...registerData } = result.data;
       const response = await AuthService.register(registerData as RegisterRequest);
       if (response.status === "success") {
-        router.push(`/verify-email?accountID=${response.accountID}`);
+        saveVerificationSession(response.verificationToken, response.maskedEmail);
+        router.push("/verify-email");
       } else {
         if (response.type === "username") toast.error("Tên đăng nhập đã được sử dụng");
         else if (response.type === "email") toast.error("Email đã được sử dụng");
@@ -77,12 +79,28 @@ export function useRegister() {
         else toast.error(response.message || "Đăng ký thất bại");
       }
     } catch (err: unknown) {
-      const error = err as { response?: { data?: { type?: string; message?: string } } };
+      const error = err as {
+        response?: {
+          data?: {
+            type?: string;
+            code?: string;
+            message?: string;
+            verificationToken?: string;
+            maskedEmail?: string;
+          };
+        };
+      };
       const errorData = error.response?.data;
       if (errorData?.type === "username") toast.error("Tên đăng nhập đã được sử dụng");
       else if (errorData?.type === "email") toast.error("Email đã được sử dụng");
       else if (errorData?.type === "phoneNumber") toast.error("Số điện thoại đã được sử dụng");
-      else toast.error(errorData?.message || "Có lỗi xảy ra, vui lòng thử lại");
+      else if (errorData?.code === "MAIL_FAILED") {
+        // Tài khoản đã tạo, chỉ email chưa đi được — BE vẫn trả ticket nên đưa
+        // người dùng sang màn hình nhập mã để họ bấm gửi lại, đừng bắt đăng ký lại.
+        saveVerificationSession(errorData.verificationToken, errorData.maskedEmail);
+        toast.error(errorData.message || "Không gửi được email, vui lòng gửi lại mã");
+        router.push("/verify-email");
+      } else toast.error(errorData?.message || "Có lỗi xảy ra, vui lòng thử lại");
     } finally {
       setIsLoading(false);
     }

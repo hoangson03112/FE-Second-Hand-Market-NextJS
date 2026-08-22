@@ -1,17 +1,25 @@
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { AuthService } from "@/services/auth.service";
 import { queryKeys } from "@/lib/query-client";
 import { announceSession } from "@/lib/session";
+import {
+  clearVerificationSession,
+  readVerificationSession,
+} from "@/lib/verification-session";
 import { useToast } from "@/components/providers/ToastProvider";
 
 export function useVerify() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
-  const accountID = searchParams.get("accountID");
   const toast = useToast();
+  // sessionStorage chỉ có ở client nên đọc trong state initializer, không đọc
+  // ở thân component — render trên server sẽ ném.
+  const [session, setSession] = useState(() =>
+    typeof window === "undefined" ? null : readVerificationSession(),
+  );
+  const verificationToken = session?.token ?? null;
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -33,11 +41,19 @@ export function useVerify() {
     return () => clearTimeout(timer);
   }, [cooldown]);
 
+  // Mất ticket (mở trực tiếp URL, đổi tab, sessionStorage bị chặn) thì không
+  // có gì để xác minh. Đẩy về đăng nhập: đăng nhập lại là BE phát phiên mới.
   useEffect(() => {
-    if (!accountID) {
-      router.push("/register");
+    if (!verificationToken) {
+      router.push("/login");
     }
-  }, [accountID, router]);
+  }, [verificationToken, router]);
+
+  /** Ticket chết giữa luồng: dọn rồi trả người dùng về đăng nhập. */
+  const abandonSession = () => {
+    clearVerificationSession();
+    setSession(null);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,8 +64,8 @@ export function useVerify() {
       return;
     }
 
-    if (!accountID) {
-      setError("Thiếu thông tin tài khoản");
+    if (!verificationToken) {
+      setError("Phiên xác minh đã hết hạn, vui lòng đăng nhập lại");
       return;
     }
 
@@ -57,11 +73,13 @@ export function useVerify() {
 
     try {
       const response = await AuthService.verify({
-        userID: accountID,
+        verificationToken,
         code: code,
       });
 
       if (response.status === "success") {
+        // Ticket đã dùng xong, BE cũng đã thu hồi — đừng để lại trong tab.
+        clearVerificationSession();
         queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });
         announceSession("signed-in");
 
@@ -89,20 +107,25 @@ export function useVerify() {
       if (data?.code === "ATTEMPTS_EXCEEDED" || data?.code === "CODE_EXPIRED") {
         setCode("");
       }
+      if (data?.code === "SESSION_EXPIRED") {
+        abandonSession();
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleResend = async () => {
-    if (!accountID || resendLoading || cooldown > 0) return;
+    if (!verificationToken || resendLoading || cooldown > 0) return;
 
     setResendLoading(true);
     setResendSuccess(false);
     setError("");
 
     try {
-      const response = await AuthService.resendVerificationCode({ accountID });
+      const response = await AuthService.resendVerificationCode({
+        verificationToken,
+      });
 
       if (response.status === "success") {
         setCode("");
@@ -115,23 +138,30 @@ export function useVerify() {
       }
     } catch (err: unknown) {
       const failure = err as {
-        response?: { data?: { message?: string; retryAfterSeconds?: number } };
+        response?: {
+          data?: {
+            message?: string;
+            code?: string;
+            retryAfterSeconds?: number;
+          };
+        };
       };
+      const data = failure.response?.data;
       // 429 do cooldown vẫn trả về số giây còn lại — dựng lại bộ đếm để nút
       // không mời người dùng bấm tiếp vào chỗ chắc chắn bị từ chối.
-      const retryAfter = failure.response?.data?.retryAfterSeconds;
-      if (retryAfter) setCooldown(retryAfter);
-      setError(
-        failure.response?.data?.message ||
-          "Không thể gửi lại mã, vui lòng thử lại sau",
-      );
+      if (data?.retryAfterSeconds) setCooldown(data.retryAfterSeconds);
+      setError(data?.message || "Không thể gửi lại mã, vui lòng thử lại sau");
+      if (data?.code === "SESSION_EXPIRED") {
+        abandonSession();
+      }
     } finally {
       setResendLoading(false);
     }
   };
 
   return {
-    accountID,
+    verificationToken,
+    maskedEmail: session?.maskedEmail,
     code,
     setCode,
     error,

@@ -7,7 +7,8 @@ import VerifyForm from "./components/VerifyForm";
 
 export default function Verify() {
   const {
-    accountID,
+    verificationToken,
+    maskedEmail,
     code,
     setCode,
     error,
@@ -21,7 +22,7 @@ export default function Verify() {
     handleResend,
   } = useVerify();
 
-  if (!accountID) {
+  if (!verificationToken) {
     return null;
   }
 
@@ -49,7 +50,11 @@ export default function Verify() {
             <span className="text-accent"> hộp thư</span>
           </>
         }
-        description="Chúng tôi đã gửi mã xác thực gồm 6 chữ số đến email bạn đã đăng ký."
+        description={
+          maskedEmail
+            ? `Chúng tôi đã gửi mã xác thực gồm 6 chữ số đến ${maskedEmail}.`
+            : "Chúng tôi đã gửi mã xác thực gồm 6 chữ số đến email bạn đã đăng ký."
+        }
       />
 
       <VerifyForm

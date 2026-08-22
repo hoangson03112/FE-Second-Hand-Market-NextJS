@@ -26,7 +26,7 @@ export const AuthService = {
   },
 
   resendVerificationCode: async (data: {
-    accountID: string;
+    verificationToken: string;
   }): Promise<ResendCodeResponse> => {
     const res = await axiosClient.post("/auth/resend-verification-code", data);
     return res as unknown as ResendCodeResponse;
@@ -61,25 +61,6 @@ export const AuthService = {
     newPassword: string;
   }): Promise<{ message: string }> => {
     return axiosClient.put("/accounts/set-password", data);
-  },
-
-  verifyGoogleEmail: async (data: {
-    pending: string;
-    code: string;
-  }): Promise<{ status: string; message?: string; token?: string }> => {
-    const res = await axiosClient.post("/auth/verify-google-email", data);
-    return res as unknown as {
-      status: string;
-      message?: string;
-      token?: string;
-    };
-  },
-
-  resendGoogleEmailCode: async (data: {
-    pending: string;
-  }): Promise<ResendCodeResponse> => {
-    const res = await axiosClient.post("/auth/resend-google-email-code", data);
-    return res as unknown as ResendCodeResponse;
   },
 
   submitAppeal: async (data: {
