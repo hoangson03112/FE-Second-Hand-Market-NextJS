@@ -51,7 +51,8 @@ function MoneyRow({
       >
         {label}
       </span>
-      <span
+      <span
+
         className={cn(
 "font-droid-serif",
           "tabular-nums text-luxury-ink",
@@ -81,7 +82,7 @@ function DeliveryOption({
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "flex items-center justify-center gap-2 rounded-[2px] border px-4 py-3.5 text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300",
+        "flex items-center justify-center gap-2 rounded-[2px] border px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] transition-all duration-300",
         active
           ? "border-luxury-ink bg-luxury-ink text-luxury-ivory"
           : "border-luxury-ink/15 text-neutral-500 hover:border-luxury-ink/40 hover:text-luxury-ink",
@@ -134,7 +135,8 @@ export default function CheckoutSellerSection({
           </p>
         </div>
         {showMarker ? (
-          <span
+          <span
+
             className="font-droid-serif shrink-0 text-sm italic text-luxury-ink/30"
           >
             {twoDigits(index + 1)} / {twoDigits(totalGroups)}
@@ -179,7 +181,8 @@ export default function CheckoutSellerSection({
                     <span className="text-xs font-medium uppercase tracking-[0.15em] text-neutral-500">
                       Số lượng: {item.quantity} sản phẩm
                     </span>
-                    <span
+                    <span
+
                       className="font-droid-serif tabular-nums text-base text-luxury-ink"
                     >
                       {formatPrice(item.product.price * item.quantity)}
@@ -244,7 +247,8 @@ export default function CheckoutSellerSection({
                   <p className="text-sm font-medium text-luxury-ink">
                     GHN — {shippingInfo?.short_name ?? "Chuẩn"}
                   </p>
-                  <span
+                  <span
+
                     className="font-droid-serif tabular-nums text-sm text-luxury-ink"
                   >
                     {shippingFee > 0 ? formatPrice(shippingFee) : "Đang tính…"}

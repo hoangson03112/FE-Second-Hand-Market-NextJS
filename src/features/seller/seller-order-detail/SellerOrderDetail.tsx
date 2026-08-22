@@ -5,11 +5,7 @@ import Link from "next/link";
 import { IconArrowUpRight, IconPackage, IconTruck } from "@tabler/icons-react";
 import { Container } from "@/components/layout/Container";
 import { ReturnInspectionModal } from "@/features/seller/components";
-import {
-  Eyebrow,
-  OrderTracking,
-  microCaps,
-} from "@/features/order/components";
+import { Eyebrow, OrderTracking, microCaps } from "@/features/order/components";
 import { cn } from "@/lib/utils";
 import { getShippingMethodType } from "@/utils/format";
 import { openChatWithOrder } from "@/utils/chat";
@@ -219,7 +215,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
         action={
           <Link
             href="/my/orders"
-            className="group mt-2 inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-7 py-3.5 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+            className="group mt-2 inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-7 py-3.5 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
           >
             Về danh sách đơn hàng
             <IconArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -324,7 +320,10 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                   isLocalPickup={isLocalPickup}
                   onChatClick={handleChatClick}
                 />
-                <SellerShippingCard order={order} isLocalPickup={isLocalPickup} />
+                <SellerShippingCard
+                  order={order}
+                  isLocalPickup={isLocalPickup}
+                />
 
                 {hasTracking ? (
                   <div ref={trackingRef}>

@@ -2,11 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
-import type { ProductStatusFilter } from "@/types/myProducts";
+import type { MyListingTabKey } from "@/types/myProducts";
 
-type FilterKey = ProductStatusFilter | "all";
-
-const FILTERS: { value: FilterKey; label: string }[] = [
+const FILTERS: { value: MyListingTabKey; label: string }[] = [
   { value: "all", label: "Tất cả" },
   { value: "pending", label: "Chờ duyệt" },
   { value: "approved", label: "Đã duyệt" },
@@ -16,9 +14,9 @@ const FILTERS: { value: FilterKey; label: string }[] = [
 ];
 
 interface ProductFilterTabsProps {
-  stats: Record<string, number>;
-  activeFilter: FilterKey;
-  onFilterChange: (filter: FilterKey) => void;
+  stats: Record<MyListingTabKey, number>;
+  activeFilter: MyListingTabKey;
+  onFilterChange: (filter: MyListingTabKey) => void;
 }
 
 /**
@@ -67,7 +65,7 @@ export function ProductFilterTabs({
                     : "border-luxury-ink/12 bg-white text-neutral-500 hover:border-luxury-ink/40 hover:text-luxury-ink",
                 )}
               >
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
+                <span className="text-2xs font-medium uppercase tracking-[0.12em]">
                   {label}
                 </span>
 

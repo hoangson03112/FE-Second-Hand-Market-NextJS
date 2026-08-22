@@ -81,7 +81,7 @@ function FilterGroup({
           >
             {String(index).padStart(2, "0")}
           </span>
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-600 transition-colors group-hover:text-luxury-ink">
+          <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-neutral-600 transition-colors group-hover:text-luxury-ink">
             {title}
           </span>
         </div>
@@ -305,12 +305,12 @@ export default function FilterSidebar({
             className="h-4 w-4 text-luxury-champagne"
             strokeWidth={1.75}
           />
-          <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-luxury-ink">
+          <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-luxury-ink">
             Bộ lọc
           </h2>
           {activeFilterCount > 0 && (
             <span
-              className="flex h-4 min-w-4 items-center justify-center bg-luxury-champagne px-1 text-[10px] font-bold text-luxury-ink"
+              className="flex h-4 min-w-4 items-center justify-center bg-luxury-champagne px-1 text-2xs font-bold text-luxury-ink"
               style={{ borderRadius: "2px" }}
             >
               {activeFilterCount}
@@ -337,7 +337,7 @@ export default function FilterSidebar({
             <button
               key={chip.label}
               onClick={chip.onRemove}
-              className="group inline-flex animate-[fadeInUp_0.35s_ease-out_backwards] items-center gap-1.5 border border-luxury-ink/15 bg-cream-50 py-1 pl-2.5 pr-1.5 text-[10px] font-medium text-luxury-ink transition-all duration-300 hover:border-luxury-champagne hover:bg-white"
+              className="group inline-flex animate-[fadeInUp_0.35s_ease-out_backwards] items-center gap-1.5 border border-luxury-ink/15 bg-cream-50 py-1 pl-2.5 pr-1.5 text-2xs font-medium text-luxury-ink transition-all duration-300 hover:border-luxury-champagne hover:bg-white"
               style={{ borderRadius: "2px", animationDelay: `${i * 60}ms` }}
             >
               {chip.label}

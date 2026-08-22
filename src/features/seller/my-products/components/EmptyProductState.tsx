@@ -20,7 +20,7 @@ export function EmptyProductState() {
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <Link
           href="/sell"
-          className="group inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-7 py-3.5 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+          className="group inline-flex items-center gap-2 rounded-[2px] bg-luxury-ink px-7 py-3.5 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
         >
           Đăng sản phẩm
           <IconArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -28,7 +28,7 @@ export function EmptyProductState() {
 
         <Link
           href="/products"
-          className="inline-flex items-center gap-2 rounded-[2px] border border-luxury-ink/15 px-7 py-3.5 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
+          className="inline-flex items-center gap-2 rounded-[2px] border border-luxury-ink/15 px-7 py-3.5 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
         >
           Khám phá chợ
         </Link>

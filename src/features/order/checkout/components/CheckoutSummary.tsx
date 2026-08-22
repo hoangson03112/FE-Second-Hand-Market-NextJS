@@ -37,9 +37,9 @@ function Row({
       <span className="text-xs font-bold uppercase tracking-[0.15em] text-charcoal-800">
         {label}
       </span>
-      <span
+      <span
         className={cn(
-"font-droid-serif",
+          "font-droid-serif",
           "tabular-nums text-sm",
           tone === "blush" ? "text-blush-700" : "text-luxury-ink",
         )}
@@ -66,9 +66,7 @@ export default function CheckoutSummary({
     <section className="overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white">
       <header className="border-b border-luxury-ink/10 px-5 py-5 sm:px-6">
         <Eyebrow>Tổng quan</Eyebrow>
-        <h2
-          className="font-droid-serif mt-3 text-xl tracking-tight text-luxury-ink"
-        >
+        <h2 className="font-droid-serif mt-3 text-xl tracking-tight text-luxury-ink">
           Tổng đơn hàng
         </h2>
       </header>
@@ -83,7 +81,10 @@ export default function CheckoutSummary({
             return (
               <div key={group.sellerId} className="space-y-3 px-5 py-5 sm:px-6">
                 <p className="truncate text-sm font-medium text-neutral-700">
-                 Người bán: <span className="font-bold text-luxury-ink tracking-tight">{group.sellerName}</span>
+                  Người bán:{" "}
+                  <span className="font-bold text-luxury-ink tracking-tight">
+                    {group.sellerName}
+                  </span>
                 </p>
                 <Row
                   label={`Hàng · ${group.items.length} sp`}
@@ -100,10 +101,10 @@ export default function CheckoutSummary({
                   }
                 />
                 <div className="flex items-center justify-between gap-4">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
+                  <span className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-500">
                     Thanh toán
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.2em] text-luxury-ink">
+                  <span className="inline-flex items-center gap-1.5 rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.15em] text-luxury-ink">
                     <Icon className="h-3 w-3" />
                     {group.isLocalPickup ? "Khi gặp mặt" : label}
                   </span>
@@ -138,13 +139,11 @@ export default function CheckoutSummary({
       {/* Ink cap — the same dark panel treatment as the homepage CTA */}
       <InkSurface className="px-5 py-6 sm:px-6">
         <Eyebrow tone="dark">Tổng cộng</Eyebrow>
-        <p
-          className="font-droid-serif mt-3 tabular-nums text-[clamp(1.5rem,2.4vw,2rem)] leading-none text-luxury-ivory"
-        >
+        <p className="font-droid-serif mt-3 tabular-nums text-[clamp(1.5rem,2.4vw,2rem)] leading-none text-luxury-ivory">
           {formatPrice(total)}
         </p>
         {isMultiSeller ? (
-          <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.2em] text-luxury-ivory/50">
+          <p className="mt-3 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ivory/50">
             Cho {sellerGroups.length} đơn từ {sellerGroups.length} người bán
           </p>
         ) : null}

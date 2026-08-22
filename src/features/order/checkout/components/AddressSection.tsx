@@ -72,7 +72,7 @@ export default function AddressSection({
               {selectedAddress.phoneNumber}
             </span>
             {selectedAddress.isDefault ? (
-              <span className="rounded-[2px] border border-luxury-champagne/50 bg-cream-100 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.2em] text-neutral-700">
+              <span className="rounded-[2px] border border-luxury-champagne/50 bg-cream-100 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.15em] text-neutral-700">
                 Mặc định
               </span>
             ) : null}

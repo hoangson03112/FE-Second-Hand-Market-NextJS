@@ -7,7 +7,11 @@ import {
   microCaps,
 } from "@/features/order/components";
 import { ReturnInspectionModal } from "@/features/seller/components";
-import { ConfirmWithReasonDialog, Pagination } from "@/components/ui";
+import {
+  ConfirmWithReasonDialog,
+  ListSkeleton,
+  Pagination,
+} from "@/components/ui";
 import { Container } from "@/components/layout/Container";
 import { cn } from "@/lib/utils";
 import { PAGE_SIZE, useSellerOrders } from "./hooks/useSellerOrders";
@@ -161,12 +165,7 @@ export default function SellerOrders() {
           />
 
           {isLoading ? (
-            <div className="flex flex-col items-center gap-5 py-24">
-              <span className="h-4 w-4 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
-              <p className={cn(microCaps, "text-neutral-500")}>
-                Đang tải đơn hàng
-              </p>
-            </div>
+            <ListSkeleton className="py-6" rows={4} />
           ) : filteredOrders.length === 0 ? (
             <div className={revealClass}>
               <EmptyOrderState activeTab={activeTab} />

@@ -15,7 +15,7 @@ interface OrderSellerReviewSectionProps {
 }
 
 const FIELD_LABEL =
-  "mb-2.5 block text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500";
+  "mb-2.5 block text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500";
 
 export function OrderSellerReviewSection({
   existingReview,
@@ -36,7 +36,10 @@ export function OrderSellerReviewSection({
     >
       {existingReview ? (
         <div className="rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-5 py-5">
-          <span className="flex gap-1" aria-label={`${existingReview.rating} trên 5 sao`}>
+          <span
+            className="flex gap-1"
+            aria-label={`${existingReview.rating} trên 5 sao`}
+          >
             {[1, 2, 3, 4, 5].map((i) => (
               <IconStar
                 key={i}
@@ -105,7 +108,7 @@ export function OrderSellerReviewSection({
           </button>
         </form>
       ) : (
-        <div className="flex items-center justify-center gap-3 py-8 text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
+        <div className="flex items-center justify-center gap-3 py-8 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
           <span className="h-3.5 w-3.5 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
           Đang tải thông tin đánh giá
         </div>

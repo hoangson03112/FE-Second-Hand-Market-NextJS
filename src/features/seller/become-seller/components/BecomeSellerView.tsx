@@ -127,7 +127,7 @@ export function BecomeSellerView({
               />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-luxury-champagne">
+              <p className="text-2xs font-bold uppercase tracking-[0.28em] text-luxury-champagne">
                 {requiresVerification
                   ? "Xác minh tài khoản"
                   : "Bắt đầu hành trình"}
@@ -322,7 +322,7 @@ function TimelineStep({
         )}
       </div>
       <div className="min-w-0 flex-1 pb-1">
-        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.15em] text-neutral-500">
           {label}
         </p>
         {children}

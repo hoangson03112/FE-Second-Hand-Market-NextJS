@@ -58,9 +58,7 @@ export function ProductListHeader({
 
           <div className="min-w-0">
             <Eyebrow>Kênh người bán</Eyebrow>
-            <h1
-              className="font-droid-serif mt-2.5 text-[clamp(1.5rem,3vw,2rem)] leading-[1.1] tracking-tight text-luxury-ink"
-            >
+            <h1 className="font-droid-serif mt-2.5 text-[clamp(1.5rem,3vw,2rem)] leading-[1.1] tracking-tight text-luxury-ink">
               Sản phẩm của tôi
             </h1>
             <p className="mt-2.5 max-w-md text-sm leading-relaxed text-neutral-600">
@@ -68,7 +66,7 @@ export function ProductListHeader({
             </p>
             <Link
               href="/seller/orders"
-              className="group mt-4 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-taupe-700"
+              className="group mt-4 inline-flex items-center gap-2 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-taupe-700"
             >
               Quản lý đơn hàng
               <IconArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -79,9 +77,7 @@ export function ProductListHeader({
         <div className="flex flex-wrap items-end justify-between gap-6 lg:justify-end lg:gap-8">
           <div>
             <p className={cn(microCaps, "text-neutral-500")}>Tổng tin đăng</p>
-            <p
-              className="font-droid-serif mt-2 text-2xl leading-none tabular-nums text-luxury-ink"
-            >
+            <p className="font-droid-serif mt-2 text-2xl leading-none tabular-nums text-luxury-ink">
               {totalCount}
             </p>
           </div>
@@ -98,7 +94,7 @@ export function ProductListHeader({
 
             <Link
               href="/sell"
-              className="inline-flex h-9 items-center gap-2 rounded-[2px] bg-luxury-ink px-5 text-[10px] font-bold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+              className="inline-flex h-9 items-center gap-2 rounded-[2px] bg-luxury-ink px-5 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
             >
               <IconPlus className="h-3.5 w-3.5" />
               Đăng tin

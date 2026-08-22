@@ -65,7 +65,7 @@ export default function OrderTabs({
                     : "border-luxury-ink/12 bg-white text-neutral-500 hover:border-luxury-ink/40 hover:text-luxury-ink",
                 )}
               >
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em]">
+                <span className="text-2xs font-bold uppercase tracking-[0.15em]">
                   {label}
                 </span>
 

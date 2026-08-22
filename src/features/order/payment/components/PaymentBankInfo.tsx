@@ -21,7 +21,6 @@ export interface PaymentBankInfoProps {
   copiedField?: string | null;
 }
 
-
 const label =
   "text-xs font-medium uppercase tracking-[0.15em] text-neutral-800";
 
@@ -75,9 +74,7 @@ export function PaymentBankInfo({
     <section className="overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white">
       <header className="border-b border-luxury-ink/10 px-5 py-5 sm:px-6">
         <Eyebrow>Hoặc chuyển thủ công</Eyebrow>
-        <h2
-          className="mt-3 font-droid-serif text-xl tracking-tight text-luxury-ink"
-        >
+        <h2 className="mt-3 font-droid-serif text-xl tracking-tight text-luxury-ink">
           Thông tin chuyển khoản
         </h2>
       </header>
@@ -109,9 +106,7 @@ export function PaymentBankInfo({
             <div className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6">
               <dt className={label}>Số tài khoản</dt>
               <dd className="flex items-center gap-3">
-                <span
-                  className="font-droid-serif tabular-nums text-base tracking-wide text-luxury-ink"
-                >
+                <span className="font-droid-serif tabular-nums text-base tracking-wide text-luxury-ink">
                   {displayBankInfo.accountNumber}
                 </span>
                 <CopyButton
@@ -131,13 +126,11 @@ export function PaymentBankInfo({
             </div>
 
             <div className="flex items-center justify-between gap-4 bg-cream-50/70 px-5 py-4 sm:px-6">
-              <dt className="text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink">
+              <dt className="text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink">
                 Số tiền
               </dt>
               <dd className="flex items-center gap-3">
-                <span
-                  className="font-droid-serif tabular-nums text-xl text-luxury-ink"
-                >
+                <span className="font-droid-serif tabular-nums text-xl text-luxury-ink">
                   {formatPrice(displayBankInfo.amount)}
                 </span>
                 <CopyButton

@@ -30,7 +30,8 @@ export default function PaymentBreakdown({
     <section className="overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white">
       <header className="border-b border-luxury-ink/10 px-5 py-5 sm:px-6">
         <Eyebrow>Thanh toán</Eyebrow>
-        <h2
+        <h2
+
           className="font-droid-serif mt-3 text-lg tracking-tight text-luxury-ink"
         >
           Chi tiết khoản tiền
@@ -48,7 +49,7 @@ export default function PaymentBreakdown({
       </div>
 
       <div className="flex items-baseline justify-between gap-4 border-t border-luxury-ink/10 bg-cream-50/70 px-5 py-5 sm:px-6">
-        <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink">
+        <span className="text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink">
           Tổng cộng
         </span>
         <span className="font-droid-serif tabular-nums text-xl text-luxury-ink">

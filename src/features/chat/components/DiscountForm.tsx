@@ -165,14 +165,14 @@ export default function DiscountForm({
       <div className="flex gap-2 mt-2">
         <button
           type="submit"
-          className="inline-flex h-10 items-center justify-center rounded-[2px] bg-luxury-ink px-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-40"
+          className="inline-flex h-10 items-center justify-center rounded-[2px] bg-luxury-ink px-5 text-2xs font-semibold uppercase tracking-[0.15em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-40"
           disabled={!canSubmit}
         >
           {loading ? "Đang tạo..." : "Tạo giảm giá"}
         </button>
         <button
           type="button"
-          className="inline-flex h-10 items-center justify-center rounded-[2px] border border-luxury-ink/15 px-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
+          className="inline-flex h-10 items-center justify-center rounded-[2px] border border-luxury-ink/15 px-5 text-2xs font-semibold uppercase tracking-[0.15em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
           onClick={onCancel}
           disabled={loading}
         >

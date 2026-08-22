@@ -33,7 +33,7 @@ export default function ProductGalleryNew({
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         {conditionLabel && (
-          <div className="absolute top-3 right-3 px-3 py-1 rounded-[2px] text-[10px] font-bold uppercase tracking-[0.2em] bg-white/90 backdrop-blur-sm border border-luxury-ink/10 text-luxury-ink">
+          <div className="absolute top-3 right-3 px-3 py-1 rounded-[2px] text-2xs font-bold uppercase tracking-[0.15em] bg-white/90 backdrop-blur-sm border border-luxury-ink/10 text-luxury-ink">
             {conditionLabel}
           </div>
         )}

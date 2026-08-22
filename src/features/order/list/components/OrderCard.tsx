@@ -38,11 +38,7 @@ interface OrderCardProps {
 }
 
 /** One line per item: thumbnail, name, quantity, line total. */
-function ProductRow({
-  item,
-}: {
-  item: Order["products"][number];
-}) {
+function ProductRow({ item }: { item: Order["products"][number] }) {
   const product = item.productId;
   const name = product?.name || "Sản phẩm";
   const href = product?._id ? `/products/${product._id}/product` : null;
@@ -221,9 +217,7 @@ export function OrderCard({
 
           <div className="flex items-baseline gap-3">
             <span className={cn(microCaps, "text-neutral-500")}>Tổng cộng</span>
-            <span
-              className="font-droid-serif text-xl leading-none tabular-nums text-luxury-ink"
-            >
+            <span className="font-droid-serif text-xl leading-none tabular-nums text-luxury-ink">
               {formatPrice(order.totalAmount)}
             </span>
           </div>
@@ -263,7 +257,7 @@ export function OrderCard({
         <div className="flex flex-wrap items-center justify-between gap-4">
           <Link
             href={`/orders/${order._id}`}
-            className="group inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-taupe-700"
+            className="group inline-flex items-center gap-2 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-taupe-700"
           >
             Xem chi tiết
             <IconArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

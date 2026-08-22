@@ -1,11 +1,5 @@
 "use client";
 
-/**
- * Last-resort boundary: catches errors thrown by the root layout itself, where
- * `app/error.tsx` cannot render. It replaces the whole document, so it must
- * ship its own <html>/<body> and cannot rely on the app's fonts or CSS
- * variables — styles are inlined on purpose.
- */
 export default function GlobalError({
   error,
   reset,

@@ -12,6 +12,6 @@ export const INPUT_CLASS =
 export const SELECT_CLASS = `${INPUT_CLASS} cursor-pointer appearance-none pr-9`;
 
 export const LABEL_CLASS =
-  "mb-2 block text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-600";
+  "mb-2 block text-2xs font-semibold uppercase tracking-[0.15em] text-neutral-600";
 
 export const ERROR_CLASS = "mt-1.5 text-xs leading-relaxed text-blush-700";

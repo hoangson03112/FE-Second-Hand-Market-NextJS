@@ -473,7 +473,7 @@ export default function HeroSection() {
         transition={{ delay: reducedMotion ? 0 : 2.8, duration: 0.8 }}
       >
         <div className="flex flex-col items-center gap-2">
-          <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-neutral-600/70">
+          <span className="text-2xs font-medium uppercase tracking-[0.28em] text-neutral-600/70">
             Cuộn xuống
           </span>
           <div className="h-10 w-px bg-gradient-to-b from-luxury-champagne/80 to-transparent animate-scroll-hint" />

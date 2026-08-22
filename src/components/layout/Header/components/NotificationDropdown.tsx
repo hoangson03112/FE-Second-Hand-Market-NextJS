@@ -139,7 +139,7 @@ export function NotificationDropdown() {
               </div>
             </div>
 
-            <span className="text-[10px] font-bold px-2 py-1 rounded-full bg-primary/10 text-primary">
+            <span className="text-2xs font-bold px-2 py-1 rounded-full bg-primary/10 text-primary">
               Mới nhất
             </span>
           </div>

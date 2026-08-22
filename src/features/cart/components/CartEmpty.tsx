@@ -32,7 +32,7 @@ export default function CartEmpty() {
 
       <div className="relative grid gap-10 p-8 sm:p-10 lg:grid-cols-[1.1fr_1fr] lg:items-center xl:p-16">
         <div className="min-w-0">
-          <div className="inline-flex items-center gap-2 rounded-[2px] border border-luxury-ink/10 bg-charcoal-50/50 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-charcoal-600">
+          <div className="inline-flex items-center gap-2 rounded-[2px] border border-luxury-ink/10 bg-charcoal-50/50 px-3 py-1 text-2xs font-bold uppercase tracking-[0.15em] text-charcoal-600">
             <IconShoppingBag className="h-3.5 w-3.5 text-luxury-ink" />
             Giỏ hàng
             <IconChevronRight className="h-3 w-3 text-charcoal-400" />
@@ -51,7 +51,7 @@ export default function CartEmpty() {
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
             <Link
               href="/search"
-              className="group inline-flex h-11 min-w-[160px] items-center justify-center gap-2 whitespace-nowrap rounded-[2px] bg-luxury-ink px-6 text-[11px] uppercase tracking-[0.2em] font-bold text-white transition-colors duration-200 hover:bg-luxury-ink/90"
+              className="group inline-flex h-11 min-w-[160px] items-center justify-center gap-2 whitespace-nowrap rounded-[2px] bg-luxury-ink px-6 text-[11px] uppercase tracking-[0.15em] font-bold text-white transition-colors duration-200 hover:bg-luxury-ink/90"
             >
               <IconSearch className="h-4 w-4" />
               Tìm sản phẩm
@@ -59,7 +59,7 @@ export default function CartEmpty() {
 
             <Link
               href="/products"
-              className="inline-flex h-11 min-w-[190px] items-center justify-center gap-2 whitespace-nowrap rounded-[2px] border border-luxury-ink/20 bg-transparent px-6 text-[11px] uppercase tracking-[0.2em] font-bold text-luxury-ink transition-colors hover:bg-charcoal-50"
+              className="inline-flex h-11 min-w-[190px] items-center justify-center gap-2 whitespace-nowrap rounded-[2px] border border-luxury-ink/20 bg-transparent px-6 text-[11px] uppercase tracking-[0.15em] font-bold text-luxury-ink transition-colors hover:bg-charcoal-50"
             >
               Xem tất cả
             </Link>
@@ -99,12 +99,10 @@ export default function CartEmpty() {
           <div className="relative overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white p-8">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <div className="text-[10px] uppercase tracking-[0.2em] font-bold text-charcoal-500">
+                <div className="text-2xs uppercase tracking-[0.15em] font-bold text-charcoal-500">
                   GỢI Ý NHANH
                 </div>
-                <div
-                  className="font-droid-serif mt-2 text-lg text-luxury-ink"
-                >
+                <div className="font-droid-serif mt-2 text-lg text-luxury-ink">
                   Bắt đầu từ danh mục
                 </div>
                 <p className="mt-1 text-sm text-charcoal-600">

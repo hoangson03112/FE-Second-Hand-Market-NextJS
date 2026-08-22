@@ -9,9 +9,7 @@ export default function CartLoginPrompt() {
       <div className="w-20 h-20 mb-6 flex items-center justify-center bg-taupe-50/50 rounded-[2px] border border-luxury-ink/10">
         <IconLogin className="w-10 h-10 text-luxury-ink" />
       </div>
-      <h3
-        className="font-droid-serif text-2xl text-luxury-ink mb-3"
-      >
+      <h3 className="font-droid-serif text-2xl text-luxury-ink mb-3">
         Đăng nhập để xem giỏ hàng
       </h3>
       <p className="text-charcoal-500 text-sm mb-8 leading-relaxed">
@@ -20,7 +18,7 @@ export default function CartLoginPrompt() {
       </p>
       <Link
         href="/login"
-        className="inline-flex items-center justify-center h-12 px-10 bg-luxury-ink text-white uppercase tracking-[0.2em] text-[11px] font-bold rounded-[2px] hover:bg-luxury-ink/90 transition-colors duration-300"
+        className="inline-flex items-center justify-center h-12 px-10 bg-luxury-ink text-white uppercase tracking-[0.15em] text-[11px] font-bold rounded-[2px] hover:bg-luxury-ink/90 transition-colors duration-300"
       >
         Đăng Nhập
       </Link>

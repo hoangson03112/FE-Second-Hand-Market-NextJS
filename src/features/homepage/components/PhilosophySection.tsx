@@ -130,7 +130,7 @@ export default function PhilosophySection() {
             >
               <div>
                 <div className="flex items-center justify-between border-b border-neutral-200 pb-4">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+                  <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
                     {values[0].tag}
                   </span>
                   <span className="font-ny text-xl italic text-luxury-ink/40 group-hover:text-taupe-700 transition-colors">
@@ -138,9 +138,7 @@ export default function PhilosophySection() {
                   </span>
                 </div>
 
-                <h3
-                  className="font-droid-serif mt-5 text-xl font-normal text-luxury-ink"
-                >
+                <h3 className="font-droid-serif mt-5 text-xl font-normal text-luxury-ink">
                   {values[0].title}
                 </h3>
                 <p className="mt-2 text-xs leading-relaxed text-neutral-600">
@@ -180,7 +178,7 @@ export default function PhilosophySection() {
 
               <div className="relative z-10">
                 <div className="flex items-center justify-between border-b border-white/15 pb-4">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60">
+                  <span className="text-2xs font-bold uppercase tracking-[0.15em] text-white/60">
                     {values[1].tag}
                   </span>
                   <span className="font-ny text-xl italic text-white/40 group-hover:text-white transition-colors">
@@ -190,9 +188,7 @@ export default function PhilosophySection() {
 
                 <div className="mt-5 h-px w-6 bg-luxury-champagne" />
 
-                <h3
-                  className="font-droid-serif mt-3 text-xl font-normal text-white"
-                >
+                <h3 className="font-droid-serif mt-3 text-xl font-normal text-white">
                   {values[1].title}
                 </h3>
                 <p className="mt-2 text-xs leading-relaxed text-white/70">
@@ -222,7 +218,7 @@ export default function PhilosophySection() {
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div className="max-w-md">
                   <div className="flex items-center gap-3">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500">
+                    <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
                       {values[2].tag}
                     </span>
                     <span className="h-1 w-1 rounded-full bg-taupe-700" />
@@ -231,9 +227,7 @@ export default function PhilosophySection() {
                     </span>
                   </div>
 
-                  <h3
-                    className="font-droid-serif mt-3 text-xl font-normal text-luxury-ink"
-                  >
+                  <h3 className="font-droid-serif mt-3 text-xl font-normal text-luxury-ink">
                     {values[2].title}
                   </h3>
                   <p className="mt-2 text-xs leading-relaxed text-neutral-600">

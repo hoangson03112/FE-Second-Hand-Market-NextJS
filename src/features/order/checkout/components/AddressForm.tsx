@@ -15,7 +15,7 @@ interface AddressFormProps {
 }
 
 const fieldLabel =
-  "block text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-600";
+  "block text-2xs font-bold uppercase tracking-[0.22em] text-neutral-600";
 
 const fieldBase =
   "h-11 w-full rounded-[2px] border border-luxury-ink/15 bg-white px-3.5 text-sm text-luxury-ink transition-colors duration-200 placeholder:text-neutral-400 focus:border-luxury-ink focus:outline-none disabled:cursor-not-allowed disabled:bg-cream-100/60 disabled:text-neutral-400";
@@ -316,7 +316,7 @@ export function AddressForm({
               type="button"
               onClick={onCancel}
               disabled={isSubmitting}
-              className="inline-flex h-11 items-center justify-center rounded-[2px] border border-luxury-ink/15 px-7 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink/40 disabled:opacity-40"
+              className="inline-flex h-11 items-center justify-center rounded-[2px] border border-luxury-ink/15 px-7 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink/40 disabled:opacity-40"
             >
               Hủy
             </button>
@@ -324,7 +324,7 @@ export function AddressForm({
           <button
             type="submit"
             disabled={!values.wardCode || isSubmitting}
-            className="inline-flex h-11 items-center justify-center gap-3 rounded-[2px] bg-luxury-ink px-7 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-luxury-ink"
+            className="inline-flex h-11 items-center justify-center gap-3 rounded-[2px] bg-luxury-ink px-7 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-luxury-ink"
           >
             {isSubmitting ? (
               <>

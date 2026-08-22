@@ -2,15 +2,7 @@ import { cn } from "@/lib/utils";
 import { PRODUCT_STATUS_CONFIG } from "@/constants";
 import type { ProductStatusFilter } from "@/types/product";
 
-/**
- * Moderation state in the same hairline-chip language as `OrderStatusChip`: a
- * 2px chip with one tonal dot, instead of the saturated pill that used to sit on
- * these cards.
- *
- * Labels still come from `PRODUCT_STATUS_CONFIG` so the wording stays
- * single-sourced; only the colour decision lives here, because the raw
- * red/blue/green hex in that config belongs to the older palette.
- */
+
 
 type Tone = "progress" | "settled" | "attention" | "failed" | "neutral";
 
@@ -50,16 +42,17 @@ export function ProductStatusChip({
   status,
   className,
 }: ProductStatusChipProps) {
-  const key = (status as ProductStatusFilter) in TONE_BY_STATUS
-    ? (status as ProductStatusFilter)
-    : "pending";
+  const key =
+    (status as ProductStatusFilter) in TONE_BY_STATUS
+      ? (status as ProductStatusFilter)
+      : "pending";
   const tone = TONE_BY_STATUS[key];
   const label = PRODUCT_STATUS_CONFIG[key]?.label ?? key;
 
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 items-center gap-2 rounded-[2px] border px-2.5 py-1 text-2xs font-bold uppercase tracking-[0.18em]",
+        "inline-flex shrink-0 items-center gap-2 rounded-[2px] border px-2.5 py-1 text-2xs font-medium uppercase tracking-[0.15em]",
         CHIP_CLASSES[tone],
         className,
       )}

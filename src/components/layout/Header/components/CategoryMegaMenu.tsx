@@ -44,7 +44,7 @@ export function CategoryMegaMenu({
             }}
           >
             <div className="py-8 ps-8">
-              <p className="text-xs font-bold tracking-[0.18em] uppercase mb-1.5 text-charcoal-300">
+              <p className="text-xs font-bold tracking-[0.15em] uppercase mb-1.5 text-charcoal-300">
                 Danh mục
               </p>
               <h2 className="text-xl font-medium mb-7 text-foreground">
@@ -58,10 +58,10 @@ export function CategoryMegaMenu({
                       className="flex items-center gap-2.5 mb-2 py-1"
                       onClick={onHideAllCategories}
                     >
-                      <span className="text-[10px] font-medium tabular-nums shrink-0 text-primary">
+                      <span className="text-2xs font-medium tabular-nums shrink-0 text-primary">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      <span className="text-[13px] font-bold truncate transition-colors text-foreground group-hover:text-primary">
+                      <span className="text-sm font-bold truncate transition-colors text-foreground group-hover:text-primary">
                         {category.name}
                       </span>
                     </Link>
@@ -73,7 +73,7 @@ export function CategoryMegaMenu({
                             key={sub._id}
                             href={`/categories/${category.slug}/sub/${sub.slug}`}
                             onClick={onHideAllCategories}
-                            className="flex items-center gap-2 py-1.5 px-2 text-[12px] font-medium rounded-md transition-colors truncate text-muted-foreground hover:bg-primary/10 hover:text-foreground"
+                            className="flex items-center gap-2 py-1.5 px-2 text-sm font-medium rounded-md transition-colors truncate text-muted-foreground hover:bg-primary/10 hover:text-foreground"
                           >
                             <span className="w-1 h-1 rounded-full shrink-0 bg-primary/50" />
                             {sub.name}

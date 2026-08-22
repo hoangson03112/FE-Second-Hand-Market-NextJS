@@ -1,11 +1,7 @@
 "use client";
 
 import type { IProduct } from "@/types/product";
-import {
-  useProvinces,
-  useDistricts,
-  useWards,
-} from "@/hooks/useGHNLocation";
+import { useProvinces, useDistricts, useWards } from "@/hooks/useGHNLocation";
 
 type AddressDetailProps = {
   address: NonNullable<IProduct["address"]>;
@@ -18,10 +14,10 @@ export function AddressDetail({ address, sellerName }: AddressDetailProps) {
   const { data: wards = [] } = useWards(address.districtId);
 
   const provinceName = provinces.find(
-    (p) => String(p.ProvinceID) === String(address.provinceId)
+    (p) => String(p.ProvinceID) === String(address.provinceId),
   )?.ProvinceName;
   const districtName = districts.find(
-    (d) => String(d.DistrictID) === String(address.districtId)
+    (d) => String(d.DistrictID) === String(address.districtId),
   )?.DistrictName;
   const wardName = wards.find((w) => w.WardCode === address.wardCode)?.WardName;
 
@@ -31,11 +27,15 @@ export function AddressDetail({ address, sellerName }: AddressDetailProps) {
     { label: "Địa chỉ", value: address.specificAddress },
     {
       label: "Tỉnh/TP",
-      value: provinceName ?? (address.provinceId ? String(address.provinceId) : undefined),
+      value:
+        provinceName ??
+        (address.provinceId ? String(address.provinceId) : undefined),
     },
     {
       label: "Quận/Huyện",
-      value: districtName ?? (address.districtId ? String(address.districtId) : undefined),
+      value:
+        districtName ??
+        (address.districtId ? String(address.districtId) : undefined),
     },
     {
       label: "Phường/Xã",
@@ -47,7 +47,7 @@ export function AddressDetail({ address, sellerName }: AddressDetailProps) {
     <dl className="grid grid-cols-2 gap-x-6 gap-y-2">
       {rows.map(({ label, value }) => (
         <div key={label}>
-          <dt className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+          <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
             {label}
           </dt>
           <dd className="mt-0.5 text-sm text-foreground">{value || "—"}</dd>

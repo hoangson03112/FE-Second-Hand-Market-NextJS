@@ -49,7 +49,7 @@ export default function CartBottomBar({
               <span className="text-xs uppercase tracking-[0.13em] font-medium text-luxury-ink hidden sm:block">
                 Tổng thanh toán ({selectedCount} sản phẩm):
               </span>
-              <span className="text-[10px] uppercase tracking-[0.2em] font-bold  sm:hidden">
+              <span className="text-2xs uppercase tracking-[0.15em] font-bold  sm:hidden">
                 Tổng ({selectedCount}):
               </span>
               <span className="text-xl sm:text-2xl font-medium text-luxury-ink mt-1">

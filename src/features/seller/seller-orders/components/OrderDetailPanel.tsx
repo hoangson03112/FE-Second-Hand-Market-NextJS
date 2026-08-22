@@ -84,7 +84,10 @@ function Notice({
 }) {
   return (
     <div
-      className={cn("rounded-[2px] border px-4 py-3.5", NOTICE_TONE_CLASS[tone])}
+      className={cn(
+        "rounded-[2px] border px-4 py-3.5",
+        NOTICE_TONE_CLASS[tone],
+      )}
     >
       <p className="text-xs font-bold text-luxury-ink">{title}</p>
       <p className="mt-1.5 text-xs leading-relaxed text-neutral-600">
@@ -185,7 +188,8 @@ export default function OrderDetailPanel({
     refundRequest?.status === "processing" ||
     refundRequest?.status === "bank_info_required";
 
-  const hasQuickAction = isPending || canApproveRejectRefund || canConfirmReturn;
+  const hasQuickAction =
+    isPending || canApproveRejectRefund || canConfirmReturn;
 
   const addressLine =
     [
@@ -211,9 +215,7 @@ export default function OrderDetailPanel({
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
             <Eyebrow>Đơn đang chọn</Eyebrow>
-            <p
-              className="font-droid-serif mt-2.5 truncate text-xl tracking-wide text-luxury-ink"
-            >
+            <p className="font-droid-serif mt-2.5 truncate text-xl tracking-wide text-luxury-ink">
               #{order._id.slice(-8).toUpperCase()}
             </p>
             <p className="mt-2 text-xs tabular-nums text-neutral-500">
@@ -226,9 +228,7 @@ export default function OrderDetailPanel({
         {order.ghnOrderCode ? (
           <p className="mt-4 border-t border-luxury-ink/8 pt-4 text-xs text-neutral-500">
             Mã vận đơn GHN{" "}
-            <span
-              className="font-droid-serif ml-1 tracking-wide text-luxury-ink"
-            >
+            <span className="font-droid-serif ml-1 tracking-wide text-luxury-ink">
               {order.ghnOrderCode}
             </span>
           </p>
@@ -373,9 +373,7 @@ export default function OrderDetailPanel({
                     <span className={cn(microCaps, "text-neutral-500")}>
                       ×{item.quantity} · {formatPrice(item.price)}
                     </span>
-                    <span
-                      className="font-droid-serif tabular-nums text-sm text-luxury-ink"
-                    >
+                    <span className="font-droid-serif tabular-nums text-sm text-luxury-ink">
                       {formatPrice(item.price * item.quantity)}
                     </span>
                   </div>
@@ -392,9 +390,7 @@ export default function OrderDetailPanel({
           <MetaRow label="Email" value={getBuyerEmail(order)} />
           <MetaRow
             label="Điện thoại"
-            value={
-              <span className="tabular-nums">{getBuyerPhone(order)}</span>
-            }
+            value={<span className="tabular-nums">{getBuyerPhone(order)}</span>}
           />
           <MetaRow
             label="Cập nhật"
@@ -463,9 +459,7 @@ export default function OrderDetailPanel({
               label="Số tiền hoàn"
               value={
                 <span className="font-droid-serif tabular-nums text-base">
-                  {formatPrice(
-                    refundRequest.refundAmount || order.totalAmount,
-                  )}
+                  {formatPrice(refundRequest.refundAmount || order.totalAmount)}
                 </span>
               }
             />
@@ -484,9 +478,7 @@ export default function OrderDetailPanel({
               <p className={cn(microCaps, "text-neutral-500")}>
                 Vận đơn hoàn trả GHN
               </p>
-              <p
-                className="font-droid-serif mt-2 text-sm tracking-wide text-luxury-ink"
-              >
+              <p className="font-droid-serif mt-2 text-sm tracking-wide text-luxury-ink">
                 {order.ghnReturnOrderCode}
               </p>
               <a
@@ -496,7 +488,7 @@ export default function OrderDetailPanel({
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group mt-3 inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-luxury-ink transition-colors hover:text-taupe-700"
+                className="group mt-3 inline-flex items-center gap-1.5 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ink transition-colors hover:text-taupe-700"
               >
                 Theo dõi vận đơn hoàn
                 <IconArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -516,9 +508,7 @@ export default function OrderDetailPanel({
               <span className={cn(microCaps, "text-neutral-400")}>
                 Tiền sản phẩm
               </span>
-              <span
-                className="font-droid-serif tabular-nums text-sm text-cream-50"
-              >
+              <span className="font-droid-serif tabular-nums text-sm text-cream-50">
                 {formatPrice(productAmount)}
               </span>
             </div>
@@ -526,9 +516,7 @@ export default function OrderDetailPanel({
               <span className={cn(microCaps, "text-neutral-400")}>
                 Phí vận chuyển
               </span>
-              <span
-                className="font-droid-serif tabular-nums text-sm text-cream-50"
-              >
+              <span className="font-droid-serif tabular-nums text-sm text-cream-50">
                 {formatPrice(shippingFee)}
               </span>
             </div>
@@ -538,9 +526,7 @@ export default function OrderDetailPanel({
             <span className={cn(microCaps, "text-luxury-champagne")}>
               Tổng cộng
             </span>
-            <span
-              className="font-droid-serif text-2xl leading-none tabular-nums text-cream-50"
-            >
+            <span className="font-droid-serif text-2xl leading-none tabular-nums text-cream-50">
               {formatPrice(grandTotal)}
             </span>
           </div>

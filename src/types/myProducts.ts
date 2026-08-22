@@ -37,10 +37,33 @@ export type PaginationMeta = {
   totalPages: number;
 };
 
+/**
+ * Các tab trên màn "Tin đăng của tôi". Server nhận đúng những key này và tự
+ * map sang status thật (approved gộp cả active, under_review gộp cả
+ * review_requested).
+ */
+export type MyListingTabKey =
+  | "all"
+  | "pending"
+  | "approved"
+  | "under_review"
+  | "rejected"
+  | "sold";
+
+/** Số tin đăng theo từng tab, đếm trên toàn bộ tin của seller. */
+export type MyListingStatusCounts = Record<MyListingTabKey, number>;
+
+export type MyListingsParams = {
+  page?: number;
+  limit?: number;
+  status?: MyListingTabKey;
+};
+
 export type MyListingsResponse = {
   success: boolean;
   data: MyListingProduct[];
   message?: string;
   pagination?: PaginationMeta;
+  statusCounts?: MyListingStatusCounts;
 };
 

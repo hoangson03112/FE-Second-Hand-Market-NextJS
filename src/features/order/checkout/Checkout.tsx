@@ -172,9 +172,7 @@ export default function Checkout() {
                   "rounded-[2px] border border-dashed border-luxury-ink/15 bg-white px-6 py-20 text-center",
                 )}
               >
-                <h3
-                  className="font-droid-serif text-xl text-luxury-ink"
-                >
+                <h3 className="font-droid-serif text-xl text-luxury-ink">
                   Chưa có gì để thanh toán
                 </h3>
                 <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-neutral-600">
@@ -234,7 +232,7 @@ export default function Checkout() {
             {!allLocalPickup && isCalculatingShipping ? (
               <div className="flex items-center gap-4 rounded-[2px] border border-luxury-ink/10 bg-white px-5 py-5">
                 <span className="h-3.5 w-3.5 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-600">
+                <span className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-600">
                   Đang tính phí vận chuyển
                 </span>
               </div>

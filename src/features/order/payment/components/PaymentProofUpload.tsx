@@ -31,9 +31,7 @@ export function PaymentProofUpload({
   return (
     <section className="rounded-[2px] border border-luxury-ink/10 bg-white px-5 py-6 sm:px-6">
       <Eyebrow>Bước cuối</Eyebrow>
-      <h2
-        className="font-droid-serif mt-3 text-lg tracking-tight text-luxury-ink"
-      >
+      <h2 className="font-droid-serif mt-3 text-lg tracking-tight text-luxury-ink">
         Gửi biên lai chuyển khoản
       </h2>
       <p className="mt-2.5 text-xs leading-relaxed text-neutral-600">
@@ -69,7 +67,7 @@ export function PaymentProofUpload({
               />
               {!disabled ? (
                 <span className="absolute inset-0 flex items-center justify-center bg-luxury-ink/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory">
+                  <span className="text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ivory">
                     Chọn ảnh khác
                   </span>
                 </span>
@@ -80,7 +78,7 @@ export function PaymentProofUpload({
               <span className="flex h-10 w-10 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-white">
                 <IconUpload className="h-4 w-4 text-luxury-ink" />
               </span>
-              <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink">
+              <p className="mt-4 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink">
                 Chọn ảnh biên lai
               </p>
               <p className="mt-2 text-xs text-neutral-500">
@@ -94,7 +92,7 @@ export function PaymentProofUpload({
           <button
             type="button"
             onClick={() => onFileChange(null)}
-            className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 transition-colors hover:text-blush-700"
+            className="inline-flex items-center gap-1.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500 transition-colors hover:text-blush-700"
           >
             <IconX className="h-3.5 w-3.5" />
             Bỏ ảnh đã chọn

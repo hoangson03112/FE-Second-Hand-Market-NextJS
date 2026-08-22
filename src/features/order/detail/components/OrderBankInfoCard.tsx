@@ -32,7 +32,7 @@ const INPUT_CLASS =
   "w-full rounded-[2px] border border-luxury-ink/15 bg-white px-3.5 py-2.5 text-sm text-luxury-ink outline-none transition-colors duration-300 placeholder:text-neutral-400 hover:border-luxury-ink/25 focus:border-luxury-champagne";
 
 const FIELD_LABEL =
-  "mb-2 block text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500";
+  "mb-2 block text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500";
 
 export function OrderBankInfoCard({
   status: orderStatus,
@@ -71,7 +71,9 @@ export function OrderBankInfoCard({
       : "Thông tin ngân hàng nhận tiền";
 
   const legacyBankName =
-    bankName.trim() && !BANK_OPTIONS.includes(bankName) ? bankName.trim() : null;
+    bankName.trim() && !BANK_OPTIONS.includes(bankName)
+      ? bankName.trim()
+      : null;
 
   const accountFields = [
     {
@@ -102,7 +104,7 @@ export function OrderBankInfoCard({
 
           {ghnReturnOrderCode && (
             <div className="rounded-[2px] border border-luxury-champagne/40 bg-luxury-champagne/8 px-4 py-3.5">
-              <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-600">
+              <p className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
                 Mã vận đơn hoàn trả
               </p>
               <p className="mt-1.5 font-mono text-sm font-bold text-luxury-ink">
@@ -113,7 +115,7 @@ export function OrderBankInfoCard({
                   href={ghnReturnTrackingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group mt-2.5 inline-flex items-center gap-1.5 text-2xs font-bold uppercase tracking-[0.2em] text-luxury-ink underline decoration-luxury-champagne underline-offset-4 transition-colors hover:text-accent"
+                  className="group mt-2.5 inline-flex items-center gap-1.5 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ink underline decoration-luxury-champagne underline-offset-4 transition-colors hover:text-accent"
                 >
                   Xem trên GHN
                   <IconExternalLink className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -131,7 +133,7 @@ export function OrderBankInfoCard({
             showGhnSection && "border-t",
           )}
         >
-          <p className="text-2xs font-bold uppercase tracking-[0.2em] text-taupe-700">
+          <p className="text-2xs font-bold uppercase tracking-[0.15em] text-taupe-700">
             {refundStatus === "processing"
               ? "Đã gửi STK — admin sẽ chuyển khoản"
               : "Đã gửi — chờ admin xử lý hoàn tiền"}
@@ -230,7 +232,9 @@ export function OrderBankInfoCard({
             }
             className="w-full rounded-[2px] bg-luxury-ink py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
           >
-            {isSubmittingBankInfo ? "Đang gửi…" : "Gửi thông tin nhận hoàn tiền"}
+            {isSubmittingBankInfo
+              ? "Đang gửi…"
+              : "Gửi thông tin nhận hoàn tiền"}
           </button>
         </form>
       )}

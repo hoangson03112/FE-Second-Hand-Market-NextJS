@@ -117,7 +117,7 @@ export function PasswordForm({
                 <button
                   type="button"
                   onClick={() => setShowOldPassword(!showOldPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-wide font-bold text-luxury-ink hover:text-luxury-ink/70"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-2xs uppercase tracking-wide font-bold text-luxury-ink hover:text-luxury-ink/70"
                 >
                   {showOldPassword ? "Ẩn" : "Hiện"}
                 </button>
@@ -149,7 +149,7 @@ export function PasswordForm({
               <button
                 type="button"
                 onClick={() => setShowNewPassword(!showNewPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] uppercase tracking-wide font-bold text-luxury-ink hover:text-luxury-ink/70"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-2xs uppercase tracking-wide font-bold text-luxury-ink hover:text-luxury-ink/70"
               >
                 {showNewPassword ? "Ẩn" : "Hiện"}
               </button>
@@ -170,7 +170,7 @@ export function PasswordForm({
                     />
                   </div>
                   <span
-                    className={`text-[10px] uppercase tracking-wide font-medium ${passwordStrength.color}`}
+                    className={`text-2xs uppercase tracking-wide font-medium ${passwordStrength.color}`}
                   >
                     {passwordStrength.label}
                   </span>
@@ -231,7 +231,7 @@ export function PasswordForm({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.2em] text-[11px] font-bold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
+              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.15em] text-[11px] font-bold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
             >
               {isSubmitting ? (
                 <>

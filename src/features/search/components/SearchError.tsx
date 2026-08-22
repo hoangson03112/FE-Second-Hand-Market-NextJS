@@ -27,7 +27,7 @@ export default function SearchError() {
       <button
         type="button"
         onClick={() => window.location.reload()}
-        className="group mt-7 inline-flex items-center gap-2 bg-luxury-ink px-6 py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+        className="group mt-7 inline-flex items-center gap-2 bg-luxury-ink px-6 py-3 text-[11px] font-bold uppercase tracking-[0.15em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
         style={{ borderRadius: "2px" }}
       >
         <IconRefresh

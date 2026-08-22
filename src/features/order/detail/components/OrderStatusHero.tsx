@@ -34,7 +34,7 @@ function TrackingRow({
 }) {
   return (
     <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-      <span className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
+      <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
         {label}
       </span>
       <span className="font-mono text-sm text-luxury-ink">{code}</span>
@@ -42,7 +42,7 @@ function TrackingRow({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="group inline-flex items-center gap-1 text-2xs font-bold uppercase tracking-[0.2em] text-luxury-ink underline decoration-luxury-champagne underline-offset-4 transition-colors hover:text-accent"
+        className="group inline-flex items-center gap-1 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ink underline decoration-luxury-champagne underline-offset-4 transition-colors hover:text-accent"
       >
         Theo dõi
         <IconExternalLink className="h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -92,7 +92,8 @@ export function OrderStatusHero({
         <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-4">
           <div className="min-w-0 max-w-xl">
             <Eyebrow tone="dark">Trạng thái</Eyebrow>
-            <h2
+            <h2
+
               className="font-droid-serif mt-4 text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.1] tracking-tight text-luxury-ivory"
             >
               {statusConfig.label}
@@ -105,7 +106,7 @@ export function OrderStatusHero({
           </div>
 
           <div className="shrink-0 text-right">
-            <p className="text-2xs font-bold uppercase tracking-[0.2em] text-luxury-champagne">
+            <p className="text-2xs font-bold uppercase tracking-[0.15em] text-luxury-champagne">
               Cập nhật
             </p>
             <p className="mt-1.5 text-xs text-luxury-ivory/60">
@@ -179,7 +180,7 @@ export function OrderStatusHero({
                     </span>
                     <span
                       className={cn(
-                        "text-center text-[10px] font-bold uppercase leading-tight tracking-[0.12em]",
+                        "text-center text-2xs font-bold uppercase leading-tight tracking-[0.12em]",
                         isReached ? "text-luxury-ink" : "text-neutral-400",
                       )}
                     >

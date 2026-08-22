@@ -55,9 +55,7 @@ export default function SellerOrdersHeader({
 
           <div className="min-w-0">
             <Eyebrow>Kênh người bán</Eyebrow>
-            <h1
-              className="font-droid-serif mt-2.5 text-[clamp(1.5rem,3vw,2rem)] leading-[1.1] tracking-tight text-luxury-ink"
-            >
+            <h1 className="font-droid-serif mt-2.5 text-[clamp(1.5rem,3vw,2rem)] leading-[1.1] tracking-tight text-luxury-ink">
               Quản lý đơn hàng
             </h1>
             <p className="mt-2.5 max-w-md text-sm leading-relaxed text-neutral-600">
@@ -65,7 +63,7 @@ export default function SellerOrdersHeader({
             </p>
             <Link
               href="/seller/payouts"
-              className="group mt-4 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-taupe-700"
+              className="group mt-4 inline-flex items-center gap-2 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-taupe-700"
             >
               Đối soát doanh thu
               <IconArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

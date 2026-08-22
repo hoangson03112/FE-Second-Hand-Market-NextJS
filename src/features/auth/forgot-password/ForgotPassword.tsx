@@ -44,7 +44,7 @@ export default function ForgotPassword() {
                 </p>
 
                 <div className="space-y-6 hidden md:block">
-                  {forgotPasswordFeatures.map((feature: any, idx: number) => (
+                  {forgotPasswordFeatures.map((feature, idx) => (
                     <div key={idx} className="flex items-start gap-4">
                       <div className="flex-shrink-0 w-6 h-6 rounded-full border border-foreground/20 flex items-center justify-center mt-0.5 text-foreground">
                         <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">

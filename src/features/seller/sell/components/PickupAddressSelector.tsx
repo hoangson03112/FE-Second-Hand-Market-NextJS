@@ -86,7 +86,7 @@ function AddressCard({
             {address.fullName}
           </span>
           {address.isDefault && (
-            <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-cream-100 text-luxury-ink border border-luxury-champagne/40">
+            <span className="text-2xs font-medium px-1.5 py-0.5 rounded-full bg-cream-100 text-luxury-ink border border-luxury-champagne/40">
               Mặc định
             </span>
           )}
@@ -107,7 +107,7 @@ function AddressCard({
         <button
           type="button"
           onClick={handleEdit}
-          className="flex items-center gap-1 text-[10px] font-medium text-neutral-500 hover:text-luxury-ink transition-colors px-1.5 py-1 rounded-[2px] hover:bg-cream-50"
+          className="flex items-center gap-1 text-2xs font-medium text-neutral-500 hover:text-luxury-ink transition-colors px-1.5 py-1 rounded-[2px] hover:bg-cream-50"
         >
           <IconEdit className="w-3 h-3" />
           Sửa
@@ -115,7 +115,7 @@ function AddressCard({
         <button
           type="button"
           onClick={handleDelete}
-          className="flex items-center gap-1 text-[10px] font-medium text-neutral-500 hover:text-blush-700 transition-colors px-1.5 py-1 rounded-[2px] hover:bg-red-50"
+          className="flex items-center gap-1 text-2xs font-medium text-neutral-500 hover:text-blush-700 transition-colors px-1.5 py-1 rounded-[2px] hover:bg-red-50"
         >
           <IconTrash className="w-3 h-3" />
           Xóa

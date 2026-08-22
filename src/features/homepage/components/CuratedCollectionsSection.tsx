@@ -77,15 +77,13 @@ export default function CuratedCollectionsSection() {
                 <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10 transition-all duration-500 group-hover:ring-luxury-champagne/35" />
 
                 <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8 text-cream-50">
-                  <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.28em] text-luxury-champagne/90">
+                  <p className="mb-3 text-2xs font-bold uppercase tracking-[0.28em] text-luxury-champagne/90">
                     Bộ sưu tập {String(index + 1).padStart(2, "0")}
                   </p>
 
                   <div className="mb-3 h-px w-8 bg-luxury-champagne/70 transition-all duration-500 ease-out group-hover:w-14 group-hover:bg-luxury-champagne" />
 
-                  <h3
-                    className="font-droid-serif text-2xl font-normal tracking-tight text-cream-50 transition-transform duration-500 ease-out group-hover:-translate-y-1 md:text-3xl"
-                  >
+                  <h3 className="font-droid-serif text-2xl font-normal tracking-tight text-cream-50 transition-transform duration-500 ease-out group-hover:-translate-y-1 md:text-3xl">
                     {item.title}
                   </h3>
 
@@ -93,7 +91,7 @@ export default function CuratedCollectionsSection() {
                     {item.description}
                   </p>
 
-                  <div className="mt-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-champagne/90 transition-transform duration-500 ease-out group-hover:-translate-y-1">
+                  <div className="mt-5 flex items-center gap-2 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-champagne/90 transition-transform duration-500 ease-out group-hover:-translate-y-1">
                     <span>Khám phá</span>
 
                     <svg

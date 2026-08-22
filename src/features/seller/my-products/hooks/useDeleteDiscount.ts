@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SellerService } from "@/services/seller.service";
+import { MY_PRODUCTS_QUERY_KEY } from "./useMyProducts";
 import { useToast } from "@/components/ui";
 import type { MyListingsResponse } from "@/types/myProducts";
 
@@ -11,17 +12,21 @@ export function useDeleteDiscount(refetch?: () => void) {
     mutationFn: (discountId: string) => SellerService.deletePersonalDiscount(discountId),
     onSuccess: (_, discountId) => {
       toast.success("Đã xóa ưu đãi");
-      queryClient.setQueryData<MyListingsResponse>(["my", "products"], (old) => {
-        if (!old?.data) return old;
-        return {
-          ...old,
-          data: old.data.map((p) => ({
-            ...p,
-            personalDiscounts:
-              p.personalDiscounts?.filter((d) => d._id !== discountId) ?? [],
-          })),
-        };
-      });
+      // Ưu đãi có thể nằm ở bất kỳ trang/tab nào đang được cache.
+      queryClient.setQueriesData<MyListingsResponse>(
+        { queryKey: MY_PRODUCTS_QUERY_KEY },
+        (old) => {
+          if (!old?.data) return old;
+          return {
+            ...old,
+            data: old.data.map((p) => ({
+              ...p,
+              personalDiscounts:
+                p.personalDiscounts?.filter((d) => d._id !== discountId) ?? [],
+            })),
+          };
+        },
+      );
       refetch?.();
     },
     onError: (err: unknown) => {

@@ -66,7 +66,7 @@ function FileDropzone({
               </p>
             </div>
             <div
-              className="absolute right-2 top-2 flex items-center gap-1 bg-luxury-ink/85 px-2 py-1 text-[10px] font-bold text-luxury-champagne backdrop-blur-sm"
+              className="absolute right-2 top-2 flex items-center gap-1 bg-luxury-ink/85 px-2 py-1 text-2xs font-bold text-luxury-champagne backdrop-blur-sm"
               style={{ borderRadius: "2px" }}
             >
               <IconCheck className="h-3 w-3" strokeWidth={2.5} />
@@ -84,7 +84,7 @@ function FileDropzone({
             <p className="text-[12px] font-medium text-neutral-600">
               Nhấn để tải ảnh lên
             </p>
-            <p className="text-[10px] text-taupe-400">JPG, PNG — tối đa 5MB</p>
+            <p className="text-2xs text-taupe-400">JPG, PNG — tối đa 5MB</p>
           </div>
         )}
       </label>

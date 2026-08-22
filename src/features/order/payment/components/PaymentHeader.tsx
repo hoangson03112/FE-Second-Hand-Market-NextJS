@@ -42,7 +42,7 @@ export function PaymentHeader({
       <div className="relative z-10">
         <Link
           href="/"
-          className="group inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory/60 transition-colors hover:text-luxury-ivory"
+          className="group inline-flex items-center gap-2 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ivory/60 transition-colors hover:text-luxury-ivory"
         >
           <IconArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-0.5" />
           Quay lại
@@ -66,9 +66,7 @@ export function PaymentHeader({
                 <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-luxury-ivory/50">
                   Mã đơn nội bộ
                 </span>
-                <span
-                  className="font-droid-serif select-all break-all text-sm tracking-wide text-luxury-ivory/90"
-                >
+                <span className="font-droid-serif select-all break-all text-sm tracking-wide text-luxury-ivory/90">
                   {orderId}
                 </span>
               </div>

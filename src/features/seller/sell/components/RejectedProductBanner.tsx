@@ -27,7 +27,7 @@ export function RejectedProductBanner({
             </p>
           )}
           {humanReviewRequested ? (
-            <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-neutral-600">
+            <div className="flex items-center gap-2 text-2xs font-semibold uppercase tracking-[0.15em] text-neutral-600">
               <div className="h-1 w-1 animate-pulse rounded-full bg-luxury-champagne" />
               Đã yêu cầu duyệt lại. Admin sẽ xem xét trong 24h.
             </div>

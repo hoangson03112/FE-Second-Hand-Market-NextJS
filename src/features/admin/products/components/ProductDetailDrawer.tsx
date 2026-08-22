@@ -51,10 +51,12 @@ export function ProductDetailDrawer({
         {/* Scrollable body */}
         <div className="flex-1 overflow-y-auto">
           <div className="p-5 space-y-6">
-
             {/* ① AI Moderation */}
             {ai && (
-              <AIModerationSection ai={ai} estimatedWeight={product.estimatedWeight} />
+              <AIModerationSection
+                ai={ai}
+                estimatedWeight={product.estimatedWeight}
+              />
             )}
 
             {/* ② Description */}
@@ -62,7 +64,9 @@ export function ProductDetailDrawer({
               <SectionTitle icon={IconListDetails} title="Mô tả sản phẩm" />
               <div className="rounded-xl border border-border/60 bg-muted/20 px-4 py-3">
                 <p className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed">
-                  {product.description?.trim() || <em className="text-xs">Không có mô tả</em>}
+                  {product.description?.trim() || (
+                    <em className="text-xs">Không có mô tả</em>
+                  )}
                 </p>
               </div>
             </section>
@@ -70,10 +74,18 @@ export function ProductDetailDrawer({
             {/* ③ Attributes */}
             {(product.attributes?.length ?? 0) > 0 && (
               <section>
-                <SectionTitle icon={IconTag} title="Thuộc tính" count={product.attributes.length} />
+                <SectionTitle
+                  icon={IconTag}
+                  title="Thuộc tính"
+                  count={product.attributes.length}
+                />
                 <div className="rounded-xl border border-border/60 bg-muted/20 px-4 py-3 divide-y divide-border/40">
                   {product.attributes.map((attr) => (
-                    <InfoRow key={attr._id} label={attr.key} value={attr.value} />
+                    <InfoRow
+                      key={attr._id}
+                      label={attr.key}
+                      value={attr.value}
+                    />
                   ))}
                 </div>
               </section>
@@ -82,7 +94,11 @@ export function ProductDetailDrawer({
             {/* ④ Images */}
             {(product.images?.length ?? 0) > 0 && (
               <section>
-                <SectionTitle icon={IconPhoto} title="Ảnh sản phẩm" count={product.images.length} />
+                <SectionTitle
+                  icon={IconPhoto}
+                  title="Ảnh sản phẩm"
+                  count={product.images.length}
+                />
                 <div className="grid grid-cols-4 gap-2">
                   {product.images.map((img, i) => (
                     <a
@@ -101,7 +117,7 @@ export function ProductDetailDrawer({
                         className="object-cover transition-transform group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors" />
-                      <span className="absolute top-1.5 left-1.5 w-5 h-5 rounded-full bg-black/50 text-white text-[10px] font-bold flex items-center justify-center">
+                      <span className="absolute top-1.5 left-1.5 w-5 h-5 rounded-full bg-black/50 text-white text-2xs font-bold flex items-center justify-center">
                         {i + 1}
                       </span>
                     </a>
@@ -117,7 +133,10 @@ export function ProductDetailDrawer({
                 <div className="rounded-xl border border-border/60 bg-muted/20 px-4 py-3">
                   <AddressDetail
                     address={product.address}
-                    sellerName={product.seller?.account?.fullName ?? product.seller?.fullName}
+                    sellerName={
+                      product.seller?.account?.fullName ??
+                      product.seller?.fullName
+                    }
                   />
                 </div>
               </section>

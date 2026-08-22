@@ -46,12 +46,10 @@ export default function ProductMessageCard({
           <p className="line-clamp-2 text-sm font-medium leading-relaxed text-luxury-ink">
             {productName}
           </p>
-          <p
-            className="font-droid-serif mt-1.5 tabular-nums text-base text-luxury-ink"
-          >
+          <p className="font-droid-serif mt-1.5 tabular-nums text-base text-luxury-ink">
             {formatPrice(productPrice)}
           </p>
-          <span className="mt-auto flex items-center gap-1.5 pt-2 text-[9px] font-semibold uppercase tracking-[0.2em] text-neutral-500 transition-colors group-hover:text-luxury-ink">
+          <span className="mt-auto flex items-center gap-1.5 pt-2 text-[9px] font-semibold uppercase tracking-[0.15em] text-neutral-500 transition-colors group-hover:text-luxury-ink">
             Xem chi tiết
             <IconArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </span>

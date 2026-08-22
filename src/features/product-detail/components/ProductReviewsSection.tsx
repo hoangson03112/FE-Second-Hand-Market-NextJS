@@ -50,7 +50,7 @@ function ReviewCard({ review }: { review: ProductReview }) {
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2 gap-y-1">
             <p className="text-xs font-bold text-luxury-ink">{name}</p>
-            <span className="text-[10px] text-taupe-400">
+            <span className="text-2xs text-taupe-400">
               {formatDateOnly(review.createdAt)}
             </span>
           </div>
@@ -98,7 +98,7 @@ export default function ProductReviewsSection({
   if (isPending) {
     return (
       <section className="p-5 rounded-[2px] border border-luxury-ink/10 bg-taupe-50/50">
-        <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-luxury-ink">
+        <h2 className="text-sm font-bold uppercase tracking-[0.15em] text-luxury-ink">
           Đánh giá từ người mua
         </h2>
         <p className="mt-2 text-sm text-taupe-400">Đang tải đánh giá...</p>
@@ -109,7 +109,7 @@ export default function ProductReviewsSection({
   if (isError) {
     return (
       <section className="p-5 rounded-[2px] border border-luxury-ink/10 bg-taupe-50/50">
-        <h2 className="text-sm font-bold uppercase tracking-[0.2em] text-luxury-ink">
+        <h2 className="text-sm font-bold uppercase tracking-[0.15em] text-luxury-ink">
           Đánh giá từ người mua
         </h2>
         <p className="mt-2 text-sm text-blush-600">
@@ -160,7 +160,7 @@ export default function ProductReviewsSection({
             variant="outline"
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="rounded-[2px] text-[11px] font-bold uppercase tracking-[0.2em] px-6 border-luxury-ink/20 text-luxury-ink hover:bg-taupe-50"
+            className="rounded-[2px] text-[11px] font-bold uppercase tracking-[0.15em] px-6 border-luxury-ink/20 text-luxury-ink hover:bg-taupe-50"
           >
             {isFetchingNextPage ? "Đang tải..." : "Xem thêm đánh giá"}
           </Button>

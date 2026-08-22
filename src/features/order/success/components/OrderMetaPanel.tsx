@@ -34,7 +34,7 @@ function MetaRow({
         <Icon className="h-4 w-4 text-luxury-ink" />
       </span>
       <div className="min-w-0 flex-1">
-        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-neutral-500">
+        <p className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-500">
           {label}
         </p>
         <div className="mt-2">{children}</div>
@@ -85,7 +85,8 @@ export default function OrderMetaPanel({
     <section className="overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white">
       <header className="border-b border-luxury-ink/10 px-5 py-5 sm:px-6">
         <Eyebrow>Thông tin đơn</Eyebrow>
-        <h2
+        <h2
+
           className="font-droid-serif mt-3 text-lg tracking-tight text-luxury-ink"
         >
           Giao nhận &amp; liên hệ
@@ -156,7 +157,7 @@ export default function OrderMetaPanel({
       <div className="border-t border-luxury-ink/10 bg-cream-50/70 px-5 py-5 sm:px-6">
         <Link
           href={`/orders/${orderId}`}
-          className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-[2px] bg-luxury-ink px-6 text-[10px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
+          className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-[2px] bg-luxury-ink px-6 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
         >
           Xem chi tiết đơn hàng
           <IconArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

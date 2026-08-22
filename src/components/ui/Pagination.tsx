@@ -59,7 +59,7 @@ export default function Pagination({
     /* Nút Trước/Sau — dạng chữ editorial, gạch chân hairline khi hover */
     const arrowClass = (disabled: boolean) =>
       cn(
-        "group inline-flex items-center gap-2 py-1 text-[11px] font-bold uppercase tracking-[0.2em]",
+        "group inline-flex items-center gap-2 py-1 text-xs font-bold uppercase tracking-[0.15em]",
         "outline-none transition-colors duration-300 ease-out",
         "focus-visible:text-luxury-ink",
         disabled
@@ -96,7 +96,7 @@ export default function Pagination({
                 <span
                   key={`ellipsis-${i}`}
                   aria-hidden
-                  className="inline-flex h-9 w-6 items-center justify-center text-[11px] tracking-[0.15em] text-luxury-ink/25"
+                  className="inline-flex h-9 w-6 items-center justify-center text-xs tracking-[0.15em] text-luxury-ink/25"
                 >
                   ···
                 </span>
@@ -113,7 +113,7 @@ export default function Pagination({
                 aria-label={`Trang ${n}`}
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "font-droid-serif inline-flex h-9 min-w-9 items-center justify-center border px-2 text-[13px] leading-none",
+                  "font-droid-serif inline-flex h-9 min-w-9 items-center justify-center border px-2 text-sm leading-none",
                   "outline-none transition-all duration-300 ease-out",
                   "focus-visible:border-luxury-champagne",
                   isActive
