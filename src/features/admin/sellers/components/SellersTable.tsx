@@ -43,27 +43,27 @@ export default function SellersTable({
   onOpenBan,
 }: SellersTableProps) {
   return (
-    <div className="rounded-xl border border-border bg-card overflow-hidden">
+    <div className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs">
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border bg-muted/50">
-              <th className="text-left px-4 py-3 font-medium text-foreground">
+            <tr className="border-b border-border/80 bg-muted/40">
+              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
                 Seller
               </th>
-              <th className="text-left px-4 py-3 font-medium text-foreground hidden sm:table-cell">
+              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 hidden sm:table-cell">
                 Liên hệ
               </th>
-              <th className="text-left px-4 py-3 font-medium text-foreground hidden lg:table-cell">
+              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 hidden lg:table-cell">
                 Ngân hàng
               </th>
-              <th className="text-left px-4 py-3 font-medium text-foreground">
+              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
                 Trạng thái
               </th>
-              <th className="text-left px-4 py-3 font-medium text-foreground hidden md:table-cell">
+              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 hidden md:table-cell">
                 Ngày đăng ký
               </th>
-              <th className="text-right px-4 py-3 font-medium text-foreground">
+              <th className="text-right px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
                 Thao tác
               </th>
             </tr>

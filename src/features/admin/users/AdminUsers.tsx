@@ -108,35 +108,59 @@ export default function AdminUsers() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <PageHeader
-        title="Người dùng"
-        description="Danh sách tài khoản (Account). Lọc theo vai trò bên dưới."
+        title="Quản lý người dùng"
+        description="Tra cứu danh sách tài khoản khách hàng, người bán và quản trị viên trong hệ sinh thái Eco Market."
+        badge={
+          totalItems > 0 ? (
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
+              {totalItems} tài khoản
+            </span>
+          ) : null
+        }
         actions={
           <SearchInput
             value={search}
             onChange={setSearch}
             placeholder="Tìm theo tên, email, SĐT..."
-            containerClassName="w-full sm:w-64"
+            containerClassName="w-full sm:w-72"
           />
         }
       />
 
       <StatsCards totalUsers={totalItems} recent7Days={recent7Days} />
 
-      <RoleTabs activeRole={roleFilter} onRoleChange={setRoleFilter} />
-      <AccountStatusTabs
-        activeStatus={statusFilter}
-        onStatusChange={setStatusFilter}
-      />
+      {/* Filters Section */}
+      <div className="rounded-2xl border border-border/80 bg-card p-4 sm:p-5 shadow-xs space-y-3">
+        <div className="space-y-1.5">
+          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+            Lọc theo vai trò:
+          </span>
+          <RoleTabs activeRole={roleFilter} onRoleChange={setRoleFilter} />
+        </div>
+        <div className="space-y-1.5 pt-2 border-t border-border/60">
+          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+            Lọc theo trạng thái:
+          </span>
+          <AccountStatusTabs
+            activeStatus={statusFilter}
+            onStatusChange={setStatusFilter}
+          />
+        </div>
+      </div>
 
       {hasNoAccounts ? (
-        <NoData icon={<IconUsers />} title="Chưa có tài khoản nào." size="sm" />
+        <NoData
+          icon={<IconUsers className="w-10 h-10 text-muted-foreground" />}
+          title="Chưa có tài khoản nào"
+          description="Hệ thống chưa ghi nhận người dùng nào."
+        />
       ) : hasNoFiltered ? (
         <NoData
-          icon={<IconSearch />}
-          title="Không tìm thấy người dùng phù hợp."
-          size="sm"
+          icon={<IconSearch className="w-10 h-10 text-muted-foreground" />}
+          title="Không tìm thấy người dùng phù hợp"
+          description="Thử thay đổi từ khóa tìm kiếm hoặc điều chỉnh bộ lọc."
         />
       ) : (
         <>

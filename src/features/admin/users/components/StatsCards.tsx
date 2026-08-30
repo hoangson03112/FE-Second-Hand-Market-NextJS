@@ -1,3 +1,5 @@
+import { IconUsers, IconUserPlus, IconInfoCircle } from "@tabler/icons-react";
+
 interface StatsCardsProps {
   totalUsers: number;
   recent7Days: number;
@@ -8,31 +10,45 @@ export default function StatsCards({
   recent7Days,
 }: StatsCardsProps) {
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-      <div className="rounded-xl border border-border bg-card px-4 py-3">
-        <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-          Tổng người dùng
-        </p>
-        <p className="mt-1 text-xl font-bold text-foreground">
-          {totalUsers.toLocaleString("vi-VN")}
-        </p>
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="rounded-2xl border border-border/80 bg-card p-4 sm:p-5 shadow-xs flex items-center justify-between">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            Tổng người dùng
+          </p>
+          <p className="mt-1.5 text-2xl font-bold text-foreground tabular-nums">
+            {totalUsers.toLocaleString("vi-VN")}
+          </p>
+        </div>
+        <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+          <IconUsers className="w-5 h-5" />
+        </div>
       </div>
-      <div className="rounded-xl border border-border bg-card px-4 py-3">
-        <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-          Mới 7 ngày gần đây
-        </p>
-        <p className="mt-1 text-xl font-bold text-foreground">
-          {recent7Days.toLocaleString("vi-VN")}
-        </p>
+
+      <div className="rounded-2xl border border-border/80 bg-card p-4 sm:p-5 shadow-xs flex items-center justify-between">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            Mới (7 ngày qua)
+          </p>
+          <p className="mt-1.5 text-2xl font-bold text-emerald-600 tabular-nums">
+            +{recent7Days.toLocaleString("vi-VN")}
+          </p>
+        </div>
+        <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shrink-0">
+          <IconUserPlus className="w-5 h-5" />
+        </div>
       </div>
-      <div className="rounded-xl border border-border bg-card px-4 py-3">
-        <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-          Ghi chú
-        </p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Mặc định hiển thị tài khoản người mua. Vai trò được hiển thị bằng nhãn
-          màu.
-        </p>
+
+      <div className="rounded-2xl border border-border/80 bg-card p-4 sm:p-5 shadow-xs flex items-center gap-3">
+        <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center shrink-0">
+          <IconInfoCircle className="w-5 h-5" />
+        </div>
+        <div className="min-w-0">
+          <p className="text-xs font-bold text-foreground">Phân quyền tài khoản</p>
+          <p className="text-xs text-muted-foreground mt-0.5 leading-snug">
+            Quản lý vai trò Buyer, Seller và Admin. Kiểm soát mở và khóa tài khoản.
+          </p>
+        </div>
       </div>
     </div>
   );

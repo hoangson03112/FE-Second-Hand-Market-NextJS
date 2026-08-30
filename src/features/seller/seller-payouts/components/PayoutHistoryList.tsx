@@ -17,7 +17,7 @@ export function PayoutHistoryList({
 }: PayoutHistoryListProps) {
   if (error) {
     return (
-      <div className="rounded-xl bg-red-50 border-2 border-red-200 p-4 text-sm text-red-600">
+      <div className="rounded-[22px] border border-red-200 bg-red-50 p-4 text-sm text-red-600">
         {error}
       </div>
     );
@@ -25,43 +25,55 @@ export function PayoutHistoryList({
 
   if (payouts.length === 0) {
     return (
-      <div className="text-center py-10">
-        <IconReceipt2 className="w-10 h-10 text-taupe-300 mx-auto mb-3" />
-        <p className="text-sm text-taupe-500">Chưa có giao dịch nào</p>
+      <div className="py-10 text-center">
+        <IconReceipt2 className="mx-auto mb-3 h-10 w-10 text-charcoal-300" />
+        <p className="text-sm text-charcoal-500">Chưa có giao dịch nào</p>
       </div>
     );
   }
 
   return (
     <div>
-      <p className="text-xs text-taupe-500 mb-3">
+      <p className="mb-3 text-xs uppercase tracking-[0.12em] text-charcoal-400">
         {total} giao dịch — hiển thị {payouts.length} mới nhất
       </p>
-      <div className="divide-y divide-border">
-        {payouts.map((payout) => (
-          <div
-            key={payout._id}
-            className="flex items-center justify-between gap-4 py-3"
-          >
-            <div className="min-w-0">
-              <p className="text-sm font-bold text-taupe-900">
-                {formatPrice(payout.amount)}
-              </p>
-              <p className="text-xs text-taupe-500 mt-0.5">
-                {format(payout.createdAt)}
-                {payout.bankName && ` · ${payout.bankName}`}
-                {payout.accountNumber &&
-                  ` ****${payout.accountNumber.slice(-4)}`}
-              </p>
-              {payout.note && (
-                <p className="text-xs text-taupe-400 mt-0.5 line-clamp-1">
-                  {payout.note}
+      <div className="divide-y divide-taupe-200/70">
+        {payouts.map((payout) => {
+          const amount = payout.amount ?? payout.totalAmount ?? 0;
+          const status = (payout.status ?? payout.payoutStatus ?? "pending") as
+            | "pending"
+            | "processing"
+            | "completed"
+            | "failed";
+          const createdAt = payout.createdAt ?? new Date().toISOString();
+          const bankName = payout.bankName ?? "";
+          const accountNumber = payout.accountNumber ?? "";
+          const note = payout.note ?? "";
+
+          return (
+            <div
+              key={payout._id}
+              className="flex items-center justify-between gap-4 py-3"
+            >
+              <div className="min-w-0">
+                <p className="text-sm font-bold text-luxury-ink">
+                  {formatPrice(amount)}
                 </p>
-              )}
+                <p className="mt-0.5 text-xs text-charcoal-500">
+                  {format(createdAt)}
+                  {bankName && ` · ${bankName}`}
+                  {accountNumber && ` ****${accountNumber.slice(-4)}`}
+                </p>
+                {note && (
+                  <p className="mt-0.5 line-clamp-1 text-xs text-charcoal-400">
+                    {note}
+                  </p>
+                )}
+              </div>
+              <PayoutStatusBadge status={status} />
             </div>
-            <PayoutStatusBadge status={payout.status} />
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

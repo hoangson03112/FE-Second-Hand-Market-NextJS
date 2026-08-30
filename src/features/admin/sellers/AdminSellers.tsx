@@ -7,7 +7,7 @@ import StatsBadges from "./components/StatsBadges";
 import StatusTabs from "./components/StatusTabs";
 import SellersTable from "./components/SellersTable";
 import SellerDetailModal from "./components/SellerDetailModal";
-import { NoData } from "@/features/admin/components";
+import { NoData, PageHeader, ErrorState } from "@/features/admin/components";
 
 export default function AdminSellers() {
   const {
@@ -33,28 +33,39 @@ export default function AdminSellers() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-[40vh] items-center justify-center">
-        <IconLoader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <IconLoader2 className="h-9 w-9 animate-spin text-primary" />
+          <p className="text-sm font-medium text-muted-foreground">
+            Đang tải danh sách seller...
+          </p>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-        Không tải được danh sách seller.
-      </div>
+      <ErrorState
+        title="Không tải được danh sách seller"
+        description="Vui lòng kiểm tra quyền đăng nhập tài khoản quản trị viên."
+      />
     );
   }
 
   return (
-    <div className="space-y-4">
-      <div>
-        <h1 className="text-lg font-bold text-foreground">Seller</h1>
-        <p className="text-xs text-muted-foreground mt-0.5">
-          Duyệt và quản lý tài khoản seller
-        </p>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        title="Quản lý Người bán (Seller)"
+        description="Thẩm định thông tin CCCD, thông tin ngân hàng và phê duyệt quyền đăng bán sản phẩm."
+        badge={
+          statistics?.total != null ? (
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
+              {statistics.total} seller
+            </span>
+          ) : null
+        }
+      />
 
       {statistics && (
         <StatsBadges
@@ -66,6 +77,7 @@ export default function AdminSellers() {
         />
       )}
 
+      {/* Status filter toolbar */}
       <StatusTabs
         activeStatus={statusFilter}
         onStatusChange={(status) => {
@@ -75,7 +87,11 @@ export default function AdminSellers() {
       />
 
       {sellers.length === 0 ? (
-        <NoData icon={<IconBuildingStore />} title="Không có seller nào." size="sm" />
+        <NoData
+          icon={<IconBuildingStore className="w-10 h-10 text-muted-foreground" />}
+          title="Không có hồ sơ seller nào"
+          description="Không tìm thấy người bán nào theo điều kiện lọc hiện tại."
+        />
       ) : (
         <>
           <SellersTable

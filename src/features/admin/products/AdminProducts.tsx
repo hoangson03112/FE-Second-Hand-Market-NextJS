@@ -8,6 +8,7 @@ import { ProductDetailDrawer } from "./components/ProductDetailDrawer";
 import { ProductTable } from "./components/ProductTable";
 import { STATUS_TABS } from "./constants";
 import { RejectReasonDialog } from "./components";
+import { PageHeader, NoData, ErrorState } from "@/features/admin/components";
 
 export default function AdminProducts() {
   const {
@@ -31,51 +32,68 @@ export default function AdminProducts() {
   } = useAdminProducts();
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-lg font-bold text-foreground">Kiểm duyệt sản phẩm</h1>
-        <p className="text-xs text-muted-foreground mt-0.5">Duyệt hoặc từ chối sản phẩm đăng bán</p>
-      </div>
+      <PageHeader
+        title="Kiểm duyệt sản phẩm"
+        description="Thẩm định, duyệt hoặc từ chối sản phẩm người bán đăng tải trên hệ thống."
+        badge={
+          data?.total != null ? (
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
+              {data.total} sản phẩm
+            </span>
+          ) : null
+        }
+      />
 
       {/* Status filter tabs */}
-      <div className="flex flex-wrap gap-1.5 border-b border-border pb-2">
-        {STATUS_TABS.map((tab) => (
-          <button
-            key={tab.value || "all"}
-            type="button"
-            onClick={() => {
-              setStatusFilter(tab.value as ProductStatusFilter | "");
-              setPage(1);
-            }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-              statusFilter === tab.value
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+        {STATUS_TABS.map((tab) => {
+          const isActive = statusFilter === tab.value;
+          return (
+            <button
+              key={tab.value || "all"}
+              type="button"
+              onClick={() => {
+                setStatusFilter(tab.value as ProductStatusFilter | "");
+                setPage(1);
+              }}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${
+                isActive
+                  ? "bg-primary text-primary-foreground shadow-xs shadow-primary/20"
+                  : "bg-card border border-border/80 text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
+            >
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
 
       {/* Error */}
       {error && (
-        <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-          Không tải được danh sách. Kiểm tra đăng nhập với tài khoản admin.
-        </div>
+        <ErrorState
+          title="Không tải được danh sách sản phẩm"
+          description="Vui lòng kiểm tra quyền đăng nhập tài khoản admin."
+        />
       )}
 
       {/* Content */}
       {isLoading ? (
-        <div className="flex items-center justify-center py-12">
-          <IconLoader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+        <div className="flex items-center justify-center py-20">
+          <div className="flex flex-col items-center gap-3">
+            <IconLoader2 className="w-9 h-9 animate-spin text-primary" />
+            <p className="text-sm font-medium text-muted-foreground">
+              Đang tải danh sách sản phẩm...
+            </p>
+          </div>
         </div>
       ) : data?.data?.length === 0 ? (
-        <div className="rounded-xl border border-border bg-card p-8 text-center text-sm text-muted-foreground">
-          <IconPackage className="w-10 h-10 mx-auto mb-2 opacity-50" />
-          Không có sản phẩm nào.
-        </div>
+        <NoData
+          icon={<IconPackage className="w-10 h-10 text-muted-foreground" />}
+          title="Không có sản phẩm nào"
+          description="Không tìm thấy sản phẩm phù hợp với bộ lọc hiện tại."
+        />
       ) : (
         <>
           <ProductTable

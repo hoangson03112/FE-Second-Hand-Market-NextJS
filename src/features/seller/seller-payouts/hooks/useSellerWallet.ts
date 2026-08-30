@@ -21,9 +21,11 @@ export type PayoutStatus = "pending" | "processing" | "completed" | "failed";
  */
 export interface SellerPayout {
   _id: string;
-  amount: number;
-  status: PayoutStatus;
-  createdAt: string;
+  amount?: number;
+  totalAmount?: number;
+  status?: PayoutStatus | string;
+  payoutStatus?: PayoutStatus | string;
+  createdAt?: string;
   orderIds?: string[];
   bankName?: string;
   accountNumber?: string;
@@ -63,7 +65,15 @@ export function useSellerWallet() {
     }
 
     if (payoutsResult.status === "fulfilled") {
-      //   setPayouts(payoutsResult.value as PayoutsPage);
+      const value = payoutsResult.value as {
+        data?: SellerPayout[];
+        total?: number;
+      };
+
+      setPayouts({
+        data: Array.isArray(value?.data) ? value.data : [],
+        total: typeof value?.total === "number" ? value.total : 0,
+      });
     } else {
       setPayouts({ data: [], total: 0 });
       setPayoutsError("Không thể tải lịch sử thanh toán. Vui lòng thử lại.");

@@ -3,7 +3,7 @@
 import { IconFolders, IconLoader2 } from "@tabler/icons-react";
 import type { AdminCategory } from "@/types/admin";
 import { useAdminCategories } from "./hooks/useAdminCategories";
-import { NoData } from "@/features/admin/components";
+import { NoData, PageHeader, ErrorState } from "@/features/admin/components";
 import CategoryHeader from "./components/CategoryHeader";
 import AddCategoryForm from "./components/AddCategoryForm";
 import AddSubcategoryForm from "./components/AddSubcategoryForm";
@@ -45,48 +45,59 @@ export default function AdminCategories() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-[40vh] items-center justify-center">
-        <IconLoader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <IconLoader2 className="h-9 w-9 animate-spin text-primary" />
+          <p className="text-sm font-medium text-muted-foreground">
+            Đang tải cây danh mục...
+          </p>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-        Không tải được danh mục.
-      </div>
+      <ErrorState
+        title="Không tải được danh mục"
+        description="Vui lòng kiểm tra quyền đăng nhập tài khoản quản trị viên."
+      />
     );
   }
 
   if (!categories.length) {
     return (
-      <div className="space-y-4">
-        <div>
-          <h1 className="text-lg font-bold text-foreground">Danh mục</h1>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            Quản lý danh mục và danh mục con
-          </p>
-        </div>
+      <div className="space-y-6">
+        <PageHeader
+          title="Quản lý danh mục"
+          description="Cấu hình danh mục cha và các phân loại con hỗ trợ người bán phân loại sản phẩm."
+        />
         <AddCategoryForm
           newCategoryName={newCategoryName}
           isSaving={isCreatingCategory}
           onNameChange={setNewCategoryName}
           onSubmit={addCategory}
         />
-        <NoData icon={<IconFolders />} title="Chưa có danh mục nào." size="sm" />
+        <NoData
+          icon={<IconFolders className="w-10 h-10 text-muted-foreground" />}
+          title="Chưa có danh mục nào"
+          description="Hãy tạo danh mục đầu tiên bằng form ở trên."
+        />
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      <div>
-        <h1 className="text-lg font-bold text-foreground">Danh mục</h1>
-        <p className="text-xs text-muted-foreground mt-0.5">
-          Quản lý cây danh mục và danh mục con cho toàn bộ hệ thống
-        </p>
-      </div>
+    <div className="space-y-6">
+      <PageHeader
+        title="Quản lý danh mục"
+        description="Cấu hình danh mục cha và các phân loại con cho toàn bộ hệ thống Eco Market."
+        badge={
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
+            {categories.length} danh mục
+          </span>
+        }
+      />
 
       <AddCategoryForm
         newCategoryName={newCategoryName}
@@ -95,7 +106,7 @@ export default function AdminCategories() {
         onSubmit={addCategory}
       />
 
-      <div className="space-y-3">
+      <div className="space-y-3.5">
         {categories.map((cat: AdminCategory) => {
           const isSelected = selectedCategory?._id === cat._id;
           const isEditingCategory = editingCategoryId === cat._id;
@@ -109,7 +120,11 @@ export default function AdminCategories() {
           return (
             <div
               key={cat._id}
-              className="rounded-xl border border-border bg-card p-3 md:p-4 space-y-2"
+              className={`rounded-2xl border bg-card p-4 sm:p-5 transition-all shadow-xs ${
+                isSelected
+                  ? "border-primary/40 ring-1 ring-primary/20"
+                  : "border-border/80 hover:border-primary/20"
+              }`}
             >
               <CategoryHeader
                 category={cat}
@@ -129,7 +144,7 @@ export default function AdminCategories() {
               />
 
               {isSelected && (
-                <div className="mt-2 space-y-3 border-t border-border pt-2">
+                <div className="mt-4 space-y-4 border-t border-border/60 pt-4">
                   <AddSubcategoryForm
                     categoryName={cat.name}
                     newSubName={newSubName}
