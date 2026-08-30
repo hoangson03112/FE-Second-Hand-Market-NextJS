@@ -21,9 +21,11 @@ export type PayoutStatus = "pending" | "processing" | "completed" | "failed";
  */
 export interface SellerPayout {
   _id: string;
-  amount: number;
-  status: PayoutStatus;
-  createdAt: string;
+  amount?: number;
+  totalAmount?: number;
+  status?: PayoutStatus | string;
+  payoutStatus?: PayoutStatus | string;
+  createdAt?: string;
   orderIds?: string[];
   bankName?: string;
   accountNumber?: string;

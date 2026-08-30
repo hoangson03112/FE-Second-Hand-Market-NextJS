@@ -40,10 +40,11 @@ export function PayoutHistoryList({
       <div className="divide-y divide-taupe-200/70">
         {payouts.map((payout) => {
           const amount = payout.amount ?? payout.totalAmount ?? 0;
-          const status: SellerPayout["status"] =
-            payout.status ??
-            (payout.payoutStatus as SellerPayout["status"]) ??
-            "pending";
+          const status = (payout.status ?? payout.payoutStatus ?? "pending") as
+            | "pending"
+            | "processing"
+            | "completed"
+            | "failed";
           const createdAt = payout.createdAt ?? new Date().toISOString();
           const bankName = payout.bankName ?? "";
           const accountNumber = payout.accountNumber ?? "";
