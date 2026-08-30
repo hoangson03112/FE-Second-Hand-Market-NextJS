@@ -48,8 +48,43 @@
   50% { opacity: 0.75; transform: scale(1.04); }
 }
 
+@keyframes hero-ribbon-sweep {
+  0% { opacity: 0; transform: translate3d(-72%, -50%, 0) skewX(-18deg); }
+  12% { opacity: 0.8; }
+  50% { opacity: 0.42; }
+  88% { opacity: 0.8; }
+  100% { opacity: 0; transform: translate3d(72%, -50%, 0) skewX(-18deg); }
+}
+
+.hero-ribbon-sweep {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--accent) 8%, transparent) 22%,
+    color-mix(in srgb, var(--luxury-champagne) 24%, transparent) 50%,
+    color-mix(in srgb, var(--accent) 8%, transparent) 78%,
+    transparent 100%
+  );
+  filter: blur(18px);
+  animation: hero-ribbon-sweep 7s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ribbon-sweep {
+    animation: hero-ribbon-sweep 7s ease-in-out infinite !important;
+  }
+}
+
 .animate-marquee-luxury {
-  animation: marquee-luxury 38s linear infinite;
+  animation: marquee-luxury 18s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-luxury {
+    animation: marquee-luxury 18s linear infinite !important;
+  }
 }
 
 .animate-scroll-hint {

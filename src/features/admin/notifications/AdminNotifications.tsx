@@ -3,6 +3,17 @@
 import { FormEvent, useState } from "react";
 import { AdminService } from "@/services/admin.service";
 import { useQuery } from "@tanstack/react-query";
+import {
+  IconSend,
+  IconClock,
+  IconUsers,
+  IconBell,
+  IconCheck,
+  IconAlertTriangle,
+  IconLoader2,
+  IconCalendar,
+} from "@tabler/icons-react";
+import { PageHeader, NoData } from "@/features/admin/components";
 
 export default function AdminNotifications() {
   const [title, setTitle] = useState("");
@@ -67,7 +78,7 @@ export default function AdminNotifications() {
         link: link.trim() || undefined,
         targetRoles,
       });
-      setResult(`${res.message} (Đã gửi: ${res.sentCount})`);
+      setResult(`${res.message} (Đã gửi thành công tới ${res.sentCount} tài khoản)`);
       setTitle("");
       setMessage("");
       setLink("");
@@ -88,203 +99,270 @@ export default function AdminNotifications() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-xl font-bold text-foreground">
-          Thông báo hệ thống
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Tạo thông báo broadcast gửi đến toàn bộ user theo nhóm vai trò.
-        </p>
-      </div>
+      <PageHeader
+        title="Thông báo hệ thống (Broadcast)"
+        description="Soạn và phát đi thông báo trực tiếp tới hàng loạt người dùng theo từng nhóm vai trò."
+        badge={
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
+            <IconBell className="w-3.5 h-3.5" />
+            Toàn hệ thống
+          </span>
+        }
+      />
 
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-4 rounded-xl border border-border bg-card p-4 shadow-sm"
-      >
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-foreground">Tiêu đề</label>
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary"
-            placeholder="Ví dụ: Khuyến mãi cuối tuần"
-            maxLength={120}
-          />
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Form soạn thông báo */}
+        <div className="lg:col-span-6 space-y-4">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-4 rounded-2xl border border-border/80 bg-card p-5 sm:p-6 shadow-xs"
+          >
+            <h2 className="text-sm font-bold text-foreground flex items-center gap-2">
+              <IconSend className="w-4 h-4 text-primary" />
+              Soạn thông báo mới
+            </h2>
 
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-foreground">
-            Nội dung
-          </label>
-          <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="min-h-[120px] w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary"
-            placeholder="Nội dung thông báo gửi cho người dùng..."
-            maxLength={1000}
-          />
-        </div>
-
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-foreground">
-            Đường dẫn (tuỳ chọn)
-          </label>
-          <input
-            value={link}
-            onChange={(e) => setLink(e.target.value)}
-            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary"
-            placeholder="/products hoặc /orders"
-          />
-        </div>
-
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-foreground">Nhóm người nhận</p>
-          <div className="flex flex-wrap gap-4 text-sm">
-            <label className="inline-flex items-center gap-2">
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                Tiêu đề thông báo
+              </label>
               <input
-                type="checkbox"
-                checked={targetBuyer}
-                onChange={(e) => setTargetBuyer(e.target.checked)}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full rounded-xl border border-border/80 bg-background px-3.5 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary placeholder:text-muted-foreground transition-all"
+                placeholder="Ví dụ: Cập nhật chính sách hoàn tiền mới"
+                maxLength={120}
               />
-              Buyer
-            </label>
-            <label className="inline-flex items-center gap-2">
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                Nội dung chi tiết
+              </label>
+              <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="min-h-[120px] w-full rounded-xl border border-border/80 bg-background px-3.5 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary placeholder:text-muted-foreground transition-all"
+                placeholder="Nội dung thông báo gửi cho người dùng..."
+                maxLength={1000}
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                Đường dẫn liên kết (tuỳ chọn)
+              </label>
               <input
-                type="checkbox"
-                checked={targetSeller}
-                onChange={(e) => setTargetSeller(e.target.checked)}
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
+                className="w-full rounded-xl border border-border/80 bg-background px-3.5 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary placeholder:text-muted-foreground transition-all"
+                placeholder="/products hoặc /orders hoặc liên kết ngoài"
               />
-              Seller
-            </label>
-            <label className="inline-flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={targetAdmin}
-                onChange={(e) => setTargetAdmin(e.target.checked)}
-              />
-              Admin
-            </label>
-          </div>
+            </div>
+
+            <div className="space-y-2 pt-2 border-t border-border/60">
+              <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                Nhóm đối tượng nhận tin
+              </p>
+              <div className="flex flex-wrap gap-2.5">
+                <label
+                  className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold cursor-pointer transition-all ${
+                    targetBuyer
+                      ? "bg-primary/10 border-primary text-primary"
+                      : "bg-background border-border text-muted-foreground hover:bg-muted"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={targetBuyer}
+                    onChange={(e) => setTargetBuyer(e.target.checked)}
+                    className="sr-only"
+                  />
+                  {targetBuyer && <IconCheck className="w-3.5 h-3.5" />}
+                  Người mua (Buyer)
+                </label>
+
+                <label
+                  className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold cursor-pointer transition-all ${
+                    targetSeller
+                      ? "bg-primary/10 border-primary text-primary"
+                      : "bg-background border-border text-muted-foreground hover:bg-muted"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={targetSeller}
+                    onChange={(e) => setTargetSeller(e.target.checked)}
+                    className="sr-only"
+                  />
+                  {targetSeller && <IconCheck className="w-3.5 h-3.5" />}
+                  Người bán (Seller)
+                </label>
+
+                <label
+                  className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold cursor-pointer transition-all ${
+                    targetAdmin
+                      ? "bg-primary/10 border-primary text-primary"
+                      : "bg-background border-border text-muted-foreground hover:bg-muted"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={targetAdmin}
+                    onChange={(e) => setTargetAdmin(e.target.checked)}
+                    className="sr-only"
+                  />
+                  {targetAdmin && <IconCheck className="w-3.5 h-3.5" />}
+                  Quản trị viên (Admin)
+                </label>
+              </div>
+            </div>
+
+            {error ? (
+              <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700 font-medium flex items-center gap-2">
+                <IconAlertTriangle className="w-4 h-4 shrink-0" />
+                {error}
+              </div>
+            ) : null}
+
+            {result ? (
+              <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-700 font-medium flex items-center gap-2">
+                <IconCheck className="w-4 h-4 shrink-0" />
+                {result}
+              </div>
+            ) : null}
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="inline-flex items-center justify-center gap-2 w-full rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-all shadow-2xs"
+            >
+              {isSubmitting ? (
+                <>
+                  <IconLoader2 className="w-4 h-4 animate-spin" />
+                  Đang phát thông báo...
+                </>
+              ) : (
+                <>
+                  <IconSend className="w-4 h-4" />
+                  Gửi thông báo ngay
+                </>
+              )}
+            </button>
+          </form>
         </div>
 
-        {error ? (
-          <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-            {error}
-          </div>
-        ) : null}
+        {/* Lịch sử phát sóng */}
+        <div className="lg:col-span-6 space-y-4">
+          <div className="rounded-2xl border border-border/80 bg-card p-5 sm:p-6 shadow-xs space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-sm font-bold text-foreground flex items-center gap-2">
+                <IconClock className="w-4 h-4 text-primary" />
+                Lịch sử thông báo đã gửi
+              </h2>
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-muted text-muted-foreground">
+                {history?.pagination?.total ?? 0} bản ghi
+              </span>
+            </div>
 
-        {result ? (
-          <div className="rounded-lg border border-emerald-600/30 bg-emerald-600/10 px-3 py-2 text-sm text-emerald-700">
-            {result}
-          </div>
-        ) : null}
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <div className="relative">
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => {
+                    setHistoryPage(1);
+                    setStartDate(e.target.value);
+                  }}
+                  className="w-full rounded-xl border border-border/80 bg-background px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                />
+              </div>
+              <div className="relative">
+                <input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => {
+                    setHistoryPage(1);
+                    setEndDate(e.target.value);
+                  }}
+                  className="w-full rounded-xl border border-border/80 bg-background px-3 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                />
+              </div>
+            </div>
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-60"
-        >
-          {isSubmitting ? "Đang gửi..." : "Gửi thông báo"}
-        </button>
-      </form>
-
-      <div className="space-y-3 rounded-xl border border-border bg-card p-4 shadow-sm">
-        <div className="flex items-center justify-between">
-          <h2 className="text-sm font-bold text-foreground">
-            Lịch sử broadcast
-          </h2>
-          <p className="text-xs text-muted-foreground">
-            {history?.pagination?.total ?? 0} bản ghi
-          </p>
-        </div>
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => {
-              setHistoryPage(1);
-              setStartDate(e.target.value);
-            }}
-            className="rounded-md border border-input bg-background px-3 py-2 text-sm"
-          />
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => {
-              setHistoryPage(1);
-              setEndDate(e.target.value);
-            }}
-            className="rounded-md border border-input bg-background px-3 py-2 text-sm"
-          />
-        </div>
-
-        {historyLoading ? (
-          <p className="text-sm text-muted-foreground">Đang tải lịch sử...</p>
-        ) : historyItems.length ? (
-          <div className="space-y-2">
-            {historyItems.map((item) => (
-              <div
-                key={item._id}
-                className="rounded-lg border border-border p-3"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="text-sm font-bold text-foreground">
-                      {item.title}
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {item.message}
-                    </p>
-                  </div>
-                  <span className="text-xs text-muted-foreground whitespace-nowrap">
-                    {new Date(item.createdAt).toLocaleString("vi-VN")}
-                  </span>
-                </div>
-                <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                  <span>Nhóm: {(item.targetRoles || []).join(", ")}</span>
-                  <span>•</span>
-                  <span>Đã gửi: {item.sentCount}</span>
-                  {item.createdBy?.fullName || item.createdBy?.email ? (
-                    <>
-                      <span>•</span>
-                      <span>
-                        Bởi: {item.createdBy?.fullName || item.createdBy?.email}
+            {historyLoading ? (
+              <div className="flex items-center justify-center py-10">
+                <IconLoader2 className="w-6 h-6 animate-spin text-primary" />
+              </div>
+            ) : historyItems.length ? (
+              <div className="space-y-3">
+                {historyItems.map((item) => (
+                  <div
+                    key={item._id}
+                    className="rounded-xl border border-border/80 bg-background/50 p-3.5 space-y-2 hover:border-primary/20 transition-colors"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-xs font-bold text-foreground">
+                          {item.title}
+                        </p>
+                        <p className="mt-1 text-xs text-muted-foreground line-clamp-2">
+                          {item.message}
+                        </p>
+                      </div>
+                      <span className="text-[11px] text-muted-foreground whitespace-nowrap">
+                        {new Date(item.createdAt).toLocaleString("vi-VN")}
                       </span>
-                    </>
-                  ) : null}
+                    </div>
+                    <div className="flex flex-wrap items-center gap-1.5 text-[11px] text-muted-foreground pt-1 border-t border-border/40">
+                      <span className="inline-block px-2 py-0.5 rounded bg-primary/10 text-primary font-medium">
+                        {(item.targetRoles || []).join(", ")}
+                      </span>
+                      <span>•</span>
+                      <span>Đã gửi: <strong className="text-foreground">{item.sentCount}</strong></span>
+                      {item.createdBy?.fullName || item.createdBy?.email ? (
+                        <>
+                          <span>•</span>
+                          <span>Bởi: {item.createdBy?.fullName || item.createdBy?.email}</span>
+                        </>
+                      ) : null}
+                    </div>
+                  </div>
+                ))}
+
+                <div className="flex items-center justify-end gap-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setHistoryPage((p) => Math.max(1, p - 1))}
+                    disabled={!canGoPrev}
+                    className="rounded-lg border border-border/80 px-2.5 py-1 text-xs font-medium hover:bg-muted disabled:opacity-40 transition-colors"
+                  >
+                    Trước
+                  </button>
+                  <span className="text-xs text-muted-foreground">
+                    Trang {currentPage}/{totalPages}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setHistoryPage((p) => Math.min(totalPages, p + 1))
+                    }
+                    disabled={!canGoNext}
+                    className="rounded-lg border border-border/80 px-2.5 py-1 text-xs font-medium hover:bg-muted disabled:opacity-40 transition-colors"
+                  >
+                    Sau
+                  </button>
                 </div>
               </div>
-            ))}
-
-            <div className="flex items-center justify-end gap-2 pt-1">
-              <button
-                type="button"
-                onClick={() => setHistoryPage((p) => Math.max(1, p - 1))}
-                disabled={!canGoPrev}
-                className="rounded border border-border px-3 py-1 text-xs disabled:opacity-50"
-              >
-                Trước
-              </button>
-              <span className="text-xs text-muted-foreground">
-                Trang {currentPage}/{totalPages}
-              </span>
-              <button
-                type="button"
-                onClick={() =>
-                  setHistoryPage((p) => Math.min(totalPages, p + 1))
-                }
-                disabled={!canGoNext}
-                className="rounded border border-border px-3 py-1 text-xs disabled:opacity-50"
-              >
-                Sau
-              </button>
-            </div>
+            ) : (
+              <NoData
+                icon={<IconBell className="w-8 h-8 text-muted-foreground" />}
+                title="Chưa có lịch sử broadcast"
+                description="Các thông báo bạn gửi sẽ được lưu lại ở đây."
+              />
+            )}
           </div>
-        ) : (
-          <p className="text-sm text-muted-foreground">
-            Chưa có lịch sử broadcast.
-          </p>
-        )}
+        </div>
       </div>
     </div>
   );

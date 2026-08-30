@@ -9,6 +9,8 @@ export interface PageHeaderProps {
   actions?: React.ReactNode;
   /** Optional breadcrumb rendered above the title. */
   breadcrumb?: React.ReactNode;
+  /** Optional badge next to title */
+  badge?: React.ReactNode;
   className?: string;
   /** Extra content rendered below the header row (e.g. tabs, a FilterBar). */
   children?: React.ReactNode;
@@ -23,6 +25,7 @@ export function PageHeader({
   description,
   actions,
   breadcrumb,
+  badge,
   className,
   children,
 }: PageHeaderProps) {
@@ -31,10 +34,23 @@ export function PageHeader({
       {breadcrumb}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-1">
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">{title}</h1>
-          {description && <p className="text-sm text-muted-foreground">{description}</p>}
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+              {title}
+            </h1>
+            {badge}
+          </div>
+          {description && (
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+              {description}
+            </p>
+          )}
         </div>
-        {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
+        {actions && (
+          <div className="flex shrink-0 items-center gap-2 flex-wrap">
+            {actions}
+          </div>
+        )}
       </div>
       {children}
     </div>

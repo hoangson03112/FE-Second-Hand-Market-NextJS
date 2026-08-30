@@ -14,24 +14,31 @@ export default function StatsBadges({
   banned = 0,
 }: StatsBadgesProps) {
   return (
-    <div className="flex flex-wrap gap-2 text-sm">
-      <span className="rounded-lg bg-muted px-2 py-1 text-muted-foreground">
-        Tổng: {total}
-      </span>
-      <span className="rounded-lg bg-primary/10 px-2 py-1 text-primary/90">
-        Chờ duyệt: {pending}
-      </span>
-      <span className="rounded-lg bg-secondary px-2 py-1 text-foreground/80">
-        Đã duyệt: {approved}
-      </span>
-      <span className="rounded-lg bg-destructive/10 px-2 py-1 text-destructive">
-        Từ chối: {rejected}
-      </span>
-      {banned > 0 && (
-        <span className="rounded-lg bg-muted px-2 py-1 text-muted-foreground">
-          Bị khóa: {banned}
-        </span>
-      )}
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+      <div className="rounded-xl border border-border/80 bg-card p-3.5 shadow-xs">
+        <span className="text-muted-foreground font-medium">Tổng hồ sơ seller</span>
+        <p className="mt-1 text-xl font-bold text-foreground tabular-nums">
+          {total}
+        </p>
+      </div>
+      <div className="rounded-xl border border-amber-200/70 bg-amber-50/50 p-3.5 shadow-xs">
+        <span className="text-amber-800 font-medium">Chờ xét duyệt</span>
+        <p className="mt-1 text-xl font-bold text-amber-700 tabular-nums">
+          {pending}
+        </p>
+      </div>
+      <div className="rounded-xl border border-emerald-200/70 bg-emerald-50/50 p-3.5 shadow-xs">
+        <span className="text-emerald-800 font-medium">Đã phê duyệt</span>
+        <p className="mt-1 text-xl font-bold text-emerald-700 tabular-nums">
+          {approved}
+        </p>
+      </div>
+      <div className="rounded-xl border border-rose-200/70 bg-rose-50/50 p-3.5 shadow-xs">
+        <span className="text-rose-800 font-medium">Bị từ chối / Khóa</span>
+        <p className="mt-1 text-xl font-bold text-rose-700 tabular-nums">
+          {rejected + banned}
+        </p>
+      </div>
     </div>
   );
 }

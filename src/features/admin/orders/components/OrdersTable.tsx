@@ -50,24 +50,24 @@ export default function OrdersTable({
 }: OrdersTableProps) {
   const { confirm } = useConfirm();
   return (
-    <div className="rounded-xl border border-border bg-card overflow-hidden">
+    <div className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs">
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border bg-muted/50">
-              <th className="text-left px-4 py-3 font-medium text-foreground">
-                Mã / Ngày
+            <tr className="border-b border-border/80 bg-muted/40">
+              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                Mã / Ngày đặt
               </th>
-              <th className="text-left px-4 py-3 font-medium text-foreground hidden sm:table-cell">
+              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 hidden sm:table-cell">
                 Người mua
               </th>
-              <th className="text-left px-4 py-3 font-medium text-foreground">
+              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
                 Tổng tiền
               </th>
-              <th className="text-left px-4 py-3 font-medium text-foreground">
+              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
                 Trạng thái
               </th>
-              <th className="text-right px-4 py-3 font-medium text-foreground w-10">
+              <th className="text-right px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 w-12">
                 Chi tiết
               </th>
             </tr>

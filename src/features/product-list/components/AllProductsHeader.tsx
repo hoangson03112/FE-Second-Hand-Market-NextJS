@@ -5,30 +5,38 @@ import { IconChevronRight } from "@tabler/icons-react";
 
 interface AllProductsHeaderProps {
   total?: number;
+  title?: string;
+  breadcrumbLabel?: string;
+  totalLabel?: string;
 }
 
-export default function AllProductsHeader({ total }: AllProductsHeaderProps) {
+export default function AllProductsHeader({
+  total,
+  title = "Tất cả sản phẩm.",
+  breadcrumbLabel = "Bộ sưu tập",
+  totalLabel = "sản phẩm",
+}: AllProductsHeaderProps) {
   return (
-    <header className="w-full max-w-[1800px] mx-auto px-4 sm:px-8 lg:px-12 py-8">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 border-b border-luxury-ink pb-8">
+    <header className="px-4 py-8 sm:px-8 lg:px-12">
+      <div className="flex flex-col justify-between gap-12 border-b border-luxury-ink pb-8 md:flex-row md:items-end">
         <div className="space-y-4">
           <nav
             aria-label="Breadcrumb"
-            className="flex items-center gap-2 text-xs font-bold tracking-[0.15em] text-charcoal-400 uppercase flex-wrap"
+            className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[0.15em] text-charcoal-400"
           >
-            <Link href="/" className="hover:text-luxury-ink transition-colors">
+            <Link href="/" className="transition-colors hover:text-luxury-ink">
               Trang chủ
             </Link>
             <IconChevronRight className="h-3 w-3 text-charcoal-300" />
-            <span className="text-luxury-ink">Bộ sưu tập</span>
+            <span className="text-luxury-ink">{breadcrumbLabel}</span>
           </nav>
-          <h1 className="text-3xl sm:text-3xl md:text-4xl font-normal text-luxury-ink font-droid-serif">
-            Tất cả sản phẩm.
+          <h1 className="font-droid-serif text-3xl font-normal text-luxury-ink sm:text-3xl md:text-4xl">
+            {title}
           </h1>
         </div>
         {typeof total === "number" && (
           <p className="text-xs font-medium uppercase tracking-[0.15em] text-charcoal-400">
-            {total} sản phẩm
+            {total} {totalLabel}
           </p>
         )}
       </div>

@@ -10,8 +10,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-// shared/Skeleton uses `bg-muted`; the shadcn one uses `bg-accent`, which in
-// this token set resolves to the brand green.
 import { Skeleton } from "@/components/ui/Skeleton";
 import { NoData } from "./NoData";
 import { cn } from "@/lib/utils";
@@ -65,18 +63,22 @@ export function DataTable<T>({
   className,
 }: DataTableProps<T>) {
   return (
-    <div className={cn("w-full overflow-x-auto rounded-xl border border-border", className)}>
+    <div className={cn("w-full overflow-x-auto rounded-2xl border border-border/80 bg-card shadow-xs", className)}>
       <Table>
         {caption && (
-          <caption className="p-2 text-sm text-muted-foreground">{caption}</caption>
+          <caption className="p-3 text-sm text-muted-foreground">{caption}</caption>
         )}
         <TableHeader>
-          <TableRow>
+          <TableRow className="border-b border-border/80 bg-muted/40 hover:bg-muted/40">
             {columns.map((column) => (
               <TableHead
                 key={column.key}
                 style={column.width ? { width: column.width } : undefined}
-                className={cn(column.align && ALIGN[column.align], column.headerClassName)}
+                className={cn(
+                  "py-3.5 px-4 text-xs font-bold uppercase tracking-wider text-muted-foreground/80",
+                  column.align && ALIGN[column.align],
+                  column.headerClassName
+                )}
               >
                 {column.header}
               </TableHead>
@@ -86,10 +88,10 @@ export function DataTable<T>({
         <TableBody>
           {loading ? (
             Array.from({ length: skeletonRows }).map((_, rowIndex) => (
-              <TableRow key={`skeleton-${rowIndex}`}>
+              <TableRow key={`skeleton-${rowIndex}`} className="border-b border-border/60">
                 {columns.map((column) => (
-                  <TableCell key={column.key} className={column.className}>
-                    <Skeleton className="h-4 w-full" />
+                  <TableCell key={column.key} className={cn("py-3.5 px-4", column.className)}>
+                    <Skeleton className="h-4 w-full rounded-md" />
                   </TableCell>
                 ))}
               </TableRow>
@@ -110,12 +112,19 @@ export function DataTable<T>({
               <TableRow
                 key={getRowId ? getRowId(row, index) : index}
                 onClick={onRowClick ? () => onRowClick(row, index) : undefined}
-                className={cn(onRowClick && "cursor-pointer")}
+                className={cn(
+                  "border-b border-border/60 last:border-0 hover:bg-muted/30 transition-colors",
+                  onRowClick && "cursor-pointer"
+                )}
               >
                 {columns.map((column) => (
                   <TableCell
                     key={column.key}
-                    className={cn(column.align && ALIGN[column.align], column.className)}
+                    className={cn(
+                      "py-3.5 px-4 text-sm text-foreground",
+                      column.align && ALIGN[column.align],
+                      column.className
+                    )}
                   >
                     {column.cell(row, index)}
                   </TableCell>

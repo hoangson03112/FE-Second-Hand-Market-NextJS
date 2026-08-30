@@ -5,6 +5,7 @@ import {
   IconCircleCheck,
   IconClock,
   IconBuildingStore,
+  IconMail,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,72 +14,94 @@ export default function BecomeSellerSuccess() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Top bar */}
-      <div className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <div className="max-w-8xl mx-auto w-full px-4 sm:px-6 h-14 flex items-center gap-3">
+    <main className="min-h-screen bg-luxury-ivory text-luxury-ink">
+      <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mb-8 flex items-center justify-between gap-3 border-b border-taupe-200/80 pb-5">
           <button
             type="button"
             onClick={() => router.push("/")}
-            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.15em] text-charcoal-500 transition-colors hover:text-luxury-ink"
           >
-            <IconArrowLeft className="w-4 h-4" />
+            <IconArrowLeft className="h-4 w-4" />
             Về trang chủ
           </button>
-          <span className="text-muted-foreground/40 select-none">|</span>
-          <span className="text-sm font-medium text-foreground">
+          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-charcoal-400">
             Đăng ký Seller
           </span>
         </div>
-      </div>
 
-      <div className="max-w-8xl mx-auto w-full px-4 sm:px-6 py-8 space-y-4">
-        {/* Success card */}
-        <div className="rounded-2xl border border-border bg-card p-6 flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-            <IconCircleCheck className="w-6 h-6 text-primary" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <h1 className="text-base font-bold text-foreground mb-1">
+        <section className="mx-auto max-w-3xl rounded-[32px] border border-taupe-200/80 bg-white/80 p-6 shadow-[0_18px_45px_rgba(28,27,24,0.05)] backdrop-blur-sm sm:p-8 lg:p-10">
+          <div className="flex flex-col items-center text-center">
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#f3e9dd] ring-8 ring-[#f7f1ea]">
+              <IconCircleCheck className="h-10 w-10 text-emerald-600" />
+            </div>
+
+            <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.18em] text-charcoal-400">
+              Đăng ký thành công
+            </p>
+            <h1 className="mt-3 font-droid-serif text-3xl font-normal text-luxury-ink sm:text-4xl">
               Hồ sơ đã được gửi thành công!
             </h1>
-            <p className="text-sm text-muted-foreground">
-              Chúng tôi sẽ xem xét hồ sơ của bạn và phản hồi trong vòng 24h. Bạn
-              sẽ nhận thông báo qua email khi có kết quả.
+            <p className="mt-4 max-w-xl text-sm leading-7 text-charcoal-500">
+              Chúng tôi sẽ xem xét hồ sơ của bạn và phản hồi trong vòng 24 giờ.
+              Bạn sẽ nhận thông báo qua email khi có kết quả.
             </p>
           </div>
-        </div>
 
-        {/* Pending notice */}
-        <div className="rounded-xl border border-primary/20 bg-primary/8 px-4 py-3 flex items-start gap-3">
-          <IconClock className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-          <p className="text-xs text-primary/90">
-            Đội ngũ Eco Market đang kiểm duyệt hồ sơ của bạn. Thông thường mất
-            dưới <span className="font-bold">24 giờ</span> để xem xét.
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            <div className="rounded-[22px] border border-taupe-200/80 bg-luxury-ivory p-4 text-left">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-taupe-200/80">
+                <IconClock className="h-5 w-5 text-luxury-ink" />
+              </div>
+              <p className="text-sm font-medium text-luxury-ink">Xét duyệt nhanh</p>
+              <p className="mt-1 text-xs text-charcoal-500">Thường trong vòng 24 giờ</p>
+            </div>
+
+            <div className="rounded-[22px] border border-taupe-200/80 bg-luxury-ivory p-4 text-left">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-taupe-200/80">
+                <IconMail className="h-5 w-5 text-luxury-ink" />
+              </div>
+              <p className="text-sm font-medium text-luxury-ink">Thông báo qua email</p>
+              <p className="mt-1 text-xs text-charcoal-500">Nhận kết quả ngay khi được duyệt</p>
+            </div>
+
+            <div className="rounded-[22px] border border-taupe-200/80 bg-luxury-ivory p-4 text-left">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-taupe-200/80">
+                <IconBuildingStore className="h-5 w-5 text-luxury-ink" />
+              </div>
+              <p className="text-sm font-medium text-luxury-ink">Sẵn sàng bán hàng</p>
+              <p className="mt-1 text-xs text-charcoal-500">Bắt đầu đăng sản phẩm ngay</p>
+            </div>
+          </div>
+
+          <div className="mt-8 rounded-[24px] border border-amber-200 bg-amber-50/80 p-4">
+            <p className="text-sm leading-6 text-amber-900">
+              Đội ngũ Eco Market đang kiểm duyệt hồ sơ của bạn. Thông thường mất
+              dưới <span className="font-bold">24 giờ</span> để xem xét.
+            </p>
+          </div>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/sell"
+              className="flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-luxury-ink px-5 text-sm font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-charcoal-700"
+            >
+              <IconBuildingStore className="h-4 w-4" />
+              Khám phá tính năng Seller
+            </Link>
+            <Link
+              href="/"
+              className="flex h-12 flex-1 items-center justify-center rounded-full border border-taupe-200 bg-white px-5 text-sm font-bold uppercase tracking-[0.12em] text-luxury-ink transition-colors hover:border-luxury-ink/40 hover:bg-luxury-ivory"
+            >
+              Về trang chủ
+            </Link>
+          </div>
+
+          <p className="mt-6 text-center text-xs uppercase tracking-[0.14em] text-charcoal-400">
+            Hồ sơ sẽ được đội ngũ Eco Market kiểm duyệt trong vòng 24h.
           </p>
-        </div>
-
-        {/* Actions */}
-        <div className="flex flex-col sm:flex-row gap-2 pt-2">
-          <Link
-            href="/sell"
-            className="flex-1 h-11 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center gap-2"
-          >
-            <IconBuildingStore className="w-4 h-4" />
-            Khám phá tính năng Seller
-          </Link>
-          <Link
-            href="/"
-            className="flex-1 h-11 rounded-xl border border-border text-muted-foreground text-sm font-medium hover:bg-muted hover:text-foreground transition-colors flex items-center justify-center"
-          >
-            Về trang chủ
-          </Link>
-        </div>
-
-        <p className="text-center text-xs text-muted-foreground pb-2">
-          Hồ sơ sẽ được đội ngũ Eco Market kiểm duyệt trong vòng 24h.
-        </p>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }

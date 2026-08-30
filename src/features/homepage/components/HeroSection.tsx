@@ -337,8 +337,12 @@ export default function HeroSection() {
             "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
         }}
       />
+      <div
+        aria-hidden
+        className="hero-ribbon-sweep pointer-events-none absolute left-0 top-1/2 z-[2] h-24 w-[140%] -translate-y-1/2"
+      />
       <motion.div
-        className="absolute inset-0 z-[2]"
+        className="absolute inset-0 z-[3]"
         initial={reducedMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
@@ -450,14 +454,14 @@ export default function HeroSection() {
         >
           <Link
             href="/products"
-            className="group relative inline-flex min-w-[220px] items-center justify-center rounded-[2px] bg-luxury-ink px-10 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-white transition-all duration-300 hover:scale-[1.02]"
+            className="group relative inline-flex min-w-[220px] items-center justify-center rounded-[2px] bg-luxury-ink px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] text-white transition-all duration-300 hover:scale-[1.02]"
           >
             <div className="absolute inset-0 bg-accent opacity-0 transition-opacity duration-300 group-hover:opacity-15 blur-md" />
             <span className="relative z-10">Khám phá bộ sưu tập</span>
           </Link>
           <Link
             href="/sell"
-            className="inline-flex min-w-[220px] items-center justify-center rounded-[2px] border border-luxury-ink/20 bg-white/50 px-10 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-luxury-ink backdrop-blur-sm transition-all duration-300 hover:border-luxury-ink/40 hover:bg-white/80"
+            className="inline-flex min-w-[220px] items-center justify-center rounded-[2px] border border-luxury-ink/20 bg-white/50 px-10 py-4 text-xs font-bold uppercase tracking-[0.24em] text-luxury-ink backdrop-blur-sm hover:scale-[1.02] transition-all duration-300 hover:border-luxury-ink/40 hover:bg-white/80"
           >
             Bắt đầu bán
           </Link>

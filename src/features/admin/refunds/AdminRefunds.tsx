@@ -20,6 +20,7 @@ import { AdminDisputeDetailModal } from "./components/AdminDisputeDetailModal";
 import type { RefundRequest } from "@/types/order";
 import { ADMIN_MESSAGES } from "@/constants/messages";
 import { Pagination } from "@/components/ui";
+import { PageHeader } from "@/features/admin/components";
 
 const REASON_LABELS: Record<string, string> = {
   damaged: "Hàng bị hỏng",
@@ -179,15 +180,17 @@ export default function AdminRefunds() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-lg font-bold text-foreground">
-          Quản lý hoàn tiền & khiếu nại
-        </h1>
-        <p className="text-xs text-muted-foreground mt-0.5">
-          Khiếu nại → sau khi seller nhận hàng hoàn, buyer gửi STK → tại đây
-          admin xác nhận đã chuyển khoản (POST complete-refund).
-        </p>
-      </div>
+      <PageHeader
+        title="Quản lý hoàn tiền & khiếu nại"
+        description="Xử lý tranh chấp, duyệt khiếu nại và xác nhận chuyển khoản hoàn tiền sau khi người mua gửi STK."
+        badge={
+          refunds.length > 0 ? (
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
+              {refunds.length} yêu cầu
+            </span>
+          ) : null
+        }
+      />
 
       {/* Filters */}
       <div className="flex gap-2 overflow-x-auto pb-1">
@@ -201,8 +204,8 @@ export default function AdminRefunds() {
               onClick={() => setStatusFilter(t.value)}
               className={
                 active
-                  ? "inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-primary text-primary-foreground text-xs font-bold border border-primary shrink-0"
-                  : "inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-card text-foreground text-xs font-bold border border-border hover:bg-muted shrink-0"
+                  ? "inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-bold shadow-xs shadow-primary/20 shrink-0"
+                  : "inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-card text-muted-foreground text-xs font-semibold border border-border/80 hover:bg-muted hover:text-foreground shrink-0"
               }
             >
               <Icon className="w-4 h-4" />
@@ -213,21 +216,29 @@ export default function AdminRefunds() {
       </div>
 
       {/* Table */}
-      <div className="rounded-xl border border-border bg-card overflow-hidden">
+      <div className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-border bg-muted/50">
-                <th className="text-left px-4 py-3 font-medium">Đơn hàng</th>
-                <th className="text-left px-4 py-3 font-medium">Người mua</th>
-                <th className="text-left px-4 py-3 font-medium hidden md:table-cell">
+              <tr className="border-b border-border/80 bg-muted/40">
+                <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                  Đơn hàng
+                </th>
+                <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                  Người mua
+                </th>
+                <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 hidden md:table-cell">
                   Người bán
                 </th>
-                <th className="text-left px-4 py-3 font-medium">Trạng thái</th>
-                <th className="text-left px-4 py-3 font-medium hidden lg:table-cell">
+                <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                  Trạng thái
+                </th>
+                <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 hidden lg:table-cell">
                   Lý do
                 </th>
-                <th className="text-right px-4 py-3 font-medium">Thao tác</th>
+                <th className="text-right px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                  Thao tác
+                </th>
               </tr>
             </thead>
             <tbody>

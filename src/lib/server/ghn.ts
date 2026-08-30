@@ -12,7 +12,7 @@ import type { GhnFeeBreakdown } from "@/types/shipping";
 const GHN_API_URL =
   process.env.GHN_API_URL ??
   "https://dev-online-gateway.ghn.vn/shiip/public-api";
-const GHN_TOKEN = process.env.GHN_TOKEN;
+const GHN_API_TOKEN = process.env.GHN_API_TOKEN;
 const GHN_SHOP_ID = process.env.GHN_SHOP_ID;
 
 /** GHN's dev gateway routinely stalls; fail fast instead of holding the socket. */
@@ -54,7 +54,7 @@ export class GhnError extends Error {
 }
 
 export function isGhnConfigured(): boolean {
-  return Boolean(GHN_TOKEN);
+  return Boolean(GHN_API_TOKEN);
 }
 
 // ---------------------------------------------------------------------------
@@ -104,7 +104,7 @@ async function postOnce<T>(
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     Accept: "application/json",
-    Token: GHN_TOKEN as string,
+    Token: GHN_API_TOKEN as string,
   };
   // GHN requires ShopId on the fee/leadtime endpoints; sending it everywhere is
   // harmless and keeps this in step with the backend's own GHN calls.

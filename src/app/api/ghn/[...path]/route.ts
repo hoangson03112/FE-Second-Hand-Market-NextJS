@@ -14,7 +14,7 @@ import { NextRequest, NextResponse } from "next/server";
 const GHN_API_URL =
   process.env.GHN_API_URL ??
   "https://dev-online-gateway.ghn.vn/shiip/public-api";
-const GHN_TOKEN = process.env.GHN_TOKEN;
+const GHN_API_TOKEN = process.env.GHN_API_TOKEN;
 const GHN_SHOP_ID = process.env.GHN_SHOP_ID;
 
 // GHN endpoints that require the shop id in the request body.
@@ -24,7 +24,7 @@ async function proxy(
   req: NextRequest,
   ctx: { params: Promise<{ path: string[] }> }
 ): Promise<NextResponse> {
-  if (!GHN_TOKEN) {
+  if (!GHN_API_TOKEN) {
     return NextResponse.json(
       { code: 500, message: "GHN token is not configured on the server" },
       { status: 500 }
@@ -38,7 +38,7 @@ async function proxy(
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     Accept: "application/json",
-    Token: GHN_TOKEN,
+    Token: GHN_API_TOKEN,
   };
 
   let body: string | undefined;

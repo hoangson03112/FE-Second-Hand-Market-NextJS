@@ -1,16 +1,16 @@
 "use client";
 
 import {
-  IconArrowLeft,
   IconLoader2,
   IconCoins,
   IconClock,
   IconWallet,
+  IconCash,
 } from "@tabler/icons-react";
-import Link from "next/link";
 import { useSellerWallet } from "./hooks/useSellerWallet";
 import { WalletStatCard } from "./components/WalletStatCard";
 import { PayoutHistoryList } from "./components/PayoutHistoryList";
+import AllProductsHeader from "@/features/product-list/components/AllProductsHeader";
 
 export default function SellerPayouts() {
   const {
@@ -25,8 +25,8 @@ export default function SellerPayouts() {
 
   if (userLoading) {
     return (
-      <div className="min-h-[50vh] flex items-center justify-center">
-        <IconLoader2 className="w-10 h-10 animate-spin text-primary" />
+      <div className="min-h-[50vh] flex items-center justify-center bg-luxury-ivory">
+        <IconLoader2 className="h-10 w-10 animate-spin text-luxury-ink" />
       </div>
     );
   }
@@ -34,68 +34,78 @@ export default function SellerPayouts() {
   if (!account) return null;
 
   return (
-    <main className="max-w-8xl mx-auto w-full px-4 py-8 sm:px-6 bg-cream-50 min-h-screen">
-      <Link
-        href="/seller"
-        className="inline-flex items-center gap-2 text-primary hover:underline font-medium text-sm mb-6"
-      >
-        <IconArrowLeft className="h-4 w-4" />
-        Quay lại
-      </Link>
+    <main className="mx-auto w-full max-w-9xl  min-h-screen bg-luxury-ivory text-luxury-ink">
+      <AllProductsHeader
+        total={payouts.total}
+        title="Ví & Thanh toán"
+        breadcrumbLabel="Seller"
+        totalLabel="giao dịch"
+      />
 
-      <h1 className="text-xl font-bold text-taupe-900 mb-6">Ví & Thanh toán</h1>
+      <div className="px-4 pb-12 sm:px-8 lg:px-12">
+        {isLoading ? (
+          <div className="flex justify-center py-20">
+            <IconLoader2 className="h-10 w-10 animate-spin text-luxury-ink" />
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {walletError && (
+              <div className="rounded-[22px] border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+                {walletError}
+              </div>
+            )}
 
-      {isLoading ? (
-        <div className="flex justify-center py-16">
-          <IconLoader2 className="w-10 h-10 animate-spin text-primary" />
-        </div>
-      ) : (
-        <div className="space-y-6">
-          {walletError && (
-            <div className="rounded-xl bg-red-50 border-2 border-red-200 p-4 text-sm text-red-600">
-              {walletError}
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <WalletStatCard
+                icon={IconCoins}
+                amount={wallet?.balance ?? 0}
+                label="Số dư khả dụng"
+                tone="success"
+              />
+              <WalletStatCard
+                icon={IconClock}
+                amount={wallet?.pendingBalance ?? 0}
+                label="Chờ rút"
+                tone="warning"
+              />
+              <WalletStatCard
+                icon={IconCash}
+                amount={wallet?.totalEarned ?? 0}
+                label="Tổng đã thu"
+                tone="primary"
+              />
+              <WalletStatCard
+                icon={IconWallet}
+                amount={wallet?.totalWithdrawn ?? 0}
+                label="Đã rút"
+                tone="neutral"
+              />
             </div>
-          )}
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <WalletStatCard
-              icon={IconCoins}
-              amount={wallet?.balance ?? 0}
-              label="Số dư khả dụng"
-              tone="success"
-            />
-            <WalletStatCard
-              icon={IconClock}
-              amount={wallet?.pendingBalance ?? 0}
-              label="Chờ rút"
-              tone="warning"
-            />
-            <WalletStatCard
-              icon={IconCoins}
-              amount={wallet?.totalEarned ?? 0}
-              label="Tổng đã thu"
-              tone="primary"
-            />
-            <WalletStatCard
-              icon={IconWallet}
-              amount={wallet?.totalWithdrawn ?? 0}
-              label="Đã rút"
-              tone="neutral"
-            />
-          </div>
+            <div className="rounded-[30px] border border-taupe-200/80 bg-white/80 p-6 shadow-[0_18px_45px_rgba(28,27,24,0.04)] backdrop-blur-sm">
+              <div className="mb-5 flex items-center justify-between gap-3 border-b border-taupe-200/70 pb-4">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-charcoal-400">
+                    Giao dịch
+                  </p>
+                  <h2 className="mt-2 text-xl font-medium text-luxury-ink">
+                    Lịch sử thanh toán
+                  </h2>
+                </div>
+                <span className="rounded-full border border-taupe-200 bg-luxury-ivory px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-charcoal-500">
+                  {payouts.total} giao dịch
+                </span>
+              </div>
 
-          <div className="rounded-2xl border-2 border-border bg-gradient-to-br from-cream-50 to-white p-5 shadow-md">
-            <h2 className="font-bold text-taupe-900 mb-3 uppercase tracking-wide text-sm">
-              Lịch sử thanh toán
-            </h2>
-            <PayoutHistoryList
-              payouts={payouts.data}
-              total={payouts.total}
-              error={payoutsError}
-            />
+              <PayoutHistoryList
+                payouts={payouts.data}
+                total={payouts.total}
+                error={payoutsError}
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </main>
   );
 }
