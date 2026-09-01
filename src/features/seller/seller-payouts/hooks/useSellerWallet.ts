@@ -84,7 +84,7 @@ export function useSellerWallet() {
 
   useEffect(() => {
     if (!userLoading && !account) {
-      router.push("/login");
+      router.replace("/login?redirect=%2Fseller%2Fpayouts");
       return;
     }
     if (!account) return;

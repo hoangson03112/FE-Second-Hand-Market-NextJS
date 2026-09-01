@@ -31,7 +31,16 @@ export default function SellerPayouts() {
     );
   }
 
-  if (!account) return null;
+  if (!account) {
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center bg-luxury-ivory">
+        <div className="flex items-center gap-3 text-sm font-medium text-luxury-ink">
+          <IconLoader2 className="h-5 w-5 animate-spin" />
+          <span>Đang chuyển hướng đăng nhập...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main className="mx-auto w-full max-w-9xl  min-h-screen bg-luxury-ivory text-luxury-ink">

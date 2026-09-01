@@ -163,9 +163,9 @@ export default function Product({ id }: ProductProps) {
                 </div>
               )}
               {(product.stock ?? 0) > 1 && (
-                <div className="text-sm font-bold uppercase tracking-wide text-charcoal-400">
+                <div className="text-sm font-medium uppercase tracking-wide text-charcoal-400">
                   Còn lại:{" "}
-                  <span className="font-medium text-luxury-ink">
+                  <span className=" text-luxury-ink">
                     {product.stock} sản phẩm
                   </span>
                 </div>
@@ -182,7 +182,7 @@ export default function Product({ id }: ProductProps) {
                   </div>
                 )}
                 {product.deliveryOptions.localPickup && (
-                  <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-[11px] uppercase tracking-wide font-bold">
+                  <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-xs uppercase tracking-wide font-medium">
                     <IconMapPin className="h-4 w-4 text-red-500" />
                     Giao dịch trực tiếp
                   </div>
