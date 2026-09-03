@@ -5,7 +5,7 @@ export const formatPrice = (price: number) => {
   }).format(price);
 };
 
-/** Parse user price input (handles "70.000", "70,000", "70000") to number. Returns 0 if invalid. */
+
 export const parsePriceInput = (input: string): number => {
   if (!input || typeof input !== "string") return 0;
   const digitsOnly = input.replace(/\D/g, "");
@@ -14,7 +14,7 @@ export const parsePriceInput = (input: string): number => {
   return Number.isNaN(parsed) ? 0 : parsed;
 };
 
-/** Compute discount amount and percent. Guards against invalid/zero original price. */
+
 export const getDiscountStats = (
   originalPrice: number,
   discountedPrice: number

@@ -47,8 +47,8 @@ export default function AdminCategories() {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <IconLoader2 className="h-9 w-9 animate-spin text-primary" />
-          <p className="text-sm font-medium text-muted-foreground">
+          <IconLoader2 className="h-9 w-9 animate-spin text-luxury-ink" />
+          <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
             Đang tải cây danh mục...
           </p>
         </div>
@@ -69,6 +69,7 @@ export default function AdminCategories() {
     return (
       <div className="space-y-6">
         <PageHeader
+          eyebrow="Cấu hình danh mục"
           title="Quản lý danh mục"
           description="Cấu hình danh mục cha và các phân loại con hỗ trợ người bán phân loại sản phẩm."
         />
@@ -79,7 +80,7 @@ export default function AdminCategories() {
           onSubmit={addCategory}
         />
         <NoData
-          icon={<IconFolders className="w-10 h-10 text-muted-foreground" />}
+          icon={<IconFolders className="w-10 h-10 text-neutral-400" />}
           title="Chưa có danh mục nào"
           description="Hãy tạo danh mục đầu tiên bằng form ở trên."
         />
@@ -90,10 +91,11 @@ export default function AdminCategories() {
   return (
     <div className="space-y-6">
       <PageHeader
+        eyebrow="Cấu hình danh mục"
         title="Quản lý danh mục"
         description="Cấu hình danh mục cha và các phân loại con cho toàn bộ hệ thống Eco Market."
         badge={
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-[2px] text-2xs font-bold uppercase tracking-[0.16em] bg-cream-50 text-luxury-ink border border-luxury-ink/10">
             {categories.length} danh mục
           </span>
         }
@@ -120,10 +122,10 @@ export default function AdminCategories() {
           return (
             <div
               key={cat._id}
-              className={`rounded-2xl border bg-card p-4 sm:p-5 transition-all shadow-xs ${
+              className={`rounded-[2px] border bg-white p-4 sm:p-5 transition-all ${
                 isSelected
-                  ? "border-primary/40 ring-1 ring-primary/20"
-                  : "border-border/80 hover:border-primary/20"
+                  ? "border-luxury-ink shadow-xs"
+                  : "border-luxury-ink/10 hover:border-luxury-ink/30"
               }`}
             >
               <CategoryHeader
@@ -144,7 +146,7 @@ export default function AdminCategories() {
               />
 
               {isSelected && (
-                <div className="mt-4 space-y-4 border-t border-border/60 pt-4">
+                <div className="mt-4 space-y-4 border-t border-luxury-ink/8 pt-4">
                   <AddSubcategoryForm
                     categoryName={cat.name}
                     newSubName={newSubName}

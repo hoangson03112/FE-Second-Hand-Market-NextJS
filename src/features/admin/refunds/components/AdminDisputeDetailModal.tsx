@@ -219,20 +219,19 @@ export function AdminDisputeDetailModal({
   ].filter(Boolean) as { label: string; value: string }[];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-sm overflow-y-auto">
-      <div className="bg-card rounded-2xl shadow-xl max-w-8xl w-full max-h-[92vh] overflow-hidden border border-border flex flex-col">
-        {/* Header: trạng thái khiếu nại + số tiền (một lần, rõ ràng) */}
-        <header className="shrink-0 border-b border-border bg-muted/20 px-5 py-4 sm:px-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-luxury-ink/60 overflow-y-auto">
+      <div className="bg-white rounded-[2px] shadow-2xl max-w-5xl w-full max-h-[92vh] overflow-hidden border border-luxury-ink/10 flex flex-col">
+        <header className="shrink-0 border-b border-luxury-ink/10 bg-cream-50/70 px-5 py-4 sm:px-6">
           <div className="flex items-start justify-between gap-3">
             <div className="flex min-w-0 items-start gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/12 text-primary">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-cream-50 text-luxury-ink">
                 <IconReceiptRefund className="h-5 w-5" stroke={1.75} />
               </div>
               <div className="min-w-0 space-y-1">
                 <div className="flex flex-wrap items-center gap-2 gap-y-1">
-                  <h2 className="text-base font-bold tracking-tight text-foreground sm:text-lg">
+                  <h2 className="font-droid-serif text-base font-bold tracking-tight text-luxury-ink sm:text-lg">
                     Khiếu nại{" "}
-                    <span className="font-mono text-muted-foreground">
+                    <span className="font-mono text-neutral-500">
                       #{refund?._id?.slice(-8).toUpperCase() ?? "—"}
                     </span>
                   </h2>
@@ -240,7 +239,7 @@ export function AdminDisputeDetailModal({
                     <OrderStatusBadge status={refund.status} size="sm" />
                   )}
                 </div>
-                <p className="text-xs text-muted-foreground sm:text-sm">
+                <p className="text-2xs text-neutral-500 font-medium">
                   {refund?.createdAt && (
                     <span>Tạo {format(refund.createdAt)}</span>
                   )}
@@ -255,34 +254,34 @@ export function AdminDisputeDetailModal({
             <button
               type="button"
               onClick={onClose}
-              className="shrink-0 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              className="shrink-0 rounded-[2px] border border-luxury-ink/10 p-1.5 text-luxury-ink transition-colors hover:bg-taupe-50"
               aria-label="Đóng"
             >
-              <IconX className="h-5 w-5" />
+              <IconX className="h-4 w-4" />
             </button>
           </div>
           {refund && (
-            <div className="mt-4 flex flex-col gap-0.5 border-t border-border/80 pt-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="mt-4 flex flex-col gap-0.5 border-t border-luxury-ink/8 pt-3 sm:flex-row sm:items-end sm:justify-between">
               <SectionLabel>Số tiền hoàn</SectionLabel>
-              <p className="text-2xl font-bold tabular-nums tracking-tight text-foreground sm:text-3xl">
+              <p className="font-droid-serif text-2xl font-bold tabular-nums text-luxury-ink sm:text-3xl">
                 {formatPrice(refund.refundAmount)}
               </p>
             </div>
           )}
         </header>
 
-        <div className="flex-1 overflow-y-auto px-5 py-5 sm:px-6">
+        <div className="flex-1 overflow-y-auto px-5 py-5 sm:px-6 bg-luxury-ivory/40">
           {isLoading ? (
             <div className="flex items-center justify-center py-24">
-              <IconLoader2 className="w-12 h-12 animate-spin text-primary" />
+              <IconLoader2 className="w-8 h-8 animate-spin text-luxury-ink" />
             </div>
           ) : !refund ? (
-            <p className="text-muted-foreground text-center py-16">
+            <p className="text-neutral-500 text-center py-16 text-xs">
               Không tải được dữ liệu.
             </p>
           ) : (
             <div className="space-y-5">
-              {/* Người tham gia — một hàng gọn */}
+
               <div className="grid gap-3 sm:grid-cols-2">
                 {[
                   {
@@ -337,7 +336,7 @@ export function AdminDisputeDetailModal({
                 ))}
               </div>
 
-              {/* Nội dung khiếu nại — không lặp số tiền */}
+
               <section className="rounded-xl border border-border bg-card">
                 <div className="flex items-center gap-2 border-b border-border px-4 py-3">
                   <IconPackage className="h-4 w-4 text-muted-foreground" />
@@ -677,14 +676,14 @@ export function AdminDisputeDetailModal({
           )}
         </div>
 
-        {/* ─── STICKY ACTION BAR ─── */}
+
         {refund?.status === "disputed" && (
-          <div className="flex flex-wrap items-center justify-end gap-2 border-t border-border bg-muted/20 px-5 py-3 sm:px-6">
+          <div className="flex flex-wrap items-center justify-end gap-2.5 border-t border-luxury-ink/10 bg-cream-50/50 px-5 py-3 sm:px-6">
             <button
               type="button"
               onClick={onReject}
               disabled={isProcessing}
-              className="flex items-center gap-2 rounded-lg border border-destructive/50 px-4 py-2.5 text-sm font-bold text-destructive transition-colors hover:bg-destructive/5 disabled:opacity-50"
+              className="flex items-center gap-2 rounded-[2px] border border-rose-200 bg-white px-4 py-2 text-2xs font-bold uppercase tracking-[0.12em] text-rose-700 transition-colors hover:bg-rose-50 disabled:opacity-50"
             >
               <IconCircleX className="h-4 w-4" />
               Bác bỏ khiếu nại
@@ -693,7 +692,7 @@ export function AdminDisputeDetailModal({
               type="button"
               onClick={onApprove}
               disabled={isProcessing}
-              className="flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
+              className="flex items-center gap-2 rounded-[2px] bg-accent px-5 py-2 text-2xs font-bold uppercase tracking-[0.12em] text-white transition-all hover:opacity-90 disabled:opacity-50"
             >
               {isProcessing ? (
                 <IconLoader2 className="h-4 w-4 animate-spin" />

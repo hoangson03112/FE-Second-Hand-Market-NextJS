@@ -1,15 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-/**
- * Server-side proxy for the GHN (GiaoHangNhanh) API.
- *
- * The GHN `Token` is a secret and must never reach the browser bundle, so all
- * GHN calls from the client go through this Route Handler instead of hitting
- * GHN directly. The token (and shop id) are read from server-only env vars and
- * injected here.
- *
- * Client base URL: `/api/ghn`  ->  forwarded to `${GHN_API_URL}/<path>`.
- */
 
 const GHN_API_URL =
   process.env.GHN_API_URL ??
@@ -17,7 +7,7 @@ const GHN_API_URL =
 const GHN_API_TOKEN = process.env.GHN_API_TOKEN;
 const GHN_SHOP_ID = process.env.GHN_SHOP_ID;
 
-// GHN endpoints that require the shop id in the request body.
+
 const SHOP_ID_ENDPOINTS = ["available-services"];
 
 async function proxy(
@@ -48,8 +38,7 @@ async function proxy(
       unknown
     >;
 
-    // Inject the shop id for endpoints that need it, so the client never has to
-    // know it.
+
     if (
       GHN_SHOP_ID &&
       json &&
@@ -63,8 +52,7 @@ async function proxy(
     body = JSON.stringify(json);
   }
 
-  // Without a deadline a stalled GHN holds this handler's socket open for as
-  // long as GHN wants; the browser gives up at 8s either way.
+
   let upstream: Response;
   try {
     upstream = await fetch(target, {

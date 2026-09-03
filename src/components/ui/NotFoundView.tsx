@@ -12,18 +12,18 @@ export interface NotFoundLink {
 }
 
 export interface NotFoundViewProps {
-  /** Watermark + kicker code. Pass an empty string to drop the watermark. */
+
   code?: string;
   eyebrow?: string;
   title?: string;
   description?: string;
-  /** Filled call to action. */
+
   primaryAction?: NotFoundLink;
-  /** Outlined call to action — pass `null` to render only the back button. */
+
   secondaryAction?: NotFoundLink | null;
-  /** Client-side "go back", shown next to the two link actions. */
+
   showBackButton?: boolean;
-  /** Hairline strip of shortcuts under the actions. */
+
   suggestions?: NotFoundLink[];
   className?: string;
 }
@@ -35,10 +35,7 @@ const DEFAULT_SUGGESTIONS: NotFoundLink[] = [
   { href: "/orders", label: "Đơn hàng của tôi" },
 ];
 
-/**
- * The project-wide "route does not exist" screen. Used by `app/not-found.tsx`
- * and by any segment-level `not-found.tsx` that wants its own wording.
- */
+
 export function NotFoundView({
   code = "404",
   eyebrow = "Không tìm thấy trang",

@@ -56,7 +56,7 @@ export function SellerSection({ seller, addressPhone }: SellerSectionProps) {
       </div>
 
       <div className="rounded-xl border border-border bg-card overflow-hidden">
-        {/* Avatar + name row */}
+
         <div className="flex items-center gap-3.5 px-4 py-4 border-b border-border/60">
           <div className="w-11 h-11 rounded-full bg-muted border border-border flex items-center justify-center shrink-0 overflow-hidden">
             {seller?.avatar ? (
@@ -111,7 +111,7 @@ export function SellerSection({ seller, addressPhone }: SellerSectionProps) {
           )}
         </div>
 
-        {/* Stats row */}
+
         <div className="grid grid-cols-3 divide-x divide-border/60">
           <div className="py-3 text-center">
             <p className="text-base font-bold text-foreground">
@@ -131,7 +131,7 @@ export function SellerSection({ seller, addressPhone }: SellerSectionProps) {
           </div>
         </div>
 
-        {/* Contact + location info */}
+
         <div className="px-4 py-3 border-t border-border/60 space-y-2">
           {email && (
             <div className="flex items-center gap-2 text-xs">

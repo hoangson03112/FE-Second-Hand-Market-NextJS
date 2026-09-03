@@ -12,7 +12,7 @@ interface OrderStatusHeroProps {
   status: string;
   statusConfig: { label: string; color: string; icon: string; bgColor: string };
   statusDescription: Record<string, string>;
-  /** When set (e.g. refund flow + Refund.status), overrides statusDescription[status]. */
+
   descriptionOverride?: string;
   progressSteps: readonly ProgressStep[];
   effectiveStepIdx: number;
@@ -51,13 +51,7 @@ function TrackingRow({
   );
 }
 
-/**
- * The page's one focal point: status on the dark ink ground (the same treatment
- * as the checkout total), with the journey laid out beneath it on white.
- *
- * `statusConfig.icon` / `.bgColor` are deliberately unused — those carry the
- * saturated emoji palette of the admin tables, which does not belong here.
- */
+
 export function OrderStatusHero({
   status,
   statusConfig,

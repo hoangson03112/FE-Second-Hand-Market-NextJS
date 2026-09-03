@@ -16,10 +16,7 @@ const NOISE_TEXTURE =
 interface AuthShellProps {
   panel: React.ReactNode;
   children: React.ReactNode;
-  /**
-   * Bề ngang cột form. "narrow" (mặc định) cho form một cột — login, verify.
-   * "wide" cho register, vì lưới sm:grid-cols-2 của nó cần chỗ cho 2 field.
-   */
+
   size?: "narrow" | "wide";
 }
 

@@ -26,33 +26,33 @@ export interface Message {
   productId?: string;
   orderId?: string;
   media?: Media[];
-  
-  // Status
+
+
   isRead?: boolean;
   readAt?: string;
   deliveredAt?: string;
-  
-  // Edit & Delete
+
+
   isDeleted?: boolean;
   deletedAt?: string;
   deletedBy?: string;
   isEdited?: boolean;
   editedAt?: string;
-  
-  // Reply
+
+
   replyTo?: string | Message;
-  
-  // Reactions
+
+
   reactions?: Reaction[];
-  
-  // Metadata
+
+
   metadata?: Record<string, unknown>;
-  
-  // Timestamps
+
+
   createdAt: string;
   updatedAt?: string;
-  
-  // Populated fields
+
+
   senderName?: string;
   senderAvatar?: string;
   product?: {

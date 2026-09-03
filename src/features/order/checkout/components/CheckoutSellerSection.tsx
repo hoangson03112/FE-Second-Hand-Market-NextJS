@@ -25,7 +25,7 @@ interface CheckoutSellerSectionProps {
   onPaymentMethodChange: (method: PaymentMethodType) => void;
   deliveryMethod: "local_pickup" | "cod_shipping";
   onDeliveryMethodChange: (method: "local_pickup" | "cod_shipping") => void;
-  /** Zero-based position, shown as an editorial "01 / 03" marker. */
+
   index?: number;
   totalGroups?: number;
 }
@@ -118,7 +118,7 @@ export default function CheckoutSellerSection({
 
   return (
     <section className="overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white">
-      {/* Seller header */}
+
       <header className="flex items-center gap-4 border-b border-luxury-ink/10 bg-cream-50/70 px-5 py-4 sm:px-6">
         <AvatarOrInitials
           avatar={sellerAvatar}
@@ -145,7 +145,7 @@ export default function CheckoutSellerSection({
       </header>
 
       <div className="px-5 sm:px-6">
-        {/* Product list */}
+
         <div className="divide-y divide-luxury-ink/8">
           {items.map((item) => {
             const avatar = item.product.avatar?.url ?? "";
@@ -194,7 +194,7 @@ export default function CheckoutSellerSection({
           })}
         </div>
 
-        {/* Delivery method selector */}
+
         {group.hasBothOptions ? (
           <div className="border-t border-luxury-ink/8 py-6">
             <p className="text-2xs font-medium uppercase tracking-[0.15em] text-charcoal-800">
@@ -217,7 +217,7 @@ export default function CheckoutSellerSection({
           </div>
         ) : null}
 
-        {/* Shipping info for this seller */}
+
         <div
           className={cn(
             "py-6",
@@ -273,9 +273,7 @@ export default function CheckoutSellerSection({
           )}
         </div>
 
-        {/* Payment method — only a real choice when the order ships.
-            Gặp mặt trực tiếp always settles in cash at the handover, so we
-            state it instead of rendering a single-option radio group. */}
+
         <div className="border-t border-luxury-ink/8 py-6">
           <p className="text-2xs font-medium uppercase tracking-[0.15em] text-charcoal-800">
             {group.isLocalPickup ? "Thanh toán" : "Phương thức thanh toán"}
@@ -317,7 +315,7 @@ export default function CheckoutSellerSection({
         </div>
       </div>
 
-      {/* Section subtotal */}
+
       <div className="space-y-3.5 border-t border-luxury-ink/10 bg-cream-50/70 px-5 py-5 sm:px-6">
         <MoneyRow label="Tiền hàng" value={formatPrice(subtotal)} />
         {!group.isLocalPickup ? (

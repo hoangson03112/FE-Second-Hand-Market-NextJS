@@ -32,7 +32,6 @@ export function createStore<T extends object>(
       ? devtools(persistedCreator as unknown as StateCreator<T, [], []>, { name })
       : persistedCreator;
 
-  // TS: middleware mutator types are carried in `finalCreator`,
-  // but `create<T>()` here expects a plain StateCreator signature.
+
   return create<T>()(finalCreator as unknown as StateCreator<T, [], []>);
 }

@@ -128,7 +128,7 @@ export function useOrderDetail({ orderId, autoOpenRefund, autoOpenReview }: UseO
     fetchProductReviews();
   }, [order, orderId]);
 
-  // Auto-open refund or review modal when navigated from order list with query params
+
   useEffect(() => {
     if (!order || isLoading) return;
     const isLocalPickup = getShippingMethodType(order.shippingMethod) === "local_pickup";
@@ -142,7 +142,7 @@ export function useOrderDetail({ orderId, autoOpenRefund, autoOpenReview }: UseO
     ) {
       setShowRefundModal(true);
     } else if (autoOpenReview && canReviewOrder) {
-      // Scroll to review section
+
       setTimeout(() => {
         document.getElementById("seller-review-section")?.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 300);
@@ -246,8 +246,8 @@ export function useOrderDetail({ orderId, autoOpenRefund, autoOpenReview }: UseO
         accountNumber.trim(),
         accountHolder.trim(),
       );
-      // Server sets order.status = "refund" on a refund request; the request
-      // itself lives on order.refundRequestId.
+
+
       setOrder((prev) => (prev ? { ...prev, status: "refund" as const } : null));
       setShowRefundModal(false);
       setRefundReason("");

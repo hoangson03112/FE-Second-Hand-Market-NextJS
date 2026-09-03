@@ -33,11 +33,7 @@ interface SellerProductsCardProps {
   order: Order;
 }
 
-/**
- * The items in the order. The price breakdown that used to repeat at the bottom
- * of this card now lives once, on the ink panel — it was printed twice on the
- * same screen.
- */
+
 export function SellerProductsCard({ order }: SellerProductsCardProps) {
   const products = order.products ?? [];
 

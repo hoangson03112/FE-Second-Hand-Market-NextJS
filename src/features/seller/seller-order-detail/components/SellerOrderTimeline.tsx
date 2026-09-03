@@ -13,9 +13,9 @@ export interface TimelineStep {
 
 interface SellerOrderTimelineProps {
   steps: TimelineStep[];
-  /** Index of the step the order is currently sitting on. */
+
   currentIndex: number;
-  /** Cancelled / failed orders came off the rail — say so instead of drawing it. */
+
   brokenNotice?: string | null;
 }
 
@@ -23,12 +23,7 @@ type NodeState = "done" | "active" | "todo";
 
 const twoDigits = (value: number) => String(value).padStart(2, "0");
 
-/**
- * Square 2px node with a serif ordinal — the same vocabulary as the buyer's
- * `OrderProgressTrail`, so both sides of a transaction read the same trail. The
- * seller version adds the timestamp per step, because that is the operational
- * detail they actually need when a buyer asks "where is my order".
- */
+
 function Node({ state, index }: { state: NodeState; index: number }) {
   return (
     <span
@@ -85,7 +80,7 @@ export function SellerOrderTimeline({
         </div>
       ) : (
         <>
-          {/* Horizontal rail from md up */}
+
           <ol className="hidden md:flex md:items-start">
             {steps.map((step, index) => {
               const state = stateFor(index, currentIndex);
@@ -132,7 +127,7 @@ export function SellerOrderTimeline({
             })}
           </ol>
 
-          {/* Vertical trail below md — no sideways scrolling to read a status */}
+
           <ol className="md:hidden">
             {steps.map((step, index) => {
               const state = stateFor(index, currentIndex);

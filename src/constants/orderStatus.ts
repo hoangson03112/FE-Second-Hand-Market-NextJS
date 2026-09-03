@@ -107,7 +107,7 @@ export const STATUS_CONFIG: Record<
     bgColor: "bg-violet-100 border-violet-300",
     icon: "💸",
   },
-  /** Trạng thái Refund (admin / danh sách hoàn) */
+
   disputed: {
     label: "Khiếu nại",
     color: "text-purple-800",
@@ -139,7 +139,7 @@ export const STATUS_CONFIG: Record<
     icon: "✕",
   },
 };
-// Simple labels map for backward compatibility
+
 export const STATUS_LABELS: Record<string, string> = {
   pending: "Chờ xác nhận",
   confirmed: "Đã xác nhận",
@@ -160,7 +160,7 @@ export const STATUS_LABELS: Record<string, string> = {
   refunded: "Đã hoàn tiền",
 };
 
-// Simple colors map for backward compatibility
+
 export const STATUS_COLORS: Record<string, string> = {
   pending: "bg-primary/10 text-primary/90 border-primary/30",
   confirmed: "bg-primary/15 text-primary border-primary/40",
@@ -295,16 +295,7 @@ export function getRefundStatusNotice(
   }
 }
 
-/**
- * The only statuses `order.status` can ever hold — mirrors the `ORDER_STATUS`
- * enum in `backend/src/utils/orderStateMachine.js`, which Mongoose enforces.
- *
- * `returning` / `returned` are the leg where a failed delivery travels back to
- * the seller — they live on the order. `return_shipping` / `refund_requested` /
- * `refund_approved` belong to the **Refund** model, not to the order, so a tab
- * keyed on them can never match anything. Likewise the backend uses
- * `delivery_failed`, never `failed`.
- */
+
 export const ORDER_STATUS_KEYS: readonly OrderStatus[] = [
   "pending",
   "confirmed",
@@ -326,31 +317,13 @@ export interface OrderTab {
   label: string;
 }
 
-/**
- * Single source of truth for order filter tabs (buyer list + admin dropdown).
- * Labels are derived from `STATUS_CONFIG` so tab text can never drift away from
- * the status badge text.
- */
+
 export const ORDER_TABS: readonly OrderTab[] = [
   { key: "all", label: "Tất cả" },
   ...ORDER_STATUS_KEYS.map((key) => ({ key, label: getOrderStatusLabel(key) })),
 ];
 
-/**
- * Buyer-facing filter groups.
- *
- * One tab per status gives the buyer list fourteen chips, and nobody shopping
- * thinks in `picked_up` vs `out_for_delivery` vs `shipping` — that vocabulary is
- * the fulfilment pipeline's, not theirs. These six groups are what a buyer
- * actually looks for; the exact stage is shown per order on the card's progress
- * rail, where it is information rather than navigation noise.
- *
- * `ORDER_TABS` above is deliberately left alone: the admin screen does need one
- * entry per status.
- *
- * `action` carries no status list — it is computed per order by
- * `getBuyerTodo()`, because "needs me to do something" cuts across statuses.
- */
+
 export const BUYER_TAB_STATUSES: Record<string, readonly string[]> = {
   all: [],
   action: [],
@@ -384,15 +357,6 @@ export const BUYER_ORDER_TABS: readonly OrderTab[] = [
 ];
 
 
-/**
- * Project a Refund document's status onto the pseudo order status the seller
- * screens key their UI on.
- *
- * The backend keeps `order.status === "refund"` for the entire refund
- * lifecycle and advances `refund.status` instead
- * (`backend/src/utils/refundStateMachine.js`), so seller UI must read the
- * refund document — not the order — to know which stage it is at.
- */
 export function sellerDisplayStatusFromRefund(
   orderStatus: string,
   refundStatus: string | null | undefined,

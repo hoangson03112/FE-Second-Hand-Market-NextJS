@@ -13,7 +13,7 @@ export function useAddress() {
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const [showNewAddressForm, setShowNewAddressForm] = useState(false);
-  
+
   const {
     data: addresses = [],
     isLoading,
@@ -22,7 +22,7 @@ export function useAddress() {
   } = useQuery<Address[]>({
     queryKey: [...queryKeys.addresses.list(), "delivery"],
     queryFn: async () => {
-    
+
 
       try {
         const rawAddresses = await AddressService.getAddresses("delivery");
@@ -42,7 +42,7 @@ export function useAddress() {
     gcTime: serverStateConfig.gcTime.dynamic, // 10 minutes
   });
 
-  // Auto-select default address on mount or when addresses change
+
   useEffect(() => {
     if (addresses.length > 0 && !selectedAddress) {
       const defaultAddress =
@@ -98,14 +98,14 @@ export function useAddress() {
   const handleDeleteAddress = async (id: string) => {
     await AddressService.deleteAddress(id);
     await refetch();
-    // If deleted address was selected, clear selection
+
     if (selectedAddress?._id === id) {
       setSelectedAddress(null);
     }
   };
 
   return {
-    // State
+
     addresses,
     selectedAddress,
     showAddressModal,
@@ -113,7 +113,7 @@ export function useAddress() {
     isLoading,
     error,
 
-    // Actions
+
     handleSelectAddress,
     handleOpenModal,
     handleCloseModal,

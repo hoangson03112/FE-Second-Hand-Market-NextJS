@@ -34,7 +34,7 @@ export const NotificationService = {
     return axiosClient.delete(`/notifications/${id}`);
   },
 
-  /** Chuyển đổi từ DB format sang AppNotification format */
+
   toAppNotification: (n: FetchNotificationsResponse["notifications"][number]): AppNotification => ({
     id: n._id,
     type: n.type as AppNotification["type"],

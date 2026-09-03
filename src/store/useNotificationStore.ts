@@ -28,13 +28,13 @@ interface NotificationState {
   notifications: AppNotification[];
   unreadCount: number;
   addNotification: (notification: AddNotificationInput) => void;
-  /** Bulk-load from API. Existing notifications with matching dedupeKey are skipped. */
+
   hydrate: (notifications: AppNotification[]) => void;
   markAsRead: (id: string) => void;
   markAllAsRead: () => void;
   removeNotification: (id: string) => void;
   clearNotifications: () => void;
-  /** Clear store — call on logout */
+
   reset: () => void;
 }
 

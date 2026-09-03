@@ -34,7 +34,7 @@ function toDealProduct(p: MyListingProduct): Product {
   };
 }
 
-// ─── Product Card for Popover ─────────────────────────────────────────────
+
 function ProductCard({
   product,
   selected,
@@ -51,7 +51,7 @@ function ProductCard({
       className={`flex w-full items-center gap-3 rounded-[2px] border bg-white p-2 transition-all duration-300 hover:border-luxury-ink/40 ${selected ? "border-luxury-ink" : "border-luxury-ink/12"}`}
     >
       {product.imageUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
+
         <img
           src={product.imageUrl}
           alt={product.name}
@@ -78,7 +78,6 @@ function ProductCard({
   );
 }
 
-// ─── Main Component ─────────────────────────────────────────────────────────
 
 export default function SellerDiscountInline({
   buyerId,

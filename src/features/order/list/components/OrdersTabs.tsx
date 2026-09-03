@@ -6,7 +6,7 @@ import type { OrderTab } from "@/constants/orderStatus";
 
 interface OrdersTabsProps {
   tabs: readonly OrderTab[];
-  /** Pre-computed per-tab counts — "Cần xử lý" is not a status, so the list owns this. */
+
   counts: Record<string, number>;
   activeTab: string;
   onChange: (tab: string) => void;
@@ -20,7 +20,7 @@ export function OrdersTabs({
 }: OrdersTabsProps) {
   const activeRef = useRef<HTMLButtonElement | null>(null);
 
-  // Scroll active tab into view when it changes
+
   useEffect(() => {
     activeRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -81,7 +81,7 @@ export function OrdersTabs({
               </button>
             );
           })}
-          {/* Trailing spacer — ensures the last tab is never clipped */}
+
           <div className="w-2 shrink-0" aria-hidden="true" />
         </div>
       </div>

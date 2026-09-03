@@ -13,10 +13,7 @@ export interface ErrorStateProps
   retryText?: string;
 }
 
-/**
- * ErrorState — {@link EmptyState} preset for error situations, with an optional
- * retry button.
- */
+
 export function ErrorState({
   icon,
   title = "Đã có lỗi xảy ra",

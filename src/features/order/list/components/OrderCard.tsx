@@ -37,7 +37,6 @@ interface OrderCardProps {
   onOpenRefund: (orderId: string) => void;
 }
 
-/** One line per item: thumbnail, name, quantity, line total. */
 function ProductRow({ item }: { item: Order["products"][number] }) {
   const product = item.productId;
   const name = product?.name || "Sản phẩm";
@@ -101,14 +100,6 @@ function ProductRow({ item }: { item: Order["products"][number] }) {
   );
 }
 
-/**
- * One order, at scanning density.
- *
- * The address, shipping method and itemised totals that used to live here have
- * moved to the detail page where they belong — a list exists to answer "which
- * order is this, where is it, and does it need me", and every extra block pushed
- * the next order off the screen.
- */
 export function OrderCard({
   order,
   cancellingId,
@@ -127,8 +118,6 @@ export function OrderCard({
   const stage = getOrderStage(order);
   const todo = getBuyerTodo(order);
 
-  /* With no todo, a refund still needs one line of "what is happening" — the
-     title only, since the rail already shows how far along it is. */
   const refundNoticeTitle =
     !todo && stage?.flow === "refund"
       ? getRefundStatusNotice(order.status, "buyer")?.title
@@ -163,8 +152,6 @@ export function OrderCard({
           ))}
         </div>
 
-        {/* Seller and grand total share one line, so the itemised list above
-            does not push the card's summary out of view. */}
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-luxury-ink/8 py-3.5">
           {order.sellerId ? (
             <div className="flex min-w-0 items-center gap-2">

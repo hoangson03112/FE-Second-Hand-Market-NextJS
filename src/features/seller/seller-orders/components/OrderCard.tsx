@@ -93,9 +93,9 @@ export default function OrderCard({
               : "border-border hover:border-primary/25",
       )}
     >
-      {/* ── MAIN ROW ──────────────────────────────────────────────────────── */}
+
       <div className="flex gap-3 p-4">
-        {/* Product image */}
+
         <div className="relative w-[92px] h-[92px] rounded-lg overflow-hidden shrink-0 bg-muted">
           {productImage ? (
             <Image
@@ -121,9 +121,9 @@ export default function OrderCard({
           )}
         </div>
 
-        {/* Content */}
+
         <div className="flex-1 min-w-0 flex flex-col gap-1">
-          {/* Product name + status badge */}
+
           <div className="flex items-start gap-2">
             <h3 className="font-bold text-sm leading-snug line-clamp-2 flex-1 group-hover:text-primary transition-colors">
               {firstProduct?.name ?? "Sản phẩm không xác định"}
@@ -131,7 +131,7 @@ export default function OrderCard({
             <OrderStatusBadge status={order.status} />
           </div>
 
-          {/* Buyer */}
+
           <div className="flex items-center gap-1.5">
             <AvatarOrInitials
               avatar={(order.buyerId as { avatar?: { url?: string } })?.avatar}
@@ -143,7 +143,7 @@ export default function OrderCard({
             </span>
           </div>
 
-          {/* Price */}
+
           <div className="flex items-baseline gap-2">
             <span className="text-base font-bold text-primary leading-none">
               {formatPrice(order.totalAmount)}
@@ -155,7 +155,7 @@ export default function OrderCard({
             )}
           </div>
 
-          {/* Meta: ID · time · GHN code */}
+
           <div className="flex items-center flex-wrap gap-x-1.5 gap-y-0 text-[11px] text-muted-foreground mt-auto">
             <span className="font-mono font-bold text-foreground/50">
               #{order._id.slice(-6).toUpperCase()}
@@ -175,7 +175,7 @@ export default function OrderCard({
         </div>
       </div>
 
-      {/* ── REFUND BANNER ─────────────────────────────────────────────────── */}
+
       {isRefundRequest && (
         <div className="mx-4 mb-3">
           <div className="flex items-start gap-2.5 bg-orange-50 border border-orange-100 rounded-xl px-3 py-2.5">
@@ -212,7 +212,7 @@ export default function OrderCard({
         </div>
       )}
 
-      {/* ── ACTIONS ───────────────────────────────────────────────────────── */}
+
       <OrderActions
         order={order}
         updatingId={updatingId}
@@ -220,7 +220,7 @@ export default function OrderCard({
         onApproveRefund={onApproveRefund}
       />
 
-      {/* ── FOOTER ────────────────────────────────────────────────────────── */}
+
       <div className="flex items-center border-t border-border/60 divide-x divide-border/60 bg-muted/10">
         <Link
           href={`/my/messages?buyerId=${order.buyerId?._id}`}

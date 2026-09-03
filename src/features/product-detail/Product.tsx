@@ -63,7 +63,7 @@ export default function Product({ id }: ProductProps) {
     [product?.stock],
   );
 
-  /* ── MÀN HÌNH LOADING ── */
+
   if (isLoading) {
     return (
       <PageLoader
@@ -74,7 +74,7 @@ export default function Product({ id }: ProductProps) {
     );
   }
 
-  /* ── MÀN HÌNH LỖI / KHÔNG TÌM THẤY SẢN PHẨM ── */
+
   if (error || !product) {
     return (
       <NotFoundView
@@ -93,7 +93,7 @@ export default function Product({ id }: ProductProps) {
   const averageRating = reviewSummary?.avgRating ?? product.avgRating ?? 0;
   const totalReviews = reviewSummary?.totalReviews ?? product.totalReviews ?? 0;
 
-  // Chuyển đổi attributes thành dạng details
+
   const productDetails =
     product.attributes?.map(
       (attr: IAttribute) => `${attr.key}: ${attr.value}`,
@@ -110,9 +110,9 @@ export default function Product({ id }: ProductProps) {
           Trở lại
         </button>
 
-        {/* LAYOUT CHÍNH: GALLERY & THÔNG TIN SẢN PHẨM */}
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 pb-6">
-          {/* CỘT TRÁI: Gallery Hình Ảnh & Thông Số Kỹ Thuật */}
+
           <div className="lg:col-span-6 xl:col-span-5 space-y-8">
             <ProductGalleryNew
               images={product.images || [product.avatar]}
@@ -122,7 +122,7 @@ export default function Product({ id }: ProductProps) {
             <ProductSpecifications details={productDetails} />
           </div>
 
-          {/* CỘT PHẢI: Thông Tin Chi Tiết & Hành Động */}
+
           <div className="lg:col-span-6 xl:col-span-7 flex flex-col">
             <ProductHeader
               name={product.name}
@@ -172,7 +172,7 @@ export default function Product({ id }: ProductProps) {
               )}
             </div>
 
-            {/* HÌNH THỨC GIAO HÀNG */}
+
             {product.deliveryOptions && (
               <div className="flex flex-wrap gap-3 py-2 ">
                 {product.deliveryOptions.codShipping && (
@@ -206,13 +206,13 @@ export default function Product({ id }: ProductProps) {
           </div>
         </div>
 
-        {/* MÔ TẢ & ĐÁNH GIÁ SẢN PHẨM */}
+
         <div className="space-y-12 border-t border-luxury-ink/10 pt-6">
           <ProductDescription description={product.description} />
           <ProductReviewsSection productId={product._id} />
         </div>
 
-        {/* NÚT BÁO CÁO */}
+
         {account && (
           <div className="mt-14 text-center pb-8">
             <button
@@ -225,7 +225,7 @@ export default function Product({ id }: ProductProps) {
           </div>
         )}
 
-        {/* MODAL BÁO CÁO */}
+
         {showReportModal && (
           <ReportProductModal
             productId={product._id}

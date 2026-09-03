@@ -24,14 +24,14 @@ import type { PaymentProof } from "@/types/order";
 interface SellerPaymentProofCardProps {
   proof: PaymentProof | null;
   loading: boolean;
-  /** Số tiền đơn hàng, để người bán đối chiếu với ảnh biên lai. */
+
   amount: number;
   submitting: boolean;
   onVerify: () => void;
   onReject: (reason: string) => void;
 }
 
-/** Same three tones as `OrderStatusChip`: settled, attention, failed. */
+
 const STATUS_TONE = {
   pending: {
     chip: "border-luxury-champagne/50 bg-cream-100 text-neutral-700",
@@ -89,7 +89,7 @@ export function SellerPaymentProofCard({
     );
   }
 
-  // Người mua chưa chuyển khoản — chưa có gì để đối soát.
+
   if (!proof) {
     return (
       <Panel eyebrow="Thanh toán" title="Biên lai chuyển khoản">
@@ -150,7 +150,7 @@ export function SellerPaymentProofCard({
           </span>
         }
       >
-        {/* Số tiền cần đối chiếu */}
+
         <div className="flex flex-wrap items-end justify-between gap-4 rounded-[2px] border border-luxury-ink/10 bg-cream-50/60 px-4 py-3.5">
           <div>
             <p className={cn(microCaps, "text-neutral-500")}>
@@ -172,7 +172,7 @@ export function SellerPaymentProofCard({
           ) : null}
         </div>
 
-        {/* Tài khoản người mua đã chuyển tới */}
+
         {snapshot ? (
           <div className="mt-4 space-y-3 border-t border-luxury-ink/8 pt-4">
             <p className={cn(microCaps, "text-neutral-500")}>
@@ -190,7 +190,7 @@ export function SellerPaymentProofCard({
           </div>
         ) : null}
 
-        {/* Ảnh biên lai */}
+
         {proof.proofImage?.url ? (
           <div className="mt-4 border-t border-luxury-ink/8 pt-4">
             <p className={cn(microCaps, "text-neutral-500")}>Ảnh biên lai</p>
@@ -215,7 +215,7 @@ export function SellerPaymentProofCard({
           </div>
         ) : null}
 
-        {/* Lý do từ chối trước đó */}
+
         {proof.status === "rejected" && proof.rejectReason ? (
           <div className="mt-4 flex gap-3 rounded-[2px] border border-blush-300 bg-blush-50 px-4 py-3.5">
             <IconAlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-blush-600" />
@@ -235,7 +235,7 @@ export function SellerPaymentProofCard({
           </p>
         ) : null}
 
-        {/* Hành động — chỉ khi còn chờ đối soát */}
+
         {isPending ? (
           <div className="mt-5 border-t border-luxury-ink/8 pt-5">
             <p className="text-xs leading-relaxed text-neutral-600">

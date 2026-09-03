@@ -37,12 +37,7 @@ const toast = Object.assign(toastFn, {
   dismiss: sonnerToast.dismiss,
 });
 
-/*
-  API của sonner không phụ thuộc state nào, nên dựng sẵn một lần ở module scope
-  và luôn trả về đúng object đó. Nếu tạo mới mỗi lần render, mọi
-  useEffect/useCallback nhận toast làm dependency sẽ chạy lại sau từng render
-  — đủ để một effect fetch-rồi-setState tự gọi lại chính nó vô hạn.
-*/
+
 const toastApi = {
   toast,
   success: sonnerToast.success,

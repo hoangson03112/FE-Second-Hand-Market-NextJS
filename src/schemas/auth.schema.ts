@@ -1,8 +1,6 @@
 import { z } from "zod";
 
-// Format-only validation - không chặt chẽ, đúng format là được
 
-// Username: 3-30 ký tự, chữ/số/chấm/gạch dưới
 const usernameSchema = z
   .string()
   .min(1, "Vui lòng nhập tên đăng nhập")
@@ -11,14 +9,14 @@ const usernameSchema = z
   .regex(/^[a-zA-Z0-9._]+$/, "Chỉ dùng chữ, số, dấu chấm hoặc gạch dưới")
   .trim();
 
-// Số điện thoại VN: 10–11 số, bắt đầu 0 hoặc +84
+
 const phoneSchema = z
   .string()
   .min(1, "Vui lòng nhập số điện thoại")
   .transform((s) => s.replace(/\s/g, ""))
   .refine((s) => /^(0|\+84)?[0-9]{9,10}$/.test(s), "Số điện thoại không đúng định dạng");
 
-// Login
+
 const loginIdentifierSchema = z
   .string()
   .min(1, "Vui lòng nhập email hoặc tên đăng nhập")
@@ -39,7 +37,7 @@ export const loginSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginSchema>;
 
-// Register
+
 export const registerSchema = z
   .object({
     fullName: z

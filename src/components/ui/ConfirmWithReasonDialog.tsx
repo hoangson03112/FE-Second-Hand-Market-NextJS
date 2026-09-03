@@ -70,7 +70,7 @@ export function ConfirmWithReasonDialog({
 
       <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6">
         <div
-          className="relative w-full max-w-xl overflow-hidden rounded-[30px] border border-luxury-ink/10 bg-luxury-ivory shadow-[0_32px_90px_rgba(18,14,12,0.16)]"
+          className="relative w-full max-w-xl overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-luxury-ivory shadow-[0_32px_90px_rgba(18,14,12,0.16)]"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="border-b border-luxury-ink/10 bg-[linear-gradient(135deg,#fffdf9_0%,#f2ebdf_100%)] px-5 py-4 sm:px-6">
@@ -82,7 +82,7 @@ export function ConfirmWithReasonDialog({
                   <IconAlertTriangle className="h-5 w-5" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-charcoal-500">
+                  <p className="text-2xs font-medium uppercase tracking-[0.12em] text-charcoal-500">
                     Xác nhận thao tác
                   </p>
                   <h3 className="mt-1 text-xl font-semibold text-luxury-ink">
@@ -111,7 +111,7 @@ export function ConfirmWithReasonDialog({
               <div>
                 <label
                   htmlFor="confirm-reason"
-                  className="mb-2 block text-[11px] font-bold uppercase tracking-[0.18em] text-charcoal-500"
+                  className="mb-2 block text-xs font-medium uppercase tracking-[0.15em] text-charcoal-500"
                 >
                   {reasonLabel} <span className="text-red-500">*</span>
                 </label>
@@ -123,7 +123,7 @@ export function ConfirmWithReasonDialog({
                   required
                   rows={4}
                   disabled={isLoading}
-                  className="w-full resize-none rounded-[20px] border border-luxury-ink/10 bg-white px-4 py-3 text-sm text-luxury-ink placeholder:text-neutral-400 focus:border-luxury-ink focus:outline-none focus:ring-4 focus:ring-luxury-champagne/20 disabled:cursor-not-allowed disabled:bg-cream-50"
+                  className="w-full resize-none rounded-[2px] border border-luxury-ink/10 bg-white px-4 py-3 text-sm text-luxury-ink placeholder:text-neutral-400 focus:border-luxury-ink focus:outline-none focus:ring-4 focus:ring-luxury-champagne/20 disabled:cursor-not-allowed disabled:bg-cream-50"
                 />
               </div>
 
@@ -139,14 +139,14 @@ export function ConfirmWithReasonDialog({
                 type="button"
                 onClick={onCancel}
                 disabled={isLoading}
-                className="flex-1 rounded-full border border-luxury-ink/15 bg-white px-4 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-luxury-ink transition hover:border-luxury-ink/30 hover:bg-cream-50 disabled:opacity-50"
+                className="flex-1 rounded-[2px] border border-luxury-ink/15 bg-white px-4 py-3 text-xs font-bold uppercase tracking-[0.15em] text-luxury-ink transition hover:border-luxury-ink/30 hover:bg-cream-50 disabled:opacity-50"
               >
                 {cancelText}
               </button>
               <button
                 type="submit"
                 disabled={!reason.trim() || isLoading}
-                className={`flex-1 rounded-full px-4 py-3 text-[11px] font-bold uppercase tracking-[0.18em] transition disabled:cursor-not-allowed disabled:opacity-50 ${styles.confirm}`}
+                className={`flex-1 rounded-[2px] px-4 py-3 text-xs font-bold uppercase tracking-[0.15em] transition disabled:cursor-not-allowed disabled:opacity-50 ${styles.confirm}`}
               >
                 {isLoading ? "Đang xử lý..." : confirmText}
               </button>

@@ -24,10 +24,7 @@ type RefundStatusLike =
   | "completed"
   | null;
 
-/**
- * Backend keeps order.status as "refund" until payout; granular phase is Refund.status.
- * Hero timeline must follow refund doc, not only order.status.
- */
+
 function getRefundStepKey(orderStatus: string, refundStatus: RefundStatusLike): string {
   if (orderStatus === "refunded" || refundStatus === "completed") return "refunded";
   if (

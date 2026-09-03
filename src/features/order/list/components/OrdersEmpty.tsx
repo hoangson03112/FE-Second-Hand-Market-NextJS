@@ -9,7 +9,7 @@ import type { OrderTab } from "@/constants/orderStatus";
 interface OrdersEmptyProps {
   activeTab: string;
   tabs: readonly OrderTab[];
-  /** Set when the list is empty because of the search box, not the tab. */
+
   searchQuery?: string;
 }
 

@@ -12,7 +12,7 @@ export function useDeleteDiscount(refetch?: () => void) {
     mutationFn: (discountId: string) => SellerService.deletePersonalDiscount(discountId),
     onSuccess: (_, discountId) => {
       toast.success("Đã xóa ưu đãi");
-      // Ưu đãi có thể nằm ở bất kỳ trang/tab nào đang được cache.
+
       queryClient.setQueriesData<MyListingsResponse>(
         { queryKey: MY_PRODUCTS_QUERY_KEY },
         (old) => {

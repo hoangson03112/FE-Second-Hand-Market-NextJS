@@ -62,9 +62,6 @@ export function ConfirmDialogProvider({
   const handleConfirm = useCallback(() => closeWith(true), [closeWith]);
   const handleCancel = useCallback(() => closeWith(false), [closeWith]);
 
-  // The previous palette used `bg-destructive/10` + `text-destructive`, tokens
-  // this project never defines, so the danger icon rendered with no colour at
-  // all. The blush ramp is the real one.
   const getVariantConfig = () => {
     switch (options?.variant) {
       case "danger":
@@ -105,24 +102,30 @@ export function ConfirmDialogProvider({
         <DialogContent className="max-w-sm" showCloseButton>
           <DialogHeader className="items-center text-center">
             <div
-              className={`mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl ${config.iconWrap} ${config.iconColor}`}
+              className={`mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-[2px] ${config.iconWrap} ${config.iconColor}`}
             >
               {config.icon}
             </div>
-            <DialogTitle>{options?.title || "Xác nhận"}</DialogTitle>
-            <DialogDescription className="text-sm leading-relaxed">
+            <DialogTitle className="font-droid-serif">
+              {options?.title || "Xác nhận"}
+            </DialogTitle>
+            <DialogDescription className="text-sm leading-relaxed text-center">
               {options?.message}
             </DialogDescription>
           </DialogHeader>
 
           <DialogFooter className="sm:grid sm:grid-cols-2 sm:gap-3">
-            <Button variant="outline" onClick={handleCancel} className="w-full">
+            <Button
+              variant="outline"
+              onClick={handleCancel}
+              className="w-full rounded-[2px]"
+            >
               {options?.cancelText || "Hủy"}
             </Button>
             <Button
               variant={config.confirmVariant}
               onClick={handleConfirm}
-              className="w-full"
+              className="w-full rounded-[2px]"
             >
               {options?.confirmText || "Xác nhận"}
             </Button>

@@ -4,9 +4,9 @@ import { cn } from "@/lib/utils";
 
 interface OrdersHeaderProps {
   onBack: () => void;
-  /** Total order count, shown as an editorial figure beside the title. */
+
   totalCount?: number;
-  /** How many orders are waiting on the buyer — the figure worth leading with. */
+
   actionCount?: number;
 }
 

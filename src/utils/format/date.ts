@@ -36,11 +36,7 @@ export const formatDateOnly = (dateString: string) => {
   }
 };
 
-/**
- * Returns a human-readable relative time string in Vietnamese.
- * e.g. "Vừa xong", "5 phút trước", "2 giờ trước", "3 ngày trước",
- * or a full date for anything older than 30 days.
- */
+
 export const formatTimeAgo = (dateString: string): string => {
   if (!dateString) return "—";
   const date = new Date(dateString);
@@ -64,7 +60,7 @@ export const formatTimeAgo = (dateString: string): string => {
     year: "numeric",
   });
 };
-/** "M/YYYY" — used for "member since" style labels. */
+
 export function getMonthYear(dateString?: string): string {
   if (!dateString) return "N/A";
   const date = new Date(dateString);

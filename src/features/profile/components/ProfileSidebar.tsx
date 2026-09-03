@@ -71,7 +71,7 @@ export function ProfileSidebar({
   return (
     <aside className="lg:w-72 shrink-0">
       <div className="rounded-[2px] border border-luxury-ink/10 bg-white overflow-hidden">
-        {/* User card */}
+
         <div className="p-6 border-b border-luxury-ink/10 bg-luxury-ivory/50">
           <div className="flex flex-col items-center text-center">
             <div className="mb-4">
@@ -103,7 +103,7 @@ export function ProfileSidebar({
           </div>
         </div>
 
-        {/* Tabs: Tài khoản */}
+
         <div className="p-4 border-b border-luxury-ink/10">
           <p className="px-2 py-2 text-xs font-bold text-charcoal-400  uppercase tracking-[0.13em]">
             Tài khoản
@@ -148,7 +148,7 @@ export function ProfileSidebar({
           </div>
         )}
 
-        {/* Quick links by role */}
+
         {(isSeller || isAdmin) && (
           <div className="p-4">
             <p className="px-2 py-2 text-xs font-bold text-charcoal-400  uppercase tracking-[0.13em]">

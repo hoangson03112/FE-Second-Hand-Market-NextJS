@@ -61,11 +61,7 @@ const TONE_GROUND: Record<Tone, string> = {
   failed: "border-blush-200 bg-blush-50",
 };
 
-/**
- * One shape for every state the order can be in: a tonal header saying where
- * things stand, and the actions that state allows underneath. Nine near-identical
- * card variants used to be spelled out by hand, each drifting a little.
- */
+
 function ActionPanel({
   tone,
   eyebrow,
@@ -123,10 +119,8 @@ export function SellerActionButtons({
   isLocalPickup,
   onChatClick,
 }: SellerActionButtonsProps) {
-  // The server parks `order.status` at "refund" for the whole refund
-  // lifecycle and advances `refundRequestId.status` instead, so reading
-  // `order.status` directly left every refund branch below unreachable and the
-  // seller with no actions at all after a reload.
+
+
   const status = sellerDisplayStatusFromRefund(
     order.status,
     order.refundRequestId?.status,
@@ -139,7 +133,7 @@ export function SellerActionButtons({
     </button>
   ) : null;
 
-  /* ── Dialogs always rendered ─────────────────────────────────── */
+
   const dialogs = (
     <>
       <CancelOrderReasonDialog
@@ -216,7 +210,7 @@ export function SellerActionButtons({
     </>
   );
 
-  /* ── pending ─────────────────────────────────────────────────── */
+
   if (status === "pending") {
     return (
       <>
@@ -250,7 +244,7 @@ export function SellerActionButtons({
     );
   }
 
-  /* ── confirmed / in-transit statuses ────────────────────────── */
+
   if (
     status === "confirmed" ||
     status === "picked_up" ||
@@ -304,9 +298,9 @@ export function SellerActionButtons({
     );
   }
 
-  /* ── refund_requested ────────────────────────────────────────── */
+
   if (status === "refund_requested") {
-    // Seller already rejected — nothing left to act on.
+
     if (order.refundRequestId?.status === "rejected") {
       return (
         <>
@@ -359,7 +353,7 @@ export function SellerActionButtons({
     );
   }
 
-  /* ── delivered ───────────────────────────────────────────────── */
+
   if (status === "delivered") {
     return (
       <>
@@ -376,7 +370,7 @@ export function SellerActionButtons({
     );
   }
 
-  /* ── completed ───────────────────────────────────────────────── */
+
   if (status === "completed") {
     return (
       <>
@@ -391,7 +385,7 @@ export function SellerActionButtons({
     );
   }
 
-  /* ── cancelled ───────────────────────────────────────────────── */
+
   if (status === "cancelled") {
     return (
       <>
@@ -413,7 +407,7 @@ export function SellerActionButtons({
     );
   }
 
-  /* ── returning / return_shipping (buyer is sending item back) ── */
+
   if (status === "returning" || status === "return_shipping") {
     return (
       <>
@@ -459,7 +453,7 @@ export function SellerActionButtons({
     );
   }
 
-  /* ── returned (seller received item, waiting for refund release) */
+
   if (status === "returned") {
     return (
       <>
@@ -476,7 +470,7 @@ export function SellerActionButtons({
     );
   }
 
-  /* ── refund terminal states ──────────────────────────────────── */
+
   if (status === "refund_approved" || status === "refunded") {
     return (
       <>
@@ -501,7 +495,7 @@ export function SellerActionButtons({
     );
   }
 
-  /* ── fallback ────────────────────────────────────────────────── */
+
   return (
     <>
       {dialogs}

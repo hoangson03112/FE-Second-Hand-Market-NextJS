@@ -90,7 +90,7 @@ function ConversationItem({
       <div className="relative">
         <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-luxury-ink/10 bg-cream-100 transition-colors duration-300 group-hover:border-luxury-ink/30">
           {showAvatarImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
+
             <img
               src={avatarUrl}
               alt={conversation.name}

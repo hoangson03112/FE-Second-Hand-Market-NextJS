@@ -71,7 +71,7 @@ export default function CheckoutSummary({
         </h2>
       </header>
 
-      {/* Per-seller breakdown when multi-seller */}
+
       {isMultiSeller ? (
         <div className="divide-y divide-luxury-ink/8 border-b border-luxury-ink/10">
           {sellerGroups.map((group) => {
@@ -136,7 +136,7 @@ export default function CheckoutSummary({
         ) : null}
       </div>
 
-      {/* Ink cap — the same dark panel treatment as the homepage CTA */}
+
       <InkSurface className="px-5 py-6 sm:px-6">
         <Eyebrow tone="dark">Tổng cộng</Eyebrow>
         <p className="font-droid-serif mt-3 tabular-nums text-[clamp(1.5rem,2.4vw,2rem)] leading-none text-luxury-ivory">

@@ -7,7 +7,7 @@ export interface CreateProductReviewRequest {
   comment?: string;
 }
 
-/** buyerId khi populate từ API */
+
 export interface ProductReviewBuyer {
   _id: string;
   fullName: string;
@@ -52,9 +52,7 @@ export const ProductReviewService = {
     return axiosClient.get(`/product-reviews/by-order/${orderId}/product/${productId}`);
   },
 
-  /**
-   * Đánh giá theo sản phẩm (public) — có phân trang, avgRating/totalReviews toàn cục.
-   */
+
   getByProduct: async (
     productId: string,
     params?: { page?: number; limit?: number },

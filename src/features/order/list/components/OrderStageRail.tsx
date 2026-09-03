@@ -6,14 +6,7 @@ interface OrderStageRailProps {
   stage: OrderStageInfo;
 }
 
-/**
- * A four-segment rule instead of a row of numbered nodes: at list density the
- * eye reads "how far along" from a filled bar far faster than from icons, and it
- * costs one line instead of four.
- *
- * Done segments are ink, the segment in progress is champagne, the rest are a
- * hairline — the same three-way distinction the detail trail makes.
- */
+
 export function OrderStageRail({ stage }: OrderStageRailProps) {
   const { stages, currentIndex, isComplete } = stage;
   const currentLabel = stages[currentIndex]?.label ?? "";
@@ -50,14 +43,13 @@ export function OrderStageRail({ stage }: OrderStageRailProps) {
         ))}
       </div>
 
-      {/* Labels are the nice-to-have here — dropped on narrow screens, where the
-          headline above already names the current step. */}
+
       <div className="mt-2 hidden gap-1.5 sm:flex">
         {stages.map((s, index) => (
           <span
             key={s.key}
             className={cn(
-              "flex-1 text-2xs font-bold uppercase tracking-[0.14em]",
+              "flex-1 text-2xs font-medium uppercase tracking-[0.14em]",
               index <= currentIndex ? "text-luxury-ink" : "text-neutral-400",
             )}
           >

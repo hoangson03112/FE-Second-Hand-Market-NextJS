@@ -5,7 +5,7 @@ import { OrderService } from "@/services/order.service";
 import { queryKeys } from "@/lib/query-client";
 import type { Order } from "@/types/order";
 
-// ── Query: buyer's orders ─────────────────────────────────────────────────────
+
 export function useMyOrders() {
   return useQuery({
     queryKey: queryKeys.orders.myOrders(),
@@ -15,7 +15,7 @@ export function useMyOrders() {
   });
 }
 
-// ── Query: order detail ───────────────────────────────────────────────────────
+
 export function useOrderDetail(orderId: string, enabled = true) {
   return useQuery({
     queryKey: queryKeys.orders.detail(orderId),
@@ -26,7 +26,7 @@ export function useOrderDetail(orderId: string, enabled = true) {
   });
 }
 
-// ── Query: seller's orders ────────────────────────────────────────────────────
+
 export function useSellerOrders() {
   return useQuery({
     queryKey: queryKeys.orders.sellerOrders(),
@@ -36,7 +36,7 @@ export function useSellerOrders() {
   });
 }
 
-// ── Query: GHN tracking ───────────────────────────────────────────────────────
+
 export function useOrderTracking(orderId: string, enabled = true) {
   return useQuery({
     queryKey: queryKeys.orders.tracking(orderId),
@@ -48,20 +48,19 @@ export function useOrderTracking(orderId: string, enabled = true) {
   });
 }
 
-// ── Mutation helpers ──────────────────────────────────────────────────────────
 
 function patchOrderInCache(
   qc: ReturnType<typeof useQueryClient>,
   orderId: string,
   patch: Partial<Order>
 ) {
-  // Update in detail cache
+
   qc.setQueryData(
     queryKeys.orders.detail(orderId),
     (old: { order: Order } | undefined) =>
       old ? { order: { ...old.order, ...patch } } : old
   );
-  // Update in list caches
+
   const updateList = (key: readonly unknown[]) => {
     qc.setQueryData(key, (old: Order[] | undefined) =>
       old?.map((o) => (o._id === orderId ? { ...o, ...patch } : o))
@@ -71,7 +70,7 @@ function patchOrderInCache(
   updateList(queryKeys.orders.sellerOrders());
 }
 
-// ── Mutation: cancel order ────────────────────────────────────────────────────
+
 export function useCancelOrder() {
   const qc = useQueryClient();
   return useMutation({
@@ -83,7 +82,7 @@ export function useCancelOrder() {
   });
 }
 
-// ── Mutation: confirm received (delivered → completed) ────────────────────────
+
 export function useConfirmReceived() {
   const qc = useQueryClient();
   return useMutation({
@@ -94,7 +93,7 @@ export function useConfirmReceived() {
   });
 }
 
-// ── Mutation: request refund ──────────────────────────────────────────────────
+
 export function useRequestRefund() {
   const qc = useQueryClient();
   return useMutation({
@@ -112,16 +111,14 @@ export function useRequestRefund() {
       videos?: File[];
     }) => OrderService.requestRefund(orderId, reason, description, images, videos),
     onSuccess: (_, { orderId }) => {
-      // The server sets `order.status = "refund"` when a refund is requested
-      // (services/refund.service.js) and tracks the request itself on
-      // `order.refundRequestId`. Mirror that so the cache does not disagree
-      // with the next refetch.
+
+
       patchOrderInCache(qc, orderId, { status: "refund" });
     },
   });
 }
 
-// ── Mutation: seller confirm order ────────────────────────────────────────────
+
 export function useSellerConfirmOrder() {
   const qc = useQueryClient();
   return useMutation({
@@ -138,7 +135,7 @@ export function useSellerConfirmOrder() {
   });
 }
 
-// ── Mutation: seller cancel order ─────────────────────────────────────────────
+
 export function useSellerCancelOrder() {
   const qc = useQueryClient();
   return useMutation({

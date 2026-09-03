@@ -109,7 +109,7 @@ export function useCartPage() {
   }, [cartItems, selectedIds, selectedCount, router, toast]);
 
   return {
-    // Data
+
     cartItems,
     groups,
     itemCount,
@@ -117,11 +117,11 @@ export function useCartPage() {
     selectedCount,
     selectedSubtotal,
     allSelected,
-    // Loading / busy
+
     isLoadingCart,
     isBusy,
     isGoingToCheckout,
-    // Actions
+
     updateQuantity,
     handleToggle,
     handleSelectAll,

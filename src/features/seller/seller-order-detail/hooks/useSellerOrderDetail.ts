@@ -42,8 +42,7 @@ export function useSellerOrderDetail(orderId: string) {
     load();
   }, [account, orderId]);
 
-  // Chỉ đơn chuyển khoản mới có biên lai. 404 ở đây là trạng thái bình thường
-  // (người mua chưa gửi), không phải lỗi — card sẽ hiện "chờ chuyển khoản".
+
   const isBankTransfer = order?.paymentMethod === "bank_transfer";
 
   useEffect(() => {
@@ -68,7 +67,7 @@ export function useSellerOrderDetail(orderId: string) {
     };
   }, [isBankTransfer, orderId]);
 
-  // ── Seller confirms order (pending → confirmed) ──────────────────────────
+
   const handleConfirm = async () => {
     if (!order) return;
     const ok = await confirm({
@@ -91,7 +90,7 @@ export function useSellerOrderDetail(orderId: string) {
     }
   };
 
-  // ── Seller cancels order ─────────────────────────────────────────────────
+
   const handleCancel = async (reason: string) => {
     if (!order) return;
     setUpdatingStatus(true);
@@ -107,16 +106,15 @@ export function useSellerOrderDetail(orderId: string) {
     }
   };
 
-  // ── Seller approves refund ────────────────────────────────────────────────
+
   const handleApproveRefund = async (note?: string) => {
     if (!order) return;
     setApproveOpen(false);
     setUpdatingStatus(true);
     try {
       await OrderService.approveRefund(order._id, note);
-      // Server keeps order.status at "refund" and advances the Refund doc to
-      // "return_shipping" (POST /orders/:id/approve-refund). Mirror that shape
-      // so the UI does not disagree with the next refetch.
+
+
       setOrder((prev) =>
         prev && prev.refundRequestId
           ? {
@@ -136,14 +134,14 @@ export function useSellerOrderDetail(orderId: string) {
     }
   };
 
-  // ── Seller rejects refund ─────────────────────────────────────────────────
+
   const handleRejectRefund = async (reason: string) => {
     if (!order) return;
     setRejectOpen(false);
     setUpdatingStatus(true);
     try {
       await OrderService.rejectRefund(order._id, reason);
-      // Order status stays refund_requested; only the Refund doc status changes
+
       setOrder((prev) =>
         prev && prev.refundRequestId
           ? { ...prev, refundRequestId: { ...prev.refundRequestId, status: "rejected" } }
@@ -157,16 +155,14 @@ export function useSellerOrderDetail(orderId: string) {
     }
   };
 
-  // ── Seller confirms return item received ──────────────────────────────────
-  // The inspection result decides where the refund goes: intact goods oblige
-  // the seller to transfer the money, anything else hands the case to an admin.
+
   const handleConfirmReturnReceived = async (inspection?: ReturnInspectionPayload) => {
     if (!order) return;
     setUpdatingStatus(true);
     try {
       await OrderService.confirmReturnReceived(order._id, inspection);
       const isIntact = (inspection?.condition ?? "intact") === "intact";
-      // Same shape as approve: only the Refund doc advances.
+
       setOrder((prev) =>
         prev && prev.refundRequestId
           ? {
@@ -190,9 +186,7 @@ export function useSellerOrderDetail(orderId: string) {
     }
   };
 
-  // ── Seller đối soát biên lai chuyển khoản ─────────────────────────────────
-  // Tiền vào thẳng tài khoản người bán nên chính họ xác nhận. Server duyệt
-  // biên lai và đánh dấu đơn "đã thanh toán" trong cùng một lời gọi.
+
   const handleVerifyProof = async () => {
     if (!order) return;
     const ok = await confirm({
@@ -237,7 +231,7 @@ export function useSellerOrderDetail(orderId: string) {
     }
   };
 
-  // ── Seller marks local_pickup order as delivered ───────────────────────────
+
   const handleMarkDelivered = async () => {
     if (!order) return;
     const ok = await confirm({

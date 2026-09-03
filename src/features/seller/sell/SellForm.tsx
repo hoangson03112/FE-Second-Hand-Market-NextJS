@@ -76,7 +76,7 @@ export default function SellForm() {
 
   const isSeller = account?.role === "seller";
 
-  // Check if can request review
+
   const canRequestReview =
     isEditMode &&
     currentProduct?.status === "rejected" &&
@@ -113,7 +113,7 @@ export default function SellForm() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <ErrorMessage message={apiError} />
 
-          {/* Địa chỉ lấy hàng – hiển thị cho tất cả users */}
+
           <PickupAddressSelector
             addresses={pickupAddresses}
             selectedId={pickupAddressId}
@@ -125,7 +125,7 @@ export default function SellForm() {
             error={pickupAddressError}
           />
 
-          {/* Hình thức giao hàng */}
+
           <DeliveryOptions
             value={deliveryOptions}
             onChange={handleDeliveryOptionsChange}
@@ -133,7 +133,7 @@ export default function SellForm() {
           />
 
           <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
-            {/* Cột trái: thông tin + danh mục + mô tả */}
+
             <div className="flex flex-col gap-6">
               <SectionCard icon={IconPackage} title="Thông tin cơ bản">
                 <ProductBasicInfo
@@ -177,7 +177,7 @@ export default function SellForm() {
               </SectionCard>
             </div>
 
-            {/* Cột phải: Thuộc tính + Ảnh & IconVideo — chia đều với cột trái */}
+
             <div className="flex flex-col gap-6">
               <SectionCard
                 icon={IconListDetails}
@@ -228,7 +228,7 @@ export default function SellForm() {
         </div>
       </div>
 
-      {/* Modal thêm/sửa địa chỉ lấy hàng */}
+
       <AddressFormModal
         isOpen={showModal}
         editingAddress={editingAddress}

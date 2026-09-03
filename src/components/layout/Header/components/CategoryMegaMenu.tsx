@@ -44,15 +44,15 @@ export function CategoryMegaMenu({
             }}
           >
             <div className="py-8 ps-8">
-              <p className="text-xs font-bold tracking-[0.15em] uppercase mb-1.5 text-charcoal-300">
-                Danh mục
+              <p className="text-xs font-medium tracking-[0.15em] uppercase mb-1.5 text-charcoal-300">
+                Danh mục hiện có
               </p>
               <h2 className="text-xl font-medium mb-7 text-foreground">
                 Tìm đúng thứ <span className="text-accent">bạn đang cần.</span>
               </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-6 max-h-[min(90vh,580px)] overflow-y-auto   pr-1">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-4 max-h-[min(90vh,580px)] overflow-y-auto   pr-1">
                 {categories.map((category: ICategory, index: number) => (
-                  <div key={category._id} className="group min-w-0">
+                  <div key={category._id} className="group min-w-0  ">
                     <Link
                       href={`/categories/${category.slug}`}
                       className="flex items-center gap-2.5 mb-2 py-1"
@@ -61,13 +61,13 @@ export function CategoryMegaMenu({
                       <span className="text-2xs font-medium tabular-nums shrink-0 text-primary">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      <span className="text-sm font-bold truncate transition-colors text-foreground group-hover:text-primary">
+                      <span className=" font-droid-serif text-sm font-bold truncate transition-colors text-foreground group-hover:text-primary">
                         {category.name}
                       </span>
                     </Link>
-                    <div className="h-px bg-border mb-1.5" />
+                    <div className="bg-border" />
                     {category.subCategories?.length > 0 && (
-                      <div className="space-y-0.5">
+                      <div className="space-y-0.3">
                         {category.subCategories.map((sub: ISubCategory) => (
                           <Link
                             key={sub._id}

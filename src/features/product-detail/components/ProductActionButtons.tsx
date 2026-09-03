@@ -59,7 +59,7 @@ export default function ProductActionButtons({
 
   return (
     <div className="flex flex-row gap-4">
-      {/* Add to cart — secondary */}
+
       <button
         onClick={onAddToCart}
         disabled={disabled}
@@ -69,7 +69,7 @@ export default function ProductActionButtons({
         {actionLoading ? "Đang thêm..." : "Thêm vào giỏ"}
       </button>
 
-      {/* Buy now — primary CTA */}
+
       <button
         onClick={onBuyNow}
         disabled={disabled}

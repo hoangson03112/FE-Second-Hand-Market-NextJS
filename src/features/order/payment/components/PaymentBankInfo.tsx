@@ -24,7 +24,7 @@ export interface PaymentBankInfoProps {
 const label =
   "text-xs font-medium uppercase tracking-[0.15em] text-neutral-800";
 
-/** Hairline copy affordance that confirms in place instead of silently. */
+
 function CopyButton({
   value,
   field,

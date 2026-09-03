@@ -1,6 +1,4 @@
-/**
- * Refund-related constants
- */
+
 import {
   IconTool,
   IconRepeat,
@@ -22,9 +20,6 @@ export const REFUND_REASON_OPTIONS = [
 export const REFUND_MAX_IMAGES = 10;
 export const REFUND_MAX_VIDEOS = 3;
 
-/**
- * Khớp cấu hình GHN (`payment_type_id: 1`): cước đơn hoàn về người bán do shop/seller chịu.
- * Dùng cho copy buyer & seller (đơn GHN).
- */
+
 export const REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER =
   "Phí vận chuyển đơn hoàn về người bán do người bán chịu (theo GHN); người mua không trả phí ship hoàn.";

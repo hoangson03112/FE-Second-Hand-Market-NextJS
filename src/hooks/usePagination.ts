@@ -10,21 +10,11 @@ export interface UsePaginationReturn {
   resetPage: () => void;
 }
 
-/**
- * Manages a single page-number state and exposes helpers for navigating.
- *
- * Pass `totalPages` so the hook can clamp the current page when it goes
- * out of range (e.g. after a filter change shrinks the result set).
- *
- * @example
- * const { page, setPage, resetPage } = usePagination();
- * // In a TanStack Query key: queryKey: ["orders", page, filter]
- * // Reset when a filter changes: useEffect(() => resetPage(), [filter])
- */
+
 export function usePagination(totalPages = 1): UsePaginationReturn {
   const [page, setPageState] = useState(1);
 
-  // Clamp to valid range whenever totalPages changes
+
   useEffect(() => {
     if (totalPages > 0 && page > totalPages) {
       setPageState(1);

@@ -12,7 +12,7 @@ export interface PaymentActionsProps {
   isExpired: boolean;
   isConfirmingPayment: boolean;
   onConfirmPayment: () => void;
-  /** Drives the disabled state so the intent is clear before clicking. */
+
   hasProof?: boolean;
 }
 

@@ -6,7 +6,7 @@ export type PaginationMeta = {
 };
 
 export type DashboardSalesDataPoint = {
-  /** Backend shape may vary by chart implementation */
+
   day?: string;
   date?: string;
   revenue?: number;

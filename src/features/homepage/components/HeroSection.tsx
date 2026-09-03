@@ -441,7 +441,7 @@ export default function HeroSection() {
           bạch và bền vững trong không gian sang trọng.
         </motion.p>
 
-        {/* CTA */}
+
         <motion.div
           className="pointer-events-auto flex flex-col items-center gap-4 sm:flex-row sm:gap-5"
           initial={reducedMotion ? false : { opacity: 0, y: 20 }}
@@ -468,7 +468,7 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Scroll hint */}
+
       <motion.div
         aria-hidden
         className="pointer-events-none absolute bottom-8 left-1/2 z-10 -translate-x-1/2"

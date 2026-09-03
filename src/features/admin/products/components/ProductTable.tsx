@@ -31,39 +31,39 @@ export function ProductTable({
   onToggleVisibility,
 }: ProductTableProps) {
   return (
-    <div className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs">
+    <div className="rounded-[2px] border border-luxury-ink/10 bg-white overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border/80 bg-muted/40">
-              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+            <tr className="border-b border-luxury-ink/10 bg-cream-50/70">
+              <th className="text-left px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
                 Sản phẩm
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 hidden sm:table-cell">
+              <th className="text-left px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600 hidden sm:table-cell">
                 Giá
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 hidden md:table-cell">
+              <th className="text-left px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600 hidden md:table-cell">
                 Danh mục
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 hidden md:table-cell">
+              <th className="text-left px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600 hidden md:table-cell">
                 Kho
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 hidden lg:table-cell">
+              <th className="text-left px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600 hidden lg:table-cell">
                 Tình trạng
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 hidden md:table-cell">
+              <th className="text-left px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600 hidden md:table-cell">
                 Người bán
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+              <th className="text-left px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
                 Trạng thái
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+              <th className="text-left px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
                 Hiển thị
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80 hidden lg:table-cell">
+              <th className="text-left px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600 hidden lg:table-cell">
                 Ngày đăng
               </th>
-              <th className="text-right px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+              <th className="text-right px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
                 Thao tác
               </th>
             </tr>
@@ -72,7 +72,7 @@ export function ProductTable({
             {products.map((product) => {
               const statusInfo = STATUS_TABLE_BADGE[product.status] ?? {
                 label: product.status,
-                className: "bg-muted text-muted-foreground border-border",
+                className: "bg-cream-50 text-neutral-600 border-luxury-ink/10",
               };
               const canModerate =
                 product.status === "pending" ||
@@ -88,12 +88,11 @@ export function ProductTable({
               return (
                 <tr
                   key={product._id}
-                  className="border-b border-border/60 last:border-0 hover:bg-muted/30 transition-colors"
+                  className="border-b border-luxury-ink/6 last:border-0 hover:bg-taupe-50/40 transition-colors"
                 >
-                  {/* Tên + ảnh */}
                   <td className="px-4 py-3.5">
                     <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-xl border border-border bg-muted overflow-hidden shrink-0">
+                      <div className="w-11 h-11 rounded-[2px] border border-luxury-ink/10 bg-cream-50 overflow-hidden shrink-0">
                         {product.avatar?.url ? (
                           <Image
                             src={product.avatar.url}
@@ -104,37 +103,37 @@ export function ProductTable({
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
-                            <IconPackage className="w-5 h-5 text-muted-foreground" />
+                            <IconPackage className="w-5 h-5 text-neutral-400" />
                           </div>
                         )}
                       </div>
-                      <span className="font-semibold text-foreground line-clamp-2 max-w-[220px]">
+                      <span className="font-semibold text-luxury-ink line-clamp-2 max-w-[220px] text-xs">
                         {product.name}
                       </span>
                     </div>
                   </td>
 
-                  <td className="px-4 py-3.5 hidden sm:table-cell font-bold text-foreground tabular-nums">
+                  <td className="px-4 py-3.5 hidden sm:table-cell font-droid-serif font-bold text-luxury-ink tabular-nums text-sm">
                     {formatPrice(product.price)}
                   </td>
 
-                  <td className="px-4 py-3.5 hidden md:table-cell text-muted-foreground text-xs">
-                    <span className="font-medium text-foreground">
+                  <td className="px-4 py-3.5 hidden md:table-cell text-neutral-500 text-xs">
+                    <span className="font-medium text-luxury-ink">
                       {product.category?.name ?? "—"}
                     </span>
                     {product.subcategory?.name && (
-                      <span className="block text-[11px] text-muted-foreground">
+                      <span className="block text-[11px] text-neutral-400">
                         {product.subcategory.name}
                       </span>
                     )}
                   </td>
 
-                  <td className="px-4 py-3.5 hidden md:table-cell text-muted-foreground tabular-nums font-medium">
+                  <td className="px-4 py-3.5 hidden md:table-cell text-neutral-600 tabular-nums font-medium text-xs">
                     {product.stock}
                   </td>
 
-                  <td className="px-4 py-3.5 hidden lg:table-cell text-muted-foreground text-xs">
-                    <span className="inline-block px-2 py-0.5 rounded-md bg-muted/60 text-foreground font-medium text-[11px]">
+                  <td className="px-4 py-3.5 hidden lg:table-cell text-neutral-500 text-xs">
+                    <span className="inline-block px-2 py-0.5 rounded-[2px] bg-cream-50 text-luxury-ink border border-luxury-ink/8 font-medium text-[11px]">
                       {product.condition
                         ? (CONDITION_LABEL[product.condition] ?? product.condition)
                         : "—"}
@@ -142,53 +141,50 @@ export function ProductTable({
                   </td>
 
                   <td className="px-4 py-3.5 hidden md:table-cell text-xs">
-                    <span className="font-medium text-foreground block">
+                    <span className="font-medium text-luxury-ink block">
                       {product.seller?.account?.fullName ?? product.seller?.fullName ?? "—"}
                     </span>
                   </td>
 
-                  {/* Trạng thái */}
                   <td className="px-4 py-3.5">
                     <span
-                      className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold border ${statusInfo.className}`}
+                      className={`inline-flex px-2.5 py-0.5 rounded-[2px] text-2xs font-bold uppercase tracking-[0.1em] border ${statusInfo.className}`}
                     >
                       {statusInfo.label}
                     </span>
                   </td>
 
-                  {/* Hiển thị */}
                   <td className="px-4 py-3.5">
                     {canToggleVisibility ? (
                       <span
-                        className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${
+                        className={`inline-flex items-center gap-1.5 rounded-[2px] border px-2 py-0.5 text-2xs font-bold uppercase tracking-[0.1em] ${
                           isVisible
-                            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                            : "bg-muted text-muted-foreground border-border"
+                            ? "bg-cream-50 text-accent border-accent/30"
+                            : "bg-white text-neutral-400 border-luxury-ink/10"
                         }`}
                       >
                         <span
                           className={`inline-block h-1.5 w-1.5 rounded-full ${
-                            isVisible ? "bg-emerald-500" : "bg-muted-foreground/50"
+                            isVisible ? "bg-accent" : "bg-neutral-300"
                           }`}
                         />
                         {isVisible ? "Hiển thị" : "Ẩn"}
                       </span>
                     ) : (
-                      <span className="text-xs text-muted-foreground">—</span>
+                      <span className="text-xs text-neutral-400">—</span>
                     )}
                   </td>
 
-                  <td className="px-4 py-3.5 hidden lg:table-cell text-muted-foreground text-xs">
+                  <td className="px-4 py-3.5 hidden lg:table-cell text-neutral-500 text-xs">
                     {product.createdAt ? format(product.createdAt) : "—"}
                   </td>
 
-                  {/* Actions */}
                   <td className="px-4 py-3.5 text-right">
                     <div className="flex items-center justify-end gap-1.5">
                       <button
                         type="button"
                         onClick={() => onView(product)}
-                        className="p-1.5 rounded-lg border border-border text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                        className="p-1.5 rounded-[2px] border border-luxury-ink/15 text-luxury-ink hover:bg-taupe-50 transition-colors"
                         title="Xem chi tiết"
                       >
                         <IconEye className="w-4 h-4" />
@@ -199,7 +195,7 @@ export function ProductTable({
                             type="button"
                             onClick={() => onApprove(product)}
                             disabled={isUpdating}
-                            className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 disabled:opacity-50 transition-colors"
+                            className="p-1.5 rounded-[2px] bg-accent text-white border border-accent hover:opacity-90 disabled:opacity-50 transition-all"
                             title="Duyệt sản phẩm"
                           >
                             <IconCircleCheck className="w-4 h-4" />
@@ -208,7 +204,7 @@ export function ProductTable({
                             type="button"
                             onClick={() => onReject(product)}
                             disabled={isUpdating}
-                            className="p-1.5 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 disabled:opacity-50 transition-colors"
+                            className="p-1.5 rounded-[2px] bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 disabled:opacity-50 transition-all"
                             title="Từ chối sản phẩm"
                           >
                             <IconCircleX className="w-4 h-4" />
@@ -220,7 +216,7 @@ export function ProductTable({
                           type="button"
                           onClick={() => onToggleVisibility(product)}
                           disabled={isUpdating}
-                          className="inline-flex items-center gap-1 rounded-lg border border-border px-2 py-1 text-xs font-medium text-foreground hover:bg-muted disabled:opacity-50 transition-colors"
+                          className="inline-flex items-center gap-1 rounded-[2px] border border-luxury-ink/15 px-2 py-1 text-2xs font-bold uppercase tracking-[0.12em] text-luxury-ink hover:bg-taupe-50 disabled:opacity-50 transition-colors"
                           title={isVisible ? "Ẩn sản phẩm" : "Hiển thị sản phẩm"}
                         >
                           <IconRefresh className="h-3.5 w-3.5" />

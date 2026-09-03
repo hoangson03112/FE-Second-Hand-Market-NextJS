@@ -9,17 +9,7 @@ import { logger } from "@/infrastructure/monitoring/logger";
 
 export type { ShipmentQuoteRequest, ShipmentQuotes };
 
-/**
- * Shipping quotes for checkout.
- *
- * All GHN traffic happens server-side in `/api/shipping/quote`: the browser
- * sends one request carrying every seller's shipment and gets every fee back,
- * instead of paying three sequential GHN round trips per seller. That also
- * keeps fee lookups off the shared GHN proxy rate limiter that province /
- * district / ward lookups run through.
- */
 
-/** Long enough for a cold GHN call plus one server-side retry. */
 const QUOTE_TIMEOUT_MS = 20_000;
 
 const QUOTE_URL =
@@ -27,7 +17,7 @@ const QUOTE_URL =
     ? `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/shipping/quote`
     : "/api/shipping/quote";
 
-/** GHN returns leadtime as a UNIX timestamp (seconds) for the delivery date. */
+
 function toShippingOption(quote: ShipmentQuote): ShippingServiceOption {
   const expectedDeliveryDate = new Date(quote.leadtime * 1000);
   const diffMs = expectedDeliveryDate.getTime() - Date.now();
@@ -54,14 +44,7 @@ function toShippingOption(quote: ShipmentQuote): ShippingServiceOption {
 }
 
 export const ShippingService = {
-  /**
-   * Quote every shipment in a checkout with a single request.
-   *
-   * Never rejects on a per-shipment failure — a seller with an unconfigured
-   * pickup address lands in `errors` while the rest still get priced. It only
-   * throws when the request itself fails, which is the one case where nothing
-   * can be shown.
-   */
+
   quoteShipments: async (params: {
     to_district_id: number;
     to_ward_code: string;
@@ -72,8 +55,7 @@ export const ShippingService = {
 
     if (shipments.length === 0) return { options: {}, errors: {} };
 
-    // Caller-supplied abort (address changed) and the timeout both need to cancel
-    // the same fetch.
+
     const timeout = AbortSignal.timeout(QUOTE_TIMEOUT_MS);
     const abort = signal ? AbortSignal.any([signal, timeout]) : timeout;
 
@@ -125,10 +107,7 @@ export const ShippingService = {
     return { options, errors };
   },
 
-  /**
-   * Single-shipment convenience wrapper. Throws on failure so callers that only
-   * care about one seller keep a simple success/throw contract.
-   */
+
   calculateShippingInfo: async (params: {
     from_district_id: number;
     from_ward_code: string;

@@ -11,7 +11,7 @@ export interface PaymentQrSectionProps {
   qrCodeImageUrl: string;
 }
 
-/** Fixed square frame so the QR never collapses or overflows its panel. */
+
 const frame =
   "flex aspect-square w-full max-w-[300px] items-center justify-center rounded-[2px] border p-4";
 
@@ -21,8 +21,8 @@ export function PaymentQrSection({
   bankInfo,
   qrCodeImageUrl,
 }: PaymentQrSectionProps) {
-  // The previous version wrote `parent.innerHTML` from the img onError handler,
-  // mutating DOM that React owns. Track the failure in state instead.
+
+
   const [hasImageError, setHasImageError] = useState(false);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export function PaymentQrSection({
     if (bankInfo && qrCodeImageUrl && !hasImageError) {
       return (
         <div className={`${frame} border-luxury-ink/10 bg-white`}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+
           <img
             src={qrCodeImageUrl}
             alt="Mã QR thanh toán"

@@ -110,11 +110,12 @@ export default function AdminUsers() {
   return (
     <div className="space-y-6">
       <PageHeader
+        eyebrow="Quản lý thành viên"
         title="Quản lý người dùng"
         description="Tra cứu danh sách tài khoản khách hàng, người bán và quản trị viên trong hệ sinh thái Eco Market."
         badge={
           totalItems > 0 ? (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-[2px] text-2xs font-bold uppercase tracking-[0.16em] bg-cream-50 text-luxury-ink border border-luxury-ink/10">
               {totalItems} tài khoản
             </span>
           ) : null
@@ -131,16 +132,16 @@ export default function AdminUsers() {
 
       <StatsCards totalUsers={totalItems} recent7Days={recent7Days} />
 
-      {/* Filters Section */}
-      <div className="rounded-2xl border border-border/80 bg-card p-4 sm:p-5 shadow-xs space-y-3">
+      {/* Filters Card */}
+      <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-4 sm:p-5 space-y-3">
         <div className="space-y-1.5">
-          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+          <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
             Lọc theo vai trò:
           </span>
           <RoleTabs activeRole={roleFilter} onRoleChange={setRoleFilter} />
         </div>
-        <div className="space-y-1.5 pt-2 border-t border-border/60">
-          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+        <div className="space-y-1.5 pt-3 border-t border-luxury-ink/8">
+          <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
             Lọc theo trạng thái:
           </span>
           <AccountStatusTabs
@@ -152,13 +153,13 @@ export default function AdminUsers() {
 
       {hasNoAccounts ? (
         <NoData
-          icon={<IconUsers className="w-10 h-10 text-muted-foreground" />}
+          icon={<IconUsers className="w-10 h-10 text-neutral-400" />}
           title="Chưa có tài khoản nào"
           description="Hệ thống chưa ghi nhận người dùng nào."
         />
       ) : hasNoFiltered ? (
         <NoData
-          icon={<IconSearch className="w-10 h-10 text-muted-foreground" />}
+          icon={<IconSearch className="w-10 h-10 text-neutral-400" />}
           title="Không tìm thấy người dùng phù hợp"
           description="Thử thay đổi từ khóa tìm kiếm hoặc điều chỉnh bộ lọc."
         />
@@ -185,37 +186,45 @@ export default function AdminUsers() {
           if (!open) closeBan();
         }}
       >
-        <DialogContent>
+        <DialogContent className="rounded-[2px] border border-luxury-ink/10 bg-white">
           <DialogHeader>
-            <DialogTitle>Khóa tài khoản</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="font-droid-serif text-lg text-luxury-ink">
+              Khóa tài khoản
+            </DialogTitle>
+            <DialogDescription className="text-xs text-neutral-500">
               Tài khoản{" "}
-              <strong className="text-foreground">
+              <strong className="text-luxury-ink font-semibold">
                 {banModal?.fullName ?? banModal?.email}
               </strong>{" "}
               sẽ không thể đăng nhập.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-2">
-            <Label>
+            <Label className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
               Lý do{" "}
-              <span className="text-xs text-muted-foreground">(tùy chọn)</span>
+              <span className="text-neutral-400 lowercase font-normal">(tùy chọn)</span>
             </Label>
             <Textarea
               value={banReason}
               onChange={(e) => setBanReason(e.target.value)}
               rows={3}
+              className="rounded-[2px] border border-luxury-ink/15 bg-cream-50/50 text-xs text-luxury-ink focus:border-luxury-ink"
               placeholder="VD: Vi phạm chính sách cộng đồng"
             />
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={closeBan}>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={closeBan}
+              className="rounded-[2px] border border-luxury-ink/15 text-2xs font-bold uppercase tracking-[0.12em] text-luxury-ink hover:bg-taupe-50"
+            >
               Hủy
             </Button>
             <Button
               variant="destructive"
               disabled={isUpdating}
               onClick={handleConfirmBan}
+              className="rounded-[2px] bg-rose-700 hover:bg-rose-800 text-2xs font-bold uppercase tracking-[0.12em]"
             >
               {isUpdating && <Loader2 className="size-4 animate-spin mr-2" />}
               Khóa tài khoản

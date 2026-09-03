@@ -80,7 +80,7 @@ export function useSellForm() {
   const [apiError, setApiError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingProduct, setIsLoadingProduct] = useState(false);
-  // Lưu thông tin đầy đủ của ảnh và video hiện tại (khi edit)
+
   const [existingImages, setExistingImages] = useState<
     Array<{
       url: string;
@@ -91,24 +91,24 @@ export function useSellForm() {
     }>
   >([]);
   const [existingVideoUrl, setExistingVideoUrl] = useState<string | null>(null);
-  // Lưu product data (khi edit) để có thể check status và humanReviewRequested
+
   const [currentProduct, setCurrentProduct] =
     useState<IProductWithMediaAndIds | null>(null);
   const router = useRouter();
 
-  // Pickup address selector state
+
   const [pickupAddressId, setPickupAddressId] = useState("");
   const [pickupAddressError, setPickupAddressError] = useState("");
 
-  // Delivery options state
+
   const [deliveryOptions, setDeliveryOptions] =
     useState<DeliveryOptions>(INITIAL_DELIVERY);
   const [deliveryOptionsError, setDeliveryOptionsError] = useState("");
 
-  // For the "Đăng ký làm Seller" button: show only to buyers
+
   const showPickupSection = Boolean(account && account.role !== "seller");
 
-  // Reset form when switching from edit to new
+
   const prevIsEditModeRef = useRef(isEditMode);
   useEffect(() => {
     if (prevIsEditModeRef.current && !isEditMode) {
@@ -121,7 +121,7 @@ export function useSellForm() {
     prevIsEditModeRef.current = isEditMode;
   }, [isEditMode]);
 
-  // Load product data when in edit mode
+
   useEffect(() => {
     if (!isEditMode || !editProductId) return;
 
@@ -147,7 +147,7 @@ export function useSellForm() {
 
         setCurrentProduct(product);
 
-        // Populate form with product data
+
         let existingImageData =
           product.images
             ?.map((img) => ({
@@ -159,7 +159,7 @@ export function useSellForm() {
             }))
             .filter((img) => img.url && img.publicId) || [];
 
-        // Fallback: Nếu images rỗng nhưng có avatar, dùng avatar làm ảnh duy nhất
+
         if (
           existingImageData.length === 0 &&
           product.avatar?.url &&
@@ -180,13 +180,13 @@ export function useSellForm() {
         setExistingVideoUrl(product.video?.url ?? null);
         setValues(mapProductToFormValues(product));
 
-        // Prefill pickup address id from product.address._id
+
         const addrId = product.address?._id;
         if (addrId) {
           setPickupAddressId(addrId);
         }
 
-        // Prefill delivery options
+
         if (product.deliveryOptions) {
           setDeliveryOptions({
             localPickup: product.deliveryOptions.localPickup ?? true,
@@ -452,15 +452,15 @@ export function useSellForm() {
     addAttribute,
     removeAttribute,
     updateAttribute,
-    // Pickup address selector
+
     pickupAddressId,
     pickupAddressError,
     handleSelectPickupAddress,
-    // Delivery options
+
     deliveryOptions,
     deliveryOptionsError,
     handleDeliveryOptionsChange,
-    // For "Become Seller" button visibility
+
     showPickupSection,
   };
 }

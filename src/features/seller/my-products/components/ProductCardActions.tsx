@@ -23,7 +23,7 @@ interface ProductCardActionsProps {
   isRequestingReview: boolean;
   onDelete: (productId: string, productName: string) => void;
   isDeleting: boolean;
-  /** grid: buttons share the row width, delete is icon-only. list: inline, labelled. */
+
   variant?: "grid" | "list";
 }
 
@@ -39,7 +39,7 @@ export function ProductCardActions({
   variant = "list",
 }: ProductCardActionsProps) {
   const isGrid = variant === "grid";
-  /** In the grid the row is narrow, so the labelled actions stretch to fill it. */
+
   const grow = isGrid ? "flex-1" : undefined;
 
   return (

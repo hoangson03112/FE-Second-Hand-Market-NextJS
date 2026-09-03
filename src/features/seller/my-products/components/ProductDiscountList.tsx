@@ -11,15 +11,11 @@ interface ProductDiscountListProps {
   discounts: Discount[];
   onDelete?: (discountId: string) => void;
   isDeletingId?: string | null;
-  /** grid: stacked rows. list: a single wrapping line of pills. */
+
   variant?: "grid" | "list";
 }
 
-/**
- * Personal offers sit on the champagne/cream ground reserved for "needs
- * attention but not wrong" — the same tone the order screens use for a refund
- * in progress.
- */
+
 export function ProductDiscountList({
   discounts,
   onDelete,

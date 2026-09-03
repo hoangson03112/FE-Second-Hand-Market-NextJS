@@ -29,7 +29,7 @@ interface SelectFieldProps<T extends string> {
   onChange: (value: T) => void;
 }
 
-/** Hairline select with its label as a micro-caps overline, not a boxed prefix. */
+
 function SelectField<T extends string>({
   label,
   value,
@@ -69,7 +69,7 @@ interface OrdersToolbarProps {
   onDateFilterChange: (value: DateFilter) => void;
   sortBy: SortOption;
   onSortChange: (value: SortOption) => void;
-  /** Result count, shown as an editorial figure beside the filters. */
+
   resultCount: number;
 }
 

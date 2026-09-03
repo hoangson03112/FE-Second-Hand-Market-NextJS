@@ -127,7 +127,7 @@ export default function Checkout() {
       />
 
       <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg">
-        {/* Delivery address */}
+
         {showAddressSection ? (
           <div style={delay(140)} className={cn(revealClass, "mb-6")}>
             <CheckoutPanel eyebrow="Giao đến" title="Địa chỉ nhận hàng">
@@ -139,7 +139,7 @@ export default function Checkout() {
           </div>
         ) : null}
 
-        {/* Multi-seller notice */}
+
         {isMultiSeller ? (
           <div
             style={delay(180)}
@@ -162,7 +162,7 @@ export default function Checkout() {
         ) : null}
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
-          {/* Left column: seller sections */}
+
           <div className="space-y-6 lg:col-span-8">
             {isEmpty ? (
               <div
@@ -205,9 +205,8 @@ export default function Checkout() {
                     onPaymentMethodChange={(method) =>
                       setPaymentMethodForSeller(group.sellerId, method)
                     }
-                    // `group.isLocalPickup` is what the hook actually uses to
-                    // price and create the order, so drive the toggle from it
-                    // rather than re-deriving a fallback that can disagree.
+
+
                     deliveryMethod={
                       group.isLocalPickup ? "local_pickup" : "cod_shipping"
                     }
@@ -222,7 +221,7 @@ export default function Checkout() {
               ))
             )}
 
-            {/* Global shipping error / loading */}
+
             {!allLocalPickup && shippingError ? (
               <div className="rounded-[2px] border border-blush-300 bg-blush-50 px-5 py-4 text-xs leading-relaxed text-blush-800">
                 {shippingError}
@@ -239,7 +238,7 @@ export default function Checkout() {
             ) : null}
           </div>
 
-          {/* Right column: summary + checkout */}
+
           <div className="lg:col-span-4">
             <div
               style={delay(300)}

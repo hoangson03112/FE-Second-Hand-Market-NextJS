@@ -43,7 +43,7 @@ export default function ProductHeader({
 
   return (
     <div className="flex flex-col border-b border-luxury-ink/10 pb-6 mb-2">
-      {/* Header Top: Breadcrumb & Share */}
+
       <div className="flex items-center justify-between gap-4 mb-4">
         {(category || subcategory) && (
           <nav
@@ -85,12 +85,12 @@ export default function ProductHeader({
         </div>
       </div>
 
-      {/* Product Name */}
+
       <h1 className="font-droid-serif text-3xl lg:text-4xl text-luxury-ink leading-[1.1] mb-5 tracking-tight">
         {name}
       </h1>
 
-      {/* Rating Section */}
+
       <div className="flex items-center gap-4">
         {totalReviews > 0 ? (
           <>

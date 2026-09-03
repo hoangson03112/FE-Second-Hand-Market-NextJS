@@ -3,21 +3,10 @@ import { AddressService } from "@/services/address.service";
 import type { Province, District, Ward } from "@/types/address";
 import { queryKeys } from "@/lib/query-client";
 
-/**
- * GHN administrative data (provinces / districts / wards).
- *
- * This is the single source for that data. It previously lived here *and* in a
- * parallel `useProvinces.ts` that hit the same endpoints under a different
- * query key, so the same list could be fetched and cached twice.
- *
- * The data is effectively immutable, hence `staleTime: Infinity` — it is
- * fetched once per session and never refetched.
- */
 
-/** Form inputs hand us strings; callers elsewhere pass numbers. */
 type LocationId = string | number | null | undefined;
 
-/** Normalised so `"202"` and `202` share one cache entry instead of two. */
+
 function toId(value: LocationId): number | null {
   if (value === null || value === undefined || value === "") return null;
   const n = Number(value);
@@ -62,10 +51,7 @@ export function useWards(districtId?: LocationId) {
   });
 }
 
-/**
- * Province autocomplete. Not wired into any screen yet — kept because it is the
- * only consumer of `AddressService.searchProvinces`.
- */
+
 export function useProvinceSearch(query: string) {
   return useQuery<Province[], Error>({
     queryKey: queryKeys.addresses.searchProvinces(query),
@@ -78,9 +64,6 @@ export function useProvinceSearch(query: string) {
   });
 }
 
-/* -------------------------------------------------------------------------- */
-/* Imperative helpers — read the same cache from outside React                 */
-/* -------------------------------------------------------------------------- */
 
 export async function getCachedProvinces(
   queryClient: QueryClient,

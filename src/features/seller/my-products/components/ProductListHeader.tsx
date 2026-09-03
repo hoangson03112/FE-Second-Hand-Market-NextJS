@@ -13,7 +13,7 @@ import { Eyebrow, microCaps } from "@/features/order/components";
 import { cn } from "@/lib/utils";
 
 interface ProductListHeaderProps {
-  /** Total listing count, shown as an editorial figure beside the title. */
+
   totalCount: number;
   viewMode: "list" | "grid";
   onViewModeChange: (mode: "list" | "grid") => void;

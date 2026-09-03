@@ -8,7 +8,7 @@ interface AuthSubmitButtonProps {
   label: string;
   loadingLabel?: string;
   isLoading?: boolean;
-  /** Vô hiệu hóa mà không hiện nhãn "đang xử lý" — ví dụ form chưa hợp lệ. */
+
   disabled?: boolean;
   className?: string;
 }

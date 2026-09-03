@@ -14,8 +14,8 @@ export default function AdminReports() {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <IconLoader2 className="h-9 w-9 animate-spin text-primary" />
-          <p className="text-sm font-medium text-muted-foreground">
+          <IconLoader2 className="h-9 w-9 animate-spin text-luxury-ink" />
+          <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
             Đang tải danh sách báo cáo vi phạm...
           </p>
         </div>
@@ -35,11 +35,12 @@ export default function AdminReports() {
   return (
     <div className="space-y-6">
       <PageHeader
+        eyebrow="An toàn & Khiếu nại"
         title="Báo cáo & Khiếu nại vi phạm"
         description="Tiếp nhận và xử lý các báo cáo vi phạm tài khoản, gian lận hoặc khiếu nại khóa nick."
         badge={
           reports.length > 0 ? (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-[2px] text-2xs font-bold uppercase tracking-[0.16em] bg-cream-50 text-luxury-ink border border-luxury-ink/10">
               {reports.length} báo cáo
             </span>
           ) : null
@@ -48,7 +49,7 @@ export default function AdminReports() {
 
       {reports.length === 0 ? (
         <NoData
-          icon={<IconFlag className="w-10 h-10 text-muted-foreground" />}
+          icon={<IconFlag className="w-10 h-10 text-neutral-400" />}
           title="Chưa có báo cáo nào"
           description="Hệ thống hiện không ghi nhận phản ánh hay khiếu nại nào từ người dùng."
         />

@@ -10,7 +10,7 @@ import { ORDER_MESSAGES, SELLER_MESSAGES } from "@/constants/messages";
 
 export const PAGE_SIZE = 6;
 
-// Maps individual tab keys → matching order statuses
+
 export const SELLER_TAB_STATUSES: Record<string, string[]> = {
   all: [],
   pending: ["pending"],
@@ -77,7 +77,7 @@ export function useSellerOrders() {
     }
   }, []);
 
-  // Dashboard summary stats
+
   const stats = useMemo(() => {
     const todayOrders = orders.filter((o) => isToday(o.createdAt));
     const todayRevenue = todayOrders
@@ -94,7 +94,7 @@ export function useSellerOrders() {
     };
   }, [orders]);
 
-  // Per-tab counts (using the simplified tab mapping)
+
   const tabCounts = useMemo(() => {
     const counts: Record<string, number> = { all: orders.length };
     for (const [tab, statuses] of Object.entries(SELLER_TAB_STATUSES)) {
@@ -107,13 +107,13 @@ export function useSellerOrders() {
   const filteredOrders = useMemo(() => {
     let list = orders;
 
-    // Tab filter
+
     const tabStatuses = SELLER_TAB_STATUSES[activeTab];
     if (tabStatuses && tabStatuses.length > 0) {
       list = list.filter((o) => tabStatuses.includes(o.status));
     }
 
-    // Date filter
+
     if (dateFilter === "today") {
       list = list.filter((o) => isToday(o.createdAt));
     } else if (dateFilter === "week") {
@@ -124,7 +124,7 @@ export function useSellerOrders() {
       list = list.filter((o) => new Date(o.createdAt).getTime() > cutoff);
     }
 
-    // Search by order ID / buyer name / product name
+
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       list = list.filter(
@@ -135,7 +135,7 @@ export function useSellerOrders() {
       );
     }
 
-    // Sort
+
     return [...list].sort((a, b) => {
       if (sortBy === "newest") return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       if (sortBy === "oldest") return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
@@ -223,8 +223,7 @@ export function useSellerOrders() {
     }
   };
 
-  // Hàng về nguyên vẹn thì người bán chuyển lại tiền; không nguyên vẹn thì
-  // yêu cầu được chuyển cho quản trị viên phân xử.
+
   const handleConfirmReturnReceived = async (
     orderId: string,
     inspection?: ReturnInspectionPayload,

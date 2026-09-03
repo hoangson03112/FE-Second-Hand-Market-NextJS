@@ -19,7 +19,7 @@ export async function enrichAddressWithNames(
       return enrichedAddress;
     }
 
-    // Get provinces từ cache
+
     if (address.provinceId && !address.province) {
       const provinces = await getCachedProvinces(queryClient);
       const province = provinces.find(
@@ -30,7 +30,7 @@ export async function enrichAddressWithNames(
       }
     }
 
-    // Get districts từ cache
+
     if (address.districtId && !address.district && address.provinceId) {
       const districts = await getCachedDistricts(
         queryClient,
@@ -44,7 +44,7 @@ export async function enrichAddressWithNames(
       }
     }
 
-    // Get wards từ cache
+
     if (address.wardCode && !address.ward && address.districtId) {
       const wards = await getCachedWards(queryClient, address.districtId);
       const ward = wards.find((w) => w.WardCode === address.wardCode);
@@ -53,7 +53,7 @@ export async function enrichAddressWithNames(
       }
     }
 
-    // Set address field nếu chưa có
+
     if (!enrichedAddress.address && enrichedAddress.specificAddress) {
       enrichedAddress.address = enrichedAddress.specificAddress;
     }
@@ -61,12 +61,12 @@ export async function enrichAddressWithNames(
     return enrichedAddress;
   } catch (error) {
     console.error("Error enriching address:", error);
-    return address; // Return original if error
+    return address;
   }
 }
 
 export function getProvinceName(provinceId?: string | null): string {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+
   const { data: provinces = [] } = useProvinces();
 
   if (provinceId && provinces.length > 0) {
@@ -93,7 +93,7 @@ export async function enrichAddresses(
       if (address.districtId) uniqueDistrictIds.add(address.districtId);
     });
 
-    // Prefetch tất cả districts và wards cần thiết song song
+
     const districtPromises = Array.from(uniqueProvinceIds).map((provinceId) =>
       getCachedDistricts(queryClient, provinceId),
     );
@@ -102,11 +102,11 @@ export async function enrichAddresses(
       getCachedWards(queryClient, districtId),
     );
 
-    // Chờ tất cả prefetch xong
+
     const allDistricts = await Promise.all(districtPromises);
     const allWards = await Promise.all(wardPromises);
 
-    // Map để lookup nhanh
+
     const districtsMap = new Map<string, District[]>();
     const wardsMap = new Map<string, Ward[]>();
 
@@ -118,11 +118,11 @@ export async function enrichAddresses(
       wardsMap.set(districtId, allWards[index] || []);
     });
 
-    // Transform addresses (không cần call API thêm nữa)
+
     const enrichedAddresses = addresses.map((address) => {
       const enriched = { ...address };
 
-      // Get province name
+
       if (address.provinceId && !address.province) {
         const province = provinces.find(
           (p) => p.ProvinceID.toString() === address.provinceId?.toString(),
@@ -132,7 +132,7 @@ export async function enrichAddresses(
         }
       }
 
-      // Get district name
+
       if (address.districtId && !address.district && address.provinceId) {
         const districts = districtsMap.get(address.provinceId) || [];
         const district = districts.find(
@@ -143,7 +143,7 @@ export async function enrichAddresses(
         }
       }
 
-      // Get ward name
+
       if (address.wardCode && !address.ward && address.districtId) {
         const wards = wardsMap.get(address.districtId) || [];
         const ward = wards.find((w) => w.WardCode === address.wardCode);
@@ -152,7 +152,7 @@ export async function enrichAddresses(
         }
       }
 
-      // Set address field
+
       if (!enriched.address && enriched.specificAddress) {
         enriched.address = enriched.specificAddress;
       }
@@ -163,6 +163,6 @@ export async function enrichAddresses(
     return enrichedAddresses;
   } catch (error) {
     console.error("Error enriching addresses:", error);
-    return addresses; // Return original if error
+    return addresses;
   }
 }

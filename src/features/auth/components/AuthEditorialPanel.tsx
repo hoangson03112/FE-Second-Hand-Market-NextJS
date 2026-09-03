@@ -27,7 +27,7 @@ export default function AuthEditorialPanel({
   const reducedMotion = usePrefersReducedMotion();
 
   return (
-    /* Nền ink + hiệu ứng do AuthShell vẽ tràn viền — ở đây chỉ còn nội dung. */
+
     <div className="relative flex h-full flex-col justify-between py-14 pr-10 xl:py-16 xl:pr-16">
       <motion.div
         className="relative z-10 flex items-center justify-between gap-6"

@@ -14,8 +14,8 @@ export function useVerify() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const toast = useToast();
-  // sessionStorage chỉ có ở client nên đọc trong state initializer, không đọc
-  // ở thân component — render trên server sẽ ném.
+
+
   const [session, setSession] = useState(() =>
     typeof window === "undefined" ? null : readVerificationSession(),
   );
@@ -34,22 +34,21 @@ export function useVerify() {
     }
   }, [error, toast]);
 
-  /* Đếm ngược cooldown gửi lại mã — BE trả về retryAfterSeconds. */
+
   useEffect(() => {
     if (cooldown <= 0) return;
     const timer = setTimeout(() => setCooldown((s) => s - 1), 1000);
     return () => clearTimeout(timer);
   }, [cooldown]);
 
-  // Mất ticket (mở trực tiếp URL, đổi tab, sessionStorage bị chặn) thì không
-  // có gì để xác minh. Đẩy về đăng nhập: đăng nhập lại là BE phát phiên mới.
+
   useEffect(() => {
     if (!verificationToken) {
       router.push("/login");
     }
   }, [verificationToken, router]);
 
-  /** Ticket chết giữa luồng: dọn rồi trả người dùng về đăng nhập. */
+
   const abandonSession = () => {
     clearVerificationSession();
     setSession(null);
@@ -78,7 +77,7 @@ export function useVerify() {
       });
 
       if (response.status === "success") {
-        // Ticket đã dùng xong, BE cũng đã thu hồi — đừng để lại trong tab.
+
         clearVerificationSession();
         queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });
         announceSession("signed-in");
@@ -97,8 +96,7 @@ export function useVerify() {
       const data = failure.response?.data;
       const message = data?.message || "Có lỗi xảy ra, vui lòng thử lại";
 
-      // BE vô hiệu mã sau 5 lần sai — cho người dùng biết còn bao nhiêu lượt
-      // thay vì để họ gõ đến khi bị chặn mà không hiểu vì sao.
+
       setError(
         data?.code === "INVALID_CODE" && typeof data.attemptsLeft === "number"
           ? `${message} (còn ${data.attemptsLeft} lần thử)`
@@ -147,8 +145,8 @@ export function useVerify() {
         };
       };
       const data = failure.response?.data;
-      // 429 do cooldown vẫn trả về số giây còn lại — dựng lại bộ đếm để nút
-      // không mời người dùng bấm tiếp vào chỗ chắc chắn bị từ chối.
+
+
       if (data?.retryAfterSeconds) setCooldown(data.retryAfterSeconds);
       setError(data?.message || "Không thể gửi lại mã, vui lòng thử lại sau");
       if (data?.code === "SESSION_EXPIRED") {

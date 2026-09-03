@@ -66,7 +66,7 @@ export function useRegister() {
     }
     setIsLoading(true);
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       const { confirmPassword, ...registerData } = result.data;
       const response = await AuthService.register(registerData as RegisterRequest);
       if (response.status === "success") {
@@ -95,8 +95,8 @@ export function useRegister() {
       else if (errorData?.type === "email") toast.error("Email đã được sử dụng");
       else if (errorData?.type === "phoneNumber") toast.error("Số điện thoại đã được sử dụng");
       else if (errorData?.code === "MAIL_FAILED") {
-        // Tài khoản đã tạo, chỉ email chưa đi được — BE vẫn trả ticket nên đưa
-        // người dùng sang màn hình nhập mã để họ bấm gửi lại, đừng bắt đăng ký lại.
+
+
         saveVerificationSession(errorData.verificationToken, errorData.maskedEmail);
         toast.error(errorData.message || "Không gửi được email, vui lòng gửi lại mã");
         router.push("/verify-email");

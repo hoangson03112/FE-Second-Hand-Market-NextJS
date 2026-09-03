@@ -17,7 +17,7 @@ export interface FilterSidebarProps {
   filters: IProductFilters;
   onFilterChange: (updater: (prev: IProductFilters) => IProductFilters) => void;
   provinces?: Province[];
-  /** Optional: hiển thị số kết quả trực tiếp trong sidebar để phản hồi UX ngay lập tức */
+
   resultCount?: number;
 }
 
@@ -53,7 +53,7 @@ function formatCompactVnd(value: number) {
   return `${value}đ`;
 }
 
-/* ── Numbered accordion section — motif "01, 02, 03" lấy từ PhilosophySection ── */
+
 function FilterGroup({
   index,
   title,
@@ -107,7 +107,7 @@ function FilterGroup({
   );
 }
 
-/* ── Dual-range price slider — kéo trực tiếp thay vì gõ số mù mờ ── */
+
 function PriceRangeSlider({
   min,
   max,
@@ -393,7 +393,7 @@ export default function FilterSidebar({
           </FilterGroup>
         )}
 
-        {/* ── HÌNH THỨC GIAO DỊCH ── */}
+
         <FilterGroup
           index={provinces.length > 0 ? 2 : 1}
           title="Hình thức nhận hàng"
@@ -434,7 +434,7 @@ export default function FilterSidebar({
           </div>
         </FilterGroup>
 
-        {/* ── TÌNH TRẠNG — thước đo chất lượng dạng vạch ── */}
+
         <FilterGroup
           index={provinces.length > 0 ? 3 : 2}
           title="Tình trạng sản phẩm"
@@ -479,7 +479,7 @@ export default function FilterSidebar({
                     {opt.label}
                   </span>
 
-                  {/* Vạch chất lượng — 5 vạch, tô theo % */}
+
                   <div className="flex items-center gap-[3px]" aria-hidden>
                     {Array.from({ length: 5 }).map((_, i) => (
                       <span
@@ -501,7 +501,7 @@ export default function FilterSidebar({
           </div>
         </FilterGroup>
 
-        {/* ── MỨC GIÁ — preset + dual-range slider ── */}
+
         <FilterGroup index={provinces.length > 0 ? 4 : 3} title="Khoảng giá">
           <div className="mb-5 flex flex-wrap gap-2">
             {PRICE_PRESETS.map((preset) => {

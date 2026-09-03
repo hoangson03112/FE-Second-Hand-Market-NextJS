@@ -11,41 +11,41 @@ export default function StatsCards({
 }: StatsCardsProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <div className="rounded-2xl border border-border/80 bg-card p-4 sm:p-5 shadow-xs flex items-center justify-between">
+      <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-4 sm:p-5 flex items-center justify-between">
         <div>
-          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+          <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
             Tổng người dùng
           </p>
-          <p className="mt-1.5 text-2xl font-bold text-foreground tabular-nums">
+          <p className="font-droid-serif mt-2 text-2xl font-bold text-luxury-ink tabular-nums">
             {totalUsers.toLocaleString("vi-VN")}
           </p>
         </div>
-        <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-          <IconUsers className="w-5 h-5" />
+        <div className="w-10 h-10 rounded-[2px] border border-luxury-ink/10 bg-cream-50 text-luxury-ink flex items-center justify-center shrink-0">
+          <IconUsers className="w-4 h-4" />
         </div>
       </div>
 
-      <div className="rounded-2xl border border-border/80 bg-card p-4 sm:p-5 shadow-xs flex items-center justify-between">
+      <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-4 sm:p-5 flex items-center justify-between">
         <div>
-          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+          <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
             Mới (7 ngày qua)
           </p>
-          <p className="mt-1.5 text-2xl font-bold text-emerald-600 tabular-nums">
+          <p className="font-droid-serif mt-2 text-2xl font-bold text-accent tabular-nums">
             +{recent7Days.toLocaleString("vi-VN")}
           </p>
         </div>
-        <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shrink-0">
-          <IconUserPlus className="w-5 h-5" />
+        <div className="w-10 h-10 rounded-[2px] border border-luxury-ink/10 bg-cream-50 text-accent flex items-center justify-center shrink-0">
+          <IconUserPlus className="w-4 h-4" />
         </div>
       </div>
 
-      <div className="rounded-2xl border border-border/80 bg-card p-4 sm:p-5 shadow-xs flex items-center gap-3">
-        <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 flex items-center justify-center shrink-0">
-          <IconInfoCircle className="w-5 h-5" />
+      <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-4 sm:p-5 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-[2px] border border-luxury-ink/10 bg-cream-50 text-luxury-ink flex items-center justify-center shrink-0">
+          <IconInfoCircle className="w-4 h-4" />
         </div>
         <div className="min-w-0">
-          <p className="text-xs font-bold text-foreground">Phân quyền tài khoản</p>
-          <p className="text-xs text-muted-foreground mt-0.5 leading-snug">
+          <p className="text-xs font-bold text-luxury-ink">Phân quyền tài khoản</p>
+          <p className="text-xs text-neutral-500 mt-0.5 leading-snug">
             Quản lý vai trò Buyer, Seller và Admin. Kiểm soát mở và khóa tài khoản.
           </p>
         </div>

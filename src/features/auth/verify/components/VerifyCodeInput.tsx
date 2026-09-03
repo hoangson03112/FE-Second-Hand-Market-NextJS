@@ -10,7 +10,7 @@ interface VerifyCodeInputProps {
   code: string;
   onCodeChange: (code: string) => void;
   onClearError: () => void;
-  /** Tô viền cảnh báo khi mã bị từ chối. */
+
   hasError?: boolean;
   label?: string;
   hint?: string;
@@ -34,7 +34,7 @@ export default function VerifyCodeInput({
     focusCell(0);
   }, []);
 
-  /** Ghi digits vào chuỗi mã bắt đầu từ vị trí `start`, trả về vị trí con trỏ kế tiếp. */
+
   const writeDigits = (start: number, digits: string) => {
     const next = code.padEnd(CELLS.length, " ").split("");
     for (let i = 0; i < digits.length && start + i < CELLS.length; i += 1) {

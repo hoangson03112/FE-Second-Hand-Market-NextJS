@@ -23,8 +23,8 @@ export default function AdminModeration() {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <IconLoader2 className="h-9 w-9 animate-spin text-primary" />
-          <p className="text-sm font-medium text-muted-foreground">
+          <IconLoader2 className="h-9 w-9 animate-spin text-luxury-ink" />
+          <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
             Đang tải dữ liệu kiểm duyệt AI...
           </p>
         </div>
@@ -44,11 +44,12 @@ export default function AdminModeration() {
   return (
     <div className="space-y-6">
       <PageHeader
+        eyebrow="Tự động hoá AI"
         title="Kiểm duyệt nội dung tự động AI"
         description="Thống kê hiệu quả phân tích hình ảnh và văn bản của AI trong việc phát hiện sản phẩm vi phạm."
         badge={
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-[2px] text-2xs font-bold uppercase tracking-[0.16em] bg-cream-50 text-luxury-ink border border-luxury-ink/10">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
             AI Guard Active
           </span>
         }
@@ -60,15 +61,15 @@ export default function AdminModeration() {
           title="Cần admin review thủ công"
         >
           <div className="space-y-2">
-            <p className="text-3xl font-bold text-amber-600 tabular-nums">
+            <p className="font-droid-serif text-3xl font-bold text-amber-700 tabular-nums">
               {needsReview}
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-neutral-500">
               Sản phẩm có độ tin cậy AI trung bình cần người thật xác minh
             </p>
             <Link
               href="/admin/products"
-              className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline pt-1"
+              className="inline-flex items-center gap-1 text-2xs font-bold uppercase tracking-[0.12em] text-luxury-ink hover:text-accent pt-1 transition-colors"
             >
               Mở danh sách duyệt →
             </Link>
@@ -85,19 +86,19 @@ export default function AdminModeration() {
                 {statusStats.map((s: { _id: string; count: number }) => (
                   <div
                     key={s._id}
-                    className="flex items-center justify-between text-xs p-2 rounded-lg bg-muted/40"
+                    className="flex items-center justify-between text-xs p-2.5 rounded-[2px] bg-cream-50/60 border border-luxury-ink/6"
                   >
-                    <span className="text-muted-foreground font-medium uppercase">
+                    <span className="text-neutral-500 font-bold text-2xs uppercase tracking-[0.1em]">
                       {s._id}
                     </span>
-                    <span className="font-bold text-foreground tabular-nums">
+                    <span className="font-droid-serif font-bold text-luxury-ink tabular-nums text-sm">
                       {s.count}
                     </span>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-muted-foreground">Chưa có dữ liệu phân loại</p>
+              <p className="text-xs text-neutral-400">Chưa có dữ liệu phân loại</p>
             )}
           </div>
         </StatCard>
@@ -114,48 +115,47 @@ export default function AdminModeration() {
                   return (
                     <div
                       key={String(s._id)}
-                      className={`flex items-center justify-between text-xs p-2 rounded-lg ${
+                      className={`flex items-center justify-between text-xs p-2.5 rounded-[2px] border ${
                         isApproved
-                          ? "bg-emerald-50 text-emerald-800 border border-emerald-100"
-                          : "bg-rose-50 text-rose-800 border border-rose-100"
+                          ? "bg-white text-accent border-accent/30"
+                          : "bg-white text-rose-700 border-rose-200"
                       }`}
                     >
-                      <div className="flex items-center gap-1.5 font-semibold">
+                      <div className="flex items-center gap-1.5 text-2xs font-bold uppercase tracking-[0.1em]">
                         {isApproved ? (
-                          <IconCheck className="w-3.5 h-3.5 text-emerald-600" />
+                          <IconCheck className="w-3.5 h-3.5 text-accent" />
                         ) : (
                           <IconX className="w-3.5 h-3.5 text-rose-600" />
                         )}
                         <span>{isApproved ? "AI Đề xuất duyệt" : "AI Cảnh báo vi phạm"}</span>
                       </div>
-                      <span className="font-bold tabular-nums">{s.count}</span>
+                      <span className="font-droid-serif font-bold tabular-nums text-sm">{s.count}</span>
                     </div>
                   );
                 })}
               </div>
             ) : (
-              <p className="text-xs text-muted-foreground">Chưa có kết quả AI</p>
+              <p className="text-xs text-neutral-400">Chưa có kết quả AI</p>
             )}
           </div>
         </StatCard>
       </div>
 
-      {/* Action banner */}
-      <div className="rounded-2xl border border-primary/20 bg-primary/5 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h3 className="text-sm font-bold text-foreground">
+          <h3 className="font-droid-serif text-base font-bold text-luxury-ink">
             Cần xem xét và thẩm định các sản phẩm đang chờ?
           </h3>
-          <p className="text-xs text-muted-foreground mt-0.5">
+          <p className="text-xs text-neutral-500 mt-1 leading-relaxed">
             Chuyển tới bảng kiểm duyệt sản phẩm để xem ảnh chi tiết, phân tích AI và quyết định duyệt hoặc từ chối.
           </p>
         </div>
         <Link
           href="/admin/products"
-          className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-xs font-bold hover:bg-primary/90 transition-all shadow-2xs shrink-0"
+          className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-[2px] bg-luxury-ink text-luxury-ivory text-2xs font-bold uppercase tracking-[0.14em] hover:bg-charcoal-800 transition-all shrink-0"
         >
           Đi tới Kiểm duyệt sản phẩm
-          <IconArrowRight className="w-4 h-4" />
+          <IconArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
     </div>

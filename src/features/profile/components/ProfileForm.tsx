@@ -35,9 +35,7 @@ export function ProfileForm({
       </div>
 
       <form onSubmit={onSubmit} className="p-6 lg:p-8">
-        {/* Two columns from `lg` so the panel fills its width instead of
-            leaving a dead gutter on the right. Fields that carry a hint or
-            badge span both columns. */}
+
         <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2">
           <div>
             <label className="block text-xs uppercase tracking-wide font-bold text-luxury-ink mb-2">

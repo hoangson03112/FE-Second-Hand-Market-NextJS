@@ -17,7 +17,7 @@ export const STATUS_TABS: { value: ProductStatusFilter | ""; label: string }[] =
   { value: "rejected", label: "Từ chối" },
 ];
 
-/** Badge dùng trong bảng danh sách (label + className) */
+
 export const STATUS_TABLE_BADGE: Record<string, { label: string; className: string }> = {
   pending:          { label: "Chờ duyệt",         className: "bg-primary/10 text-primary/90" },
   review_requested: { label: "Yêu cầu duyệt lại", className: "bg-primary/15 text-primary" },

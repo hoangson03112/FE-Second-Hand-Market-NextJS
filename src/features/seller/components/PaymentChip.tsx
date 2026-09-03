@@ -1,12 +1,5 @@
 import { cn } from "@/lib/utils";
 
-/**
- * Payment state in the same hairline-chip language as `OrderStatusChip`, rather
- * than the saturated green/amber pills the seller screens used to carry.
- *
- * Lives here rather than under one feature because both the seller queue and the
- * seller order detail render it.
- */
 
 type PaymentStatus = "pending" | "paid" | "refunded" | (string & {});
 
@@ -28,7 +21,7 @@ const FULL_LABEL: Record<string, string> = {
   pending: "Chưa thanh toán",
 };
 
-/** Compact wording for list rows, where the column is a few characters wide. */
+
 const SHORT_LABEL: Record<string, string> = {
   paid: "Đã TT",
   refunded: "Đã hoàn",
@@ -37,9 +30,9 @@ const SHORT_LABEL: Record<string, string> = {
 
 interface PaymentChipProps {
   status?: PaymentStatus;
-  /** `short` for list rows, `full` for detail surfaces. */
+
   variant?: "short" | "full";
-  /** `dark` inverts the chip for use on an ink panel. */
+
   tone?: "light" | "dark";
   className?: string;
 }

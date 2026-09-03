@@ -52,11 +52,7 @@ type StatusKey =
   | "disputed"
   | "cancelled";
 
-/**
- * The same five tones `OrderStatusChip` uses. The refund flow used to reach for
- * amber / sky / blue / purple / green straight out of Tailwind, which put six
- * palettes on a page built from ivory, ink, champagne and one green.
- */
+
 type Tone = "progress" | "settled" | "attention" | "failed" | "neutral";
 
 const TONE: Record<Tone, { surface: string; border: string; text: string }> = {

@@ -14,7 +14,7 @@ interface ChatMessagesProps {
   accountId: string;
 }
 
-/** Own bubbles are the ink panel; incoming ones stay on the white sheet. */
+
 function bubbleClass(isOwn: boolean) {
   return cn(
     "max-w-[80%] rounded-[2px] px-4 py-3",

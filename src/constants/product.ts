@@ -1,13 +1,5 @@
 import type { ProductStatusFilter } from "@/types/product";
 
-/**
- * Product-related constants
- * Product status, messages, and configurations
- */
-
-// ============================================================================
-// Product Status Configuration
-// ============================================================================
 
 export const PRODUCT_STATUS_CONFIG: Record<
   ProductStatusFilter,
@@ -63,9 +55,6 @@ export const PRODUCT_STATUS_CONFIG: Record<
   },
 };
 
-// ============================================================================
-// Messages
-// ============================================================================
 
 export const PRODUCT_MESSAGES = {
   DELETE_CONFIRM: "Bạn có chắc muốn xóa sản phẩm này?",

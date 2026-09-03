@@ -3,7 +3,7 @@ import type { ProductStatusFilter } from "./product";
 export type MyProductStatus = ProductStatusFilter;
 export type { ProductStatusFilter };
 
-/** Ưu đãi cá nhân đính kèm sản phẩm (từ seller) */
+
 export type PersonalDiscountItem = {
   _id: string;
   price: number;
@@ -11,7 +11,7 @@ export type PersonalDiscountItem = {
   buyerId?: { _id: string; fullName?: string };
 };
 
-/** Minimal shape for `/products/my/listings` response items */
+
 export type MyListingProduct = {
   _id: string;
   name: string;
@@ -37,11 +37,7 @@ export type PaginationMeta = {
   totalPages: number;
 };
 
-/**
- * Các tab trên màn "Tin đăng của tôi". Server nhận đúng những key này và tự
- * map sang status thật (approved gộp cả active, under_review gộp cả
- * review_requested).
- */
+
 export type MyListingTabKey =
   | "all"
   | "pending"
@@ -50,7 +46,7 @@ export type MyListingTabKey =
   | "rejected"
   | "sold";
 
-/** Số tin đăng theo từng tab, đếm trên toàn bộ tin của seller. */
+
 export type MyListingStatusCounts = Record<MyListingTabKey, number>;
 
 export type MyListingsParams = {

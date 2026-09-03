@@ -1,13 +1,6 @@
 import { getShippingMethodType } from "@/utils/format";
 import type { Order } from "@/types/order";
 
-/**
- * Where an order sits, condensed to four nodes.
- *
- * The detail page shows the full seven-step GHN trail; a list needs a shape the
- * eye can read at a glance, and every flow (delivery, local pickup, refund)
- * collapses to the same four so a column of cards stays comparable.
- */
 
 export interface Stage {
   key: string;
@@ -48,12 +41,12 @@ const REFUND_ORDER_STATUSES = new Set([
 const BROKEN_STATUSES = new Set(["cancelled", "delivery_failed"]);
 
 export interface OrderStageInfo {
-  /** Which rail this order is on — callers word their copy differently per flow. */
+
   flow: "delivery" | "pickup" | "refund";
   stages: readonly Stage[];
-  /** Index of the stage the order is currently at. */
+
   currentIndex: number;
-  /** True once the final stage is reached, so the rail can read as finished. */
+
   isComplete: boolean;
 }
 
@@ -90,7 +83,7 @@ function refundStageIndex(
   return { index: 0, isComplete: false };
 }
 
-/** `null` for orders that ended off the rail (cancelled, delivery failed). */
+
 export function getOrderStage(order: Order): OrderStageInfo | null {
   if (BROKEN_STATUSES.has(order.status)) return null;
 
@@ -132,22 +125,15 @@ export function getOrderStage(order: Order): OrderStageInfo | null {
 }
 
 export interface BuyerTodo {
-  /** The one thing the buyer should do, phrased as an instruction. */
+
   label: string;
-  /** Optional single line of context, only when the label is not self-evident. */
+
   hint?: string;
-  /** True when the card's own button performs it; otherwise send them to detail. */
+
   inlineAction?: boolean;
 }
 
-/**
- * What this order is waiting on the buyer for — the question the list should
- * answer first, and what the "Cần xử lý" tab filters on.
- *
- * Refund cases are checked before delivery ones because the backend keeps
- * `order.status === "refund"` for the whole return lifecycle and advances the
- * Refund document instead.
- */
+
 export function getBuyerTodo(order: Order): BuyerTodo | null {
   const refund =
     order.refundRequestId && typeof order.refundRequestId === "object"

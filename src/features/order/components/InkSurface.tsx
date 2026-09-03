@@ -5,12 +5,7 @@ interface InkSurfaceProps {
   className?: string;
 }
 
-/**
- * The dark ink ground used for the one figure on a screen that should carry
- * weight — the checkout total, the order total. Champagne/accent glow plus the
- * fractal-noise grain lifted from the homepage CTA panel, so the transactional
- * screens read as the same publication.
- */
+
 export function InkSurface({ children, className }: InkSurfaceProps) {
   return (
     <div className={cn("relative overflow-hidden bg-luxury-ink", className)}>

@@ -1,4 +1,4 @@
-// Re-export all utilities
+
 export * from "./addressTransform";
 export * from "./avatar";
 export * from "./cartToCheckout";

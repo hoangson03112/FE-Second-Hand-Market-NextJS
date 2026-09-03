@@ -1,4 +1,4 @@
-/* Glassmorphism Utilities */
+
 @utility glass {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
@@ -13,7 +13,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Hover Effects */
+
 @utility hover-lift {
   transition:
     transform 0.3s ease,

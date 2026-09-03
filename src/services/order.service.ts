@@ -11,30 +11,22 @@ import type {
 } from "@/types/order";
 
 export const OrderService = {
-  /**
-   * Create a complete order with all required information
-   */
+
   create: async (data: CreateOrderRequest): Promise<CreateOrderResponse> => {
     return axiosClient.post("/orders", data);
   },
 
-  /**
-   * Get order by ID
-   */
+
   getById: async (id: string): Promise<{ order: Order }> => {
     return axiosClient.get(`/orders/order-details/${id}`);
   },
 
-  /**
-   * Get all orders for current user
-   */
+
   getMyOrders: async (): Promise<{ orders: Order[] }> => {
     return axiosClient.get("/orders/my-orders");
   },
 
-  /**
-   * Update order status
-   */
+
   updateStatus: async (
     orderId: string,
     status: string,
@@ -43,40 +35,28 @@ export const OrderService = {
     return axiosClient.patch("/orders/update", { orderId, status, reason });
   },
 
-  /**
-   * Get seller bank info for order payment
-   */
+
   getSellerBankInfo: async (
     orderId: string
   ): Promise<SellerBankInfo> => {
     return axiosClient.get(`/orders/${orderId}/seller-bank-info`);
   },
 
-  /**
-   * Confirm payment status
-   */
+
   confirmPayment: async (
     orderId: string
   ): Promise<{ message: string; order: Order }> => {
     return axiosClient.patch("/orders/update-payment-status", { orderId });
   },
 
-  /**
-   * Biên lai chuyển khoản của một đơn.
-   * GET /bank-info/:orderId — chỉ người mua, người bán của đơn, hoặc admin.
-   * Trả 404 khi người mua chưa gửi biên lai nào.
-   */
+
   getPaymentProof: async (
     orderId: string
   ): Promise<{ bankInfo: PaymentProof }> => {
     return axiosClient.get(`/bank-info/${orderId}`);
   },
 
-  /**
-   * Người bán đối soát biên lai.
-   * PATCH /bank-info/verify/:orderId — "verified" đánh dấu đơn đã thanh toán
-   * luôn, "rejected" bắt buộc kèm lý do để người mua gửi lại.
-   */
+
   verifyPaymentProof: async (
     orderId: string,
     status: "verified" | "rejected",
@@ -88,18 +68,14 @@ export const OrderService = {
     });
   },
 
-  /**
-   * Get orders for seller (orders where current user is seller)
-   */
+
   getSellerOrders: async (): Promise<{ orders: Order[] }> => {
     const res = await axiosClient.get<{ orders: Order[] }>("/orders/seller/my");
     const data = res as { orders?: Order[] };
     return { orders: data.orders || [] };
   },
 
-  /**
-   * Update order by seller (status: delivered, cancelled, etc.)
-   */
+
   updateSellerOrder: async (
     orderId: string,
     status: string,
@@ -113,17 +89,12 @@ export const OrderService = {
     return { order: data.order || {} as Order };
   },
 
-  /**
-   * Buyer confirms received order (delivered -> completed)
-   */
+
   confirmReceived: async (orderId: string): Promise<{ message: string; order: Order }> => {
     return axiosClient.patch(`/orders/${orderId}/confirm-received`);
   },
 
-  /**
-   * Buyer requests refund with optional evidence files and bank account info
-   * POST /orders/:id/request-refund  (multipart/form-data)
-   */
+
   requestRefund: async (
     orderId: string,
     reason: string,
@@ -155,10 +126,7 @@ export const OrderService = {
     });
   },
 
-  /**
-   * Cancel order — buyer (pending only) or seller (confirmed only)
-   * POST /orders/:id/cancel
-   */
+
   cancelOrder: async (
     orderId: string,
     reason: string
@@ -166,10 +134,7 @@ export const OrderService = {
     return axiosClient.post(`/orders/${orderId}/cancel`, { reason });
   },
 
-  /**
-   * Seller approves refund request from buyer
-   * POST /orders/:id/approve-refund
-   */
+
   approveRefund: async (
     orderId: string,
     note?: string
@@ -177,10 +142,7 @@ export const OrderService = {
     return axiosClient.post(`/orders/${orderId}/approve-refund`, { note });
   },
 
-  /**
-   * Seller: reject a refund request
-   * POST /orders/:id/reject-refund
-   */
+
   rejectRefund: async (
     orderId: string,
     reason: string
@@ -188,14 +150,7 @@ export const OrderService = {
     return axiosClient.post(`/orders/${orderId}/reject-refund`, { reason });
   },
 
-  /**
-   * Seller: confirm the returned parcel arrived, and record what was inside.
-   * POST /orders/:id/confirm-return-received
-   *
-   * The refund is only owed when the goods come back intact. Reporting any
-   * other condition sends the refund to `disputed` for an admin to settle
-   * instead of obliging the seller to transfer the money.
-   */
+
   confirmReturnReceived: async (
     orderId: string,
     inspection?: {
@@ -220,10 +175,7 @@ export const OrderService = {
     });
   },
 
-  /**
-   * Buyer: submit bank account info for refund transfer (only when status === "returned")
-   * POST /orders/:id/refund-bank-info
-   */
+
   submitRefundBankInfo: async (
     orderId: string,
     data: { bankName: string; accountNumber: string; accountHolder: string }
@@ -231,10 +183,7 @@ export const OrderService = {
     return axiosClient.post(`/orders/${orderId}/refund-bank-info`, data);
   },
 
-  /**
-   * Seller: get payout history
-   * GET /orders/seller/payouts
-   */
+
   getSellerPayouts: async (params?: {
     page?: number;
     limit?: number;
@@ -248,10 +197,7 @@ export const OrderService = {
     return res as unknown as { data: Order[]; total: number; page: number; totalPages: number };
   },
 
-  /**
-   * Seller: get wallet summary
-   * GET /orders/seller/wallet
-   */
+
   getSellerWallet: async (): Promise<{
     balance: number;
     pendingBalance: number;
@@ -267,20 +213,15 @@ export const OrderService = {
     };
   },
 
-  /**
-   * Get GHN shipping tracking for an order
-   */
+
   getTracking: async (orderId: string): Promise<{ tracking: GHNTrackingData }> => {
     return axiosClient.get(`/orders/${orderId}/tracking`);
   },
 
-  /**
-   * Get orders with filters (buyer)
-   */
+
   getMyOrdersByStatus: async (status?: OrderStatus): Promise<{ orders: Order[] }> => {
     const params = status ? `?status=${status}` : "";
     return axiosClient.get(`/orders/my-orders${params}`);
   },
 };
-
 

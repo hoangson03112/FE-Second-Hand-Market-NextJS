@@ -78,7 +78,7 @@ export function useProductActions({
         quantity,
       });
 
-      // Invalidate cart queries to refresh cart data
+
       queryClient.invalidateQueries({ queryKey: queryKeys.cart.list() });
       queryClient.invalidateQueries({ queryKey: queryKeys.users.current() });
 
@@ -102,8 +102,8 @@ export function useProductActions({
     }
     try {
       setActionLoading(true);
-      
-      // Open floating chat box with seller and product info
+
+
       openChatWithSeller({
         _id: product.seller._id,
         fullName: product.seller.fullName,
@@ -115,7 +115,7 @@ export function useProductActions({
         image: typeof product.images?.[0] === 'string' ? product.images[0] : product.images?.[0]?.url,
         slug: product.slug,
       });
-      
+
       toast.success(`Đang mở chat với ${product.seller.fullName || 'người bán'}`);
     } catch (error) {
       console.error("Lỗi khi liên hệ người bán:", error);
@@ -124,7 +124,6 @@ export function useProductActions({
       setActionLoading(false);
     }
   }, [account, product, router, toast]);
-
 
 
   return {

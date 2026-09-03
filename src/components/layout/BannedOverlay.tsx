@@ -84,7 +84,7 @@ export function BannedOverlay() {
             </div>
             <h1
               id="banned-title"
-              className="mb-2 text-center text-xl font-bold text-gray-900"
+              className="font-droid-serif mb-2 text-center text-xl font-medium text-gray-900"
             >
               Tài khoản đã bị khóa
             </h1>
@@ -97,7 +97,7 @@ export function BannedOverlay() {
               <button
                 type="button"
                 onClick={handleOpenAppealForm}
-                className="inline-flex justify-center rounded-xl bg-amber-700 px-4 py-3 font-bold text-white transition hover:bg-amber-800"
+                className="inline-flex justify-center rounded-xl bg-amber-700 px-4 py-3 font-medium text-white transition hover:bg-amber-800"
               >
                 Gửi khiếu nại lên quản trị viên
               </button>
@@ -114,7 +114,7 @@ export function BannedOverlay() {
 
         {step === "form" && (
           <>
-            <h2 className="mb-4 text-center text-lg font-bold text-gray-900">
+            <h2 className="mb-4 text-center text-lg font-medium font-droid-serif text-gray-900">
               Gửi khiếu nại
             </h2>
             <form onSubmit={handleSubmitAppeal} className="flex flex-col gap-4">

@@ -10,7 +10,7 @@ export function useAdminPayouts() {
   const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.orders.payouts(),
     queryFn: () => AdminService.getPayouts(),
-    // backend returns { data: [...] } (pending-payouts endpoint)
+
     select: (d) => d.data ?? [],
   });
 

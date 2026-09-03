@@ -17,7 +17,7 @@ export function useCategoryPage({ slug }: UseCategoryPageProps) {
     page: 1,
   });
 
-  // Fetch category info
+
   const { data: categoryData, isLoading: isLoadingCategory } = useQuery({
     queryKey: ["category", slug],
     queryFn: async () => {
@@ -29,7 +29,7 @@ export function useCategoryPage({ slug }: UseCategoryPageProps) {
     },
   });
 
-  // Fetch products
+
   const {
     data: productsData,
     isLoading: isLoadingProducts,

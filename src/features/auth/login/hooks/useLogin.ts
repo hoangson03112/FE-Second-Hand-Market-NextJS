@@ -104,8 +104,7 @@ export function useLogin() {
       ).response;
       const statusCode = response?.status;
 
-      // BE dùng 403 cho cả hai trạng thái chặn đăng nhập, phân biệt bằng `type`.
-      // Không đọc `type` thì tài khoản chưa xác minh sẽ thấy màn hình bị khoá.
+
       if (statusCode === 403 && response?.data?.type === "inactive") {
         const saved = saveVerificationSession(
           response.data.verificationToken,
@@ -115,8 +114,8 @@ export function useLogin() {
           response.data.message ||
             "Tài khoản chưa xác minh. Vui lòng nhập mã trong email.",
         );
-        // Không có ticket (Redis lỗi, hoặc sessionStorage bị chặn) thì đừng đẩy
-        // sang màn hình nhập mã để nó lại bật về đây — giữ người dùng ở lại.
+
+
         if (saved) router.push("/verify-email");
       } else if (statusCode === 403) {
         setBanned(true);

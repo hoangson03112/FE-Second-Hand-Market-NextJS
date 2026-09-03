@@ -1,4 +1,4 @@
-/** Shared building blocks for the admin screens (tables, empty/error states). */
+
 export * from "./DataTable";
 export * from "./EmptyState";
 export * from "./ErrorState";

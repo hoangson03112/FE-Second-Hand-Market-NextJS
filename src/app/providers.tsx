@@ -33,8 +33,7 @@ export default function Providers({
 
   const [hasSession, setHasSession] = useState(initialHasSession);
 
-  // router.refresh() sau khi đăng nhập/đăng xuất khiến server layout đọc lại
-  // cookie và đẩy giá trị mới xuống đây.
+
   useEffect(() => setHasSession(initialHasSession), [initialHasSession]);
 
   useEffect(() => {
@@ -42,7 +41,7 @@ export default function Providers({
       setHasSession(signal === "signed-in");
 
       if (signal === "signed-out") {
-        // Về trạng thái khách ngay: header, guard, giỏ hàng cùng cập nhật.
+
         queryClient.setQueryData(queryKeys.users.current(), null);
         queryClient.removeQueries({ queryKey: queryKeys.cart.all });
       } else {
@@ -56,7 +55,7 @@ export default function Providers({
 
     window.addEventListener(SESSION_CHANGED_EVENT, handleLocalSessionChange);
 
-    // Đồng bộ giữa các tab: đăng xuất ở tab này thì tab kia cũng thoát.
+
     const channel =
       "BroadcastChannel" in window ? new BroadcastChannel(SESSION_CHANNEL) : null;
     if (channel) {

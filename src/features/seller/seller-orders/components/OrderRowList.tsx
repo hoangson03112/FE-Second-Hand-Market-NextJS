@@ -10,7 +10,7 @@ import { getBuyerName } from "../utils/orderUtils";
 import { REFUND_PHASE_SHORT_LABELS } from "../utils/refundPresentation";
 import { PaymentChip } from "@/features/seller/components";
 
-/** One grid template for the head and every row, so the columns cannot drift. */
+
 const COLUMNS =
   "md:grid md:grid-cols-[1.15fr_0.8fr_1.15fr_0.6fr_1fr_0.7fr] md:items-center md:gap-4";
 
@@ -20,11 +20,7 @@ interface OrderRowListProps {
   onSelect: (orderId: string) => void;
 }
 
-/**
- * The queue: a hairline register rather than a card grid. Rows stay dense enough
- * to scan a page of orders at once, and the selected row is marked with a
- * champagne rule instead of a tinted fill.
- */
+
 export default function OrderRowList({
   orders,
   selectedOrderId,
@@ -73,7 +69,7 @@ export default function OrderRowList({
                 isSelected ? "bg-cream-50/80" : "hover:bg-cream-50/50",
               )}
             >
-              {/* Selection mark — a champagne rule down the leading edge */}
+
               <span
                 aria-hidden
                 className={cn(
@@ -83,7 +79,7 @@ export default function OrderRowList({
               />
 
               <div className={cn("flex flex-col gap-2 md:gap-0", COLUMNS)}>
-                {/* Code + status */}
+
                 <div className="flex items-center justify-between gap-3 md:block">
                   <p
                     className="font-droid-serif truncate text-sm tracking-wide text-luxury-ink"
@@ -124,7 +120,7 @@ export default function OrderRowList({
                 </div>
               </div>
 
-              {/* Mobile-only meta line, and the refund phase on every breakpoint */}
+
               <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
                 <span className="text-xs tabular-nums text-neutral-500 md:hidden">
                   {formatDateOnly(order.createdAt)} · {productCount} SP

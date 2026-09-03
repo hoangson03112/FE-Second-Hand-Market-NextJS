@@ -1,13 +1,5 @@
 import { STATUS_CONFIG } from "@/constants/orderStatus";
 
-/**
- * Colour-coded pill for an order **or refund** status — both live in
- * `STATUS_CONFIG`. Domain-aware, hence it sits with the order feature rather
- * than in `components/ui`.
- *
- * For the quiet-luxury screens use `OrderStatusChip` instead; this one keeps
- * the saturated palette the admin and seller tables were built around.
- */
 
 const DOT_COLORS: Record<string, string> = {
   pending: "bg-primary/50",
@@ -17,8 +9,8 @@ const DOT_COLORS: Record<string, string> = {
   out_for_delivery: "bg-primary",
   delivered: "bg-foreground/60",
   completed: "bg-foreground",
-  // `bg-destructive` / `bg-muted-foreground` compile to nothing in this token
-  // set, so those dots used to be invisible.
+
+
   failed: "bg-blush-600",
   delivery_failed: "bg-blush-600",
   returning: "bg-amber-500",

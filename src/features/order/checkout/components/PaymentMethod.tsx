@@ -9,7 +9,7 @@ interface PaymentMethodProps {
   selected: PaymentMethodType;
   onSelect: (method: PaymentMethodType) => void;
   showBankTransfer?: boolean;
-  /** Unique name for the radio group — use sellerId to avoid cross-seller collisions */
+
   radioName?: string;
 }
 

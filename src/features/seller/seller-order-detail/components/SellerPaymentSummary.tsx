@@ -22,10 +22,7 @@ function Row({ label, value }: { label: string; value: string }) {
   );
 }
 
-/**
- * The one figure on the screen that carries weight, on the ink ground the
- * homepage CTA and the checkout total share.
- */
+
 export function SellerPaymentSummary({ order }: SellerPaymentSummaryProps) {
   return (
     <InkSurface className="rounded-[2px]">

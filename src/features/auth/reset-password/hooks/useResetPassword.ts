@@ -24,7 +24,7 @@ interface UseResetPasswordReturn {
 export function useResetPassword({ token }: UseResetPasswordParams): UseResetPasswordReturn {
   const router = useRouter();
   const toast = useToast();
-  
+
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -87,7 +87,7 @@ export function useResetPassword({ token }: UseResetPasswordParams): UseResetPas
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation
+
     if (newPassword.length < 6) {
       toast.error("Mật khẩu phải có ít nhất 6 ký tự");
       return;

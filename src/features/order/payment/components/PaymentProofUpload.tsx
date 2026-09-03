@@ -59,7 +59,7 @@ export function PaymentProofUpload({
 
           {proofPreviewUrl ? (
             <div className="group relative flex h-full w-full items-center justify-center p-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+
               <img
                 src={proofPreviewUrl}
                 alt="Biên lai đã chọn"

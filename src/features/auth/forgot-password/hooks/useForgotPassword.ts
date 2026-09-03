@@ -23,7 +23,7 @@ export function useForgotPassword(): UseForgotPasswordReturn {
     setIsLoading(true);
 
     try {
-      // Use unified axios client + correct backend route.
+
       await axiosClient.post("/auth/forgot-password", { email });
       setIsSuccess(true);
       toast.success( AUTH_MESSAGES.FORGOT_PASSWORD_EMAIL_SENT);

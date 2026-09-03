@@ -18,7 +18,7 @@ export function useSubCategoryPage({ slug, subId }: UseSubCategoryPageProps) {
     page: 1,
   });
 
-  // Fetch category and subcategory info
+
   const { data: categoryData, isLoading: isLoadingCategory } = useQuery({
     queryKey: ["category", slug, subId],
     queryFn: async () => {
@@ -34,7 +34,7 @@ export function useSubCategoryPage({ slug, subId }: UseSubCategoryPageProps) {
     },
   });
 
-  // Fetch products
+
   const {
     data: productsData,
     isLoading: isLoadingProducts,

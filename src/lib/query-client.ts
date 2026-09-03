@@ -16,7 +16,7 @@ export const createQueryClient = () => {
       mutations: {
         retry: 1,
 
-        // Show error on mutation failure
+
         onError: (error) => {
           console.error("Mutation error:", error);
         },
@@ -26,7 +26,7 @@ export const createQueryClient = () => {
 };
 
 export const queryKeys = {
-  // Categories
+
   categories: {
     all: ["categories"] as const,
     lists: () => [...queryKeys.categories.all, "list"] as const,
@@ -36,7 +36,7 @@ export const queryKeys = {
     detail: (id: string) => [...queryKeys.categories.details(), id] as const,
   },
 
-  // Products
+
   products: {
     all: ["products"] as const,
     lists: () => [...queryKeys.products.all, "list"] as const,
@@ -64,12 +64,12 @@ export const queryKeys = {
         subCategorySlug,
         filters,
       ] as const,
-    /** Đánh giá sản phẩm (theo productId) */
+
     reviews: (productId: string) =>
       [...queryKeys.products.all, "reviews", productId] as const,
   },
 
-  // Users
+
   users: {
     all: ["users"] as const,
     details: () => [...queryKeys.users.all, "detail"] as const,
@@ -77,13 +77,13 @@ export const queryKeys = {
     current: () => [...queryKeys.users.all, "current"] as const,
   },
 
-  // Cart
+
   cart: {
     all: ["cart"] as const,
     list: () => [...queryKeys.cart.all, "list"] as const,
   },
 
-  // Addresses
+
   addresses: {
     all: ["addresses"] as const,
     lists: () => [...queryKeys.addresses.all, "list"] as const,
@@ -97,7 +97,7 @@ export const queryKeys = {
       [...queryKeys.addresses.all, "search", query] as const,
   },
 
-  // Orders
+
   orders: {
     all: ["orders"] as const,
     myOrders: () => [...queryKeys.orders.all, "my"] as const,

@@ -9,10 +9,7 @@ interface OrderDetailHeaderProps {
   onBack: () => void;
 }
 
-/**
- * Mirrors `CheckoutHeader` — same height, same back affordance, same serif
- * title — so moving from checkout to an order reads as one continuous flow.
- */
+
 export function OrderDetailHeader({
   orderId,
   status,
@@ -30,7 +27,7 @@ export function OrderDetailHeader({
           <IconArrowLeft className="h-5 w-5" />
         </button>
 
-        <h1
+        <h1
           className="font-droid-serif min-w-0 flex-1 truncate text-xl tracking-tight text-luxury-ink sm:text-2xl"
         >
           Chi Tiết Đơn Hàng

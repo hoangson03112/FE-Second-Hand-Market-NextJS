@@ -5,9 +5,9 @@ export interface IProduct {
   name: string;
   slug: string;
   price: number;
-  originalPrice?: number; 
-  hasPersonalDiscount?: boolean; 
-  personalDiscountId?: string; 
+  originalPrice?: number;
+  hasPersonalDiscount?: boolean;
+  personalDiscountId?: string;
   avatar: IImage;
   stock: number;
   description: string;
@@ -127,9 +127,9 @@ export interface IProductFilters {
   search?: string;
   page?: number;
   limit?: number;
-  /** Gặp mặt trực tiếp / Giao hàng */
+
   transactionMethod?: "meeting" | "shipping";
-  /** GHN ProvinceID */
+
   provinceId?: string | number;
 }
 
@@ -142,7 +142,7 @@ export interface IProductListResponse {
   totalPages?: number;
 }
 
-/** Admin: danh sách sản phẩm (GET /products với verifyAdmin) */
+
 export type ProductStatusFilter =
   | "pending"
   | "approved"

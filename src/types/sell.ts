@@ -23,7 +23,7 @@ export type DeliveryOptions = {
   codShipping: boolean;
 };
 
-/** Địa chỉ lấy hàng (cho user chưa verify seller) */
+
 export type PickupFormValues = {
   provinceId: string;
   districtId: string;

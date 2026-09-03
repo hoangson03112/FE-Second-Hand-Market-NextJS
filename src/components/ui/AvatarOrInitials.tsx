@@ -5,7 +5,7 @@ import Image from "next/image";
 import { getUserInitials } from "@/utils";
 
 interface AvatarOrInitialsProps {
-  /** URL string hoặc object { url } */
+
   avatar?: string | { url?: string } | null;
   fullName?: string;
   size?: number;
@@ -13,7 +13,7 @@ interface AvatarOrInitialsProps {
   alt?: string;
 }
 
-/** Hiển thị avatar nếu có, fallback chữ cái đầu từ tên */
+
 export function AvatarOrInitials({
   avatar,
   fullName = "",

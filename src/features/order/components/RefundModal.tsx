@@ -135,7 +135,7 @@ export function RefundModal({
         className="flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden bg-luxury-ivory shadow-2xl"
         style={{ borderRadius: "2px" }}
       >
-        {/* ── HEADER ── */}
+
         <div className="relative flex items-start justify-between border-b border-luxury-ink/8 px-6 py-5">
           <div className="flex items-center gap-3.5">
             <span
@@ -228,7 +228,7 @@ export function RefundModal({
         >
           <div className="flex-1 overflow-y-auto">
             <div className="space-y-5 px-6 py-6">
-              {/* ── STEP 1 — LÝ DO ── */}
+
               {step === 1 && (
                 <div className="space-y-4">
                   <div>
@@ -321,7 +321,7 @@ export function RefundModal({
                 </div>
               )}
 
-              {/* ── STEP 2 — BẰNG CHỨNG ── */}
+
               {step === 2 && (
                 <div className="space-y-5">
                   <div>
@@ -436,7 +436,7 @@ export function RefundModal({
                                 key={i}
                                 className="rounded-[2px] group relative aspect-square overflow-hidden border border-luxury-ink/10"
                               >
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
+
                                 <img
                                   src={URL.createObjectURL(file)}
                                   alt={file.name}
@@ -565,7 +565,7 @@ export function RefundModal({
                 </div>
               )}
 
-              {/* ── STEP 3 — NGÂN HÀNG ── */}
+
               {step === 3 && (
                 <div className="space-y-4">
                   <div>
@@ -653,7 +653,7 @@ export function RefundModal({
                 </div>
               )}
 
-              {/* ── STEP 4 — XÁC NHẬN ── */}
+
               {step === 4 && (
                 <div className="space-y-4">
                   <div>
@@ -796,7 +796,7 @@ export function RefundModal({
                           key={i}
                           className="aspect-square overflow-hidden border border-luxury-ink/10 rounded-[2px]"
                         >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
+
                           <img
                             src={URL.createObjectURL(file)}
                             alt={`img-${i}`}
@@ -843,7 +843,7 @@ export function RefundModal({
             </div>
           </div>
 
-          {/* ── FOOTER ── */}
+
           <div className="border-t border-luxury-ink/8 bg-white/70 px-6 py-4">
             <div className="flex items-center gap-3">
               {step > 1 ? (
