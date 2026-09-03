@@ -174,13 +174,17 @@ export default function Footer() {
             © {currentYear} Chợ Đồ Cũ Thông Minh. Tất cả quyền được bảo lưu.
           </p>
           <div className="flex items-center gap-8">
-            {["Điều khoản", "Bảo mật", "Sitemap"].map((label, i) => (
+            {[
+              { label: "Điều khoản", href: "/terms" },
+              { label: "Bảo mật", href: "/privacy" },
+              { label: "Sitemap", href: "/sitemap" },
+            ].map((item, i) => (
               <Link
                 key={i}
-                href={`/${label.toLowerCase().replace(/\s/g, "-")}`}
+                href={item.href}
                 className="text-xs text-taupe-300 hover:text-cream-100 transition-colors duration-200 font-bold uppercase tracking-wider"
               >
-                {label}
+                {item.label}
               </Link>
             ))}
           </div>
