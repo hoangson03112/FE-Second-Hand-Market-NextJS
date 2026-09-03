@@ -34,7 +34,7 @@ const REFUND_RELATED_STATUSES = [
   "refunded",
 ];
 
-/** Mô tả hero theo phase Refund (order có thể vẫn là "refund" suốt vòng đời — xem Order model BE). */
+
 function getBuyerRefundHeroDescription(params: {
   orderStatus: string;
   refundStatus: string | null;
@@ -372,8 +372,8 @@ export function OrderDetailView({
     hasBankInfo: Boolean(order.refundBankInfo?.buyerAccountNumber),
     isEscalating: isEscalatingToAdmin,
   });
-  // Same tonal vocabulary as `OrderStatusChip` / `RefundDetailCard`, so the page
-  // never introduces a sixth palette for a one-line notice.
+
+
   const refundTodoClass =
     refundTodo?.tone === "success"
       ? "border-accent/35 bg-taupe-50"
@@ -387,7 +387,7 @@ export function OrderDetailView({
     isLocalPickup,
   });
 
-  // Matches the checkout entry animation — one rAF, then a staggered settle.
+
   const [isRevealed, setIsRevealed] = useState(false);
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => setIsRevealed(true));
@@ -461,7 +461,7 @@ export function OrderDetailView({
               "grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8",
             )}
           >
-            {/* Left column */}
+
             <div className="space-y-6 lg:col-span-7 xl:col-span-8">
               <OrderProductsCard
                 order={order}
@@ -512,7 +512,7 @@ export function OrderDetailView({
               )}
             </div>
 
-            {/* Right sidebar */}
+
             <div className="lg:col-span-5 xl:col-span-4">
               <div className="space-y-6 lg:sticky lg:top-24">
                 <OrderMetaCard

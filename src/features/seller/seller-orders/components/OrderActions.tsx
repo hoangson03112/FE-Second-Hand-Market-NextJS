@@ -42,7 +42,7 @@ export default function OrderActions({
     (order.status === "refund_requested" || order.status === "refund") &&
     (refundDoc == null || refundDoc.status === "pending");
 
-  // ── Chờ xác nhận ──────────────────────────────────────────────────────────
+
   if (order.status === "pending") {
     return (
       <>
@@ -82,7 +82,7 @@ export default function OrderActions({
     );
   }
 
-  // ── Đang vận chuyển ───────────────────────────────────────────────────────
+
   if (
     ["confirmed", "picked_up", "shipping", "out_for_delivery"].includes(
       order.status,
@@ -103,7 +103,7 @@ export default function OrderActions({
     );
   }
 
-  // ── Yêu cầu hoàn tiền (BE thường dùng order.status === "refund") ───────────
+
   if (needsSellerRefundDecision) {
     return (
       <div className="px-3 pb-3">
@@ -134,7 +134,7 @@ export default function OrderActions({
     );
   }
 
-  // ── Hoàn tiền đã duyệt ────────────────────────────────────────────────────
+
   if (order.status === "refund_approved") {
     return (
       <div className="px-3 pb-3">
@@ -148,7 +148,7 @@ export default function OrderActions({
     );
   }
 
-  // ── Các trạng thái kết thúc ────────────────────────────────────────────────
+
   if (
     [
       "delivered",

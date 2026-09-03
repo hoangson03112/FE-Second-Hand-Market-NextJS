@@ -1,6 +1,4 @@
-/**
- * Utility functions for chat operations
- */
+
 
 interface ProductInfo {
   _id: string;
@@ -26,12 +24,10 @@ interface OpenChatParams {
   order?: OrderInfo;
 }
 
-/**
- * Mở floating chat box với người dùng cụ thể
- */
+
 export function openChat({ userId, userName, userAvatar, product, order }: OpenChatParams): void {
   if (typeof window === 'undefined') return;
-  
+
   const openChatEvent = new CustomEvent('openChat', {
     detail: {
       userId,
@@ -41,13 +37,11 @@ export function openChat({ userId, userName, userAvatar, product, order }: OpenC
       order,
     }
   });
-  
+
   window.dispatchEvent(openChatEvent);
 }
 
-/**
- * Mở chat với người bán từ thông tin sản phẩm
- */
+
 export function openChatWithSeller(
   seller: {
     _id: string;
@@ -64,9 +58,7 @@ export function openChatWithSeller(
   });
 }
 
-/**
- * Mở chat với người bán kèm thông tin đơn hàng
- */
+
 export function openChatWithOrder(
   seller: {
     _id: string;

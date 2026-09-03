@@ -18,7 +18,7 @@ interface OrderMetaPanelProps {
   isLocalPickup: boolean;
 }
 
-/** One labelled row: icon, micro-caps label, then the value block. */
+
 function MetaRow({
   icon: Icon,
   label,

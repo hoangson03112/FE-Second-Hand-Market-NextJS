@@ -8,10 +8,7 @@ export interface PaginationProps {
   totalPages: number;
   onPageChange: (page: number) => void;
   className?: string;
-  /**
-   * "default" — dashboard/admin (bo tròn, token shadcn).
-   * "luxury"  — storefront editorial: góc 2px, ivory/ink/champagne, số serif.
-   */
+
   variant?: "default" | "luxury";
 }
 
@@ -24,7 +21,7 @@ function getPageWindow(current: number, total: number): (number | "...")[] {
   return [1, "...", current - 1, current, current + 1, "...", total];
 }
 
-/** Vùng cuộn thật của app là #main-scroll-container, không phải window. */
+
 function scrollToTop() {
   const container = document.getElementById("main-scroll-container");
   if (container) {
@@ -56,7 +53,7 @@ export default function Pagination({
   if (variant === "luxury") {
     const pad = (n: number) => String(n).padStart(2, "0");
 
-    /* Nút Trước/Sau — dạng chữ editorial, gạch chân hairline khi hover */
+
     const arrowClass = (disabled: boolean) =>
       cn(
         "group inline-flex items-center gap-2 py-1 text-xs font-bold uppercase tracking-[0.15em]",

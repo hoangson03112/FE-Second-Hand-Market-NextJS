@@ -22,10 +22,6 @@ export type OrderDisplayStatus =
   | "refund_approved";
 
 
-/**
- * What the seller found when they opened the returned parcel. Only `intact`
- * obliges them to refund; anything else routes the request to an admin.
- */
 export type ReturnInspectionCondition =
   | "intact"
   | "damaged"
@@ -38,7 +34,7 @@ export interface CreateOrderRequest {
     quantity: number;
   }>;
   totalAmount: number;
-  shippingAddress: string; 
+  shippingAddress: string;
   shippingMethod: string;
   sellerId: string;
   paymentMethod: string;
@@ -291,10 +287,7 @@ export interface SellerBankInfo {
 
 export type PaymentProofStatus = "pending" | "verified" | "rejected";
 
-/**
- * Biên lai chuyển khoản người mua tải lên. Tiền vào thẳng tài khoản người bán
- * nên chính người bán là người đối soát và duyệt, không phải admin.
- */
+
 export interface PaymentProof {
   _id: string;
   orderId: string;

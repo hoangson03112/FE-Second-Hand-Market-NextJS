@@ -19,7 +19,7 @@ export type OrderLite = {
   paymentMethod?: string;
 };
 
-/** Client-side guard matching the copy shown on the upload dropzone. */
+
 export const PROOF_MAX_BYTES = 10 * 1024 * 1024;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -75,9 +75,7 @@ export function usePayment() {
   const [isCancelling, setIsCancelling] = useState(false);
   const toast = useToast();
 
-  // `useToast()` builds a fresh object on every render, so referencing it
-  // directly from the fetch effect's dependency array re-ran that effect after
-  // every state update — an endless refetch loop. Read it through a ref.
+
   const toastRef = useRef(toast);
   toastRef.current = toast;
 
@@ -188,7 +186,7 @@ export function usePayment() {
     return generateVietQRImageUrl(bankInfo);
   }, [bankInfo]);
 
-  /** Copies and reports which field was copied so the UI can confirm it. */
+
   const handleCopy = useCallback(async (text: string, field?: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -217,8 +215,8 @@ export function usePayment() {
       setPaymentError("Đã hết thời gian thanh toán cho đơn này.");
       return;
     }
-    // Previously this reported success even with nothing attached, so the buyer
-    // was told the proof had been sent while no request was ever made.
+
+
     if (!proofFile) {
       setPaymentError(
         "Vui lòng tải lên ảnh chụp biên lai chuyển khoản trước khi xác nhận.",
@@ -244,9 +242,7 @@ export function usePayment() {
       form.append("proof", proofFile);
       await axiosClient.post("/bank-info/payment-proof", form);
 
-      // Tiền chuyển thẳng vào tài khoản người bán, nên người bán là người đối
-      // soát biên lai (PATCH /bank-info/verify/:orderId) — không phải admin.
-      // Người mua chỉ cần gửi biên lai lên.
+
       setPaymentSuccess(
         "Đã gửi biên lai thành công. Người bán sẽ đối soát và xác nhận đơn hàng.",
       );
@@ -274,8 +270,8 @@ export function usePayment() {
       setProofFile(null);
       return;
     }
-    // The dropzone advertises "PNG, JPG, WEBP (MAX. 10MB)" — enforce it here
-    // rather than letting the upload fail server-side.
+
+
     if (!file.type.startsWith("image/")) {
       setProofFile(null);
       setPaymentError("Chỉ chấp nhận tệp ảnh (PNG, JPG, WEBP).");

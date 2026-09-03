@@ -131,7 +131,7 @@ class WebSocketService {
 
       this.socket.on("disconnect", (reason) => {
         this.isConnecting = false;
-        // Do not set this.socket = null: the client may auto-reconnect and keeps the same instance.
+
         logger.info("Socket disconnected", { reason });
       });
     } catch (error) {

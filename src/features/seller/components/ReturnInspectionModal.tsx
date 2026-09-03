@@ -46,13 +46,7 @@ interface ReturnInspectionModalProps {
   onSubmit: (payload: ReturnInspectionPayload) => void | Promise<void>;
 }
 
-/**
- * Seller opens the returned parcel and records what they found.
- *
- * This is the gate on the refund: money only goes back when the goods come
- * back intact. Reporting any other condition hands the case to an admin
- * instead of obliging the seller to transfer.
- */
+
 export function ReturnInspectionModal({
   isOpen,
   submitting = false,
@@ -77,8 +71,8 @@ export function ReturnInspectionModal({
   };
 
   const handleSubmit = async () => {
-    // The backend enforces this too — mirrored here so the seller finds out
-    // before the upload rather than after it.
+
+
     if (!isIntact && !comment.trim()) {
       setError("Vui lòng mô tả tình trạng hàng khi báo hàng không nguyên vẹn.");
       return;

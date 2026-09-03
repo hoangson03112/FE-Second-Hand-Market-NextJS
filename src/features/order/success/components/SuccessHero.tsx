@@ -18,10 +18,7 @@ interface SuccessHeroProps {
   onConfirmReceived: () => void;
 }
 
-/**
- * The confirmation moment gets the dark ink treatment from the homepage CTA:
- * radial accent glow, fractal-noise grain, serif headline in ivory.
- */
+
 export default function SuccessHero({
   orderCode,
   orderId,

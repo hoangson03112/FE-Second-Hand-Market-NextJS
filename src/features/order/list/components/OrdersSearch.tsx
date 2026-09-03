@@ -10,11 +10,7 @@ interface OrdersSearchProps {
   resultCount: number;
 }
 
-/**
- * One field, no dropdowns. Past a dozen orders the useful question is "where is
- * the lamp I bought", not "show me every order sorted by value" — so the list
- * gets a search box and keeps the tab strip as the only other control.
- */
+
 export function OrdersSearch({
   value,
   onChange,

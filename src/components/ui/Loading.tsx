@@ -2,9 +2,6 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-/* -------------------------------------------------------------------------- */
-/* Spinner — inline, inherits the colour of its context                       */
-/* -------------------------------------------------------------------------- */
 
 type SpinnerSize = "sm" | "md" | "lg";
 
@@ -34,8 +31,8 @@ export function Spinner({
     >
       <span
         aria-hidden
-        // `border-current` so the ring follows the text colour of whatever
-        // wraps it (dark buttons, tinted cards…) instead of a fixed token.
+
+
         className={cn(
           "inline-block animate-spin rounded-full border-current border-r-transparent",
           spinnerSizeClasses[size]
@@ -50,9 +47,6 @@ export function Spinner({
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* LoadingBlock — a card-sized placeholder inside an already-rendered page    */
-/* -------------------------------------------------------------------------- */
 
 interface LoadingBlockProps extends React.HTMLAttributes<HTMLDivElement> {
   fullScreen?: boolean;
@@ -81,7 +75,7 @@ export function LoadingBlock({
   );
 }
 
-/** Backwards-compatible alias (`label` / `fullscreen` spelling). */
+
 export function Loading({
   label,
   fullscreen,
@@ -93,25 +87,19 @@ export function Loading({
   return <LoadingBlock text={label} fullScreen={fullscreen} {...rest} />;
 }
 
-/* -------------------------------------------------------------------------- */
-/* PageLoader — the route-level loader used by every `app/**\/loading.tsx`     */
-/* -------------------------------------------------------------------------- */
 
 export interface PageLoaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Small uppercase kicker above the headline. */
+
   eyebrow?: string;
-  /** Serif headline — keep it one short sentence. */
+
   title?: string;
-  /** Optional supporting line under the progress rule. */
+
   caption?: string;
-  /** Fill the whole viewport instead of the content area (~70vh). */
+
   fullScreen?: boolean;
 }
 
-/**
- * Server-component safe (no hooks, no event handlers) so it can be rendered
- * straight from a `loading.tsx` Suspense boundary.
- */
+
 export function PageLoader({
   eyebrow = "Đang tải",
   title = "Vui lòng chờ trong giây lát.",
@@ -162,9 +150,6 @@ export function PageLoader({
   );
 }
 
-/* -------------------------------------------------------------------------- */
-/* LoadingState — loading / empty / data switch for client-side queries       */
-/* -------------------------------------------------------------------------- */
 
 interface LoadingStateProps<T> {
   loading: boolean;

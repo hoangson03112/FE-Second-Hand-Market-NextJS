@@ -1,10 +1,4 @@
-/**
- * Logger Utility
- * 
- * Centralized logging system with different log levels
- * Supports console logging in development and can be extended
- * to send logs to external services in production
- */
+
 
 type LogLevel = "info" | "warn" | "error" | "debug";
 
@@ -17,24 +11,11 @@ class Logger {
 
   private log(level: LogLevel, message: string, error?: Error, context?: LogContext) {
     if (!this.isDevelopment && level === "debug") {
-      return; // Skip debug logs in production
+      return;
     }
 
     const timestamp = new Date().toISOString();
-    // Log entry structure for future logging service integration
-    // const logEntry = {
-    //   timestamp,
-    //   level,
-    //   message,
-    //   ...(error && {
-    //     error: {
-    //       name: error.name,
-    //       message: error.message,
-    //       stack: error.stack,
-    //     },
-    //   }),
-    //   ...context,
-    // };
+
 
     switch (level) {
       case "error":
@@ -73,7 +54,7 @@ class Logger {
     this.log("debug", message, undefined, context);
   }
 
-  // API-specific logging methods
+
   apiRequest(method: string, url: string, data?: unknown) {
     this.debug(`API Request: ${method} ${url}`, { method, url, data });
   }

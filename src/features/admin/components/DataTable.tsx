@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-
 import {
   Table,
   TableBody,
@@ -15,7 +14,6 @@ import { NoData } from "./NoData";
 import { cn } from "@/lib/utils";
 
 export interface DataTableColumn<T> {
-  /** Unique key for the column. */
   key: string;
   header: React.ReactNode;
   cell: (row: T, index: number) => React.ReactNode;
@@ -45,10 +43,6 @@ const ALIGN = {
   right: "text-right",
 } as const;
 
-/**
- * DataTable — generic, config-driven table wrapping shadcn `Table` with built-in
- * loading (skeleton rows) and empty ({@link NoData}) states.
- */
 export function DataTable<T>({
   columns,
   data,
@@ -63,19 +57,24 @@ export function DataTable<T>({
   className,
 }: DataTableProps<T>) {
   return (
-    <div className={cn("w-full overflow-x-auto rounded-2xl border border-border/80 bg-card shadow-xs", className)}>
+    <div
+      className={cn(
+        "w-full overflow-x-auto rounded-[2px] border border-luxury-ink/10 bg-white",
+        className
+      )}
+    >
       <Table>
         {caption && (
-          <caption className="p-3 text-sm text-muted-foreground">{caption}</caption>
+          <caption className="p-3 text-xs text-neutral-500">{caption}</caption>
         )}
         <TableHeader>
-          <TableRow className="border-b border-border/80 bg-muted/40 hover:bg-muted/40">
+          <TableRow className="border-b border-luxury-ink/10 bg-cream-50/70 hover:bg-cream-50/70">
             {columns.map((column) => (
               <TableHead
                 key={column.key}
                 style={column.width ? { width: column.width } : undefined}
                 className={cn(
-                  "py-3.5 px-4 text-xs font-bold uppercase tracking-wider text-muted-foreground/80",
+                  "py-3.5 px-4 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600",
                   column.align && ALIGN[column.align],
                   column.headerClassName
                 )}
@@ -88,10 +87,16 @@ export function DataTable<T>({
         <TableBody>
           {loading ? (
             Array.from({ length: skeletonRows }).map((_, rowIndex) => (
-              <TableRow key={`skeleton-${rowIndex}`} className="border-b border-border/60">
+              <TableRow
+                key={`skeleton-${rowIndex}`}
+                className="border-b border-luxury-ink/6"
+              >
                 {columns.map((column) => (
-                  <TableCell key={column.key} className={cn("py-3.5 px-4", column.className)}>
-                    <Skeleton className="h-4 w-full rounded-md" />
+                  <TableCell
+                    key={column.key}
+                    className={cn("py-3.5 px-4", column.className)}
+                  >
+                    <Skeleton className="h-4 w-full rounded-[2px] bg-neutral-200/60" />
                   </TableCell>
                 ))}
               </TableRow>
@@ -113,7 +118,7 @@ export function DataTable<T>({
                 key={getRowId ? getRowId(row, index) : index}
                 onClick={onRowClick ? () => onRowClick(row, index) : undefined}
                 className={cn(
-                  "border-b border-border/60 last:border-0 hover:bg-muted/30 transition-colors",
+                  "border-b border-luxury-ink/6 last:border-0 hover:bg-taupe-50/40 transition-colors",
                   onRowClick && "cursor-pointer"
                 )}
               >
@@ -121,7 +126,7 @@ export function DataTable<T>({
                   <TableCell
                     key={column.key}
                     className={cn(
-                      "py-3.5 px-4 text-sm text-foreground",
+                      "py-3.5 px-4 text-xs text-luxury-ink",
                       column.align && ALIGN[column.align],
                       column.className
                     )}

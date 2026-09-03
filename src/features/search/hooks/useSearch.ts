@@ -16,7 +16,7 @@ interface SearchResponse {
 
 export function useSearch() {
   const searchParams = useSearchParams();
-  // Accept multiple query param aliases used by manual tests and automation tools.
+
   const q =
     searchParams.get("q") ||
     searchParams.get("query") ||

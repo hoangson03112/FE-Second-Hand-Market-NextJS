@@ -65,8 +65,7 @@ export default function Payment() {
     );
   }
 
-  // Previously this returned `null`, leaving a blank white page whenever the
-  // order could not be loaded.
+
   if (!order) {
     return (
       <PageContainer

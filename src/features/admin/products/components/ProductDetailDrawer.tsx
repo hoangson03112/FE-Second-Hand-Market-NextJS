@@ -38,20 +38,20 @@ export function ProductDetailDrawer({
 
   return (
     <>
-      {/* Backdrop */}
+
       <div
         className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      {/* Drawer panel */}
+
       <aside className="fixed inset-y-0 right-0 z-50 w-full max-w-2xl flex flex-col bg-card border-l border-border shadow-2xl">
         <ProductDrawerHeader product={product} onClose={onClose} />
 
-        {/* Scrollable body */}
+
         <div className="flex-1 overflow-y-auto">
           <div className="p-5 space-y-6">
-            {/* ① AI Moderation */}
+
             {ai && (
               <AIModerationSection
                 ai={ai}
@@ -59,7 +59,7 @@ export function ProductDetailDrawer({
               />
             )}
 
-            {/* ② Description */}
+
             <section>
               <SectionTitle icon={IconListDetails} title="Mô tả sản phẩm" />
               <div className="rounded-xl border border-border/60 bg-muted/20 px-4 py-3">
@@ -71,7 +71,7 @@ export function ProductDetailDrawer({
               </div>
             </section>
 
-            {/* ③ Attributes */}
+
             {(product.attributes?.length ?? 0) > 0 && (
               <section>
                 <SectionTitle
@@ -91,7 +91,7 @@ export function ProductDetailDrawer({
               </section>
             )}
 
-            {/* ④ Images */}
+
             {(product.images?.length ?? 0) > 0 && (
               <section>
                 <SectionTitle
@@ -126,7 +126,7 @@ export function ProductDetailDrawer({
               </section>
             )}
 
-            {/* ⑤ Pickup address */}
+
             {product.address && (
               <section>
                 <SectionTitle icon={IconMapPin} title="Địa chỉ lấy hàng" />
@@ -142,7 +142,7 @@ export function ProductDetailDrawer({
               </section>
             )}
 
-            {/* ⑥ Seller info */}
+
             {product.seller && (
               <SellerSection
                 seller={product.seller}

@@ -4,9 +4,7 @@ import { IconBan, IconLockOpen } from "@tabler/icons-react";
 
 import type { AdminAccount } from "@/types/admin";
 import { format } from "@/utils/format/date";
-import { ToneBadge, type StatusTone } from "@/components/ui";
 import { DataTable, type DataTableColumn } from "@/features/admin/components";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const ROLE_LABELS: Record<string, string> = {
@@ -21,16 +19,16 @@ const STATUS_LABELS: Record<string, string> = {
   banned: "Bị khóa",
 };
 
-const ROLE_TONES: Record<string, StatusTone> = {
-  admin: "default",
-  seller: "info",
-  buyer: "muted",
+const ROLE_BADGE: Record<string, string> = {
+  admin: "bg-cream-50 text-luxury-ink border border-luxury-ink/10",
+  seller: "bg-cream-50 text-accent border border-accent/30",
+  buyer: "bg-neutral-100 text-neutral-600 border border-neutral-200",
 };
 
-const STATUS_TONES: Record<string, StatusTone> = {
-  active: "success",
-  inactive: "warning",
-  banned: "error",
+const STATUS_BADGE: Record<string, string> = {
+  active: "bg-cream-50 text-accent border border-accent/30",
+  inactive: "bg-amber-50 text-amber-700 border border-amber-200",
+  banned: "bg-rose-50 text-rose-700 border border-rose-200",
 };
 
 interface UsersTableProps {
@@ -56,24 +54,26 @@ export default function UsersTable({
         const name = acc.fullName ?? acc.email;
         return (
           <div className="flex items-center gap-3">
-            <Avatar className="size-9">
-              <AvatarImage src={acc.avatar?.url} alt={name} />
-              <AvatarFallback>{name.charAt(0).toUpperCase()}</AvatarFallback>
+            <Avatar className="size-8 rounded-[2px] border border-luxury-ink/10">
+              <AvatarImage src={acc.avatar?.url} alt={name} className="rounded-[2px] object-cover" />
+              <AvatarFallback className="rounded-[2px] bg-cream-50 text-luxury-ink font-bold text-xs">
+                {name.charAt(0).toUpperCase()}
+              </AvatarFallback>
             </Avatar>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <span className="max-w-[160px] truncate font-medium text-foreground sm:max-w-[220px]">
+                <span className="max-w-[160px] truncate font-semibold text-luxury-ink text-xs sm:max-w-[220px]">
                   {acc.fullName ?? "—"}
                 </span>
-                <ToneBadge
-                  tone={ROLE_TONES[acc.role ?? "buyer"] ?? "muted"}
-                  dot={false}
-                  className="text-2xs"
+                <span
+                  className={`inline-flex px-2 py-0.5 rounded-[2px] text-2xs font-bold uppercase tracking-[0.1em] ${
+                    ROLE_BADGE[acc.role ?? "buyer"] ?? ROLE_BADGE.buyer
+                  }`}
                 >
                   {ROLE_LABELS[acc.role ?? "buyer"] ?? acc.role}
-                </ToneBadge>
+                </span>
               </div>
-              <p className="max-w-[220px] truncate text-xs text-muted-foreground">
+              <p className="max-w-[220px] truncate text-xs text-neutral-400">
                 {acc.email}
               </p>
             </div>
@@ -84,19 +84,19 @@ export default function UsersTable({
     {
       key: "email",
       header: "Email",
-      cell: (acc) => <span className="text-muted-foreground">{acc.email}</span>,
+      cell: (acc) => <span className="text-neutral-500 text-xs">{acc.email}</span>,
     },
     {
       key: "phone",
       header: "Số điện thoại",
-      className: "hidden text-muted-foreground sm:table-cell",
+      className: "hidden text-neutral-500 text-xs sm:table-cell",
       headerClassName: "hidden sm:table-cell",
       cell: (acc) => acc.phoneNumber ?? "—",
     },
     {
       key: "createdAt",
       header: "Ngày tạo",
-      className: "hidden text-xs text-muted-foreground md:table-cell",
+      className: "hidden text-xs text-neutral-500 md:table-cell",
       headerClassName: "hidden md:table-cell",
       cell: (acc) => (acc.createdAt ? format(acc.createdAt) : "—"),
     },
@@ -106,9 +106,13 @@ export default function UsersTable({
       className: "hidden sm:table-cell",
       headerClassName: "hidden sm:table-cell",
       cell: (acc) => (
-        <ToneBadge tone={STATUS_TONES[acc.status ?? "active"] ?? "muted"}>
+        <span
+          className={`inline-flex px-2.5 py-0.5 rounded-[2px] text-2xs font-bold uppercase tracking-[0.1em] ${
+            STATUS_BADGE[acc.status ?? "active"] ?? STATUS_BADGE.active
+          }`}
+        >
           {STATUS_LABELS[acc.status ?? "active"] ?? acc.status ?? "—"}
-        </ToneBadge>
+        </span>
       ),
     },
   ];
@@ -120,29 +124,27 @@ export default function UsersTable({
       align: "right",
       cell: (acc) =>
         acc.status === "banned" ? (
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
+            type="button"
             disabled={isUpdating}
             onClick={() => onUnban?.(acc)}
-            className="text-emerald-600 hover:text-emerald-700"
+            className="inline-flex items-center gap-1.5 rounded-[2px] border border-accent/30 bg-white px-3 py-1.5 text-2xs font-bold uppercase tracking-[0.12em] text-accent hover:bg-cream-50 transition-colors disabled:opacity-50"
           >
-            <IconLockOpen className="size-4 mr-2" />
+            <IconLockOpen className="size-3.5" />
             Mở khóa
-          </Button>
+          </button>
         ) : acc.role !== "admin" ? (
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
+            type="button"
             disabled={isUpdating}
             onClick={() => onBan?.(acc)}
-            className="text-destructive hover:text-destructive"
+            className="inline-flex items-center gap-1.5 rounded-[2px] border border-rose-200 bg-white px-3 py-1.5 text-2xs font-bold uppercase tracking-[0.12em] text-rose-700 hover:bg-rose-50 transition-colors disabled:opacity-50"
           >
-            <IconBan className="size-4 mr-2" />
+            <IconBan className="size-3.5" />
             Khóa
-          </Button>
+          </button>
         ) : (
-          <span className="text-xs text-muted-foreground">—</span>
+          <span className="text-2xs text-neutral-400">—</span>
         ),
     });
   }

@@ -30,7 +30,7 @@ export function ProductDrawerHeader({ product, onClose }: ProductDrawerHeaderPro
 
   return (
     <header className="shrink-0 border-b border-border bg-card">
-      {/* Top bar */}
+
       <div className="flex items-center justify-between px-5 py-3 border-b border-border/50">
         <div className="flex items-center gap-2">
           <span
@@ -70,10 +70,10 @@ export function ProductDrawerHeader({ product, onClose }: ProductDrawerHeaderPro
         </div>
       </div>
 
-      {/* Product hero */}
+
       <div className="px-5 py-4">
         <div className="flex gap-4">
-          {/* Thumbnail */}
+
           <div className="w-20 h-20 rounded-xl border border-border bg-muted overflow-hidden shrink-0">
             {product.avatar?.url ? (
               <Image
@@ -90,13 +90,13 @@ export function ProductDrawerHeader({ product, onClose }: ProductDrawerHeaderPro
             )}
           </div>
 
-          {/* Info */}
+
           <div className="min-w-0 flex-1">
             <h2 className="text-sm font-bold text-foreground leading-snug mb-2 line-clamp-2">
               {product.name}
             </h2>
 
-            {/* Price + condition */}
+
             <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
               <span className="px-2.5 py-1 rounded-lg bg-primary text-primary-foreground text-sm font-bold leading-none">
                 {formatPrice(product.price)}
@@ -108,7 +108,7 @@ export function ProductDrawerHeader({ product, onClose }: ProductDrawerHeaderPro
               )}
             </div>
 
-            {/* Stats */}
+
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-muted text-xs text-muted-foreground font-medium">
                 <IconPackage className="w-3 h-3" /> {product.stock} tồn kho
@@ -127,7 +127,7 @@ export function ProductDrawerHeader({ product, onClose }: ProductDrawerHeaderPro
           </div>
         </div>
 
-        {/* Timestamps */}
+
         <div className="mt-3 flex items-center gap-4 text-[11px] text-muted-foreground pt-3 border-t border-border/40">
           <span className="flex items-center gap-1">
             <IconCalendar className="w-3 h-3" />

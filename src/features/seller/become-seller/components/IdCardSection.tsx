@@ -12,7 +12,7 @@ interface IdCardSectionProps {
   ) => (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-/* ── Dropzone card với preview ảnh — thay input file mặc định khó dùng ── */
+
 function FileDropzone({
   file,
   label,
@@ -53,7 +53,7 @@ function FileDropzone({
       >
         {previewUrl ? (
           <>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+
             <img
               src={previewUrl}
               alt={label}

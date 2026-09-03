@@ -1,7 +1,7 @@
 import { REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER } from "@/constants/refund";
 import type { NoticeTone } from "@/features/order/components";
 
-/** Refund lifecycle, phrased for the seller who has to act on it. */
+
 export const REFUND_REQUEST_STATUS_LABELS: Record<string, string> = {
   pending: "Chờ bạn xét duyệt",
   approved: "Đã chấp thuận (chờ tạo / gửi hàng hoàn)",
@@ -16,7 +16,7 @@ export const REFUND_REQUEST_STATUS_LABELS: Record<string, string> = {
   disputed: "Đang tranh chấp",
 };
 
-/** Short form used inside the list rows, where there is no space for a sentence. */
+
 export const REFUND_PHASE_SHORT_LABELS: Record<string, string> = {
   pending: "Chờ xét duyệt",
   approved: "Chờ gửi hàng hoàn",
@@ -37,10 +37,7 @@ export interface SellerRefundTodo {
   description: string;
 }
 
-/**
- * `order.status` usually stays "refund" for the whole return flow — the step the
- * seller is actually on lives on the Refund document, so both are read together.
- */
+
 export function getSellerRefundTodo(
   orderStatus: string,
   refundStatus: string | null | undefined,

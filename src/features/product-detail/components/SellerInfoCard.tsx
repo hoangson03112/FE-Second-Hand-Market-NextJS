@@ -28,7 +28,7 @@ export default function SellerInfoCard({
 
   return (
     <div className="p-5 rounded-[2px] border border-luxury-ink/10 bg-taupe-50/50 mb-6">
-      <h3 className="text-xs font-bold uppercase tracking-[0.15em] text-charcoal-400 mb-4">
+      <h3 className="text-xs font-medium uppercase tracking-[0.15em] text-charcoal-400 mb-4">
         Thông tin người bán
       </h3>
       <div className="flex items-start gap-4">

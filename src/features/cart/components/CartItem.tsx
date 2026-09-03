@@ -81,7 +81,7 @@ export default function CartItem({
         )}
       </Link>
 
-      {/* Mobile layout */}
+
       <div className="flex-1 min-w-0 flex flex-col lg:hidden">
         <Link
           href={productHref}
@@ -148,7 +148,7 @@ export default function CartItem({
         </div>
       </div>
 
-      {/* Desktop layout */}
+
       <div className="hidden lg:flex flex-1 items-center gap-4">
         <Link
           href={productHref}

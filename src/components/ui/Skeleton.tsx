@@ -4,16 +4,13 @@ import { cn } from "@/lib/utils";
 
 export type SkeletonProps = React.HTMLAttributes<HTMLDivElement>;
 
-/**
- * One placeholder bone. Defaults to the project's editorial look
- * (2px corners, ink at 8%) — the same recipe feature-level skeletons use.
- */
+
 export function Skeleton({ className, ...props }: SkeletonProps) {
   return (
     <div
       aria-hidden
-      // `bg-muted` compiles to nothing here (no `--color-muted` token), which
-      // left every skeleton invisible unless the caller passed its own colour.
+
+
       className={cn("animate-pulse rounded-[2px] bg-luxury-ink/8", className)}
       {...props}
     />
@@ -93,18 +90,15 @@ export function TableSkeleton({
 }
 
 interface GridSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** How many cards to lay out. */
+
   count?: number;
-  /** Aspect ratio of the media area of each card. */
+
   aspect?: string;
-  /** Column classes — override to match the real grid of the page. */
+
   columnsClassName?: string;
 }
 
-/**
- * Catalogue grid: the shape a product listing takes while its query resolves
- * (all products, search results, a category page).
- */
+
 export function GridSkeleton({
   count = 8,
   aspect = "aspect-[3/4]",
@@ -137,14 +131,11 @@ export function GridSkeleton({
 
 interface ListSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   rows?: number;
-  /** Square media block on the left of each row. */
+
   withMedia?: boolean;
 }
 
-/**
- * Stacked record cards: the shape a list of orders / requests takes while its
- * query resolves.
- */
+
 export function ListSkeleton({
   rows = 4,
   withMedia = true,

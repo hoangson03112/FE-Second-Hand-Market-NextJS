@@ -4,28 +4,19 @@ import { Eyebrow } from "./Eyebrow";
 interface PanelProps {
   eyebrow?: string;
   title?: React.ReactNode;
-  /** Sits under the title, for a one-line hint about the panel. */
+
   description?: React.ReactNode;
-  /** Rendered at the far end of the panel header. */
+
   aside?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
   bodyClassName?: string;
-  /**
-   * `flush` drops the body padding for panels that render their own rows or
-   * divided lists and need the dividers to reach the panel edge.
-   */
+
   padding?: "default" | "flush";
   id?: string;
 }
 
-/**
- * The one surface shape shared by checkout and order detail: white sheet,
- * hairline ink border, 2px corners, eyebrow + serif title in a bordered header.
- *
- * Both screens render the same object at different stages of its life, so they
- * are built from this rather than from two lookalike card styles.
- */
+
 export function Panel({
   eyebrow,
   title,
@@ -50,7 +41,7 @@ export function Panel({
           <div className="min-w-0">
             {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
             {title ? (
-              <h2
+              <h2
                 className={cn(
 "font-droid-serif",
                   "text-lg tracking-tight text-luxury-ink",

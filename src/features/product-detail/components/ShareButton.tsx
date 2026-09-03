@@ -104,13 +104,13 @@ export default function ShareButton({
 
       {isOpen && (
         <>
-          {/* Backdrop */}
+
           <div
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
 
-          {/* Dropdown */}
+
           <div className="absolute right-0 mt-2 w-64 bg-card rounded-xl shadow-2xl border border-border z-50 overflow-hidden">
             <div className="p-3 border-b border-border flex items-center justify-between">
               <h3 className="text-sm font-bold text-foreground">
@@ -126,7 +126,7 @@ export default function ShareButton({
             </div>
 
             <div className="p-2">
-              {/* Native share (mobile) */}
+
               {isNativeShareSupported() && (
                 <button
                   onClick={handleNativeShare}
@@ -141,7 +141,7 @@ export default function ShareButton({
                 </button>
               )}
 
-              {/* Social platforms */}
+
               {shareOptions.map((option) => (
                 <button
                   key={option.name}

@@ -42,25 +42,25 @@ export function useBecomeSeller() {
   const [productLimit, setProductLimit] = useState<SellerProductLimitResponse | null>(null);
   const [requiresVerification, setRequiresVerification] = useState(false);
 
-  // Check seller request status and product limit on mount
+
   useEffect(() => {
     const checkStatus = async () => {
       try {
         setIsCheckingStatus(true);
-        
-        // Check request status
+
+
         const statusResponse = await SellerService.getRequestStatus();
         setHasRequest(statusResponse.hasRequest);
         setRequestStatus(statusResponse.status);
-        
-        // Check product limit (only if not already a seller)
+
+
         if (statusResponse.status !== "approved") {
           try {
             const limitResponse = await SellerService.getProductLimit();
             setProductLimit(limitResponse);
             setRequiresVerification(limitResponse.requiresVerification);
-            
-            // Show info message if approaching limit
+
+
             if (limitResponse.requiresVerification) {
               setApiError(
                 `Bạn đã đăng ${limitResponse.totalProducts}/${limitResponse.limit} sản phẩm. ` +
@@ -73,8 +73,8 @@ export function useBecomeSeller() {
             // Don't block if limit check fails
           }
         }
-        
-        // Show status messages
+
+
         if (statusResponse.hasRequest && statusResponse.status === "pending") {
           setApiError("Bạn đã gửi yêu cầu trở thành seller. Vui lòng chờ phê duyệt.");
         } else if (statusResponse.hasRequest && statusResponse.status === "approved") {
@@ -130,7 +130,7 @@ export function useBecomeSeller() {
       setApiError("");
       setErrors({});
 
-      // Check if user already has a request
+
       if (hasRequest) {
         if (requestStatus === "pending") {
           setApiError("Bạn đã gửi yêu cầu trở thành seller. Vui lòng chờ phê duyệt.");
@@ -147,7 +147,7 @@ export function useBecomeSeller() {
         }
       }
 
-      // Check product limit - if requires verification, allow but show info
+
       if (requiresVerification && productLimit) {
         // Still allow submission, but user should know they need verification
         // The backend should handle the limit check
@@ -199,7 +199,7 @@ export function useBecomeSeller() {
       } catch (err: unknown) {
         const ax = err as { response?: { data?: { message?: string } } };
         const errorMessage = ax.response?.data?.message || "Có lỗi xảy ra, vui lòng thử lại";
-        // Check if error is about duplicate request
+
         if (errorMessage.toLowerCase().includes("đã gửi") || errorMessage.toLowerCase().includes("already")) {
           setHasRequest(true);
           setRequestStatus("pending");

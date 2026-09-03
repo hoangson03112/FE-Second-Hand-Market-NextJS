@@ -57,8 +57,8 @@ export default function MyProducts() {
   const handlePageChange = useCallback(
     (nextPage: number) => {
       setPage(nextPage);
-      // Điều khiển phân trang nằm dưới cùng grid, nên đưa người dùng về đầu
-      // danh sách khi trang mới được tải.
+
+
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
     [setPage],
@@ -74,8 +74,8 @@ export default function MyProducts() {
     setRequestingReviewId(productId);
     await _requestReview(productId);
     setRequestingReviewId(null);
-    // Optimistic update: đổi status ngay lập tức trên mọi trang đang cache,
-    // rồi làm mới nền (đổi status có thể khiến tin rời khỏi tab hiện tại).
+
+
     queryClient.setQueriesData<MyListingsResponse>(
       { queryKey: MY_PRODUCTS_QUERY_KEY },
       (old) => {
@@ -113,9 +113,7 @@ export default function MyProducts() {
         onViewModeChange={setViewMode}
       />
 
-      {/* The filter strip is the one control that must stay reachable while the
-          grid scrolls, so it sticks on its own rather than dragging the
-          editorial header along with it. */}
+
       <div className="sticky top-0 z-20 border-b border-luxury-ink/10 bg-luxury-ivory/95 backdrop-blur-md">
         <ProductFilterTabs
           stats={stats}
@@ -165,8 +163,8 @@ export default function MyProducts() {
             <div
               className={cn(
                 revealClass,
-                // Trang cũ vẫn hiển thị trong lúc trang mới đang về — làm mờ
-                // nhẹ để người dùng biết dữ liệu đang được tải.
+
+
                 isFetching ? "opacity-50" : "opacity-100",
                 viewMode === "grid"
                   ? "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"

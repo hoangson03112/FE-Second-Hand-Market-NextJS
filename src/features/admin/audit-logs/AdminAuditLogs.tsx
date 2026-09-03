@@ -69,8 +69,8 @@ export default function AdminAuditLogs() {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <IconLoader2 className="h-9 w-9 animate-spin text-primary" />
-          <p className="text-sm font-medium text-muted-foreground">
+          <IconLoader2 className="h-9 w-9 animate-spin text-luxury-ink" />
+          <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
             Đang tải nhật ký thao tác...
           </p>
         </div>
@@ -90,22 +90,22 @@ export default function AdminAuditLogs() {
   return (
     <div className="space-y-6">
       <PageHeader
+        eyebrow="Kiểm soát bảo mật"
         title="Nhật ký thao tác (Audit Logs)"
         description="Theo dõi toàn bộ lịch sử can thiệp, khóa/mở tài khoản, duyệt hồ sơ và duyệt hoàn tiền của ban quản trị."
         badge={
-          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-[2px] text-2xs font-bold uppercase tracking-[0.16em] bg-cream-50 text-luxury-ink border border-luxury-ink/10">
             {totalItems} bản ghi
           </span>
         }
       />
 
-      {/* Filter toolbar card */}
-      <div className="rounded-2xl border border-border/80 bg-card p-4 sm:p-5 shadow-xs space-y-3">
+      <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-4 sm:p-5 space-y-3">
         <div className="flex flex-wrap items-center gap-2.5">
           <select
             value={action}
             onChange={(e) => setAction(e.target.value)}
-            className="rounded-xl border border-border/80 bg-background px-3 py-2 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+            className="rounded-[2px] border border-luxury-ink/15 bg-white px-3 py-2 text-2xs font-bold uppercase tracking-[0.1em] text-luxury-ink focus:outline-none focus:border-luxury-ink"
           >
             {ACTION_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>
@@ -117,7 +117,7 @@ export default function AdminAuditLogs() {
           <select
             value={targetType}
             onChange={(e) => setTargetType(e.target.value)}
-            className="rounded-xl border border-border/80 bg-background px-3 py-2 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+            className="rounded-[2px] border border-luxury-ink/15 bg-white px-3 py-2 text-2xs font-bold uppercase tracking-[0.1em] text-luxury-ink focus:outline-none focus:border-luxury-ink"
           >
             {TARGET_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>
@@ -126,20 +126,20 @@ export default function AdminAuditLogs() {
             ))}
           </select>
 
-          <div className="flex items-center gap-2 text-xs text-muted-foreground sm:ml-auto">
-            <IconCalendar className="w-3.5 h-3.5" />
+          <div className="flex items-center gap-2 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500 sm:ml-auto">
+            <IconCalendar className="w-3.5 h-3.5 text-neutral-500" />
             <input
               type="date"
               value={startDate ?? ""}
               onChange={(e) => setDateRange(e.target.value || undefined, endDate)}
-              className="rounded-xl border border-border/80 bg-background px-2.5 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              className="rounded-[2px] border border-luxury-ink/15 bg-white px-2.5 py-1.5 text-xs text-luxury-ink focus:outline-none focus:border-luxury-ink"
             />
-            <span>đến</span>
+            <span className="lowercase font-normal">đến</span>
             <input
               type="date"
               value={endDate ?? ""}
               onChange={(e) => setDateRange(startDate, e.target.value || undefined)}
-              className="rounded-xl border border-border/80 bg-background px-2.5 py-1.5 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              className="rounded-[2px] border border-luxury-ink/15 bg-white px-2.5 py-1.5 text-xs text-luxury-ink focus:outline-none focus:border-luxury-ink"
             />
           </div>
         </div>
@@ -147,33 +147,33 @@ export default function AdminAuditLogs() {
 
       {logs.length === 0 ? (
         <NoData
-          icon={<IconFileText className="w-10 h-10 text-muted-foreground" />}
+          icon={<IconFileText className="w-10 h-10 text-neutral-400" />}
           title="Không có bản ghi nào phù hợp"
           description="Thử thay đổi loại hành động hoặc khoảng ngày tra cứu."
         />
       ) : (
         <>
-          <div className="rounded-2xl border border-border/80 bg-card overflow-hidden shadow-xs">
+          <div className="rounded-[2px] border border-luxury-ink/10 bg-white overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border/80 bg-muted/40 text-left">
-                    <th className="px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                  <tr className="border-b border-luxury-ink/10 bg-cream-50/70 text-left">
+                    <th className="px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
                       Thời gian
                     </th>
-                    <th className="px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                    <th className="px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
                       Admin thực hiện
                     </th>
-                    <th className="px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                    <th className="px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
                       Hành động
                     </th>
-                    <th className="px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                    <th className="px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
                       Đối tượng
                     </th>
-                    <th className="px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                    <th className="px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
                       Chi tiết metadata
                     </th>
-                    <th className="px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-muted-foreground/80">
+                    <th className="px-4 py-3.5 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
                       Địa chỉ IP
                     </th>
                   </tr>
@@ -182,38 +182,38 @@ export default function AdminAuditLogs() {
                   {logs.map((log) => (
                     <tr
                       key={log._id}
-                      className="border-b border-border/60 last:border-0 hover:bg-muted/30 transition-colors"
+                      className="border-b border-luxury-ink/6 last:border-0 hover:bg-taupe-50/40 transition-colors"
                     >
-                      <td className="px-4 py-3.5 text-xs text-muted-foreground whitespace-nowrap">
+                      <td className="px-4 py-3.5 text-xs text-neutral-500 whitespace-nowrap">
                         {format(log.createdAt)}
                       </td>
-                      <td className="px-4 py-3.5 text-foreground">
-                        <div className="font-semibold text-xs text-foreground">
+                      <td className="px-4 py-3.5 text-luxury-ink">
+                        <div className="font-semibold text-xs text-luxury-ink">
                           {log.adminId?.fullName ?? "—"}
                         </div>
-                        <div className="text-[11px] text-muted-foreground">
+                        <div className="text-[11px] text-neutral-400">
                           {log.adminId?.email ?? ""}
                         </div>
                       </td>
                       <td className="px-4 py-3.5">
                         <span
-                          className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold border ${getActionBadgeStyle(
+                          className={`inline-flex px-2.5 py-0.5 rounded-[2px] text-2xs font-bold uppercase tracking-[0.1em] border ${getActionBadgeStyle(
                             log.action
                           )}`}
                         >
                           {log.action}
                         </span>
                       </td>
-                      <td className="px-4 py-3.5 text-foreground text-xs">
-                        <span className="font-medium">{log.targetType}</span> ·{" "}
-                        <span className="font-mono text-muted-foreground text-[11px]">
+                      <td className="px-4 py-3.5 text-luxury-ink text-xs">
+                        <span className="font-semibold">{log.targetType}</span> ·{" "}
+                        <span className="font-mono text-neutral-500 text-[11px]">
                           {log.targetId}
                         </span>
                       </td>
-                      <td className="px-4 py-3.5 text-xs text-muted-foreground max-w-xs truncate">
+                      <td className="px-4 py-3.5 text-xs text-neutral-500 max-w-xs truncate">
                         {renderMetadata(log.metadata)}
                       </td>
-                      <td className="px-4 py-3.5 text-xs font-mono text-muted-foreground">
+                      <td className="px-4 py-3.5 text-xs font-mono text-neutral-500">
                         {log.ip ?? "—"}
                       </td>
                     </tr>

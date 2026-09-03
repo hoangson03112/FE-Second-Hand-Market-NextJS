@@ -10,15 +10,10 @@ import type {
 } from "@/types/address";
 import { logger } from "@/infrastructure/monitoring/logger";
 
-/**
- * Address Service - Manages user addresses and GHN location data
- */
-export const AddressService = {
-  // ========== USER ADDRESSES (Internal API) ==========
 
-  /**
-   * Get addresses of the current user, optionally filtered by type
-   */
+export const AddressService = {
+
+
   getAddresses: async (type?: "delivery" | "pickup"): Promise<Address[]> => {
     try {
       const response = await axiosClient.get("/addresses", {
@@ -31,16 +26,12 @@ export const AddressService = {
     }
   },
 
-  /**
-   * Create a new address
-   */
+
   createAddress: async (data: CreateAddressRequest): Promise<Address> => {
     return axiosClient.post("/addresses/create", data);
   },
 
-  /**
-   * Update an address
-   */
+
   updateAddress: async (
     id: string,
     data: CreateAddressRequest
@@ -124,7 +115,7 @@ export const AddressService = {
       const normalizedQuery = query
         .toLowerCase()
         .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, ""); // Remove Vietnamese accents
+        .replace(/[\u0300-\u036f]/g, "");
 
       return provinces.filter((province) => {
         const normalizedName = province.ProvinceName.toLowerCase()

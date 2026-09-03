@@ -20,7 +20,7 @@ export interface CreateProductPayload {
 }
 
 export interface UpdateProductPayload extends CreateProductPayload {
-  // Để giữ lại ảnh/video cũ khi update
+
   existingImages?: Array<{
     url: string;
     publicId: string;

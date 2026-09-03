@@ -33,7 +33,7 @@ export default function BecomeSellerScreen() {
   if (account.role === "seller") {
     return (
       <div className="min-h-screen bg-background">
-        {/* Top bar */}
+
         <div className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
           <div className="max-w-8xl mx-auto w-full px-4 sm:px-6 h-14 flex items-center gap-3">
             <button

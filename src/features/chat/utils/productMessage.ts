@@ -33,7 +33,6 @@ export function buildProductMessage({
   return `Xin chào! Tôi quan tâm đến sản phẩm:\n\n📦 ${name}\n💰 ${priceText}\n🖼️ ${image || ""}\n🔗 ${url}`;
 }
 
-// ─── Order message ────────────────────────────────────────────────────────────
 
 export interface BuildOrderMessageInput {
   orderId: string;
@@ -62,7 +61,6 @@ export function buildOrderMessage({
   return `Xin chào! Tôi muốn hỏi về đơn hàng:\n\n🛍 Mã đơn: #${orderId.slice(-8).toUpperCase()}${orderCode}\n📋 Trạng thái: ${statusLabel}\n📦 Sản phẩm:\n${productLines}\n💰 Tổng: ${fmt(totalAmount)}`;
 }
 
-// ─── Parse product message ────────────────────────────────────────────────────
 
 export function parseProductMessage(text: string): ParsedProductMessage {
   const match = text.match(PRODUCT_MESSAGE_REGEX);

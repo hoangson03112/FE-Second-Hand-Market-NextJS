@@ -19,10 +19,7 @@ interface OrderTabsProps {
   tabCounts: Record<string, number>;
 }
 
-/**
- * Hairline 2px chips with a serif count — the same tab language as the buyer
- * order list, so both sides of a transaction are navigated the same way.
- */
+
 export default function OrderTabs({
   activeTab,
   onTabChange,
@@ -83,7 +80,7 @@ export default function OrderTabs({
               </button>
             );
           })}
-          {/* Trailing spacer — ensures the last tab is never clipped */}
+
           <div className="w-2 shrink-0" aria-hidden="true" />
         </div>
       </div>

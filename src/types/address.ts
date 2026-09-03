@@ -3,16 +3,16 @@ export interface Address {
   fullName: string;
   phoneNumber: string;
   specificAddress?: string;
-  
-  // Raw IDs from backend
+
+
   provinceId?: string;
   districtId?: string;
   wardCode?: string;
-  
+
   province?: string;
   district?: string;
   ward?: string;
-  address?: string; 
+  address?: string;
   isDefault?: boolean;
   type?: "delivery" | "pickup";
 }
@@ -34,10 +34,6 @@ export interface AddressResponse {
 }
 
 
-
-/**
- * GHN API Response Wrapper
- */
 export interface GHNResponse<T> {
   code: number;
   message: string;
@@ -64,9 +60,7 @@ export interface Province {
   UpdatedDate: string;
 }
 
-/**
- * GHN District (Quận/Huyện)
- */
+
 export interface District {
   DistrictID: number;
   ProvinceID: number;
@@ -83,9 +77,7 @@ export interface District {
   Status?: number;
 }
 
-/**
- * GHN Ward (Phường/Xã)
- */
+
 export interface Ward {
   WardCode: string;
   DistrictID: number;
@@ -102,66 +94,54 @@ export interface Ward {
   Status?: number;
 }
 
-// ========== GHN SHIPPING FEE & TIME ==========
 
-/**
- * GHN Calculate Shipping Fee Request
- */
 export interface CalculateShippingFeeRequest {
   from_district_id: number;
   from_ward_code?: string;
   to_district_id: number;
   to_ward_code: string;
-  weight: number; // grams
-  length?: number; // cm
-  width?: number; // cm
-  height?: number; // cm
-  insurance_value?: number; // VND
-  service_type_id?: number; // 2 = Express, 5 = Standard
+  weight: number;
+  length?: number;
+  width?: number;
+  height?: number;
+  insurance_value?: number;
+  service_type_id?: number;
   coupon?: string;
 }
 
-/**
- * GHN Shipping Fee Response
- */
+
 export interface ShippingFeeData {
-  total: number; // Total shipping fee
-  service_fee: number; // Base service fee
-  insurance_fee: number; // Insurance fee
-  pick_station_fee: number; // Pick station fee
-  coupon_value: number; // Discount from coupon
-  r2s_fee: number; // Return to sender fee
-  return_again: number; // Return again fee
-  document_return: number; // Document return fee
-  double_check: number; // Double check fee
-  cod_fee: number; // COD fee
-  pick_remote_areas_fee: number; // Remote area pickup fee
-  deliver_remote_areas_fee: number; // Remote area delivery fee
-  cod_failed_fee: number; // COD failed fee
+  total: number;
+  service_fee: number;
+  insurance_fee: number;
+  pick_station_fee: number;
+  coupon_value: number;
+  r2s_fee: number;
+  return_again: number;
+  document_return: number;
+  double_check: number;
+  cod_fee: number;
+  pick_remote_areas_fee: number;
+  deliver_remote_areas_fee: number;
+  cod_failed_fee: number;
 }
 
-/**
- * GHN Expected Delivery Time Request
- */
+
 export interface CalculateExpectedDeliveryTimeRequest {
   from_district_id: number;
-  from_ward_code: string; // Required: Ward Code pick up parcel
+  from_ward_code: string;
   to_district_id: number;
-  to_ward_code: string; // Required: Ward Code drop off parcels
+  to_ward_code: string;
   service_id: number;
 }
 
-/**
- * GHN Expected Delivery Time Response
- */
+
 export interface ExpectedDeliveryTimeData {
-  leadtime: number; // Estimated delivery time in seconds
-  order_date: number; // Order timestamp
+  leadtime: number;
+  order_date: number;
 }
 
-/**
- * GHN Available Service (from available-services API)
- */
+
 export interface GHNAvailableService {
   service_id: number;
   short_name: string;
@@ -169,30 +149,26 @@ export interface GHNAvailableService {
   service_name?: string;
 }
 
-/**
- * Combined Shipping Info (for frontend use)
- */
+
 export interface ShippingInfo {
   fee: number;
   estimatedDays: number;
   estimatedDate: string;
 }
 
-/**
- * Shipping Service Option with pricing (for user selection)
- */
+
 export interface ShippingServiceOption {
   service_id: number;
   service_type_id: number;
-  short_name: string; // e.g., "Express", "Standard"
-  service_name?: string; // Full name from GHN
+  short_name: string;
+  service_name?: string;
   fee: number;
-  // Fee breakdown from GHN (optional but useful for order creation)
-  shippingFee?: number; // base service fee
+
+  shippingFee?: number;
   insuranceFee?: number;
   codFee?: number;
-  totalShippingFee?: number; // usually equals fee
-  // Raw expected delivery time (ISO) for saving to DB
+  totalShippingFee?: number;
+
   expectedDeliveryTime?: string;
   estimatedDays: number;
   estimatedDate: string;

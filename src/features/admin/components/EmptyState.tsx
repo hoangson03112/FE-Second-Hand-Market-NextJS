@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { cn } from "@/lib/utils";
 
 export interface EmptyStateProps {
@@ -11,10 +10,6 @@ export interface EmptyStateProps {
   size?: "sm" | "md";
 }
 
-/**
- * EmptyState — centered placeholder for empty/blank content areas.
- * Base for {@link NoData} and {@link ErrorState}.
- */
 export function EmptyState({
   icon,
   title,
@@ -26,7 +21,7 @@ export function EmptyState({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center text-center",
+        "flex flex-col items-center justify-center text-center rounded-[2px] border border-dashed border-luxury-ink/15 bg-white",
         size === "sm" ? "px-4 py-8" : "px-6 py-14",
         className,
       )}
@@ -34,8 +29,8 @@ export function EmptyState({
       {icon && (
         <div
           className={cn(
-            "mb-4 flex items-center justify-center rounded-full bg-muted text-muted-foreground",
-            size === "sm" ? "size-12 [&_svg]:size-6" : "size-16 [&_svg]:size-8",
+            "mb-4 flex items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-cream-50 text-luxury-ink",
+            size === "sm" ? "size-10 [&_svg]:size-5" : "size-14 [&_svg]:size-6",
           )}
         >
           {icon}
@@ -43,14 +38,14 @@ export function EmptyState({
       )}
       <h3
         className={cn(
-          "font-bold text-foreground",
+          "font-droid-serif font-bold text-luxury-ink",
           size === "sm" ? "text-base" : "text-lg",
         )}
       >
         {title}
       </h3>
       {description && (
-        <p className="mt-1 max-w-md text-sm text-muted-foreground">
+        <p className="mt-1.5 max-w-md text-xs leading-relaxed text-neutral-500">
           {description}
         </p>
       )}

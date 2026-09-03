@@ -62,7 +62,7 @@ export function ProductMedia({
 
   return (
     <div className="space-y-4 flex-1 min-h-0 flex flex-col">
-      {/* ── Images ── */}
+
       <div className="flex-shrink-0">
         <p className="text-xs font-medium text-taupe-700 mb-2">
           Ảnh sản phẩm <span className="text-red-500">*</span>{" "}
@@ -92,7 +92,7 @@ export function ProductMedia({
           </p>
         </div>
 
-        {/* Existing images (edit mode) */}
+
         {existingImages.length > 0 && (
           <div className="grid grid-cols-4 gap-2 mt-2">
             {existingImages.map((url, i) => (
@@ -127,7 +127,7 @@ export function ProductMedia({
           </div>
         )}
 
-        {/* New images */}
+
         {newImages.length > 0 && (
           <div className="grid grid-cols-4 gap-2 mt-2">
             {newImages.map((file, i) => (
@@ -168,7 +168,7 @@ export function ProductMedia({
         )}
       </div>
 
-      {/* ── Video ── */}
+
       <div className="pt-2 border-t-2 border-luxury-ink/10 flex-shrink-0">
         <p className="text-xs font-medium text-taupe-700 mb-2 flex items-center gap-1.5">
           <IconMovie className="w-3.5 h-3.5" />
@@ -186,7 +186,7 @@ export function ProductMedia({
           className="hidden"
         />
 
-        {/* Existing video */}
+
         {existingVideoUrl && !newVideo && (
           <div className="relative rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 p-2 flex items-center gap-2 mb-2">
             <div className="w-10 h-10 rounded-[2px] bg-taupe-50 flex items-center justify-center shrink-0">
@@ -209,7 +209,7 @@ export function ProductMedia({
           </div>
         )}
 
-        {/* New video preview */}
+
         {newVideo ? (
           <div className="relative rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 p-2 flex items-center gap-2">
             <div className="w-10 h-10 rounded-[2px] bg-taupe-50 flex items-center justify-center shrink-0">
@@ -245,7 +245,7 @@ export function ProductMedia({
           </button>
         ) : null}
 
-        {/* Replace video button */}
+
         {existingVideoUrl && !newVideo && (
           <button
             type="button"

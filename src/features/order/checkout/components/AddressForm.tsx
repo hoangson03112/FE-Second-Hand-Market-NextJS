@@ -31,7 +31,7 @@ function Required() {
   );
 }
 
-/** Native select wrapped with the champagne-free hairline chevron. */
+
 function Select({
   children,
   ...props
@@ -134,7 +134,7 @@ export function AddressForm({
       ) : null}
 
       <form onSubmit={submitForm} className="space-y-10">
-        {/* Recipient */}
+
         <fieldset>
           <Eyebrow>Thông tin người nhận</Eyebrow>
 
@@ -179,7 +179,7 @@ export function AddressForm({
           </div>
         </fieldset>
 
-        {/* Location */}
+
         <fieldset className="border-t border-luxury-ink/8 pt-8">
           <Eyebrow>Địa chỉ giao hàng</Eyebrow>
 
@@ -309,7 +309,7 @@ export function AddressForm({
           </label>
         </fieldset>
 
-        {/* Actions */}
+
         <div className="flex flex-col-reverse items-stretch gap-3 border-t border-luxury-ink/8 pt-6 sm:flex-row sm:items-center sm:justify-end">
           {onCancel ? (
             <button

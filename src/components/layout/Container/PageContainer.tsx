@@ -8,15 +8,7 @@ interface PageContainerProps {
   fullHeight?: boolean;
 }
 
-/**
- * Page-level container wrapper
- * Provides consistent page background and min-height
- * 
- * @example
- * <PageContainer>
- *   <YourPageContent />
- * </PageContainer>
- */
+
 export function PageContainer({
   children,
   className,

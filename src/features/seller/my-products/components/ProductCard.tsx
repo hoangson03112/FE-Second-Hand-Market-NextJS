@@ -23,7 +23,7 @@ interface ProductCardProps {
 const SHEET =
   "group relative overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-white transition-all duration-500 hover:border-luxury-ink/25 hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--luxury-ink)_6%,transparent)]";
 
-/** Photo on a cream ground, contained rather than cropped — as on the storefront. */
+
 function Thumbnail({
   product,
   className,
@@ -68,7 +68,7 @@ function Thumbnail({
   );
 }
 
-/** Why the moderator turned the listing down — blush ramp, never raw red. */
+
 function RejectionNote({
   reason,
   lines,

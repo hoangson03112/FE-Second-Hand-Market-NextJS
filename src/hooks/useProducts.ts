@@ -6,7 +6,7 @@ import { queryKeys } from "@/lib/query-client";
 
 const PRODUCT_REVIEWS_PAGE_SIZE = 10;
 
-/** Đánh giá sản phẩm trên trang chi tiết (infinite scroll / xem thêm) */
+
 export function useProductReviews(productId: string) {
   return useInfiniteQuery({
     queryKey: queryKeys.products.reviews(productId),

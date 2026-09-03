@@ -7,20 +7,20 @@ export function useWebSocket(userId: string | null | undefined) {
 
   useEffect(() => {
     if (!userId) {
-      // userId became null → user logged out → disconnect socket
+
       websocketService.disconnect();
       return;
     }
 
-    // Connect (no-op if already connected)
+
     websocketService.connect(userId);
 
-    // Subscribe to messages
+
     const unsubscribe = websocketService.subscribe((message) => {
       setLastMessage(message);
     });
 
-    // Check connection status periodically
+
     const interval = setInterval(() => {
       setIsConnected(websocketService.isConnected());
     }, 1000);

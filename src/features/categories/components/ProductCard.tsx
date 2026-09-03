@@ -21,7 +21,7 @@ export default function ProductCard({
   className,
 }: ProductCardProps) {
   const imageUrl = product.avatar?.url ?? product.images?.[0]?.url;
-  
+
   return (
     <Link
       href={`/products/${product._id}/${product.slug ?? "san-pham"}`}
@@ -30,11 +30,7 @@ export default function ProductCard({
         className,
       )}
     >
-      {/* `relative` is load-bearing: everything inside is absolutely positioned
-          (`fill` images, the inset wrapper, the category tag). Without it they
-          resolve against the nearest positioned ancestor — on the homepage that
-          is the section itself, so every card's artwork escapes and paints over
-          the whole "Sản phẩm nổi bật" block. */}
+
       <div className="relative rounded-[2px] aspect-square w-full overflow-hidden bg-cream-100">
         {imageUrl ? (
           <>
@@ -84,7 +80,7 @@ export default function ProductCard({
           </h3>
         </div>
 
-        {/* Giá và nút bấm (Action)[cite: 15] */}
+
         <div className="mt-3 flex items-center justify-between border-t border-luxury-ink/6 pt-3">
           <span className="text-sm font-normal tracking-tight text-primary md:text-base group-hover:text-blush-600">
             {formatPrice(product.price)}

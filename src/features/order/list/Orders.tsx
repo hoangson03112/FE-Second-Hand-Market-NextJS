@@ -16,7 +16,7 @@ import { CancelOrderReasonDialog } from "@/features/order/components";
 import { RefundModal } from "@/features/order/components";
 import { ListSkeleton, Pagination } from "@/components/ui";
 
-/** Centered ivory state used for the auth / initial-load screens. */
+
 function OrdersPlaceholder({
   title,
   subtitle,
@@ -126,9 +126,7 @@ export default function Orders() {
           actionCount={tabCounts.action ?? 0}
         />
 
-        {/* The tab strip is the one control that must stay reachable while the
-            list scrolls, so it sticks on its own rather than dragging the
-            editorial header along with it. */}
+
         <div className="sticky top-0 z-20 border-b border-luxury-ink/10 bg-luxury-ivory/95 backdrop-blur-md">
           <OrdersTabs
             tabs={BUYER_ORDER_TABS}
@@ -176,7 +174,7 @@ export default function Orders() {
                 </div>
               ))}
 
-              {/* Pagination footer */}
+
               <div className="flex flex-col items-center gap-6 border-t border-luxury-ink/6 pt-8">
                 <p className={cn(microCaps, "tabular-nums text-neutral-500")}>
                   Hiển thị{" "}

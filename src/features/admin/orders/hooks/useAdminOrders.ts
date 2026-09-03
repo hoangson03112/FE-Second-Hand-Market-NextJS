@@ -42,7 +42,7 @@ export function useAdminOrders() {
   const totalItems = data?.pagination?.totalItems ?? 0;
   const allOrders: AdminOrder[] = data?.orders ?? [];
 
-  // Clamp page when filter/search changes reduce total pages
+
   useEffect(() => {
     if (totalPages > 0 && page > totalPages) setPageState(1);
   }, [totalPages, page]);

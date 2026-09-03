@@ -1,10 +1,4 @@
-/**
- * A small pill that carries a semantic tone. Domain-free on purpose — it knows
- * nothing about orders; callers decide what the tone means.
- *
- * Named `ToneBadge` rather than `Badge` so it can never collide with a future
- * `npx shadcn add badge` (Windows filenames are case-insensitive).
- */
+
 
 export type StatusTone =
   | "success"

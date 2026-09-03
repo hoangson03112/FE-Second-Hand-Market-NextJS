@@ -5,7 +5,7 @@ export interface PaymentTimerProps {
   secondsLeft: number | null;
   isExpired: boolean;
   formatCountdown: (secondsLeft: number | null) => string;
-  /** `dark` renders on the ink hero; `light` on an ivory surface. */
+
   tone?: "light" | "dark";
 }
 

@@ -33,20 +33,20 @@ export default function AdminProducts() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <PageHeader
+        eyebrow="Kiểm duyệt sàn"
         title="Kiểm duyệt sản phẩm"
         description="Thẩm định, duyệt hoặc từ chối sản phẩm người bán đăng tải trên hệ thống."
         badge={
           data?.total != null ? (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-[2px] text-2xs font-bold uppercase tracking-[0.16em] bg-cream-50 text-luxury-ink border border-luxury-ink/10">
               {data.total} sản phẩm
             </span>
           ) : null
         }
       />
 
-      {/* Status filter tabs */}
+      {/* Filter Tabs: Quiet Luxury Style */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1">
         {STATUS_TABS.map((tab) => {
           const isActive = statusFilter === tab.value;
@@ -58,10 +58,10 @@ export default function AdminProducts() {
                 setStatusFilter(tab.value as ProductStatusFilter | "");
                 setPage(1);
               }}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all whitespace-nowrap ${
+              className={`px-3.5 py-2 rounded-[2px] text-2xs font-bold uppercase tracking-[0.14em] transition-all whitespace-nowrap ${
                 isActive
-                  ? "bg-primary text-primary-foreground shadow-xs shadow-primary/20"
-                  : "bg-card border border-border/80 text-muted-foreground hover:bg-muted hover:text-foreground"
+                  ? "bg-luxury-ink text-luxury-ivory shadow-none"
+                  : "bg-white border border-luxury-ink/10 text-neutral-600 hover:bg-taupe-50 hover:text-luxury-ink"
               }`}
             >
               {tab.label}
@@ -70,7 +70,6 @@ export default function AdminProducts() {
         })}
       </div>
 
-      {/* Error */}
       {error && (
         <ErrorState
           title="Không tải được danh sách sản phẩm"
@@ -78,19 +77,18 @@ export default function AdminProducts() {
         />
       )}
 
-      {/* Content */}
       {isLoading ? (
         <div className="flex items-center justify-center py-20">
           <div className="flex flex-col items-center gap-3">
-            <IconLoader2 className="w-9 h-9 animate-spin text-primary" />
-            <p className="text-sm font-medium text-muted-foreground">
+            <IconLoader2 className="w-9 h-9 animate-spin text-luxury-ink" />
+            <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
               Đang tải danh sách sản phẩm...
             </p>
           </div>
         </div>
       ) : data?.data?.length === 0 ? (
         <NoData
-          icon={<IconPackage className="w-10 h-10 text-muted-foreground" />}
+          icon={<IconPackage className="w-10 h-10 text-neutral-400" />}
           title="Không có sản phẩm nào"
           description="Không tìm thấy sản phẩm phù hợp với bộ lọc hiện tại."
         />
@@ -117,7 +115,6 @@ export default function AdminProducts() {
         </>
       )}
 
-      {/* Product detail drawer */}
       {selectedProduct && (
         <ProductDetailDrawer
           product={selectedProduct}
@@ -128,7 +125,6 @@ export default function AdminProducts() {
         />
       )}
 
-      {/* Reject reason dialog */}
       <RejectReasonDialog
         isOpen={!!rejectProduct}
         productName={rejectProduct?.name || ""}

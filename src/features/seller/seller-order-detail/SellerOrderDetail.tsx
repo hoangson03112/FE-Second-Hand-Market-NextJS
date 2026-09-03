@@ -49,7 +49,7 @@ const LOCAL_STEPS: Array<{ key: string; label: string }> = [
   { key: "completed", label: "Hoàn thành" },
 ];
 
-/** Statuses that leave the fulfilment rail rather than advancing along it. */
+
 const OFF_RAIL: Record<string, string> = {
   cancelled: "Đơn hàng đã bị hủy nên không còn tiến trình giao nhận.",
   delivery_failed:
@@ -78,8 +78,7 @@ function buildTimeline(
     const tsField = STATUS_TO_TS[key] || key + "At";
     let at = historyEntry?.updatedAt ?? orderRaw[tsField];
 
-    // No explicit timestamp, but the order has already moved past this step —
-    // fall back to the last update so the step does not read as "not reached".
+
     if (!at && currIdx >= 0) {
       const idx = ORDER.indexOf(key);
       if (idx >= 0 && idx <= currIdx) {
@@ -92,7 +91,7 @@ function buildTimeline(
   return { steps, currentIndex: currIdx >= 0 ? currIdx : 0 };
 }
 
-/** Centered ivory state for loading and not-found. */
+
 function DetailPlaceholder({
   title,
   subtitle,
@@ -159,7 +158,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
     handleRejectProof,
   } = useSellerOrderDetail(orderId);
 
-  // Seller must inspect the returned parcel before the refund can proceed.
+
   const [inspectionOpen, setInspectionOpen] = useState(false);
 
   useEffect(() => {
@@ -264,7 +263,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
               "grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8",
             )}
           >
-            {/* Left column — what is in the order and what to do about it */}
+
             <div className="space-y-6 lg:col-span-7">
               <SellerActionButtons
                 order={order}
@@ -295,8 +294,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
                 <SellerRefundCard refund={order.refundRequestId} />
               ) : null}
 
-              {/* Bank transfer proof — người bán tự đối soát vì tiền vào thẳng
-                  tài khoản của họ. Đơn đã hủy thì không còn gì để đối soát. */}
+
               {isBankTransfer && order.status !== "cancelled" ? (
                 <SellerPaymentProofCard
                   proof={paymentProof}
@@ -311,7 +309,7 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
               <SellerProductsCard order={order} />
             </div>
 
-            {/* Right column — who and how much */}
+
             <div className="lg:col-span-5">
               <div className="space-y-6 lg:sticky lg:top-6">
                 <SellerPaymentSummary order={order} />

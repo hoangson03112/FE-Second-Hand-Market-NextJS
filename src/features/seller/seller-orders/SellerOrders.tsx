@@ -22,7 +22,7 @@ import OrdersToolbar from "./components/OrdersToolbar";
 import OrderRowList from "./components/OrderRowList";
 import OrderDetailPanel from "./components/OrderDetailPanel";
 
-/** Centered ivory state used while the session resolves. */
+
 function SellerOrdersPlaceholder({
   title,
   subtitle,
@@ -82,7 +82,7 @@ export default function SellerOrders() {
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
   const [cancelOpen, setCancelOpen] = useState(false);
   const [rejectRefundOpen, setRejectRefundOpen] = useState(false);
-  // Seller must inspect the returned parcel before the refund can proceed.
+
   const [inspectionOrderId, setInspectionOrderId] = useState<string | null>(
     null,
   );
@@ -142,9 +142,7 @@ export default function SellerOrders() {
       <div className="min-h-screen bg-luxury-ivory">
         <SellerOrdersHeader onBack={() => router.back()} stats={stats} />
 
-        {/* The tab strip is the one control that must stay reachable while the
-            queue scrolls, so it sticks on its own rather than dragging the
-            editorial header along with it. */}
+
         <div className="sticky top-0 z-20 border-b border-luxury-ink/10 bg-luxury-ivory/95 backdrop-blur-md">
           <OrderTabs
             activeTab={activeTab}

@@ -14,7 +14,7 @@ interface RoleTabsProps {
 
 export default function RoleTabs({ activeRole, onRoleChange }: RoleTabsProps) {
   return (
-    <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
+    <div className="flex items-center gap-2 overflow-x-auto pb-1">
       {ROLE_TABS.map((tab) => {
         const isActive = activeRole === tab.value;
         return (
@@ -22,10 +22,10 @@ export default function RoleTabs({ activeRole, onRoleChange }: RoleTabsProps) {
             key={tab.value}
             type="button"
             onClick={() => onRoleChange(tab.value)}
-            className={`rounded-xl px-3.5 py-1.5 text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`rounded-[2px] px-3.5 py-1.5 text-2xs font-bold uppercase tracking-[0.12em] whitespace-nowrap transition-all ${
               isActive
-                ? "bg-primary text-primary-foreground shadow-xs shadow-primary/20"
-                : "bg-card border border-border/80 text-muted-foreground hover:bg-muted hover:text-foreground"
+                ? "bg-luxury-ink text-luxury-ivory shadow-none"
+                : "bg-white border border-luxury-ink/10 text-neutral-600 hover:bg-taupe-50 hover:text-luxury-ink"
             }`}
           >
             {tab.label}

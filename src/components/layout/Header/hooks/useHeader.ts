@@ -122,14 +122,14 @@ export function useHeader() {
 
   const handleLogout = async () => {
     try {
-      // Backend xoá cookie httpOnly — JS không tự xoá được chúng.
+
       await AuthService.logout();
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
       setShowUserDropdown(false);
-      // Cookie httpOnly do backend xoá qua Set-Cookie; ở đây chỉ báo cho tab
-      // này và các tab khác cùng chuyển về trạng thái khách.
+
+
       announceSession("signed-out");
       router.replace("/login");
       router.refresh();
@@ -167,7 +167,7 @@ export function useHeader() {
     if (productLimit) {
       return !productLimit.requiresVerification;
     }
-    return false; // Default to false while loading
+    return false;
   }, [account, productLimit]);
 
   const sellButtonHref = useMemo(() => {

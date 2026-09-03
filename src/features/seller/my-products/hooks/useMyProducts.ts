@@ -13,7 +13,7 @@ import type {
 } from "@/types/myProducts";
 import { PRODUCT_UI_MESSAGES } from "@/constants/messages";
 
-/** Prefix chung cho mọi trang/tab — dùng để invalidate hoặc patch cache. */
+
 export const MY_PRODUCTS_QUERY_KEY = ["my", "products"] as const;
 
 export const MY_PRODUCTS_PAGE_SIZE = 10;

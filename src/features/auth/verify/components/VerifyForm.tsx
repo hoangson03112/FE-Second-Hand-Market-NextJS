@@ -13,14 +13,14 @@ interface VerifyFormProps {
   onClearError: () => void;
   isLoading: boolean;
   resendSuccess: boolean;
-  /** Optional override for the success message text (defaults to "Mã xác thực mới đã được gửi!"). */
+
   resendMessage?: string;
   resendLoading: boolean;
-  /** Số giây còn phải chờ trước khi được gửi lại; 0 = bấm được ngay. */
+
   cooldown?: number;
   onSubmit: (e: React.FormEvent) => void;
   onResend: () => void;
-  /** Customize copy for flows that reuse this form (e.g. Google email verification). */
+
   submitLabel?: string;
   submitLoadingLabel?: string;
   resendPromptLabel?: string;

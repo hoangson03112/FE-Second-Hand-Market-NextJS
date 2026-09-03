@@ -43,12 +43,12 @@ export default function ProductHeader({
 
   return (
     <div className="flex flex-col border-b border-luxury-ink/10 pb-6 mb-2">
-      {/* Header Top: Breadcrumb & Share */}
+
       <div className="flex items-center justify-between gap-4 mb-4">
         {(category || subcategory) && (
           <nav
             aria-label="Breadcrumb"
-            className="flex items-center gap-2 text-xs font-bold tracking-[0.15em] text-charcoal-400 uppercase flex-wrap"
+            className="flex items-center gap-2 text-xs font-medium tracking-[0.15em] text-charcoal-400 uppercase flex-wrap"
           >
             <Link href="/" className="hover:text-luxury-ink transition-colors">
               Trang chủ
@@ -85,12 +85,12 @@ export default function ProductHeader({
         </div>
       </div>
 
-      {/* Product Name */}
+
       <h1 className="font-droid-serif text-3xl lg:text-4xl text-luxury-ink leading-[1.1] mb-5 tracking-tight">
         {name}
       </h1>
 
-      {/* Rating Section */}
+
       <div className="flex items-center gap-4">
         {totalReviews > 0 ? (
           <>
@@ -119,7 +119,7 @@ export default function ProductHeader({
             </span>
           </>
         ) : (
-          <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-charcoal-400">
+          <div className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-charcoal-400">
             <IconStar className="h-4 w-4" />
             <span>Chưa có đánh giá</span>
           </div>

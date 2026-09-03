@@ -10,10 +10,7 @@ export interface PaymentHeaderProps {
   formatCountdown: (secondsLeft: number | null) => string;
 }
 
-/**
- * Dark ink hero carrying the countdown — the same panel treatment as the
- * homepage CTA, so the payment window reads as deliberate rather than alarming.
- */
+
 export function PaymentHeader({
   orderId,
   secondsLeft,

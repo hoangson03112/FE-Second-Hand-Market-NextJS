@@ -44,7 +44,7 @@ import {
 } from "../utils/refundPresentation";
 import { PaymentChip } from "@/features/seller/components";
 
-/** Label/value pair used inside the light panels. */
+
 function MetaRow({
   label,
   value,
@@ -72,7 +72,7 @@ function MetaRow({
   );
 }
 
-/** Advisory block — tonal ground, never a saturated alert bar. */
+
 function Notice({
   tone,
   title,
@@ -109,12 +109,7 @@ interface OrderDetailPanelProps {
   onConfirmReturn: (orderId: string) => void;
 }
 
-/**
- * The detail half of the queue. Every block is a `Panel` — the same white sheet
- * with hairline border and serif title used by checkout and order detail — and
- * the money lands on the ink surface, the one figure on the screen that carries
- * weight.
- */
+
 export default function OrderDetailPanel({
   order,
   isUpdating,
@@ -210,7 +205,7 @@ export default function OrderDetailPanel({
 
   return (
     <div className="space-y-5">
-      {/* Identity */}
+
       <div className="rounded-[2px] border border-luxury-ink/10 bg-white px-5 py-5 sm:px-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
@@ -235,7 +230,7 @@ export default function OrderDetailPanel({
         ) : null}
       </div>
 
-      {/* What to do next */}
+
       {refundTodo ? (
         <Notice
           tone={refundTodo.tone}
@@ -315,8 +310,7 @@ export default function OrderDetailPanel({
           }
         />
       ) : !refundTodo && !refundNotice ? (
-        /* Only worth saying when nothing else on the panel is already telling
-           the seller where the order stands. */
+
         <p
           className={cn(
             microCaps,
@@ -335,7 +329,7 @@ export default function OrderDetailPanel({
         />
       ) : null}
 
-      {/* Products */}
+
       <Panel
         eyebrow="Trong đơn"
         title={`${products.length} sản phẩm`}
@@ -384,7 +378,7 @@ export default function OrderDetailPanel({
         </div>
       </Panel>
 
-      {/* Buyer */}
+
       <Panel eyebrow="Người mua" title={getBuyerName(order)}>
         <div className="space-y-3.5">
           <MetaRow label="Email" value={getBuyerEmail(order)} />
@@ -403,7 +397,7 @@ export default function OrderDetailPanel({
         </div>
       </Panel>
 
-      {/* Fulfilment */}
+
       <Panel eyebrow="Giao hàng" title="Địa chỉ nhận hàng">
         <div className="flex gap-4 rounded-[2px] border border-luxury-ink/10 bg-cream-50/60 px-4 py-4">
           <IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-luxury-ink" />
@@ -443,7 +437,7 @@ export default function OrderDetailPanel({
         </div>
       </Panel>
 
-      {/* Refund request detail */}
+
       {refundRequest ? (
         <Panel eyebrow="Hoàn tiền" title="Thông tin yêu cầu">
           <div className="space-y-3.5">
@@ -498,7 +492,7 @@ export default function OrderDetailPanel({
         </Panel>
       ) : null}
 
-      {/* Money — the one figure that carries weight */}
+
       <InkSurface className="rounded-[2px]">
         <div className="px-5 py-6 sm:px-6">
           <Eyebrow tone="dark">Đối soát</Eyebrow>

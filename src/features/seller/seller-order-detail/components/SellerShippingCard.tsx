@@ -11,7 +11,7 @@ interface SellerShippingCardProps {
   isLocalPickup: boolean;
 }
 
-/** Waybill code plus its tracking link — one row, serif code, micro-caps label. */
+
 function WaybillRow({
   label,
   code,

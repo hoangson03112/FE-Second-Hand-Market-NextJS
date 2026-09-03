@@ -1,10 +1,8 @@
 @import "tailwindcss";
 
-/* -------------------------------------------------------------------------- */
-/* Design System CSS Variables (:root)                                        */
-/* -------------------------------------------------------------------------- */
+
 :root {
-  /* Core Brand Colors */
+
   --background: #eef1f0;
   --foreground: #303231;
   --primary: #333333;
@@ -14,7 +12,7 @@
   --luxury-ivory: #F7F5F0;
   --luxury-ink: #1A1816;
 
-  /* Color Palettes */
+
   --cream-50: #fefcf9;
   --cream-100: #fdf9f3;
   --cream-200: #faf3e6;
@@ -23,7 +21,7 @@
   --beige-50: #f7f2ea;
   --beige-100: #f0e8dc;
 
-  /* Brand Ramp (Hero Leaf-Green) - Kept 'taupe' variable name for backward compatibility */
+
   --taupe-50: #eff6ee;
   --taupe-100: #dcecda;
   --taupe-200: #bfddbc;
@@ -57,7 +55,7 @@
   --blush-800: #953e2e;
   --blush-900: #7d3628;
 
-  /* Neutrals mapped to Charcoal/Cream */
+
   --neutral-50: var(--cream-50);
   --neutral-100: var(--cream-100);
   --neutral-200: var(--charcoal-100);
@@ -70,7 +68,7 @@
   --neutral-900: var(--charcoal-900);
   --neutral-950: var(--charcoal-900);
 
-  /* Semantic Feedback */
+
   --success: #10b981;
   --success-light: #d1fae5;
   --success-dark: #047857;
@@ -84,7 +82,7 @@
   --info-light: var(--taupe-100);
   --info-dark: var(--taupe-700);
 
-  /* UI Aliases */
+
   --color-bg-primary: var(--background);
   --color-bg-secondary: var(--neutral-50);
   --color-bg-primary-tint: var(--taupe-50);
@@ -96,9 +94,7 @@
   --color-shadow-secondary: rgba(35, 39, 42, 0.16);
 }
 
-/* -------------------------------------------------------------------------- */
-/* Tailwind v4 Config Mapping                                                 */
-/* -------------------------------------------------------------------------- */
+
 @theme {
   --font-sans:
     var(--font-geist), -apple-system, BlinkMacSystemFont, "SF Pro Text",
@@ -106,11 +102,11 @@
   --font-mono: var(--font-sans);
   --font-serif: var(--font-sans);
 
-  /* Custom Container Sizes */
+
   --container-8xl: 88rem;
   --container-9xl: 96rem;
 
-  /* Custom Breakpoints */
+
   --breakpoint-sm: 480px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
@@ -119,7 +115,7 @@
   --breakpoint-3xl: 1920px;
   --breakpoint-4xl: 2560px;
 
-  /* Auto-map color palettes for Tailwind utilities (bg-taupe-500, text-blush-100, etc.) */
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);

@@ -14,11 +14,7 @@ export interface SellerWallet {
 
 export type PayoutStatus = "pending" | "processing" | "completed" | "failed";
 
-/**
- * Shape assumed from OrderService.getSellerPayouts(). Adjust the fields to
- * match the real API response — the previous version typed this as
- * `unknown[]` and never rendered it, so there was nothing to infer from.
- */
+
 export interface SellerPayout {
   _id: string;
   amount?: number;
@@ -84,7 +80,7 @@ export function useSellerWallet() {
 
   useEffect(() => {
     if (!userLoading && !account) {
-      router.push("/login");
+      router.replace("/login?redirect=%2Fseller%2Fpayouts");
       return;
     }
     if (!account) return;

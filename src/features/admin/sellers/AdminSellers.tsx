@@ -35,8 +35,8 @@ export default function AdminSellers() {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <IconLoader2 className="h-9 w-9 animate-spin text-primary" />
-          <p className="text-sm font-medium text-muted-foreground">
+          <IconLoader2 className="h-9 w-9 animate-spin text-luxury-ink" />
+          <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
             Đang tải danh sách seller...
           </p>
         </div>
@@ -56,11 +56,12 @@ export default function AdminSellers() {
   return (
     <div className="space-y-6">
       <PageHeader
+        eyebrow="Thẩm định người bán"
         title="Quản lý Người bán (Seller)"
         description="Thẩm định thông tin CCCD, thông tin ngân hàng và phê duyệt quyền đăng bán sản phẩm."
         badge={
           statistics?.total != null ? (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-[2px] text-2xs font-bold uppercase tracking-[0.16em] bg-cream-50 text-luxury-ink border border-luxury-ink/10">
               {statistics.total} seller
             </span>
           ) : null
@@ -77,7 +78,6 @@ export default function AdminSellers() {
         />
       )}
 
-      {/* Status filter toolbar */}
       <StatusTabs
         activeStatus={statusFilter}
         onStatusChange={(status) => {
@@ -88,7 +88,7 @@ export default function AdminSellers() {
 
       {sellers.length === 0 ? (
         <NoData
-          icon={<IconBuildingStore className="w-10 h-10 text-muted-foreground" />}
+          icon={<IconBuildingStore className="w-10 h-10 text-neutral-400" />}
           title="Không có hồ sơ seller nào"
           description="Không tìm thấy người bán nào theo điều kiện lọc hiện tại."
         />
@@ -129,6 +129,4 @@ export default function AdminSellers() {
     </div>
   );
 }
-
-
 

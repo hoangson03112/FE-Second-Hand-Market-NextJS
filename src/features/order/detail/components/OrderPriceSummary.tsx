@@ -23,8 +23,7 @@ function Row({ label, value }: { label: string; value: string }) {
   );
 }
 
-/** Same rows and same ink cap as `CheckoutSummary` — the paid order should read
- *  as the receipt of the basket the buyer confirmed, not a different document. */
+
 export function OrderPriceSummary({
   productAmount,
   shippingFee,
@@ -49,7 +48,7 @@ export function OrderPriceSummary({
 
       <InkSurface className="px-5 py-6 sm:px-6">
         <Eyebrow tone="dark">Tổng cộng</Eyebrow>
-        <p
+        <p
           className="font-droid-serif mt-3 tabular-nums text-[clamp(1.5rem,2.4vw,2rem)] leading-none text-luxury-ivory"
         >
           {formatPrice(totalAmount)}

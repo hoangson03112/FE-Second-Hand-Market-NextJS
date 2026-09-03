@@ -24,9 +24,9 @@ export default function ProductGalleryNew({
 
   return (
     <div className="flex flex-col gap-3">
-      {/* Ảnh chính */}
+
       <div className="relative overflow-hidden bg-taupe-50 rounded-[2px] aspect-square border border-luxury-ink/10 group">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+
         <img
           src={imageUrls[selectedImage]}
           alt={productName}
@@ -39,7 +39,7 @@ export default function ProductGalleryNew({
         )}
       </div>
 
-      {/* Thumbnails */}
+
       {imageUrls.length > 1 && (
         <div className="flex gap-2.5 overflow-x-auto pb-1 scrollbar-hide">
           {imageUrls.slice(0, 8).map((img, idx) => (
@@ -52,7 +52,7 @@ export default function ProductGalleryNew({
                   : "border-luxury-ink/10 hover:border-luxury-ink/40 opacity-60 hover:opacity-100"
               }`}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+
               <img
                 src={img}
                 alt={`${productName} ${idx + 1}`}

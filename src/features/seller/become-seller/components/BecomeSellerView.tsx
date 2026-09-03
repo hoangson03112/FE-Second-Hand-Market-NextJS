@@ -72,7 +72,7 @@ export function BecomeSellerView({
 
   return (
     <div className="min-h-screen bg-luxury-ivory">
-      {/* ── STICKY HEADER ── */}
+
       <div className="sticky top-0 z-10 border-b border-luxury-ink/8 bg-luxury-ivory/95 backdrop-blur-md">
         <div className="mx-auto flex h-14 w-full max-w-4xl items-center gap-3 px-4 sm:px-6">
           <button
@@ -94,7 +94,7 @@ export function BecomeSellerView({
       </div>
 
       <div className="mx-auto w-full max-w-4xl space-y-6 px-4 py-10 sm:px-6 md:py-14">
-        {/* ── HERO — luxury-ink card, đồng bộ LuxuryCtaSection ── */}
+
         <div
           className="relative overflow-hidden bg-luxury-ink px-6 py-8 md:px-10 md:py-10"
           style={{ borderRadius: "2px" }}
@@ -166,7 +166,7 @@ export function BecomeSellerView({
           </div>
         </div>
 
-        {/* ── PRODUCT LIMIT NOTICE ── */}
+
         {productLimit &&
           requiresVerification &&
           requestStatus !== "approved" && (
@@ -188,7 +188,7 @@ export function BecomeSellerView({
             </div>
           )}
 
-        {/* ── STATES ── */}
+
         {isCheckingStatus ? (
           <div className="flex flex-col items-center justify-center gap-3 py-24">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-luxury-ink/15 border-t-luxury-champagne" />
@@ -223,7 +223,7 @@ export function BecomeSellerView({
           />
         ) : null}
 
-        {/* ── FORM — timeline 3 bước ── */}
+
         {showForm && (
           <form onSubmit={handleSubmit} className="space-y-5">
             <ErrorMessage message={apiError} />
@@ -296,7 +296,7 @@ export function BecomeSellerView({
   );
 }
 
-/* ── Timeline step wrapper — số thứ tự editorial nối bằng đường dọc champagne ── */
+
 function TimelineStep({
   index,
   label,
@@ -331,7 +331,7 @@ function TimelineStep({
   );
 }
 
-/* ── Status card — pending / rejected ── */
+
 function StatusCard({
   tone,
   icon: Icon,

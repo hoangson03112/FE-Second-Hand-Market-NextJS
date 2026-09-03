@@ -12,7 +12,7 @@ import { getBuyerTodo } from "../utils/orderStage";
 
 export const PAGE_SIZE = 8;
 
-/** Free-text match over the fields a buyer would actually remember. */
+
 function matchesQuery(order: Order, query: string) {
   const haystack = [
     order._id,
@@ -101,8 +101,6 @@ export function useOrders() {
   };
 
   useEffect(() => {
-    // Không phân giải được tài khoản sau khi useUser đã xong ⇒ chưa đăng nhập
-    // hoặc phiên đã hết hạn.
     if (!userLoading && !account) {
       setIsRedirectingAuth(true);
       setIsLoading(false);
@@ -166,8 +164,8 @@ export function useOrders() {
         accountHolder.trim(),
       );
       setOrders((prev) =>
-        // Server sets order.status = "refund" on a refund request; the request
-        // itself lives on order.refundRequestId.
+
+
         prev.map((o) => o._id === refundTargetOrder._id ? { ...o, status: "refund" as const } : o),
       );
       setRefundTargetOrder(null);
@@ -188,8 +186,7 @@ export function useOrders() {
     return orders.filter((o) => matchesQuery(o, query));
   }, [orders, searchQuery]);
 
-  /* Counts follow the search, so the tab numbers always describe what a click
-     would actually show. */
+
   const tabCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const tab of BUYER_ORDER_TABS) {

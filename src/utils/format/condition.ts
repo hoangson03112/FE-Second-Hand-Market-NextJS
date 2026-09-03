@@ -1,6 +1,4 @@
-/**
- * Utility functions for formatting product condition display
- */
+
 
 export type ProductCondition = "new" | "like_new" | "good" | "fair" | "poor";
 
@@ -44,31 +42,23 @@ const CONDITION_MAP: Record<ProductCondition, ConditionInfo> = {
   },
 };
 
-/**
- * Get Vietnamese label for product condition (backward compatible)
- */
+
 export function formatCondition(condition: string | undefined | null): string {
   if (!condition) return "Đã sử dụng";
   return CONDITION_MAP[condition as ProductCondition]?.label || condition;
 }
 
-/**
- * Get Vietnamese label for product condition
- */
+
 export function getConditionLabel(condition: ProductCondition | string): string {
   return CONDITION_MAP[condition as ProductCondition]?.label || "Không xác định";
 }
 
-/**
- * Get text color class for product condition
- */
+
 export function getConditionColor(condition: ProductCondition | string): string {
   return CONDITION_MAP[condition as ProductCondition]?.color || "text-neutral-600";
 }
 
-/**
- * Get badge color classes for product condition
- */
+
 export function getConditionBadgeColor(condition: ProductCondition | string): string {
   return (
     CONDITION_MAP[condition as ProductCondition]?.badgeColor ||
@@ -76,23 +66,17 @@ export function getConditionBadgeColor(condition: ProductCondition | string): st
   );
 }
 
-/**
- * Get description for product condition
- */
+
 export function getConditionDescription(condition: ProductCondition | string): string {
   return CONDITION_MAP[condition as ProductCondition]?.description || "";
 }
 
-/**
- * Get all condition info
- */
+
 export function getConditionInfo(condition: ProductCondition | string): ConditionInfo | null {
   return CONDITION_MAP[condition as ProductCondition] || null;
 }
 
-/**
- * Get all available conditions
- */
+
 export function getAllConditions(): Array<{ value: ProductCondition; label: string }> {
   return [
     { value: "new", label: "Mới" },

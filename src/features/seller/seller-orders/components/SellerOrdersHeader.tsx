@@ -20,11 +20,7 @@ export default function SellerOrdersHeader({
   onBack,
   stats,
 }: SellerOrdersHeaderProps) {
-  /**
-   * Editorial figures rather than dashboard stat cards: a micro-caps label over
-   * a serif numeral, separated by hairlines — the gesture the homepage uses for
-   * its section counts, so the seller queue reads as part of the storefront.
-   */
+
   const figures: { label: string; value: string; attention?: boolean }[] = [
     { label: "Đơn hôm nay", value: String(stats.todayOrders) },
     { label: "Doanh thu hôm nay", value: formatPrice(stats.todayRevenue) },

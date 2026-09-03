@@ -19,10 +19,7 @@ interface ProductFilterTabsProps {
   onFilterChange: (filter: MyListingTabKey) => void;
 }
 
-/**
- * The same hairline chip strip as the order screens — one navigation language
- * across every seller surface, with the count set in serif.
- */
+
 export function ProductFilterTabs({
   stats,
   activeFilter,
@@ -83,7 +80,7 @@ export function ProductFilterTabs({
               </button>
             );
           })}
-          {/* Trailing spacer — ensures the last chip is never clipped */}
+
           <div className="w-2 shrink-0" aria-hidden="true" />
         </div>
       </div>

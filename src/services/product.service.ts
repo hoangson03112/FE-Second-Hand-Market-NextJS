@@ -39,8 +39,7 @@ export const ProductService = {
       formData.append("phoneNumber", payload.phoneNumber);
     if (payload.addressId) formData.append("addressId", payload.addressId);
 
-    // Upload sản phẩm (ảnh/video) có thể mất thời gian lâu hơn,
-    // nên tăng timeout để tránh request bị `canceled` giữa chừng.
+
     const response = await axiosClient.post("/products", formData, {
       timeout: 60000, // 60s cho upload file
     });
@@ -52,7 +51,7 @@ export const ProductService = {
     };
   },
 
-  /** Tìm kiếm sản phẩm toàn hệ thống – dùng endpoint /products/search */
+
   search: async (query: string, filters?: IProductFilters) => {
     if (!query || query.trim().length === 0) {
       return {
@@ -100,7 +99,7 @@ export const ProductService = {
     return response as unknown as IProductListResponse;
   },
 
-  /** Lấy tất cả sản phẩm công khai (approved/active) – không cần category */
+
   getAllPublic: async (
     filters?: IProductFilters,
   ): Promise<IProductListResponse> => {
@@ -129,7 +128,7 @@ export const ProductService = {
     return response as unknown as IProductListResponse;
   },
 
-  /** Lấy danh sách sản phẩm nổi bật cho Home */
+
   getFeatured: async (limit = 5): Promise<IProductListResponse> => {
     const safeLimit = Math.min(Math.max(limit, 1), 20);
     const response = await axiosClient.get(
@@ -138,7 +137,7 @@ export const ProductService = {
     return response as unknown as IProductListResponse;
   },
 
-  /** Chi tiết sản phẩm đầy đủ – dùng khi xem trang chi tiết hoặc mở form Edit */
+
   getById: async (id: string): Promise<IProduct> => {
     const response = await axiosClient.get<{
       success?: boolean;
@@ -171,14 +170,14 @@ export const ProductService = {
     });
   },
 
-  /** User: danh sách sản phẩm đã đăng (chỉ fields cho list). Chi tiết đầy đủ khi bấm Edit gọi getById. */
+
   getMyListings: async (
     params?: MyListingsParams,
   ): Promise<MyListingsResponse> => {
     const qs = new URLSearchParams();
     if (params?.page) qs.set("page", String(params.page));
     if (params?.limit) qs.set("limit", String(params.limit));
-    // "all" là mặc định của server nên không cần gửi.
+
     if (params?.status && params.status !== "all") {
       qs.set("status", params.status);
     }
@@ -189,7 +188,7 @@ export const ProductService = {
     return response as unknown as MyListingsResponse;
   },
 
-  /** Admin: lấy danh sách sản phẩm (cần token + role admin) */
+
   getProductsAdmin: async (
     params?: AdminProductListParams,
   ): Promise<AdminProductListResponse> => {
@@ -206,7 +205,7 @@ export const ProductService = {
     return response as unknown as AdminProductListResponse;
   },
 
-  /** Admin: cập nhật trạng thái sản phẩm (duyệt / từ chối / bật tắt hiển thị) */
+
   updateStatus: async (
     productId: string,
     status:
@@ -230,7 +229,7 @@ export const ProductService = {
     };
   },
 
-  /** User: yêu cầu duyệt lại sản phẩm bị AI reject (gửi thẳng cho admin, không qua AI) */
+
   requestReview: async (productId: string) => {
     const response = await axiosClient.post(
       `/products/${productId}/request-review`,
@@ -242,7 +241,7 @@ export const ProductService = {
     };
   },
 
-  /** User: cập nhật sản phẩm của chính mình */
+
   update: async (productId: string, payload: UpdateProductPayload) => {
     const formData = new FormData();
     formData.append("name", payload.name);
@@ -254,11 +253,11 @@ export const ProductService = {
     formData.append("condition", payload.condition ?? "good");
     formData.append("attributes", JSON.stringify(payload.attributes ?? []));
     formData.append("deliveryOptions", JSON.stringify(payload.deliveryOptions));
-    // Gửi thông tin ảnh cũ để giữ lại
+
     if (payload.existingImages && payload.existingImages.length > 0) {
       formData.append("existingImages", JSON.stringify(payload.existingImages));
     }
-    // Gửi ảnh mới (nếu có)
+
     if (payload.images?.length) {
       payload.images.forEach((file) => formData.append("newImages", file));
     }
@@ -286,7 +285,7 @@ export const ProductService = {
     };
   },
 
-  /** User: xóa sản phẩm của chính mình */
+
   delete: async (productId: string) => {
     await axiosClient.delete(`/products/${productId}`);
   },

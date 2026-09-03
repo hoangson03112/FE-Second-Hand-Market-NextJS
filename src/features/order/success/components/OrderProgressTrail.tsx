@@ -21,7 +21,7 @@ function nodeStateFor(index: number, currentIndex: number): NodeState {
   return "todo";
 }
 
-/** Square 2px node with a serif ordinal — filled once reached, hairline before. */
+
 function Node({ state, index }: { state: NodeState; index: number }) {
   return (
     <span
@@ -61,7 +61,7 @@ export default function OrderProgressTrail({
         </p>
       </div>
 
-      {/* Horizontal rail on desktop */}
+
       <ol className="mt-8 hidden md:flex md:items-start">
         {steps.map((step, index) => {
           const state = nodeStateFor(index, currentIndex);
@@ -102,7 +102,7 @@ export default function OrderProgressTrail({
         })}
       </ol>
 
-      {/* Vertical trail on mobile — no horizontal scrolling to read status */}
+
       <ol className="mt-7 space-y-0 md:hidden">
         {steps.map((step, index) => {
           const state = nodeStateFor(index, currentIndex);

@@ -50,7 +50,7 @@ export default function PhilosophySection() {
         )}
       >
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-14 items-stretch">
-          {/* CỘT TRÁI (5 Cols): Editorial Hero Story */}
+
           <div className="flex flex-col justify-between lg:col-span-5 py-2">
             <div
               className={cn(
@@ -115,9 +115,9 @@ export default function PhilosophySection() {
             </div>
           </div>
 
-          {/* CỘT PHẢI (7 Cols): Dynamic Cards Layout */}
+
           <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Card 1: Clean Warm Surface */}
+
             <Link
               href={values[0].href}
               className={cn(
@@ -154,7 +154,7 @@ export default function PhilosophySection() {
               </div>
             </Link>
 
-            {/* Card 2: Editorial Dark Photo Overlay (Lấy phong cách từ ảnh mẫu) */}
+
             <Link
               href={values[1].href}
               className={cn(
@@ -165,7 +165,7 @@ export default function PhilosophySection() {
               )}
               style={{ transitionDelay: "280ms" }}
             >
-              {/* Background Photo */}
+
               <div className="absolute inset-0 z-0">
                 <Image
                   src={values[1].image!}
@@ -204,7 +204,7 @@ export default function PhilosophySection() {
               </div>
             </Link>
 
-            {/* Card 3: Horizontal Full-width Accent */}
+
             <Link
               href={values[2].href}
               className={cn(

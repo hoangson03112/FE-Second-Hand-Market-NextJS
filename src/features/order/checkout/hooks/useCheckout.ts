@@ -53,17 +53,17 @@ function groupCheckoutItemsBySeller(
   return map;
 }
 
-/** Nhóm có thể giao COD khi TẤT CẢ sản phẩm hỗ trợ codShipping */
+
 function canGroupCodShip(items: CheckoutItem[]): boolean {
   return items.every((item) => item.product.deliveryOptions?.codShipping === true);
 }
 
-/** Nhóm có thể giao trực tiếp khi TẤT CẢ sản phẩm hỗ trợ localPickup */
+
 function canGroupLocalPickup(items: CheckoutItem[]): boolean {
   return items.every((item) => item.product.deliveryOptions?.localPickup !== false);
 }
 
-/** Gộp lỗi từng người bán thành một dòng đọc được, không nuốt seller nào. */
+
 function formatShippingErrors(
   errors: Record<string, string>,
   sellerNames: Record<string, string>
@@ -92,7 +92,7 @@ export function useCheckout() {
   const [shippingError, setShippingError] = useState<string | null>(null);
   const toast = useToast();
 
-  // Per-seller bank transfer availability
+
   const isBankTransferAvailableBySeller = useMemo<Record<string, boolean>>(() => {
     const result: Record<string, boolean> = {};
     const groups = groupCheckoutItemsBySeller(checkoutItems);
@@ -102,18 +102,18 @@ export function useCheckout() {
     return result;
   }, [checkoutItems]);
 
-  /** Trả về method đã chọn, fallback theo capability */
+
   const resolveDeliveryMethod = useCallback(
     (sellerId: string, canCod: boolean, canPickup: boolean): "local_pickup" | "cod_shipping" => {
       if (deliveryMethodBySeller[sellerId]) return deliveryMethodBySeller[sellerId];
-      if (canCod && canPickup) return "cod_shipping"; // default khi có cả 2
+      if (canCod && canPickup) return "cod_shipping";
       if (!canPickup) return "cod_shipping";
       return "local_pickup";
     },
     [deliveryMethodBySeller]
   );
 
-  // Reset bank_transfer when not available or when delivery is local_pickup (gặp mặt trực tiếp)
+
   const effectiveDeliveryBySeller = useMemo(() => {
     const groups = groupCheckoutItemsBySeller(checkoutItems);
     const out: Record<string, "local_pickup" | "cod_shipping"> = {};
@@ -160,8 +160,7 @@ export function useCheckout() {
     []
   );
 
-  // Chỉ huỷ/bỏ qua được request cũ nếu giữ được controller và "chữ ký" của lần
-  // tính gần nhất giữa các render.
+
   const quoteAbortRef = useRef<AbortController | null>(null);
   const quoteKeyRef = useRef<string | null>(null);
 
@@ -197,7 +196,7 @@ export function useCheckout() {
       const localErrors: Record<string, string> = {};
 
       for (const [sellerId, sellerItems] of groups) {
-        // Chỉ tính GHN cho seller có thể ship COD
+
         if (!canGroupCodShip(sellerItems)) continue;
 
         const firstProduct = sellerItems[0]?.product;
@@ -212,8 +211,7 @@ export function useCheckout() {
         const fromWardCode =
           pickupAddress?.wardCode ?? seller?.from_ward_code ?? "";
 
-        // Địa chỉ gửi hàng hỏng là lỗi của riêng seller đó — các seller còn lại
-        // vẫn phải được báo giá bình thường.
+
         if (!Number.isFinite(fromDistrictId) || !fromWardCode) {
           localErrors[sellerId] = "chưa cấu hình địa chỉ gửi hàng.";
           continue;
@@ -231,8 +229,7 @@ export function useCheckout() {
         });
       }
 
-      // Effect gọi hàm này chạy lại mỗi khi `selectedAddress` đổi identity; báo
-      // giá lại một giỏ hàng + địa chỉ không đổi chỉ tốn thêm độ trễ.
+
       const quoteKey = JSON.stringify({ toDistrictId, toWardCode, shipments });
       if (quoteKey === quoteKeyRef.current) return;
 
@@ -247,7 +244,7 @@ export function useCheckout() {
 
       const controller = new AbortController();
       quoteAbortRef.current = controller;
-      // Đặt trước khi await để một lần gọi trùng lúc đang bay không bắn thêm request.
+
       quoteKeyRef.current = quoteKey;
 
       setIsCalculatingShipping(true);
@@ -261,7 +258,7 @@ export function useCheckout() {
           signal: controller.signal,
         });
 
-        // Địa chỉ đã đổi trong lúc chờ — kết quả này đã cũ, lần gọi mới đang giữ state.
+
         if (controller.signal.aborted) return;
 
         setShippingInfoBySeller(options);
@@ -283,7 +280,7 @@ export function useCheckout() {
     [account?.email, checkoutItems]
   );
 
-  // Seller groups enriched with shipping info and subtotals
+
   const sellerGroups = useMemo<SellerGroup[]>(() => {
     const groups = groupCheckoutItemsBySeller(checkoutItems);
     return Array.from(groups.entries()).map(([sellerId, items]) => {
@@ -395,7 +392,7 @@ export function useCheckout() {
         try {
           await removeItems(productIds);
         } catch (error) {
-          // Cart cleanup failure should not block a successfully created order.
+
           logger.warn("Failed to sync cart items after checkout", {
             productIds,
             error: error instanceof Error ? error.message : String(error),
@@ -405,7 +402,7 @@ export function useCheckout() {
       clearCheckout();
 
       if (bankTransferOrderIds.length > 0) {
-        // Redirect to payment for first bank transfer order
+
         router.push(`/payment?orderId=${bankTransferOrderIds[0]}`);
       } else {
         const firstOrderId = allOrderIds[0];

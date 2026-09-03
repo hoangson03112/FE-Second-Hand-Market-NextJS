@@ -23,22 +23,22 @@ const STATUS_CONFIG: Record<
   pending: {
     label: "Chờ duyệt",
     icon: IconClock,
-    className: "bg-primary/10 text-primary",
+    className: "bg-cream-50 text-luxury-ink border border-luxury-ink/10",
   },
   approved: {
     label: "Đã duyệt",
     icon: IconCircleCheck,
-    className: "bg-emerald-500/10 text-emerald-600",
+    className: "bg-cream-50 text-accent border border-accent/30",
   },
   rejected: {
     label: "Từ chối",
     icon: IconCircleX,
-    className: "bg-destructive/10 text-destructive",
+    className: "bg-rose-50 text-rose-700 border border-rose-200",
   },
   banned: {
     label: "Bị khóa",
     icon: IconBan,
-    className: "bg-muted text-muted-foreground",
+    className: "bg-neutral-100 text-neutral-500 border border-neutral-200",
   },
 };
 
@@ -52,10 +52,10 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-border bg-background p-5 space-y-3">
-      <div className="flex items-center gap-2">
-        <Icon className="w-4 h-4 text-muted-foreground shrink-0" />
-        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wide">
+    <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-5 space-y-3">
+      <div className="flex items-center gap-2 border-b border-luxury-ink/8 pb-2">
+        <Icon className="w-4 h-4 text-neutral-500 shrink-0" />
+        <span className="text-2xs font-bold text-luxury-ink uppercase tracking-[0.15em]">
           {title}
         </span>
       </div>
@@ -66,9 +66,9 @@ function Section({
 
 function Row({ label, value }: { label: string; value?: React.ReactNode }) {
   return (
-    <div className="flex items-start gap-2 text-sm">
-      <span className="w-36 shrink-0 text-muted-foreground">{label}</span>
-      <span className="text-foreground font-medium break-all">
+    <div className="flex items-start gap-2 text-xs">
+      <span className="w-36 shrink-0 text-neutral-500">{label}</span>
+      <span className="text-luxury-ink font-medium break-all">
         {value ?? "—"}
       </span>
     </div>
@@ -106,15 +106,14 @@ export default function SellerDetailModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 p-0 sm:p-4"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-luxury-ink/60 p-0 sm:p-4"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-8xl max-h-[92dvh] sm:max-h-[90vh] overflow-hidden rounded-t-2xl sm:rounded-2xl border border-border bg-card shadow-2xl flex flex-col"
+        className="w-full max-w-5xl max-h-[92dvh] sm:max-h-[90vh] overflow-hidden rounded-t-[2px] sm:rounded-[2px] border border-luxury-ink/10 bg-white shadow-2xl flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-border px-5 py-4 shrink-0">
+        <div className="flex items-center justify-between border-b border-luxury-ink/10 bg-cream-50/70 px-5 py-4 shrink-0">
           <div className="flex items-center gap-4">
             {seller.accountId?.avatar?.url ? (
               <Image
@@ -122,19 +121,19 @@ export default function SellerDetailModal({
                 alt={seller.accountId.fullName}
                 width={44}
                 height={44}
-                className="w-11 h-11 rounded-full object-cover border border-border"
+                className="w-11 h-11 rounded-full object-cover border border-luxury-ink/10"
               />
             ) : (
-              <div className="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-base shrink-0">
+              <div className="w-11 h-11 rounded-full bg-cream-50 border border-luxury-ink/10 flex items-center justify-center text-luxury-ink font-bold text-base shrink-0">
                 {seller.accountId?.fullName?.[0]?.toUpperCase() ?? "?"}
               </div>
             )}
             <div>
-              <p className="text-base font-bold text-foreground leading-tight">
+              <p className="font-droid-serif text-lg font-bold text-luxury-ink leading-tight">
                 {seller.accountId?.fullName ?? "—"}
               </p>
               <span
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium mt-1 ${statusCfg.className}`}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-[2px] text-2xs font-bold uppercase tracking-[0.1em] mt-1 border ${statusCfg.className}`}
               >
                 <StatusIcon className="w-3.5 h-3.5" />
                 {statusCfg.label}
@@ -144,62 +143,59 @@ export default function SellerDetailModal({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+            className="rounded-[2px] border border-luxury-ink/10 p-1.5 text-luxury-ink hover:bg-taupe-50 transition-colors"
           >
             <IconX className="h-5 w-5" />
           </button>
         </div>
 
-        {/* Body */}
-        <div className="overflow-y-auto p-5 sm:p-6 space-y-5">
-          {/* Thống kê - full width */}
-          <div className="rounded-xl border border-primary/20 bg-primary/5 p-5">
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-4">
+        <div className="overflow-y-auto p-5 sm:p-6 space-y-5 bg-luxury-ivory/40">
+          <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-5">
+            <p className="text-2xs font-bold text-neutral-500 uppercase tracking-[0.2em] mb-4">
               Thống kê hoạt động
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="flex flex-col items-center rounded-xl bg-background border border-border py-4 px-3">
-                <IconPackage className="w-6 h-6 text-primary mb-1.5" />
-                <span className="text-xl font-bold text-foreground">
+              <div className="flex flex-col items-center rounded-[2px] bg-cream-50/50 border border-luxury-ink/8 py-4 px-3">
+                <IconPackage className="w-5 h-5 text-luxury-ink mb-1.5" />
+                <span className="font-droid-serif text-xl font-bold text-luxury-ink tabular-nums">
                   {stats?.totalProductsActive ?? 0}
                 </span>
-                <span className="text-xs text-muted-foreground mt-0.5">
+                <span className="text-2xs font-bold uppercase tracking-[0.1em] text-neutral-500 mt-1">
                   Đang bán
                 </span>
               </div>
-              <div className="flex flex-col items-center rounded-xl bg-background border border-border py-4 px-3">
-                <IconShoppingCart className="w-6 h-6 text-primary mb-1.5" />
-                <span className="text-xl font-bold text-foreground">
+              <div className="flex flex-col items-center rounded-[2px] bg-cream-50/50 border border-luxury-ink/8 py-4 px-3">
+                <IconShoppingCart className="w-5 h-5 text-luxury-ink mb-1.5" />
+                <span className="font-droid-serif text-xl font-bold text-luxury-ink tabular-nums">
                   {stats?.totalSold ?? 0}
                 </span>
-                <span className="text-xs text-muted-foreground mt-0.5">
+                <span className="text-2xs font-bold uppercase tracking-[0.1em] text-neutral-500 mt-1">
                   Đã bán
                 </span>
               </div>
-              <div className="flex flex-col items-center rounded-xl bg-background border border-border py-4 px-3">
-                <IconStar className="w-6 h-6 text-amber-500 mb-1.5" />
-                <span className="text-xl font-bold text-foreground">
+              <div className="flex flex-col items-center rounded-[2px] bg-cream-50/50 border border-luxury-ink/8 py-4 px-3">
+                <IconStar className="w-5 h-5 text-amber-600 mb-1.5" />
+                <span className="font-droid-serif text-xl font-bold text-luxury-ink tabular-nums">
                   {(stats?.avgRating ?? 0) > 0
                     ? `${Number(stats!.avgRating).toFixed(1)} ★`
                     : "0"}
                 </span>
-                <span className="text-xs text-muted-foreground mt-0.5">
+                <span className="text-2xs font-bold uppercase tracking-[0.1em] text-neutral-500 mt-1">
                   Đánh giá TB
                 </span>
               </div>
-              <div className="flex flex-col items-center rounded-xl bg-background border border-border py-4 px-3">
-                <IconMessageCircle className="w-6 h-6 text-primary mb-1.5" />
-                <span className="text-xl font-bold text-foreground">
+              <div className="flex flex-col items-center rounded-[2px] bg-cream-50/50 border border-luxury-ink/8 py-4 px-3">
+                <IconMessageCircle className="w-5 h-5 text-luxury-ink mb-1.5" />
+                <span className="font-droid-serif text-xl font-bold text-luxury-ink tabular-nums">
                   {stats?.totalReviews ?? 0}
                 </span>
-                <span className="text-xs text-muted-foreground mt-0.5">
+                <span className="text-2xs font-bold uppercase tracking-[0.1em] text-neutral-500 mt-1">
                   Lượt đánh giá
                 </span>
               </div>
             </div>
           </div>
 
-          {/* 2 cột: Trái = Tài khoản + Ngân hàng, Phải = CCCD */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
             <div className="lg:col-span-5 space-y-5">
               <Section icon={IconUser} title="Thông tin tài khoản">
@@ -231,7 +227,7 @@ export default function SellerDetailModal({
                     }
                   />
                 </div>
-                <div className="pt-3 border-t border-border mt-3 space-y-2">
+                <div className="pt-3 border-t border-luxury-ink/8 mt-3 space-y-2">
                   <Row
                     label="Đồng ý điều khoản"
                     value={
@@ -239,8 +235,8 @@ export default function SellerDetailModal({
                         <span
                           className={
                             seller.agreeTerms
-                              ? "text-emerald-600"
-                              : "text-destructive"
+                              ? "text-accent font-semibold"
+                              : "text-rose-700 font-semibold"
                           }
                         >
                           {seller.agreeTerms ? "Đã đồng ý" : "Chưa đồng ý"}
@@ -255,8 +251,8 @@ export default function SellerDetailModal({
                         <span
                           className={
                             seller.agreePolicy
-                              ? "text-emerald-600"
-                              : "text-destructive"
+                              ? "text-accent font-semibold"
+                              : "text-rose-700 font-semibold"
                           }
                         >
                           {seller.agreePolicy ? "Đã đồng ý" : "Chưa đồng ý"}
@@ -280,7 +276,7 @@ export default function SellerDetailModal({
                     <Row
                       label="Lý do từ chối"
                       value={
-                        <span className="text-destructive">
+                        <span className="text-rose-700">
                           {seller.rejectedReason}
                         </span>
                       }
@@ -293,7 +289,9 @@ export default function SellerDetailModal({
                 <Row label="Ngân hàng" value={seller.bankInfo?.bankName} />
                 <Row
                   label="Số tài khoản"
-                  value={seller.bankInfo?.accountNumber}
+                  value={
+                    <span className="font-mono">{seller.bankInfo?.accountNumber}</span>
+                  }
                 />
                 <Row
                   label="Chủ tài khoản"
@@ -310,7 +308,7 @@ export default function SellerDetailModal({
                     { label: "Mặt sau", file: seller.idCardBack },
                   ].map(({ label, file }) => (
                     <div key={label}>
-                      <p className="text-xs font-medium text-muted-foreground mb-2">
+                      <p className="text-2xs font-bold uppercase tracking-[0.12em] text-neutral-500 mb-2">
                         {label}
                       </p>
                       {file?.url ? (
@@ -318,7 +316,7 @@ export default function SellerDetailModal({
                           href={file.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="block rounded-xl border border-border overflow-hidden bg-muted/30 hover:opacity-95 transition-opacity"
+                          className="block rounded-[2px] border border-luxury-ink/10 overflow-hidden bg-cream-50/50 hover:opacity-95 transition-opacity"
                         >
                           <Image
                             src={file.url}
@@ -329,7 +327,7 @@ export default function SellerDetailModal({
                           />
                         </a>
                       ) : (
-                        <div className="w-full h-32 rounded-xl border border-border bg-muted/40 flex items-center justify-center text-sm text-muted-foreground">
+                        <div className="w-full h-32 rounded-[2px] border border-luxury-ink/10 bg-cream-50/50 flex items-center justify-center text-xs text-neutral-400">
                           Chưa có ảnh
                         </div>
                       )}
@@ -340,11 +338,10 @@ export default function SellerDetailModal({
             </div>
           </div>
 
-          {/* Lý do từ chối / khóa - full width */}
           {(seller.verificationStatus === "pending" ||
             seller.verificationStatus === "approved") && (
-            <div className="rounded-xl border border-border bg-background p-5">
-              <label className="block text-xs font-bold text-muted-foreground uppercase tracking-wide mb-2">
+            <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-5">
+              <label className="block text-2xs font-bold text-neutral-600 uppercase tracking-[0.15em] mb-2">
                 {seller.verificationStatus === "pending"
                   ? "Lý do từ chối (nếu từ chối)"
                   : "Lý do khóa (bắt buộc khi khóa)"}
@@ -352,7 +349,7 @@ export default function SellerDetailModal({
               <textarea
                 value={rejectReason}
                 onChange={(e) => onRejectReasonChange(e.target.value)}
-                className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"
+                className="w-full rounded-[2px] border border-luxury-ink/15 bg-white px-3.5 py-2.5 text-xs text-luxury-ink placeholder:text-neutral-400 focus:outline-none focus:border-luxury-ink resize-none"
                 rows={2}
                 placeholder={
                   seller.verificationStatus === "pending"
@@ -364,12 +361,11 @@ export default function SellerDetailModal({
           )}
         </div>
 
-        {/* Footer */}
-        <div className="flex gap-3 justify-end border-t border-border px-5 py-4 shrink-0">
+        <div className="flex gap-3 justify-end border-t border-luxury-ink/10 bg-cream-50/50 px-5 py-4 shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl border border-border px-5 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors"
+            className="rounded-[2px] border border-luxury-ink/15 bg-white px-5 py-2 text-2xs font-bold uppercase tracking-[0.12em] text-luxury-ink hover:bg-taupe-50 transition-colors"
           >
             Đóng
           </button>
@@ -379,7 +375,7 @@ export default function SellerDetailModal({
                 type="button"
                 onClick={onReject}
                 disabled={isUpdating}
-                className="rounded-xl border border-destructive/30 bg-destructive/5 px-5 py-2.5 text-sm font-medium text-destructive hover:bg-destructive/10 disabled:opacity-50 transition-colors"
+                className="rounded-[2px] border border-rose-200 bg-white px-5 py-2 text-2xs font-bold uppercase tracking-[0.12em] text-rose-700 hover:bg-rose-50 disabled:opacity-50 transition-colors"
               >
                 Từ chối
               </button>
@@ -387,7 +383,7 @@ export default function SellerDetailModal({
                 type="button"
                 onClick={onApprove}
                 disabled={isUpdating}
-                className="rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary/90 disabled:opacity-50 transition-colors"
+                className="rounded-[2px] bg-accent px-5 py-2 text-2xs font-bold uppercase tracking-[0.12em] text-white hover:opacity-90 disabled:opacity-50 transition-all"
               >
                 Duyệt seller
               </button>
@@ -398,7 +394,7 @@ export default function SellerDetailModal({
               type="button"
               onClick={onBan}
               disabled={isUpdating || !rejectReason.trim()}
-              className="rounded-xl border border-destructive/30 bg-destructive/5 px-5 py-2.5 text-sm font-medium text-destructive hover:bg-destructive/10 disabled:opacity-50 transition-colors"
+              className="rounded-[2px] border border-rose-200 bg-white px-5 py-2 text-2xs font-bold uppercase tracking-[0.12em] text-rose-700 hover:bg-rose-50 disabled:opacity-50 transition-colors"
             >
               Khóa tài khoản
             </button>

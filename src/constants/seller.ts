@@ -1,20 +1,8 @@
 import React from "react";
 
-/**
- * Seller-related constants
- * Become seller, verification, and product limits
- */
 
-// ============================================================================
-// Seller Limits
-// ============================================================================
-
-/** Giới hạn số sản phẩm cho người bán chưa verify */
 export const UNVERIFIED_SELLER_PRODUCT_LIMIT = 5;
 
-// ============================================================================
-// Become Seller Features
-// ============================================================================
 
 export const becomeSellerFeatures = [
   {

@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/query-client";
 import { announceSession } from "@/lib/session";
 
-/** Nơi cất đích đến trước khi rời sang Google. Khớp với useLogin. */
+
 const POST_LOGIN_REDIRECT_KEY = "eco:post-login-redirect";
 
 function safeRedirect(target: string | null): string {
@@ -15,13 +15,7 @@ function safeRedirect(target: string | null): string {
   return target;
 }
 
-/**
- * Điểm hạ cánh sau khi đăng nhập Google.
- *
- * Backend đã set cookie phiên trước khi redirect tới đây, và page.tsx (server)
- * đã kiểm tra cookie tồn tại. Trang này chỉ nạp lại user qua /auth/me rồi đưa
- * người dùng về đúng chỗ họ đang dở — không nhận, không lưu token nào trên URL.
- */
+
 export default function GoogleCallbackClient() {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -44,7 +38,7 @@ export default function GoogleCallbackClient() {
   return (
     <div className="flex min-h-[60svh] flex-col items-center justify-center gap-4 bg-luxury-ivory">
       <div className="h-10 w-10 animate-spin rounded-full border border-luxury-ink/15 border-t-luxury-ink" />
-      <p className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
+      <p className="text-2xs font-medium uppercase tracking-[0.15em] text-neutral-500">
         Đang hoàn tất đăng nhập
       </p>
     </div>

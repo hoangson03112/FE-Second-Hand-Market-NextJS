@@ -205,8 +205,7 @@ export const AdminService = {
     return axiosClient.put("/admin/admin/moderation/toggle-mode", { mode });
   },
 
-  // ── Refund Management ────────────────────────────────────────────
-  /** Get all refunds (admin view) — from the refund module */
+
   getRefunds: async (params?: {
     page?: number;
     limit?: number;
@@ -218,16 +217,13 @@ export const AdminService = {
     return res as unknown as { refunds: RefundRequest[]; pagination?: PaginationMeta };
   },
 
-  /** Get refund detail (admin/buyer/seller) — full info including evidence, order */
+
   getRefundDetail: async (refundId: string): Promise<{ success: boolean; refund: RefundRequest }> => {
     const res = await axiosClient.get(`/refunds/${refundId}`);
     return res as unknown as { success: boolean; refund: RefundRequest };
   },
 
-  /**
-   * Admin finalizes a refund: deducts seller wallet & marks order refunded.
-   * POST /orders/:orderId/complete-refund
-   */
+
   approveRefund: async (
     orderId: string,
     adminNote?: string
@@ -235,10 +231,7 @@ export const AdminService = {
     return axiosClient.post(`/orders/${orderId}/complete-refund`, { adminNote });
   },
 
-  /**
-   * Admin approves a disputed refund (sides with buyer).
-   * PUT /refunds/:refundId/admin-handle  (only when status === "disputed")
-   */
+
   approveDispute: async (
     refundId: string,
     comment?: string
@@ -249,10 +242,7 @@ export const AdminService = {
     });
   },
 
-  /**
-   * Admin rejects a disputed refund (sides with seller).
-   * PUT /refunds/:refundId/admin-handle  (only when status === "disputed")
-   */
+
   rejectRefund: async (
     refundId: string,
     adminNote: string
@@ -263,31 +253,27 @@ export const AdminService = {
     });
   },
 
-  // ── Seller Payout Management ─────────────────────────────────────
-  /** List orders completed but payout not yet released */
+
   getPayouts: async (): Promise<{ data: SellerPayout[] }> => {
     const res = await axiosClient.get("/orders/admin/pending-payouts");
     return res as unknown as { data: SellerPayout[] };
   },
 
-  /** Admin manually triggers payout for a completed order */
+
   triggerPayout: async (
     orderId: string
   ): Promise<{ message: string }> => {
     return axiosClient.post(`/orders/${orderId}/payout`);
   },
 
-  /**
-   * Admin confirms a bank transfer payment by a buyer.
-   * POST /orders/:orderId/confirm-bank-transfer
-   */
+
   confirmBankTransfer: async (
     orderId: string
   ): Promise<{ message: string }> => {
     return axiosClient.post(`/orders/${orderId}/confirm-bank-transfer`);
   },
 
-  // ── GHN Tracking ─────────────────────────────────────────────────
+
   getOrderTracking: async (
     orderId: string
   ): Promise<{ tracking: GHNTrackingData }> => {
@@ -295,7 +281,7 @@ export const AdminService = {
     return res as unknown as { tracking: GHNTrackingData };
   },
 
-  // ── Admin Order Status Update ─────────────────────────────────────
+
   updateOrderStatus: async (
     orderId: string,
     status: string,

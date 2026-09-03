@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils";
 
 interface AuthFieldProps extends React.ComponentProps<"input"> {
   label: string;
-  /** Leading icon, rendered at 18px in the field gutter. */
+
   icon?: React.ReactNode;
-  /** Adds the champagne asterisk next to the label. */
+
   requiredMark?: boolean;
-  /** Renders the show/hide password toggle. */
+
   reveal?: boolean;
   fieldClassName?: string;
 }

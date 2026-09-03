@@ -2,16 +2,12 @@ import { cn } from "@/lib/utils";
 
 interface EyebrowProps {
   children: React.ReactNode;
-  /** `dark` for use on the ink panels, where the rule and label turn champagne. */
+
   tone?: "light" | "dark";
   className?: string;
 }
 
-/**
- * Champagne hairline + micro-caps label — the opening gesture of every
- * homepage section, reused so transactional screens read as the same
- * publication rather than a separate app.
- */
+
 export function Eyebrow({ children, tone = "light", className }: EyebrowProps) {
   return (
     <div className={cn("flex items-center gap-3", className)}>

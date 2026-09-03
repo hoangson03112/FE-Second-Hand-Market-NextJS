@@ -8,15 +8,7 @@ interface SectionProps {
   withBackground?: boolean;
 }
 
-/**
- * Section wrapper component
- * Provides consistent card-like sections with optional border and background
- * 
- * @example
- * <Section withBorder withBackground>
- *   <YourSectionContent />
- * </Section>
- */
+
 export function Section({
   children,
   className,

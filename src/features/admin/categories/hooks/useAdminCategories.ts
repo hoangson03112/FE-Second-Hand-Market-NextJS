@@ -11,15 +11,15 @@ export function useAdminCategories() {
   const { confirm } = useConfirm();
   const toast = useToast();
 
-  // Category editing
+
   const [newCategoryName, setNewCategoryName] = useState("");
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
   const [categoryNameDraft, setCategoryNameDraft] = useState("");
 
-  // Selection
+
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
 
-  // Subcategory state
+
   const [newSubName, setNewSubName] = useState("");
   const [editingSubId, setEditingSubId] = useState<string | null>(null);
   const [subNameDraft, setSubNameDraft] = useState("");
@@ -265,7 +265,7 @@ export function useAdminCategories() {
     categories,
     isLoading,
     error,
-    // category
+
     newCategoryName,
     setNewCategoryName,
     addCategory,
@@ -279,7 +279,7 @@ export function useAdminCategories() {
     startEditCategory,
     cancelEditCategory,
     saveCategory,
-    // subcategory
+
     newSubName,
     setNewSubName,
     addSubCategory,

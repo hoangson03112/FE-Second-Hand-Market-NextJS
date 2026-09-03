@@ -12,7 +12,7 @@ import { PASSWORD_MIN_LENGTH } from "@/constants";
 interface PasswordFormProps {
   formData: PasswordFormData;
   isSubmitting: boolean;
-  /** true = tài khoản Google, hiển thị "Thiết lập mật khẩu" (không có ô mật khẩu hiện tại) */
+
   isGoogleUser?: boolean;
   onSubmit: (e: React.FormEvent) => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -35,7 +35,7 @@ export function PasswordForm({
     : "Bảo vệ tài khoản bằng mật khẩu mạnh";
   const submitLabel = isGoogleUser ? "Thiết lập mật khẩu" : "Đổi mật khẩu";
 
-  // Password strength indicator
+
   const getPasswordStrength = (password: string) => {
     if (!password) return { strength: 0, label: "", color: "" };
 
@@ -154,7 +154,7 @@ export function PasswordForm({
                 {showNewPassword ? "Ẩn" : "Hiện"}
               </button>
             </div>
-            {/* Password strength */}
+
             {formData.newPassword && (
               <div className="mt-3 space-y-1.5">
                 <div className="flex items-center gap-2">

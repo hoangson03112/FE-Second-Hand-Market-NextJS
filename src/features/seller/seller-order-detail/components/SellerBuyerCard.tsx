@@ -22,7 +22,7 @@ interface SellerBuyerCardProps {
   onChatClick: () => void;
 }
 
-/** Hairline contact row that fills with ink on hover, like every other action. */
+
 function ContactRow({
   icon: Icon,
   label,
@@ -74,8 +74,7 @@ export function SellerBuyerCard({
 }: SellerBuyerCardProps) {
   const buyer = order.buyerId;
   const address = order.shippingAddress;
-  /* The delivery contact is often not the account holder, so it is worth
-     repeating rather than making the seller guess. */
+
   const recipientDiffers =
     address && address.fullName && address.fullName !== buyer?.fullName;
 

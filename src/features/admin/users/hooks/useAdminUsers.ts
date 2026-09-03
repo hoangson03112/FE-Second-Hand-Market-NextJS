@@ -45,7 +45,7 @@ export function useAdminUsers() {
     }) => AdminService.updateAccountStatus(accountId, status, reason),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ACCOUNTS_QUERY_KEY });
-      // Keep admin sellers screen in sync when banning/unbanning accounts
+
       qc.invalidateQueries({ queryKey: ["admin", "sellers"] });
     },
   });

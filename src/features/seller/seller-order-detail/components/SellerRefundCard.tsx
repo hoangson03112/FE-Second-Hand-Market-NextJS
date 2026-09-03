@@ -48,7 +48,7 @@ export function SellerRefundCard({ refund }: SellerRefundCardProps) {
       description="Xem bằng chứng trước khi chấp thuận hoặc từ chối."
       className="border-luxury-champagne/45"
     >
-      {/* Reason */}
+
       <div className="flex items-center gap-3.5 rounded-[2px] border border-luxury-champagne/45 bg-cream-100/70 px-4 py-3.5">
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-white">
           <ReasonIcon className="h-4 w-4 text-luxury-ink" />
@@ -61,7 +61,7 @@ export function SellerRefundCard({ refund }: SellerRefundCardProps) {
         </div>
       </div>
 
-      {/* Description */}
+
       <div className="mt-5">
         <p className={cn(microCaps, "text-neutral-500")}>
           Mô tả của người mua
@@ -71,7 +71,7 @@ export function SellerRefundCard({ refund }: SellerRefundCardProps) {
         </p>
       </div>
 
-      {/* Evidence images */}
+
       {images.length > 0 ? (
         <div className="mt-5">
           <p className={cn(microCaps, "text-neutral-500")}>
@@ -102,7 +102,7 @@ export function SellerRefundCard({ refund }: SellerRefundCardProps) {
         </div>
       ) : null}
 
-      {/* Evidence videos */}
+
       {videos.length > 0 ? (
         <div className="mt-5">
           <p className={cn(microCaps, "text-neutral-500")}>

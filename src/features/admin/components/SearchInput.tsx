@@ -10,17 +10,14 @@ export interface SearchInputProps
   extends Omit<React.ComponentProps<typeof Input>, "onChange" | "value"> {
   value?: string;
   onChange?: (value: string) => void;
-  /** Fired after `debounceMs` of inactivity — ideal for triggering queries. */
+
   onDebouncedChange?: (value: string) => void;
   debounceMs?: number;
   onClear?: () => void;
   containerClassName?: string;
 }
 
-/**
- * SearchInput — input with a leading search icon, a clear button, and optional
- * debounced change callback. Wraps shadcn `Input`.
- */
+
 export function SearchInput({
   value,
   onChange,
