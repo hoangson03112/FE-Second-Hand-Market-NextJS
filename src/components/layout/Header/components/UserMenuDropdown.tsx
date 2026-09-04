@@ -53,7 +53,7 @@ export function UserMenuDropdown({
             alt=""
             width={30}
             height={30}
-            className="w-7 h-7 sm:w-[30px] sm:h-[30px] object-cover rounded-[2px]"
+            className="w-7 h-7 sm:w-[30px] sm:h-[30px] object-cover rounded-full"
             style={{ border: "2px solid var(--border)" }}
           />
         ) : (
