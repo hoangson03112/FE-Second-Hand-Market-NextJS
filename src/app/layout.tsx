@@ -22,6 +22,8 @@ const droidSerifWGL = localFont({
   style: "normal",
   variable: "--font-droid-serif",
   display: "swap",
+  adjustFontFallback: "Times New Roman",
+  preload: true,
 });
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -106,6 +108,14 @@ export default async function RootLayout({
       className={`h-full ${geist.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <link
+          rel="preconnect"
+          href="https://res.cloudinary.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+      </head>
       <body
         suppressHydrationWarning
         className={`h-full overflow-hidden bg-luxury-ivory text-foreground antialiased ${droidSerifWGL.variable}`}

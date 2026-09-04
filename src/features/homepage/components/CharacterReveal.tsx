@@ -14,7 +14,7 @@ interface CharacterRevealProps {
 export function CharacterReveal({
   text,
   baseCharIndex = 0,
-  isActive,
+  isActive = true,
   className,
 }: CharacterRevealProps) {
   return (
@@ -23,15 +23,15 @@ export function CharacterReveal({
         <motion.span
           key={`${baseCharIndex}-${index}-${char}`}
           className={className}
-          initial={{ opacity: 0, y: "0.4em", filter: "blur(6px)" }}
+          initial={false}
           animate={
             isActive
               ? { opacity: 1, y: 0, filter: "blur(0px)" }
-              : { opacity: 0, y: "0.4em", filter: "blur(6px)" }
+              : { opacity: 0.8, y: 0, filter: "blur(0px)" }
           }
           transition={{
-            duration: 0.5,
-            delay: (baseCharIndex + index) * CHAR_STAGGER,
+            duration: 0.35,
+            delay: (baseCharIndex + index) * 0.015,
             ease: [0.22, 1, 0.36, 1],
           }}
           style={{ display: char === " " ? "inline" : "inline-block" }}
@@ -47,5 +47,5 @@ export function getCharacterRevealDuration(
   charCount: number,
   extraDelay = 0,
 ): number {
-  return extraDelay + charCount * CHAR_STAGGER + 0.5;
+  return extraDelay + charCount * 0.015 + 0.2;
 }

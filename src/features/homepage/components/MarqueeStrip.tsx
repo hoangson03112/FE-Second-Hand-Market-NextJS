@@ -31,7 +31,7 @@ function MarqueeContent() {
 export default function MarqueeStrip() {
   return (
     <div
-      className="relative overflow-hidden border-y border-charcoal-800/10 bg-luxury-ink py-4"
+      className="relative h-[53px] min-h-[53px] overflow-hidden border-y border-charcoal-800/10 bg-luxury-ink py-4"
       aria-hidden
     >
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-luxury-ink to-transparent" />

@@ -11,6 +11,7 @@ export function HeaderLogo() {
         height={110}
         className="h-15 sm:h-15 w-auto max-w-[150px] sm:max-w-none object-contain transition-opacity duration-200 group-hover:opacity-70"
         priority
+        loading="eager"
       />
     </Link>
   );
