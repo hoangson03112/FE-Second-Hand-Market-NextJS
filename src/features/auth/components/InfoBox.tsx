@@ -8,26 +8,30 @@ interface InfoBoxProps {
   children: React.ReactNode;
 }
 
-const variantStyles: Record<InfoBoxVariant, { bg: string; border: string; text: string }> = {
+const variantStyles: Record<InfoBoxVariant, { bg: string; border: string; text: string; titleColor: string }> = {
   info: {
-    bg: "bg-muted/60",
-    border: "border-border",
-    text: "text-foreground/80",
+    bg: "bg-cream-50/70",
+    border: "border-luxury-ink/10",
+    text: "text-neutral-600",
+    titleColor: "text-luxury-ink",
   },
   warning: {
-    bg: "bg-primary/8",
-    border: "border-primary/20",
-    text: "text-primary/90",
+    bg: "bg-amber-50/60",
+    border: "border-amber-200/80",
+    text: "text-amber-900/90",
+    titleColor: "text-amber-950",
   },
   success: {
-    bg: "bg-secondary/60",
-    border: "border-border",
-    text: "text-foreground/80",
+    bg: "bg-emerald-50/60",
+    border: "border-emerald-200/80",
+    text: "text-emerald-900/90",
+    titleColor: "text-emerald-950",
   },
   error: {
-    bg: "bg-destructive/8",
-    border: "border-destructive/20",
-    text: "text-destructive",
+    bg: "bg-blush-50/60",
+    border: "border-blush-200/80",
+    text: "text-blush-900/90",
+    titleColor: "text-blush-950",
   },
 };
 
@@ -35,11 +39,15 @@ export default function InfoBox({ variant = "info", title, children }: InfoBoxPr
   const styles = variantStyles[variant];
 
   return (
-    <div className={`${styles.bg} border ${styles.border} rounded-xl p-4`}>
-      <p className={`text-sm ${styles.text} leading-relaxed`}>
-        {title && <strong>{title} </strong>}
+    <div className={`${styles.bg} border ${styles.border} rounded-[2px] p-4 text-xs`}>
+      {title && (
+        <p className={`text-2xs font-bold uppercase tracking-[0.14em] ${styles.titleColor} mb-1`}>
+          {title}
+        </p>
+      )}
+      <div className={`${styles.text} leading-relaxed font-sans`}>
         {children}
-      </p>
+      </div>
     </div>
   );
 }

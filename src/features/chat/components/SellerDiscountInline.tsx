@@ -55,7 +55,7 @@ function ProductCard({
         <img
           src={product.imageUrl}
           alt={product.name}
-          className="w-10 h-10 rounded-lg object-cover border border-border"
+          className="w-10 h-10 rounded-[2px] object-cover border border-luxury-ink/10"
         />
       ) : (
         <div className="flex h-10 w-10 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-taupe-50 text-sm font-semibold text-taupe-300">
@@ -142,7 +142,7 @@ export default function SellerDiscountInline({
         <button
           type="button"
           onClick={handleCancel}
-          className="w-7 h-7 rounded-full hover:bg-taupe-100 flex items-center justify-center transition-colors text-taupe-400 hover:text-taupe-600"
+          className="w-7 h-7 rounded-[2px] hover:bg-taupe-100 flex items-center justify-center transition-colors text-taupe-400 hover:text-taupe-600"
         >
           <IconX className="w-4 h-4" />
         </button>
@@ -150,7 +150,7 @@ export default function SellerDiscountInline({
 
       {created ? (
         <div className="mt-3 flex flex-col items-center justify-center gap-2 rounded-[2px] border border-accent/40 bg-taupe-50 px-6 py-6">
-          <span className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+          <span className="w-12 h-12 rounded-[2px] bg-emerald-50 border border-emerald-200 flex items-center justify-center">
             <IconCheck className="w-7 h-7 text-emerald-600" />
           </span>
           <div className="text-sm font-semibold text-taupe-800">

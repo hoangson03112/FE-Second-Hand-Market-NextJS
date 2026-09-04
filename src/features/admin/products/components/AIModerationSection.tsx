@@ -12,31 +12,31 @@ export function AIModerationSection({ ai, estimatedWeight }: AIModerationSection
   const isRejected = ai.approved === false;
 
   return (
-    <section className="rounded-xl border border-border bg-muted/30 p-4 space-y-3">
+    <section className="rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 p-4 space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-bold text-foreground uppercase tracking-wider">
-          AI Kiểm duyệt
+        <h3 className="text-2xs font-bold text-luxury-ink uppercase tracking-[0.14em]">
+          AI Kiểm duyệt tự động
         </h3>
         <span
-          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold ${
+          className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[2px] border text-2xs font-bold uppercase tracking-wider ${
             ai.bypassAI
-              ? "bg-muted text-muted-foreground"
+              ? "bg-taupe-50 border-luxury-ink/10 text-neutral-500"
               : isApproved
-                ? "bg-secondary text-foreground/80"
+                ? "bg-emerald-50 border-emerald-200 text-emerald-800"
                 : isRejected
-                  ? "bg-destructive/10 text-destructive"
-                  : "bg-primary/10 text-primary/90"
+                  ? "bg-blush-50 border-blush-200 text-blush-700"
+                  : "bg-cream-50 border-luxury-ink/10 text-luxury-ink"
           }`}
         >
           <span
-            className={`w-1.5 h-1.5 rounded-full ${
+            className={`w-1.5 h-1.5 rounded-[1px] ${
               ai.bypassAI
-                ? "bg-muted-foreground/40"
+                ? "bg-neutral-400"
                 : isApproved
-                  ? "bg-primary/70"
+                  ? "bg-emerald-600"
                   : isRejected
-                    ? "bg-destructive"
-                    : "bg-primary/40"
+                    ? "bg-blush-600"
+                    : "bg-amber-500"
             }`}
           />
           {ai.bypassAI
@@ -50,16 +50,16 @@ export function AIModerationSection({ ai, estimatedWeight }: AIModerationSection
       </div>
 
       {ai.humanReviewRequested && (
-        <p className="text-xs text-foreground/70 bg-secondary/60 px-3 py-1.5 rounded-lg">
-          👤 Yêu cầu kiểm duyệt thủ công
+        <p className="text-xs text-luxury-ink bg-white border border-luxury-ink/10 px-3 py-1.5 rounded-[2px]">
+          👤 Yêu cầu kiểm duyệt thủ công bởi Admin
         </p>
       )}
 
       {(ai.reasons?.length ?? 0) > 0 && (
-        <ul className="space-y-1">
+        <ul className="space-y-1 bg-white/70 p-2.5 rounded-[2px] border border-luxury-ink/6">
           {ai.reasons!.map((r, i) => (
-            <li key={i} className="text-xs text-muted-foreground flex gap-2">
-              <span className="mt-1 w-1 h-1 rounded-full bg-muted-foreground shrink-0" />
+            <li key={i} className="text-xs text-neutral-600 flex gap-2">
+              <span className="mt-1.5 w-1 h-1 rounded-[1px] bg-neutral-400 shrink-0" />
               {r}
             </li>
           ))}
@@ -67,16 +67,16 @@ export function AIModerationSection({ ai, estimatedWeight }: AIModerationSection
       )}
 
       {ai.rejectionReason && (
-        <p className="text-xs text-destructive">
+        <p className="text-xs text-blush-700 bg-blush-50/60 p-2 rounded-[2px] border border-blush-200">
           Lý do từ chối: {ai.rejectionReason}
         </p>
       )}
 
       {estimatedWeight && (
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-neutral-500 pt-1">
           Cân nặng ước tính:{" "}
-          <strong className="text-foreground">{estimatedWeight.value}g</strong>{" "}
-          ({Math.round(estimatedWeight.confidence * 100)}% tin cậy)
+          <strong className="text-luxury-ink font-mono">{estimatedWeight.value}g</strong>{" "}
+          ({Math.round(estimatedWeight.confidence * 100)}% độ tin cậy)
         </p>
       )}
     </section>

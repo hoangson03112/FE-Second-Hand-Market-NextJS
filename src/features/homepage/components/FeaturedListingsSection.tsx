@@ -46,12 +46,12 @@ export default function FeaturedListingsSection() {
             {[...Array(5)].map((_, i) => (
               <Skeleton
                 key={i}
-                className="h-[300px] w-full rounded-2xl bg-neutral-200/80"
+                className="h-[300px] w-full rounded-[2px] bg-neutral-200/80"
               />
             ))}
           </div>
         ) : featuredProducts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-neutral-300 bg-white py-16 text-center shadow-xs">
+          <div className="flex flex-col items-center justify-center rounded-[2px] border border-dashed border-luxury-ink/15 bg-white py-16 text-center shadow-xs">
             <IconPackageOff className="h-8 w-8 text-neutral-400" />
             <p className="mt-2 text-sm text-neutral-500">
               Chưa có sản phẩm nổi bật nào.

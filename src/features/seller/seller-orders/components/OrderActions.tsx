@@ -42,15 +42,14 @@ export default function OrderActions({
     (order.status === "refund_requested" || order.status === "refund") &&
     (refundDoc == null || refundDoc.status === "pending");
 
-
   if (order.status === "pending") {
     return (
       <>
-        <div className="flex items-center gap-2 px-3 pb-3">
+        <div className="flex items-center gap-2 px-4 pb-3">
           <button
             onClick={() => onUpdateStatus(order._id, "confirmed")}
             disabled={isUpdating}
-            className="flex-1 py-2 px-3 bg-primary text-primary-foreground rounded-xl text-[13px] font-bold hover:bg-primary/90 active:bg-primary/95 disabled:opacity-40 flex items-center justify-center gap-2 transition-all"
+            className="flex-1 py-2 px-3 bg-luxury-ink text-luxury-ivory rounded-[2px] text-2xs font-bold uppercase tracking-[0.12em] hover:bg-charcoal-800 disabled:opacity-40 flex items-center justify-center gap-1.5 transition-all"
           >
             {isUpdating ? (
               <IconLoader2 className="w-3.5 h-3.5 animate-spin" />
@@ -62,10 +61,10 @@ export default function OrderActions({
           <button
             onClick={() => setCancelOpen(true)}
             disabled={isUpdating}
-            className="py-2 px-3 bg-muted text-muted-foreground rounded-xl text-[13px] font-medium hover:bg-destructive/10 hover:text-destructive disabled:opacity-40 flex items-center justify-center gap-1.5 transition-all"
+            className="py-2 px-3 border border-luxury-ink/20 text-neutral-600 rounded-[2px] text-2xs font-bold uppercase tracking-[0.12em] hover:border-blush-600 hover:text-blush-600 disabled:opacity-40 flex items-center justify-center gap-1.5 transition-all"
           >
             <IconCircleX className="w-3.5 h-3.5" />
-            Huỷ đơn
+            Huỷ
           </button>
         </div>
         <CancelOrderReasonDialog
@@ -82,7 +81,6 @@ export default function OrderActions({
     );
   }
 
-
   if (
     ["confirmed", "picked_up", "shipping", "out_for_delivery"].includes(
       order.status,
@@ -90,29 +88,28 @@ export default function OrderActions({
   ) {
     const label = isLocalPickup
       ? order.status === "confirmed"
-        ? "Đã xác nhận • Liên hệ người mua để sắp xếp giao hàng"
+        ? "Đã xác nhận • Vui lòng liên hệ người mua để giao hàng"
         : "Đang chờ giao hàng trực tiếp"
-      : "Đơn hàng đang được GHN vận chuyển";
+      : "Đơn hàng đang được vận chuyển qua GHN";
     return (
-      <div className="px-3 pb-3">
-        <div className="flex items-center gap-2 bg-muted border border-border rounded-xl px-3 py-2">
-          <IconTruck className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-          <p className="text-[12px] font-medium text-foreground/70">{label}</p>
+      <div className="px-4 pb-3">
+        <div className="flex items-center gap-2 bg-cream-50/70 border border-luxury-ink/10 rounded-[2px] px-3 py-2">
+          <IconTruck className="w-3.5 h-3.5 text-luxury-ink shrink-0" />
+          <p className="text-2xs font-medium text-neutral-600">{label}</p>
         </div>
       </div>
     );
   }
 
-
   if (needsSellerRefundDecision) {
     return (
-      <div className="px-3 pb-3">
-        <div className="flex gap-1.5">
+      <div className="px-4 pb-3">
+        <div className="flex gap-2">
           {onApproveRefund && (
             <button
               onClick={() => onApproveRefund(order._id)}
               disabled={isUpdating}
-              className="flex-1 py-1.5 px-3 bg-primary text-primary-foreground rounded-xl text-[12px] font-bold hover:bg-primary/90 disabled:opacity-40 flex items-center justify-center gap-1.5 transition-all"
+              className="flex-1 py-2 px-3 bg-luxury-ink text-luxury-ivory rounded-[2px] text-2xs font-bold uppercase tracking-[0.12em] hover:bg-charcoal-800 disabled:opacity-40 flex items-center justify-center gap-1.5 transition-all"
             >
               {isUpdating ? (
                 <IconLoader2 className="w-3.5 h-3.5 animate-spin" />
@@ -124,7 +121,7 @@ export default function OrderActions({
           )}
           <Link
             href={`/my/orders/${order._id}`}
-            className="flex items-center justify-center gap-1.5 py-1.5 px-3 bg-muted text-muted-foreground rounded-xl text-[12px] font-medium hover:bg-muted/80 transition-all"
+            className="flex items-center justify-center gap-1.5 py-2 px-3 border border-luxury-ink/20 text-neutral-600 rounded-[2px] text-2xs font-bold uppercase tracking-[0.12em] hover:bg-taupe-50 transition-all"
           >
             <IconEye className="w-3.5 h-3.5" />
             Xem bằng chứng
@@ -134,32 +131,17 @@ export default function OrderActions({
     );
   }
 
-
   if (order.status === "refund_approved") {
     return (
-      <div className="px-3 pb-3">
-        <div className="flex items-center gap-2 bg-muted border border-border rounded-xl px-3 py-2">
-          <IconCircleCheck className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-          <p className="text-[12px] font-medium text-muted-foreground">
-            Đã chấp thuận hoàn tiền · Admin đang xử lý
+      <div className="px-4 pb-3">
+        <div className="flex items-center gap-2 bg-cream-50/70 border border-luxury-ink/10 rounded-[2px] px-3 py-2">
+          <IconCircleCheck className="w-3.5 h-3.5 text-luxury-ink shrink-0" />
+          <p className="text-2xs font-medium text-neutral-600">
+            Đã chấp thuận hoàn tiền · Ban Quản Trị đang xử lý
           </p>
         </div>
       </div>
     );
-  }
-
-
-  if (
-    [
-      "delivered",
-      "completed",
-      "delivery_failed",
-      "returned",
-      "cancelled",
-      "refunded",
-    ].includes(order.status)
-  ) {
-    return null;
   }
 
   return null;

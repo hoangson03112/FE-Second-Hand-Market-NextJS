@@ -105,7 +105,7 @@ export function ProfileSidebar({
 
 
         <div className="p-4 border-b border-luxury-ink/10">
-          <p className="px-2 py-2 text-xs font-bold text-charcoal-400  uppercase tracking-[0.13em]">
+          <p className="px-2 py-2 text-xs font-bold text-charcoal-400 uppercase tracking-[0.13em]">
             Tài khoản
           </p>
           <div className="space-y-1">
@@ -127,31 +127,20 @@ export function ProfileSidebar({
                 {isGoogleUser ? "Thiết lập mật khẩu" : "Đổi mật khẩu"}
               </span>
             </button>
+            <button
+              type="button"
+              onClick={() => onTabChange("bank")}
+              className={navClass("bank")}
+            >
+              <IconBuildingBank className="w-4 h-4" />
+              <span>Tài khoản nhận tiền (Bank)</span>
+            </button>
           </div>
         </div>
 
-        {isSeller && (
-          <div className="p-4 border-b border-luxury-ink/10">
-            <p className="px-2 py-2 text-2xs font-bold text-taupe-500 uppercase tracking-[0.15em]">
-              Seller
-            </p>
-            <div className="space-y-1">
-              <button
-                type="button"
-                onClick={() => onTabChange("bank")}
-                className={navClass("bank")}
-              >
-                <IconBuildingBank className="w-4 h-4" />
-                <span>Thông tin ngân hàng</span>
-              </button>
-            </div>
-          </div>
-        )}
-
-
         {(isSeller || isAdmin) && (
           <div className="p-4">
-            <p className="px-2 py-2 text-xs font-bold text-charcoal-400  uppercase tracking-[0.13em]">
+            <p className="px-2 py-2 text-xs font-bold text-charcoal-400 uppercase tracking-[0.13em]">
               Truy cập nhanh
             </p>
             <div className="space-y-1">
@@ -178,19 +167,12 @@ export function ProfileSidebar({
                     <IconPackage className="w-4 h-4 shrink-0" />
                     Sản phẩm đã đăng
                   </Link>
-                  <Link
-                    href="/seller/payouts"
-                    className="flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-sm font-medium text-muted-foreground hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
-                  >
-                    <IconCurrencyDong className="w-4 h-4 shrink-0" />
-                    Ví & Thanh toán
-                  </Link>
                 </>
               )}
               {isAdmin && (
                 <Link
                   href="/admin"
-                  className=" flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-base font-medium text-muted-foreground hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-base font-medium text-muted-foreground hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
                 >
                   <IconSettings className="w-4 h-4 shrink-0" />
                   Quản trị hệ thống

@@ -121,7 +121,7 @@ export default function FilterBar({
                   filters.provinceId != null ? String(filters.provinceId) : ""
                 }
                 onChange={(e) => handleProvinceChange(e.target.value)}
-                className="h-10 min-w-[150px] cursor-pointer appearance-none rounded-full border border-luxury-ink/10 bg-white pl-4 pr-9 text-[13px] font-medium text-luxury-ink transition-all hover:border-luxury-ink/30 focus:border-luxury-ink focus:outline-none"
+                className="h-10 min-w-[150px] cursor-pointer appearance-none rounded-[2px] border border-luxury-ink/10 bg-white pl-4 pr-9 text-[13px] font-medium text-luxury-ink transition-all hover:border-luxury-ink/30 focus:border-luxury-ink focus:outline-none"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%231a1816'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
                   backgroundRepeat: "no-repeat",
@@ -149,7 +149,7 @@ export default function FilterBar({
                   key={opt.value}
                   onClick={() => handleTransactionChange(opt.value)}
                   className={cn(
-                    "h-10 whitespace-nowrap rounded-full border px-4 text-[13px] font-medium transition-all",
+                    "h-10 whitespace-nowrap rounded-[2px] border px-4 text-[13px] font-medium transition-all",
                     isActive
                       ? "border-luxury-ink bg-luxury-ink text-luxury-ivory shadow-[0_10px_22px_rgba(26,24,22,0.12)]"
                       : "border-luxury-ink/10 bg-white text-neutral-600 hover:border-luxury-ink/25 hover:text-luxury-ink",
@@ -173,7 +173,7 @@ export default function FilterBar({
                     handleSortChange(opt.value as IProductFilters["sortBy"])
                   }
                   className={cn(
-                    "h-10 whitespace-nowrap rounded-full border px-4 text-[13px] font-medium transition-all",
+                    "h-10 whitespace-nowrap rounded-[2px] border px-4 text-[13px] font-medium transition-all",
                     isActive
                       ? "border-luxury-ink bg-luxury-ink text-luxury-ivory shadow-[0_10px_22px_rgba(26,24,22,0.12)]"
                       : "border-luxury-ink/10 bg-white text-neutral-600 hover:border-luxury-ink/25 hover:text-luxury-ink",
@@ -188,7 +188,7 @@ export default function FilterBar({
           <button
             onClick={() => setShowFilters(!showFilters)}
             className={cn(
-              "ml-2 flex h-10 shrink-0 items-center gap-2 rounded-full border px-4 text-[13px] font-medium transition-all",
+              "ml-2 flex h-10 shrink-0 items-center gap-2 rounded-[2px] border px-4 text-[13px] font-medium transition-all",
               showFilters || activeFilterCount > 0
                 ? "border-luxury-ink bg-luxury-ink text-luxury-ivory shadow-[0_10px_22px_rgba(26,24,22,0.12)]"
                 : "border-luxury-ink/10 bg-white text-neutral-600 hover:border-luxury-ink/25 hover:text-luxury-ink",
@@ -209,7 +209,7 @@ export default function FilterBar({
             </svg>
             Bộ lọc
             {activeFilterCount > 0 && (
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 text-[11px] font-bold">
+              <span className="flex h-5 w-5 items-center justify-center rounded-[2px] bg-white/20 text-[11px] font-bold">
                 {activeFilterCount}
               </span>
             )}
@@ -239,7 +239,7 @@ export default function FilterBar({
         {activeFilterCount > 0 && (
           <div className="flex flex-wrap gap-2 pb-4">
             {filters.search && (
-              <span className="inline-flex h-7 items-center gap-1.5 rounded-full border border-luxury-ink/10 bg-white pl-3 pr-2 text-[12px] font-medium text-luxury-ink">
+              <span className="inline-flex h-7 items-center gap-1.5 rounded-[2px] border border-luxury-ink/10 bg-white pl-3 pr-2 text-[12px] font-medium text-luxury-ink">
                 {filters.search}
                 <button
                   onClick={() =>
@@ -264,7 +264,7 @@ export default function FilterBar({
               </span>
             )}
             {selectedProvince && (
-              <span className="inline-flex h-7 items-center gap-1.5 rounded-full border border-luxury-ink/10 bg-white pl-3 pr-2 text-[12px] font-medium text-luxury-ink">
+              <span className="inline-flex h-7 items-center gap-1.5 rounded-[2px] border border-luxury-ink/10 bg-white pl-3 pr-2 text-[12px] font-medium text-luxury-ink">
                 {selectedProvince.ProvinceName}
                 <button
                   onClick={() => handleProvinceChange("")}
@@ -287,7 +287,7 @@ export default function FilterBar({
               </span>
             )}
             {filters.transactionMethod && (
-              <span className="inline-flex h-7 items-center gap-1.5 rounded-full border border-luxury-ink/10 bg-white pl-3 pr-2 text-[12px] font-medium text-luxury-ink">
+              <span className="inline-flex h-7 items-center gap-1.5 rounded-[2px] border border-luxury-ink/10 bg-white pl-3 pr-2 text-[12px] font-medium text-luxury-ink">
                 {
                   TRANSACTION_OPTIONS.find(
                     (o) => o.value === filters.transactionMethod,
@@ -316,7 +316,7 @@ export default function FilterBar({
               </span>
             )}
             {filters.condition && (
-              <span className="inline-flex h-7 items-center gap-1.5 rounded-full border border-luxury-ink/10 bg-white pl-3 pr-2 text-[12px] font-medium text-luxury-ink">
+              <span className="inline-flex h-7 items-center gap-1.5 rounded-[2px] border border-luxury-ink/10 bg-white pl-3 pr-2 text-[12px] font-medium text-luxury-ink">
                 {
                   CONDITION_OPTIONS.find((c) => c.value === filters.condition)
                     ?.label
@@ -342,7 +342,7 @@ export default function FilterBar({
               </span>
             )}
             {(filters.minPrice || filters.maxPrice) && (
-              <span className="inline-flex h-7 items-center gap-1.5 rounded-full border border-luxury-ink/10 bg-white pl-3 pr-2 text-[12px] font-medium text-luxury-ink">
+              <span className="inline-flex h-7 items-center gap-1.5 rounded-[2px] border border-luxury-ink/10 bg-white pl-3 pr-2 text-[12px] font-medium text-luxury-ink">
                 {activePricePreset?.label ??
                   `${filters.minPrice ? (filters.minPrice / 1000).toFixed(0) + "k" : "0"}-${filters.maxPrice ? (filters.maxPrice / 1000).toFixed(0) + "k" : "∞"}`}
                 <button
@@ -390,7 +390,7 @@ export default function FilterBar({
                           )
                         }
                         className={cn(
-                          "h-9 rounded-full border px-4 text-[13px] font-medium transition-all",
+                          "h-9 rounded-[2px] border px-4 text-[13px] font-medium transition-all",
                           isActive
                             ? "border-luxury-ink bg-luxury-ink text-luxury-ivory shadow-[0_10px_22px_rgba(26,24,22,0.12)]"
                             : "border-luxury-ink/10 bg-white text-neutral-600 hover:border-luxury-ink/25 hover:text-luxury-ink",
@@ -416,7 +416,7 @@ export default function FilterBar({
                           filters.maxPrice,
                         )
                       }
-                      className="h-11 w-full rounded-xl border border-luxury-ink/10 bg-white pl-10 pr-4 text-sm text-luxury-ink transition-colors focus:border-luxury-ink focus:outline-none"
+                      className="h-11 w-full rounded-[2px] border border-luxury-ink/10 bg-white pl-10 pr-4 text-sm text-luxury-ink transition-colors focus:border-luxury-ink focus:outline-none focus:ring-1 focus:ring-luxury-ink"
                     />
                   </div>
                   <div className="relative">
@@ -433,7 +433,7 @@ export default function FilterBar({
                           e.target.value ? Number(e.target.value) : undefined,
                         )
                       }
-                      className="h-11 w-full rounded-xl border border-luxury-ink/10 bg-white pl-12 pr-4 text-sm text-luxury-ink transition-colors focus:border-luxury-ink focus:outline-none"
+                      className="h-11 w-full rounded-[2px] border border-luxury-ink/10 bg-white pl-12 pr-4 text-sm text-luxury-ink transition-colors focus:border-luxury-ink focus:outline-none focus:ring-1 focus:ring-luxury-ink"
                     />
                   </div>
                 </div>
@@ -448,7 +448,7 @@ export default function FilterBar({
                       key={value}
                       onClick={() => handleConditionChange(value)}
                       className={cn(
-                        "h-9 rounded-full border px-4 text-[13px] font-medium transition-all",
+                        "h-9 rounded-[2px] border px-4 text-[13px] font-medium transition-all",
                         filters.condition === value
                           ? "border-luxury-ink bg-luxury-ink text-luxury-ivory shadow-[0_10px_22px_rgba(26,24,22,0.12)]"
                           : "border-luxury-ink/10 bg-white text-neutral-600 hover:border-luxury-ink/25 hover:text-luxury-ink",

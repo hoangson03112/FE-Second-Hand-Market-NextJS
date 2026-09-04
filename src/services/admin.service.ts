@@ -254,16 +254,10 @@ export const AdminService = {
   },
 
 
-  getPayouts: async (): Promise<{ data: SellerPayout[] }> => {
-    const res = await axiosClient.get("/orders/admin/pending-payouts");
-    return res as unknown as { data: SellerPayout[] };
-  },
-
-
-  triggerPayout: async (
+  confirmSellerPayout: async (
     orderId: string
   ): Promise<{ message: string }> => {
-    return axiosClient.post(`/orders/${orderId}/payout`);
+    return axiosClient.post(`/admin/orders/${orderId}/confirm-seller-payout`);
   },
 
 

@@ -1,6 +1,7 @@
 import React from "react";
 import type { ChangeEvent } from "react";
 import type { Province, District, Ward } from "@/types/address";
+import { IconMapPin } from "@tabler/icons-react";
 
 interface AddressValues {
   provinceId: string;
@@ -53,17 +54,19 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
   onAddressChange,
 }) => {
   return (
-    <div className="rounded-2xl border-2 border-border bg-taupe-50/60 p-3 lg:p-4 space-y-3">
-      <div className="flex items-center justify-between gap-2">
-        <h3 className="text-sm font-bold text-taupe-900">
-          Địa chỉ kinh doanh / lấy hàng
+    <div className="rounded-[2px] border border-luxury-ink/10 bg-cream-50/50 p-5 space-y-4">
+      <div className="flex items-center justify-between gap-2 border-b border-luxury-ink/10 pb-3">
+        <h3 className="font-droid-serif text-sm font-bold text-luxury-ink flex items-center gap-1.5">
+          <IconMapPin className="w-4 h-4 text-luxury-ink" />
+          Địa chỉ kho / Lấy hàng GHN
         </h3>
-        <span className="text-[11px] font-bold text-primary uppercase tracking-wide">
+        <span className="text-2xs font-bold text-neutral-500 uppercase tracking-[0.15em]">
           Bước 1
         </span>
       </div>
+
       {selectedProvince && selectedDistrict && selectedWard && (
-        <p className="text-xs text-taupe-500">
+        <p className="text-xs text-neutral-600 bg-white p-2.5 rounded-[2px] border border-luxury-ink/8">
           {selectedWard.WardName}, {selectedDistrict.DistrictName},{" "}
           {selectedProvince.ProvinceName}
         </p>
@@ -71,18 +74,18 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div className="md:col-span-1">
-          <label className="block text-xs font-medium text-taupe-700 mb-1">
-            Tỉnh/Thành phố <span className="text-red-500">*</span>
+          <label className="block text-2xs uppercase tracking-wider font-bold text-luxury-ink mb-1.5">
+            Tỉnh / Thành phố <span className="text-blush-600">*</span>
           </label>
           <select
             name="provinceId"
             value={values.provinceId}
             onChange={onProvinceChange}
             disabled={provincesLoading}
-            className="w-full rounded-lg border border-border bg-white text-taupe-900 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary disabled:bg-taupe-100"
+            className="w-full h-10 rounded-[2px] border border-luxury-ink/20 bg-white text-luxury-ink px-3 text-xs outline-none focus:border-luxury-ink disabled:bg-taupe-100/50"
           >
             <option value="">
-              {provincesLoading ? "Đang tải..." : "Chọn Tỉnh/Thành phố"}
+              {provincesLoading ? "Đang tải..." : "Chọn Tỉnh / Thành"}
             </option>
             {provinces.map((p) => (
               <option key={p.ProvinceID} value={p.ProvinceID}>
@@ -93,22 +96,22 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
         </div>
 
         <div className="md:col-span-1">
-          <label className="block text-xs font-medium text-taupe-700 mb-1">
-            Quận/Huyện <span className="text-red-500">*</span>
+          <label className="block text-2xs uppercase tracking-wider font-bold text-luxury-ink mb-1.5">
+            Quận / Huyện <span className="text-blush-600">*</span>
           </label>
           <select
             name="districtId"
             value={values.districtId}
             onChange={onDistrictChange}
             disabled={!values.provinceId || districtsLoading}
-            className="w-full rounded-lg border border-border bg-white text-taupe-900 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary disabled:bg-taupe-100"
+            className="w-full h-10 rounded-[2px] border border-luxury-ink/20 bg-white text-luxury-ink px-3 text-xs outline-none focus:border-luxury-ink disabled:bg-taupe-100/50"
           >
             <option value="">
               {!values.provinceId
                 ? "Chọn Tỉnh trước"
                 : districtsLoading
                   ? "Đang tải..."
-                  : "Chọn Quận/Huyện"}
+                  : "Chọn Quận / Huyện"}
             </option>
             {districts.map((d) => (
               <option key={d.DistrictID} value={d.DistrictID}>
@@ -119,22 +122,22 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
         </div>
 
         <div className="md:col-span-1">
-          <label className="block text-xs font-medium text-taupe-700 mb-1">
-            Phường/Xã <span className="text-red-500">*</span>
+          <label className="block text-2xs uppercase tracking-wider font-bold text-luxury-ink mb-1.5">
+            Phường / Xã <span className="text-blush-600">*</span>
           </label>
           <select
             name="wardCode"
             value={values.wardCode}
             onChange={onWardChange}
             disabled={!values.districtId || wardsLoading}
-            className="w-full rounded-lg border border-border bg-white text-taupe-900 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary disabled:bg-taupe-100"
+            className="w-full h-10 rounded-[2px] border border-luxury-ink/20 bg-white text-luxury-ink px-3 text-xs outline-none focus:border-luxury-ink disabled:bg-taupe-100/50"
           >
             <option value="">
               {!values.districtId
-                ? "Chọn Quận trước"
+                ? "Chọn Huyện trước"
                 : wardsLoading
                   ? "Đang tải..."
-                  : "Chọn Phường/Xã"}
+                  : "Chọn Phường / Xã"}
             </option>
             {wards.map((w) => (
               <option key={w.WardCode} value={w.WardCode}>
@@ -147,26 +150,26 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
-          <label className="block text-xs font-medium text-taupe-700 mb-1">
-            Địa chỉ cụ thể (số nhà, đường){" "}
-            <span className="text-red-500">*</span>
+          <label className="block text-2xs uppercase tracking-wider font-bold text-luxury-ink mb-1.5">
+            Địa chỉ cụ thể (Số nhà, đường){" "}
+            <span className="text-blush-600">*</span>
           </label>
           <input
             type="text"
             name="address"
             value={values.address}
             onChange={onAddressChange}
-            placeholder="Ví dụ: 123 Nguyễn Trãi, phường 5..."
-            className="w-full rounded-lg border border-border bg-white text-taupe-900 placeholder:text-taupe-400 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary"
+            placeholder="Ví dụ: 123 Nguyễn Huệ, Phường Bến Nghé..."
+            className="w-full h-10 rounded-[2px] border border-luxury-ink/20 bg-white text-luxury-ink placeholder:text-neutral-400 px-3 text-xs outline-none focus:border-luxury-ink"
           />
           {errors.address && (
-            <p className="mt-1 text-xs text-red-600">{errors.address}</p>
+            <p className="mt-1 text-2xs text-blush-600">{errors.address}</p>
           )}
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-taupe-700 mb-1">
-            Số điện thoại <span className="text-red-500">*</span>
+          <label className="block text-2xs uppercase tracking-wider font-bold text-luxury-ink mb-1.5">
+            Số điện thoại liên hệ <span className="text-blush-600">*</span>
           </label>
           <input
             type="tel"
@@ -175,10 +178,10 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
             value={values.phoneNumber}
             onChange={onAddressChange}
             placeholder="VD: 0901234567"
-            className="w-full rounded-lg border border-border bg-white text-taupe-900 placeholder:text-taupe-400 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary"
+            className="w-full h-10 rounded-[2px] border border-luxury-ink/20 bg-white text-luxury-ink placeholder:text-neutral-400 px-3 text-xs outline-none focus:border-luxury-ink font-mono"
           />
           {errors.phoneNumber && (
-            <p className="mt-1 text-xs text-red-600">{errors.phoneNumber}</p>
+            <p className="mt-1 text-2xs text-blush-600">{errors.phoneNumber}</p>
           )}
         </div>
       </div>

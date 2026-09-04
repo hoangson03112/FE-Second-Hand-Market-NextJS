@@ -16,5 +16,4 @@ export interface BankFormData {
   bankName: string;
   accountNumber: string;
   accountHolder: string;
-  bankBin?: string;
 }

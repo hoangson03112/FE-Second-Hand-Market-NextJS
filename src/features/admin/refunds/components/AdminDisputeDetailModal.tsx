@@ -301,19 +301,19 @@ export function AdminDisputeDetailModal({
                 ].map(({ role, u, fallback, accent, bg }) => (
                   <div
                     key={role}
-                    className="flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-3"
+                    className="flex items-center gap-3 rounded-[2px] border border-luxury-ink/10 bg-white px-3.5 py-3 shadow-xs"
                   >
                     <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${bg}`}
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-[2px] ${bg}`}
                     >
-                      <IconUser className={`h-5 w-5 ${accent}`} stroke={1.5} />
+                      <IconUser className={`h-4 w-4 ${accent}`} stroke={1.5} />
                     </div>
                     <div className="min-w-0 flex-1">
                       <SectionLabel>{role}</SectionLabel>
-                      <p className="truncate font-medium text-foreground">
+                      <p className="truncate font-semibold text-xs text-luxury-ink">
                         {u?.fullName ?? "—"}
                       </p>
-                      <p className="truncate text-xs text-muted-foreground">
+                      <p className="truncate text-2xs text-neutral-500">
                         {u?.phoneNumber ?? u?.email ?? "—"}
                       </p>
                     </div>
@@ -327,7 +327,7 @@ export function AdminDisputeDetailModal({
                           order: orderInfo,
                         })
                       }
-                      className="shrink-0 rounded-lg border border-border bg-background px-2.5 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
+                      className="shrink-0 rounded-[2px] border border-luxury-ink/20 bg-white px-2.5 py-1.5 text-2xs font-bold uppercase tracking-wider text-luxury-ink transition-colors hover:bg-taupe-50"
                     >
                       <IconMessage className="mr-1 inline h-3.5 w-3.5 align-text-bottom" />
                       Chat
@@ -337,55 +337,55 @@ export function AdminDisputeDetailModal({
               </div>
 
 
-              <section className="rounded-xl border border-border bg-card">
-                <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-                  <IconPackage className="h-4 w-4 text-muted-foreground" />
-                  <h3 className="text-sm font-bold text-foreground">
+              <section className="rounded-[2px] border border-luxury-ink/10 bg-white shadow-xs">
+                <div className="flex items-center gap-2 border-b border-luxury-ink/10 bg-cream-50/50 px-4 py-3">
+                  <IconPackage className="h-4 w-4 text-luxury-ink" />
+                  <h3 className="font-droid-serif text-sm font-bold text-luxury-ink">
                     Yêu cầu hoàn tiền
                   </h3>
                 </div>
                 <div className="space-y-4 px-4 py-4">
                   <div>
                     <SectionLabel>Lý do</SectionLabel>
-                    <p className="mt-1 text-sm font-medium text-foreground">
+                    <p className="mt-1 text-sm font-medium text-luxury-ink">
                       {REASON_LABELS[refund.reason] ?? refund.reason}
                     </p>
                   </div>
                   {refund.description && (
                     <div>
                       <SectionLabel>Ghi chú từ người mua</SectionLabel>
-                      <p className="mt-1.5 rounded-lg bg-muted/50 px-3 py-2.5 text-sm leading-relaxed text-foreground">
+                      <p className="mt-1.5 rounded-[2px] bg-cream-50/70 border border-luxury-ink/8 px-3.5 py-2.5 text-xs leading-relaxed text-neutral-600">
                         {refund.description}
                       </p>
                     </div>
                   )}
                   {refund.sellerResponse && (
                     <div
-                      className={`flex gap-3 rounded-lg px-3 py-3 ${
+                      className={`flex gap-3 rounded-[2px] border px-3.5 py-3 ${
                         refund.sellerResponse.decision === "rejected"
-                          ? "bg-destructive/5"
-                          : "bg-emerald-500/10"
+                          ? "bg-blush-50/60 border-blush-200"
+                          : "bg-emerald-50/60 border-emerald-200"
                       }`}
                     >
                       {refund.sellerResponse.decision === "rejected" ? (
-                        <IconCircleX className="mt-0.5 h-5 w-5 shrink-0 text-destructive" />
+                        <IconCircleX className="mt-0.5 h-4 w-4 shrink-0 text-blush-600" />
                       ) : (
-                        <IconCircleCheck className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
+                        <IconCircleCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700" />
                       )}
                       <div className="min-w-0">
-                        <p className="text-sm font-medium text-foreground">
+                        <p className="text-xs font-bold uppercase tracking-wider text-luxury-ink">
                           Seller{" "}
                           {refund.sellerResponse.decision === "rejected"
                             ? "từ chối"
                             : "chấp thuận"}
                           {refund.sellerResponse.respondedAt && (
-                            <span className="ml-2 font-normal text-muted-foreground">
+                            <span className="ml-2 font-normal text-neutral-400 lowercase">
                               · {format(refund.sellerResponse.respondedAt)}
                             </span>
                           )}
                         </p>
                         {refund.sellerResponse.comment && (
-                          <p className="mt-1 text-sm text-muted-foreground">
+                          <p className="mt-1 text-xs text-neutral-600">
                             {refund.sellerResponse.comment}
                           </p>
                         )}
@@ -396,59 +396,55 @@ export function AdminDisputeDetailModal({
               </section>
 
               {refund.buyerRefundBankInfo?.buyerAccountNumber && (
-                <section className="overflow-hidden rounded-xl border border-primary/20 bg-primary/[0.03]">
-                  <div className="border-b border-primary/15 bg-primary/5 px-4 py-3 sm:flex sm:items-center sm:justify-between sm:gap-4">
+                <section className="overflow-hidden rounded-[2px] border border-luxury-ink/15 bg-cream-50/30 shadow-xs">
+                  <div className="border-b border-luxury-ink/10 bg-cream-50/70 px-4 py-3 sm:flex sm:items-center sm:justify-between sm:gap-4">
                     <div className="flex items-start gap-3">
-                      <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-primary">
-                        <IconQrcode className="h-5 w-5" stroke={1.5} />
+                      <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-[2px] bg-luxury-ink text-luxury-ivory">
+                        <IconQrcode className="h-4 w-4" stroke={1.5} />
                       </div>
                       <div>
-                        <h3 className="text-sm font-bold text-foreground">
-                          Bước tiếp theo: chuyển khoản
+                        <h3 className="font-droid-serif text-sm font-bold text-luxury-ink">
+                          Thông tin tài khoản hoàn tiền
                         </h3>
-                        <p className="mt-0.5 text-xs text-muted-foreground">
-                          Quét VietQR — app sẽ điền sẵn số tiền và nội dung.
-                          Chuyển đúng{" "}
-                          <span className="font-medium text-foreground">
+                        <p className="mt-0.5 text-2xs text-neutral-500">
+                          Quét mã VietQR hoặc chuyển khoản đúng số tiền{" "}
+                          <span className="font-bold text-luxury-ink font-mono">
                             {formatPrice(refund.refundAmount)}
                           </span>
-                          {buyerRefundQr?.transferContent
-                            ? " và nội dung bên dưới."
-                            : "."}
                         </p>
                       </div>
                     </div>
                   </div>
                   <div className="grid gap-6 p-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start lg:gap-8">
-                    <dl className="space-y-3 text-sm">
+                    <dl className="space-y-3 text-xs">
                       <div className="grid gap-0.5 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-x-4">
-                        <dt className="text-muted-foreground">Ngân hàng</dt>
-                        <dd className="font-medium text-foreground">
+                        <dt className="text-neutral-500">Ngân hàng</dt>
+                        <dd className="font-bold text-luxury-ink">
                           {refund.buyerRefundBankInfo.buyerBankName ?? "—"}
                         </dd>
                       </div>
                       <div className="grid gap-0.5 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-x-4">
-                        <dt className="text-muted-foreground">Số tài khoản</dt>
-                        <dd className="font-mono font-medium tracking-wide text-foreground">
+                        <dt className="text-neutral-500">Số tài khoản</dt>
+                        <dd className="font-mono font-bold text-luxury-ink">
                           {refund.buyerRefundBankInfo.buyerAccountNumber}
                         </dd>
                       </div>
                       <div className="grid gap-0.5 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-x-4">
-                        <dt className="text-muted-foreground">Chủ TK</dt>
-                        <dd className="font-medium text-foreground">
+                        <dt className="text-neutral-500">Chủ tài khoản</dt>
+                        <dd className="font-bold uppercase text-luxury-ink">
                           {refund.buyerRefundBankInfo.buyerAccountHolder ?? "—"}
                         </dd>
                       </div>
                       {buyerRefundQr?.transferContent && (
-                        <div className="border-t border-border/80 pt-3">
-                          <dt className="text-muted-foreground">Nội dung CK</dt>
-                          <dd className="mt-1 break-all font-mono text-sm font-medium text-foreground">
+                        <div className="border-t border-luxury-ink/10 pt-2.5">
+                          <dt className="text-neutral-500">Nội dung chuyển khoản</dt>
+                          <dd className="mt-1 break-all font-mono text-2xs font-bold text-luxury-ink bg-white p-2 rounded-[2px] border border-luxury-ink/8">
                             {buyerRefundQr.transferContent}
                           </dd>
                         </div>
                       )}
                       {refund.buyerRefundBankInfo.submittedAt && (
-                        <p className="text-xs text-muted-foreground pt-1">
+                        <p className="text-2xs text-neutral-400 pt-1">
                           Người mua gửi STK lúc{" "}
                           {format(refund.buyerRefundBankInfo.submittedAt)}
                         </p>
@@ -456,18 +452,18 @@ export function AdminDisputeDetailModal({
                     </dl>
                     {buyerRefundQr?.url && (
                       <div className="flex flex-col items-center lg:items-end">
-                        <div className="rounded-xl border border-border bg-white p-3 shadow-sm">
+                        <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-3 shadow-xs">
                           <Image
                             src={buyerRefundQr.url}
                             alt="Mã VietQR hoàn tiền"
-                            width={216}
-                            height={216}
-                            className="h-[200px] w-[200px] object-contain sm:h-[216px] sm:w-[216px]"
+                            width={200}
+                            height={200}
+                            className="h-[180px] w-[180px] object-contain"
                             unoptimized
                           />
                         </div>
-                        <p className="mt-2 max-w-[220px] text-center text-[11px] leading-snug text-muted-foreground lg:text-right">
-                          Lỗi QR? Chuyển thủ công theo thông tin bên trái.
+                        <p className="mt-1.5 max-w-[200px] text-center text-[10px] text-neutral-400 lg:text-right">
+                          Quét app ngân hàng để điền nhanh
                         </p>
                       </div>
                     )}
@@ -477,9 +473,9 @@ export function AdminDisputeDetailModal({
 
               <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
                 {order && (
-                  <section className="rounded-xl border border-border bg-card">
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-3">
-                      <h3 className="text-sm font-bold text-foreground">
+                  <section className="rounded-[2px] border border-luxury-ink/10 bg-white shadow-xs">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-luxury-ink/10 bg-cream-50/50 px-4 py-3">
+                      <h3 className="font-droid-serif text-sm font-bold text-luxury-ink">
                         Đơn #{order._id?.slice(-8).toUpperCase()}
                       </h3>
                       <OrderStatusBadge
@@ -487,33 +483,33 @@ export function AdminDisputeDetailModal({
                         size="sm"
                       />
                     </div>
-                    <div className="space-y-3 px-4 py-3">
+                    <div className="space-y-3 px-4 py-3 text-xs">
                       {(order.createdAt || order.updatedAt) && (
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-2xs text-neutral-400">
                           {order.createdAt && (
-                            <>Đặt {format(order.createdAt)}</>
+                            <>Đặt: {format(order.createdAt)}</>
                           )}
                           {order.createdAt && order.updatedAt && " · "}
                           {order.updatedAt && (
-                            <>Cập nhật {format(order.updatedAt)}</>
+                            <>Cập nhật: {format(order.updatedAt)}</>
                           )}
                         </p>
                       )}
                       {order.shippingAddress &&
                         typeof order.shippingAddress === "object" && (
-                          <div className="rounded-lg bg-muted/40 px-3 py-2.5 text-sm">
-                            <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-                              <IconMapPin className="h-3.5 w-3.5" /> Giao hàng
+                          <div className="rounded-[2px] bg-cream-50/70 border border-luxury-ink/8 px-3 py-2.5 text-xs">
+                            <p className="flex items-center gap-1.5 text-2xs font-bold uppercase tracking-wider text-neutral-500">
+                              <IconMapPin className="h-3.5 w-3.5 text-luxury-ink" /> Địa chỉ giao hàng
                             </p>
-                            <p className="mt-1 font-medium">
+                            <p className="mt-1 font-semibold text-luxury-ink">
                               {order.shippingAddress.fullName}
                             </p>
                             {order.shippingAddress.phoneNumber && (
-                              <p className="text-xs text-muted-foreground font-mono">
+                              <p className="text-2xs text-neutral-500 font-mono">
                                 {order.shippingAddress.phoneNumber}
                               </p>
                             )}
-                            <p className="mt-1 text-xs leading-relaxed text-foreground">
+                            <p className="mt-1 text-xs text-neutral-600">
                               {[
                                 order.shippingAddress.specificAddress,
                                 order.shippingAddress.ward,
@@ -525,7 +521,7 @@ export function AdminDisputeDetailModal({
                             </p>
                           </div>
                         )}
-                      <div className="divide-y divide-border">
+                      <div className="divide-y divide-luxury-ink/6">
                         {orderProducts.map((item, i) => {
                           const prod = item.productId as {
                             name?: string;
@@ -544,23 +540,23 @@ export function AdminDisputeDetailModal({
                               className="flex items-center gap-3 py-2.5 first:pt-0"
                             >
                               {imgUrl && (
-                                <div className="h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-muted">
+                                <div className="h-10 w-10 shrink-0 overflow-hidden rounded-[2px] bg-taupe-50 border border-luxury-ink/8">
                                   <Image
                                     src={imgUrl}
                                     alt=""
-                                    width={44}
-                                    height={44}
+                                    width={40}
+                                    height={40}
                                     className="h-full w-full object-cover"
                                   />
                                 </div>
                               )}
-                              <span className="min-w-0 flex-1 truncate text-sm">
+                              <span className="min-w-0 flex-1 truncate text-xs text-luxury-ink font-medium">
                                 {prod?.name ?? "Sản phẩm"}{" "}
-                                <span className="text-muted-foreground">
+                                <span className="text-neutral-400 font-mono">
                                   ×{item.quantity}
                                 </span>
                               </span>
-                              <span className="shrink-0 text-sm font-medium tabular-nums">
+                              <span className="shrink-0 text-xs font-bold font-droid-serif tabular-nums text-luxury-ink">
                                 {formatPrice(
                                   (item.price ?? 0) * (item.quantity ?? 1),
                                 )}
@@ -569,9 +565,9 @@ export function AdminDisputeDetailModal({
                           );
                         })}
                       </div>
-                      <div className="flex items-center justify-between border-t border-border pt-3 text-sm font-bold">
-                        <span className="text-muted-foreground">Tổng đơn</span>
-                        <span className="tabular-nums text-foreground">
+                      <div className="flex items-center justify-between border-t border-luxury-ink/10 pt-3 text-xs font-bold">
+                        <span className="text-neutral-500 uppercase tracking-wider text-2xs">Tổng đơn</span>
+                        <span className="font-droid-serif text-sm font-bold text-luxury-ink tabular-nums">
                           {formatPrice(order.totalAmount ?? 0)}
                         </span>
                       </div>
@@ -581,11 +577,11 @@ export function AdminDisputeDetailModal({
 
                 {((refund.evidence?.images?.length ?? 0) > 0 ||
                   (refund.evidence?.videos?.length ?? 0) > 0) && (
-                  <section className="rounded-xl border border-border bg-card">
-                    <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-                      <IconPhoto className="h-4 w-4 text-muted-foreground" />
-                      <h3 className="text-sm font-bold text-foreground">
-                        Bằng chứng
+                  <section className="rounded-[2px] border border-luxury-ink/10 bg-white shadow-xs">
+                    <div className="flex items-center gap-2 border-b border-luxury-ink/10 bg-cream-50/50 px-4 py-3">
+                      <IconPhoto className="h-4 w-4 text-luxury-ink" />
+                      <h3 className="font-droid-serif text-sm font-bold text-luxury-ink">
+                        Bằng chứng người mua
                       </h3>
                     </div>
                     <div className="px-4 py-3">
@@ -599,7 +595,7 @@ export function AdminDisputeDetailModal({
                                   href={img.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="group block aspect-square overflow-hidden rounded-lg border border-border transition-colors hover:border-primary"
+                                  className="group block aspect-square overflow-hidden rounded-[2px] border border-luxury-ink/10 bg-taupe-50"
                                 >
                                   <Image
                                     src={img.url}
@@ -608,7 +604,7 @@ export function AdminDisputeDetailModal({
                                     }
                                     width={120}
                                     height={120}
-                                    className="h-full w-full object-cover transition-transform group-hover:scale-[1.02]"
+                                    className="h-full w-full object-cover transition-transform group-hover:scale-105 duration-300"
                                   />
                                 </a>
                               ))}
@@ -624,15 +620,15 @@ export function AdminDisputeDetailModal({
                                 href={v.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-3 rounded-lg border border-border p-2.5 transition-colors hover:bg-muted/60"
+                                className="flex items-center gap-3 rounded-[2px] border border-luxury-ink/10 p-2.5 text-xs text-luxury-ink transition-colors hover:bg-taupe-50"
                               >
-                                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-primary/10">
-                                  <IconVideo className="h-4 w-4 text-primary" />
+                                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[2px] bg-cream-50 border border-luxury-ink/10">
+                                  <IconVideo className="h-4 w-4 text-luxury-ink" />
                                 </div>
-                                <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                                <span className="min-w-0 flex-1 truncate font-medium">
                                   {v.originalName ?? `Video ${i + 1}`}
                                 </span>
-                                <IconChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+                                <IconChevronRight className="h-4 w-4 shrink-0 text-neutral-400" />
                               </a>
                             ))}
                           </div>
@@ -643,14 +639,14 @@ export function AdminDisputeDetailModal({
               </div>
 
               {timelineItems.length > 0 && (
-                <section className="rounded-xl border border-border bg-card">
-                  <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-                    <IconClock className="h-4 w-4 text-muted-foreground" />
-                    <h3 className="text-sm font-bold text-foreground">
-                      Mốc thời gian
+                <section className="rounded-[2px] border border-luxury-ink/10 bg-white shadow-xs">
+                  <div className="flex items-center gap-2 border-b border-luxury-ink/10 bg-cream-50/50 px-4 py-3">
+                    <IconClock className="h-4 w-4 text-luxury-ink" />
+                    <h3 className="font-droid-serif text-sm font-bold text-luxury-ink">
+                      Tiến trình xử lý
                     </h3>
                   </div>
-                  <ul className="divide-y divide-border px-2 py-1">
+                  <ul className="divide-y divide-luxury-ink/6 px-3 py-1 text-xs">
                     {timelineItems.map((item, i) => (
                       <li
                         key={i}
@@ -660,10 +656,10 @@ export function AdminDisputeDetailModal({
                           <TimelineDot filled />
                         </span>
                         <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between sm:gap-4">
-                          <span className="text-sm text-muted-foreground">
+                          <span className="text-neutral-500">
                             {item.label}
                           </span>
-                          <time className="text-sm font-medium tabular-nums text-foreground">
+                          <time className="font-mono text-2xs text-luxury-ink font-semibold">
                             {format(item.value)}
                           </time>
                         </div>

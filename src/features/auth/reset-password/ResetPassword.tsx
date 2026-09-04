@@ -46,7 +46,7 @@ export default function ResetPassword() {
                   </p>
                 </div>
                 <div className="w-full">
-                  <div className="bg-white/90 backdrop-blur-md border border-gray-100 rounded-3xl shadow-2xl shadow-taupe-900/10 p-8 sm:p-10 lg:p-12 space-y-8">
+                  <div className="bg-white/90 backdrop-blur-md border border-luxury-ink/10 rounded-[2px] shadow-sm p-8 sm:p-10 lg:p-12 space-y-8">
                     <div className="space-y-1 text-center">
                       <h2 style={{ fontWeight: 300, lineHeight: 1.05, letterSpacing: "-0.03em" }} className="font-droid-serif text-4xl mb-8 text-luxury-ink">Liên kết đặt lại đã hết hạn</h2>
                       <p className="text-taupe-600">Bạn có thể yêu cầu một liên kết mới để tiếp tục đổi mật khẩu.</p>
@@ -89,7 +89,7 @@ export default function ResetPassword() {
                 <div className="space-y-6 hidden md:block">
                   {resetPasswordFeatures.map((feature, idx) => (
                     <div key={idx} className="flex items-start gap-4">
-                      <div className="flex-shrink-0 w-6 h-6 rounded-full border border-foreground/20 flex items-center justify-center mt-0.5 text-foreground">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-[2px] border border-foreground/20 flex items-center justify-center mt-0.5 text-foreground">
                         <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
@@ -111,7 +111,7 @@ export default function ResetPassword() {
                     <Image src="https://res.cloudinary.com/dqvtj4uxo/image/upload/v1755696284/logi_ov2gbl.png" alt="Eco Market" width={100} height={100} className="h-16 w-auto" priority />
                   </Link>
                 </div>
-                <div className="bg-white/90 backdrop-blur-md border border-gray-100 rounded-3xl shadow-2xl shadow-taupe-900/10 p-8 sm:p-10 lg:p-12 space-y-8">
+                <div className="bg-white/90 backdrop-blur-md border border-luxury-ink/10 rounded-[2px] shadow-sm p-8 sm:p-10 lg:p-12 space-y-8">
                   <div className="space-y-1 text-center">
                     <h2 style={{ fontWeight: 300, lineHeight: 1.05, letterSpacing: "-0.03em" }} className="font-droid-serif text-4xl mb-8 text-luxury-ink">
                       {isSuccess ? "Đổi mật khẩu thành công" : "Đặt mật khẩu mới"}

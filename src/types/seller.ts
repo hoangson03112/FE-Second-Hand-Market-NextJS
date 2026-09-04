@@ -37,7 +37,6 @@ export interface SellerBankInfo {
   bankName: string;
   accountNumber: string;
   accountHolder: string;
-  bankBin?: string | null;
 }
 
 export interface SellerInfoResponse {
@@ -55,6 +54,4 @@ export interface UpdateBankInfoPayload {
   bankName: string;
   accountNumber: string;
   accountHolder: string;
-
-  bankBin?: string;
 }

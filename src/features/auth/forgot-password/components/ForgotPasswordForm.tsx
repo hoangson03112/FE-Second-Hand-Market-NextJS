@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import InfoBox from "@/features/auth/components/InfoBox";
-import { IconArrowRight, IconMail } from "@tabler/icons-react";
+import { IconArrowRight, IconMail, IconShieldLock } from "@tabler/icons-react";
 
 interface ForgotPasswordFormProps {
   email: string;
@@ -18,12 +18,13 @@ export default function ForgotPasswordForm({
 }: ForgotPasswordFormProps) {
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
-      <div className="rounded-2xl border border-taupe-200/70 bg-gradient-to-r from-cream-50 to-taupe-50 p-4 sm:p-5">
-        <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-taupe-500">
+      <div className="rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 p-4">
+        <p className="text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ink flex items-center gap-1.5">
+          <IconShieldLock className="w-3.5 h-3.5 text-luxury-ink" />
           Bảo mật tài khoản
         </p>
-        <p className="mt-2 text-[14px] leading-relaxed text-taupe-700">
-          Nhập email đã đăng ký để nhận liên kết đặt lại mật khẩu. Liên kết chỉ
+        <p className="mt-1.5 text-xs leading-relaxed text-neutral-600">
+          Nhập email đã đăng ký để nhận liên kết đặt lại mật khẩu an toàn. Liên kết chỉ
           có hiệu lực trong 15 phút.
         </p>
       </div>
@@ -31,13 +32,13 @@ export default function ForgotPasswordForm({
       <div className="space-y-2">
         <label
           htmlFor="email"
-          className="block text-[14px] font-bold text-taupe-900"
+          className="block text-[11px] uppercase tracking-wider font-bold text-luxury-ink"
         >
-          Email đã đăng ký <span className="text-destructive ml-1">*</span>
+          Email đã đăng ký <span className="text-blush-600 ml-0.5">*</span>
         </label>
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <IconMail className="h-5 w-5" />
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
+            <IconMail className="h-4 w-4" />
           </div>
           <Input
             id="email"
@@ -47,39 +48,34 @@ export default function ForgotPasswordForm({
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               onEmailChange(e.target.value)
             }
-            placeholder="VD: email@example.com"
+            placeholder="VD: name@domain.com"
             required
-            className="pl-12 pr-4 py-6 border-foreground/20 focus-visible:border-foreground focus-visible:ring-foreground/10 transition-all text-foreground bg-transparent placeholder:text-foreground/40 text-[15px] rounded-xl"
+            className="pl-10 h-11 text-xs"
           />
         </div>
       </div>
 
-      <InfoBox variant="warning" title="Lưu ý bảo mật">
-        Liên kết đặt lại mật khẩu sẽ được gửi đến email của bạn và{" "}
-        <strong>hết hạn sau 15 phút</strong>.
+      <InfoBox variant="warning" title="Lưu ý bảo mật:">
+        Liên kết khôi phục chỉ được kích hoạt một lần duy nhất và sẽ tự động hết hạn sau 15 phút kể từ lúc gửi.
       </InfoBox>
 
       <button
         type="submit"
         disabled={isLoading}
-        className="group relative flex w-full items-center justify-center px-12 py-4 text-sm font-medium uppercase tracking-[0.25em] text-background bg-foreground transition-all duration-300 hover:scale-[1.02] disabled:opacity-70 disabled:hover:scale-100"
-        style={{ borderRadius: "3px" }}
+        className="w-full h-11 px-8 rounded-[2px] bg-luxury-ink text-luxury-ivory uppercase tracking-[0.15em] text-xs font-bold hover:bg-charcoal-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all inline-flex items-center justify-center gap-2"
       >
-        <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md rounded-lg" />
-        <span className="relative z-10 flex items-center gap-2">
-          {isLoading ? "Đang xử lý..." : "Gửi liên kết đặt lại"}
-          {!isLoading && <IconArrowRight className="w-5 h-5" />}
-        </span>
+        <span>{isLoading ? "Đang gửi yêu cầu..." : "Gửi liên kết đặt lại"}</span>
+        {!isLoading && <IconArrowRight className="w-4 h-4" />}
       </button>
 
-      <p className="text-center text-[15px] text-taupe-600">
-        Nhớ mật khẩu rồi?{" "}
+      <p className="text-center text-xs text-neutral-500">
+        Bạn đã nhớ lại mật khẩu?{" "}
         <Link
           href="/login"
-          className="font-bold text-primary hover:text-primary/80 inline-flex items-center gap-1.5 transition-colors"
+          className="font-bold text-luxury-ink hover:underline inline-flex items-center gap-1 transition-colors"
         >
           Đăng nhập ngay
-          <IconArrowRight className="w-4 h-4" />
+          <IconArrowRight className="w-3.5 h-3.5" />
         </Link>
       </p>
     </form>

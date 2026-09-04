@@ -69,42 +69,49 @@ export function BannedOverlay() {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-luxury-ink/60 backdrop-blur-sm"
       role="alertdialog"
       aria-modal="true"
       aria-labelledby="banned-title"
     >
-      <div className="mx-4 w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
+      <div className="mx-4 w-full max-w-md rounded-[2px] border border-luxury-ink/10 bg-white p-6 sm:p-8 shadow-2xl">
         {step === "main" && (
           <>
             <div className="mb-6 flex justify-center">
-              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-4xl">
+              <span className="flex h-14 w-14 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-cream-50 text-2xl">
                 🔒
               </span>
             </div>
-            <h1
-              id="banned-title"
-              className="font-droid-serif mb-2 text-center text-xl font-medium text-gray-900"
-            >
-              Tài khoản đã bị khóa
-            </h1>
-            <p className="mb-6 text-center text-gray-600">
-              Tài khoản của bạn đã bị quản trị viên khóa. Bạn không thể thực
-              hiện thao tác trên trang. Nếu cho rằng đây là nhầm lẫn, vui lòng
-              gửi khiếu nại đến quản trị viên.
-            </p>
+            <div className="text-center mb-6 space-y-2">
+              <div className="inline-flex items-center gap-2">
+                <span className="h-px w-6 bg-luxury-champagne/80" />
+                <span className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
+                  Cảnh báo an ninh
+                </span>
+                <span className="h-px w-6 bg-luxury-champagne/80" />
+              </div>
+              <h1
+                id="banned-title"
+                className="font-droid-serif text-xl sm:text-2xl font-bold text-luxury-ink"
+              >
+                Tài khoản đã bị tạm khóa
+              </h1>
+              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                Tài khoản của bạn đã bị quản trị viên khóa do phát hiện vi phạm quy chế hoặc yêu cầu kiểm tra an toàn. Nếu cho rằng đây là nhầm lẫn, vui lòng gửi khiếu nại tới ban quản trị.
+              </p>
+            </div>
             <div className="flex flex-col gap-3">
               <button
                 type="button"
                 onClick={handleOpenAppealForm}
-                className="inline-flex justify-center rounded-xl bg-amber-700 px-4 py-3 font-medium text-white transition hover:bg-amber-800"
+                className="inline-flex justify-center items-center rounded-[2px] bg-luxury-ink px-4 py-3 text-2xs font-bold uppercase tracking-[0.14em] text-luxury-ivory hover:bg-charcoal-800 transition-all"
               >
-                Gửi khiếu nại lên quản trị viên
+                Gửi khiếu nại lên ban quản trị
               </button>
               <button
                 type="button"
                 onClick={handleGoToLogin}
-                className="rounded-xl border border-gray-300 bg-white px-4 py-3 font-medium text-gray-700 transition hover:bg-gray-50"
+                className="inline-flex justify-center items-center rounded-[2px] border border-luxury-ink/15 bg-white px-4 py-3 text-2xs font-bold uppercase tracking-[0.14em] text-luxury-ink hover:bg-taupe-50 transition-all"
               >
                 Về trang đăng nhập
               </button>
@@ -114,73 +121,86 @@ export function BannedOverlay() {
 
         {step === "form" && (
           <>
-            <h2 className="mb-4 text-center text-lg font-medium font-droid-serif text-gray-900">
-              Gửi khiếu nại
-            </h2>
+            <div className="text-center mb-6">
+              <div className="inline-flex items-center gap-2 mb-1">
+                <span className="h-px w-6 bg-luxury-champagne/80" />
+                <span className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
+                  Giải quyết khiếu nại
+                </span>
+                <span className="h-px w-6 bg-luxury-champagne/80" />
+              </div>
+              <h2 className="font-droid-serif text-xl font-bold text-luxury-ink">
+                Gửi Đơn Khiếu Nại
+              </h2>
+            </div>
             <form onSubmit={handleSubmitAppeal} className="flex flex-col gap-4">
               <div>
                 <label
                   htmlFor="appeal-email"
-                  className="mb-1 block text-sm font-medium text-gray-700"
+                  className="mb-1 block text-2xs font-bold uppercase tracking-[0.14em] text-neutral-600"
                 >
-                  Email <span className="text-red-500">*</span>
+                  Email đăng ký <span className="text-blush-600">*</span>
                 </label>
                 <input
                   id="appeal-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-amber-600 focus:outline-none focus:ring-1 focus:ring-amber-600"
-                  placeholder="email@example.com"
+                  className="w-full rounded-[2px] border border-luxury-ink/15 bg-white px-3.5 py-2 text-xs text-luxury-ink focus:border-luxury-ink focus:outline-none"
+                  placeholder="email@vidu.com"
                   required
                 />
               </div>
               <div>
                 <label
                   htmlFor="appeal-fullName"
-                  className="mb-1 block text-sm font-medium text-gray-700"
+                  className="mb-1 block text-2xs font-bold uppercase tracking-[0.14em] text-neutral-600"
                 >
-                  Họ tên
+                  Họ và tên
                 </label>
                 <input
                   id="appeal-fullName"
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-amber-600 focus:outline-none focus:ring-1 focus:ring-amber-600"
+                  className="w-full rounded-[2px] border border-luxury-ink/15 bg-white px-3.5 py-2 text-xs text-luxury-ink focus:border-luxury-ink focus:outline-none"
                   placeholder="Nguyễn Văn A"
                 />
               </div>
               <div>
                 <label
                   htmlFor="appeal-message"
-                  className="mb-1 block text-sm font-medium text-gray-700"
+                  className="mb-1 block text-2xs font-bold uppercase tracking-[0.14em] text-neutral-600"
                 >
-                  Nội dung khiếu nại <span className="text-red-500">*</span>
+                  Nội dung giải trình <span className="text-blush-600">*</span>
                 </label>
                 <textarea
                   id="appeal-message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={4}
-                  className="w-full resize-none rounded-lg border border-gray-300 px-3 py-2 focus:border-amber-600 focus:outline-none focus:ring-1 focus:ring-amber-600"
+                  className="w-full resize-none rounded-[2px] border border-luxury-ink/15 bg-white px-3.5 py-2 text-xs text-luxury-ink focus:border-luxury-ink focus:outline-none"
                   placeholder="Mô tả lý do bạn cho rằng việc khóa tài khoản là nhầm lẫn..."
                   required
                 />
               </div>
-              {error && <p className="text-sm text-red-600">{error}</p>}
-              <div className="flex gap-2">
+              {error && (
+                <p className="text-xs font-semibold text-rose-700 bg-rose-50 p-2.5 rounded-[2px] border border-rose-200">
+                  {error}
+                </p>
+              )}
+              <div className="flex gap-2 pt-2">
                 <button
                   type="button"
                   onClick={handleBackFromForm}
-                  className="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-3 font-medium text-gray-700 hover:bg-gray-50"
+                  className="flex-1 rounded-[2px] border border-luxury-ink/15 bg-white px-4 py-2.5 text-2xs font-bold uppercase tracking-[0.14em] text-luxury-ink hover:bg-taupe-50"
                 >
                   Quay lại
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 rounded-xl bg-amber-700 px-4 py-3 font-bold text-white hover:bg-amber-800 disabled:opacity-50"
+                  className="flex-1 rounded-[2px] bg-luxury-ink px-4 py-2.5 text-2xs font-bold uppercase tracking-[0.14em] text-luxury-ivory hover:bg-charcoal-800 disabled:opacity-50"
                 >
                   {loading ? "Đang gửi..." : "Gửi khiếu nại"}
                 </button>
@@ -192,29 +212,30 @@ export function BannedOverlay() {
         {step === "success" && (
           <>
             <div className="mb-4 flex justify-center">
-              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-4xl">
+              <span className="flex h-14 w-14 items-center justify-center rounded-[2px] bg-cream-50 border border-luxury-ink/10 text-accent text-2xl font-bold">
                 ✓
               </span>
             </div>
-            <h2 className="mb-2 text-center text-lg font-bold text-gray-900">
-              Đã gửi khiếu nại
-            </h2>
-            <p className="mb-6 text-center text-gray-600">
-              Chúng tôi đã nhận được khiếu nại của bạn và sẽ xem xét, liên hệ
-              lại qua email trong thời gian sớm nhất.
-            </p>
+            <div className="text-center mb-6 space-y-2">
+              <h2 className="font-droid-serif text-xl font-bold text-luxury-ink">
+                Đã Gửi Đơn Khiếu Nại
+              </h2>
+              <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                Ban Quản Trị đã nhận được đơn của bạn và sẽ tiến hành kiểm tra lại lịch sử hoạt động, phản hồi qua email trong vòng 24 giờ.
+              </p>
+            </div>
             <div className="flex flex-col gap-3">
               <button
                 type="button"
                 onClick={handleBackFromForm}
-                className="rounded-xl border border-gray-300 bg-white px-4 py-3 font-medium text-gray-700 hover:bg-gray-50"
+                className="rounded-[2px] border border-luxury-ink/15 bg-white px-4 py-3 text-2xs font-bold uppercase tracking-[0.14em] text-luxury-ink hover:bg-taupe-50"
               >
-                Quay lại
+                Gửi thêm giải trình
               </button>
               <button
                 type="button"
                 onClick={handleGoToLogin}
-                className="rounded-xl bg-amber-700 px-4 py-3 font-bold text-white hover:bg-amber-800"
+                className="rounded-[2px] bg-luxury-ink px-4 py-3 text-2xs font-bold uppercase tracking-[0.14em] text-luxury-ivory hover:bg-charcoal-800"
               >
                 Về trang đăng nhập
               </button>

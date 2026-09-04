@@ -45,24 +45,24 @@ export default function SubcategoryList({
   }, [normalizedSubSearch, subcategories]);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2.5">
       <div className="flex items-center justify-between gap-2">
-        <p className="text-xs font-medium text-muted-foreground">
+        <p className="text-2xs font-bold uppercase tracking-[0.14em] text-neutral-500">
           Danh mục con ({subcategories.length})
         </p>
-        <div className="flex items-center gap-1 rounded-lg border border-border bg-background px-2 py-1">
-          <IconSearch className="h-3.5 w-3.5 text-muted-foreground" />
+        <div className="flex items-center gap-1.5 rounded-[2px] border border-luxury-ink/15 bg-white px-2.5 py-1">
+          <IconSearch className="h-3.5 w-3.5 text-neutral-400" />
           <input
             type="text"
             placeholder="Tìm theo tên..."
-            className="bg-transparent text-[11px] outline-none border-none placeholder:text-muted-foreground"
+            className="bg-transparent text-xs outline-none border-none placeholder:text-neutral-400 text-luxury-ink"
             value={subSearch}
             onChange={(e) => setSubSearch(e.target.value)}
           />
         </div>
       </div>
       {filteredSubs.length ? (
-        <div className="space-y-1 max-h-64 overflow-y-auto pr-1">
+        <div className="space-y-1.5 max-h-64 overflow-y-auto pr-1">
           {filteredSubs.map((sub) => (
             <SubcategoryItem
               key={sub._id}
@@ -81,8 +81,8 @@ export default function SubcategoryList({
           ))}
         </div>
       ) : (
-        <p className="text-[11px] text-muted-foreground">
-          Chưa có danh mục con nào cho danh mục này.
+        <p className="text-xs text-neutral-400 italic">
+          Chưa có danh mục con nào.
         </p>
       )}
     </div>

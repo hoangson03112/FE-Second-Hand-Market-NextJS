@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { Input } from "@/components/ui/input";
 import InfoBox from "@/features/auth/components/InfoBox";
-import { IconArrowRight } from "@tabler/icons-react";
+import { IconArrowRight, IconLock, IconEye, IconEyeOff, IconShieldCheck } from "@tabler/icons-react";
 
 interface ResetPasswordFormProps {
   newPassword: string;
@@ -26,13 +26,13 @@ export default function ResetPasswordForm({
 
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
-      <div className="rounded-2xl border border-taupe-200/70 bg-gradient-to-r from-cream-50 to-taupe-50 p-4 sm:p-5">
-        <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-taupe-500">
-          Cập nhật bảo mật
+      <div className="rounded-[2px] border border-luxury-ink/10 bg-cream-50/70 p-4">
+        <p className="text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ink flex items-center gap-1.5">
+          <IconShieldCheck className="w-3.5 h-3.5 text-luxury-ink" />
+          Cập nhật mật khẩu mới
         </p>
-        <p className="mt-2 text-[14px] leading-relaxed text-taupe-700">
-          Tạo mật khẩu mới để bảo vệ tài khoản của bạn tốt hơn. Ưu tiên mật khẩu
-          mạnh, khó đoán.
+        <p className="mt-1.5 text-xs leading-relaxed text-neutral-600">
+          Vui lòng thiết lập mật khẩu mới có độ bảo mật cao để bảo vệ tài khoản giao dịch của bạn.
         </p>
       </div>
 
@@ -40,25 +40,13 @@ export default function ResetPasswordForm({
         <div className="space-y-2">
           <label
             htmlFor="newPassword"
-            className="block text-[14px] font-bold text-taupe-900"
+            className="block text-[11px] uppercase tracking-wider font-bold text-luxury-ink"
           >
-            Mật khẩu mới <span className="text-destructive ml-1">*</span>
+            Mật khẩu mới <span className="text-blush-600 ml-0.5">*</span>
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-foreground">
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                />
-              </svg>
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
+              <IconLock className="h-4 w-4" />
             </div>
             <Input
               id="newPassword"
@@ -70,48 +58,15 @@ export default function ResetPasswordForm({
               }
               placeholder="Tối thiểu 6 ký tự"
               required
-              className="pl-12 pr-12 py-6 border-foreground/20 focus-visible:border-foreground focus-visible:ring-foreground/10 transition-all text-foreground bg-transparent placeholder:text-foreground/40 text-[15px] rounded-xl"
+              className="pl-10 pr-10 h-11 text-xs"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-0 pr-4 flex items-center text-foreground hover:text-primary transition-colors"
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-neutral-400 hover:text-luxury-ink transition-colors"
               aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
             >
-              {showPassword ? (
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.29 3.29m0 0L3 12m3.29-5.71L12 12"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
-                </svg>
-              )}
+              {showPassword ? <IconEyeOff className="h-4 w-4" /> : <IconEye className="h-4 w-4" />}
             </button>
           </div>
         </div>
@@ -119,25 +74,13 @@ export default function ResetPasswordForm({
         <div className="space-y-2">
           <label
             htmlFor="confirmPassword"
-            className="block text-[14px] font-bold text-taupe-900"
+            className="block text-[11px] uppercase tracking-wider font-bold text-luxury-ink"
           >
-            Xác nhận mật khẩu <span className="text-destructive ml-1">*</span>
+            Xác nhận mật khẩu mới <span className="text-blush-600 ml-0.5">*</span>
           </label>
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-foreground">
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                />
-              </svg>
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-400">
+              <IconLock className="h-4 w-4" />
             </div>
             <Input
               id="confirmPassword"
@@ -149,79 +92,41 @@ export default function ResetPasswordForm({
               }
               placeholder="Nhập lại mật khẩu mới"
               required
-              className="pl-12 pr-12 py-6 border-foreground/20 focus-visible:border-foreground focus-visible:ring-foreground/10 transition-all text-foreground bg-transparent placeholder:text-foreground/40 text-[15px] rounded-xl"
+              className="pl-10 pr-10 h-11 text-xs"
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute inset-y-0 right-0 pr-4 flex items-center text-foreground hover:text-primary transition-colors"
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-neutral-400 hover:text-luxury-ink transition-colors"
               aria-label={showConfirmPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
             >
-              {showConfirmPassword ? (
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.29 3.29m0 0L3 12m3.29-5.71L12 12"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  />
-                </svg>
-              )}
+              {showConfirmPassword ? <IconEyeOff className="h-4 w-4" /> : <IconEye className="h-4 w-4" />}
             </button>
           </div>
         </div>
       </div>
 
-      <InfoBox variant="info" title="Mẹo bảo mật">
-        Sử dụng mật khẩu mạnh với ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường
-        và số.
+      <InfoBox variant="info" title="Khuyến nghị an toàn:">
+        Nên sử dụng kết hợp chữ in hoa, chữ thường, chữ số và ký tự đặc biệt để tối ưu hóa độ an toàn.
       </InfoBox>
 
       <button
         type="submit"
         disabled={isLoading}
-        className="group relative flex w-full items-center justify-center px-12 py-4 text-sm font-medium uppercase tracking-[0.25em] text-background bg-foreground transition-all duration-300 hover:scale-[1.02] disabled:opacity-70 disabled:hover:scale-100"
-        style={{ borderRadius: "3px" }}
+        className="w-full h-11 px-8 rounded-[2px] bg-luxury-ink text-luxury-ivory uppercase tracking-[0.15em] text-xs font-bold hover:bg-charcoal-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all inline-flex items-center justify-center gap-2"
       >
-        <div className="absolute inset-0 bg-foreground/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-md rounded-lg" />
-        <span className="relative z-10 flex items-center gap-2">
-          {isLoading ? "Đang xử lý..." : "Đổi mật khẩu"}
-          {!isLoading && <IconArrowRight className="w-5 h-5" />}
-        </span>
+        <span>{isLoading ? "Đang lưu thay đổi..." : "Lưu mật khẩu mới"}</span>
+        {!isLoading && <IconArrowRight className="w-4 h-4" />}
       </button>
 
-      <p className="text-center text-[15px] text-taupe-600">
-        Nhớ mật khẩu rồi?{" "}
+      <p className="text-center text-xs text-neutral-500">
+        Bạn đã nhớ lại mật khẩu?{" "}
         <Link
           href="/login"
-          className="font-bold text-primary hover:text-primary/80 inline-flex items-center gap-1.5 transition-colors"
+          className="font-bold text-luxury-ink hover:underline inline-flex items-center gap-1 transition-colors"
         >
           Đăng nhập ngay
-          <IconArrowRight className="w-4 h-4" />
+          <IconArrowRight className="w-3.5 h-3.5" />
         </Link>
       </p>
     </form>

@@ -41,25 +41,23 @@ export function BankInfoForm({
       <div className="px-6 py-6 border-b border-luxury-ink/10">
         <h2 className="font-droid-serif text-2xl text-luxury-ink flex items-center gap-2">
           <IconBuildingBank className="w-6 h-6 text-luxury-ink" />
-          Thông tin ngân hàng
+          Tài khoản nhận tiền (Ngân hàng)
         </h2>
-        <p className="text-2xs uppercase tracking-[0.15em] font-bold text-taupe-500 mt-2">
-          Tài khoản nhận tiền khi bán hàng. Chỉ hiển thị và chỉnh sửa được với
-          tài khoản Seller.
+        <p className="text-2xs uppercase tracking-[0.15em] font-bold text-neutral-500 mt-2">
+          Thông tin nhận tiền chuyển khoản từ Ban Quản Trị sau khi đơn hàng bán hoàn thành.
         </p>
       </div>
 
       <div className="p-6 lg:p-8">
-        <div className="p-4 rounded-[2px] bg-taupe-50/50 border border-luxury-ink/10 mb-6">
+        <div className="p-4 rounded-[2px] bg-cream-50/70 border border-luxury-ink/10 mb-6">
           <div className="flex gap-3">
-            <IconAlertCircle className="w-5 h-5 text-luxury-ink shrink-0 mt-0.5" />
+            <IconAlertCircle className="w-5 h-5 text-accent shrink-0 mt-0.5" />
             <div>
               <h4 className="text-xs uppercase tracking-wide font-bold text-luxury-ink">
-                Lưu ý
+                Lưu ý quan trọng
               </h4>
-              <p className="text-xs text-luxury-ink/80 mt-1">
-                Thông tin ngân hàng dùng để nhận thanh toán từ người mua. Đảm
-                bảo nhập chính xác để tránh sai lệch.
+              <p className="text-xs text-neutral-600 mt-1">
+                Ban Quản Trị sẽ dùng thông tin tài khoản này để quét mã VietQR và chuyển khoản tiền bán sản phẩm sau khi đơn hàng giao thành công. Vui lòng kiểm tra kỹ số tài khoản và tên chủ thẻ.
               </p>
             </div>
           </div>

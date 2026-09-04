@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   Breadcrumb,
   ProfileSidebar,
@@ -13,8 +14,18 @@ import { useProfile, usePasswordChange, useSellerBank } from "./hooks";
 import { getAvatarUrl } from "@/utils";
 import type { TabId } from "./types";
 
-export default function Profile() {
-  const [activeTab, setActiveTab] = useState<TabId>("profile");
+function ProfileContent() {
+  const searchParams = useSearchParams();
+  const tabQuery = searchParams.get("tab") as TabId | null;
+  const [activeTab, setActiveTab] = useState<TabId>(
+    tabQuery === "bank" || tabQuery === "password" ? tabQuery : "profile"
+  );
+
+  useEffect(() => {
+    if (tabQuery === "bank" || tabQuery === "password" || tabQuery === "profile") {
+      setActiveTab(tabQuery);
+    }
+  }, [tabQuery]);
 
   const {
     account,
@@ -86,7 +97,7 @@ export default function Profile() {
               />
             )}
 
-            {activeTab === "bank" && account.role === "seller" && (
+            {activeTab === "bank" && (
               <BankInfoForm
                 formData={bankFormData}
                 isSubmitting={isBankSubmitting}
@@ -99,5 +110,13 @@ export default function Profile() {
         </main>
       </div>
     </div>
+  );
+}
+
+export default function Profile() {
+  return (
+    <Suspense fallback={<LoadingState />}>
+      <ProfileContent />
+    </Suspense>
   );
 }

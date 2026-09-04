@@ -18,7 +18,7 @@ export function Section({
   return (
     <section
       className={cn(
-        "rounded-lg",
+        "rounded-[2px]",
         withBackground && "bg-card shadow-sm",
         withBorder && "border border-border",
         className

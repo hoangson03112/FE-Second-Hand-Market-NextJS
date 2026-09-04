@@ -94,7 +94,7 @@ export function NotificationDropdown() {
         type="button"
         aria-label="Thông báo"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex relative items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full transition-all duration-150 text-muted-foreground hover:text-foreground hover:bg-primary/10"
+        className="flex relative items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-[2px] transition-all duration-150 text-muted-foreground hover:text-foreground hover:bg-primary/10"
       >
         <IconBell className="w-[17px] h-[17px]" />
         {unreadCount > 0 && (
@@ -102,7 +102,7 @@ export function NotificationDropdown() {
             className="absolute top-0 right-0 min-w-[16px] h-4 flex items-center justify-center text-white text-[9px] font-bold pointer-events-none"
             style={{
               background: "oklch(0.48 0.12 35)",
-              borderRadius: "20px",
+              borderRadius: "2px",
               border: "1.5px solid var(--background)",
               padding: "0 3px",
               boxShadow: "0 1px 4px oklch(0.48 0.12 35 / 0.4)",
@@ -123,7 +123,7 @@ export function NotificationDropdown() {
             }}
           >
             <div className="flex items-center gap-2.5 min-w-0">
-              <span className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 bg-primary/15 text-primary">
+              <span className="w-7 h-7 rounded-[2px] border border-luxury-ink/10 flex items-center justify-center shrink-0 bg-primary/15 text-primary">
                 <IconBell className="w-4 h-4" />
               </span>
               <div>
@@ -139,7 +139,7 @@ export function NotificationDropdown() {
               </div>
             </div>
 
-            <span className="text-2xs font-bold px-2 py-1 rounded-full bg-primary/10 text-primary">
+            <span className="text-2xs font-bold px-2 py-1 rounded-[2px] border border-luxury-ink/10 bg-white text-neutral-600">
               Mới nhất
             </span>
           </div>
@@ -155,7 +155,7 @@ export function NotificationDropdown() {
           <div className="overflow-y-auto p-1.5">
             {visibleNotifications.length === 0 ? (
               <div className="py-12 flex flex-col items-center justify-center text-center px-6">
-                <span className="w-12 h-12 rounded-full flex items-center justify-center mb-3 bg-secondary text-muted-foreground">
+                <span className="w-12 h-12 rounded-[2px] border border-luxury-ink/10 flex items-center justify-center mb-3 bg-cream-50 text-neutral-400">
                   <IconBell className="w-6 h-6" />
                 </span>
                 <p className="font-bold text-sm text-foreground">
@@ -185,10 +185,10 @@ export function NotificationDropdown() {
                           metadata,
                         })
                       }
-                      className="w-full text-left block rounded-lg p-3 transition-colors duration-200 group bg-card hover:bg-primary/10"
+                      className="w-full text-left block rounded-[2px] p-3 transition-colors duration-200 group bg-card hover:bg-primary/10"
                     >
                       <div className="flex items-start justify-between gap-2.5">
-                        <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15">
+                        <span className="w-8 h-8 rounded-[2px] border border-luxury-ink/10 flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15">
                           {getNotificationIcon(item.type)}
                         </span>
                         <div className="min-w-0 flex-1">
@@ -213,10 +213,10 @@ export function NotificationDropdown() {
                       key={item.id}
                       href={item.link}
                       onClick={() => setIsOpen(false)}
-                      className="block rounded-lg p-3 transition-colors duration-200 group bg-card hover:bg-primary/10"
+                      className="block rounded-[2px] p-3 transition-colors duration-200 group bg-card hover:bg-primary/10"
                     >
                       <div className="flex items-start gap-2.5">
-                        <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15">
+                        <span className="w-8 h-8 rounded-[2px] border border-luxury-ink/10 flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15">
                           {getNotificationIcon(item.type)}
                         </span>
                         <div className="min-w-0 flex-1">
@@ -238,10 +238,10 @@ export function NotificationDropdown() {
                 return (
                   <div
                     key={item.id}
-                    className="w-full text-left rounded-lg p-3 transition-colors duration-200 group bg-card hover:bg-primary/10"
+                    className="w-full text-left rounded-[2px] p-3 transition-colors duration-200 group bg-card hover:bg-primary/10"
                   >
                     <div className="flex items-start gap-2.5">
-                      <span className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15">
+                      <span className="w-8 h-8 rounded-[2px] border border-luxury-ink/10 flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15">
                         {getNotificationIcon(item.type)}
                       </span>
                       <div className="min-w-0 flex-1">
@@ -262,7 +262,7 @@ export function NotificationDropdown() {
             )}
 
             {hasMoreNotifications && (
-              <div className="mx-2 mt-1 mb-2 rounded-lg px-3 py-2 text-center bg-primary/5">
+              <div className="mx-2 mt-1 mb-2 rounded-[2px] border border-luxury-ink/10 px-3 py-2 text-center bg-cream-50/70">
                 <p className="text-[11px] text-muted-foreground">
                   Đang hiển thị 20 thông báo mới nhất. Danh sách cuộn trong
                   khung này.

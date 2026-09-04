@@ -82,7 +82,7 @@ export default function CategoryHeader({
                 <div className="mb-4 flex items-center gap-2">
                   <Link
                     href={`/categories/${category.slug}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-luxury-ink/10 bg-cream-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-600 transition-colors hover:border-luxury-ink/20 hover:text-luxury-ink"
+                    className="inline-flex items-center gap-2 rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-600 transition-colors hover:border-luxury-ink/20 hover:text-luxury-ink"
                   >
                     <IconLayoutGrid className="h-3.5 w-3.5" />
                     {category.name}
@@ -126,7 +126,7 @@ export default function CategoryHeader({
               {!isSubCategoryView && (
                 <Link
                   href={`/categories/${category.slug}`}
-                  className="inline-flex items-center justify-center rounded-full border border-luxury-ink bg-luxury-ink px-4 py-2 text-sm font-medium text-luxury-ivory shadow-[0_10px_24px_rgba(26,24,22,0.12)] transition-all hover:-translate-y-0.5"
+                  className="inline-flex items-center justify-center rounded-[2px] border border-luxury-ink bg-luxury-ink px-4 py-2 text-sm font-medium text-luxury-ivory shadow-[0_10px_24px_rgba(26,24,22,0.12)] transition-all hover:-translate-y-0.5"
                 >
                   Tất cả
                 </Link>
@@ -139,7 +139,7 @@ export default function CategoryHeader({
                     key={sub._id}
                     href={`/categories/${category.slug}/sub/${sub.slug}`}
                     className={cn(
-                      "inline-flex items-center justify-center rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 hover:-translate-y-0.5",
+                      "inline-flex items-center justify-center rounded-[2px] border px-4 py-2 text-sm font-medium transition-all duration-200 hover:-translate-y-0.5",
                       isActive
                         ? "border-luxury-ink bg-luxury-ink text-luxury-ivory shadow-[0_10px_24px_rgba(26,24,22,0.12)]"
                         : "border-luxury-ink/10 bg-white text-neutral-600 hover:border-luxury-ink/25 hover:text-luxury-ink",

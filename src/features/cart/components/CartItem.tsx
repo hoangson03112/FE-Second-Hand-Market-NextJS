@@ -207,7 +207,7 @@ export default function CartItem({
             type="button"
             onClick={() => onRemove(product._id)}
             disabled={isUpdating}
-            className="p-2.5 rounded-full text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
+            className="p-2.5 rounded-[2px] text-neutral-400 hover:text-blush-600 hover:bg-blush-50 transition-colors disabled:opacity-50"
           >
             <Trash2 className="h-4 w-4" />
           </button>

@@ -1,5 +1,5 @@
-import SellerPayouts from "@/features/seller/seller-payouts/SellerPayouts";
+import { redirect } from "next/navigation";
 
 export default function SellerPayoutsPage() {
-  return <SellerPayouts />;
+  redirect("/profile?tab=bank");
 }
