@@ -42,22 +42,22 @@ export default function Footer() {
   const socialLinks = [
     {
       name: "Facebook",
-      href: "https://facebook.com",
+      href: "https://www.facebook.com/hoagsown3",
       icon: <IconBrandFacebook className="w-4 h-4" />,
     },
     {
       name: "Instagram",
-      href: "https://instagram.com",
+      href: "https://www.facebook.com/hoagsown3",
       icon: <IconBrandInstagram className="w-4 h-4" />,
     },
     {
       name: "Twitter",
-      href: "https://twitter.com",
+      href: "https://www.facebook.com/hoagsown3",
       icon: <IconBrandTwitter className="w-4 h-4" />,
     },
     {
       name: "YouTube",
-      href: "https://youtube.com",
+      href: "https://www.facebook.com/hoagsown3",
       icon: <IconBrandYoutube className="w-4 h-4" />,
     },
   ];
@@ -99,7 +99,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-2xs font-black tracking-[0.4em] uppercase text-taupe-300 mb-6">
+            <h3 className="text-2xs font-black tracking-[0.2em] uppercase text-taupe-300 mb-6">
               Về Chúng Tôi
             </h3>
             <ul className="space-y-3">
@@ -117,7 +117,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-2xs font-black tracking-[0.4em] uppercase text-taupe-300 mb-6">
+            <h3 className="text-2xs font-black tracking-[0.2em] uppercase text-taupe-300 mb-6">
               Hỗ Trợ
             </h3>
             <ul className="space-y-3">
@@ -135,7 +135,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-2xs font-black tracking-[0.4em] uppercase text-taupe-300 mb-6">
+            <h3 className="text-2xs font-black tracking-[0.2em] uppercase text-taupe-300 mb-6">
               CHÍNH SÁCH
             </h3>
             <ul className="space-y-3 mb-10">
@@ -151,7 +151,7 @@ export default function Footer() {
               ))}
             </ul>
 
-            <h3 className="text-2xs font-black tracking-[0.4em] uppercase text-taupe-300 mb-6">
+            <h3 className="text-2xs font-black tracking-[0.2em] uppercase text-taupe-300 mb-6">
               DANH MỤC
             </h3>
             <ul className="space-y-3">

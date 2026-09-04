@@ -46,38 +46,38 @@ export default function ReportProductModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
-      <div className="bg-white border border-zinc-200 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-luxury-ink/60 backdrop-blur-sm">
+      <div className="bg-white border border-luxury-ink/10 rounded-[2px] shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
-          <div className="flex justify-between items-center mb-4 pb-3 border-b border-zinc-100">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-900">
-              Báo cáo sản phẩm
+          <div className="flex justify-between items-center mb-4 pb-3 border-b border-luxury-ink/8">
+            <h2 className="font-droid-serif text-base font-bold text-luxury-ink">
+              Báo Cáo Sản Phẩm Vi Phạm
             </h2>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full hover:bg-zinc-100 text-zinc-400 hover:text-zinc-900 transition-colors"
+              className="p-1 rounded-[2px] text-neutral-400 hover:text-luxury-ink hover:bg-taupe-50 transition-colors"
               aria-label="Đóng"
             >
               <IconX className="w-4 h-4" />
             </button>
           </div>
 
-          <p className="text-xs text-zinc-500 mb-4">
+          <p className="text-xs text-neutral-600 mb-4">
             Đang báo cáo:{" "}
-            <span className="font-bold text-zinc-900">{productName}</span>
+            <span className="font-bold text-luxury-ink">{productName}</span>
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 mb-1.5">
-                Lý do báo cáo
+              <label className="block text-2xs font-bold uppercase tracking-[0.14em] text-neutral-600 mb-1.5">
+                Lý do báo cáo vi phạm *
               </label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Mô tả chi tiết vấn đề..."
+                placeholder="Mô tả cụ thể hành vi vi phạm (hàng giả, lừa đảo, mô tả sai lệch, nội dung phản cảm...)"
                 rows={4}
-                className="w-full px-3.5 py-2.5 text-xs text-zinc-900 rounded-xl border border-zinc-200 bg-white placeholder:text-zinc-400 focus:outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 transition-all"
+                className="w-full px-3.5 py-2.5 text-xs text-luxury-ink rounded-[2px] border border-luxury-ink/15 bg-white placeholder:text-neutral-400 focus:outline-none focus:border-luxury-ink transition-all resize-none"
                 required
               />
             </div>
@@ -85,14 +85,14 @@ export default function ReportProductModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 py-2.5 border border-zinc-200 rounded-xl text-xs font-bold text-zinc-700 hover:bg-zinc-50 transition-colors"
+                className="flex-1 py-2.5 border border-luxury-ink/15 rounded-[2px] text-2xs font-bold uppercase tracking-[0.12em] text-luxury-ink hover:bg-taupe-50 transition-colors"
               >
-                Hủy
+                Hủy bỏ
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex-1 py-2.5 bg-zinc-900 text-white rounded-xl text-xs font-bold hover:bg-zinc-800 disabled:opacity-50 transition-colors"
+                className="flex-1 py-2.5 bg-luxury-ink text-luxury-ivory rounded-[2px] text-2xs font-bold uppercase tracking-[0.12em] hover:bg-charcoal-800 disabled:opacity-50 transition-colors"
               >
                 {isSubmitting ? "Đang gửi..." : "Gửi báo cáo"}
               </button>

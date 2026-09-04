@@ -37,9 +37,9 @@ export function useAddress() {
         return [];
       }
     },
-    enabled: true, // Auto fetch since token might be managed differently
-    staleTime: serverStateConfig.staleTime.dynamic, // 1 minute
-    gcTime: serverStateConfig.gcTime.dynamic, // 10 minutes
+    enabled: true, 
+    staleTime: serverStateConfig.staleTime.dynamic, 
+    gcTime: serverStateConfig.gcTime.dynamic, 
   });
 
 

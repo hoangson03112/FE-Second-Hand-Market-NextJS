@@ -143,7 +143,7 @@ export function PickupAddressSelector({
           <p className="text-xs text-neutral-500">Đang tải địa chỉ...</p>
         </div>
       ) : addresses.length === 0 ? (
-        <div className="py-4 text-center space-y-2">
+        <div className="py-2 text-center space-y-2">
           <div className="w-10 h-10 rounded-full bg-cream-100 flex items-center justify-center mx-auto">
             <IconMapPin className="w-5 h-5 text-primary" />
           </div>

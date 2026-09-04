@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { IconArrowRight, IconBrandLinkedin, IconBrandGithub } from "@tabler/icons-react";
+import {
+  IconArrowRight,
+  IconBrandLinkedin,
+  IconBrandGithub,
+} from "@tabler/icons-react";
 
 export const metadata: Metadata = {
   title: "Đội ngũ phát triển | Eco Market",
@@ -12,25 +16,29 @@ const LEADERS = [
   {
     name: "Hoàng Sơn",
     role: "Founder & Chief Executive Officer",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
     bio: "Định hình tầm nhìn chiến lược kinh tế tuần hoàn và cấu trúc trải nghiệm người dùng cao cấp cho Eco Market.",
   },
   {
-    name: "Minh Quân",
+    name: "Hoàng Sơn",
     role: "Co-Founder & Chief Technology Officer",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80",
     bio: "Kiến trúc sư hệ thống ký quỹ Escrow thời gian thực và mô hình kiểm duyệt thị giác AI tự động.",
   },
   {
-    name: "Thu Trang",
+    name: "Hoàng Sơn",
     role: "Head of Product & Experience",
-    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80",
     bio: "Chịu trách nhiệm thiết kế giao diện Quiet Luxury và tối ưu hóa hành trình giao dịch của người mua và người bán.",
   },
   {
-    name: "Đức Anh",
+    name: "Hoàng Sơn",
     role: "Head of Operations & Trust",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80",
     bio: "Quản lý quy trình thẩm định CCCD người bán, giám sát an toàn giao dịch và giải quyết khiếu nại 3 bên.",
   },
 ];
@@ -38,17 +46,17 @@ const LEADERS = [
 const DEPARTMENTS = [
   {
     name: "Kỹ thuật & Công nghệ (Engineering)",
-    count: "12 Kỹ sư",
+    count: "1 Kỹ sư",
     desc: "Xây dựng hạ tầng Next.js, kiến trúc Microservices phân tán, cổng thanh toán PayOS & hệ thống AI Guard.",
   },
   {
     name: "Vận hành & Kiểm duyệt (Operations & Trust)",
-    count: "8 Chuyên viên",
+    count: "1 Chuyên viên",
     desc: "Xác thực danh tính seller, thẩm định khiếu nại hoàn tiền và theo dõi chu trình logistics GHN toàn quốc.",
   },
   {
     name: "Chăm sóc khách hàng (Customer Excellence)",
-    count: "10 Tư vấn viên",
+    count: "1 Tư vấn viên",
     desc: "Hỗ trợ 24/7 qua livechat, giải đáp thắc mắc và đồng hành cùng người dùng trong từng đơn hàng.",
   },
 ];
@@ -60,7 +68,7 @@ export default function TeamPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 mb-4">
             <span className="h-px w-8 bg-luxury-champagne/80" />
-            <span className="text-2xs font-bold uppercase tracking-[0.28em] text-neutral-600">
+            <span className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-600">
               Đội Ngũ Sáng Lập
             </span>
             <span className="h-px w-8 bg-luxury-champagne/80" />
@@ -69,7 +77,9 @@ export default function TeamPage() {
             Những Con Người Đằng Sau Sứ Mệnh Eco Market
           </h1>
           <p className="mt-6 text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto leading-relaxed">
-            Tập hợp những chuyên gia công nghệ, nhà thiết kế và nhân sự vận hành nhiệt huyết cùng chung khát vọng xây dựng một thị trường trao đổi đồ cũ chuẩn mực tại Việt Nam.
+            Tập hợp những chuyên gia công nghệ, nhà thiết kế và nhân sự vận hành
+            nhiệt huyết cùng chung khát vọng xây dựng một thị trường trao đổi đồ
+            cũ chuẩn mực tại Việt Nam.
           </p>
         </div>
       </section>
@@ -149,7 +159,8 @@ export default function TeamPage() {
             Muốn Gia Nhập Đội Ngũ Của Chúng Tôi?
           </h2>
           <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
-            Chúng tôi luôn tìm kiếm những tài năng đam mê công nghệ và mong muốn tạo ra giá trị bền vững cho xã hội.
+            Chúng tôi luôn tìm kiếm những tài năng đam mê công nghệ và mong muốn
+            tạo ra giá trị bền vững cho xã hội.
           </p>
           <div className="pt-2">
             <Link

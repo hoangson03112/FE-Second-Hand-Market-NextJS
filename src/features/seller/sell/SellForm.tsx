@@ -100,7 +100,7 @@ export default function SellForm() {
   return (
     <>
       <div className="min-h-screen w-full bg-luxury-ivory">
-        <div className="mx-auto w-full max-w-8xl px-4 py-8 sm:px-6">
+        <div className="mx-auto w-full max-w-9xl px-4 py-8 sm:px-6">
         <SellFormHeader
           isEditMode={isEditMode}
           showBecomeSellerLink={showPickupSection && !isEditMode}

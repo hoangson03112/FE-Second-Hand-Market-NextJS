@@ -113,7 +113,7 @@ export default function DiscountForm({
               setPercent("");
             }
           }}
-          className="w-full border border-primary/30 rounded-lg px-3 py-2 text-sm font-medium"
+          className="w-full border border-luxury-ink/20 rounded-[2px] px-3 py-2 text-sm font-medium focus:border-luxury-ink focus:outline-none focus:ring-1 focus:ring-luxury-ink"
           min={1}
           placeholder="Giá deal"
           required
@@ -142,7 +142,7 @@ export default function DiscountForm({
             }
             setPercent(formatPercentForInput(percentNumber));
           }}
-          className="w-40 border border-primary/30 rounded-lg px-3 py-2 text-sm font-medium"
+          className="w-40 border border-luxury-ink/20 rounded-[2px] px-3 py-2 text-sm font-medium focus:border-luxury-ink focus:outline-none focus:ring-1 focus:ring-luxury-ink"
           min={0}
           max={100}
           step="0.01"
@@ -161,7 +161,7 @@ export default function DiscountForm({
           </span>
         ) : null}
       </div>
-      {error && <div className="text-red-600 text-sm mt-1">{error}</div>}
+      {error && <div className="text-blush-600 text-sm mt-1">{error}</div>}
       <div className="flex gap-2 mt-2">
         <button
           type="submit"

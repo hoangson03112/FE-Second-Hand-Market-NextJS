@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 
-const GHN_API_URL =
-  process.env.GHN_API_URL ??
-  "https://dev-online-gateway.ghn.vn/shiip/public-api";
+const GHN_API_URL =process.env.GHN_API_URL 
 const GHN_API_TOKEN = process.env.GHN_API_TOKEN;
 const GHN_SHOP_ID = process.env.GHN_SHOP_ID;
 

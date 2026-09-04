@@ -10,7 +10,6 @@ import {
   IconPackage,
 } from "@tabler/icons-react";
 import type { Order } from "@/types/order";
-import {} from "@/components/ui";
 import { formatPrice } from "@/utils/format/price";
 import { getProductImage } from "../utils/orderUtils";
 import OrderActions from "./OrderActions";
@@ -82,21 +81,18 @@ export default function OrderCard({
   return (
     <div
       className={cn(
-        "group bg-background overflow-hidden rounded-xl border shadow-sm transition-all duration-200",
-        "hover:shadow-md hover:-translate-y-0.5",
+        "group bg-white overflow-hidden rounded-[2px] border transition-all duration-200 shadow-xs",
         isRefundRequest
-          ? "border-orange-200 hover:border-orange-300"
+          ? "border-amber-300"
           : isRefundInProgress
-            ? "border-sky-200 hover:border-sky-300"
+            ? "border-sky-300"
             : isPending
-              ? "border-amber-200 hover:border-amber-300"
-              : "border-border hover:border-primary/25",
+              ? "border-luxury-ink/30"
+              : "border-luxury-ink/10 hover:border-luxury-ink/30",
       )}
     >
-
-      <div className="flex gap-3 p-4">
-
-        <div className="relative w-[92px] h-[92px] rounded-lg overflow-hidden shrink-0 bg-muted">
+      <div className="flex gap-3.5 p-4">
+        <div className="relative w-20 h-20 rounded-[2px] overflow-hidden shrink-0 bg-taupe-50 border border-luxury-ink/10">
           {productImage ? (
             <Image
               src={productImage}
@@ -109,65 +105,62 @@ export default function OrderCard({
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
               <IconPackage
-                className="w-10 h-10 text-muted-foreground/40"
+                className="w-8 h-8 text-neutral-400"
                 strokeWidth={1.5}
               />
             </div>
           )}
           {order.products.length > 1 && (
-            <span className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded-md text-2xs font-bold bg-black/60 text-white backdrop-blur-sm">
+            <span className="absolute bottom-1 right-1 px-1.5 py-0.2 rounded-[1px] text-[9px] font-bold bg-luxury-ink/80 text-white backdrop-blur-xs">
               +{order.products.length - 1}
             </span>
           )}
         </div>
 
-
         <div className="flex-1 min-w-0 flex flex-col gap-1">
-
-          <div className="flex items-start gap-2">
-            <h3 className="font-bold text-sm leading-snug line-clamp-2 flex-1 group-hover:text-primary transition-colors">
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="font-semibold text-xs leading-snug line-clamp-2 flex-1 text-luxury-ink group-hover:underline">
               {firstProduct?.name ?? "Sản phẩm không xác định"}
             </h3>
             <OrderStatusBadge status={order.status} />
           </div>
 
-
           <div className="flex items-center gap-1.5">
             <AvatarOrInitials
               avatar={(order.buyerId as { avatar?: { url?: string } })?.avatar}
               fullName={order.buyerId?.fullName}
-              size={20}
+              size={18}
             />
-            <span className="text-[12px] text-muted-foreground font-medium truncate">
+            <span className="text-2xs text-neutral-500 font-medium truncate">
               {order.buyerId?.fullName || "—"}
             </span>
           </div>
 
-
-          <div className="flex items-baseline gap-2">
-            <span className="text-base font-bold text-primary leading-none">
+          <div className="flex items-baseline gap-2 mt-0.5">
+            <span className="font-droid-serif text-sm font-bold text-luxury-ink leading-none">
               {formatPrice(order.totalAmount)}
             </span>
             {order.shippingFee !== undefined && order.shippingFee > 0 && (
-              <span className="text-[11px] text-muted-foreground/70">
+              <span className="text-[10px] text-neutral-400">
                 +{formatPrice(order.shippingFee)} ship
               </span>
             )}
           </div>
 
-
-          <div className="flex items-center flex-wrap gap-x-1.5 gap-y-0 text-[11px] text-muted-foreground mt-auto">
-            <span className="font-mono font-bold text-foreground/50">
+          <div className="flex items-center flex-wrap gap-x-2 gap-y-0 text-2xs text-neutral-400 mt-auto pt-1">
+            <span className="font-mono font-bold text-luxury-ink/70">
               #{order._id.slice(-6).toUpperCase()}
             </span>
-            <span className="w-[3px] h-[3px] rounded-full bg-muted-foreground/40 shrink-0" />
-            <IconClock className="w-3 h-3 shrink-0" strokeWidth={2} />
-            <span>{formatTimeAgo(order.createdAt)}</span>
+            <span>•</span>
+            <div className="flex items-center gap-1">
+              <IconClock className="w-3 h-3 shrink-0" />
+              <span>{formatTimeAgo(order.createdAt)}</span>
+            </div>
             {order.ghnOrderCode && (
               <>
-                <span className="w-[3px] h-[3px] rounded-full bg-muted-foreground/40 shrink-0" />
-                <span className="font-mono font-bold text-blue-600/80">
-                  {order.ghnOrderCode}
+                <span>•</span>
+                <span className="font-mono font-bold text-accent">
+                  GHN: {order.ghnOrderCode}
                 </span>
               </>
             )}
@@ -175,43 +168,42 @@ export default function OrderCard({
         </div>
       </div>
 
-
       {isRefundRequest && (
         <div className="mx-4 mb-3">
-          <div className="flex items-start gap-2.5 bg-orange-50 border border-orange-100 rounded-xl px-3 py-2.5">
-            <IconAlertTriangle className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
+          <div className="flex items-start gap-2.5 bg-amber-50/80 border border-amber-200 rounded-[2px] p-3 text-xs">
+            <IconAlertTriangle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
             <div>
-              <p className="text-[13px] font-bold text-orange-700 leading-snug">
+              <p className="text-2xs font-bold uppercase tracking-wider text-amber-900 leading-snug">
                 Yêu cầu hoàn tiền
                 {refundDoc?.reason &&
                   ` · ${REFUND_REASON_LABELS[refundDoc.reason] ?? refundDoc.reason}`}
               </p>
-              <p className="text-[11px] text-orange-500 mt-0.5">
-                Xem bằng chứng trước khi phê duyệt.
+              <p className="text-2xs text-amber-800 mt-0.5">
+                Vui lòng xem kỹ bằng chứng trước khi xác nhận.
               </p>
             </div>
           </div>
         </div>
       )}
+
       {isRefundInProgress && (
         <div className="mx-4 mb-3">
-          <div className="flex items-start gap-2.5 bg-sky-50 border border-sky-100 rounded-xl px-3 py-2.5">
-            <IconPackage className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
+          <div className="flex items-start gap-2.5 bg-cream-50 border border-luxury-ink/10 rounded-[2px] p-3 text-xs">
+            <IconPackage className="w-4 h-4 text-luxury-ink shrink-0 mt-0.5" />
             <div>
-              <p className="text-[13px] font-bold text-sky-800 leading-snug">
+              <p className="text-2xs font-bold uppercase tracking-wider text-luxury-ink leading-snug">
                 Hoàn tiền đang xử lý
                 {refundDoc?.status &&
                   ` · ${REFUND_PHASE_LABELS[refundDoc.status] ?? refundDoc.status}`}
               </p>
-              <p className="text-[11px] text-sky-600 mt-0.5">
-                Theo dõi vận đơn hoàn và xác nhận khi đã nhận lại hàng.{" "}
+              <p className="text-2xs text-neutral-600 mt-0.5">
+                Theo dõi hàng hoàn và xác nhận khi đã nhận lại kiện hàng.{" "}
                 {REFUND_GHN_RETURN_SHIPPING_PAID_BY_SELLER}
               </p>
             </div>
           </div>
         </div>
       )}
-
 
       <OrderActions
         order={order}
@@ -220,20 +212,19 @@ export default function OrderCard({
         onApproveRefund={onApproveRefund}
       />
 
-
-      <div className="flex items-center border-t border-border/60 divide-x divide-border/60 bg-muted/10">
+      <div className="flex items-center border-t border-luxury-ink/10 divide-x divide-luxury-ink/10 bg-cream-50/50">
         <Link
           href={`/my/messages?buyerId=${order.buyerId?._id}`}
-          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium text-muted-foreground hover:bg-muted/70 hover:text-foreground transition-colors"
+          className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-2xs font-bold uppercase tracking-[0.12em] text-neutral-600 hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
         >
-          <IconMessageCircle className="w-3.5 h-3.5" strokeWidth={2} />
-          Chat
+          <IconMessageCircle className="w-3.5 h-3.5" />
+          Nhắn tin
         </Link>
         <Link
           href={`/my/orders/${order._id}`}
-          className="flex-1 flex items-center justify-center py-2.5 text-xs font-medium text-muted-foreground hover:bg-muted/70 hover:text-foreground transition-colors"
+          className="flex-1 flex items-center justify-center py-2.5 text-2xs font-bold uppercase tracking-[0.12em] text-neutral-600 hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
         >
-          Xem đơn
+          Chi tiết đơn
         </Link>
       </div>
     </div>

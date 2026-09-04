@@ -46,7 +46,7 @@ export default function ForgotPassword() {
                 <div className="space-y-6 hidden md:block">
                   {forgotPasswordFeatures.map((feature, idx) => (
                     <div key={idx} className="flex items-start gap-4">
-                      <div className="flex-shrink-0 w-6 h-6 rounded-full border border-foreground/20 flex items-center justify-center mt-0.5 text-foreground">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-[2px] border border-foreground/20 flex items-center justify-center mt-0.5 text-foreground">
                         <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
@@ -79,7 +79,7 @@ export default function ForgotPassword() {
                     />
                   </Link>
                 </div>
-                <div className="bg-white/90 backdrop-blur-md border border-gray-100 rounded-3xl shadow-2xl shadow-taupe-900/10 p-8 sm:p-10 lg:p-12 space-y-8">
+                <div className="bg-white/90 backdrop-blur-md border border-luxury-ink/10 rounded-[2px] shadow-sm p-8 sm:p-10 lg:p-12 space-y-8">
                   <div className="space-y-1 text-center">
                     <h2
                       style={{

@@ -184,34 +184,7 @@ export const OrderService = {
   },
 
 
-  getSellerPayouts: async (params?: {
-    page?: number;
-    limit?: number;
-    payoutStatus?: string;
-  }): Promise<{ data: Order[]; total: number; page: number; totalPages: number }> => {
-    const search = new URLSearchParams();
-    if (params?.page) search.set("page", String(params.page));
-    if (params?.limit) search.set("limit", String(params.limit));
-    if (params?.payoutStatus) search.set("payoutStatus", params.payoutStatus);
-    const res = await axiosClient.get(`/orders/seller/payouts?${search.toString()}`);
-    return res as unknown as { data: Order[]; total: number; page: number; totalPages: number };
-  },
 
-
-  getSellerWallet: async (): Promise<{
-    balance: number;
-    pendingBalance: number;
-    totalEarned: number;
-    totalWithdrawn: number;
-  }> => {
-    const res = await axiosClient.get("/orders/seller/wallet");
-    return res as unknown as {
-      balance: number;
-      pendingBalance: number;
-      totalEarned: number;
-      totalWithdrawn: number;
-    };
-  },
 
 
   getTracking: async (orderId: string): Promise<{ tracking: GHNTrackingData }> => {

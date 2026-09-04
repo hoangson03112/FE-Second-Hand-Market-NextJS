@@ -156,7 +156,7 @@ export function AIProductAssistantPanel({
                             alt={product.name}
                             width={56}
                             height={56}
-                            className="w-14 h-14 rounded-lg object-cover border border-border"
+                            className="w-14 h-14 rounded-[2px] object-cover border border-luxury-ink/10"
                             unoptimized
                           />
                           <div className="min-w-0">

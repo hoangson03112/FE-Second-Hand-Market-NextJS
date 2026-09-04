@@ -34,17 +34,14 @@ export function AddressFormModal({
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center"
       onClick={onClose}
     >
-
       <div className="absolute inset-0 bg-taupe-900/40 backdrop-blur-sm" />
 
-
       <div
-        className="relative z-10 w-full sm:max-w-lg bg-cream-50 rounded-t-2xl sm:rounded-[2px] border border-luxury-ink/10 shadow-xl max-h-[90vh] overflow-y-auto"
+        className="relative z-10 w-full sm:max-w-xl bg-cream-50 rounded-t-2xl sm:rounded-[2px] border border-luxury-ink/10 shadow-xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-
         <div className="sticky top-0 flex items-center justify-between px-4 py-3 border-b-2 border-luxury-ink/10 bg-cream-50 rounded-t-2xl z-10">
-          <h2 className="text-sm font-bold text-luxury-ink uppercase tracking-wide">
+          <h2 className="text-sm font-bold font-droid-serif text-luxury-ink uppercase tracking-wide">
             {editingAddress ? "Sửa địa chỉ lấy hàng" : "Thêm địa chỉ lấy hàng"}
           </h2>
           <button

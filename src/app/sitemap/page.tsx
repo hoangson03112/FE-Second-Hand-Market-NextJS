@@ -40,7 +40,7 @@ const SITEMAP_SECTIONS = [
       { name: "Quản lý bài đăng của tôi", href: "/my/listings" },
       { name: "Kênh Người bán (Seller Hub)", href: "/seller" },
       { name: "Quản lý đơn hàng bán", href: "/seller/orders" },
-      { name: "Lịch sử nhận tiền Payouts", href: "/seller/payouts" },
+      { name: "Tài khoản nhận tiền (Bank)", href: "/profile?tab=bank" },
     ],
   },
   {

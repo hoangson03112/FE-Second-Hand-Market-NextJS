@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "@/features/auth/hooks/useUser";
-import { SellerService } from "@/services/seller.service";
+import { BankService } from "@/services/bank.service";
 import { useToast } from "@/components/ui";
 import { PROFILE_MESSAGES } from "@/constants";
 import type { BankFormData } from "../types";
 
-const SELLER_INFO_KEY = ["seller", "profile"] as const;
+const BANK_INFO_KEY = ["bank-info", "me"] as const;
 
 export function useSellerBank() {
   const { data: account } = useUser();
@@ -17,30 +17,28 @@ export function useSellerBank() {
     bankName: "",
     accountNumber: "",
     accountHolder: "",
-    bankBin: "",
   });
 
   const accountId = account?.accountID;
-  const isSeller = account?.role === "seller";
 
-  const { data: sellerResponse, isLoading: isLoadingSeller } = useQuery({
-    queryKey: [...SELLER_INFO_KEY, accountId],
-    queryFn: () => SellerService.getSellerInfo(accountId!),
-    enabled: !!accountId && isSeller,
+  const { data: bankResponse, isLoading: isLoadingBank } = useQuery({
+    queryKey: [...BANK_INFO_KEY, accountId],
+    queryFn: () => BankService.getMyBankInfo(),
+    enabled: !!accountId,
+    retry: false,
   });
 
-  const seller = sellerResponse?.success ? sellerResponse.data : null;
+  const bankInfo = bankResponse?.data;
 
   useEffect(() => {
-    if (seller?.bankInfo) {
+    if (bankInfo) {
       setFormData({
-        bankName: seller.bankInfo.bankName || "",
-        accountNumber: seller.bankInfo.accountNumber || "",
-        accountHolder: seller.bankInfo.accountHolder || "",
-        bankBin: seller.bankInfo.bankBin ?? "",
+        bankName: bankInfo.bankName || "",
+        accountNumber: bankInfo.accountNumber || "",
+        accountHolder: bankInfo.accountHolder || "",
       });
     }
-  }, [seller]);
+  }, [bankInfo]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -55,14 +53,13 @@ export function useSellerBank() {
     }
     setIsSubmitting(true);
     try {
-      await SellerService.updateBankInfo({
+      await BankService.updateMyBankInfo({
         bankName: formData.bankName.trim(),
         accountNumber: formData.accountNumber.trim(),
-        accountHolder: formData.accountHolder.trim(),
-        bankBin: formData.bankBin?.trim() || undefined,
+        accountHolder: formData.accountHolder.trim().toUpperCase(),
       });
-      queryClient.invalidateQueries({ queryKey: [...SELLER_INFO_KEY, accountId] });
-      toast.success(PROFILE_MESSAGES.BANK_UPDATE_SUCCESS);
+      queryClient.invalidateQueries({ queryKey: [...BANK_INFO_KEY, accountId] });
+      toast.success("Cập nhật tài khoản ngân hàng thành công!");
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : PROFILE_MESSAGES.BANK_UPDATE_ERROR
@@ -73,11 +70,10 @@ export function useSellerBank() {
   };
 
   return {
-    seller,
-    isLoading: isLoadingSeller,
+    bankInfo,
+    isLoading: isLoadingBank,
     formData,
     isSubmitting,
-    isSeller,
     handleChange,
     handleSubmit,
   };

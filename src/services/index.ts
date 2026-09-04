@@ -1,6 +1,7 @@
 
 export { AddressService } from "./address.service";
 export { AuthService } from "./auth.service";
+export { BankService } from "./bank.service";
 export { CartService } from "./cart.service";
 export { CategoryService } from "./category.service";
 export { OrderService } from "./order.service";

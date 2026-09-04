@@ -95,7 +95,7 @@ export default function ShareButton({
     <div className={`relative ${className}`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border bg-background hover:bg-muted transition-colors text-sm font-medium"
+        className="flex items-center gap-2 px-4 py-2 rounded-[2px] border border-luxury-ink/15 bg-white hover:bg-cream-50 hover:border-luxury-ink/30 transition-colors text-sm font-medium text-luxury-ink"
         aria-label="Chia sẻ"
       >
         <IconShare className="w-4 h-4" />
@@ -111,14 +111,14 @@ export default function ShareButton({
           />
 
 
-          <div className="absolute right-0 mt-2 w-64 bg-card rounded-xl shadow-2xl border border-border z-50 overflow-hidden">
-            <div className="p-3 border-b border-border flex items-center justify-between">
-              <h3 className="text-sm font-bold text-foreground">
+          <div className="absolute right-0 mt-2 w-64 bg-white rounded-[2px] shadow-[0_16px_40px_rgba(26,23,20,0.12)] border border-luxury-ink/10 z-50 overflow-hidden">
+            <div className="px-4 py-3 border-b border-luxury-ink/10 bg-cream-50/70 flex items-center justify-between">
+              <h3 className="text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ink">
                 Chia sẻ sản phẩm
               </h3>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1 rounded-lg hover:bg-muted transition-colors"
+                className="p-1 rounded-[2px] hover:bg-luxury-ink/5 transition-colors text-neutral-500 hover:text-luxury-ink"
                 aria-label="Đóng"
               >
                 <IconX className="w-4 h-4" />
@@ -130,12 +130,12 @@ export default function ShareButton({
               {isNativeShareSupported() && (
                 <button
                   onClick={handleNativeShare}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary/10 transition-colors text-left mb-1"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 rounded-[2px] hover:bg-primary/10 transition-colors text-left mb-1"
                 >
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                    <IconShare className="w-4 h-4 text-primary" />
+                  <div className="w-8 h-8 rounded-[2px] border border-luxury-ink/10 bg-cream-50 flex items-center justify-center">
+                    <IconShare className="w-4 h-4 text-luxury-ink" />
                   </div>
-                  <span className="text-sm font-medium text-foreground">
+                  <span className="text-sm font-medium text-luxury-ink">
                     Chia sẻ...
                   </span>
                 </button>
@@ -151,14 +151,14 @@ export default function ShareButton({
                       setIsOpen(false);
                     }
                   }}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg ${option.bgColor} transition-colors text-left`}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-[2px] ${option.bgColor} transition-colors text-left`}
                 >
                   <div
-                    className={`w-8 h-8 rounded-full bg-muted flex items-center justify-center ${option.color}`}
+                    className={`w-8 h-8 rounded-[2px] border border-luxury-ink/10 bg-cream-50 flex items-center justify-center ${option.color}`}
                   >
                     {option.customIcon || <option.icon className="w-5 h-5" />}
                   </div>
-                  <span className="text-sm font-medium text-foreground">
+                  <span className="text-sm font-medium text-luxury-ink">
                     {option.name}
                   </span>
                 </button>

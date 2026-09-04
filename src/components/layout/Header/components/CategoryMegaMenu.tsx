@@ -37,7 +37,7 @@ export function CategoryMegaMenu({
       {showAllCategories && (
         <div className="bg-cream-100 absolute left-0 top-full  z-50 w-[min(1180px,calc(100vw-2rem))]">
           <div
-            className="rounded-xl"
+            className="rounded-[2px]"
             style={{
               boxShadow:
                 "0 20px 56px rgba(26,23,20,0.13), 0 4px 16px rgba(26,23,20,0.06)",
@@ -73,9 +73,9 @@ export function CategoryMegaMenu({
                             key={sub._id}
                             href={`/categories/${category.slug}/sub/${sub.slug}`}
                             onClick={onHideAllCategories}
-                            className="flex items-center gap-2 py-1.5 px-2 text-sm font-medium rounded-md transition-colors truncate text-muted-foreground hover:bg-primary/10 hover:text-foreground"
+                            className="flex items-center gap-2 py-1.5 px-2 text-sm font-medium rounded-[2px] transition-colors truncate text-muted-foreground hover:bg-primary/10 hover:text-foreground"
                           >
-                            <span className="w-1 h-1 rounded-full shrink-0 bg-primary/50" />
+                            <span className="w-1 h-1 shrink-0 bg-primary/50" />
                             {sub.name}
                           </Link>
                         ))}

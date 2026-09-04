@@ -145,32 +145,32 @@ export default function Pagination({
     <nav
       role="navigation"
       aria-label="Phân trang"
-      className={cn("flex items-center justify-center gap-2", className)}
+      className={cn("flex items-center justify-center gap-1.5", className)}
     >
       <button
         onClick={() => goto(currentPage - 1)}
         disabled={isFirst}
         aria-label="Trang trước"
         className={cn(
-          "inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border text-sm font-medium",
+          "inline-flex items-center gap-1.5 h-8 px-3 rounded-[2px] border text-sm font-medium",
           "transition-all duration-150 select-none outline-none",
-          "focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-1",
+          "focus-visible:border-luxury-ink focus-visible:ring-1 focus-visible:ring-luxury-ink",
           isFirst
-            ? "border-border/50 bg-muted/40 text-muted-foreground/50 cursor-not-allowed pointer-events-none"
-            : "border-border/70 bg-background text-foreground hover:bg-muted/60 hover:border-border hover:-translate-y-px hover:shadow-sm active:translate-y-0",
+            ? "border-luxury-ink/10 bg-cream-50 text-neutral-400 cursor-not-allowed pointer-events-none"
+            : "border-luxury-ink/15 bg-white text-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory hover:border-luxury-ink",
         )}
       >
         <IconChevronLeft className="w-3.5 h-3.5 shrink-0" />
         <span className="hidden sm:inline">Trước</span>
       </button>
 
-      <div className="inline-flex items-center gap-0.5 p-0.5 rounded-xl border border-border/60 bg-muted/30">
+      <div className="inline-flex items-center gap-0.5 p-0.5 rounded-[2px] border border-luxury-ink/10 bg-cream-50/60">
         {pages.map((p, i) => {
           if (p === "...") {
             return (
               <span
                 key={`ellipsis-${i}`}
-                className="w-8 h-7 inline-flex items-center justify-center text-xs text-muted-foreground/60 tracking-widest"
+                className="w-8 h-7 inline-flex items-center justify-center text-xs text-luxury-ink/30 tracking-widest"
               >
                 ···
               </span>
@@ -187,12 +187,12 @@ export default function Pagination({
               aria-label={`Trang ${n}`}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "inline-flex items-center justify-center min-w-[30px] h-7 px-2 rounded-lg text-sm",
+                "inline-flex items-center justify-center min-w-[30px] h-7 px-2 rounded-[2px] text-sm",
                 "transition-all duration-150 select-none outline-none",
-                "focus-visible:ring-2 focus-visible:ring-primary/30",
+                "focus-visible:border-luxury-ink focus-visible:ring-1 focus-visible:ring-luxury-ink",
                 isActive
-                  ? "bg-primary text-primary-foreground font-bold shadow-sm cursor-default pointer-events-none"
-                  : "text-muted-foreground font-medium hover:bg-background hover:text-foreground hover:shadow-xs cursor-pointer",
+                  ? "bg-luxury-ink text-luxury-ivory font-bold cursor-default pointer-events-none"
+                  : "text-neutral-600 font-medium hover:bg-white hover:text-luxury-ink cursor-pointer",
               )}
             >
               {n}
@@ -206,12 +206,12 @@ export default function Pagination({
         disabled={isLast}
         aria-label="Trang sau"
         className={cn(
-          "inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border text-sm font-medium",
+          "inline-flex items-center gap-1.5 h-8 px-3 rounded-[2px] border text-sm font-medium",
           "transition-all duration-150 select-none outline-none",
-          "focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-1",
+          "focus-visible:border-luxury-ink focus-visible:ring-1 focus-visible:ring-luxury-ink",
           isLast
-            ? "border-border/50 bg-muted/40 text-muted-foreground/50 cursor-not-allowed pointer-events-none"
-            : "border-border/70 bg-background text-foreground hover:bg-muted/60 hover:border-border hover:-translate-y-px hover:shadow-sm active:translate-y-0",
+            ? "border-luxury-ink/10 bg-cream-50 text-neutral-400 cursor-not-allowed pointer-events-none"
+            : "border-luxury-ink/15 bg-white text-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory hover:border-luxury-ink",
         )}
       >
         <span className="hidden sm:inline">Sau</span>

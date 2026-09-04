@@ -1,29 +1,28 @@
 import Link from "next/link";
-import { IconCircleCheck } from "@tabler/icons-react";
+import { IconCircleCheck, IconArrowRight } from "@tabler/icons-react";
 import SuccessMessage from "@/features/auth/components/SuccessMessage";
 import InfoBox from "@/features/auth/components/InfoBox";
-import { IconArrowRight } from "@tabler/icons-react";
 
 export default function ResetPasswordSuccess() {
   return (
     <div className="space-y-6">
       <SuccessMessage
-        icon={<IconCircleCheck className="w-10 h-10 text-primary" />}
-        title="Mật khẩu đã được thay đổi!"
-        description="Bạn có thể đăng nhập vào tài khoản với mật khẩu mới ngay bây giờ."
+        icon={<IconCircleCheck className="w-8 h-8 text-luxury-ink" />}
+        title="Đổi mật khẩu thành công"
+        description="Mật khẩu tài khoản của bạn đã được cập nhật thành công. Bây giờ bạn có thể đăng nhập bằng mật khẩu mới."
       />
 
-      <InfoBox variant="success" title="✅ Bảo mật:">
-        Email xác nhận đã được gửi đến hộp thư của bạn.
+      <InfoBox variant="success" title="Thông báo bảo mật:">
+        Hệ thống đã ghi nhận việc thay đổi mật khẩu và bảo vệ an toàn cho tài khoản của bạn.
       </InfoBox>
 
-      <div className="pt-4">
+      <div className="pt-2">
         <Link
           href="/login"
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 font-bold text-primary-foreground transition-all hover:bg-primary/90"
+          className="w-full h-11 px-8 rounded-[2px] bg-luxury-ink text-luxury-ivory uppercase tracking-[0.15em] text-xs font-bold hover:bg-charcoal-800 transition-all inline-flex items-center justify-center gap-2"
         >
           <span>Đăng nhập ngay</span>
-          <IconArrowRight className="w-5 h-5" />
+          <IconArrowRight className="w-4 h-4" />
         </Link>
       </div>
     </div>

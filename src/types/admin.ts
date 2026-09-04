@@ -79,17 +79,40 @@ export type AdminProductRef = {
 export interface AdminOrder {
   _id: string;
   buyerId: AdminUserRef;
-  sellerId: string | Record<string, unknown> | null;
+  sellerId:
+    | AdminUserRef
+    | {
+        _id: string;
+        fullName?: string;
+        email?: string;
+        phoneNumber?: string;
+        bankInfo?: {
+          bankName: string;
+          accountNumber: string;
+          accountHolder: string;
+        };
+      }
+    | null;
+  sellerBankInfo?: {
+    bankName: string;
+    accountNumber: string;
+    accountHolder: string;
+  } | null;
   products: Array<{
     productId: AdminProductRef | string | null;
     quantity: number;
   }>;
   totalAmount: number;
   shippingAddress?: Record<string, unknown> | string | null;
+  paymentMethod?: string;
+  paymentStatus?: "pending" | "paid" | "refunded";
+  payoutStatus?: "pending" | "paid";
+  payoutAt?: string;
   status: string;
   statusPayment?: boolean;
   ghnOrderCode?: string;
   ghnReturnOrderCode?: string;
+  completedAt?: string;
   refundBankInfo?: {
     buyerBankName?: string;
     buyerAccountNumber?: string;

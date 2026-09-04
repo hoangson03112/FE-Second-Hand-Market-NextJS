@@ -535,6 +535,24 @@ export default function OrderDetailPanel({
               tone="dark"
             />
           </div>
+
+          {(order.status === "completed" || order.status === "delivered") && (
+            <div className="mt-4 rounded-[2px] border border-luxury-champagne/30 bg-white/5 p-3.5 space-y-2">
+              <div className="flex items-center justify-between text-2xs uppercase tracking-[0.14em] font-bold text-luxury-champagne">
+                <span>Nhận tiền từ Admin</span>
+                <span className="text-cream-100">COD đã thu</span>
+              </div>
+              <p className="text-2xs text-neutral-300 leading-relaxed">
+                Sau khi bưu tá GHN giao thành công, Admin sẽ chuyển tiền bán hàng về STK của bạn.
+              </p>
+              <Link
+                href="/profile?tab=bank"
+                className="inline-block text-2xs font-bold uppercase tracking-[0.12em] text-accent underline hover:text-emerald-300"
+              >
+                Kiểm tra / Cập nhật STK nhận tiền →
+              </Link>
+            </div>
+          )}
         </div>
       </InkSurface>
 

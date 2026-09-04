@@ -29,7 +29,7 @@
   }
 
   input, textarea, select {
-    border-radius: 0.75rem;
+    border-radius: 2px;
   }
 
   :focus-visible {

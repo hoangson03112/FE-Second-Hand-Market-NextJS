@@ -58,10 +58,10 @@ export default function SellerOrdersHeader({
               Theo dõi và xử lý đơn hàng mới từ người mua.
             </p>
             <Link
-              href="/seller/payouts"
-              className="group mt-4 inline-flex items-center gap-2 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-taupe-700"
+              href="/profile?tab=bank"
+              className="group mt-4 inline-flex items-center gap-2 text-2xs font-bold uppercase tracking-[0.22em] text-luxury-ink transition-colors hover:text-accent"
             >
-              Đối soát doanh thu
+              Tài khoản nhận tiền
               <IconArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
           </div>

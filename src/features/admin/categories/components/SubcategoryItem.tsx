@@ -34,10 +34,10 @@ export default function SubcategoryItem({
 
   return (
     <div
-      className={`flex items-center gap-2 rounded-lg border px-3 py-1.5 text-xs ${
+      className={`flex items-center gap-2 rounded-[2px] border px-3 py-2 text-xs transition-colors ${
         isSubInactive
-          ? "border-border/70 bg-muted text-muted-foreground"
-          : "border-border bg-background text-foreground"
+          ? "border-luxury-ink/8 bg-taupe-50/50 text-neutral-400"
+          : "border-luxury-ink/10 bg-white text-luxury-ink hover:border-luxury-ink/20"
       }`}
     >
       {isEditing ? (
@@ -46,30 +46,30 @@ export default function SubcategoryItem({
             type="text"
             value={nameDraft}
             onChange={(e) => onNameChange(e.target.value)}
-            className="flex-1 rounded border border-border bg-card px-2 py-1 text-xs"
+            className="flex-1 h-7 rounded-[2px] border border-luxury-ink/20 bg-white px-2 text-xs outline-none focus:border-luxury-ink"
           />
           <select
             value={statusDraft}
             onChange={(e) =>
               onStatusChange(e.target.value as "active" | "inactive")
             }
-            className="rounded border border-border bg-card px-2 py-1 text-[11px]"
+            className="h-7 rounded-[2px] border border-luxury-ink/20 bg-white px-2 text-2xs"
           >
-            <option value="active">Đang dùng</option>
-            <option value="inactive">Ẩn</option>
+            <option value="active">Hoạt động</option>
+            <option value="inactive">Tạm ẩn</option>
           </select>
           <button
             type="button"
             onClick={onSave}
             disabled={!nameDraft.trim() || isSaving}
-            className="rounded bg-primary p-1 text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
+            className="rounded-[2px] bg-luxury-ink p-1 text-luxury-ivory hover:bg-charcoal-800 disabled:opacity-50"
           >
             <IconCheck className="h-3 w-3" />
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="rounded border border-border p-1 text-muted-foreground hover:bg-muted"
+            className="rounded-[2px] border border-luxury-ink/20 p-1 text-neutral-500 hover:bg-taupe-50"
           >
             <IconX className="h-3 w-3" />
           </button>
@@ -78,31 +78,31 @@ export default function SubcategoryItem({
         <>
           <div className="flex-1 min-w-0">
             <p
-              className={`font-medium truncate ${
+              className={`font-semibold truncate ${
                 isSubInactive
-                  ? "text-muted-foreground line-through"
-                  : "text-foreground"
+                  ? "text-neutral-400 line-through"
+                  : "text-luxury-ink"
               }`}
             >
               {subcategory.name}
             </p>
-            <p className="text-[11px] text-muted-foreground truncate">
-              / {subcategory.slug}
+            <p className="text-2xs font-mono text-neutral-400 truncate">
+              /{subcategory.slug}
             </p>
           </div>
           <span
-            className={`px-2 py-0.5 rounded-full text-2xs font-medium ${
+            className={`px-2 py-0.5 rounded-[2px] border text-2xs font-bold uppercase tracking-wider ${
               isSubInactive
-                ? "bg-slate-100 text-slate-700"
-                : "bg-secondary text-foreground"
+                ? "bg-taupe-50 border-luxury-ink/10 text-neutral-400"
+                : "bg-emerald-50 border-emerald-200 text-emerald-800"
             }`}
           >
-            {isSubInactive ? "Inactive" : "Active"}
+            {isSubInactive ? "Tạm ẩn" : "Hoạt động"}
           </span>
           <button
             type="button"
             onClick={onStartEdit}
-            className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+            className="rounded-[2px] p-1 text-neutral-400 hover:text-luxury-ink hover:bg-taupe-50 transition-colors"
             title="Sửa"
           >
             <IconPencil className="h-3 w-3" />
@@ -110,7 +110,7 @@ export default function SubcategoryItem({
           <button
             type="button"
             onClick={onDelete}
-            className="rounded p-1 text-destructive hover:bg-destructive/5"
+            className="rounded-[2px] p-1 text-neutral-400 hover:text-blush-600 hover:bg-blush-50 transition-colors"
             title="Xóa"
           >
             <IconTrash className="h-3 w-3" />
