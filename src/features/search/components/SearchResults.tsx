@@ -50,8 +50,7 @@ export default function SearchResults({
                 page: 1,
               })
             }
-            className="h-10 appearance-none border border-luxury-ink/15 bg-white py-2 pl-4 pr-9 text-[13px] font-medium text-luxury-ink outline-none transition-colors duration-300 hover:border-luxury-ink/25 focus:border-luxury-champagne"
-            style={{ borderRadius: "2px" }}
+            className="rounded-[2px] h-10 appearance-none border border-luxury-ink/15 bg-white py-2 pl-4 pr-9 text-[13px] font-medium text-luxury-ink outline-none transition-colors duration-300 hover:border-luxury-ink/25 focus:border-luxury-champagne"
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>

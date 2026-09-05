@@ -47,12 +47,12 @@ export default function HeaderSearch({
       <form
         onSubmit={submitSearch}
         className={cn(
-          "flex items-center overflow-hidden border transition-all duration-300 ease-out",
+          "flex rounded-[2px] items-center overflow-hidden border transition-all duration-300 ease-out",
           isOpen
             ? "w-56 border-luxury-ink/15 bg-cream-50/70 pl-3.5 sm:w-72 focus-within:border-luxury-champagne focus-within:bg-white"
             : "w-9 border-transparent bg-transparent",
         )}
-        style={{ borderRadius: "2px" }}
+    
       >
         <button
           type={isOpen ? "submit" : "button"}
@@ -73,7 +73,7 @@ export default function HeaderSearch({
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Tìm kiếm sản phẩm..."
           className={cn(
-            "h-9 bg-transparent text-[13px] font-medium text-luxury-ink placeholder:font-normal placeholder:text-taupe-400/80 focus:outline-none transition-all duration-300",
+            "h-9 bg-transparent text-sm font-medium text-luxury-ink placeholder:font-normal placeholder:text-charcoal-300 focus:outline-none transition-all duration-300",
             isOpen ? "w-full px-2 opacity-100" : "w-0 px-0 opacity-0",
           )}
         />

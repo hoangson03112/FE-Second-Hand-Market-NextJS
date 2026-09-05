@@ -33,13 +33,13 @@ export function SellFormActions({
       <button
         type="submit"
         disabled={isLoading}
-        className="inline-flex h-12 items-center justify-center rounded-[2px] bg-luxury-ink px-8 text-[11px] font-semibold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-40"
+        className="inline-flex h-12 items-center justify-center rounded-[2px] bg-luxury-ink px-8 text-xs font-semibold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-40"
       >
         {getSubmitLabel()}
       </button>
       <Link
         href={isEditMode ? "/my/listings" : "/"}
-        className="inline-flex h-12 items-center justify-center rounded-[2px] border border-luxury-ink/15 px-8 text-[11px] font-semibold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
+        className="inline-flex h-12 items-center justify-center rounded-[2px] border border-luxury-ink/15 px-8 text-xs font-semibold uppercase tracking-[0.22em] text-luxury-ink transition-all duration-300 hover:border-luxury-ink hover:bg-luxury-ink hover:text-luxury-ivory"
       >
         Hủy
       </Link>

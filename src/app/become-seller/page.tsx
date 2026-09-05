@@ -1,5 +1,5 @@
-import BecomeSellerScreen from "@/features/seller/become-seller/BecomeSellerScreen";
+import BecomeSeller from "@/features/seller/become-seller/BecomeSeller";
 
 export default function BecomeSellerPage() {
-  return <BecomeSellerScreen />;
+  return <BecomeSeller />;
 }

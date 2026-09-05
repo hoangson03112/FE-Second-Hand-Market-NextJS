@@ -18,7 +18,7 @@ export default function CartLoginPrompt() {
       </p>
       <Link
         href="/login"
-        className="inline-flex items-center justify-center h-12 px-10 bg-luxury-ink text-white uppercase tracking-[0.15em] text-[11px] font-bold rounded-[2px] hover:bg-luxury-ink/90 transition-colors duration-300"
+        className="inline-flex items-center justify-center h-12 px-10 bg-luxury-ink text-white uppercase tracking-[0.15em] text-xs font-bold rounded-[2px] hover:bg-luxury-ink/90 transition-colors duration-300"
       >
         Đăng Nhập
       </Link>

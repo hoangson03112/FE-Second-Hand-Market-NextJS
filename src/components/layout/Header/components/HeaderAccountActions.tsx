@@ -39,7 +39,7 @@ export function HeaderAccountActions({
     <>
       <Link
         href={sellButtonHref}
-        className="gap-1 group relative inline-flex items-center justify-center h-8 sm:h-9 px-4 sm:px-5 text-xs font-medium uppercase tracking-[0.1em] text-white bg-primary rounded-[2px] transition-all duration-300 hover:scale-[1.03]"
+        className="gap-1 group relative inline-flex items-center justify-center h-8 sm:h-9 px-4 sm:px-5 text-2xs font-medium uppercase tracking-[0.1em] text-white bg-primary rounded-[2px] transition-all duration-300 hover:scale-[1.03]"
       >
         <IconPlus className="w-3.5 h-3.5" strokeWidth={2.5} />
 

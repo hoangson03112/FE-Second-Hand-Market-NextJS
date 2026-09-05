@@ -81,7 +81,7 @@ function FilterGroup({
           >
             {String(index).padStart(2, "0")}
           </span>
-          <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-neutral-600 transition-colors group-hover:text-luxury-ink">
+          <span className="text-xs font-bold uppercase tracking-[0.15em] text-neutral-600 transition-colors group-hover:text-luxury-ink">
             {title}
           </span>
         </div>
@@ -141,15 +141,13 @@ function PriceRangeSlider({
     <div>
       <div className="mb-4 flex items-center justify-between text-[13px] font-medium text-luxury-ink">
         <span
-          className="border border-luxury-ink/12 bg-cream-50 px-2.5 py-1 text-[12px]"
-          style={{ borderRadius: "2px" }}
+          className="rounded-[2px] border border-luxury-ink/12 bg-cream-50 px-2.5 py-1 text-[12px]"
         >
           {formatCompactVnd(localMin)}
         </span>
         <span className="h-px w-3 bg-taupe-400/60" aria-hidden />
         <span
-          className="border border-luxury-ink/12 bg-cream-50 px-2.5 py-1 text-[12px]"
-          style={{ borderRadius: "2px" }}
+          className="rounded-[2px] border border-luxury-ink/12 bg-cream-50 px-2.5 py-1 text-[12px]"
         >
           {localMax >= PRICE_SLIDER_MAX
             ? `${formatCompactVnd(PRICE_SLIDER_MAX)}+`
@@ -310,8 +308,7 @@ export default function FilterSidebar({
           </h2>
           {activeFilterCount > 0 && (
             <span
-              className="flex h-4 min-w-4 items-center justify-center bg-luxury-champagne px-1 text-2xs font-bold text-luxury-ink"
-              style={{ borderRadius: "2px" }}
+              className="rounded-[2px] flex h-4 min-w-4 items-center justify-center bg-luxury-champagne px-1 text-2xs font-bold text-luxury-ink"
             >
               {activeFilterCount}
             </span>
@@ -351,7 +348,7 @@ export default function FilterSidebar({
       )}
 
       {typeof resultCount === "number" && (
-        <p className="border-b border-luxury-ink/6 py-3 text-[11px] text-neutral-500">
+        <p className="border-b border-luxury-ink/6 py-3 text-xs text-neutral-500">
           <span className="font-bold text-luxury-ink">
             {resultCount.toLocaleString("vi-VN")}
           </span>{" "}
@@ -375,8 +372,7 @@ export default function FilterSidebar({
                         : Number(e.target.value),
                   })
                 }
-                className="w-full appearance-none border border-luxury-ink/15 bg-white/60 py-2.5 pl-4 pr-10 text-[13px] font-medium text-luxury-ink outline-none transition-colors duration-300 hover:border-luxury-ink/25 focus:border-luxury-champagne focus:bg-white"
-                style={{ borderRadius: "2px" }}
+                className="rounded-[2px] w-full appearance-none border border-luxury-ink/15 bg-white/60 py-2.5 pl-4 pr-10 text-[13px] font-medium text-luxury-ink outline-none transition-colors duration-300 hover:border-luxury-ink/25 focus:border-luxury-champagne focus:bg-white"
               >
                 <option value="">Toàn quốc</option>
                 {provinces.map((p) => (
@@ -411,12 +407,11 @@ export default function FilterSidebar({
                     })
                   }
                   className={cn(
-                    "flex flex-col items-center justify-center gap-2 border p-3.5 transition-all duration-300",
+                    "rounded-[2px] flex flex-col items-center justify-center gap-2 border p-3.5 transition-all duration-300",
                     isActive
                       ? "border-luxury-ink bg-luxury-ink text-cream-50"
                       : "border-luxury-ink/15 bg-white/50 text-neutral-600 hover:border-luxury-champagne/60 hover:bg-cream-50",
                   )}
-                  style={{ borderRadius: "2px" }}
                 >
                   <Icon
                     className={cn(
@@ -425,7 +420,7 @@ export default function FilterSidebar({
                     )}
                     strokeWidth={1.5}
                   />
-                  <span className="text-center text-[11px] font-medium leading-tight">
+                  <span className="text-center text-xs font-medium leading-tight">
                     {opt.label}
                   </span>
                 </button>
@@ -448,17 +443,15 @@ export default function FilterSidebar({
                   onClick={() =>
                     update({ condition: isActive ? undefined : opt.value })
                   }
-                  className="group -mx-2 flex w-full items-center gap-3 p-2 transition-colors hover:bg-cream-50"
-                  style={{ borderRadius: "2px" }}
+                  className="rounded-[2px] group -mx-2 flex w-full items-center gap-3 p-2 transition-colors hover:bg-cream-50"
                 >
                   <div
                     className={cn(
-                      "flex h-4 w-4 shrink-0 items-center justify-center border transition-all duration-200",
+                      "rounded-[2px] flex h-4 w-4 shrink-0 items-center justify-center border transition-all duration-200",
                       isActive
                         ? "border-luxury-ink bg-luxury-ink"
                         : "border-luxury-ink/25 bg-white group-hover:border-luxury-ink/50",
                     )}
-                    style={{ borderRadius: "2px" }}
                   >
                     {isActive && (
                       <IconCheck
@@ -518,7 +511,7 @@ export default function FilterSidebar({
                     })
                   }
                   className={cn(
-                    "rounded-full border px-3.5 py-1.5 text-[11px] font-medium transition-all duration-300",
+                    "rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all duration-300",
                     isActive
                       ? "border-luxury-ink bg-luxury-ink text-cream-50"
                       : "border-luxury-ink/15 bg-white/50 text-neutral-600 hover:border-luxury-ink/30 hover:text-luxury-ink",

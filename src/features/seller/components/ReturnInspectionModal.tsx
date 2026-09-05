@@ -244,7 +244,7 @@ export function ReturnInspectionModal({
             type="button"
             onClick={onClose}
             disabled={submitting}
-            className="flex-1 rounded-[2px] border border-luxury-ink/20 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-luxury-ink transition-colors hover:bg-taupe-50 disabled:opacity-40"
+            className="flex-1 rounded-[2px] border border-luxury-ink/20 px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.15em] text-luxury-ink transition-colors hover:bg-taupe-50 disabled:opacity-40"
           >
             Huỷ
           </button>
@@ -252,7 +252,7 @@ export function ReturnInspectionModal({
             type="button"
             onClick={handleSubmit}
             disabled={submitting}
-            className="flex-1 rounded-[2px] bg-luxury-ink px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-cream-50 transition-opacity hover:opacity-90 disabled:opacity-40"
+            className="flex-1 rounded-[2px] bg-luxury-ink px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.15em] text-cream-50 transition-opacity hover:opacity-90 disabled:opacity-40"
           >
             {submitting
               ? "Đang gửi..."

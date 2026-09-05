@@ -41,9 +41,9 @@ export function BankInfoForm({
       <div className="px-6 py-6 border-b border-luxury-ink/10">
         <h2 className="font-droid-serif text-2xl text-luxury-ink flex items-center gap-2">
           <IconBuildingBank className="w-6 h-6 text-luxury-ink" />
-          Tài khoản nhận tiền (Ngân hàng)
+          Tài khoản ngân hàng
         </h2>
-        <p className="text-2xs uppercase tracking-[0.15em] font-bold text-neutral-500 mt-2">
+        <p className="text-2xs uppercase tracking-[0.12em] font-medium text-neutral-500 mt-2">
           Thông tin nhận tiền chuyển khoản từ Ban Quản Trị sau khi đơn hàng bán hoàn thành.
         </p>
       </div>
@@ -51,7 +51,7 @@ export function BankInfoForm({
       <div className="p-6 lg:p-8">
         <div className="p-4 rounded-[2px] bg-cream-50/70 border border-luxury-ink/10 mb-6">
           <div className="flex gap-3">
-            <IconAlertCircle className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+            <IconAlertCircle className="w-5 h-5 text-orange-400 shrink-0 mt-0.5" />
             <div>
               <h4 className="text-xs uppercase tracking-wide font-bold text-luxury-ink">
                 Lưu ý quan trọng
@@ -68,14 +68,14 @@ export function BankInfoForm({
           className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2"
         >
           <div>
-            <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
+            <label className="block text-xs uppercase tracking-wide font-medium text-luxury-ink mb-2">
               Tên ngân hàng <span className="text-blush-600">*</span>
             </label>
             <div className="relative">
               <select
                 name="bankName"
-                value={formData.bankName}
-                onChange={onChange}
+                  value={formData.bankName}
+                  onChange={onChange}
                 className="w-full h-11 pl-10 pr-4 rounded-[2px] border border-luxury-ink/20 bg-transparent text-sm outline-none focus:border-luxury-ink focus:ring-1 focus:ring-luxury-ink transition-all appearance-none"
                 required
               >
@@ -86,12 +86,12 @@ export function BankInfoForm({
                   </option>
                 ))}
               </select>
-              <IconBuildingBank className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-taupe-400 pointer-events-none" />
+              <IconBuildingBank className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-600 pointer-events-none" />
             </div>
           </div>
 
           <div>
-            <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
+            <label className="block text-xs uppercase tracking-wide font-medium text-luxury-ink mb-2">
               Số tài khoản <span className="text-blush-600">*</span>
             </label>
             <div className="relative">
@@ -104,12 +104,12 @@ export function BankInfoForm({
                 placeholder="Chỉ nhập số"
                 required
               />
-              <IconCreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-taupe-400 pointer-events-none" />
+              <IconCreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-600 pointer-events-none" />
             </div>
           </div>
 
           <div className="lg:col-span-2">
-            <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
+            <label className="block text-xs uppercase tracking-wide font-medium text-luxury-ink mb-2">
               Chủ tài khoản <span className="text-blush-600">*</span>
             </label>
             <div className="relative">
@@ -122,7 +122,7 @@ export function BankInfoForm({
                 placeholder="Họ tên in trên thẻ"
                 required
               />
-              <IconUser className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-taupe-400 pointer-events-none" />
+              <IconUser className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-600 pointer-events-none" />
             </div>
           </div>
 
@@ -133,7 +133,7 @@ export function BankInfoForm({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.15em] text-[11px] font-bold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
+              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.15em] text-xs font-bold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
             >
               {isSubmitting ? (
                 <>

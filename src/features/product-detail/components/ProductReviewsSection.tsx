@@ -160,7 +160,7 @@ export default function ProductReviewsSection({
             variant="outline"
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="rounded-[2px] text-[11px] font-bold uppercase tracking-[0.15em] px-6 border-luxury-ink/20 text-luxury-ink hover:bg-taupe-50"
+            className="rounded-[2px] text-xs font-bold uppercase tracking-[0.15em] px-6 border-luxury-ink/20 text-luxury-ink hover:bg-taupe-50"
           >
             {isFetchingNextPage ? "Đang tải..." : "Xem thêm đánh giá"}
           </Button>

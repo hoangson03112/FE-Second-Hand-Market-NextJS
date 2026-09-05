@@ -68,7 +68,7 @@ export default function AddressSection({
               {selectedAddress.fullName}
             </span>
             <span aria-hidden className="h-3 w-px bg-luxury-ink/15" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.18em] tabular-nums text-neutral-600">
+            <span className="text-xs font-bold uppercase tracking-[0.18em] tabular-nums text-neutral-600">
               {selectedAddress.phoneNumber}
             </span>
             {selectedAddress.isDefault ? (

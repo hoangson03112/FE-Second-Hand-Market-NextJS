@@ -32,7 +32,7 @@ export default function ForgotPasswordForm({
       <div className="space-y-2">
         <label
           htmlFor="email"
-          className="block text-[11px] uppercase tracking-wider font-bold text-luxury-ink"
+          className="block text-xs uppercase tracking-wider font-bold text-luxury-ink"
         >
           Email đã đăng ký <span className="text-blush-600 ml-0.5">*</span>
         </label>

@@ -132,8 +132,7 @@ export function RefundModal({
       }}
     >
       <div
-        className="flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden bg-luxury-ivory shadow-2xl"
-        style={{ borderRadius: "2px" }}
+        className="rounded-[2px] flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden bg-luxury-ivory shadow-2xl"
       >
 
         <div className="relative flex items-start justify-between border-b border-luxury-ink/8 px-6 py-5">
@@ -185,12 +184,11 @@ export function RefundModal({
                   <span
                     className={
                       isCurrent
-                        ? "flex h-6 w-6 shrink-0 items-center justify-center bg-luxury-ink text-xs font-medium text-luxury-champagne"
+                        ? "rounded-[2px] flex h-6 w-6 shrink-0 items-center justify-center bg-luxury-ink text-xs font-medium text-luxury-champagne"
                         : isDone
-                          ? "flex h-6 w-6 shrink-0 items-center justify-center bg-luxury-champagne text-luxury-ink"
-                          : "flex h-6 w-6 shrink-0 items-center justify-center border border-luxury-ink/20 text-xs font-medium text-taupe-400"
+                          ? "rounded-[2px] flex h-6 w-6 shrink-0 items-center justify-center bg-luxury-champagne text-luxury-ink"
+                          : "rounded-[2px] flex h-6 w-6 shrink-0 items-center justify-center border border-luxury-ink/20 text-xs font-medium text-taupe-400"
                     }
-                    style={{ borderRadius: "2px" }}
                   >
                     {isDone ? (
                       <IconCheck className="h-3 w-3" strokeWidth={2.5} />
@@ -253,18 +251,16 @@ export function RefundModal({
                           onClick={() => onReasonChange(opt.value)}
                           className={
                             isSelected
-                              ? "relative flex items-start gap-3 border border-luxury-champagne bg-cream-50 p-3.5 text-left transition-all duration-300"
-                              : "relative flex items-start gap-3 border border-luxury-ink/12 bg-white/60 p-3.5 text-left transition-all duration-300 hover:border-luxury-ink/25 hover:bg-cream-50/60"
+                              ? "rounded-[2px] relative flex items-start gap-3 border border-luxury-champagne bg-cream-50 p-3.5 text-left transition-all duration-300"
+                              : "rounded-[2px] relative flex items-start gap-3 border border-luxury-ink/12 bg-white/60 p-3.5 text-left transition-all duration-300 hover:border-luxury-ink/25 hover:bg-cream-50/60"
                           }
-                          style={{ borderRadius: "2px" }}
                         >
                           <div
                             className={
                               isSelected
-                                ? "flex h-9 w-9 shrink-0 items-center justify-center bg-luxury-ink"
-                                : "flex h-9 w-9 shrink-0 items-center justify-center bg-luxury-ink/5"
+                                ? "rounded-[2px] flex h-9 w-9 shrink-0 items-center justify-center bg-luxury-ink"
+                                : "rounded-[2px] flex h-9 w-9 shrink-0 items-center justify-center bg-luxury-ink/5"
                             }
-                            style={{ borderRadius: "2px" }}
                           >
                             <Icon
                               className={
@@ -291,7 +287,7 @@ export function RefundModal({
                           </div>
                           {isSelected && (
                             <span
-                              className="absolute right-2 top-2 flex h-4.5 w-4.5 items-center justify-center bg-luxury-champagne"
+                              className="rounded-[2px] absolute right-2 top-2 flex h-4.5 w-4.5 items-center justify-center bg-luxury-champagne"
                               style={{ borderRadius: "2px" }}
                             >
                               <IconCheck
@@ -424,7 +420,7 @@ export function RefundModal({
                               ? "Thả ảnh vào đây"
                               : "Kéo & thả, hoặc click để chọn"}
                           </p>
-                          <p className="text-[11px] text-taupe-400">
+                          <p className="text-xs text-taupe-400">
                             JPG, PNG, WEBP — tối đa {REFUND_MAX_IMAGES} ảnh
                           </p>
                         </button>

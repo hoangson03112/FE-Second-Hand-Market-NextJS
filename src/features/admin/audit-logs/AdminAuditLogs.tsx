@@ -191,7 +191,7 @@ export default function AdminAuditLogs() {
                         <div className="font-semibold text-xs text-luxury-ink">
                           {log.adminId?.fullName ?? "—"}
                         </div>
-                        <div className="text-[11px] text-neutral-400">
+                        <div className="text-xs text-neutral-400">
                           {log.adminId?.email ?? ""}
                         </div>
                       </td>
@@ -206,7 +206,7 @@ export default function AdminAuditLogs() {
                       </td>
                       <td className="px-4 py-3.5 text-luxury-ink text-xs">
                         <span className="font-semibold">{log.targetType}</span> ·{" "}
-                        <span className="font-mono text-neutral-500 text-[11px]">
+                        <span className="font-mono text-neutral-500 text-xs">
                           {log.targetId}
                         </span>
                       </td>

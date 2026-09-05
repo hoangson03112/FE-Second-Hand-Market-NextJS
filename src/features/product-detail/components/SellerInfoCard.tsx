@@ -77,7 +77,7 @@ export default function SellerInfoCard({
       </div>
       <button
         onClick={onContactSeller}
-        className="w-full mt-5 border border-luxury-ink/20 bg-white text-luxury-ink py-3 rounded-[2px] text-[11px] uppercase tracking-[0.15em] font-bold hover:bg-luxury-ink hover:text-white transition-colors"
+        className="w-full mt-5 border border-luxury-ink/20 bg-white text-luxury-ink py-3 rounded-[2px] text-xs uppercase tracking-[0.15em] font-bold hover:bg-luxury-ink hover:text-white transition-colors"
       >
         Chat với người bán
       </button>

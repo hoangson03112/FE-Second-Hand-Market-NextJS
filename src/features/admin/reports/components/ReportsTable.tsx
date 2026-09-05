@@ -66,7 +66,7 @@ export default function ReportsTable({
                     <td className="px-4 py-3 hidden sm:table-cell text-neutral-500 text-xs">
                       <span className="font-semibold text-luxury-ink block">{reporterDisplay}</span>
                       {reporterSub && (
-                        <span className="block text-[11px] text-neutral-400">
+                        <span className="block text-xs text-neutral-400">
                           {reporterSub}
                         </span>
                       )}

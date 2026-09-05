@@ -133,7 +133,7 @@ export function NotificationDropdown() {
                 >
                   Thông báo
                 </h2>
-                <p className="text-[11px] mt-1 text-muted-foreground">
+                <p className="text-xs mt-1 text-muted-foreground">
                   {notifications.length} thông báo
                 </p>
               </div>
@@ -198,7 +198,7 @@ export function NotificationDropdown() {
                           <p className="text-xs text-muted-foreground mt-0.5 break-words line-clamp-2 leading-relaxed">
                             {item.message}
                           </p>
-                          <p className="text-[11px] text-muted-foreground mt-1.5 font-medium">
+                          <p className="text-xs text-muted-foreground mt-1.5 font-medium">
                             {formatTimeAgo(item.createdAt)}
                           </p>
                         </div>
@@ -226,7 +226,7 @@ export function NotificationDropdown() {
                           <p className="text-xs text-muted-foreground mt-0.5 break-words line-clamp-2 leading-relaxed">
                             {item.message}
                           </p>
-                          <p className="text-[11px] text-muted-foreground mt-1.5 font-medium">
+                          <p className="text-xs text-muted-foreground mt-1.5 font-medium">
                             {formatTimeAgo(item.createdAt)}
                           </p>
                         </div>
@@ -251,7 +251,7 @@ export function NotificationDropdown() {
                         <p className="text-xs text-muted-foreground mt-0.5 break-words line-clamp-2 leading-relaxed">
                           {item.message}
                         </p>
-                        <p className="text-[11px] text-muted-foreground mt-1.5 font-medium">
+                        <p className="text-xs text-muted-foreground mt-1.5 font-medium">
                           {formatTimeAgo(item.createdAt)}
                         </p>
                       </div>
@@ -263,7 +263,7 @@ export function NotificationDropdown() {
 
             {hasMoreNotifications && (
               <div className="mx-2 mt-1 mb-2 rounded-[2px] border border-luxury-ink/10 px-3 py-2 text-center bg-cream-50/70">
-                <p className="text-[11px] text-muted-foreground">
+                <p className="text-xs text-muted-foreground">
                   Đang hiển thị 20 thông báo mới nhất. Danh sách cuộn trong
                   khung này.
                 </p>

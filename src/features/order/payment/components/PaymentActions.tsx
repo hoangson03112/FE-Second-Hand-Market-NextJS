@@ -38,7 +38,7 @@ export function PaymentActions({
         disabled={disabled}
         className={cn(
           "inline-flex h-14 w-full items-center justify-center gap-3 rounded-[2px] px-6",
-          "text-[11px] font-bold uppercase tracking-[0.22em] transition-all duration-300",
+          "text-xs font-bold uppercase tracking-[0.22em] transition-all duration-300",
           disabled
             ? "cursor-not-allowed bg-luxury-ink/25 text-luxury-ivory/70"
             : "bg-luxury-ink text-luxury-ivory hover:bg-charcoal-800",

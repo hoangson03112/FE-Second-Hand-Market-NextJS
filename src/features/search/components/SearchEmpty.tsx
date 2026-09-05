@@ -9,8 +9,7 @@ export default function SearchEmpty() {
   return (
     <div className="flex flex-col items-center py-24 text-center">
       <div
-        className="relative flex h-16 w-16 items-center justify-center border border-luxury-ink/10 bg-white"
-        style={{ borderRadius: "2px" }}
+        className="rounded-[2px] relative flex h-16 w-16 items-center justify-center border border-luxury-ink/10 bg-white"
       >
         <div
           aria-hidden
@@ -49,8 +48,7 @@ export default function SearchEmpty() {
             <Link
               key={s}
               href={`/search?q=${encodeURIComponent(s)}`}
-              className="border border-luxury-ink/12 bg-cream-50 px-3.5 py-1.5 text-[12px] font-medium text-neutral-600 transition-all duration-300 hover:border-luxury-champagne hover:text-luxury-ink"
-              style={{ borderRadius: "2px" }}
+              className="rounded-[2px] border border-luxury-ink/12 bg-cream-50 px-3.5 py-1.5 text-[12px] font-medium text-neutral-600 transition-all duration-300 hover:border-luxury-champagne hover:text-luxury-ink"
             >
               {s}
             </Link>

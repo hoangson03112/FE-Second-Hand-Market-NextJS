@@ -16,7 +16,7 @@ interface OrderActionButtonsProps {
 
 
 const BUTTON_BASE =
-  "flex w-full items-center justify-center gap-2 rounded-[2px] py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] transition-all duration-300 disabled:opacity-50";
+  "flex w-full items-center justify-center gap-2 rounded-[2px] py-3.5 text-xs font-bold uppercase tracking-[0.22em] transition-all duration-300 disabled:opacity-50";
 
 const PRIMARY = `${BUTTON_BASE} bg-luxury-ink text-luxury-ivory hover:bg-charcoal-800`;
 const SECONDARY = `${BUTTON_BASE} border border-luxury-ink/15 text-neutral-700 hover:border-luxury-ink/30 hover:text-luxury-ink`;

@@ -126,7 +126,7 @@ interface AdminDisputeDetailModalProps {
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-muted-foreground">
+    <p className="text-xs font-bold uppercase tracking-[0.08em] text-muted-foreground">
       {children}
     </p>
   );

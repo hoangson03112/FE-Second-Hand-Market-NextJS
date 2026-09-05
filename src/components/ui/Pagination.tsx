@@ -117,7 +117,6 @@ export default function Pagination({
                     ? "pointer-events-none cursor-default border-luxury-ink bg-luxury-ink text-cream-50"
                     : "border-transparent text-neutral-500 hover:border-luxury-champagne/60 hover:bg-cream-50 hover:text-luxury-ink",
                 )}
-                style={{ borderRadius: "2px" }}
               >
                 {pad(n)}
               </button>

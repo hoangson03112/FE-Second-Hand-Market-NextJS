@@ -133,7 +133,7 @@ export function ProfileSidebar({
               className={navClass("bank")}
             >
               <IconBuildingBank className="w-4 h-4" />
-              <span>Tài khoản nhận tiền (Bank)</span>
+              <span>Tài khoản ngân hàng</span>
             </button>
           </div>
         </div>

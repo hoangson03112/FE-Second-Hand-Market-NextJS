@@ -1,10 +1,12 @@
 "use client";
 
+import { useRef } from "react";
 import { usePathname } from "next/navigation";
 import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer/Footer";
 import { ErrorBoundary } from "@/components/layout/ErrorBoundary";
 import { FloatingChatBox } from "@/features/chat";
+import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 
 export default function SiteLayout({
   children,
@@ -13,6 +15,10 @@ export default function SiteLayout({
 }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
+
+  const mainRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  useSmoothScroll(mainRef, contentRef);
 
   if (isAdmin) {
     return <>{children}</>;
@@ -24,9 +30,10 @@ export default function SiteLayout({
 
       <main
         id="main-scroll-container"
+        ref={mainRef}
         className="flex-1 min-h-0 w-full overflow-y-auto overflow-x-hidden"
       >
-        <div className="flex flex-col justify-between">
+        <div ref={contentRef} className="flex flex-col justify-between">
           <div className="w-full">{children}</div>
 
           <Footer />

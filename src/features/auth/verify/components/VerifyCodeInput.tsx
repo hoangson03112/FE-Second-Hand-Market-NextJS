@@ -134,7 +134,7 @@ export default function VerifyCodeInput({
         })}
       </div>
 
-      <p className="mt-3 text-[11px] leading-relaxed text-neutral-500">
+      <p className="mt-3 text-xs leading-relaxed text-neutral-500">
         {hint}
       </p>
     </div>

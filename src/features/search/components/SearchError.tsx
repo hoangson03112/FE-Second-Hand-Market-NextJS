@@ -6,8 +6,7 @@ export default function SearchError() {
   return (
     <div className="flex flex-col items-center py-24 text-center">
       <div
-        className="flex h-16 w-16 items-center justify-center border border-red-200 bg-red-50"
-        style={{ borderRadius: "2px" }}
+        className="rounded-[2px] flex h-16 w-16 items-center justify-center border border-red-200 bg-red-50"
       >
         <IconAlertTriangle className="h-6 w-6 text-red-500" strokeWidth={1.5} />
       </div>
@@ -27,8 +26,7 @@ export default function SearchError() {
       <button
         type="button"
         onClick={() => window.location.reload()}
-        className="group mt-7 inline-flex items-center gap-2 bg-luxury-ink px-6 py-3 text-[11px] font-bold uppercase tracking-[0.15em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
-        style={{ borderRadius: "2px" }}
+        className="rounded-[2px] group mt-7 inline-flex items-center gap-2 bg-luxury-ink px-6 py-3 text-xs font-bold uppercase tracking-[0.15em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
       >
         <IconRefresh
           className="h-4 w-4 transition-transform duration-500 group-hover:rotate-180"

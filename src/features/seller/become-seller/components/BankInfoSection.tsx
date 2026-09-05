@@ -13,14 +13,14 @@ const BANK_OPTIONS = Object.keys(BANK_CODE_MAP);
 
 function FieldLabel({ children, required }: { children: React.ReactNode; required?: boolean }) {
   return (
-    <label className="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.08em] text-neutral-500">
+    <label className="mb-1.5 block text-xs font-medium uppercase tracking-[0.08em] text-neutral-500">
       {children} {required && <span className="text-accent">*</span>}
     </label>
   );
 }
 
 const inputClass =
-  "w-full border border-luxury-ink/15 bg-white/70 px-3.5 py-2.5 text-sm text-luxury-ink placeholder:text-taupe-400/70 outline-none transition-colors duration-300 hover:border-luxury-ink/25 focus:border-luxury-champagne focus:bg-white";
+  "w-full rounded-[2px] border border-luxury-ink/15 bg-white/70 px-3.5 py-2.5 text-sm text-luxury-ink placeholder:text-charcoal-300 outline-none transition-colors duration-300 hover:border-luxury-ink/25 focus:border-luxury-champagne focus:bg-white";
 
 export const BankInfoSection: React.FC<BankInfoSectionProps> = ({
   values,
@@ -28,7 +28,7 @@ export const BankInfoSection: React.FC<BankInfoSectionProps> = ({
   onChange,
 }) => {
   return (
-    <div className="border border-luxury-ink/8 bg-white/50 p-5 md:p-6" style={{ borderRadius: "2px" }}>
+    <div className="border border-luxury-ink/8 bg-white/50 p-5 md:p-6" >
       <div className="space-y-4">
         <div>
           <FieldLabel required>Số điện thoại</FieldLabel>
@@ -39,9 +39,8 @@ export const BankInfoSection: React.FC<BankInfoSectionProps> = ({
             onChange={onChange}
             placeholder="10-11 chữ số"
             className={inputClass}
-            style={{ borderRadius: "2px" }}
           />
-          {errors.phoneNumber && <p className="mt-1.5 text-xs text-red-600">{errors.phoneNumber}</p>}
+          {errors.phoneNumber && <p className="mt-1.5 text-xs text-blush-600">{errors.phoneNumber}</p>}
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -52,8 +51,8 @@ export const BankInfoSection: React.FC<BankInfoSectionProps> = ({
                 name="bankName"
                 value={values.bankName}
                 onChange={onChange}
-                className={`${inputClass} appearance-none pr-9`}
-                style={{ borderRadius: "2px" }}
+                className={`${inputClass} appearance-none pr-9 rounded-[2px]`}
+          
               >
                 <option value="">Chọn ngân hàng</option>
                 {BANK_OPTIONS.map((bank) => (
@@ -72,7 +71,7 @@ export const BankInfoSection: React.FC<BankInfoSectionProps> = ({
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
-            {errors.bankName && <p className="mt-1.5 text-xs text-red-600">{errors.bankName}</p>}
+            {errors.bankName && <p className="mt-1.5 text-xs text-blush-600">{errors.bankName}</p>}
           </div>
 
           <div>
@@ -84,9 +83,8 @@ export const BankInfoSection: React.FC<BankInfoSectionProps> = ({
               onChange={onChange}
               placeholder="Chỉ nhập số"
               className={inputClass}
-              style={{ borderRadius: "2px" }}
             />
-            {errors.accountNumber && <p className="mt-1.5 text-xs text-red-600">{errors.accountNumber}</p>}
+            {errors.accountNumber && <p className="mt-1.5 text-xs text-blush-600">{errors.accountNumber}</p>}
           </div>
         </div>
 
@@ -97,11 +95,10 @@ export const BankInfoSection: React.FC<BankInfoSectionProps> = ({
             name="accountHolder"
             value={values.accountHolder}
             onChange={onChange}
-            placeholder="Họ tên in trên thẻ"
+            placeholder="Họ tên chủ tài khoản"
             className={inputClass}
-            style={{ borderRadius: "2px" }}
           />
-          {errors.accountHolder && <p className="mt-1.5 text-xs text-red-600">{errors.accountHolder}</p>}
+          {errors.accountHolder && <p className="mt-1.5 text-xs text-blush-600">{errors.accountHolder}</p>}
         </div>
       </div>
     </div>

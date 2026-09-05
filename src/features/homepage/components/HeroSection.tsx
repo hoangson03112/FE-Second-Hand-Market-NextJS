@@ -9,37 +9,34 @@ import { usePrefersReducedMotion } from "../hooks";
 const RIBBON_COLORS = {
   taupe200: "191, 221, 188",
   accent: "95, 177, 96",
-  neutral500: "98, 98, 111",
+  champagne: "196, 165, 116",
 } as const;
 
 class SilkRibbon {
   points: { x: number; y: number; baseY: number; vy: number }[];
   colorRGB: string;
-  numLayers: number;
+  thickness: number;
   waveSpeed: number;
   waveFreq: number;
-  spread: number;
   amplitude: number;
 
   constructor(
     colorRGB: string,
-    numLayers: number,
+    thickness: number,
     baseY: number,
     waveSpeed: number,
     waveFreq: number,
-    spread: number,
     amplitude: number,
     width: number,
   ) {
     this.colorRGB = colorRGB;
-    this.numLayers = numLayers;
+    this.thickness = thickness;
     this.waveSpeed = waveSpeed;
     this.waveFreq = waveFreq;
-    this.spread = spread;
     this.amplitude = amplitude;
     this.points = [];
 
-    const step = Math.max(28, Math.round(width / 40));
+    const step = Math.max(24, Math.round(width / 50));
     const numPoints = Math.ceil(width / step) + 1;
     for (let i = 0; i <= numPoints; i++) {
       this.points.push({ x: i * step, y: baseY, baseY, vy: 0 });
@@ -52,11 +49,15 @@ class SilkRibbon {
     mouseX: number,
     mouseY: number,
     isHovered: boolean,
+    width: number,
   ) {
     this.points.forEach((p) => {
       let targetY =
         p.baseY +
-        Math.sin(p.x * this.waveFreq + time * this.waveSpeed) * this.amplitude;
+        Math.sin(p.x * this.waveFreq + time * this.waveSpeed) * this.amplitude +
+        Math.sin(p.x * this.waveFreq * 2.4 + time * this.waveSpeed * 1.6) *
+          this.amplitude *
+          0.28;
 
       if (isHovered) {
         const dx = mouseX - p.x;
@@ -77,42 +78,36 @@ class SilkRibbon {
       p.y += p.vy;
     });
 
-    for (let i = 0; i < this.numLayers; i++) {
+    const edgeFade = Math.max(0.14 * width, 110);
+    const fadeStop = Math.min(edgeFade / width, 0.4);
+
+    const bandGradient = (alpha: number) => {
+      const gradient = ctx.createLinearGradient(0, 0, width, 0);
+      gradient.addColorStop(0, `rgba(${this.colorRGB}, 0)`);
+      gradient.addColorStop(fadeStop, `rgba(${this.colorRGB}, ${alpha})`);
+      gradient.addColorStop(1 - fadeStop, `rgba(${this.colorRGB}, ${alpha})`);
+      gradient.addColorStop(1, `rgba(${this.colorRGB}, 0)`);
+      return gradient;
+    };
+
+    const drawBand = (halfThickness: number, alpha: number) => {
+      const top = this.points.map((p) => ({ x: p.x, y: p.y - halfThickness }));
+      const bottom = this.points.map((p) => ({ x: p.x, y: p.y + halfThickness }));
+
       ctx.beginPath();
-
-      const layerPoints = this.points.map((p) => {
-        const twist = Math.sin(
-          p.x * this.waveFreq * 1.25 + time * (this.waveSpeed * 1.1) + i * 0.04,
-        );
-        return {
-          x: p.x,
-          y: p.y + twist * (i * this.spread),
-        };
-      });
-
-      ctx.moveTo(layerPoints[0].x, layerPoints[0].y);
-
-      for (let j = 1; j < layerPoints.length - 1; j++) {
-        const xc = (layerPoints[j].x + layerPoints[j + 1].x) / 2;
-        const yc = (layerPoints[j].y + layerPoints[j + 1].y) / 2;
-        ctx.quadraticCurveTo(layerPoints[j].x, layerPoints[j].y, xc, yc);
+      ctx.moveTo(top[0].x, top[0].y);
+      for (let j = 1; j < top.length; j++) ctx.lineTo(top[j].x, top[j].y);
+      for (let j = bottom.length - 1; j >= 0; j--) {
+        ctx.lineTo(bottom[j].x, bottom[j].y);
       }
+      ctx.closePath();
+      ctx.fillStyle = bandGradient(alpha);
+      ctx.fill();
+    };
 
-      const lastIdx = layerPoints.length - 1;
-      ctx.quadraticCurveTo(
-        layerPoints[lastIdx - 1].x,
-        layerPoints[lastIdx - 1].y,
-        layerPoints[lastIdx].x,
-        layerPoints[lastIdx].y,
-      );
-
-      const alpha = 0.02 + (1 - i / this.numLayers) * 0.07;
-      ctx.strokeStyle = `rgba(${this.colorRGB}, ${alpha})`;
-      ctx.lineWidth = 1.2;
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      ctx.stroke();
-    }
+    drawBand(this.thickness * 1.15, 0.06);
+    drawBand(this.thickness * 0.68, 0.11);
+    drawBand(this.thickness * 0.3, 0.2);
   }
 }
 
@@ -162,32 +157,29 @@ function FullBleedFluidCanvas({
       ribbonsRef.current = [
         new SilkRibbon(
           RIBBON_COLORS.taupe200,
-          18,
-          safeHeight * 0.6,
+          100,
+          safeHeight * 0.63,
           0.0006,
-          0.0012,
-          3,
-          110,
+          0.0011,
+          130,
           safeWidth,
         ),
         new SilkRibbon(
           RIBBON_COLORS.accent,
-          14,
-          safeHeight * 0.5,
-          0.0009,
-          0.0016,
-          2,
-          80,
+          68,
+          safeHeight * 0.48,
+          0.0008,
+          0.0015,
+          95,
           safeWidth,
         ),
         new SilkRibbon(
-          RIBBON_COLORS.neutral500,
-          8,
-          safeHeight * 0.4,
-          0.0013,
-          0.0022,
-          1,
-          45,
+          RIBBON_COLORS.champagne,
+          44,
+          safeHeight * 0.35,
+          0.0011,
+          0.002,
+          60,
           safeWidth,
         ),
       ];
@@ -208,6 +200,7 @@ function FullBleedFluidCanvas({
             mouseRef.current.x,
             mouseRef.current.y,
             hoverRef.current,
+            logicalWidth,
           );
         });
       }
@@ -324,10 +317,6 @@ export default function HeroSection() {
             "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
         }}
       />
-      <div
-        aria-hidden
-        className="hero-ribbon-sweep pointer-events-none absolute left-0 top-1/2 z-[2] h-24 w-[140%] -translate-y-1/2"
-      />
       <motion.div
         className="absolute inset-0 z-[3]"
         initial={reducedMotion ? false : { opacity: 0 }}
@@ -340,6 +329,14 @@ export default function HeroSection() {
           reducedMotion={reducedMotion}
         />
       </motion.div>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 z-[4] h-[58%] w-[min(46rem,78%)] -translate-x-1/2 -translate-y-1/2"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 55% at 50% 50%, color-mix(in srgb, var(--cream-100) 78%, transparent) 0%, color-mix(in srgb, var(--cream-100) 40%, transparent) 45%, transparent 68%)",
+        }}
+      />
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 lg:px-8  pb-24 flex flex-col items-center text-center pointer-events-none">
         <motion.div
           className="mb-8 flex items-center gap-3"
@@ -351,7 +348,7 @@ export default function HeroSection() {
           }}
         >
           <span className="h-px w-10 bg-luxury-champagne/90" aria-hidden />
-          <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-neutral-600">
+          <p className="text-xs font-bold uppercase tracking-[0.32em] text-neutral-600">
             Nền tảng đồ cũ cao cấp
           </p>
           <span className="h-px w-10 bg-luxury-champagne/90" aria-hidden />
@@ -422,7 +419,6 @@ export default function HeroSection() {
           bạch và bền vững trong không gian sang trọng.
         </motion.p>
 
-
         <motion.div
           className="pointer-events-auto flex flex-col items-center gap-4 sm:flex-row sm:gap-5"
           initial={false}
@@ -448,7 +444,6 @@ export default function HeroSection() {
           </Link>
         </motion.div>
       </div>
-
 
       <motion.div
         aria-hidden

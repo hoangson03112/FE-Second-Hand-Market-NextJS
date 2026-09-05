@@ -43,7 +43,7 @@ export function UserMenuDropdown({
       <button
         type="button"
         onClick={toggleUserDropdown}
-        className={`flex items-center shadow-sm gap-1 sm:gap-1.5 h-8 sm:h-9 pl-0.5 sm:pl-1 pr-1.5 sm:pr-2.5 rounded-[2px] transition-all duration-150 focus:outline-none hover:bg-primary/10 ${showUserDropdown ? "bg-primary/10" : ""}`}
+        className={`flex items-center shadow-sm gap-1 sm:gap-1.5 h-8 sm:h-9 pl-0.5 sm:pl-1 pr-1.5 sm:pr-2.5 rounded-full transition-all duration-150 focus:outline-none hover:bg-primary/10 ${showUserDropdown ? "bg-primary/10" : ""}`}
         aria-expanded={showUserDropdown}
         aria-haspopup="true"
       >
@@ -58,7 +58,7 @@ export function UserMenuDropdown({
           />
         ) : (
           <span
-            className="w-7 h-7 sm:w-[30px] sm:h-[30px] flex items-center justify-center text-white text-xs font-bold rounded-[2px]"
+            className="w-7 h-7 sm:w-[30px] sm:h-[30px] flex items-center justify-center text-white text-xs font-bold rounded-full"
             style={{
               background:
                 "linear-gradient(135deg, var(--primary) 0%, oklch(0.43 0.08 35) 100%)",
@@ -83,7 +83,7 @@ export function UserMenuDropdown({
                   alt=""
                   width={36}
                   height={36}
-                  className="w-9 h-9 rounded-[2px] object-cover shrink-0"
+                  className="w-9 h-9 rounded-full object-cover shrink-0"
                   style={{ border: "2px solid var(--border)" }}
                 />
               ) : (

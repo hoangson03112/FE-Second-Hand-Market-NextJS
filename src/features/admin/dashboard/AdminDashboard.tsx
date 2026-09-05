@@ -348,7 +348,7 @@ export default function AdminDashboard() {
                   <p className="text-xs font-bold text-luxury-ink truncate">
                     Duyệt sản phẩm
                   </p>
-                  <p className="text-[11px] text-neutral-500">Kiểm duyệt đăng bán</p>
+                  <p className="text-xs text-neutral-500">Kiểm duyệt đăng bán</p>
                 </div>
               </Link>
 
@@ -363,7 +363,7 @@ export default function AdminDashboard() {
                   <p className="text-xs font-bold text-luxury-ink truncate">
                     Duyệt Seller
                   </p>
-                  <p className="text-[11px] text-neutral-500">Thẩm định CCCD</p>
+                  <p className="text-xs text-neutral-500">Thẩm định CCCD</p>
                 </div>
               </Link>
 
@@ -378,7 +378,7 @@ export default function AdminDashboard() {
                   <p className="text-xs font-bold text-luxury-ink truncate">
                     Xử lý hoàn tiền
                   </p>
-                  <p className="text-[11px] text-neutral-500">Khiếu nại & VietQR</p>
+                  <p className="text-xs text-neutral-500">Khiếu nại & VietQR</p>
                 </div>
               </Link>
 
@@ -393,7 +393,7 @@ export default function AdminDashboard() {
                   <p className="text-xs font-bold text-luxury-ink truncate">
                     Cây danh mục
                   </p>
-                  <p className="text-[11px] text-neutral-500">Quản lý phân loại</p>
+                  <p className="text-xs text-neutral-500">Quản lý phân loại</p>
                 </div>
               </Link>
             </div>
