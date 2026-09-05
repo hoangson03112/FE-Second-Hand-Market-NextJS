@@ -18,7 +18,7 @@ const FIELD_LABEL =
   "mb-2.5 block text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500";
 
 const BUTTON_BASE =
-  "flex-1 rounded-[2px] py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] transition-all duration-300";
+  "flex-1 rounded-[2px] py-3.5 text-xs font-bold uppercase tracking-[0.22em] transition-all duration-300";
 
 export function ProductReviewModal({
   open,

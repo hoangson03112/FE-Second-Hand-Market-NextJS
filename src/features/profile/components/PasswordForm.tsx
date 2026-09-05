@@ -100,7 +100,7 @@ export function PasswordForm({
         <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2">
           {!isGoogleUser && (
             <div className="lg:col-span-2">
-              <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
+              <label className="block text-xs uppercase tracking-wide font-bold text-luxury-ink mb-2">
                 Mật khẩu hiện tại <span className="text-blush-600">*</span>
               </label>
               <div className="relative">
@@ -126,7 +126,7 @@ export function PasswordForm({
           )}
 
           <div>
-            <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
+            <label className="block text-xs uppercase tracking-wide font-bold text-luxury-ink mb-2">
               {isGoogleUser ? "Mật khẩu" : "Mật khẩu mới"}{" "}
               <span className="text-blush-600">*</span>
             </label>
@@ -180,7 +180,7 @@ export function PasswordForm({
           </div>
 
           <div>
-            <label className="block text-[11px] uppercase tracking-wide font-bold text-luxury-ink mb-2">
+            <label className="block text-xs uppercase tracking-wide font-bold text-luxury-ink mb-2">
               Xác nhận {isGoogleUser ? "mật khẩu" : "mật khẩu mới"}{" "}
               <span className="text-blush-600">*</span>
             </label>
@@ -231,7 +231,7 @@ export function PasswordForm({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.15em] text-[11px] font-bold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
+              className="h-11 px-8 rounded-[2px] bg-luxury-ink text-white uppercase tracking-[0.15em] text-xs font-bold hover:bg-luxury-ink/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center gap-2 shrink-0"
             >
               {isSubmitting ? (
                 <>

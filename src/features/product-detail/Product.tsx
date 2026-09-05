@@ -153,12 +153,12 @@ export default function Product({ id }: ProductProps) {
                 hasPersonalDiscount={product.hasPersonalDiscount}
               />
               {(product.stock ?? 0) === 0 && (
-                <div className="inline-flex items-center justify-center rounded-[2px] bg-taupe-50/50 text-taupe-500 border border-luxury-ink/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.1em]">
+                <div className="inline-flex items-center justify-center rounded-[2px] bg-taupe-50/50 text-taupe-500 border border-luxury-ink/10 px-4 py-3 text-xs font-bold uppercase tracking-[0.1em]">
                   Hết hàng
                 </div>
               )}
               {(product.stock ?? 0) === 1 && (
-                <div className="inline-flex items-center justify-center rounded-[2px] bg-blush-50 text-blush-600 border border-blush-200 px-4 py-3 text-[11px] font-bold uppercase tracking-[0.1em]">
+                <div className="inline-flex items-center justify-center rounded-[2px] bg-blush-50 text-blush-600 border border-blush-200 px-4 py-3 text-xs font-bold uppercase tracking-[0.1em]">
                   Chỉ còn 1 sản phẩm duy nhất
                 </div>
               )}
@@ -176,7 +176,7 @@ export default function Product({ id }: ProductProps) {
             {product.deliveryOptions && (
               <div className="flex flex-wrap gap-3 py-2 ">
                 {product.deliveryOptions.codShipping && (
-                  <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-[11px] uppercase tracking-wide font-bold">
+                  <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-xs uppercase tracking-wide font-bold">
                     <IconTruck className="h-4 w-4 text-primary" />
                     Giao hàng tận nhà (COD)
                   </div>

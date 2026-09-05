@@ -120,7 +120,7 @@ export default function RegisterForm({
         />
       </div>
 
-      <p className="text-[11px] leading-relaxed text-neutral-500">
+      <p className="text-xs leading-relaxed text-neutral-500">
         Bằng việc tạo tài khoản, bạn đồng ý với các điều khoản sử dụng và chính
         sách bảo mật của Eco Market.
       </p>

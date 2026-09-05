@@ -209,7 +209,7 @@ export default function FilterBar({
             </svg>
             Bộ lọc
             {activeFilterCount > 0 && (
-              <span className="flex h-5 w-5 items-center justify-center rounded-[2px] bg-white/20 text-[11px] font-bold">
+              <span className="flex h-5 w-5 items-center justify-center rounded-[2px] bg-white/20 text-xs font-bold">
                 {activeFilterCount}
               </span>
             )}

@@ -63,7 +63,7 @@ export default function PhilosophySection() {
             >
               <div className="flex items-center gap-3">
                 <span className="h-px w-8 bg-luxury-champagne/80" aria-hidden />
-                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-neutral-600">
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-neutral-600">
                   Triết lí cốt lõi
                 </p>
               </div>
@@ -106,8 +106,7 @@ export default function PhilosophySection() {
             >
               <Link
                 href="/products"
-                className="group inline-flex items-center gap-3 bg-luxury-ink px-7 py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
-                style={{ borderRadius: "2px" }}
+                className="rounded-[2px] group inline-flex items-center gap-3 bg-luxury-ink px-7 py-3.5 text-xs font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800"
               >
                 <span>Khám phá sản phẩm</span>
                 <IconArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -146,7 +145,7 @@ export default function PhilosophySection() {
                 </p>
               </div>
 
-              <div className="mt-8 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-luxury-ink transition-colors group-hover:text-taupe-700">
+              <div className="mt-8 flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.16em] text-luxury-ink transition-colors group-hover:text-taupe-700">
                 <span>Tìm hiểu thêm</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-1">
                   →
@@ -196,7 +195,7 @@ export default function PhilosophySection() {
                 </p>
               </div>
 
-              <div className="relative z-10 mt-8 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-white transition-colors">
+              <div className="relative z-10 mt-8 flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.16em] text-white transition-colors">
                 <span>Tìm hiểu thêm</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-1">
                   →

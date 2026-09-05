@@ -107,14 +107,14 @@ export default function ProductHeader({
                   ),
                 )}
               </div>
-              <span className="ml-1 text-[11px] font-bold text-luxury-ink mt-0.5">
+              <span className="ml-1 text-xs font-bold text-luxury-ink mt-0.5">
                 {averageRating.toFixed(1)}
               </span>
             </div>
 
             <div className="h-3 w-[1px] bg-luxury-ink/20" />
 
-            <span className="text-[11px] font-bold uppercase tracking-wide text-taupe-500 mt-0.5">
+            <span className="text-xs font-bold uppercase tracking-wide text-taupe-500 mt-0.5">
               {totalReviews.toLocaleString("vi-VN")} đánh giá
             </span>
           </>

@@ -35,7 +35,7 @@ export default function CategoryHeader({
       <div className="absolute -right-12 top-8 h-52 w-52 rounded-full bg-luxury-champagne/10 blur-3xl" />
 
       <div className="relative mx-auto w-full max-w-9xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
-        <nav className="mb-5 flex flex-wrap items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-neutral-500">
+        <nav className="mb-5 flex flex-wrap items-center gap-1.5 text-xs font-medium uppercase tracking-[0.18em] text-neutral-500">
           <Link
             href="/"
             className="inline-flex items-center gap-1.5 transition-colors hover:text-luxury-ink"
@@ -93,7 +93,7 @@ export default function CategoryHeader({
 
               <div className="mb-3 flex items-center gap-3">
                 <span className="h-px w-8 bg-luxury-champagne/80" aria-hidden />
-                <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-neutral-600">
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-neutral-600">
                   {isSubCategoryView ? "Phân mục" : "Danh mục"}
                 </p>
               </div>

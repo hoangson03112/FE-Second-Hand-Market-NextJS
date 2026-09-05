@@ -21,7 +21,7 @@ export default function CheckoutButton({
       type="button"
       onClick={onClick}
       disabled={isSubmitting || isDisabled}
-      className="group inline-flex h-14 w-full items-center justify-center gap-3 rounded-[2px] bg-luxury-ink px-6 text-[11px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-luxury-ink"
+      className="group inline-flex h-14 w-full items-center justify-center gap-3 rounded-[2px] bg-luxury-ink px-6 text-xs font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-luxury-ink"
     >
       {isSubmitting ? (
         <>

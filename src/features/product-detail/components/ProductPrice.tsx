@@ -35,7 +35,7 @@ export default function ProductPrice({
               Tiết kiệm {formatPrice(originalPrice - price)}
             </span>
           </div>
-          <p className="text-[11px] text-taupe-600 mt-3 bg-taupe-50/50 border border-luxury-ink/10 rounded-[2px] px-4 py-3 leading-relaxed">
+          <p className="text-xs text-taupe-600 mt-3 bg-taupe-50/50 border border-luxury-ink/10 rounded-[2px] px-4 py-3 leading-relaxed">
             🎉 Giá ưu đãi đặc biệt dành riêng cho tài khoản của bạn.
           </p>
         </div>

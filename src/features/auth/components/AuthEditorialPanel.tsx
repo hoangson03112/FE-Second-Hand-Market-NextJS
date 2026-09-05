@@ -67,7 +67,7 @@ export default function AuthEditorialPanel({
         >
           <div className="flex items-center gap-3">
             <span className="h-px w-8 bg-luxury-champagne/80" aria-hidden />
-            <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-luxury-champagne">
+            <p className="text-xs font-bold uppercase tracking-[0.32em] text-luxury-champagne">
               {eyebrow}
             </p>
           </div>

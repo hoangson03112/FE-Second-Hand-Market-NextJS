@@ -81,7 +81,7 @@ export default function AboutPage() {
             </span>
             <span className="h-px w-8 bg-luxury-champagne/80" />
           </div>
-          <h1 className="font-droid-serif text-3xl sm:text-5xl font-bold tracking-tight text-luxury-ink max-w-3xl mx-auto leading-tight">
+          <h1 className="font-droid-serif text-3xl sm:text-5xl font-medium tracking-tight text-luxury-ink max-w-3xl mx-auto leading-tight">
             Định Nghĩa Lại Phong Cách Tiêu Dùng Tuần Hoàn & Bền Vững
           </h1>
           <p className="mt-6 text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto leading-relaxed">
@@ -117,7 +117,7 @@ export default function AboutPage() {
             </span>
             <span className="h-px w-6 bg-luxury-champagne/80" />
           </div>
-          <h2 className="font-droid-serif text-2xl sm:text-3xl font-bold text-luxury-ink">
+          <h2 className="font-droid-serif text-2xl sm:text-3xl font-medium text-luxury-ink">
             Giải Pháp Công Nghệ Cho Tiêu Dùng Thông Minh
           </h2>
         </div>
@@ -155,7 +155,7 @@ export default function AboutPage() {
               </span>
               <span className="h-px w-6 bg-luxury-champagne/80" />
             </div>
-            <h2 className="font-droid-serif text-2xl sm:text-3xl font-bold text-luxury-ink">
+            <h2 className="font-droid-serif text-2xl sm:text-3xl font-medium text-luxury-ink">
               Nguyên Tắc Định Hình Eco Market
             </h2>
           </div>
@@ -183,7 +183,7 @@ export default function AboutPage() {
 
       <section className="border-t border-luxury-ink/10 bg-luxury-ink text-luxury-ivory py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-          <h2 className="font-droid-serif text-2xl sm:text-3xl font-bold">
+          <h2 className="font-droid-serif text-2xl sm:text-3xl font-medium">
             Cùng Nhau Xây Dựng Thói Quen Tiêu Dùng Tích Cực
           </h2>
           <p className="text-xs sm:text-sm text-neutral-400 max-w-xl mx-auto leading-relaxed">

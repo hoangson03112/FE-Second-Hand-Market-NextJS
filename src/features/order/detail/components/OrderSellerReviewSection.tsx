@@ -102,7 +102,7 @@ export function OrderSellerReviewSection({
           <button
             type="submit"
             disabled={isSubmittingReview}
-            className="w-full rounded-[2px] bg-luxury-ink py-3.5 text-[11px] font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
+            className="w-full rounded-[2px] bg-luxury-ink py-3.5 text-xs font-bold uppercase tracking-[0.22em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800 disabled:opacity-50"
           >
             {isSubmittingReview ? "Đang gửi…" : "Gửi đánh giá"}
           </button>

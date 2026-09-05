@@ -40,7 +40,7 @@ export default function ResetPasswordForm({
         <div className="space-y-2">
           <label
             htmlFor="newPassword"
-            className="block text-[11px] uppercase tracking-wider font-bold text-luxury-ink"
+            className="block text-xs uppercase tracking-wider font-bold text-luxury-ink"
           >
             Mật khẩu mới <span className="text-blush-600 ml-0.5">*</span>
           </label>
@@ -74,7 +74,7 @@ export default function ResetPasswordForm({
         <div className="space-y-2">
           <label
             htmlFor="confirmPassword"
-            className="block text-[11px] uppercase tracking-wider font-bold text-luxury-ink"
+            className="block text-xs uppercase tracking-wider font-bold text-luxury-ink"
           >
             Xác nhận mật khẩu mới <span className="text-blush-600 ml-0.5">*</span>
           </label>

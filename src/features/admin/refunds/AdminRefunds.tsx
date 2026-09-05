@@ -355,7 +355,7 @@ export default function AdminRefunds() {
                         </button>
                       )}
                       {refund.status === "returned" && (
-                        <span className="text-[11px] text-neutral-500 max-w-[140px] text-right">
+                        <span className="text-xs text-neutral-500 max-w-[140px] text-right">
                           Chờ buyer gửi STK
                         </span>
                       )}

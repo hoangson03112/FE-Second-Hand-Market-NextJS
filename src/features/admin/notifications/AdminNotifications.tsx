@@ -309,11 +309,11 @@ export default function AdminNotifications() {
                           {item.message}
                         </p>
                       </div>
-                      <span className="text-[11px] text-neutral-400 whitespace-nowrap">
+                      <span className="text-xs text-neutral-400 whitespace-nowrap">
                         {new Date(item.createdAt).toLocaleString("vi-VN")}
                       </span>
                     </div>
-                    <div className="flex flex-wrap items-center gap-1.5 text-[11px] text-neutral-500 pt-2 border-t border-luxury-ink/8">
+                    <div className="flex flex-wrap items-center gap-1.5 text-xs text-neutral-500 pt-2 border-t border-luxury-ink/8">
                       <span className="inline-block px-2 py-0.5 rounded-[2px] bg-cream-50 text-luxury-ink border border-luxury-ink/10 font-bold text-2xs uppercase tracking-[0.1em]">
                         {(item.targetRoles || []).join(", ")}
                       </span>

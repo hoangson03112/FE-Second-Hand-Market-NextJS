@@ -63,7 +63,7 @@ export default function StoryPage() {
             </span>
             <span className="h-px w-8 bg-luxury-champagne/80" />
           </div>
-          <h1 className="font-droid-serif text-3xl sm:text-5xl font-bold tracking-tight text-luxury-ink leading-tight">
+          <h1 className="font-droid-serif text-3xl sm:text-5xl font-medium tracking-tight text-luxury-ink leading-tight">
             Khởi Nguồn Từ Lý Tưởng Sống Xanh & Công Nghệ
           </h1>
           <p className="mt-6 text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto leading-relaxed">

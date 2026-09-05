@@ -25,7 +25,7 @@ export default function QuantitySelector({
           >
             −
           </button>
-          <span className="w-10 flex items-center justify-center text-[11px] font-bold text-luxury-ink border-x border-luxury-ink/10 h-9">
+          <span className="w-10 flex items-center justify-center text-xs font-bold text-luxury-ink border-x border-luxury-ink/10 h-9">
             {quantity}
           </span>
           <button

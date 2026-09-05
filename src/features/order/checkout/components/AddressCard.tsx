@@ -98,7 +98,7 @@ export default function AddressCard({
               {address.fullName}
             </span>
             <span aria-hidden className="h-3 w-px bg-luxury-ink/15" />
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] tabular-nums text-neutral-600">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.18em] tabular-nums text-neutral-600">
               <IconPhone className="h-3 w-3" />
               {address.phoneNumber}
             </span>

@@ -122,7 +122,7 @@ export function ProductTable({
                       {product.category?.name ?? "—"}
                     </span>
                     {product.subcategory?.name && (
-                      <span className="block text-[11px] text-neutral-400">
+                      <span className="block text-xs text-neutral-400">
                         {product.subcategory.name}
                       </span>
                     )}
@@ -133,7 +133,7 @@ export function ProductTable({
                   </td>
 
                   <td className="px-4 py-3.5 hidden lg:table-cell text-neutral-500 text-xs">
-                    <span className="inline-block px-2 py-0.5 rounded-[2px] bg-cream-50 text-luxury-ink border border-luxury-ink/8 font-medium text-[11px]">
+                    <span className="inline-block px-2 py-0.5 rounded-[2px] bg-cream-50 text-luxury-ink border border-luxury-ink/8 font-medium text-xs">
                       {product.condition
                         ? (CONDITION_LABEL[product.condition] ?? product.condition)
                         : "—"}

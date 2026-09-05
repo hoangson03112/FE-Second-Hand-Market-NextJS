@@ -311,10 +311,10 @@ export default function AdminPayouts() {
                                 {seller.name}
                               </p>
                               {seller.email && (
-                                <p className="text-[11px] text-neutral-500">{seller.email}</p>
+                                <p className="text-xs text-neutral-500">{seller.email}</p>
                               )}
                               {seller.phone && (
-                                <p className="text-[11px] font-mono text-neutral-400">
+                                <p className="text-xs font-mono text-neutral-400">
                                   {seller.phone}
                                 </p>
                               )}
@@ -326,7 +326,7 @@ export default function AdminPayouts() {
                           <span className="font-mono text-xs font-semibold text-luxury-ink">
                             #{order._id.slice(-8).toUpperCase()}
                           </span>
-                          <p className="text-[11px] text-neutral-400 mt-0.5">
+                          <p className="text-xs text-neutral-400 mt-0.5">
                             {order.createdAt ? format(order.createdAt) : "—"}
                           </p>
                         </td>
@@ -357,7 +357,7 @@ export default function AdminPayouts() {
                               <p className="font-mono text-xs font-medium text-neutral-700">
                                 {bank.accountNumber}
                               </p>
-                              <p className="text-[11px] uppercase tracking-wider text-neutral-500">
+                              <p className="text-xs uppercase tracking-wider text-neutral-500">
                                 {bank.accountHolder}
                               </p>
                             </div>
@@ -475,7 +475,7 @@ export default function AdminPayouts() {
                     alt="VietQR Payout"
                     className="w-56 h-auto rounded-[2px] object-contain shadow-xs"
                   />
-                  <p className="text-[11px] text-neutral-500 mt-2 font-medium">
+                  <p className="text-xs text-neutral-500 mt-2 font-medium">
                     Quét bằng app ngân hàng bất kỳ để tự động điền thông tin
                   </p>
                 </div>

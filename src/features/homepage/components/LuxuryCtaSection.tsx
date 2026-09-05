@@ -36,7 +36,7 @@ export default function LuxuryCtaSection() {
           />
 
           <div className="relative z-10 mx-auto max-w-3xl text-center">
-            <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-luxury-champagne">
+            <p className="text-xs font-bold uppercase tracking-[0.32em] text-luxury-champagne">
               Bắt đầu hành trình
             </p>
             <h2
@@ -59,16 +59,14 @@ export default function LuxuryCtaSection() {
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link
                 href="/products"
-                className="group inline-flex min-w-[220px] items-center justify-center gap-2 bg-luxury-ivory px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-luxury-ink transition-all duration-300 hover:bg-white"
-                style={{ borderRadius: "2px" }}
+                className="rounded-[2px] group inline-flex min-w-[220px] items-center justify-center gap-2 bg-luxury-ivory px-8 py-4 text-xs font-bold uppercase tracking-[0.24em] text-luxury-ink transition-all duration-300 hover:bg-white"
               >
                 Khám phá sản phẩm
                 <IconArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
               <Link
                 href="/sell"
-                className="inline-flex min-w-[220px] items-center justify-center border border-luxury-ivory/25 px-8 py-4 text-[11px] font-bold uppercase tracking-[0.24em] text-luxury-ivory transition-all duration-300 hover:border-luxury-champagne/60 hover:text-luxury-champagne"
-                style={{ borderRadius: "2px" }}
+                className="rounded-[2px] inline-flex min-w-[220px] items-center justify-center border border-luxury-ivory/25 px-8 py-4 text-xs font-bold uppercase tracking-[0.24em] text-luxury-ivory transition-all duration-300 hover:border-luxury-champagne/60 hover:text-luxury-champagne"
               >
                 Trở thành người bán
               </Link>
