@@ -33,7 +33,7 @@ const STATUS_CONFIG: Record<
   rejected: {
     label: "Từ chối",
     icon: IconCircleX,
-    className: "bg-rose-50 text-rose-700 border border-rose-200",
+    className: "bg-blush-50 text-blush-700 border border-blush-200",
   },
   banned: {
     label: "Bị khóa",
@@ -174,7 +174,7 @@ export default function SellerDetailModal({
                 </span>
               </div>
               <div className="flex flex-col items-center rounded-[2px] bg-cream-50/50 border border-luxury-ink/8 py-4 px-3">
-                <IconStar className="w-5 h-5 text-amber-600 mb-1.5" />
+                <IconStar className="w-5 h-5 text-luxury-champagne mb-1.5" />
                 <span className="font-droid-serif text-xl font-bold text-luxury-ink tabular-nums">
                   {(stats?.avgRating ?? 0) > 0
                     ? `${Number(stats!.avgRating).toFixed(1)} ★`
@@ -236,7 +236,7 @@ export default function SellerDetailModal({
                           className={
                             seller.agreeTerms
                               ? "text-accent font-semibold"
-                              : "text-rose-700 font-semibold"
+                              : "text-blush-700 font-semibold"
                           }
                         >
                           {seller.agreeTerms ? "Đã đồng ý" : "Chưa đồng ý"}
@@ -252,7 +252,7 @@ export default function SellerDetailModal({
                           className={
                             seller.agreePolicy
                               ? "text-accent font-semibold"
-                              : "text-rose-700 font-semibold"
+                              : "text-blush-700 font-semibold"
                           }
                         >
                           {seller.agreePolicy ? "Đã đồng ý" : "Chưa đồng ý"}
@@ -276,7 +276,7 @@ export default function SellerDetailModal({
                     <Row
                       label="Lý do từ chối"
                       value={
-                        <span className="text-rose-700">
+                        <span className="text-blush-700">
                           {seller.rejectedReason}
                         </span>
                       }
@@ -375,7 +375,7 @@ export default function SellerDetailModal({
                 type="button"
                 onClick={onReject}
                 disabled={isUpdating}
-                className="rounded-[2px] border border-rose-200 bg-white px-5 py-2 text-2xs font-bold uppercase tracking-[0.12em] text-rose-700 hover:bg-rose-50 disabled:opacity-50 transition-colors"
+                className="rounded-[2px] border border-blush-200 bg-white px-5 py-2 text-2xs font-bold uppercase tracking-[0.12em] text-blush-700 hover:bg-blush-50 disabled:opacity-50 transition-colors"
               >
                 Từ chối
               </button>
@@ -394,7 +394,7 @@ export default function SellerDetailModal({
               type="button"
               onClick={onBan}
               disabled={isUpdating || !rejectReason.trim()}
-              className="rounded-[2px] border border-rose-200 bg-white px-5 py-2 text-2xs font-bold uppercase tracking-[0.12em] text-rose-700 hover:bg-rose-50 disabled:opacity-50 transition-colors"
+              className="rounded-[2px] border border-blush-200 bg-white px-5 py-2 text-2xs font-bold uppercase tracking-[0.12em] text-blush-700 hover:bg-blush-50 disabled:opacity-50 transition-colors"
             >
               Khóa tài khoản
             </button>

@@ -102,7 +102,7 @@ export function ProductCard({
   viewMode = "list",
 }: ProductCardProps) {
   const discounts = product.personalDiscounts ?? [];
-
+  
   const isVisibleOnSite =
     product.status === "approved" ||
     product.status === "active" ||

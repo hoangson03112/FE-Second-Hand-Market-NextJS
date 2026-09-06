@@ -226,7 +226,7 @@ export default function CheckoutSellerSection({
         >
           {group.isLocalPickup ? (
             <div className="flex items-start gap-4 rounded-[2px] border border-luxury-ink/10 bg-cream-50/60 px-4 py-4">
-              <IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-red-600" />
+              <IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-blush-600" />
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium text-luxury-ink">
                   Giao dịch trực tiếp

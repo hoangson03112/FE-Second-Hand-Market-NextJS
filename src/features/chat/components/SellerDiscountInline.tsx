@@ -133,8 +133,8 @@ export default function SellerDiscountInline({
   };
 
   return (
-    <div className="border-t-2 border-border bg-white p-4">
-      <div className="flex items-center justify-between pb-3 border-b border-border">
+    <div className="border-t-2 border-luxury-ink/10 bg-white p-4">
+      <div className="flex items-center justify-between pb-3 border-b border-luxury-ink/10">
         <div className="font-bold text-taupe-900 text-sm leading-tight">
           Tạo ưu đãi riêng{" "}
           {buyerName && <span className="text-primary">cho {buyerName}</span>}
@@ -150,8 +150,8 @@ export default function SellerDiscountInline({
 
       {created ? (
         <div className="mt-3 flex flex-col items-center justify-center gap-2 rounded-[2px] border border-accent/40 bg-taupe-50 px-6 py-6">
-          <span className="w-12 h-12 rounded-[2px] bg-emerald-50 border border-emerald-200 flex items-center justify-center">
-            <IconCheck className="w-7 h-7 text-emerald-600" />
+          <span className="w-12 h-12 rounded-[2px] bg-taupe-50 border border-accent/35 flex items-center justify-center">
+            <IconCheck className="w-7 h-7 text-accent" />
           </span>
           <div className="text-sm font-semibold text-taupe-800">
             Ưu đãi đã được tạo thành công!
@@ -169,7 +169,7 @@ export default function SellerDiscountInline({
                 Đang tải sản phẩm…
               </div>
             ) : loadError ? (
-              <div className="text-xs text-center text-red-600 py-2">
+              <div className="text-xs text-center text-blush-600 py-2">
                 {loadError}
               </div>
             ) : products.length === 0 ? (

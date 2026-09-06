@@ -8,6 +8,7 @@ import { usePrefersReducedMotion } from "@/features/homepage/hooks";
 
 import { AUTH_PANEL_TAGS, type AuthHighlight } from "../constants";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -73,13 +74,10 @@ export default function AuthEditorialPanel({
           </div>
 
           <h2
-            className="font-droid-serif mt-5 text-luxury-ivory"
-            style={{
-              fontSize: "clamp(2.25rem, 3.4vw, 3.25rem)",
-              fontWeight: 400,
-              lineHeight: 1.08,
-              letterSpacing: "-0.03em",
-            }}
+            className={cn(
+              "font-droid-serif mt-5 text-luxury-ivory",
+              "text-[clamp(2.25rem,3.4vw,3.25rem)] font-normal leading-[1.08] tracking-[-0.03em]",
+            )}
           >
             {title}
           </h2>

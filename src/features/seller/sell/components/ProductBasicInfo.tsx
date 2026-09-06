@@ -21,7 +21,7 @@ export function ProductBasicInfo({ values, errors, onChange }: ProductBasicInfoP
     <div className="space-y-3">
       <div>
         <label className={LABEL_CLASS}>
-          Tên sản phẩm <span className="text-red-500">*</span>
+          Tên sản phẩm <span className="text-blush-600">*</span>
         </label>
         <input
           type="text"
@@ -32,14 +32,14 @@ export function ProductBasicInfo({ values, errors, onChange }: ProductBasicInfoP
           className={INPUT_CLASS}
         />
         {errors.name && (
-          <p className="mt-0.5 text-xs text-red-600">{errors.name}</p>
+          <p className="mt-0.5 text-xs text-blush-600">{errors.name}</p>
         )}
       </div>
 
       <div className="grid grid-cols-2 gap-2">
         <div>
           <label className={LABEL_CLASS}>
-            Giá (VNĐ) <span className="text-red-500">*</span>
+            Giá (VNĐ) <span className="text-blush-600">*</span>
           </label>
           <input
             type="number"
@@ -51,12 +51,12 @@ export function ProductBasicInfo({ values, errors, onChange }: ProductBasicInfoP
             className={INPUT_CLASS}
           />
           {errors.price && (
-            <p className="mt-0.5 text-xs text-red-600">{errors.price}</p>
+            <p className="mt-0.5 text-xs text-blush-600">{errors.price}</p>
           )}
         </div>
         <div>
           <label className={LABEL_CLASS}>
-            Số lượng <span className="text-red-500">*</span>
+            Số lượng <span className="text-blush-600">*</span>
           </label>
           <input
             type="number"
@@ -69,7 +69,7 @@ export function ProductBasicInfo({ values, errors, onChange }: ProductBasicInfoP
             className={INPUT_CLASS}
           />
           {errors.stock && (
-            <p className="mt-0.5 text-xs text-red-600">{errors.stock}</p>
+            <p className="mt-0.5 text-xs text-blush-600">{errors.stock}</p>
           )}
         </div>
       </div>

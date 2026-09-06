@@ -224,7 +224,7 @@ export default function AdminUsers() {
               variant="destructive"
               disabled={isUpdating}
               onClick={handleConfirmBan}
-              className="rounded-[2px] bg-rose-700 hover:bg-rose-800 text-2xs font-bold uppercase tracking-[0.12em]"
+              className="rounded-[2px] bg-blush-700 hover:bg-blush-800 text-2xs font-bold uppercase tracking-[0.12em]"
             >
               {isUpdating && <Loader2 className="size-4 animate-spin mr-2" />}
               Khóa tài khoản

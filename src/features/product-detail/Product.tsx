@@ -104,7 +104,7 @@ export default function Product({ id }: ProductProps) {
       <main className="max-w-9xl mx-auto px-4 md:px-8 py-10">
         <button
           onClick={() => router.back()}
-          className="font-droid-serif inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.15em] text-foreground hover:text-luxury-ink transition-colors mb-8 group"
+          className="font-droid-serif inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.15em] text-luxury-ink hover:text-charcoal-700 transition-colors mb-8 group"
         >
           <IconArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
           Trở lại
@@ -183,7 +183,7 @@ export default function Product({ id }: ProductProps) {
                 )}
                 {product.deliveryOptions.localPickup && (
                   <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-xs uppercase tracking-wide font-medium">
-                    <IconMapPin className="h-4 w-4 text-red-500" />
+                    <IconMapPin className="h-4 w-4 text-blush-500" />
                     Giao dịch trực tiếp
                   </div>
                 )}

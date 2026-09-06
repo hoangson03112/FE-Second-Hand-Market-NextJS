@@ -51,7 +51,7 @@ export function BankInfoForm({
       <div className="p-6 lg:p-8">
         <div className="p-4 rounded-[2px] bg-cream-50/70 border border-luxury-ink/10 mb-6">
           <div className="flex gap-3">
-            <IconAlertCircle className="w-5 h-5 text-orange-400 shrink-0 mt-0.5" />
+            <IconAlertCircle className="w-5 h-5 text-luxury-champagne shrink-0 mt-0.5" />
             <div>
               <h4 className="text-xs uppercase tracking-wide font-bold text-luxury-ink">
                 Lưu ý quan trọng
@@ -127,7 +127,7 @@ export function BankInfoForm({
           </div>
 
           <div className="lg:col-span-2 border-t border-luxury-ink/10 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-neutral-500">
               <span className="text-blush-600">*</span> Bắt buộc
             </p>
             <button

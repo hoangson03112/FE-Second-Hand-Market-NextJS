@@ -88,7 +88,7 @@ export default function BecomeSeller() {
           <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-8 shadow-xs">
             <div className="flex items-start gap-4">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-cream-50">
-                <IconCircleCheck className="h-6 w-6 text-emerald-700" />
+                <IconCircleCheck className="h-6 w-6 text-accent" />
               </div>
               <div className="min-w-0 flex-1">
                 <h1 className="mb-2 font-droid-serif text-2xl font-bold text-luxury-ink">
@@ -153,19 +153,11 @@ export default function BecomeSeller() {
         >
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-            }}
+            className="pointer-events-none absolute inset-0 opacity-[0.04] bg-noise-texture"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-10 -top-16 h-56 w-56 opacity-[0.16]"
-            style={{
-              background:
-                "radial-gradient(circle, var(--luxury-champagne) 0%, transparent 70%)",
-            }}
+            className="pointer-events-none absolute -right-10 -top-16 h-56 w-56 opacity-[0.16] bg-[radial-gradient(circle,var(--luxury-champagne)_0%,transparent_70%)]"
           />
 
           <div className="relative z-10 flex items-start gap-4">
@@ -184,8 +176,7 @@ export default function BecomeSeller() {
                   : "Bắt đầu hành trình"}
               </p>
               <h1
-                style={{ fontWeight: 400 }}
-                className="font-droid-serif mt-2 text-[clamp(1.4rem,3vw,1.9rem)] leading-tight text-luxury-ivory"
+                className="font-droid-serif mt-2 text-[clamp(1.4rem,3vw,1.9rem)] font-normal leading-tight text-luxury-ivory"
               >
                 {requiresVerification
                   ? "Xác minh tài khoản Seller"

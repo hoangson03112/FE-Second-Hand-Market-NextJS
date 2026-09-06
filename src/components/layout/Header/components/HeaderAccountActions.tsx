@@ -52,19 +52,12 @@ export function HeaderAccountActions({
         <Link
           href="/cart"
           aria-label="Giỏ hàng"
-          className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full transition-all duration-150 text-muted-foreground hover:text-foreground hover:bg-primary/10"
+          className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full transition-all duration-150 text-neutral-500 hover:text-luxury-ink hover:bg-primary/10"
         >
           <IconShoppingCart className="w-[17px] h-[17px]" />
           {productCount > 0 && (
             <span
-              className="absolute top-0 right-0 min-w-[16px] h-4 flex items-center justify-center text-white text-[9px] font-bold"
-              style={{
-                background: "oklch(0.48 0.12 35)",
-                borderRadius: "20px",
-                border: "1.5px solid var(--background)",
-                padding: "0 3px",
-                boxShadow: "0 1px 4px oklch(0.48 0.12 35 / 0.4)",
-              }}
+              className="absolute top-0 right-0 min-w-[16px] h-4 flex items-center justify-center text-white text-[9px] font-bold rounded-[20px] border-[1.5px] px-[3px] py-0 bg-[oklch(0.48_0.12_35)] border-[color:var(--background)] shadow-[0_1px_4px_oklch(0.48_0.12_35_/_0.4)]"
             >
               {productCount > 99 ? "99+" : productCount}
             </span>

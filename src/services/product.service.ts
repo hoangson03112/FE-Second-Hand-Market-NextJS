@@ -129,10 +129,9 @@ export const ProductService = {
   },
 
 
-  getFeatured: async (limit = 5): Promise<IProductListResponse> => {
-    const safeLimit = Math.min(Math.max(limit, 1), 20);
+  getFeatured: async (): Promise<IProductListResponse> => {
     const response = await axiosClient.get(
-      `/products/featured?limit=${safeLimit}`,
+      `/products/featured`,
     );
     return response as unknown as IProductListResponse;
   },

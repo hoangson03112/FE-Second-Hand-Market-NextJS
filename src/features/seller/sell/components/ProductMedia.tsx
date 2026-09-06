@@ -65,7 +65,7 @@ export function ProductMedia({
 
       <div className="flex-shrink-0">
         <p className="text-xs font-medium text-taupe-700 mb-2">
-          Ảnh sản phẩm <span className="text-red-500">*</span>{" "}
+          Ảnh sản phẩm <span className="text-blush-600">*</span>{" "}
           <span className="text-neutral-400 font-normal">
             (ít nhất 1, tối đa 10)
           </span>
@@ -164,7 +164,7 @@ export function ProductMedia({
         )}
 
         {imageError && (
-          <p className="mt-1 text-xs text-red-600">{imageError}</p>
+          <p className="mt-1 text-xs text-blush-600">{imageError}</p>
         )}
       </div>
 

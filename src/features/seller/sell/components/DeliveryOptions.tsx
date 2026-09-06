@@ -72,12 +72,12 @@ export function DeliveryOptions({
       </div>
 
       {!value.localPickup && !value.codShipping && (
-        <p className="text-xs text-amber-600 mt-2">
+        <p className="text-xs text-blush-600 mt-2">
           Vui lòng chọn ít nhất một hình thức giao hàng.
         </p>
       )}
 
-      {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+      {error && <p className="mt-1 text-xs text-blush-600">{error}</p>}
     </SectionCard>
   );
 }

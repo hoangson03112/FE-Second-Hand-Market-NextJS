@@ -234,8 +234,6 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
     "transition-all duration-700 ease-out",
     isRevealed ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
   );
-  const delay = (ms: number) => ({ transitionDelay: `${ms}ms` });
-
   return (
     <div className="min-h-screen bg-luxury-ivory">
       <SellerOrderDetailHeader
@@ -257,10 +255,9 @@ export default function SellerOrderDetail({ orderId }: SellerOrderDetailProps) {
           </div>
 
           <div
-            style={delay(80)}
             className={cn(
               revealClass,
-              "grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8",
+              "grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8 delay-[80ms]",
             )}
           >
 

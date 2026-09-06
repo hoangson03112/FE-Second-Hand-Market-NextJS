@@ -225,7 +225,7 @@ export function PasswordForm({
           </div>
 
           <div className="lg:col-span-2 border-t border-luxury-ink/10 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-neutral-500">
               <span className="text-blush-600">*</span> Bắt buộc
             </p>
             <button

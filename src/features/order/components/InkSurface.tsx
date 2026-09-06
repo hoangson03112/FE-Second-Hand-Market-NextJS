@@ -11,19 +11,11 @@ export function InkSurface({ children, className }: InkSurfaceProps) {
     <div className={cn("relative overflow-hidden bg-luxury-ink", className)}>
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 85% 15%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 10% 90%, color-mix(in srgb, var(--luxury-champagne) 16%, transparent) 0%, transparent 55%)",
-        }}
+        className="pointer-events-none absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_80%_60%_at_85%_15%,color-mix(in_srgb,var(--accent)_22%,transparent)_0%,transparent_60%),radial-gradient(ellipse_60%_50%_at_10%_90%,color-mix(in_srgb,var(--luxury-champagne)_16%,transparent)_0%,transparent_55%)]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.035]"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
+        className="pointer-events-none absolute inset-0 opacity-[0.035] bg-noise-texture"
       />
       <div className="relative z-10">{children}</div>
     </div>

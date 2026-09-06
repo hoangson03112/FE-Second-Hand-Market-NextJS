@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { cn } from "@/lib/utils";
 
 const CHAR_STAGGER = 0.042;
 
@@ -22,7 +23,7 @@ export function CharacterReveal({
       {text.split("").map((char, index) => (
         <motion.span
           key={`${baseCharIndex}-${index}-${char}`}
-          className={className}
+          className={cn(className, char === " " ? "inline" : "inline-block")}
           initial={false}
           animate={
             isActive
@@ -34,7 +35,6 @@ export function CharacterReveal({
             delay: (baseCharIndex + index) * 0.015,
             ease: [0.22, 1, 0.36, 1],
           }}
-          style={{ display: char === " " ? "inline" : "inline-block" }}
         >
           {char === " " ? "\u00A0" : char}
         </motion.span>

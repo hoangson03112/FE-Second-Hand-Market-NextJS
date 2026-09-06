@@ -286,36 +286,23 @@ export default function HeroSection() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-16 bottom-1/4 h-80 w-80 rounded-full bg-luxury-champagne/15 blur-3xl animate-hero-glow"
-        style={{ animationDelay: "2s" }}
+        className="pointer-events-none absolute -right-16 bottom-1/4 h-80 w-80 rounded-full bg-luxury-champagne/15 blur-3xl animate-hero-glow [animation-delay:2s]"
       />
 
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-0"
+        className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_120%_80%_at_50%_-10%,var(--cream-50)_0%,var(--cream-100)_42%,var(--cream-200)_100%)]"
         initial={reducedMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-        style={{
-          background:
-            "radial-gradient(ellipse 120% 80% at 50% -10%, var(--cream-50) 0%, var(--cream-100) 42%, var(--cream-200) 100%)",
-        }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-[1]"
-        style={{
-          background:
-            "radial-gradient(ellipse 90% 70% at 50% 50%, transparent 40%, color-mix(in srgb, var(--luxury-ink) 4%, transparent) 100%)",
-        }}
+        className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_90%_70%_at_50%_50%,transparent_40%,color-mix(in_srgb,var(--luxury-ink)_4%,transparent)_100%)]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.035] mix-blend-multiply"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
+        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.035] mix-blend-multiply bg-noise-texture"
       />
       <motion.div
         className="absolute inset-0 z-[3]"
@@ -331,11 +318,7 @@ export default function HeroSection() {
       </motion.div>
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 z-[4] h-[58%] w-[min(46rem,78%)] -translate-x-1/2 -translate-y-1/2"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 55% at 50% 50%, color-mix(in srgb, var(--cream-100) 78%, transparent) 0%, color-mix(in srgb, var(--cream-100) 40%, transparent) 45%, transparent 68%)",
-        }}
+        className="pointer-events-none absolute left-1/2 top-1/2 z-[4] h-[58%] w-[min(46rem,78%)] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_60%_55%_at_50%_50%,color-mix(in_srgb,var(--cream-100)_78%,transparent)_0%,color-mix(in_srgb,var(--cream-100)_40%,transparent)_45%,transparent_68%)]"
       />
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 lg:px-8  pb-24 flex flex-col items-center text-center pointer-events-none">
         <motion.div
@@ -355,25 +338,12 @@ export default function HeroSection() {
         </motion.div>
 
         <h1
-          className="font-droid-serif mb-8 text-luxury-ink"
-          style={{
-            fontSize: "clamp(3rem, 7.5vw, 5.5rem)",
-            fontWeight: 300,
-            lineHeight: 1.05,
-            letterSpacing: "-0.03em",
-          }}
+          className="font-droid-serif mb-8 text-luxury-ink text-[clamp(3rem,7.5vw,5.5rem)] font-light leading-[1.05] tracking-[-0.03em]"
         >
           <span className="block relative">
             <motion.span
               aria-hidden
-              className="pointer-events-none absolute rounded-full bg-accent/35"
-              style={{
-                width: "clamp(8rem, 5vw, 9rem)",
-                height: "clamp(8rem, 5vw, 9rem)",
-                left: "clamp(-2rem, -2.5vw, -0rem)",
-                top: "clamp(-4.5rem, -6vw, -2rem)",
-                zIndex: -1,
-              }}
+              className="pointer-events-none absolute -z-10 rounded-full bg-accent/35 w-[clamp(8rem,5vw,9rem)] h-[clamp(8rem,5vw,9rem)] left-[clamp(-2rem,-2.5vw,-0rem)] top-[clamp(-4.5rem,-6vw,-2rem)]"
               initial={false}
               animate={{ opacity: 1, scale: 1 }}
               transition={{
@@ -386,7 +356,7 @@ export default function HeroSection() {
               baseCharIndex={0}
               isActive={textReady}
             />
-            <span className="text-accent" style={{ letterSpacing: "-0.02em" }}>
+            <span className="text-accent tracking-[-0.02em]">
               <CharacterReveal
                 text={heroLine1Part2}
                 baseCharIndex={heroLine1Part1.length}
@@ -395,8 +365,7 @@ export default function HeroSection() {
             </span>
           </span>
           <span
-            className="block"
-            style={{ display: "inline-block", marginTop: "8px" }}
+            className="inline-block mt-2"
           >
             <CharacterReveal
               text={heroLine2}

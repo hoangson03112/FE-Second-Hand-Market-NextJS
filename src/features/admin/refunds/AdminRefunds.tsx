@@ -170,7 +170,7 @@ export default function AdminRefunds() {
 
   if (error) {
     return (
-      <div className="rounded-[2px] border border-rose-200 bg-white px-4 py-3 text-sm text-rose-800">
+      <div className="rounded-[2px] border border-blush-300 bg-white px-4 py-3 text-sm text-blush-800">
         Không tải được danh sách hoàn tiền.
       </div>
     );
@@ -325,7 +325,7 @@ export default function AdminRefunds() {
                               isApprovingDispute ||
                               isRejectingDispute
                             }
-                            className="flex items-center gap-1 px-3 py-1.5 border border-rose-300 text-rose-700 rounded-[2px] text-2xs font-bold uppercase tracking-[0.1em] hover:bg-rose-50 disabled:opacity-50 transition-colors"
+                            className="flex items-center gap-1 px-3 py-1.5 border border-blush-300 text-blush-700 rounded-[2px] text-2xs font-bold uppercase tracking-[0.1em] hover:bg-blush-50 disabled:opacity-50 transition-colors"
                           >
                             <IconCircleX className="w-3.5 h-3.5" />
                             Bác bỏ
@@ -397,7 +397,7 @@ export default function AdminRefunds() {
 
       {approveModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-luxury-ink/60 backdrop-blur-xs">
-          <div className="bg-white rounded-[2px] border border-luxury-ink/10 shadow-2xl max-w-md w-full p-6">
+          <div className="bg-white rounded-[2px] border border-luxury-ink/10 shadow-xs max-w-md w-full p-6">
             <h3 className="font-droid-serif text-lg font-bold text-luxury-ink mb-2">
               Duyệt khiếu nại & hoàn tiền
             </h3>
@@ -445,7 +445,7 @@ export default function AdminRefunds() {
 
       {completeRefundModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-luxury-ink/60 backdrop-blur-xs">
-          <div className="bg-white rounded-[2px] border border-luxury-ink/10 shadow-2xl max-w-md w-full p-6">
+          <div className="bg-white rounded-[2px] border border-luxury-ink/10 shadow-xs max-w-md w-full p-6">
             <h3 className="font-droid-serif text-lg font-bold text-luxury-ink mb-2">
               Xác nhận đã chuyển khoản
             </h3>
@@ -481,7 +481,7 @@ export default function AdminRefunds() {
 
       {rejectModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-luxury-ink/60 backdrop-blur-xs">
-          <div className="bg-white rounded-[2px] border border-luxury-ink/10 shadow-2xl max-w-md w-full p-6">
+          <div className="bg-white rounded-[2px] border border-luxury-ink/10 shadow-xs max-w-md w-full p-6">
             <h3 className="font-droid-serif text-lg font-bold text-luxury-ink mb-2">
               Bác bỏ khiếu nại
             </h3>
@@ -491,7 +491,7 @@ export default function AdminRefunds() {
             </p>
             <div className="mb-4">
               <label className="block text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600 mb-2">
-                Lý do <span className="text-rose-600">*</span>
+                Lý do <span className="text-blush-600">*</span>
               </label>
               <textarea
                 value={rejectNote}
@@ -514,7 +514,7 @@ export default function AdminRefunds() {
               <button
                 onClick={handleRejectDispute}
                 disabled={!rejectNote.trim() || processingId !== null}
-                className="flex-1 py-2 px-4 bg-rose-700 text-white rounded-[2px] text-2xs font-bold uppercase tracking-[0.12em] hover:bg-rose-800 disabled:opacity-50 transition-colors"
+                className="flex-1 py-2 px-4 bg-blush-700 text-white rounded-[2px] text-2xs font-bold uppercase tracking-[0.12em] hover:bg-blush-800 disabled:opacity-50 transition-colors"
               >
                 {processingId ? (
                   <IconLoader2 className="w-4 h-4 animate-spin mx-auto" />

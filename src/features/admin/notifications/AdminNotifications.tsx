@@ -219,14 +219,14 @@ export default function AdminNotifications() {
             </div>
 
             {error ? (
-              <div className="rounded-[2px] border border-rose-200 bg-rose-50 p-3 text-xs text-rose-700 font-medium flex items-center gap-2">
+              <div className="rounded-[2px] border border-blush-200 bg-blush-50 p-3 text-xs text-blush-700 font-medium flex items-center gap-2">
                 <IconAlertTriangle className="w-4 h-4 shrink-0" />
                 {error}
               </div>
             ) : null}
 
             {result ? (
-              <div className="rounded-[2px] border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-700 font-medium flex items-center gap-2">
+              <div className="rounded-[2px] border border-accent/35 bg-taupe-50 p-3 text-xs text-taupe-700 font-medium flex items-center gap-2">
                 <IconCheck className="w-4 h-4 shrink-0" />
                 {result}
               </div>

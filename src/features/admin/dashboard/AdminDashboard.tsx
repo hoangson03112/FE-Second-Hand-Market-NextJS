@@ -40,9 +40,9 @@ export default function AdminDashboard() {
 
   if (error || !stats) {
     return (
-      <div className="rounded-[2px] border border-rose-200 bg-white p-6 text-sm text-rose-800">
+      <div className="rounded-[2px] border border-blush-300 bg-white p-6 text-sm text-blush-800">
         <div className="flex items-center gap-2 font-bold mb-1">
-          <IconAlertTriangle className="w-5 h-5 text-rose-600" />
+          <IconAlertTriangle className="w-5 h-5 text-blush-600" />
           Không tải được thống kê
         </div>
         <p className="text-neutral-600 text-xs">
@@ -173,7 +173,7 @@ export default function AdminDashboard() {
               <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
                 Đang hoàn
               </span>
-              <p className="font-droid-serif mt-1.5 text-xl text-amber-700 tabular-nums">
+              <p className="font-droid-serif mt-1.5 text-xl text-luxury-champagne tabular-nums">
                 {orders.refund}
               </p>
             </div>
@@ -181,7 +181,7 @@ export default function AdminDashboard() {
               <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
                 Đã hoàn tiền
               </span>
-              <p className="font-droid-serif mt-1.5 text-xl text-rose-700 tabular-nums">
+              <p className="font-droid-serif mt-1.5 text-xl text-blush-700 tabular-nums">
                 {orders.refunded}
               </p>
             </div>
@@ -236,7 +236,7 @@ export default function AdminDashboard() {
               <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
                 Chờ CK Admin
               </span>
-              <p className="font-droid-serif mt-1.5 text-xl text-amber-700 tabular-nums">
+              <p className="font-droid-serif mt-1.5 text-xl text-luxury-champagne tabular-nums">
                 {refunds.processing}
               </p>
             </div>
@@ -252,7 +252,7 @@ export default function AdminDashboard() {
               <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
                 Từ chối / Lỗi
               </span>
-              <p className="font-droid-serif mt-1.5 text-xl text-rose-700 tabular-nums">
+              <p className="font-droid-serif mt-1.5 text-xl text-blush-700 tabular-nums">
                 {refunds.failed}
               </p>
             </div>
@@ -263,7 +263,7 @@ export default function AdminDashboard() {
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-5 sm:p-6">
           <div className="flex items-center gap-2.5 mb-4 border-b border-luxury-ink/8 pb-4">
-            <div className="w-8 h-8 rounded-[2px] border border-rose-200 bg-rose-50 text-rose-700 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-[2px] border border-blush-200 bg-blush-50 text-blush-700 flex items-center justify-center">
               <IconShieldLock className="w-4 h-4" />
             </div>
             <h2 className="font-droid-serif text-base text-luxury-ink font-bold">

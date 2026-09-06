@@ -28,11 +28,7 @@ export default function Error({
         </div>
 
         <h1
-          style={{
-            fontWeight: 400,
-            lineHeight: 1.1,
-          }}
-          className="font-droid-serif mt-6 text-[clamp(1.75rem,4vw,2.5rem)] tracking-tight text-luxury-ink"
+          className="font-droid-serif mt-6 text-[clamp(1.75rem,4vw,2.5rem)] font-normal leading-[1.1] tracking-tight text-luxury-ink"
         >
           Trang này đang gặp trục trặc.
         </h1>

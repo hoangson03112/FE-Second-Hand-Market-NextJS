@@ -204,7 +204,7 @@ export function ProductTable({
                             type="button"
                             onClick={() => onReject(product)}
                             disabled={isUpdating}
-                            className="p-1.5 rounded-[2px] bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 disabled:opacity-50 transition-all"
+                            className="p-1.5 rounded-[2px] bg-blush-50 text-blush-700 border border-blush-200 hover:bg-blush-100 disabled:opacity-50 transition-all"
                             title="Từ chối sản phẩm"
                           >
                             <IconCircleX className="w-4 h-4" />

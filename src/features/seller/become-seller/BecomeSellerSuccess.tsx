@@ -33,7 +33,7 @@ export default function BecomeSellerSuccess() {
         <section className="mx-auto max-w-3xl rounded-[2px] border border-luxury-ink/10 bg-white p-8 sm:p-10 shadow-xs">
           <div className="flex flex-col items-center text-center">
             <div className="flex h-16 w-16 items-center justify-center rounded-[2px] bg-cream-50 border border-luxury-ink/10">
-              <IconCircleCheck className="h-8 w-8 text-emerald-700" />
+              <IconCircleCheck className="h-8 w-8 text-accent" />
             </div>
 
             <p className="mt-4 text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
@@ -74,8 +74,8 @@ export default function BecomeSellerSuccess() {
             </div>
           </div>
 
-          <div className="mt-6 rounded-[2px] border border-amber-200 bg-amber-50/70 p-4">
-            <p className="text-xs leading-relaxed text-amber-900">
+          <div className="mt-6 rounded-[2px] border border-luxury-champagne/30 bg-luxury-champagne/8 p-4">
+            <p className="text-xs leading-relaxed text-neutral-700">
               Đội ngũ kiểm duyệt đang xử lý hồ sơ. Trong thời gian này, bạn vẫn có thể đăng bán các sản phẩm thường trong hạn mức thành viên.
             </p>
           </div>

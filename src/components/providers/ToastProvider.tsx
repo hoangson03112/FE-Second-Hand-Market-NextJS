@@ -59,11 +59,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         richColors
         closeButton
         toastOptions={{
-          style: {
-            background: "var(--background)",
-            color: "var(--foreground)",
-            border: "1px solid var(--border)",
-          },
+          className: "bg-luxury-ivory text-luxury-ink border border-luxury-ink/12",
         }}
       />
     </>

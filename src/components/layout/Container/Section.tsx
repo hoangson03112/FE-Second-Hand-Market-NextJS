@@ -19,8 +19,8 @@ export function Section({
     <section
       className={cn(
         "rounded-[2px]",
-        withBackground && "bg-card shadow-sm",
-        withBorder && "border border-border",
+        withBackground && "bg-luxury-ivory shadow-sm",
+        withBorder && "border border-luxury-ink/10",
         className
       )}
     >

@@ -25,11 +25,10 @@ export default function CuratedCollectionsSection() {
       >
         <div
           className={cn(
-            "transition-all duration-700 ease-out",
+            "transition-all duration-700 ease-out delay-[80ms]",
 
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
           )}
-          style={{ transitionDelay: "80ms" }}
         >
           <SectionHeader
             eyebrow="Gợi ý chọn lọc"
@@ -48,7 +47,7 @@ export default function CuratedCollectionsSection() {
               key={item.title}
               href={item.href}
               className={cn(
-                "group relative overflow-hidden bg-luxury-ink transition-all duration-700 ease-out",
+                "group relative overflow-hidden rounded-[2px] bg-luxury-ink transition-all duration-700 ease-out",
 
                 isVisible
                   ? "opacity-100 translate-y-0"
@@ -56,19 +55,13 @@ export default function CuratedCollectionsSection() {
               )}
               style={{
                 transitionDelay: `${150 + index * 100}ms`,
-
-                borderRadius: "2px",
               }}
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden">
                 <div
-                  className="absolute inset-0 h-full w-full transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                  className="absolute inset-0 h-full w-full bg-cover bg-center transition-transform duration-[1.2s] ease-out group-hover:scale-105"
                   style={{
                     backgroundImage: `url(${item.gradient})`,
-
-                    backgroundSize: "cover",
-
-                    backgroundPosition: "center",
                   }}
                 />
 

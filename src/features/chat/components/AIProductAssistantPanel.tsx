@@ -91,7 +91,7 @@ export function AIProductAssistantPanel({
 
   return (
     <div className="flex flex-col h-full">
-      <div className="px-6 py-3 border-b border-border bg-primary/5">
+      <div className="px-6 py-3 border-b border-luxury-ink/10 bg-luxury-champagne/10">
         <button
           type="button"
           onClick={onBackToConversations}

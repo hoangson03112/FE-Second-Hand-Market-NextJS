@@ -201,7 +201,7 @@ export default function SellerOrders() {
                 </div>
               </div>
 
-              <div className={revealClass} style={{ transitionDelay: "80ms" }}>
+              <div className={cn(revealClass, "delay-[80ms]")}>
                 <OrderDetailPanel
                   order={selectedOrder}
                   isUpdating={isSelectedUpdating}

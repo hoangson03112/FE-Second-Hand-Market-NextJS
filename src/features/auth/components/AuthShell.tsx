@@ -10,9 +10,6 @@ import Image from "next/image";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-const NOISE_TEXTURE =
-  "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
-
 interface AuthShellProps {
   panel: React.ReactNode;
   children: React.ReactNode;
@@ -31,11 +28,7 @@ export default function AuthShell({
     <section className="relative  overflow-hidden bg-luxury-ivory">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 120% 80% at 100% -10%, var(--cream-50) 0%, var(--cream-100) 45%, var(--cream-200) 100%)",
-        }}
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_100%_-10%,var(--cream-50)_0%,var(--cream-100)_45%,var(--cream-200)_100%)]"
       />
       <div
         aria-hidden
@@ -43,8 +36,7 @@ export default function AuthShell({
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.035] mix-blend-multiply"
-        style={{ backgroundImage: NOISE_TEXTURE }}
+        className="pointer-events-none absolute inset-0 opacity-[0.035] mix-blend-multiply bg-noise-texture"
       />
 
       <div
@@ -52,15 +44,10 @@ export default function AuthShell({
         className="pointer-events-none absolute inset-y-0 left-0 hidden w-1/2 overflow-hidden bg-luxury-ink lg:block"
       >
         <div
-          className="absolute inset-0 opacity-40"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 80% 15%, color-mix(in srgb, var(--accent) 25%, transparent) 0%, transparent 55%), radial-gradient(ellipse 60% 50% at 5% 85%, color-mix(in srgb, var(--luxury-champagne) 18%, transparent) 0%, transparent 50%)",
-          }}
+          className="absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_80%_60%_at_80%_15%,color-mix(in_srgb,var(--accent)_25%,transparent)_0%,transparent_55%),radial-gradient(ellipse_60%_50%_at_5%_85%,color-mix(in_srgb,var(--luxury-champagne)_18%,transparent)_0%,transparent_50%)]"
         />
         <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{ backgroundImage: NOISE_TEXTURE }}
+          className="absolute inset-0 opacity-[0.03] bg-noise-texture"
         />
       </div>
 

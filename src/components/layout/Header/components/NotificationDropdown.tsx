@@ -94,19 +94,12 @@ export function NotificationDropdown() {
         type="button"
         aria-label="Thông báo"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex relative items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-[2px] transition-all duration-150 text-muted-foreground hover:text-foreground hover:bg-primary/10"
+        className="flex relative items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-[2px] transition-all duration-150 text-neutral-500 hover:text-luxury-ink hover:bg-primary/10"
       >
         <IconBell className="w-[17px] h-[17px]" />
         {unreadCount > 0 && (
           <span
-            className="absolute top-0 right-0 min-w-[16px] h-4 flex items-center justify-center text-white text-[9px] font-bold pointer-events-none"
-            style={{
-              background: "oklch(0.48 0.12 35)",
-              borderRadius: "2px",
-              border: "1.5px solid var(--background)",
-              padding: "0 3px",
-              boxShadow: "0 1px 4px oklch(0.48 0.12 35 / 0.4)",
-            }}
+            className="absolute top-0 right-0 min-w-[16px] h-4 flex items-center justify-center text-white text-[9px] font-bold pointer-events-none rounded-[2px] border-[1.5px] px-[3px] py-0 bg-[oklch(0.48_0.12_35)] border-[color:var(--background)] shadow-[0_1px_4px_oklch(0.48_0.12_35_/_0.4)]"
           >
             {unreadCount > 99 ? "99+" : unreadCount}
           </span>
@@ -116,11 +109,7 @@ export function NotificationDropdown() {
       {isOpen && (
         <div className="absolute right-0 top-full mt-2 w-[392px] max-h-[560px]   bg-cream-50 rounded-[2px] shadow-lg flex flex-col z-[70] overflow-hidden">
           <div
-            className="px-4 py-3 flex items-center justify-between"
-            style={{
-              borderBottom: "1px solid var(--border)",
-              background: "oklch(from var(--primary) l c h / 0.08)",
-            }}
+            className="px-4 py-3 flex items-center justify-between border-b border-[color:color-mix(in_srgb,var(--luxury-ink)_10%,transparent)] bg-[oklch(from_var(--primary)_l_c_h_/_0.08)]"
           >
             <div className="flex items-center gap-2.5 min-w-0">
               <span className="w-7 h-7 rounded-[2px] border border-luxury-ink/10 flex items-center justify-center shrink-0 bg-primary/15 text-primary">
@@ -128,12 +117,11 @@ export function NotificationDropdown() {
               </span>
               <div>
                 <h2
-                  className="text-sm font-bold leading-none text-foreground"
-                  style={{ letterSpacing: "0.01em" }}
+                  className="text-sm font-bold leading-none text-luxury-ink tracking-[0.01em]"
                 >
                   Thông báo
                 </h2>
-                <p className="text-xs mt-1 text-muted-foreground">
+                <p className="text-xs mt-1 text-neutral-500">
                   {notifications.length} thông báo
                 </p>
               </div>
@@ -144,8 +132,8 @@ export function NotificationDropdown() {
             </span>
           </div>
 
-          <div className="px-4 py-2 border-b border-border bg-card">
-            <div className="flex items-center justify-between text-[10.5px] text-muted-foreground">
+          <div className="px-4 py-2 border-b border-luxury-ink/10 bg-white">
+            <div className="flex items-center justify-between text-[10.5px] text-neutral-500">
               <span>
                 Xem nhanh {visibleNotifications.length} thông báo mới nhất
               </span>
@@ -158,10 +146,10 @@ export function NotificationDropdown() {
                 <span className="w-12 h-12 rounded-[2px] border border-luxury-ink/10 flex items-center justify-center mb-3 bg-cream-50 text-neutral-400">
                   <IconBell className="w-6 h-6" />
                 </span>
-                <p className="font-bold text-sm text-foreground">
+                <p className="font-bold text-sm text-luxury-ink">
                   Chưa có thông báo nào
                 </p>
-                <p className="text-xs mt-1.5 text-muted-foreground">
+                <p className="text-xs mt-1.5 text-neutral-500">
                   Khi có cập nhật mới, bạn sẽ thấy tại đây.
                 </p>
               </div>
@@ -185,20 +173,20 @@ export function NotificationDropdown() {
                           metadata,
                         })
                       }
-                      className="w-full text-left block rounded-[2px] p-3 transition-colors duration-200 group bg-card hover:bg-primary/10"
+                      className="w-full text-left block rounded-[2px] p-3 transition-colors duration-200 group bg-white hover:bg-primary/10"
                     >
                       <div className="flex items-start justify-between gap-2.5">
                         <span className="w-8 h-8 rounded-[2px] border border-luxury-ink/10 flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15">
                           {getNotificationIcon(item.type)}
                         </span>
                         <div className="min-w-0 flex-1">
-                          <p className="font-bold text-sm text-foreground line-clamp-1">
+                          <p className="font-bold text-sm text-luxury-ink line-clamp-1">
                             {item.title}
                           </p>
-                          <p className="text-xs text-muted-foreground mt-0.5 break-words line-clamp-2 leading-relaxed">
+                          <p className="text-xs text-neutral-500 mt-0.5 break-words line-clamp-2 leading-relaxed">
                             {item.message}
                           </p>
-                          <p className="text-xs text-muted-foreground mt-1.5 font-medium">
+                          <p className="text-xs text-neutral-500 mt-1.5 font-medium">
                             {formatTimeAgo(item.createdAt)}
                           </p>
                         </div>
@@ -213,20 +201,20 @@ export function NotificationDropdown() {
                       key={item.id}
                       href={item.link}
                       onClick={() => setIsOpen(false)}
-                      className="block rounded-[2px] p-3 transition-colors duration-200 group bg-card hover:bg-primary/10"
+                      className="block rounded-[2px] p-3 transition-colors duration-200 group bg-white hover:bg-primary/10"
                     >
                       <div className="flex items-start gap-2.5">
                         <span className="w-8 h-8 rounded-[2px] border border-luxury-ink/10 flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15">
                           {getNotificationIcon(item.type)}
                         </span>
                         <div className="min-w-0 flex-1">
-                          <p className="font-bold text-sm text-foreground line-clamp-1">
+                          <p className="font-bold text-sm text-luxury-ink line-clamp-1">
                             {item.title}
                           </p>
-                          <p className="text-xs text-muted-foreground mt-0.5 break-words line-clamp-2 leading-relaxed">
+                          <p className="text-xs text-neutral-500 mt-0.5 break-words line-clamp-2 leading-relaxed">
                             {item.message}
                           </p>
-                          <p className="text-xs text-muted-foreground mt-1.5 font-medium">
+                          <p className="text-xs text-neutral-500 mt-1.5 font-medium">
                             {formatTimeAgo(item.createdAt)}
                           </p>
                         </div>
@@ -238,20 +226,20 @@ export function NotificationDropdown() {
                 return (
                   <div
                     key={item.id}
-                    className="w-full text-left rounded-[2px] p-3 transition-colors duration-200 group bg-card hover:bg-primary/10"
+                    className="w-full text-left rounded-[2px] p-3 transition-colors duration-200 group bg-white hover:bg-primary/10"
                   >
                     <div className="flex items-start gap-2.5">
                       <span className="w-8 h-8 rounded-[2px] border border-luxury-ink/10 flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary/15">
                         {getNotificationIcon(item.type)}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className="font-bold text-sm text-foreground line-clamp-1">
+                        <p className="font-bold text-sm text-luxury-ink line-clamp-1">
                           {item.title}
                         </p>
-                        <p className="text-xs text-muted-foreground mt-0.5 break-words line-clamp-2 leading-relaxed">
+                        <p className="text-xs text-neutral-500 mt-0.5 break-words line-clamp-2 leading-relaxed">
                           {item.message}
                         </p>
-                        <p className="text-xs text-muted-foreground mt-1.5 font-medium">
+                        <p className="text-xs text-neutral-500 mt-1.5 font-medium">
                           {formatTimeAgo(item.createdAt)}
                         </p>
                       </div>
@@ -263,7 +251,7 @@ export function NotificationDropdown() {
 
             {hasMoreNotifications && (
               <div className="mx-2 mt-1 mb-2 rounded-[2px] border border-luxury-ink/10 px-3 py-2 text-center bg-cream-50/70">
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-neutral-500">
                   Đang hiển thị 20 thông báo mới nhất. Danh sách cuộn trong
                   khung này.
                 </p>

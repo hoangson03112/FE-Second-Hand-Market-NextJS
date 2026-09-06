@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { IconSearch, IconSparkles } from "@tabler/icons-react";
+import { cn } from "@/lib/utils";
 
 const SUGGESTIONS = ["Bàn ghế gỗ", "iPhone cũ", "Đồ vintage", "Xe đạp"];
 
@@ -13,20 +14,13 @@ export default function SearchEmpty() {
       >
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-2 -top-2 h-8 w-8 opacity-25"
-          style={{
-            background:
-              "radial-gradient(circle, var(--luxury-champagne) 0%, transparent 70%)",
-          }}
+          className="pointer-events-none absolute -right-2 -top-2 h-8 w-8 opacity-25 bg-[radial-gradient(circle,var(--luxury-champagne)_0%,transparent_70%)]"
         />
         <IconSearch className="h-6 w-6 text-taupe-400" strokeWidth={1.5} />
       </div>
 
       <h2
-        style={{
-          fontWeight: 400,
-        }}
-        className="font-droid-serif mt-6 text-xl text-luxury-ink"
+        className={cn("font-droid-serif mt-6 text-xl text-luxury-ink", "font-normal")}
       >
         Nhập từ khóa để tìm kiếm
       </h2>

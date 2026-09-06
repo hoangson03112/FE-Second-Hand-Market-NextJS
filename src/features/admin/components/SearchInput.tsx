@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Search, X } from "lucide-react";
+import { IconSearch, IconX } from "@tabler/icons-react";
 
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -56,7 +56,7 @@ export function SearchInput({
 
   return (
     <div className={cn("relative", containerClassName)}>
-      <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+      <IconSearch className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-neutral-500" />
       <Input
         value={internal}
         onChange={(e) => update(e.target.value)}
@@ -72,9 +72,9 @@ export function SearchInput({
             onClear?.();
           }}
           aria-label="Xóa tìm kiếm"
-          className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-muted-foreground transition-colors hover:text-foreground"
+          className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-neutral-500 transition-colors hover:text-luxury-ink"
         >
-          <X className="size-4" />
+          <IconX className="size-4" />
         </button>
       )}
     </div>

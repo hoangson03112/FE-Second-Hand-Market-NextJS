@@ -47,10 +47,10 @@ export function AddressDetail({ address, sellerName }: AddressDetailProps) {
     <dl className="grid grid-cols-2 gap-x-6 gap-y-2">
       {rows.map(({ label, value }) => (
         <div key={label}>
-          <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+          <dt className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
             {label}
           </dt>
-          <dd className="mt-0.5 text-sm text-foreground">{value || "—"}</dd>
+          <dd className="mt-0.5 text-sm text-luxury-ink">{value || "—"}</dd>
         </div>
       ))}
     </dl>

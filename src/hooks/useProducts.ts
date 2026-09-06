@@ -42,10 +42,10 @@ export function useAllPublicProducts(filters?: IProductFilters) {
   });
 }
 
-export function useFeaturedProducts(limit = 5) {
+export function useFeaturedProducts() {
   return useQuery({
-    queryKey: [...queryKeys.products.all, "featured", limit],
-    queryFn: async () => ProductService.getFeatured(limit),
+    queryKey: [...queryKeys.products.all, "featured"],
+    queryFn: async () => ProductService.getFeatured(),
   });
 }
 

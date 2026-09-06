@@ -185,7 +185,7 @@ export function BannedOverlay() {
                 />
               </div>
               {error && (
-                <p className="text-xs font-semibold text-rose-700 bg-rose-50 p-2.5 rounded-[2px] border border-rose-200">
+                <p className="text-xs font-semibold text-blush-700 bg-blush-50 p-2.5 rounded-[2px] border border-blush-200">
                   {error}
                 </p>
               )}

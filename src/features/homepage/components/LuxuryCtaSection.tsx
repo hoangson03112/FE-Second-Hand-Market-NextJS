@@ -20,19 +20,11 @@ export default function LuxuryCtaSection() {
         <div className="relative overflow-hidden rounded-[2px] bg-luxury-ink px-8 py-16 md:px-16 md:py-20">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-40"
-            style={{
-              background:
-                "radial-gradient(ellipse 80% 60% at 80% 20%, color-mix(in srgb, var(--accent) 25%, transparent) 0%, transparent 55%), radial-gradient(ellipse 60% 50% at 10% 80%, color-mix(in srgb, var(--luxury-champagne) 18%, transparent) 0%, transparent 50%)",
-            }}
+            className="pointer-events-none absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_80%_60%_at_80%_20%,color-mix(in_srgb,var(--accent)_25%,transparent)_0%,transparent_55%),radial-gradient(ellipse_60%_50%_at_10%_80%,color-mix(in_srgb,var(--luxury-champagne)_18%,transparent)_0%,transparent_50%)]"
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-            }}
+            className="pointer-events-none absolute inset-0 opacity-[0.03] bg-noise-texture"
           />
 
           <div className="relative z-10 mx-auto max-w-3xl text-center">
@@ -40,11 +32,7 @@ export default function LuxuryCtaSection() {
               Bắt đầu hành trình
             </p>
             <h2
-              style={{
-                fontWeight: 400,
-                lineHeight: 1.08,
-              }}
-              className="font-droid-serif mt-5 text-[clamp(2rem,4.5vw,3.25rem)] text-luxury-ivory"
+              className="font-droid-serif mt-5 text-[clamp(2rem,4.5vw,3.25rem)] font-normal leading-[1.08] text-luxury-ivory"
             >
               Mua bán second-hand
               <span className="block text-taupe-200">

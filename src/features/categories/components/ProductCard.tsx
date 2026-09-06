@@ -75,20 +75,17 @@ export default function ProductCard({
             </span>
           </div>
 
-          <h3 className="mt-1.5 line-clamp-2 text-xs font-medium text-foreground leading-snug transition-colors group-hover:text-primary md:text-sm">
+          <h3 className="mt-1.5 line-clamp-2 text-xs font-medium text-luxury-ink leading-snug transition-colors md:text-sm">
             {product.name}
           </h3>
         </div>
 
 
         <div className="mt-3 flex items-center justify-between border-t border-luxury-ink/6 pt-3">
-          <span className="text-sm font-normal tracking-tight text-primary md:text-base group-hover:text-blush-600">
+          <span className="text-sm font-normal tracking-tight text-luxury-ink md:text-base group-hover:text-blush-600">
             {formatPrice(product.price)}
           </span>
-          <div
-            className="flex h-7 w-7 items-center justify-center border border-luxury-ink/10 text-luxury-ink transition-all duration-300 group-hover:border-luxury-ink group-hover:bg-luxury-ink group-hover:text-white"
-            style={{ borderRadius: "999px" }}
-          >
+          <div className="flex h-7 w-7 items-center justify-center rounded-full border border-luxury-ink/10 text-luxury-ink transition-all duration-300 group-hover:border-luxury-ink group-hover:bg-luxury-ink group-hover:text-white">
             <IconArrowUpRight className="h-3.5 w-3.5" />
           </div>
         </div>

@@ -39,6 +39,7 @@ const INITIAL_DELIVERY: DeliveryOptions = {
 function mapProductToFormValues(
   product: IProductWithMediaAndIds,
 ): SellFormValues {
+
   return {
     name: product.name || "",
     price: String(product.price || ""),
@@ -178,13 +179,12 @@ export function useSellForm() {
 
         setExistingImages(existingImageData);
         setExistingVideoUrl(product.video?.url ?? null);
+
         setValues(mapProductToFormValues(product));
 
+        
+        setPickupAddressId(product!.address!._id || "");
 
-        const addrId = product.address?._id;
-        if (addrId) {
-          setPickupAddressId(addrId);
-        }
 
 
         if (product.deliveryOptions) {
@@ -405,7 +405,7 @@ export function useSellForm() {
         const ax = err as { response?: { data?: { message?: string } } };
         setApiError(
           (ax.response?.data as { message?: string })?.message ??
-            "Có lỗi xảy ra. Vui lòng thử lại.",
+          "Có lỗi xảy ra. Vui lòng thử lại.",
         );
         setIsLoading(false);
       }

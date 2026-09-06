@@ -18,16 +18,19 @@ export const STATUS_TABS: { value: ProductStatusFilter | ""; label: string }[] =
 ];
 
 
+// Tone classes mirror the canonical status-tone system in
+// src/features/order/components/OrderStatusChip.tsx /
+// src/features/seller/my-products/components/ProductStatusChip.tsx
 export const STATUS_TABLE_BADGE: Record<string, { label: string; className: string }> = {
-  pending:          { label: "Chờ duyệt",         className: "bg-primary/10 text-primary/90" },
-  review_requested: { label: "Yêu cầu duyệt lại", className: "bg-primary/15 text-primary" },
-  under_review:     { label: "Đang xem xét",       className: "bg-secondary text-foreground/80" },
-  pending_review:   { label: "Đang xem xét",       className: "bg-secondary text-foreground/80" },
-  approved:     { label: "Đang bán",     className: "bg-primary/15 text-primary" },
-  rejected:     { label: "Từ chối",      className: "bg-destructive/10 text-destructive" },
-  active:       { label: "Đang bán",     className: "bg-primary/15 text-primary" },
-  inactive:     { label: "Ẩn",           className: "bg-muted text-muted-foreground" },
-  sold:         { label: "Đã bán",       className: "bg-muted/60 text-muted-foreground" },
+  pending:          { label: "Chờ duyệt",         className: "bg-cream-50 text-neutral-600 border-luxury-ink/12" },
+  review_requested: { label: "Yêu cầu duyệt lại", className: "bg-cream-100 text-neutral-700 border-luxury-champagne/50" },
+  under_review:     { label: "Đang xem xét",       className: "bg-white text-luxury-ink border-luxury-ink/20" },
+  pending_review:   { label: "Đang xem xét",       className: "bg-cream-100 text-neutral-700 border-luxury-champagne/50" },
+  approved:     { label: "Đang bán",     className: "bg-taupe-50 text-taupe-700 border-accent/35" },
+  rejected:     { label: "Từ chối",      className: "bg-blush-50 text-blush-800 border-blush-300" },
+  active:       { label: "Đang bán",     className: "bg-taupe-50 text-taupe-700 border-accent/35" },
+  inactive:     { label: "Ẩn",           className: "bg-cream-50 text-neutral-600 border-luxury-ink/12" },
+  sold:         { label: "Đã bán",       className: "bg-white text-luxury-ink border-luxury-ink/20" },
 };
 
 export const STATUS_BADGE: Record<
@@ -36,42 +39,42 @@ export const STATUS_BADGE: Record<
 > = {
   pending: {
     label: "Chờ duyệt",
-    dot: "bg-primary/50",
-    chip: "bg-primary/10 text-primary/90",
+    dot: "bg-neutral-400",
+    chip: "bg-cream-50 text-neutral-600 border-luxury-ink/12",
   },
   review_requested: {
     label: "Yêu cầu duyệt lại",
-    dot: "bg-primary/60",
-    chip: "bg-primary/15 text-primary",
+    dot: "bg-luxury-champagne",
+    chip: "bg-cream-100 text-neutral-700 border-luxury-champagne/50",
   },
   under_review: {
     label: "Đang xem xét",
-    dot: "bg-foreground/40",
-    chip: "bg-secondary text-foreground/80",
+    dot: "bg-luxury-ink",
+    chip: "bg-white text-luxury-ink border-luxury-ink/20",
   },
   approved: {
     label: "Đang bán",
-    dot: "bg-primary",
-    chip: "bg-primary/15 text-primary",
+    dot: "bg-accent",
+    chip: "bg-taupe-50 text-taupe-700 border-accent/35",
   },
   active: {
     label: "Đang bán",
-    dot: "bg-primary",
-    chip: "bg-primary/15 text-primary",
+    dot: "bg-accent",
+    chip: "bg-taupe-50 text-taupe-700 border-accent/35",
   },
   rejected: {
     label: "Từ chối",
-    dot: "bg-destructive",
-    chip: "bg-destructive/10 text-destructive",
+    dot: "bg-blush-600",
+    chip: "bg-blush-50 text-blush-800 border-blush-300",
   },
   inactive: {
     label: "Ẩn",
-    dot: "bg-muted-foreground/50",
-    chip: "bg-muted text-muted-foreground",
+    dot: "bg-neutral-400",
+    chip: "bg-cream-50 text-neutral-600 border-luxury-ink/12",
   },
   sold: {
     label: "Đã bán",
-    dot: "bg-foreground",
-    chip: "bg-muted/60 text-muted-foreground",
+    dot: "bg-luxury-ink",
+    chip: "bg-white text-luxury-ink border-luxury-ink/20",
   },
 };

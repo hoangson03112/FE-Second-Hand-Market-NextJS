@@ -162,7 +162,7 @@ export default function CartItem({
             {formatPrice(product.price)}
           </div>
           {product.hasPersonalDiscount && product.originalPrice != null && (
-            <div className="text-2xs text-red-400 line-through">
+            <div className="text-2xs text-blush-400 line-through">
               {formatPrice(product.originalPrice)}
             </div>
           )}

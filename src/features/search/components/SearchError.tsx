@@ -1,21 +1,19 @@
 "use client";
 
 import { IconAlertTriangle, IconRefresh } from "@tabler/icons-react";
+import { cn } from "@/lib/utils";
 
 export default function SearchError() {
   return (
     <div className="flex flex-col items-center py-24 text-center">
       <div
-        className="rounded-[2px] flex h-16 w-16 items-center justify-center border border-red-200 bg-red-50"
+        className="rounded-[2px] flex h-16 w-16 items-center justify-center border border-blush-200 bg-blush-50"
       >
-        <IconAlertTriangle className="h-6 w-6 text-red-500" strokeWidth={1.5} />
+        <IconAlertTriangle className="h-6 w-6 text-blush-600" strokeWidth={1.5} />
       </div>
 
       <h3
-        style={{
-          fontWeight: 400,
-        }}
-        className="font-droid-serif mt-6 text-xl text-luxury-ink"
+        className={cn("font-droid-serif mt-6 text-xl text-luxury-ink", "font-normal")}
       >
         Có lỗi xảy ra
       </h3>

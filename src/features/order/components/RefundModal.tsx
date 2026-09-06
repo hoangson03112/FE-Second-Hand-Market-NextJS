@@ -22,6 +22,7 @@ import {
   REFUND_MAX_VIDEOS,
 } from "@/constants/refund";
 import { formatFileSize } from "@/utils/file";
+import { cn } from "@/lib/utils";
 
 const REFUND_BANK_OPTIONS = Object.keys(BANK_CODE_MAP);
 
@@ -147,10 +148,10 @@ export function RefundModal({
             </span>
             <div>
               <h2
-                style={{
-                  fontWeight: 400,
-                }}
-                className="font-droid-serif text-lg leading-tight text-luxury-ink"
+                className={cn(
+                  "font-droid-serif text-lg leading-tight text-luxury-ink",
+                  "font-normal",
+                )}
               >
                 Yêu cầu hoàn tiền
               </h2>
@@ -286,10 +287,7 @@ export function RefundModal({
                             </p>
                           </div>
                           {isSelected && (
-                            <span
-                              className="rounded-[2px] absolute right-2 top-2 flex h-4.5 w-4.5 items-center justify-center bg-luxury-champagne"
-                              style={{ borderRadius: "2px" }}
-                            >
+                            <span className="rounded-[2px] absolute right-2 top-2 flex h-4.5 w-4.5 items-center justify-center bg-luxury-champagne">
                               <IconCheck
                                 className="h-2.5 w-2.5 text-luxury-ink"
                                 strokeWidth={3}
@@ -341,8 +339,7 @@ export function RefundModal({
                       rows={4}
                       maxLength={1000}
                       disabled={isSubmitting}
-                      className={`${inputClass} resize-none disabled:opacity-60`}
-                      style={{ borderRadius: "2px" }}
+                      className={`${inputClass} resize-none rounded-[2px] disabled:opacity-60`}
                       placeholder="Mô tả chi tiết vấn đề: sản phẩm hỏng ở đâu, sai như thế nào, thiếu gì..."
                     />
                     <div className="mt-1.5 flex items-center justify-between">
@@ -350,7 +347,7 @@ export function RefundModal({
                         className={
                           description.trim().length < 10 &&
                           description.length > 0
-                            ? "text-xs text-red-600/80"
+                            ? "text-xs text-blush-600/80"
                             : "text-xs text-taupe-400"
                         }
                       >
@@ -377,10 +374,7 @@ export function RefundModal({
                         <IconPhoto className="h-3.5 w-3.5" strokeWidth={1.75} />
                         Ảnh bằng chứng
                       </label>
-                      <span
-                        className="border border-luxury-ink/10 bg-cream-50 px-2 py-0.5 text-2xs font-medium text-taupe-500"
-                        style={{ borderRadius: "2px" }}
-                      >
+                      <span className="rounded-[2px] border border-luxury-ink/10 bg-cream-50 px-2 py-0.5 text-2xs font-medium text-taupe-500">
                         {images.length}/{REFUND_MAX_IMAGES}
                       </span>
                     </div>
@@ -393,23 +387,18 @@ export function RefundModal({
                       onDrop={handleDrop}
                       className={
                         isDragging
-                          ? "border border-dashed border-luxury-champagne bg-cream-50 transition-all duration-300"
-                          : "border border-dashed border-luxury-ink/20 bg-white/50 transition-all duration-300"
+                          ? "rounded-[2px] border border-dashed border-luxury-champagne bg-cream-50 transition-all duration-300"
+                          : "rounded-[2px] border border-dashed border-luxury-ink/20 bg-white/50 transition-all duration-300"
                       }
-                      style={{ borderRadius: "2px" }}
                     >
                       {images.length === 0 ? (
                         <button
                           type="button"
                           onClick={() => imageInputRef.current?.click()}
                           disabled={isSubmitting}
-                          className="flex w-full flex-col items-center justify-center gap-2 py-7 transition-colors hover:bg-cream-50/70 disabled:opacity-50"
-                          style={{ borderRadius: "2px" }}
+                          className="rounded-[2px] flex w-full flex-col items-center justify-center gap-2 py-7 transition-colors hover:bg-cream-50/70 disabled:opacity-50"
                         >
-                          <span
-                            className="flex h-10 w-10 items-center justify-center border border-luxury-ink/12 bg-cream-50"
-                            style={{ borderRadius: "2px" }}
-                          >
+                          <span className="rounded-[2px] flex h-10 w-10 items-center justify-center border border-luxury-ink/12 bg-cream-50">
                             <IconUpload
                               className="h-4.5 w-4.5 text-taupe-400"
                               strokeWidth={1.5}

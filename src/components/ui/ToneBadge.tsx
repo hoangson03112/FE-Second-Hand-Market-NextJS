@@ -9,8 +9,8 @@ export type StatusTone =
   | "default";
 
 const TONE_CLASSES: Record<StatusTone, string> = {
-  success: "bg-emerald-50 text-emerald-800 border-emerald-200",
-  warning: "bg-amber-50 text-amber-800 border-amber-200",
+  success: "bg-taupe-50 text-taupe-700 border-accent/35",
+  warning: "bg-cream-100 text-neutral-700 border-luxury-champagne/50",
   error: "bg-blush-50 text-blush-700 border-blush-200",
   info: "bg-cream-50 text-luxury-ink border-luxury-ink/15",
   muted: "bg-taupe-50 text-neutral-600 border-luxury-ink/10",

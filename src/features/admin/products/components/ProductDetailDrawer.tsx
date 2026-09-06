@@ -43,7 +43,7 @@ export function ProductDetailDrawer({
         onClick={onClose}
       />
 
-      <aside className="fixed inset-y-0 right-0 z-50 w-full max-w-2xl flex flex-col bg-luxury-ivory border-l border-luxury-ink/15 shadow-2xl animate-in slide-in-from-right duration-300">
+      <aside className="fixed inset-y-0 right-0 z-50 w-full max-w-2xl flex flex-col bg-luxury-ivory border-l border-luxury-ink/15 shadow-xs animate-in slide-in-from-right duration-300">
         <ProductDrawerHeader product={product} onClose={onClose} />
 
         <div className="flex-1 overflow-y-auto">

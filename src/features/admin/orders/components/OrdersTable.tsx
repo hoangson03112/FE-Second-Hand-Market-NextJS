@@ -98,11 +98,11 @@ export default function OrdersTable({
                           size={28}
                         />
                         <div>
-                          <span className="text-foreground">
+                          <span className="text-luxury-ink">
                             {order.buyerId?.fullName ?? "—"}
                           </span>
                           <br />
-                          <span className="text-xs text-muted-foreground">
+                          <span className="text-xs text-neutral-500">
                             {order.buyerId?.email ?? ""}
                           </span>
                         </div>
