@@ -3,7 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { IconArrowUpRight, IconInfoCircle } from "@tabler/icons-react";
+import {
+  IconArrowUpRight,
+  IconInfoCircle,
+  IconAlertTriangle,
+} from "@tabler/icons-react";
 import {
   AddressSection,
   AddressModal,
@@ -201,8 +205,8 @@ export default function Checkout() {
                     onPaymentMethodChange={(method) =>
                       setPaymentMethodForSeller(group.sellerId, method)
                     }
-
-
+                    hasAddress={!!selectedAddress}
+                    isCalculatingShipping={isCalculatingShipping}
                     deliveryMethod={
                       group.isLocalPickup ? "local_pickup" : "cod_shipping"
                     }
@@ -218,18 +222,9 @@ export default function Checkout() {
             )}
 
 
-            {!allLocalPickup && shippingError ? (
+            {!allLocalPickup && selectedAddress && shippingError ? (
               <div className="rounded-[2px] border border-blush-300 bg-blush-50 px-5 py-4 text-xs leading-relaxed text-blush-800">
                 {shippingError}
-              </div>
-            ) : null}
-
-            {!allLocalPickup && isCalculatingShipping ? (
-              <div className="flex items-center gap-4 rounded-[2px] border border-luxury-ink/10 bg-white px-5 py-5">
-                <span className="h-3.5 w-3.5 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
-                <span className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-600">
-                  Đang tính phí vận chuyển
-                </span>
               </div>
             ) : null}
           </div>
@@ -245,6 +240,15 @@ export default function Checkout() {
                 shipping={shipping}
                 paymentMethods={paymentMethods}
               />
+
+              {!allLocalPickup && !selectedAddress && !isEmpty ? (
+                <p className="flex items-start gap-2 rounded-[2px] border border-blush-300 bg-blush-50 px-4 py-3 text-xs leading-relaxed text-blush-800">
+                  <IconAlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+                  Vui lòng chọn địa chỉ giao hàng — hệ thống cần địa chỉ này
+                  để tính phí vận chuyển trước khi bạn có thể đặt hàng.
+                </p>
+              ) : null}
+
               <CheckoutButton
                 total={total}
                 isSubmitting={isSubmitting}

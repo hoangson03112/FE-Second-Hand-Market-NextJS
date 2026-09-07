@@ -25,9 +25,22 @@ interface CheckoutSellerSectionProps {
   onPaymentMethodChange: (method: PaymentMethodType) => void;
   deliveryMethod: "local_pickup" | "cod_shipping";
   onDeliveryMethodChange: (method: "local_pickup" | "cod_shipping") => void;
+  hasAddress: boolean;
+  isCalculatingShipping: boolean;
 
   index?: number;
   totalGroups?: number;
+}
+
+function shippingFeeLabel(
+  fee: number,
+  hasAddress: boolean,
+  isCalculating: boolean,
+) {
+  if (fee > 0) return formatPrice(fee);
+  if (!hasAddress) return "Chưa xác định";
+  if (isCalculating) return "Đang tính…";
+  return "—";
 }
 
 const twoDigits = (value: number) => String(value).padStart(2, "0");
@@ -101,6 +114,8 @@ export default function CheckoutSellerSection({
   onPaymentMethodChange,
   deliveryMethod,
   onDeliveryMethodChange,
+  hasAddress,
+  isCalculatingShipping,
   index,
   totalGroups,
 }: CheckoutSellerSectionProps) {
@@ -239,6 +254,25 @@ export default function CheckoutSellerSection({
                 Miễn phí
               </span>
             </div>
+          ) : !hasAddress ? (
+            <div className="flex items-start gap-4 rounded-[2px] border border-dashed border-luxury-ink/15 bg-cream-50/40 px-4 py-4">
+              <IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-luxury-ink">
+                  Vận chuyển GHN
+                </p>
+                <p className="mt-1.5 text-xs leading-relaxed text-neutral-500">
+                  Chọn địa chỉ giao hàng để xem phí và thời gian dự kiến.
+                </p>
+              </div>
+            </div>
+          ) : isCalculatingShipping && shippingFee === 0 ? (
+            <div className="flex items-center gap-3 rounded-[2px] border border-luxury-ink/10 bg-cream-50/60 px-4 py-4">
+              <span className="h-3.5 w-3.5 shrink-0 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
+              <p className="text-sm text-neutral-600">
+                Đang tính phí vận chuyển GHN…
+              </p>
+            </div>
           ) : (
             <div className="flex items-start gap-4 rounded-[2px] border border-luxury-ink/10 bg-cream-50/60 px-4 py-4">
               <IconTruck className="mt-0.5 h-4 w-4 shrink-0 text-luxury-ink" />
@@ -251,7 +285,7 @@ export default function CheckoutSellerSection({
 
                     className="font-droid-serif tabular-nums text-sm text-luxury-ink"
                   >
-                    {shippingFee > 0 ? formatPrice(shippingFee) : "Đang tính…"}
+                    {shippingFeeLabel(shippingFee, hasAddress, isCalculatingShipping)}
                   </span>
                 </div>
                 {shippingInfo?.expectedDeliveryTime ? (
@@ -321,7 +355,7 @@ export default function CheckoutSellerSection({
         {!group.isLocalPickup ? (
           <MoneyRow
             label="Phí vận chuyển"
-            value={shippingFee > 0 ? formatPrice(shippingFee) : "—"}
+            value={shippingFeeLabel(shippingFee, hasAddress, isCalculatingShipping)}
           />
         ) : null}
         <div className="border-t border-luxury-ink/10 pt-3.5">

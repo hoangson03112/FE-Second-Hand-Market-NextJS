@@ -81,12 +81,12 @@ export const OrderService = {
     status: string,
     reason?: string
   ): Promise<{ order: Order }> => {
-    const res = await axiosClient.patch<{ order: Order }>(
+    const res = await axiosClient.patch<{ data: Order }>(
       `/orders/seller/update/${orderId}`,
       { status, reason }
     );
-    const data = res as { order?: Order };
-    return { order: data.order || {} as Order };
+    const data = res as unknown as { data?: Order };
+    return { order: data.data || {} as Order };
   },
 
 

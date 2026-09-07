@@ -170,6 +170,6 @@ export interface ShippingServiceOption {
   totalShippingFee?: number;
 
   expectedDeliveryTime?: string;
-  estimatedDays: number;
-  estimatedDate: string;
+  estimatedDays?: number;
+  estimatedDate?: string;
 }

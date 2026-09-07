@@ -34,7 +34,7 @@ export interface ShipmentQuote {
   service_name: string;
   fee: GhnFeeBreakdown;
 
-  leadtime: number;
+  leadtime?: number;
 }
 
 export interface ShipmentQuoteResult {

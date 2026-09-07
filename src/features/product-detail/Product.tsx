@@ -34,7 +34,8 @@ export default function Product({ id }: ProductProps) {
   const queryClient = useQueryClient();
   const { data: product, isLoading, error } = useProduct(id);
   const { data: productReviewsData } = useProductReviews(product?._id ?? "");
-
+  console.log(product);
+  
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: queryKeys.products.lists() });
   }, [id, queryClient]);
@@ -63,7 +64,6 @@ export default function Product({ id }: ProductProps) {
     [product?.stock],
   );
 
-
   if (isLoading) {
     return (
       <PageLoader
@@ -73,7 +73,6 @@ export default function Product({ id }: ProductProps) {
       />
     );
   }
-
 
   if (error || !product) {
     return (
@@ -93,7 +92,6 @@ export default function Product({ id }: ProductProps) {
   const averageRating = reviewSummary?.avgRating ?? product.avgRating ?? 0;
   const totalReviews = reviewSummary?.totalReviews ?? product.totalReviews ?? 0;
 
-
   const productDetails =
     product.attributes?.map(
       (attr: IAttribute) => `${attr.key}: ${attr.value}`,
@@ -110,9 +108,7 @@ export default function Product({ id }: ProductProps) {
           Trở lại
         </button>
 
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 pb-6">
-
           <div className="lg:col-span-6 xl:col-span-5 space-y-8">
             <ProductGalleryNew
               images={product.images || [product.avatar]}
@@ -121,7 +117,6 @@ export default function Product({ id }: ProductProps) {
             />
             <ProductSpecifications details={productDetails} />
           </div>
-
 
           <div className="lg:col-span-6 xl:col-span-7 flex flex-col">
             <ProductHeader
@@ -137,7 +132,7 @@ export default function Product({ id }: ProductProps) {
 
             {product.seller && (
               <SellerInfoCard
-                location={product.address?.provinceId || ""}
+                provinceId={product.address?.provinceId || ""}
                 seller={product.seller}
                 onContactSeller={handleContactSeller}
               />
@@ -172,7 +167,6 @@ export default function Product({ id }: ProductProps) {
               )}
             </div>
 
-
             {product.deliveryOptions && (
               <div className="flex flex-wrap gap-3 py-2 ">
                 {product.deliveryOptions.codShipping && (
@@ -206,12 +200,10 @@ export default function Product({ id }: ProductProps) {
           </div>
         </div>
 
-
         <div className="space-y-12 border-t border-luxury-ink/10 pt-6">
-          <ProductDescription description={product.description} />
+          <ProductDescription description={product!.description!} />
           <ProductReviewsSection productId={product._id} />
         </div>
-
 
         {account && (
           <div className="mt-14 text-center pb-8">
@@ -224,7 +216,6 @@ export default function Product({ id }: ProductProps) {
             </button>
           </div>
         )}
-
 
         {showReportModal && (
           <ReportProductModal
