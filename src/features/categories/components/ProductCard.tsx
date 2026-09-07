@@ -9,18 +9,15 @@ import {
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { formatPrice } from "@/utils/format/price";
-import type { IProduct } from "@/types/product";
+import type { IProductCard } from "@/types/product";
 import { getProvinceName } from "@/utils";
 
 interface ProductCardProps {
-  product: IProduct;
+  product: IProductCard;
   className?: string;
 }
-export default function ProductCard({
-  product,
-  className,
-}: ProductCardProps) {
-  const imageUrl = product.avatar?.url ?? product.images?.[0]?.url;
+export default function ProductCard({ product, className }: ProductCardProps) {
+  const imageUrl = product.avatar?.url;
 
   return (
     <Link
@@ -30,7 +27,6 @@ export default function ProductCard({
         className,
       )}
     >
-
       <div className="relative rounded-[2px] aspect-square w-full overflow-hidden bg-cream-100">
         {imageUrl ? (
           <>
@@ -62,7 +58,7 @@ export default function ProductCard({
         )}
 
         <span className="absolute left-2 top-2 z-10 bg-luxury-ink/75 px-2 py-0.5 text-xs font-medium uppercase tracking-[0.16em] text-white backdrop-blur-md">
-          {product.category?.name ?? "Mới"}
+          {product.category}
         </span>
       </div>
 
@@ -71,7 +67,7 @@ export default function ProductCard({
           <div className="flex items-center gap-1 text-xs font-medium text-charcoal-500 uppercase tracking-[0.14em]">
             <IconMapPin className="h-3 w-3 text-blush-500 shrink-0" />
             <span className="line-clamp-1">
-              {getProvinceName(product?.seller?.from_province_id) || "Toàn quốc"}
+              {getProvinceName(product?.address) || "Chưa cập nhật"}
             </span>
           </div>
 
@@ -79,7 +75,6 @@ export default function ProductCard({
             {product.name}
           </h3>
         </div>
-
 
         <div className="mt-3 flex items-center justify-between border-t border-luxury-ink/6 pt-3">
           <span className="text-sm font-normal tracking-tight text-luxury-ink md:text-base group-hover:text-blush-600">
