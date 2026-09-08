@@ -27,8 +27,8 @@ const ROLE_BADGE: Record<string, string> = {
 
 const STATUS_BADGE: Record<string, string> = {
   active: "bg-cream-50 text-accent border border-accent/30",
-  inactive: "bg-amber-50 text-amber-700 border border-amber-200",
-  banned: "bg-rose-50 text-rose-700 border border-rose-200",
+  inactive: "bg-cream-100 text-neutral-700 border border-luxury-champagne/50",
+  banned: "bg-blush-50 text-blush-700 border border-blush-200",
 };
 
 interface UsersTableProps {
@@ -138,7 +138,7 @@ export default function UsersTable({
             type="button"
             disabled={isUpdating}
             onClick={() => onBan?.(acc)}
-            className="inline-flex items-center gap-1.5 rounded-[2px] border border-rose-200 bg-white px-3 py-1.5 text-2xs font-bold uppercase tracking-[0.12em] text-rose-700 hover:bg-rose-50 transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 rounded-[2px] border border-blush-200 bg-white px-3 py-1.5 text-2xs font-bold uppercase tracking-[0.12em] text-blush-700 hover:bg-blush-50 transition-colors disabled:opacity-50"
           >
             <IconBan className="size-3.5" />
             Khóa

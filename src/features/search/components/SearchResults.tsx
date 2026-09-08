@@ -1,15 +1,15 @@
 "use client";
 
 import { ProductList } from "@/features/categories/components";
-import type { IProduct, IProductFilters } from "@/types/product";
+import type {  IProductCard, IProductFilters } from "@/types/product";
 
 interface SearchResultsProps {
   query: string;
   filters: IProductFilters;
   onFilterChange: (filters: IProductFilters) => void;
-  products: IProduct[];
+  products: IProductCard[];
   isLoading: boolean;
-  total: number;
+  totalCount: number;
   currentPage: number;
   totalPages: number;
   limit: number;
@@ -29,7 +29,7 @@ export default function SearchResults({
   onFilterChange,
   products,
   isLoading,
-  total,
+  totalCount,
   currentPage,
   totalPages,
   limit,
@@ -81,7 +81,7 @@ export default function SearchResults({
         pagination={{
           currentPage,
           totalPages,
-          total,
+          totalCount,
           limit,
         }}
         onPageChange={(page) => onFilterChange({ ...filters, page })}

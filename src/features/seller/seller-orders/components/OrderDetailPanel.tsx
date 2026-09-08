@@ -547,7 +547,7 @@ export default function OrderDetailPanel({
               </p>
               <Link
                 href="/profile?tab=bank"
-                className="inline-block text-2xs font-bold uppercase tracking-[0.12em] text-accent underline hover:text-emerald-300"
+                className="inline-block text-2xs font-bold uppercase tracking-[0.12em] text-accent underline hover:text-taupe-300"
               >
                 Kiểm tra / Cập nhật STK nhận tiền →
               </Link>

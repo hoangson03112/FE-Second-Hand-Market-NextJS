@@ -22,7 +22,7 @@ export function AIModerationSection({ ai, estimatedWeight }: AIModerationSection
             ai.bypassAI
               ? "bg-taupe-50 border-luxury-ink/10 text-neutral-500"
               : isApproved
-                ? "bg-emerald-50 border-emerald-200 text-emerald-800"
+                ? "bg-taupe-50 border-accent/35 text-taupe-700"
                 : isRejected
                   ? "bg-blush-50 border-blush-200 text-blush-700"
                   : "bg-cream-50 border-luxury-ink/10 text-luxury-ink"
@@ -33,10 +33,10 @@ export function AIModerationSection({ ai, estimatedWeight }: AIModerationSection
               ai.bypassAI
                 ? "bg-neutral-400"
                 : isApproved
-                  ? "bg-emerald-600"
+                  ? "bg-accent"
                   : isRejected
                     ? "bg-blush-600"
-                    : "bg-amber-500"
+                    : "bg-luxury-champagne"
             }`}
           />
           {ai.bypassAI

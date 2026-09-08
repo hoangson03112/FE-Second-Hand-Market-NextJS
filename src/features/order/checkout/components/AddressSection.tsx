@@ -20,7 +20,7 @@ const formatAddress = (address: Address | null) => {
 };
 
 const iconTile =
-  "flex h-10 w-10 shrink-0 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-cream-50";
+  "flex h-11 w-11  shrink-0 items-center justify-center rounded-[2px] border border-luxury-ink/10 bg-cream-50";
 
 const inkButton =
   "group inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-[2px] bg-luxury-ink px-5 text-2xs font-bold uppercase tracking-[0.15em] text-luxury-ivory transition-all duration-300 hover:bg-charcoal-800";
@@ -60,24 +60,24 @@ export default function AddressSection({
     <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
       <div className="flex min-w-0 gap-4">
         <span className={iconTile}>
-          <IconMapPin className="h-4 w-4 text-luxury-ink" />
+          <IconMapPin className="h-5 w-5 text-red-600" />
         </span>
         <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="text-sm font-bold text-luxury-ink">
               {selectedAddress.fullName}
             </span>
             <span aria-hidden className="h-3 w-px bg-luxury-ink/15" />
-            <span className="text-xs font-bold uppercase tracking-[0.18em] tabular-nums text-neutral-600">
+            <span className="text-sm font-medium uppercase tracking-wide tabular-nums text-neutral-600">
               {selectedAddress.phoneNumber}
             </span>
             {selectedAddress.isDefault ? (
-              <span className="rounded-[2px] border border-luxury-champagne/50 bg-cream-100 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.15em] text-neutral-700">
+              <span className="rounded-[2px] border border-luxury-champagne/50 bg-cream-100 px-2 py-0.5 text-2xs font-medium uppercase tracking-[0.15em] text-neutral-700">
                 Mặc định
               </span>
             ) : null}
           </div>
-          <p className="mt-2.5 text-sm leading-relaxed text-neutral-600">
+          <p className="mt-1 text-sm leading-relaxed text-neutral-600">
             {formatAddress(selectedAddress)}
           </p>
         </div>

@@ -3,7 +3,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { IconArrowUpRight, IconInfoCircle } from "@tabler/icons-react";
+import {
+  IconArrowUpRight,
+  IconInfoCircle,
+  IconAlertTriangle,
+} from "@tabler/icons-react";
 import {
   AddressSection,
   AddressModal,
@@ -99,8 +103,6 @@ export default function Checkout() {
     "transition-all duration-700 ease-out",
     isRevealed ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
   );
-  const delay = (ms: number) => ({ transitionDelay: `${ms}ms` });
-
   return (
     <PageContainer
       withBackground={false}
@@ -129,7 +131,7 @@ export default function Checkout() {
       <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg">
 
         {showAddressSection ? (
-          <div style={delay(140)} className={cn(revealClass, "mb-6")}>
+          <div className={cn(revealClass, "mb-6 delay-[140ms]")}>
             <CheckoutPanel eyebrow="Giao đến" title="Địa chỉ nhận hàng">
               <AddressSection
                 selectedAddress={selectedAddress}
@@ -142,10 +144,9 @@ export default function Checkout() {
 
         {isMultiSeller ? (
           <div
-            style={delay(180)}
             className={cn(
               revealClass,
-              "mb-6 flex items-start gap-4 rounded-[2px] border border-luxury-champagne/30 bg-cream-100/70 px-5 py-4",
+              "mb-6 flex items-start gap-4 rounded-[2px] border border-luxury-champagne/30 bg-cream-100/70 px-5 py-4 delay-[180ms]",
             )}
           >
             <IconInfoCircle className="mt-0.5 h-4 w-4 shrink-0 text-luxury-champagne" />
@@ -166,10 +167,9 @@ export default function Checkout() {
           <div className="space-y-6 lg:col-span-8">
             {isEmpty ? (
               <div
-                style={delay(220)}
                 className={cn(
                   revealClass,
-                  "rounded-[2px] border border-dashed border-luxury-ink/15 bg-white px-6 py-20 text-center",
+                  "rounded-[2px] border border-dashed border-luxury-ink/15 bg-white px-6 py-20 text-center delay-[220ms]",
                 )}
               >
                 <h3 className="font-droid-serif text-xl text-luxury-ink">
@@ -191,7 +191,7 @@ export default function Checkout() {
               sellerGroups.map((group, index) => (
                 <div
                   key={group.sellerId}
-                  style={delay(220 + index * 100)}
+                  style={{ transitionDelay: `${220 + index * 100}ms` }}
                   className={revealClass}
                 >
                   <CheckoutSellerSection
@@ -205,8 +205,8 @@ export default function Checkout() {
                     onPaymentMethodChange={(method) =>
                       setPaymentMethodForSeller(group.sellerId, method)
                     }
-
-
+                    hasAddress={!!selectedAddress}
+                    isCalculatingShipping={isCalculatingShipping}
                     deliveryMethod={
                       group.isLocalPickup ? "local_pickup" : "cod_shipping"
                     }
@@ -222,18 +222,9 @@ export default function Checkout() {
             )}
 
 
-            {!allLocalPickup && shippingError ? (
+            {!allLocalPickup && selectedAddress && shippingError ? (
               <div className="rounded-[2px] border border-blush-300 bg-blush-50 px-5 py-4 text-xs leading-relaxed text-blush-800">
                 {shippingError}
-              </div>
-            ) : null}
-
-            {!allLocalPickup && isCalculatingShipping ? (
-              <div className="flex items-center gap-4 rounded-[2px] border border-luxury-ink/10 bg-white px-5 py-5">
-                <span className="h-3.5 w-3.5 animate-spin rounded-full border border-luxury-ink/20 border-t-luxury-ink" />
-                <span className="text-2xs font-bold uppercase tracking-[0.22em] text-neutral-600">
-                  Đang tính phí vận chuyển
-                </span>
               </div>
             ) : null}
           </div>
@@ -241,8 +232,7 @@ export default function Checkout() {
 
           <div className="lg:col-span-4">
             <div
-              style={delay(300)}
-              className={cn(revealClass, "space-y-5 lg:sticky lg:top-24")}
+              className={cn(revealClass, "space-y-5 lg:sticky lg:top-24 delay-[300ms]")}
             >
               <CheckoutSummary
                 sellerGroups={sellerGroups}
@@ -250,6 +240,15 @@ export default function Checkout() {
                 shipping={shipping}
                 paymentMethods={paymentMethods}
               />
+
+              {!allLocalPickup && !selectedAddress && !isEmpty ? (
+                <p className="flex items-start gap-2 rounded-[2px] border border-blush-300 bg-blush-50 px-4 py-3 text-xs leading-relaxed text-blush-800">
+                  <IconAlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+                  Vui lòng chọn địa chỉ giao hàng — hệ thống cần địa chỉ này
+                  để tính phí vận chuyển trước khi bạn có thể đặt hàng.
+                </p>
+              ) : null}
+
               <CheckoutButton
                 total={total}
                 isSubmitting={isSubmitting}

@@ -53,29 +53,24 @@ export function UserMenuDropdown({
             alt=""
             width={30}
             height={30}
-            className="w-7 h-7 sm:w-[30px] sm:h-[30px] object-cover rounded-full"
-            style={{ border: "2px solid var(--border)" }}
+            className="w-7 h-7 sm:w-[30px] sm:h-[30px] object-cover rounded-full border-2 border-luxury-ivory"
           />
         ) : (
           <span
-            className="w-7 h-7 sm:w-[30px] sm:h-[30px] flex items-center justify-center text-white text-xs font-bold rounded-full"
-            style={{
-              background:
-                "linear-gradient(135deg, var(--primary) 0%, oklch(0.43 0.08 35) 100%)",
-            }}
+            className="w-7 h-7 sm:w-[30px] sm:h-[30px] flex items-center justify-center text-white text-xs font-bold rounded-full bg-[linear-gradient(135deg,var(--primary)_0%,oklch(0.43_0.08_35)_100%)]"
           >
             {getInitials(account?.fullName)}
           </span>
         )}
         <IconChevronDown
-          className={`hidden sm:block w-3.5 h-3.5 transition-transform duration-200 text-muted-foreground ${showUserDropdown ? "rotate-180" : ""}`}
+          className={`hidden sm:block w-3.5 h-3.5 transition-transform duration-200 text-neutral-500 ${showUserDropdown ? "rotate-180" : ""}`}
           strokeWidth={2.5}
         />
       </button>
 
       {showUserDropdown && (
         <div className="shadow-lg absolute right-0 mt-2 w-60 z-50 bg-cream-50 rounded-[2px]">
-          <div className="px-4 pt-4 pb-3 border-b border-border">
+          <div className="px-4 pt-4 pb-3 border-b border-luxury-ink/10">
             <div className="flex items-center gap-3">
               {avatarUrl ? (
                 <Image
@@ -83,8 +78,7 @@ export function UserMenuDropdown({
                   alt=""
                   width={36}
                   height={36}
-                  className="w-9 h-9 rounded-full object-cover shrink-0"
-                  style={{ border: "2px solid var(--border)" }}
+                  className="w-9 h-9 rounded-full object-cover shrink-0 border-2 border-luxury-ivory"
                 />
               ) : (
                 <span className="w-9 h-9 flex items-center justify-center text-white text-sm font-bold shrink-0 rounded-[2px]">
@@ -92,10 +86,10 @@ export function UserMenuDropdown({
                 </span>
               )}
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-bold truncate text-foreground">
+                <p className="text-sm font-bold truncate text-luxury-ink">
                   {account?.fullName || "Người dùng"}
                 </p>
-                <p className="text-xs truncate mt-0.5 text-muted-foreground">
+                <p className="text-xs truncate mt-0.5 text-neutral-500">
                   {account?.email}
                 </p>
               </div>
@@ -156,13 +150,13 @@ export function UserMenuDropdown({
                   onClick={closeUserDropdown}
                   className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-[2px] transition-all duration-100 text-luxury-ink hover:bg-primary/10 hover:text-luxury-ink/80"
                 >
-                  <span className="text-muted-foreground group-hover:text-primary">
+                  <span className="text-neutral-500 group-hover:text-primary">
                     {item.icon}
                   </span>
                   {item.label}
                 </Link>
               ))}
-            <div className="my-1 mx-1 h-px bg-border" />
+            <div className="my-1 mx-1 h-px bg-luxury-ink/10" />
             <button
               type="button"
               onClick={handleLogout}

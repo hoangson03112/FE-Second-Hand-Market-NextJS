@@ -15,6 +15,9 @@ const MAX_SHIPMENTS = 20;
 const MIN_WEIGHT_G = 100;
 const MAX_WEIGHT_G = 30_000;
 const DEFAULT_WEIGHT_G = 500;
+// GHN "Hàng nhẹ" — dịch vụ tiêu chuẩn khả dụng trên hầu hết tuyến, dùng làm
+// mặc định để không phải chờ available-services trước khi tính phí.
+const DEFAULT_SERVICE_TYPE_ID = 2;
 
 interface ShipmentInput {
   id?: unknown;
@@ -61,48 +64,52 @@ async function quoteShipment(
     throw new Error("Người bán chưa cấu hình địa chỉ gửi hàng.");
   }
 
-  const services = await getAvailableServices(fromDistrictId, toDistrictId);
-  if (!services.length) {
-    throw new Error(
-      "Không có phương thức vận chuyển khả dụng cho địa chỉ này.",
-    );
-  }
-
   const requestedType = toPositiveInt(shipment.service_type_id);
-  const service =
-    (requestedType
-      ? services.find((s) => s.service_type_id === requestedType)
-      : undefined) ?? services[0];
-
+  const serviceTypeId = requestedType ?? DEFAULT_SERVICE_TYPE_ID;
   const weight = clampWeight(shipment.weight);
   const insuranceValue = toPositiveInt(shipment.insurance_value) ?? undefined;
 
-  const [fee, leadtime] = await Promise.all([
+  // Phí không cần chờ danh sách dịch vụ khả dụng — GHN chấp nhận
+  // service_type_id trực tiếp, và dịch vụ mặc định gần như luôn khả dụng.
+  // Chạy song song thay vì tuần tự cắt bớt 1 vòng round-trip trên đường
+  // găng (critical path) của số tiền phí hiển thị cho user.
+  const [fee, services] = await Promise.all([
     calculateFee({
       from_district_id: fromDistrictId,
       from_ward_code: fromWardCode,
       to_district_id: toDistrictId,
       to_ward_code: toWardCode,
       weight,
-      service_type_id: service.service_type_id,
+      service_type_id: serviceTypeId,
       insurance_value: insuranceValue,
     }),
-    calculateLeadtime({
-      from_district_id: fromDistrictId,
-      from_ward_code: fromWardCode,
-      to_district_id: toDistrictId,
-      to_ward_code: toWardCode,
-      service_id: service.service_id,
-    }),
+    getAvailableServices(fromDistrictId, toDistrictId).catch(() => []),
   ]);
 
+  const service =
+    services.find((s) => s.service_type_id === serviceTypeId) ?? services[0];
+
+  // Thời gian giao dự kiến chỉ mang tính tham khảo trên UI — không để nó
+  // làm chậm hoặc làm hỏng cả phép tính phí nếu GHN trả lỗi/chậm.
+  const leadtime = service
+    ? await calculateLeadtime({
+        from_district_id: fromDistrictId,
+        from_ward_code: fromWardCode,
+        to_district_id: toDistrictId,
+        to_ward_code: toWardCode,
+        service_id: service.service_id,
+      })
+        .then((result) => result.leadtime)
+        .catch(() => undefined)
+    : undefined;
+
   return {
-    service_id: service.service_id,
-    service_type_id: service.service_type_id,
-    short_name: service.short_name || "Giao hàng",
-    service_name: service.service_name || service.short_name || "Giao hàng",
+    service_id: service?.service_id ?? serviceTypeId,
+    service_type_id: serviceTypeId,
+    short_name: service?.short_name || "Giao hàng",
+    service_name: service?.service_name || service?.short_name || "Giao hàng",
     fee,
-    leadtime: leadtime.leadtime,
+    leadtime,
   };
 }
 

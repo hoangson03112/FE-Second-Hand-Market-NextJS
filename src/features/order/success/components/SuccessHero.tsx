@@ -30,19 +30,11 @@ export default function SuccessHero({
     <section className="relative overflow-hidden rounded-[2px] bg-luxury-ink px-6 py-12 sm:px-10 sm:py-14 lg:px-14">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-45"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 60% at 80% 15%, color-mix(in srgb, var(--accent) 26%, transparent) 0%, transparent 60%), radial-gradient(ellipse 55% 50% at 8% 85%, color-mix(in srgb, var(--luxury-champagne) 18%, transparent) 0%, transparent 55%)",
-        }}
+        className="pointer-events-none absolute inset-0 opacity-45 bg-[radial-gradient(ellipse_70%_60%_at_80%_15%,color-mix(in_srgb,var(--accent)_26%,transparent)_0%,transparent_60%),radial-gradient(ellipse_55%_50%_at_8%_85%,color-mix(in_srgb,var(--luxury-champagne)_18%,transparent)_0%,transparent_55%)]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.035]"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
+        className="pointer-events-none absolute inset-0 opacity-[0.035] bg-noise-texture"
       />
 
       <div className="relative z-10 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
@@ -55,11 +47,7 @@ export default function SuccessHero({
           </div>
 
           <h1
-            style={{
-              fontWeight: 400,
-              lineHeight: 1.06,
-            }}
-            className="font-droid-serif mt-6 text-[clamp(2rem,4.5vw,3.25rem)] tracking-tight text-luxury-ivory"
+            className="font-droid-serif mt-6 text-[clamp(2rem,4.5vw,3.25rem)] font-normal leading-[1.06] tracking-tight text-luxury-ivory"
           >
             Đặt hàng thành công.
             <span className="block text-taupe-200">

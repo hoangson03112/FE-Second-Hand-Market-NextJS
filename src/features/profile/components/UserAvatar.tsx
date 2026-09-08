@@ -25,7 +25,7 @@ export function UserAvatar({
   return (
     <div className="relative group">
       <div
-        className={`${sizeClasses.wrapper} rounded-full overflow-hidden bg-muted`}
+        className={`${sizeClasses.wrapper} rounded-full overflow-hidden bg-cream-100`}
       >
         {avatarUrl ? (
           <Image
@@ -37,7 +37,7 @@ export function UserAvatar({
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <IconUser className={`${sizeClasses.icon} text-muted-foreground`} />
+            <IconUser className={`${sizeClasses.icon} text-neutral-500`} />
           </div>
         )}
       </div>

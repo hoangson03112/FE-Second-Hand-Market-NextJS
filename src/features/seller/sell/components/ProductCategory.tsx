@@ -31,7 +31,7 @@ export function ProductCategory({
     <div className="grid grid-cols-2 gap-2">
       <div>
         <label className={LABEL_CLASS}>
-          Danh mục <span className="text-red-500">*</span>
+          Danh mục <span className="text-blush-600">*</span>
         </label>
         <select
           name="categoryId"
@@ -47,13 +47,13 @@ export function ProductCategory({
           ))}
         </select>
         {errors.categoryId && (
-          <p className="mt-0.5 text-xs text-red-600">{errors.categoryId}</p>
+          <p className="mt-0.5 text-xs text-blush-600">{errors.categoryId}</p>
         )}
       </div>
 
       <div>
         <label className={LABEL_CLASS}>
-          Danh mục con <span className="text-red-500">*</span>
+          Danh mục con <span className="text-blush-600">*</span>
         </label>
         <select
           name="subcategoryId"
@@ -70,7 +70,7 @@ export function ProductCategory({
           ))}
         </select>
         {errors.subcategoryId && (
-          <p className="mt-0.5 text-xs text-red-600">{errors.subcategoryId}</p>
+          <p className="mt-0.5 text-xs text-blush-600">{errors.subcategoryId}</p>
         )}
       </div>
     </div>

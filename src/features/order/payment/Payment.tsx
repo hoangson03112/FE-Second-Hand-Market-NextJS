@@ -96,15 +96,13 @@ export default function Payment() {
     "transition-all duration-700 ease-out",
     isRevealed ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
   );
-  const delay = (ms: number) => ({ transitionDelay: `${ms}ms` });
-
   return (
     <PageContainer
       withBackground={false}
       className="min-h-screen bg-luxury-ivory"
     >
       <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg">
-        <div style={delay(60)} className={revealClass}>
+        <div className={cn(revealClass, "delay-[60ms]")}>
           <PaymentHeader
             orderId={orderId}
             secondsLeft={secondsLeft}
@@ -115,7 +113,7 @@ export default function Payment() {
 
         <div className="mt-6 grid grid-cols-1 items-start gap-6 lg:grid-cols-12 lg:gap-8">
           <div className="space-y-6 lg:col-span-7">
-            <div style={delay(160)} className={revealClass}>
+            <div className={cn(revealClass, "delay-[160ms]")}>
               <PaymentQrSection
                 bankInfoLoading={bankInfoLoading}
                 bankInfoError={bankInfoError}
@@ -123,7 +121,7 @@ export default function Payment() {
                 qrCodeImageUrl={qrCodeImageUrl}
               />
             </div>
-            <div style={delay(240)} className={revealClass}>
+            <div className={cn(revealClass, "delay-[240ms]")}>
               <PaymentBankInfo
                 bankInfoLoading={bankInfoLoading}
                 bankInfoError={bankInfoError}
@@ -136,8 +134,7 @@ export default function Payment() {
 
           <div className="lg:col-span-5">
             <div
-              style={delay(320)}
-              className={cn(revealClass, "space-y-5 lg:sticky lg:top-8")}
+              className={cn(revealClass, "space-y-5 lg:sticky lg:top-8 delay-[320ms]")}
             >
               <PaymentOrderSummary totalAmount={order.totalAmount} />
               <PaymentProofUpload

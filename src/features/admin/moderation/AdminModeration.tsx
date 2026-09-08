@@ -61,7 +61,7 @@ export default function AdminModeration() {
           title="Cần admin review thủ công"
         >
           <div className="space-y-2">
-            <p className="font-droid-serif text-3xl font-bold text-amber-700 tabular-nums">
+            <p className="font-droid-serif text-3xl font-bold text-luxury-champagne tabular-nums">
               {needsReview}
             </p>
             <p className="text-xs text-neutral-500">
@@ -118,14 +118,14 @@ export default function AdminModeration() {
                       className={`flex items-center justify-between text-xs p-2.5 rounded-[2px] border ${
                         isApproved
                           ? "bg-white text-accent border-accent/30"
-                          : "bg-white text-rose-700 border-rose-200"
+                          : "bg-white text-blush-700 border-blush-200"
                       }`}
                     >
                       <div className="flex items-center gap-1.5 text-2xs font-bold uppercase tracking-[0.1em]">
                         {isApproved ? (
                           <IconCheck className="w-3.5 h-3.5 text-accent" />
                         ) : (
-                          <IconX className="w-3.5 h-3.5 text-rose-600" />
+                          <IconX className="w-3.5 h-3.5 text-blush-600" />
                         )}
                         <span>{isApproved ? "AI Đề xuất duyệt" : "AI Cảnh báo vi phạm"}</span>
                       </div>

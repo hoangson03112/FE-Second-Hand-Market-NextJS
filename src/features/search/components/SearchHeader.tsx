@@ -1,6 +1,7 @@
 "use client";
 
 import { IconSearch } from "@tabler/icons-react";
+import { cn } from "@/lib/utils";
 
 interface SearchHeaderProps {
   query: string;
@@ -23,10 +24,10 @@ export default function SearchHeader({ query, total }: SearchHeaderProps) {
         </div>
 
         <h1
-          style={{
-            fontWeight: 400,
-          }}
-          className="font-droid-serif mt-3 text-[clamp(1.4rem,3vw,2rem)] leading-tight text-luxury-ink"
+          className={cn(
+            "font-droid-serif mt-3 text-[clamp(1.4rem,3vw,2rem)] leading-tight text-luxury-ink",
+            "font-normal",
+          )}
         >
           &ldquo;{query || "..."}&rdquo;
         </h1>

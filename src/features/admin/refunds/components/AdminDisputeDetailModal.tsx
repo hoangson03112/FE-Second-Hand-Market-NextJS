@@ -126,7 +126,7 @@ interface AdminDisputeDetailModalProps {
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <p className="text-xs font-bold uppercase tracking-[0.08em] text-muted-foreground">
+    <p className="text-xs font-bold uppercase tracking-[0.08em] text-neutral-500">
       {children}
     </p>
   );
@@ -136,7 +136,7 @@ function TimelineDot({ filled }: { filled?: boolean }) {
   return (
     <div
       className={`shrink-0 w-2.5 h-2.5 rounded-full ${
-        filled ? "bg-primary" : "bg-muted-foreground/25"
+        filled ? "bg-luxury-ink" : "bg-luxury-ink/20"
       }`}
     />
   );
@@ -220,7 +220,7 @@ export function AdminDisputeDetailModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-luxury-ink/60 overflow-y-auto">
-      <div className="bg-white rounded-[2px] shadow-2xl max-w-5xl w-full max-h-[92vh] overflow-hidden border border-luxury-ink/10 flex flex-col">
+      <div className="bg-white rounded-[2px] shadow-xs max-w-5xl w-full max-h-[92vh] overflow-hidden border border-luxury-ink/10 flex flex-col">
         <header className="shrink-0 border-b border-luxury-ink/10 bg-cream-50/70 px-5 py-4 sm:px-6">
           <div className="flex items-start justify-between gap-3">
             <div className="flex min-w-0 items-start gap-3">
@@ -288,15 +288,15 @@ export function AdminDisputeDetailModal({
                     role: "Người mua",
                     u: refund.buyerId,
                     fallback: "Người mua",
-                    accent: "text-sky-600",
-                    bg: "bg-sky-500/10",
+                    accent: "text-luxury-ink",
+                    bg: "bg-cream-50",
                   },
                   {
                     role: "Người bán",
                     u: refund.sellerId,
                     fallback: "Người bán",
-                    accent: "text-amber-700",
-                    bg: "bg-amber-500/10",
+                    accent: "text-accent",
+                    bg: "bg-taupe-50",
                   },
                 ].map(({ role, u, fallback, accent, bg }) => (
                   <div
@@ -364,13 +364,13 @@ export function AdminDisputeDetailModal({
                       className={`flex gap-3 rounded-[2px] border px-3.5 py-3 ${
                         refund.sellerResponse.decision === "rejected"
                           ? "bg-blush-50/60 border-blush-200"
-                          : "bg-emerald-50/60 border-emerald-200"
+                          : "bg-taupe-50/60 border-accent/35"
                       }`}
                     >
                       {refund.sellerResponse.decision === "rejected" ? (
                         <IconCircleX className="mt-0.5 h-4 w-4 shrink-0 text-blush-600" />
                       ) : (
-                        <IconCircleCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-700" />
+                        <IconCircleCheck className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                       )}
                       <div className="min-w-0">
                         <p className="text-xs font-bold uppercase tracking-wider text-luxury-ink">
@@ -679,7 +679,7 @@ export function AdminDisputeDetailModal({
               type="button"
               onClick={onReject}
               disabled={isProcessing}
-              className="flex items-center gap-2 rounded-[2px] border border-rose-200 bg-white px-4 py-2 text-2xs font-bold uppercase tracking-[0.12em] text-rose-700 transition-colors hover:bg-rose-50 disabled:opacity-50"
+              className="flex items-center gap-2 rounded-[2px] border border-blush-200 bg-white px-4 py-2 text-2xs font-bold uppercase tracking-[0.12em] text-blush-700 transition-colors hover:bg-blush-50 disabled:opacity-50"
             >
               <IconCircleX className="h-4 w-4" />
               Bác bỏ khiếu nại

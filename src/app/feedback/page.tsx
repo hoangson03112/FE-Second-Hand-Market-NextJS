@@ -91,7 +91,7 @@ export default function FeedbackPage() {
                       key={star}
                       type="button"
                       onClick={() => setRating(star)}
-                      className="p-1 text-amber-500 hover:scale-110 transition-transform"
+                      className="p-1 text-luxury-champagne hover:scale-110 transition-transform"
                     >
                       {star <= rating ? (
                         <IconStarFilled className="w-8 h-8" />

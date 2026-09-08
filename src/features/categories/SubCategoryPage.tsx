@@ -27,7 +27,7 @@ export default function SubCategoryPage({ slug, subId }: SubCategoryPageProps) {
   return (
     <div className="min-h-screen bg-luxury-ivory text-luxury-ink mx-auto w-full max-w-9xl">
       <AllProductsHeader
-        total={products?.total}
+        total={products?.totalCount}
         title={subCategory?.name || category?.name || "Danh mục"}
         breadcrumbLabel={category?.name || "Danh mục"}
       />
@@ -39,7 +39,7 @@ export default function SubCategoryPage({ slug, subId }: SubCategoryPageProps) {
               filters={filters}
               onFilterChange={setFilters}
               provinces={provinces}
-              resultCount={products?.total}
+              resultCount={products?.totalCount}
             />
           </aside>
 
@@ -61,8 +61,8 @@ export default function SubCategoryPage({ slug, subId }: SubCategoryPageProps) {
                 pagination={{
                   currentPage: products?.page || 1,
                   totalPages: products?.totalPages || 1,
-                  total: products?.total || 0,
-                  limit: products?.limit || 12,
+                  totalCount: products?.totalCount || 0,
+                  limit: products?.limit || 20,
                 }}
                 onPageChange={(page: number) => {
                   setFilters((prev) => ({ ...prev, page }));

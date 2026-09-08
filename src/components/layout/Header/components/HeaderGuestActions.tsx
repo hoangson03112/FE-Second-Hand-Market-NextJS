@@ -5,7 +5,7 @@ export function HeaderGuestActions() {
     <div className="flex items-center gap-2">
       <Link
         href="/login"
-        className="uppercase inline-flex items-center justify-center h-8 sm:h-9 px-3.5 sm:px-4 text-xs  font-medium text-foreground bg-primary-foreground border border-primary rounded-[3px] transition-all duration-200 hover:scale-[1.03]"
+        className="uppercase inline-flex items-center justify-center h-8 sm:h-9 px-3.5 sm:px-4 text-xs  font-medium text-luxury-ink bg-white border border-primary rounded-[3px] transition-all duration-200 hover:scale-[1.03]"
       >
         Đăng nhập
       </Link>

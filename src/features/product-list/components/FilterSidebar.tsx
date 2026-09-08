@@ -184,8 +184,7 @@ function PriceRangeSlider({
           onChange={(e) => handleMaxChange(Number(e.target.value))}
           onMouseUp={() => onCommit(localMin, localMax)}
           onTouchEnd={() => onCommit(localMin, localMax)}
-          className="range-thumb pointer-events-none absolute inset-0 w-full appearance-none bg-transparent"
-          style={{ zIndex: 4 }}
+          className="range-thumb pointer-events-none absolute inset-0 w-full appearance-none bg-transparent z-[4]"
           aria-label="Giá cao nhất"
         />
       </div>
@@ -334,12 +333,12 @@ export default function FilterSidebar({
             <button
               key={chip.label}
               onClick={chip.onRemove}
-              className="group inline-flex animate-[fadeInUp_0.35s_ease-out_backwards] items-center gap-1.5 border border-luxury-ink/15 bg-cream-50 py-1 pl-2.5 pr-1.5 text-2xs font-medium text-luxury-ink transition-all duration-300 hover:border-luxury-champagne hover:bg-white"
-              style={{ borderRadius: "2px", animationDelay: `${i * 60}ms` }}
+              className="rounded-[2px] group inline-flex animate-[fadeInUp_0.35s_ease-out_backwards] items-center gap-1.5 border border-luxury-ink/15 bg-cream-50 py-1 pl-2.5 pr-1.5 text-2xs font-medium text-luxury-ink transition-all duration-300 hover:border-luxury-champagne hover:bg-white"
+              style={{ animationDelay: `${i * 60}ms` }}
             >
               {chip.label}
               <IconX
-                className="h-3 w-3 text-red-700 transition-colors"
+                className="h-3 w-3 text-blush-700 transition-colors"
                 strokeWidth={2}
               />
             </button>
@@ -416,7 +415,7 @@ export default function FilterSidebar({
                   <Icon
                     className={cn(
                       "h-[18px] w-[18px]",
-                      isActive ? "text-luxury-champagne" : "text-red-700",
+                      isActive ? "text-luxury-champagne" : "text-neutral-400",
                     )}
                     strokeWidth={1.5}
                   />
@@ -511,7 +510,7 @@ export default function FilterSidebar({
                     })
                   }
                   className={cn(
-                    "rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all duration-300",
+                    "rounded-[2px] border px-3.5 py-1.5 text-xs font-medium transition-all duration-300",
                     isActive
                       ? "border-luxury-ink bg-luxury-ink text-cream-50"
                       : "border-luxury-ink/15 bg-white/50 text-neutral-600 hover:border-luxury-ink/30 hover:text-luxury-ink",

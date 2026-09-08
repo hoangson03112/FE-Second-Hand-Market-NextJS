@@ -34,7 +34,8 @@ export default function Product({ id }: ProductProps) {
   const queryClient = useQueryClient();
   const { data: product, isLoading, error } = useProduct(id);
   const { data: productReviewsData } = useProductReviews(product?._id ?? "");
-
+  console.log(product);
+  
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: queryKeys.products.lists() });
   }, [id, queryClient]);
@@ -63,7 +64,6 @@ export default function Product({ id }: ProductProps) {
     [product?.stock],
   );
 
-
   if (isLoading) {
     return (
       <PageLoader
@@ -73,7 +73,6 @@ export default function Product({ id }: ProductProps) {
       />
     );
   }
-
 
   if (error || !product) {
     return (
@@ -93,7 +92,6 @@ export default function Product({ id }: ProductProps) {
   const averageRating = reviewSummary?.avgRating ?? product.avgRating ?? 0;
   const totalReviews = reviewSummary?.totalReviews ?? product.totalReviews ?? 0;
 
-
   const productDetails =
     product.attributes?.map(
       (attr: IAttribute) => `${attr.key}: ${attr.value}`,
@@ -104,15 +102,13 @@ export default function Product({ id }: ProductProps) {
       <main className="max-w-9xl mx-auto px-4 md:px-8 py-10">
         <button
           onClick={() => router.back()}
-          className="font-droid-serif inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.15em] text-foreground hover:text-luxury-ink transition-colors mb-8 group"
+          className="font-droid-serif inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.15em] text-luxury-ink hover:text-charcoal-700 transition-colors mb-8 group"
         >
           <IconArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
           Trở lại
         </button>
 
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 pb-6">
-
           <div className="lg:col-span-6 xl:col-span-5 space-y-8">
             <ProductGalleryNew
               images={product.images || [product.avatar]}
@@ -121,7 +117,6 @@ export default function Product({ id }: ProductProps) {
             />
             <ProductSpecifications details={productDetails} />
           </div>
-
 
           <div className="lg:col-span-6 xl:col-span-7 flex flex-col">
             <ProductHeader
@@ -137,7 +132,7 @@ export default function Product({ id }: ProductProps) {
 
             {product.seller && (
               <SellerInfoCard
-                location={product.address?.provinceId || ""}
+                provinceId={product.address?.provinceId || ""}
                 seller={product.seller}
                 onContactSeller={handleContactSeller}
               />
@@ -172,7 +167,6 @@ export default function Product({ id }: ProductProps) {
               )}
             </div>
 
-
             {product.deliveryOptions && (
               <div className="flex flex-wrap gap-3 py-2 ">
                 {product.deliveryOptions.codShipping && (
@@ -183,7 +177,7 @@ export default function Product({ id }: ProductProps) {
                 )}
                 {product.deliveryOptions.localPickup && (
                   <div className="inline-flex items-center gap-2 rounded-[2px] bg-white text-luxury-ink border border-luxury-ink/10 px-3.5 py-2 text-xs uppercase tracking-wide font-medium">
-                    <IconMapPin className="h-4 w-4 text-red-500" />
+                    <IconMapPin className="h-4 w-4 text-blush-500" />
                     Giao dịch trực tiếp
                   </div>
                 )}
@@ -206,12 +200,10 @@ export default function Product({ id }: ProductProps) {
           </div>
         </div>
 
-
         <div className="space-y-12 border-t border-luxury-ink/10 pt-6">
-          <ProductDescription description={product.description} />
+          <ProductDescription description={product!.description!} />
           <ProductReviewsSection productId={product._id} />
         </div>
-
 
         {account && (
           <div className="mt-14 text-center pb-8">
@@ -224,7 +216,6 @@ export default function Product({ id }: ProductProps) {
             </button>
           </div>
         )}
-
 
         {showReportModal && (
           <ReportProductModal

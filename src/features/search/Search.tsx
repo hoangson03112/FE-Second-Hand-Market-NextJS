@@ -14,7 +14,7 @@ export default function Search() {
     filters,
     setFilters,
     products,
-    total,
+    totalCount,
     currentPage,
     totalPages,
     isLoading,
@@ -23,7 +23,7 @@ export default function Search() {
 
   return (
     <div className="min-h-screen bg-luxury-ivory">
-      <SearchHeader query={q} total={total} />
+      <SearchHeader query={q} total={totalCount} />
 
       <div className="mx-auto w-full max-w-9xl px-4 py-10 sm:px-6 lg:px-8 md:py-12">
         {!q ? (
@@ -37,7 +37,7 @@ export default function Search() {
             onFilterChange={setFilters}
             products={products}
             isLoading={isLoading}
-            total={total}
+            totalCount={totalCount}
             currentPage={currentPage}
             totalPages={totalPages}
             limit={filters.limit || 20}

@@ -90,8 +90,8 @@ export default function ReturnPolicyPage() {
           </div>
 
           <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-6 sm:p-8 space-y-4">
-            <div className="flex items-center gap-2 border-b border-luxury-ink/8 pb-3 text-rose-700 font-bold">
-              <IconX className="w-5 h-5 text-rose-700" />
+            <div className="flex items-center gap-2 border-b border-luxury-ink/8 pb-3 text-blush-700 font-bold">
+              <IconX className="w-5 h-5 text-blush-700" />
               <h3 className="font-droid-serif text-base text-luxury-ink">
                 Trường hợp không áp dụng hoàn tiền
               </h3>
@@ -99,7 +99,7 @@ export default function ReturnPolicyPage() {
             <ul className="space-y-3">
               {INELIGIBLE_CASES.map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-600 leading-relaxed">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-700 mt-2 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-blush-600 mt-2 shrink-0" />
                   <span>{item}</span>
                 </li>
               ))}

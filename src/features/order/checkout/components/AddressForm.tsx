@@ -6,6 +6,7 @@ import { useForm } from "@/hooks/useForm";
 import { cn } from "@/lib/utils";
 import type { CreateAddressRequest, Address } from "@/types/address";
 import { Eyebrow } from "@/features/order/components";
+import { Required } from "@/components/ui/Required";
 
 interface AddressFormProps {
   initialData?: Address | null;
@@ -15,21 +16,14 @@ interface AddressFormProps {
 }
 
 const fieldLabel =
-  "block text-2xs font-bold uppercase tracking-[0.22em] text-neutral-600";
+  "block text-2xs font-medium uppercase tracking-[0.15em] text-neutral-600";
 
 const fieldBase =
   "h-11 w-full rounded-[2px] border border-luxury-ink/15 bg-white px-3.5 text-sm text-luxury-ink transition-colors duration-200 placeholder:text-neutral-400 focus:border-luxury-ink focus:outline-none disabled:cursor-not-allowed disabled:bg-cream-100/60 disabled:text-neutral-400";
 
 const selectBase = cn(fieldBase, "cursor-pointer appearance-none pr-9");
 
-function Required() {
-  return (
-    <span aria-hidden className="text-accent">
-      {" "}
-      *
-    </span>
-  );
-}
+
 
 
 function Select({
@@ -186,7 +180,7 @@ export function AddressForm({
           <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-3">
             <div>
               <label htmlFor="provinceId" className={fieldLabel}>
-                Tỉnh / Thành phố
+                Tỉnh/Thành phố
                 <Required />
               </label>
               <div className="mt-2.5">
@@ -199,7 +193,7 @@ export function AddressForm({
                   required
                 >
                   <option value="">
-                    {provincesLoading ? "Đang tải…" : "— Chọn Tỉnh / Thành —"}
+                    {provincesLoading ? "Đang tải…" : "— Chọn Tỉnh/Thành —"}
                   </option>
                   {provinces.map((province) => (
                     <option
@@ -215,7 +209,7 @@ export function AddressForm({
 
             <div>
               <label htmlFor="districtId" className={fieldLabel}>
-                Quận / Huyện
+                Quận
                 <Required />
               </label>
               <div className="mt-2.5">
@@ -231,7 +225,7 @@ export function AddressForm({
                     {districtsLoading
                       ? "Đang tải…"
                       : values.provinceId
-                        ? "— Chọn Quận / Huyện —"
+                        ? "— Chọn Quận —"
                         : "— Chọn Tỉnh trước —"}
                   </option>
                   {districts.map((district) => (
@@ -248,7 +242,7 @@ export function AddressForm({
 
             <div>
               <label htmlFor="wardCode" className={fieldLabel}>
-                Phường / Xã
+                Phường/Huyện
                 <Required />
               </label>
               <div className="mt-2.5">
@@ -264,7 +258,7 @@ export function AddressForm({
                     {wardsLoading
                       ? "Đang tải…"
                       : values.districtId
-                        ? "— Chọn Phường / Xã —"
+                        ? "— Chọn Phường/Huyện —"
                         : "— Chọn Huyện trước —"}
                   </option>
                   {wards.map((ward) => (

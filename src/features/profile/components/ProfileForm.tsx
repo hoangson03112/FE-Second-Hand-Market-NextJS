@@ -70,7 +70,7 @@ export function ProfileForm({
               />
               <IconPhone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-600 pointer-events-none" />
             </div>
-            <p className="mt-2 text-xs text-muted-foreground">
+            <p className="mt-2 text-xs text-neutral-500">
               Có thể nhận mã xác nhận khi thay đổi SĐT.
             </p>
           </div>
@@ -94,7 +94,7 @@ export function ProfileForm({
                 disabled={isGoogleUser}
                 className={`w-full h-11 pl-10 pr-4 rounded-[2px] border text-sm transition-all ${
                   isGoogleUser
-                    ? "bg-muted/50 cursor-not-allowed text-muted-foreground border-luxury-ink/10"
+                    ? "bg-cream-100/50 cursor-not-allowed text-neutral-500 border-luxury-ink/10"
                     : "bg-transparent border-luxury-ink/20 outline-none focus:border-luxury-ink focus:ring-1 focus:ring-luxury-ink"
                 }`}
                 placeholder="email@example.com"
@@ -107,7 +107,7 @@ export function ProfileForm({
             </div>
             {isGoogleUser && (
               <p className=" mt-1 flex items-center gap-2 text-xs text-luxury-ink/80 p-2 rounded-[2px] bg-taupe-50/50 border border-luxury-ink/10">
-                <IconAlertCircle className="w-4 h-4 text-red-500 shrink-0" />
+                <IconAlertCircle className="w-4 h-4 text-blush-600 shrink-0" />
                 Email liên kết tài khoản Google, không thể thay đổi tại đây.
               </p>
             )}
@@ -119,7 +119,7 @@ export function ProfileForm({
           </div>
 
           <div className="lg:col-span-2 border-t border-luxury-ink/10 pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-neutral-500">
               <span className="text-blush-600">*</span> Bắt buộc
             </p>
             <button

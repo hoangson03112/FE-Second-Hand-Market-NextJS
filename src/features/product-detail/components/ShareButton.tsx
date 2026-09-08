@@ -85,8 +85,8 @@ export default function ShareButton({
     {
       name: copied ? "Đã copy!" : "Copy link",
       icon: copied ? IconCheck : IconLink,
-      color: copied ? "text-primary" : "text-muted-foreground",
-      bgColor: copied ? "hover:bg-secondary" : "hover:bg-muted",
+      color: copied ? "text-accent" : "text-neutral-500",
+      bgColor: copied ? "hover:bg-taupe-100" : "hover:bg-cream-100",
       action: handleCopyLink,
     },
   ];

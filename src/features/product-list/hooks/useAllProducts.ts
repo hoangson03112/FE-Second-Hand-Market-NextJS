@@ -17,7 +17,7 @@ export function useAllProducts() {
     filters,
     setFilters,
     products: data?.data || [],
-    total: data?.total || 0,
+    totalCount: data?.totalCount || 0,
     totalPages: data?.totalPages || 1,
     currentPage: data?.page || 1,
     isLoading,

@@ -9,6 +9,7 @@ import { resetPasswordFeatures } from "@/constants/auth.features";
 import { Background } from "@/features/auth/components";
 import Image from "next/image";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default function ResetPassword() {
   const searchParams = useSearchParams();
@@ -36,19 +37,21 @@ export default function ResetPassword() {
               <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-24 items-center w-full max-w-6xl relative z-10">
                 <div className="flex flex-col justify-center px-2 lg:px-0 pointer-events-none">
                   <h1
-                    className="font-droid-serif mb-8 text-luxury-ink drop-shadow-sm"
-                    style={{ fontSize: "clamp(3rem, 6vw, 5.5rem)", fontWeight: 300, lineHeight: 1.05, letterSpacing: "-0.03em" }}
+                    className={cn(
+                      "font-droid-serif mb-8 text-luxury-ink drop-shadow-sm",
+                      "text-[clamp(3rem,6vw,5.5rem)] font-light leading-[1.05] tracking-[-0.03em]",
+                    )}
                   >
-                    Lỗi <br /> <span className="text-accent" style={{ letterSpacing: "-0.02em", fontStyle: "italic" }}>không hợp lệ</span>
+                    Lỗi <br /> <span className="text-accent italic tracking-[-0.02em]">không hợp lệ</span>
                   </h1>
-                  <p className="text-lg md:text-xl mb-12 max-w-md text-foreground/70 font-medium">
+                  <p className="text-lg md:text-xl mb-12 max-w-md text-luxury-ink/70 font-medium">
                     Link reset mật khẩu không đúng hoặc đã hết hạn.
                   </p>
                 </div>
                 <div className="w-full">
                   <div className="bg-white/90 backdrop-blur-md border border-luxury-ink/10 rounded-[2px] shadow-sm p-8 sm:p-10 lg:p-12 space-y-8">
                     <div className="space-y-1 text-center">
-                      <h2 style={{ fontWeight: 300, lineHeight: 1.05, letterSpacing: "-0.03em" }} className="font-droid-serif text-4xl mb-8 text-luxury-ink">Liên kết đặt lại đã hết hạn</h2>
+                      <h2 className={cn("font-droid-serif text-4xl mb-8 text-luxury-ink", "font-light leading-[1.05] tracking-[-0.03em]")}>Liên kết đặt lại đã hết hạn</h2>
                       <p className="text-taupe-600">Bạn có thể yêu cầu một liên kết mới để tiếp tục đổi mật khẩu.</p>
                     </div>
                     <InvalidTokenError message={invalidTokenMessage} />
@@ -71,16 +74,18 @@ export default function ResetPassword() {
               
               <div className="flex flex-col justify-center px-2 lg:px-0 pointer-events-none">
                 <h1
-                  className="font-droid-serif mb-8 text-luxury-ink drop-shadow-sm"
-                  style={{ fontSize: "clamp(3rem, 6vw, 5.5rem)", fontWeight: 300, lineHeight: 1.05, letterSpacing: "-0.03em" }}
+                  className={cn(
+                    "font-droid-serif mb-8 text-luxury-ink drop-shadow-sm",
+                    "text-[clamp(3rem,6vw,5.5rem)] font-light leading-[1.05] tracking-[-0.03em]",
+                  )}
                 >
                   {isSuccess ? "Thành" : "Đổi"} <br />
-                  <span className="text-accent" style={{ letterSpacing: "-0.02em", fontStyle: "italic" }}>
+                  <span className="text-accent italic tracking-[-0.02em]">
                     {isSuccess ? "công!" : "mật khẩu mới"}
                   </span>
                 </h1>
 
-                <p className="text-lg md:text-xl mb-12 max-w-md text-foreground/70 font-medium">
+                <p className="text-lg md:text-xl mb-12 max-w-md text-luxury-ink/70 font-medium">
                   {isSuccess
                     ? "Mật khẩu của bạn đã được thay đổi thành công."
                     : "Tạo mật khẩu mới và bảo mật tài khoản của bạn."}
@@ -89,15 +94,15 @@ export default function ResetPassword() {
                 <div className="space-y-6 hidden md:block">
                   {resetPasswordFeatures.map((feature, idx) => (
                     <div key={idx} className="flex items-start gap-4">
-                      <div className="flex-shrink-0 w-6 h-6 rounded-[2px] border border-foreground/20 flex items-center justify-center mt-0.5 text-foreground">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-[2px] border border-luxury-ink/20 flex items-center justify-center mt-0.5 text-luxury-ink">
                         <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-foreground font-medium text-[15px]">{feature.title}</h3>
+                        <h3 className="text-luxury-ink font-medium text-[15px]">{feature.title}</h3>
                         {feature.description && (
-                          <p className="text-foreground/60 text-sm mt-1 leading-relaxed max-w-sm">{feature.description}</p>
+                          <p className="text-luxury-ink/60 text-sm mt-1 leading-relaxed max-w-sm">{feature.description}</p>
                         )}
                       </div>
                     </div>
@@ -113,7 +118,7 @@ export default function ResetPassword() {
                 </div>
                 <div className="bg-white/90 backdrop-blur-md border border-luxury-ink/10 rounded-[2px] shadow-sm p-8 sm:p-10 lg:p-12 space-y-8">
                   <div className="space-y-1 text-center">
-                    <h2 style={{ fontWeight: 300, lineHeight: 1.05, letterSpacing: "-0.03em" }} className="font-droid-serif text-4xl mb-8 text-luxury-ink">
+                    <h2 className={cn("font-droid-serif text-4xl mb-8 text-luxury-ink", "font-light leading-[1.05] tracking-[-0.03em]")}>
                       {isSuccess ? "Đổi mật khẩu thành công" : "Đặt mật khẩu mới"}
                     </h2>
                     <p className="text-taupe-600">

@@ -115,7 +115,7 @@ function AddressCard({
         <button
           type="button"
           onClick={handleDelete}
-          className="flex items-center gap-1 text-2xs font-medium text-neutral-500 hover:text-blush-700 transition-colors px-1.5 py-1 rounded-[2px] hover:bg-red-50"
+          className="flex items-center gap-1 text-2xs font-medium text-neutral-500 hover:text-blush-700 transition-colors px-1.5 py-1 rounded-[2px] hover:bg-blush-50"
         >
           <IconTrash className="w-3 h-3" />
           Xóa
@@ -185,7 +185,7 @@ export function PickupAddressSelector({
         </div>
       )}
 
-      {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+      {error && <p className="mt-1 text-xs text-blush-600">{error}</p>}
     </SectionCard>
   );
 }

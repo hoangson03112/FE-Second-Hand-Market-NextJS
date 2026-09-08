@@ -26,7 +26,7 @@ interface ProfileSidebarProps {
 const ROLE_CONFIG: Record<string, { label: string; className: string }> = {
   admin: {
     label: "Quản trị viên",
-    className: "bg-amber-100 text-amber-800 border-amber-200",
+    className: "border-luxury-champagne/50 bg-cream-100 text-neutral-700",
   },
   seller: {
     label: "Seller",
@@ -34,7 +34,7 @@ const ROLE_CONFIG: Record<string, { label: string; className: string }> = {
   },
   buyer: {
     label: "Người mua",
-    className: "bg-muted text-muted-foreground border-border",
+    className: "border-luxury-ink/12 bg-cream-50 text-neutral-600",
   },
 };
 
@@ -43,7 +43,7 @@ function getRoleBadge(role?: string) {
   return (
     ROLE_CONFIG[role] ?? {
       label: "Người dùng",
-      className: "bg-muted text-muted-foreground border-border",
+      className: "border-luxury-ink/12 bg-cream-50 text-neutral-600",
     }
   );
 }
@@ -65,7 +65,7 @@ export function ProfileSidebar({
     `w-full flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-sm font-medium transition-colors ${
       activeTab === tab
         ? "bg-taupe-50 text-luxury-ink"
-        : "text-muted-foreground hover:bg-taupe-50/50 hover:text-luxury-ink"
+        : "text-neutral-500 hover:bg-taupe-50/50 hover:text-luxury-ink"
     }`;
 
   return (
@@ -84,7 +84,7 @@ export function ProfileSidebar({
             <h3 className="font-droid-serif text-xl text-luxury-ink mb-1 line-clamp-1">
               {fullName || "Người dùng"}
             </h3>
-            <p className="text-xs text-muted-foreground mb-4 line-clamp-1">
+            <p className="text-xs text-neutral-500 mb-4 line-clamp-1">
               {email}
             </p>
             <div className="flex flex-wrap justify-center gap-2">
@@ -94,7 +94,7 @@ export function ProfileSidebar({
                 {roleBadge.label}
               </span>
               {isGoogleUser && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[2px] text-xs font-medium border border-border bg-background/80">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[2px] text-xs font-medium border border-luxury-ink/10 bg-white/80">
                   <IconShield className="w-3 h-3 text-luxury-ink" />
                   Google
                 </span>
@@ -148,21 +148,21 @@ export function ProfileSidebar({
                 <>
                   <Link
                     href="/seller"
-                    className="flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-sm font-medium text-muted-foreground hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
+                    className="flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-sm font-medium text-neutral-500 hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
                   >
                     <IconLayoutDashboard className="w-4 h-4 shrink-0" />
                     Tổng quan Seller
                   </Link>
                   <Link
                     href="/seller/orders"
-                    className="flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-sm font-medium text-muted-foreground hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
+                    className="flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-sm font-medium text-neutral-500 hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
                   >
                     <IconTruck className="w-4 h-4 shrink-0" />
                     Đơn hàng bán
                   </Link>
                   <Link
                     href="/my/listings"
-                    className="flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-sm font-medium text-muted-foreground hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
+                    className="flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-sm font-medium text-neutral-500 hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
                   >
                     <IconPackage className="w-4 h-4 shrink-0" />
                     Sản phẩm đã đăng
@@ -172,7 +172,7 @@ export function ProfileSidebar({
               {isAdmin && (
                 <Link
                   href="/admin"
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-base font-medium text-muted-foreground hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-[2px] text-base font-medium text-neutral-500 hover:bg-taupe-50 hover:text-luxury-ink transition-colors"
                 >
                   <IconSettings className="w-4 h-4 shrink-0" />
                   Quản trị hệ thống

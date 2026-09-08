@@ -21,7 +21,7 @@ interface ConfirmWithReasonDialogProps {
 
 const VARIANT = {
   danger: {
-    icon: "bg-red-100 text-red-600",
+    icon: "bg-blush-100 text-blush-600",
     confirm:
       "bg-luxury-ink text-luxury-ivory hover:bg-charcoal-800 shadow-[0_12px_25px_rgba(24,20,18,0.18)]",
   },
@@ -113,7 +113,7 @@ export function ConfirmWithReasonDialog({
                   htmlFor="confirm-reason"
                   className="mb-2 block text-xs font-medium uppercase tracking-[0.15em] text-charcoal-500"
                 >
-                  {reasonLabel} <span className="text-red-500">*</span>
+                  {reasonLabel} <span className="text-blush-600">*</span>
                 </label>
                 <textarea
                   id="confirm-reason"

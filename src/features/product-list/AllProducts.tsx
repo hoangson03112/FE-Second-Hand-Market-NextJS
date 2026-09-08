@@ -11,7 +11,7 @@ export default function AllProducts() {
     filters,
     setFilters,
     products,
-    total,
+    totalCount,
     totalPages,
     currentPage,
     isLoading,
@@ -21,7 +21,7 @@ export default function AllProducts() {
   const { data: provinces = [] } = useProvinces();
   return (
     <div className="max-w-9xl mx-auto flex-1 w-full min-h-full bg-luxury-ivory text-luxury-ink  selection:text-background flex flex-col font-sans">
-      <AllProductsHeader total={total} />
+      <AllProductsHeader total={totalCount} />
 
       <div className="max-w-9xl flex-1 w-full mx-auto px-4 sm:px-8 lg:px-12">
         <div className="flex flex-col lg:flex-row items-start relative">
@@ -51,7 +51,7 @@ export default function AllProducts() {
                 pagination={{
                   currentPage,
                   totalPages,
-                  total,
+                  totalCount,
                   limit: filters.limit || 16,
                 }}
                 onPageChange={(page) =>

@@ -94,7 +94,7 @@ export default function SubcategoryItem({
             className={`px-2 py-0.5 rounded-[2px] border text-2xs font-bold uppercase tracking-wider ${
               isSubInactive
                 ? "bg-taupe-50 border-luxury-ink/10 text-neutral-400"
-                : "bg-emerald-50 border-emerald-200 text-emerald-800"
+                : "bg-taupe-50 border-accent/35 text-taupe-700"
             }`}
           >
             {isSubInactive ? "Tạm ẩn" : "Hoạt động"}

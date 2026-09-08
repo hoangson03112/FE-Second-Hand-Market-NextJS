@@ -239,7 +239,7 @@ export default function AdminLayout({
             <button
               type="button"
               onClick={handleLogout}
-              className="p-1.5 rounded-[2px] text-luxury-ivory/60 hover:bg-white/10 hover:text-rose-400 transition-colors shrink-0"
+              className="p-1.5 rounded-[2px] text-luxury-ivory/60 hover:bg-white/10 hover:text-blush-400 transition-colors shrink-0"
               title="Đăng xuất"
             >
               <IconLogout className="w-4 h-4" />

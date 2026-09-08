@@ -1,19 +1,19 @@
 "use client";
 
 import React from "react";
-import { IProduct } from "@/types/product";
+import { IProductCard } from "@/types/product";
 import ProductCard from "./ProductCard";
 import { GridSkeleton, Pagination } from "@/components/ui";
 
 interface PaginationInfo {
   currentPage: number;
   totalPages: number;
-  total: number;
+  totalCount: number;
   limit: number;
 }
 
 interface ProductListProps {
-  products: IProduct[];
+  products: IProductCard[];
   isLoading?: boolean;
   emptyMessage?: string;
   pagination?: PaginationInfo;
@@ -75,10 +75,10 @@ export default function ProductList({
               onPageChange={onPageChange}
             />
 
-            {pagination.total > 0 && (
+            {pagination.totalCount > 0 && (
               <p className="order-3 text-xs font-bold uppercase tracking-[0.15em] text-charcoal-400 md:w-44 md:text-right">
                 <span className="text-luxury-ink">
-                  {pagination.total.toLocaleString("vi-VN")}
+                  {pagination.totalCount.toLocaleString("vi-VN")}
                 </span>{" "}
                 sản phẩm
               </p>

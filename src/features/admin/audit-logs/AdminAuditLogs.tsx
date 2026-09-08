@@ -27,15 +27,15 @@ const TARGET_OPTIONS = [
 
 function getActionBadgeStyle(action: string) {
   if (action.includes("BANNED") || action.includes("REJECTED")) {
-    return "bg-rose-50 text-rose-700 border-rose-200";
+    return "bg-blush-50 text-blush-700 border-blush-200";
   }
   if (action.includes("APPROVED") || action.includes("UNBANNED")) {
-    return "bg-emerald-50 text-emerald-700 border-emerald-200";
+    return "bg-taupe-50 text-taupe-700 border-accent/35";
   }
   if (action.includes("REFUND") || action.includes("PAYOUT")) {
-    return "bg-amber-50 text-amber-700 border-amber-200";
+    return "bg-cream-100 text-neutral-700 border-luxury-champagne/50";
   }
-  return "bg-muted text-muted-foreground border-border";
+  return "bg-cream-50 text-neutral-600 border-luxury-ink/10";
 }
 
 function renderMetadata(metadata: Record<string, unknown> | undefined) {

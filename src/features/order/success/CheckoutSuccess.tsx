@@ -81,7 +81,6 @@ export default function CheckoutSuccess() {
     "transition-all duration-700 ease-out",
     isRevealed ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
   );
-  const delay = (ms: number) => ({ transitionDelay: `${ms}ms` });
 
   return (
     <PageContainer
@@ -90,7 +89,7 @@ export default function CheckoutSuccess() {
     >
       <Container as="main" maxWidth="9xl" paddingX="md" paddingY="lg">
         <div className="space-y-6">
-          <div style={delay(60)} className={revealClass}>
+          <div className={cn(revealClass, "delay-[60ms]")}>
             <SuccessHero
               orderCode={order._id.slice(-10).toUpperCase()}
               orderId={orderId ?? order._id}
@@ -100,7 +99,7 @@ export default function CheckoutSuccess() {
             />
           </div>
 
-          <div style={delay(160)} className={revealClass}>
+          <div className={cn(revealClass, "delay-[160ms]")}>
             <OrderProgressTrail
               steps={progressSteps}
               currentIndex={effectiveStepIndex}
@@ -112,18 +111,17 @@ export default function CheckoutSuccess() {
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
             <div className="space-y-6 lg:col-span-7 xl:col-span-8">
-              <div style={delay(240)} className={revealClass}>
+              <div className={cn(revealClass, "delay-[240ms]")}>
                 <OrderItemsPanel order={order} />
               </div>
-              <div style={delay(320)} className={revealClass}>
+              <div className={cn(revealClass, "delay-[320ms]")}>
                 <PaymentBreakdown order={order} isLocalPickup={isLocalPickup} />
               </div>
             </div>
 
             <div className="lg:col-span-5 xl:col-span-4">
               <div
-                style={delay(400)}
-                className={cn(revealClass, "lg:sticky lg:top-8")}
+                className={cn(revealClass, "lg:sticky lg:top-8 delay-[400ms]")}
               >
                 <OrderMetaPanel
                   order={order}

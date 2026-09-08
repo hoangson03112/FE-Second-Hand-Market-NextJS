@@ -118,7 +118,7 @@ export default async function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`h-full overflow-hidden bg-luxury-ivory text-foreground antialiased ${droidSerifWGL.variable}`}
+        className={`h-full overflow-hidden bg-luxury-ivory text-luxury-ink antialiased ${droidSerifWGL.variable}`}
       >
         <Providers hasSession={hasSession}>
           <ToastProvider>

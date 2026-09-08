@@ -16,7 +16,7 @@ export default function InvalidTokenError({ message }: InvalidTokenErrorProps) {
 
       <div className="text-center space-y-3">
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-[2px] bg-cream-50 border border-luxury-ink/10">
-          <IconAlertTriangle className="w-8 h-8 text-amber-600" />
+          <IconAlertTriangle className="w-8 h-8 text-blush-600" />
         </div>
 
         <div className="space-y-1">

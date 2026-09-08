@@ -7,6 +7,7 @@ import { forgotPasswordFeatures } from "@/constants/auth.features";
 import { Background } from "@/features/auth/components";
 import Image from "next/image";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export default function ForgotPassword() {
   const { email, setEmail, isLoading, isSuccess, handleSubmit, resetForm } = useForgotPassword();
@@ -20,24 +21,18 @@ export default function ForgotPassword() {
               
               <div className="flex flex-col justify-center px-2 lg:px-0 pointer-events-none">
                 <h1
-                  className="font-droid-serif mb-8 text-luxury-ink drop-shadow-sm"
-                  style={{
-                    fontSize: "clamp(3rem, 6vw, 5.5rem)",
-                    fontWeight: 300,
-                    lineHeight: 1.05,
-                    letterSpacing: "-0.03em",
-                  }}
+                  className={cn(
+                    "font-droid-serif mb-8 text-luxury-ink drop-shadow-sm",
+                    "text-[clamp(3rem,6vw,5.5rem)] font-light leading-[1.05] tracking-[-0.03em]",
+                  )}
                 >
                   {isSuccess ? "Kiểm tra" : "Quên"} <br />
-                  <span
-                    className="text-accent"
-                    style={{ letterSpacing: "-0.02em", fontStyle: "italic" }}
-                  >
+                  <span className="text-accent italic tracking-[-0.02em]">
                     {isSuccess ? "email của bạn" : "mật khẩu?"}
                   </span>
                 </h1>
 
-                <p className="text-lg md:text-xl mb-12 max-w-md text-foreground/70 font-medium">
+                <p className="text-lg md:text-xl mb-12 max-w-md text-luxury-ink/70 font-medium">
                   {isSuccess
                     ? "Chúng tôi đã gửi liên kết đặt lại mật khẩu đến email của bạn."
                     : "Đừng lo, chúng tôi sẽ giúp bạn lấy lại quyền truy cập tài khoản."}
@@ -46,17 +41,17 @@ export default function ForgotPassword() {
                 <div className="space-y-6 hidden md:block">
                   {forgotPasswordFeatures.map((feature, idx) => (
                     <div key={idx} className="flex items-start gap-4">
-                      <div className="flex-shrink-0 w-6 h-6 rounded-[2px] border border-foreground/20 flex items-center justify-center mt-0.5 text-foreground">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-[2px] border border-luxury-ink/20 flex items-center justify-center mt-0.5 text-luxury-ink">
                         <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-foreground font-medium text-[15px]">
+                        <h3 className="text-luxury-ink font-medium text-[15px]">
                           {feature.title}
                         </h3>
                         {feature.description && (
-                          <p className="text-foreground/60 text-sm mt-1 leading-relaxed max-w-sm">
+                          <p className="text-luxury-ink/60 text-sm mt-1 leading-relaxed max-w-sm">
                             {feature.description}
                           </p>
                         )}
@@ -82,12 +77,10 @@ export default function ForgotPassword() {
                 <div className="bg-white/90 backdrop-blur-md border border-luxury-ink/10 rounded-[2px] shadow-sm p-8 sm:p-10 lg:p-12 space-y-8">
                   <div className="space-y-1 text-center">
                     <h2
-                      style={{
-                        fontWeight: 300,
-                        lineHeight: 1.05,
-                        letterSpacing: "-0.03em",
-                      }}
-                      className="font-droid-serif text-4xl mb-8 text-luxury-ink"
+                      className={cn(
+                        "font-droid-serif text-4xl mb-8 text-luxury-ink",
+                        "font-light leading-[1.05] tracking-[-0.03em]",
+                      )}
                     >
                       {isSuccess ? "Email đã được gửi" : "Quên mật khẩu"}
                     </h2>

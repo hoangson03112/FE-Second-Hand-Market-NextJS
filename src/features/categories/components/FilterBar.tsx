@@ -121,10 +121,9 @@ export default function FilterBar({
                   filters.provinceId != null ? String(filters.provinceId) : ""
                 }
                 onChange={(e) => handleProvinceChange(e.target.value)}
-                className="h-10 min-w-[150px] cursor-pointer appearance-none rounded-[2px] border border-luxury-ink/10 bg-white pl-4 pr-9 text-[13px] font-medium text-luxury-ink transition-all hover:border-luxury-ink/30 focus:border-luxury-ink focus:outline-none"
+                className="h-10 min-w-[150px] cursor-pointer appearance-none rounded-[2px] border border-luxury-ink/10 bg-white bg-no-repeat pl-4 pr-9 text-[13px] font-medium text-luxury-ink transition-all hover:border-luxury-ink/30 focus:border-luxury-ink focus:outline-none"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%231a1816'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
-                  backgroundRepeat: "no-repeat",
                   backgroundPosition: "right 14px center",
                   backgroundSize: "14px",
                 }}
@@ -245,7 +244,7 @@ export default function FilterBar({
                   onClick={() =>
                     onFilterChange({ ...filters, search: undefined, page: 1 })
                   }
-                  className="transition-colors hover:text-destructive"
+                  className="transition-colors hover:text-blush-600"
                 >
                   <svg
                     className="h-3.5 w-3.5"
@@ -268,7 +267,7 @@ export default function FilterBar({
                 {selectedProvince.ProvinceName}
                 <button
                   onClick={() => handleProvinceChange("")}
-                  className="transition-colors hover:text-destructive"
+                  className="transition-colors hover:text-blush-600"
                 >
                   <svg
                     className="h-3.5 w-3.5"
@@ -297,7 +296,7 @@ export default function FilterBar({
                   onClick={() =>
                     handleTransactionChange(filters.transactionMethod!)
                   }
-                  className="transition-colors hover:text-destructive"
+                  className="transition-colors hover:text-blush-600"
                 >
                   <svg
                     className="h-3.5 w-3.5"
@@ -323,7 +322,7 @@ export default function FilterBar({
                 }
                 <button
                   onClick={() => handleConditionChange(filters.condition!)}
-                  className="transition-colors hover:text-destructive"
+                  className="transition-colors hover:text-blush-600"
                 >
                   <svg
                     className="h-3.5 w-3.5"
@@ -347,7 +346,7 @@ export default function FilterBar({
                   `${filters.minPrice ? (filters.minPrice / 1000).toFixed(0) + "k" : "0"}-${filters.maxPrice ? (filters.maxPrice / 1000).toFixed(0) + "k" : "∞"}`}
                 <button
                   onClick={() => handlePriceRangeChange(undefined, undefined)}
-                  className="transition-colors hover:text-destructive"
+                  className="transition-colors hover:text-blush-600"
                 >
                   <svg
                     className="h-3.5 w-3.5"

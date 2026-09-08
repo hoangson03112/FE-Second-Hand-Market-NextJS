@@ -9,10 +9,10 @@ export interface IProduct {
   hasPersonalDiscount?: boolean;
   personalDiscountId?: string;
   avatar: IImage;
-  stock: number;
-  description: string;
-  category: ICategory;
-  subcategory: ISubCategory;
+  stock?: number;
+  description?: string;
+  category?: ICategory;
+  subcategory?: ISubCategory;
   attributes: IAttribute[];
   images: IImage[];
   status:
@@ -62,7 +62,16 @@ export interface IProduct {
     rejectedAt?: string | null;
   };
 }
-
+export interface IProductCard{
+  _id: string;
+  name: string;
+  price: number;
+  slug: string;
+  avatar: IImage;
+  category: string;
+  address: string;
+  updatedAt:string;
+}
 export interface IAttribute {
   _id: string;
   key: string;
@@ -135,8 +144,8 @@ export interface IProductFilters {
 
 export interface IProductListResponse {
   success: boolean;
-  data: IProduct[];
-  total: number;
+  data: IProductCard[];
+  totalCount: number;
   page: number;
   limit: number;
   totalPages?: number;

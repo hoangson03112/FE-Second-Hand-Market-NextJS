@@ -14,7 +14,6 @@ interface IdCardSectionProps {
   ) => (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-
 function FileDropzone({
   file,
   label,
@@ -48,7 +47,7 @@ function FileDropzone({
     return (
       <div>
         <label className="mb-1.5 block text-xs font-medium uppercase tracking-[0.08em] text-neutral-500">
-          {label} {required && <span className="text-red-600">*</span>}
+          {label} {required && <span className="text-blush-600">*</span>}
         </label>
 
         <div className="flex items-center gap-3">
@@ -58,9 +57,17 @@ function FileDropzone({
           >
             {previewUrl ? (
               <>
-                <Image src={previewUrl} alt={label} fill className="object-cover" />
+                <Image
+                  src={previewUrl}
+                  alt={label}
+                  fill
+                  className="object-cover"
+                />
                 <div className="absolute inset-0 flex items-center justify-center bg-black/45 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <IconUpload className="h-4 w-4 text-white" strokeWidth={1.75} />
+                  <IconUpload
+                    className="h-4 w-4 text-white"
+                    strokeWidth={1.75}
+                  />
                 </div>
               </>
             ) : (
@@ -98,7 +105,7 @@ function FileDropzone({
   return (
     <div>
       <label className="mb-1.5 block text-xs font-medium uppercase tracking-[0.08em] text-neutral-500">
-        {label} {required && <span className="text-red-600">*</span>}
+        {label} {required && <span className="text-blush-600">*</span>}
       </label>
 
       <label
@@ -114,18 +121,14 @@ function FileDropzone({
                 Đổi ảnh khác
               </p>
             </div>
-            <div
-              className="rounded-[2px] absolute right-1.5 top-1.5 flex items-center gap-1 bg-luxury-ink/85 px-1.5 py-0.5 text-2xs font-bold text-luxury-champagne backdrop-blur-sm"
-            >
+            <div className="rounded-[2px] absolute right-1.5 top-1.5 flex items-center gap-1 bg-luxury-ink/85 px-1.5 py-0.5 text-2xs font-bold text-luxury-champagne backdrop-blur-sm">
               <IconCheck className="h-3 w-3" strokeWidth={2.5} />
               Đã tải lên
             </div>
           </>
         ) : (
           <div className="flex flex-col items-center gap-1.5 px-3 text-center">
-            <span
-              className="rounded-[2px] flex h-7 w-7 items-center justify-center border border-luxury-ink/15 bg-cream-50 text-taupe-400 transition-colors duration-300 group-hover:border-luxury-champagne/50 group-hover:text-luxury-champagne"
-            >
+            <span className="rounded-[2px] flex h-7 w-7 items-center justify-center border border-luxury-ink/15 bg-cream-50 text-taupe-400 transition-colors duration-300 group-hover:border-luxury-champagne/50 group-hover:text-luxury-champagne">
               <IconPhoto className="h-3.5 w-3.5" strokeWidth={1.5} />
             </span>
             <p className="text-xs font-medium text-neutral-600">
@@ -162,9 +165,7 @@ export const IdCardSection: React.FC<IdCardSectionProps> = ({
   onFileChange,
 }) => {
   return (
-    <div
-      className="rounded-[2px] border border-luxury-ink/8 bg-white/50 p-5 md:p-6"
-    >
+    <div className="rounded-[2px] border border-luxury-ink/8 bg-white/50 p-5 md:p-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FileDropzone
           inputId="idCardFront"

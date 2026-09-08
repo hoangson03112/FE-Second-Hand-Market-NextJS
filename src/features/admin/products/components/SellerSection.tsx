@@ -98,7 +98,7 @@ export function SellerSection({ seller, addressPhone }: SellerSectionProps) {
           {rating > 0 && (
             <div className="flex flex-col items-center shrink-0">
               <div className="flex items-center gap-0.5">
-                <IconStar className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                <IconStar className="w-3.5 h-3.5 fill-luxury-champagne text-luxury-champagne" />
                 <span className="text-xs font-bold text-luxury-ink font-mono">
                   {Number(rating).toFixed(1)}
                 </span>

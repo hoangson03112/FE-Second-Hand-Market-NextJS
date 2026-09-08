@@ -21,19 +21,11 @@ export function PaymentHeader({
     <section className="relative overflow-hidden rounded-[2px] bg-luxury-ink px-6 py-10 sm:px-10 sm:py-12">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 60% at 82% 12%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 60%), radial-gradient(ellipse 55% 50% at 8% 88%, color-mix(in srgb, var(--luxury-champagne) 18%, transparent) 0%, transparent 55%)",
-        }}
+        className="pointer-events-none absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_70%_60%_at_82%_12%,color-mix(in_srgb,var(--accent)_22%,transparent)_0%,transparent_60%),radial-gradient(ellipse_55%_50%_at_8%_88%,color-mix(in_srgb,var(--luxury-champagne)_18%,transparent)_0%,transparent_55%)]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.035]"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
+        className="pointer-events-none absolute inset-0 opacity-[0.035] bg-noise-texture"
       />
 
       <div className="relative z-10">
@@ -49,11 +41,7 @@ export function PaymentHeader({
           <div className="min-w-0">
             <Eyebrow tone="dark">Chuyển khoản ngân hàng</Eyebrow>
             <h1
-              style={{
-                fontWeight: 400,
-                lineHeight: 1.08,
-              }}
-              className="font-droid-serif mt-5 text-[clamp(1.85rem,4vw,2.85rem)] tracking-tight text-luxury-ivory"
+              className="font-droid-serif mt-5 text-[clamp(1.85rem,4vw,2.85rem)] font-normal leading-[1.08] tracking-tight text-luxury-ivory"
             >
               Hoàn tất thanh toán
             </h1>

@@ -9,7 +9,7 @@ import SectionHeader from "./SectionHeader";
 import { ProductCard } from "@/features/categories/components";
 
 export default function FeaturedListingsSection() {
-  const { data, isLoading } = useFeaturedProducts(5);
+  const { data, isLoading } = useFeaturedProducts();
   const { ref, isVisible } = useScrollReveal({ threshold: 0.1, delay: 160 });
   const featuredProducts = data?.data ?? [];
 
@@ -24,10 +24,9 @@ export default function FeaturedListingsSection() {
       >
         <div
           className={cn(
-            "transition-all duration-700 ease-out",
+            "transition-all duration-700 ease-out delay-[80ms]",
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6",
           )}
-          style={{ transitionDelay: "80ms" }}
         >
           <SectionHeader
             eyebrow="Sản phẩm nổi bật"

@@ -257,7 +257,7 @@ export function useCheckout() {
           shipments,
           signal: controller.signal,
         });
-
+        
 
         if (controller.signal.aborted) return;
 

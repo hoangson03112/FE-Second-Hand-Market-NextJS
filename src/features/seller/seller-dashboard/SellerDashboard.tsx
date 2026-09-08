@@ -144,7 +144,7 @@ export default function SellerDashboard() {
                   key={card.label}
                   className={`rounded-[2px] border bg-white p-5 space-y-3 transition-all ${
                     card.attention
-                      ? "border-amber-400 bg-amber-50/30"
+                      ? "border-luxury-champagne bg-cream-100/50"
                       : "border-luxury-ink/10"
                   }`}
                 >
@@ -219,16 +219,16 @@ export default function SellerDashboard() {
                 </div>
 
                 {pending > 0 ? (
-                  <div className="rounded-[2px] border border-amber-300 bg-amber-50/70 p-4 space-y-3">
+                  <div className="rounded-[2px] border border-luxury-champagne/60 bg-cream-100/70 p-4 space-y-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-[2px] bg-amber-500 text-white flex items-center justify-center shrink-0">
+                      <div className="w-8 h-8 rounded-[2px] bg-luxury-champagne text-white flex items-center justify-center shrink-0">
                         <IconBolt className="h-4 w-4" />
                       </div>
                       <div>
-                        <p className="text-xs font-bold text-amber-950">
+                        <p className="text-xs font-bold text-luxury-ink">
                           Bạn có {pending} đơn hàng chờ xác nhận
                         </p>
-                        <p className="text-2xs uppercase tracking-[0.12em] text-amber-700 mt-0.5">
+                        <p className="text-2xs uppercase tracking-[0.12em] text-neutral-600 mt-0.5">
                           Đóng gói và bàn giao bưu tá
                         </p>
                       </div>
@@ -236,7 +236,7 @@ export default function SellerDashboard() {
 
                     <Link
                       href="/seller/orders?tab=pending"
-                      className="inline-flex items-center gap-1.5 text-2xs font-bold uppercase tracking-[0.14em] text-amber-900 hover:underline pt-1"
+                      className="inline-flex items-center gap-1.5 text-2xs font-bold uppercase tracking-[0.14em] text-luxury-ink hover:underline pt-1"
                     >
                       Mở danh sách đơn cần xử lý →
                     </Link>

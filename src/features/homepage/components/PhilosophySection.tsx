@@ -54,12 +54,11 @@ export default function PhilosophySection() {
           <div className="flex flex-col justify-between lg:col-span-5 py-2">
             <div
               className={cn(
-                "transition-all duration-700 ease-out",
+                "transition-all duration-700 ease-out delay-[80ms]",
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-6",
               )}
-              style={{ transitionDelay: "80ms" }}
             >
               <div className="flex items-center gap-3">
                 <span className="h-px w-8 bg-luxury-champagne/80" aria-hidden />
@@ -69,11 +68,7 @@ export default function PhilosophySection() {
               </div>
 
               <h2
-                style={{
-                  fontWeight: 400,
-                  lineHeight: 1.08,
-                }}
-                className="font-droid-serif mt-4 text-[clamp(1.75rem,3vw,2.5rem)] tracking-tight text-luxury-ink"
+                className="font-droid-serif mt-4 text-[clamp(1.75rem,3vw,2.5rem)] font-normal leading-[1.08] tracking-tight text-luxury-ink"
               >
                 Mỗi món đồ cũ đều xứng đáng{" "}
                 <span className="text-accent">một hành trình mới.</span>
@@ -97,12 +92,11 @@ export default function PhilosophySection() {
 
             <div
               className={cn(
-                "mt-10 pt-4 transition-all duration-700 ease-out",
+                "mt-10 pt-4 transition-all duration-700 ease-out delay-[220ms]",
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-6",
               )}
-              style={{ transitionDelay: "220ms" }}
             >
               <Link
                 href="/products"
@@ -120,12 +114,11 @@ export default function PhilosophySection() {
             <Link
               href={values[0].href}
               className={cn(
-                "group relative flex flex-col justify-between border border-neutral-200 bg-cream-50 p-7 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-neutral-300 hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--luxury-ink)_6%,transparent)]",
+                "group relative flex flex-col justify-between border border-neutral-200 bg-cream-50 p-7 transition-all duration-700 ease-out delay-[180ms] hover:-translate-y-1 hover:border-neutral-300 hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--luxury-ink)_6%,transparent)]",
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-8",
               )}
-              style={{ transitionDelay: "180ms" }}
             >
               <div>
                 <div className="flex items-center justify-between border-b border-neutral-200 pb-4">
@@ -157,12 +150,11 @@ export default function PhilosophySection() {
             <Link
               href={values[1].href}
               className={cn(
-                "group relative flex flex-col justify-between overflow-hidden bg-luxury-ink p-7 text-white transition-all duration-700 ease-out hover:-translate-y-1 hover:shadow-[0_16px_36px_color-mix(in_srgb,var(--luxury-ink)_20%,transparent)]",
+                "group relative flex flex-col justify-between overflow-hidden bg-luxury-ink p-7 text-white transition-all duration-700 ease-out delay-[280ms] hover:-translate-y-1 hover:shadow-[0_16px_36px_color-mix(in_srgb,var(--luxury-ink)_20%,transparent)]",
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-8",
               )}
-              style={{ transitionDelay: "280ms" }}
             >
 
               <div className="absolute inset-0 z-0">
@@ -207,12 +199,11 @@ export default function PhilosophySection() {
             <Link
               href={values[2].href}
               className={cn(
-                "group relative flex flex-col justify-between border border-neutral-200 bg-white p-7 md:col-span-2 transition-all duration-700 ease-out hover:-translate-y-1 hover:border-neutral-300 hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--luxury-ink)_6%,transparent)]",
+                "group relative flex flex-col justify-between border border-neutral-200 bg-white p-7 md:col-span-2 transition-all duration-700 ease-out delay-[380ms] hover:-translate-y-1 hover:border-neutral-300 hover:shadow-[0_12px_32px_color-mix(in_srgb,var(--luxury-ink)_6%,transparent)]",
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-8",
               )}
-              style={{ transitionDelay: "380ms" }}
             >
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div className="max-w-md">

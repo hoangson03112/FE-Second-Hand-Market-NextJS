@@ -19,7 +19,7 @@ const STATUS_BADGE: Record<string, { label: string; className: string }> = {
   },
   rejected: {
     label: "Từ chối",
-    className: "bg-rose-50 text-rose-700 border border-rose-200",
+    className: "bg-blush-50 text-blush-700 border border-blush-200",
   },
   banned: {
     label: "Bị khóa",
@@ -145,7 +145,7 @@ export default function SellersTable({
                           type="button"
                           onClick={() => onOpenBan(seller)}
                           disabled={isUpdating}
-                          className="rounded-[2px] border border-rose-200 p-1.5 text-rose-700 hover:bg-rose-50 disabled:opacity-50 transition-colors"
+                          className="rounded-[2px] border border-blush-200 p-1.5 text-blush-700 hover:bg-blush-50 disabled:opacity-50 transition-colors"
                           title="Khóa tài khoản"
                         >
                           <IconBan className="h-4 w-4" />
@@ -166,7 +166,7 @@ export default function SellersTable({
                             type="button"
                             onClick={() => onOpenDetail(seller)}
                             disabled={isUpdating}
-                            className="rounded-[2px] border border-rose-200 p-1.5 text-rose-700 hover:bg-rose-50 disabled:opacity-50 transition-colors"
+                            className="rounded-[2px] border border-blush-200 p-1.5 text-blush-700 hover:bg-blush-50 disabled:opacity-50 transition-colors"
                             title="Từ chối"
                           >
                             <IconCircleX className="h-4 w-4" />

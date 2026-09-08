@@ -348,7 +348,7 @@ export default function AdminPayouts() {
                                   title="Sao chép số tài khoản"
                                 >
                                   {copiedKey === `bank-${order._id}` ? (
-                                    <IconCheck className="w-3.5 h-3.5 text-emerald-600" />
+                                    <IconCheck className="w-3.5 h-3.5 text-accent" />
                                   ) : (
                                     <IconCopy className="w-3.5 h-3.5" />
                                   )}
@@ -362,8 +362,8 @@ export default function AdminPayouts() {
                               </p>
                             </div>
                           ) : (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] bg-amber-50 text-amber-800 border border-amber-200 text-2xs font-semibold">
-                              <IconAlertTriangle className="w-3 h-3 text-amber-600" />
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] bg-cream-100 text-neutral-700 border border-luxury-champagne/50 text-2xs font-semibold">
+                              <IconAlertTriangle className="w-3 h-3 text-luxury-champagne" />
                               Chưa có tài khoản Bank
                             </span>
                           )}
@@ -372,8 +372,8 @@ export default function AdminPayouts() {
                         <td className="px-4 py-3.5">
                           {isPaid ? (
                             <div className="space-y-0.5">
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-[2px] bg-emerald-50 text-emerald-800 border border-emerald-200 text-2xs font-bold uppercase tracking-[0.1em]">
-                                <IconCheck className="w-3 h-3 text-emerald-700" />
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-[2px] bg-taupe-50 text-taupe-700 border border-accent/35 text-2xs font-bold uppercase tracking-[0.1em]">
+                                <IconCheck className="w-3 h-3 text-accent" />
                                 Đã thanh toán
                               </span>
                               {order.payoutAt && (
@@ -383,8 +383,8 @@ export default function AdminPayouts() {
                               )}
                             </div>
                           ) : (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-[2px] bg-amber-50 text-amber-800 border border-amber-200 text-2xs font-bold uppercase tracking-[0.1em]">
-                              <IconClock className="w-3 h-3 text-amber-700" />
+                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-[2px] bg-cream-100 text-neutral-700 border border-luxury-champagne/50 text-2xs font-bold uppercase tracking-[0.1em]">
+                              <IconClock className="w-3 h-3 text-luxury-champagne" />
                               Chờ giải ngân
                             </span>
                           )}
@@ -448,7 +448,7 @@ export default function AdminPayouts() {
 
       {selectedQrOrder && qrBank && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-luxury-ink/60 backdrop-blur-xs">
-          <div className="bg-white border border-luxury-ink/15 rounded-[2px] shadow-2xl max-w-md w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div className="bg-white border border-luxury-ink/15 rounded-[2px] shadow-xs max-w-md w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             <div className="px-6 py-4 border-b border-luxury-ink/10 flex items-center justify-between bg-cream-50/70">
               <div>
                 <h3 className="font-droid-serif font-bold text-base text-luxury-ink flex items-center gap-2">
@@ -495,7 +495,7 @@ export default function AdminPayouts() {
                       className="text-neutral-400 hover:text-luxury-ink"
                     >
                       {copiedKey === "modal-stk" ? (
-                        <IconCheck className="w-3.5 h-3.5 text-emerald-600" />
+                        <IconCheck className="w-3.5 h-3.5 text-accent" />
                       ) : (
                         <IconCopy className="w-3.5 h-3.5" />
                       )}
@@ -519,7 +519,7 @@ export default function AdminPayouts() {
                       className="text-neutral-400 hover:text-luxury-ink"
                     >
                       {copiedKey === "modal-amount" ? (
-                        <IconCheck className="w-3.5 h-3.5 text-emerald-600" />
+                        <IconCheck className="w-3.5 h-3.5 text-accent" />
                       ) : (
                         <IconCopy className="w-3.5 h-3.5" />
                       )}
@@ -535,7 +535,7 @@ export default function AdminPayouts() {
                       className="text-neutral-400 hover:text-luxury-ink"
                     >
                       {copiedKey === "modal-content" ? (
-                        <IconCheck className="w-3.5 h-3.5 text-emerald-600" />
+                        <IconCheck className="w-3.5 h-3.5 text-accent" />
                       ) : (
                         <IconCopy className="w-3.5 h-3.5" />
                       )}

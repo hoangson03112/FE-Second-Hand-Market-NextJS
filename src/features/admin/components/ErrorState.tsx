@@ -24,7 +24,7 @@ export function ErrorState({
 }: ErrorStateProps) {
   return (
     <EmptyState
-      icon={icon ?? <TriangleAlert className="text-destructive" />}
+      icon={icon ?? <TriangleAlert className="text-blush-600" />}
       title={title}
       description={description}
       action={

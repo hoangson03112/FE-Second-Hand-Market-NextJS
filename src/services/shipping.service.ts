@@ -19,11 +19,7 @@ const QUOTE_URL =
 
 
 function toShippingOption(quote: ShipmentQuote): ShippingServiceOption {
-  const expectedDeliveryDate = new Date(quote.leadtime * 1000);
-  const diffMs = expectedDeliveryDate.getTime() - Date.now();
-  const estimatedDays = Math.max(1, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
-
-  return {
+  const base: ShippingServiceOption = {
     service_id: quote.service_id,
     service_type_id: quote.service_type_id,
     short_name: quote.short_name,
@@ -33,8 +29,17 @@ function toShippingOption(quote: ShipmentQuote): ShippingServiceOption {
     insuranceFee: quote.fee.insurance_fee,
     codFee: quote.fee.cod_fee,
     totalShippingFee: quote.fee.total,
+  };
+
+  if (!quote.leadtime) return base;
+
+  const expectedDeliveryDate = new Date(quote.leadtime * 1000);
+  const diffMs = expectedDeliveryDate.getTime() - Date.now();
+
+  return {
+    ...base,
     expectedDeliveryTime: expectedDeliveryDate.toISOString(),
-    estimatedDays,
+    estimatedDays: Math.max(1, Math.ceil(diffMs / (1000 * 60 * 60 * 24))),
     estimatedDate: expectedDeliveryDate.toLocaleDateString("vi-VN", {
       weekday: "short",
       month: "short",
@@ -52,7 +57,8 @@ export const ShippingService = {
     signal?: AbortSignal;
   }): Promise<ShipmentQuotes> => {
     const { to_district_id, to_ward_code, shipments, signal } = params;
-
+    console.log(params);
+    
     if (shipments.length === 0) return { options: {}, errors: {} };
 
 

@@ -398,8 +398,6 @@ export function OrderDetailView({
     "transition-all duration-700 ease-out",
     isRevealed ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0",
   );
-  const delay = (ms: number) => ({ transitionDelay: `${ms}ms` });
-
   return (
     <div className="min-h-screen bg-luxury-ivory">
       <OrderDetailHeader
@@ -410,7 +408,7 @@ export function OrderDetailView({
 
       <Container maxWidth="9xl" paddingX="md" paddingY="lg">
         <div className="space-y-6">
-          <div style={delay(80)} className={revealClass}>
+          <div className={cn(revealClass, "delay-[80ms]")}>
             <OrderStatusHero
               status={order.status}
               statusConfig={statusConfig}
@@ -428,10 +426,9 @@ export function OrderDetailView({
 
           {isRefundFlow && refundTodo && (
             <div
-              style={delay(140)}
               className={cn(
                 revealClass,
-                "rounded-[2px] border px-5 py-4",
+                "rounded-[2px] border px-5 py-4 delay-[140ms]",
                 refundTodoClass,
               )}
             >
@@ -445,7 +442,7 @@ export function OrderDetailView({
           )}
 
           {showRefundCard && (
-            <div style={delay(180)} className={revealClass}>
+            <div className={cn(revealClass, "delay-[180ms]")}>
               <RefundDetailCard
                 refund={order.refundRequestId!}
                 onEscalateToAdmin={handleEscalateToAdmin}
@@ -455,10 +452,9 @@ export function OrderDetailView({
           )}
 
           <div
-            style={delay(220)}
             className={cn(
               revealClass,
-              "grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8",
+              "grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8 delay-[220ms]",
             )}
           >
 

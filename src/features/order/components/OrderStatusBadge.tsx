@@ -2,29 +2,29 @@ import { STATUS_CONFIG } from "@/constants/orderStatus";
 
 
 const DOT_COLORS: Record<string, string> = {
-  pending: "bg-primary/50",
-  confirmed: "bg-primary/70",
-  picked_up: "bg-primary/80",
-  shipping: "bg-primary",
-  out_for_delivery: "bg-primary",
-  delivered: "bg-foreground/60",
-  completed: "bg-foreground",
+  pending: "bg-neutral-400",
+  confirmed: "bg-luxury-ink",
+  picked_up: "bg-luxury-ink",
+  shipping: "bg-luxury-ink",
+  out_for_delivery: "bg-luxury-ink",
+  delivered: "bg-luxury-ink",
+  completed: "bg-accent",
 
 
   failed: "bg-blush-600",
   delivery_failed: "bg-blush-600",
-  returning: "bg-amber-500",
-  return_shipping: "bg-amber-500",
-  refund: "bg-orange-500",
-  returned: "bg-emerald-500",
-  cancelled: "bg-neutral-400",
-  refund_requested: "bg-orange-500",
-  refund_approved: "bg-blue-500",
-  refunded: "bg-violet-500",
-  disputed: "bg-purple-500",
-  processing: "bg-blue-500",
-  bank_info_required: "bg-amber-600",
-  approved: "bg-sky-500",
+  returning: "bg-luxury-champagne",
+  return_shipping: "bg-luxury-champagne",
+  refund: "bg-luxury-champagne",
+  returned: "bg-accent",
+  cancelled: "bg-blush-600",
+  refund_requested: "bg-luxury-champagne",
+  refund_approved: "bg-luxury-champagne",
+  refunded: "bg-accent",
+  disputed: "bg-blush-600",
+  processing: "bg-luxury-champagne",
+  bank_info_required: "bg-luxury-champagne",
+  approved: "bg-luxury-champagne",
   rejected: "bg-blush-600",
 };
 
@@ -51,7 +51,7 @@ export function OrderStatusBadge({
 
   return (
     <span
-      className={`inline-flex items-center rounded-full border ${cfg.bgColor} ${cfg.color} ${sizeClasses} ${className}`}
+      className={`inline-flex items-center rounded-[2px] border ${cfg.bgColor} ${cfg.color} ${sizeClasses} ${className}`}
     >
       {dot && (
         <span

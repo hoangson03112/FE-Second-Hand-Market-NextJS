@@ -1,6 +1,10 @@
 "use client";
 
-import { IconBuildingStore, IconArrowRight } from "@tabler/icons-react";
+import {
+  IconBuildingStore,
+  IconArrowRight,
+  IconChevronRight,
+} from "@tabler/icons-react";
 import Link from "next/link";
 
 interface SellFormHeaderProps {
@@ -15,6 +19,25 @@ export function SellFormHeader({
   return (
     <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-luxury-ink/6 pb-6">
       <div className="max-w-2xl">
+        <nav
+          aria-label="Breadcrumb"
+          className="mb-4 flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-[0.15em] text-charcoal-400"
+        >
+          <Link href="/" className="transition-colors hover:text-luxury-ink">
+            Trang chủ
+          </Link>
+          <IconChevronRight className="h-3 w-3 text-taupe-300" />
+          <Link
+            href="/my/listings"
+            className="transition-colors hover:text-luxury-ink"
+          >
+            Sản phẩm của tôi
+          </Link>
+          <IconChevronRight className="h-3 w-3 text-taupe-300" />
+          <span className="text-luxury-ink">
+            {isEditMode ? "Cập nhật sản phẩm" : "Đăng sản phẩm"}
+          </span>
+        </nav>
         <div className="flex items-center gap-3">
           <span aria-hidden className="h-px w-8 bg-luxury-champagne/80" />
           <p className="text-2xs font-semibold uppercase tracking-[0.24em] text-neutral-600">
@@ -22,8 +45,7 @@ export function SellFormHeader({
           </p>
         </div>
         <h1
-          style={{ fontWeight: 400 }}
-          className="font-droid-serif mt-3 text-[clamp(1.5rem,3vw,2rem)] tracking-tight text-luxury-ink"
+          className="font-droid-serif mt-3 text-[clamp(1.5rem,3vw,2rem)] font-normal tracking-tight text-luxury-ink"
         >
           {isEditMode ? "Cập nhật sản phẩm" : "Đăng sản phẩm"}
         </h1>

@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-export type StatCardTone = "emerald" | "blue" | "amber" | "purple" | "rose" | "default";
+export type StatCardTone =
+  | "progress"
+  | "settled"
+  | "attention"
+  | "failed"
+  | "neutral";
 
 interface StatCardProps {
   title: string;

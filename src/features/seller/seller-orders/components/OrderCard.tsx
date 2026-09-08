@@ -83,9 +83,9 @@ export default function OrderCard({
       className={cn(
         "group bg-white overflow-hidden rounded-[2px] border transition-all duration-200 shadow-xs",
         isRefundRequest
-          ? "border-amber-300"
+          ? "border-luxury-champagne/60"
           : isRefundInProgress
-            ? "border-sky-300"
+            ? "border-luxury-ink/20"
             : isPending
               ? "border-luxury-ink/30"
               : "border-luxury-ink/10 hover:border-luxury-ink/30",
@@ -170,15 +170,15 @@ export default function OrderCard({
 
       {isRefundRequest && (
         <div className="mx-4 mb-3">
-          <div className="flex items-start gap-2.5 bg-amber-50/80 border border-amber-200 rounded-[2px] p-3 text-xs">
-            <IconAlertTriangle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+          <div className="flex items-start gap-2.5 bg-cream-100/80 border border-luxury-champagne/50 rounded-[2px] p-3 text-xs">
+            <IconAlertTriangle className="w-4 h-4 text-taupe-700 shrink-0 mt-0.5" />
             <div>
-              <p className="text-2xs font-bold uppercase tracking-wider text-amber-900 leading-snug">
+              <p className="text-2xs font-bold uppercase tracking-wider text-neutral-800 leading-snug">
                 Yêu cầu hoàn tiền
                 {refundDoc?.reason &&
                   ` · ${REFUND_REASON_LABELS[refundDoc.reason] ?? refundDoc.reason}`}
               </p>
-              <p className="text-2xs text-amber-800 mt-0.5">
+              <p className="text-2xs text-neutral-600 mt-0.5">
                 Vui lòng xem kỹ bằng chứng trước khi xác nhận.
               </p>
             </div>

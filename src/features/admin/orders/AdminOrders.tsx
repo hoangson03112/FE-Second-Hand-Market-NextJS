@@ -138,7 +138,7 @@ export default function AdminOrders() {
             <button
               type="button"
               onClick={() => setDateRange(undefined, undefined)}
-              className="ml-2 px-2.5 py-1 rounded-[2px] border border-rose-200 text-2xs font-bold uppercase tracking-[0.1em] text-rose-700 hover:bg-rose-50 transition-colors"
+              className="ml-2 px-2.5 py-1 rounded-[2px] border border-blush-200 text-2xs font-bold uppercase tracking-[0.1em] text-blush-700 hover:bg-blush-50 transition-colors"
             >
               Xoá lọc ngày
             </button>
