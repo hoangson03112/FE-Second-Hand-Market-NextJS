@@ -136,7 +136,7 @@ export default function AdminLayout({
   );
 
   return (
-    <div className="min-h-screen flex bg-luxury-ivory text-luxury-ink">
+    <div className="h-screen overflow-hidden flex bg-luxury-ivory text-luxury-ink">
       {mobileMenuOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs lg:hidden"
@@ -159,7 +159,7 @@ export default function AdminLayout({
               <span className="font-droid-serif font-bold text-sm text-luxury-ivory tracking-wide block">
                 Eco Admin
               </span>
-              <span className="text-[9px] text-luxury-champagne font-bold uppercase tracking-[0.25em] block">
+              <span className="text-2xs text-luxury-champagne font-bold uppercase tracking-[0.2em] block">
                 Control Hub
               </span>
             </div>
@@ -249,7 +249,7 @@ export default function AdminLayout({
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 min-w-0 flex flex-col min-h-screen">
+      <div className="flex-1 min-w-0 flex flex-col min-h-0">
         <header className="h-16 px-4 lg:px-8 border-b border-luxury-ink/10 bg-luxury-ivory/95 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
             <button
@@ -283,7 +283,7 @@ export default function AdminLayout({
           </div>
         </header>
 
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-9xl w-full mx-auto">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8  w-full overflow-y-auto">
           {children}
         </main>
       </div>
