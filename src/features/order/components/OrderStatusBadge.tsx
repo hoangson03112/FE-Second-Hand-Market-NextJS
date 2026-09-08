@@ -3,7 +3,7 @@ import { STATUS_CONFIG } from "@/constants/orderStatus";
 
 const DOT_COLORS: Record<string, string> = {
   pending: "bg-neutral-400",
-  confirmed: "bg-luxury-ink",
+  confirmed: "bg-accent",
   picked_up: "bg-luxury-ink",
   shipping: "bg-luxury-ink",
   out_for_delivery: "bg-luxury-ink",

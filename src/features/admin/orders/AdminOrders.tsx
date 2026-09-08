@@ -38,7 +38,7 @@ export default function AdminOrders() {
       <div className="flex min-h-[50vh] items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <IconLoader2 className="h-9 w-9 animate-spin text-luxury-ink" />
-          <p className="text-2xs font-bold uppercase tracking-[0.2em] text-neutral-500">
+          <p className="text-2xs font-medium uppercase tracking-[0.2em] text-neutral-500">
             Đang tải danh sách đơn hàng...
           </p>
         </div>
@@ -86,7 +86,7 @@ export default function AdminOrders() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-2 text-2xs font-bold uppercase tracking-[0.1em] border border-luxury-ink/15 rounded-[2px] bg-white text-luxury-ink focus:outline-none focus:border-luxury-ink"
+              className="px-3 py-2 text-2xs font-medium uppercase tracking-[0.1em] border border-luxury-ink/15 rounded-[2px] bg-white text-luxury-ink focus:outline-none focus:border-luxury-ink"
             >
               <option value="all">Tất cả trạng thái</option>
               {ORDER_TABS.filter((t) => t.key !== "all").map((tab) => (
@@ -99,7 +99,7 @@ export default function AdminOrders() {
             <select
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value as "all" | "cod" | "bank_transfer")}
-              className="px-3 py-2 text-2xs font-bold uppercase tracking-[0.1em] border border-luxury-ink/15 rounded-[2px] bg-white text-luxury-ink focus:outline-none focus:border-luxury-ink"
+              className="px-3 py-2 text-2xs font-medium uppercase tracking-[0.1em] border border-luxury-ink/15 rounded-[2px] bg-white text-luxury-ink focus:outline-none focus:border-luxury-ink"
             >
               <option value="all">Thanh toán: Tất cả</option>
               <option value="cod">COD (Khi nhận)</option>
@@ -109,7 +109,7 @@ export default function AdminOrders() {
             <select
               value={payoutStatus}
               onChange={(e) => setPayoutStatus(e.target.value as "all" | "pending" | "paid")}
-              className="px-3 py-2 text-2xs font-bold uppercase tracking-[0.1em] border border-luxury-ink/15 rounded-[2px] bg-white text-luxury-ink focus:outline-none focus:border-luxury-ink"
+              className="px-3 py-2 text-2xs font-medium uppercase tracking-[0.1em] border border-luxury-ink/15 rounded-[2px] bg-white text-luxury-ink focus:outline-none focus:border-luxury-ink"
             >
               <option value="all">Payout: Tất cả</option>
               <option value="pending">Payout: Chưa giải ngân</option>
@@ -118,7 +118,7 @@ export default function AdminOrders() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-luxury-ink/8 text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
+        <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-luxury-ink/8 text-2xs font-medium uppercase tracking-[0.15em] text-neutral-500">
           <IconCalendar className="w-3.5 h-3.5 text-neutral-500" />
           <span>Lọc ngày:</span>
           <input
@@ -138,7 +138,7 @@ export default function AdminOrders() {
             <button
               type="button"
               onClick={() => setDateRange(undefined, undefined)}
-              className="ml-2 px-2.5 py-1 rounded-[2px] border border-blush-200 text-2xs font-bold uppercase tracking-[0.1em] text-blush-700 hover:bg-blush-50 transition-colors"
+              className="ml-2 px-2.5 py-1 rounded-[2px] border border-blush-200 text-2xs font-medium uppercase tracking-[0.1em] text-blush-700 hover:bg-blush-50 transition-colors"
             >
               Xoá lọc ngày
             </button>
