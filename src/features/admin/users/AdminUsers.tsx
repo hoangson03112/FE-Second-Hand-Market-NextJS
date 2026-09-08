@@ -24,10 +24,11 @@ import {
 } from "@/components/ui/dialog";
 import { useAdminUsers } from "./hooks/useAdminUsers";
 import StatsCards from "./components/StatsCards";
-import AccountStatusTabs from "./components/AccountStatusTabs";
-import RoleTabs from "./components/RoleTabs";
 import UsersTable from "./components/UsersTable";
 import type { AdminAccount } from "@/types/admin";
+
+const selectClass =
+  "px-3 py-2 text-2xs font-medium uppercase tracking-[0.1em] border border-luxury-ink/15 rounded-[2px] bg-white text-luxury-ink focus:outline-none focus:border-luxury-ink";
 
 export default function AdminUsers() {
   const {
@@ -132,23 +133,31 @@ export default function AdminUsers() {
 
       <StatsCards totalUsers={totalItems} recent7Days={recent7Days} />
 
-      {/* Filters Card */}
-      <div className="rounded-[2px] border border-luxury-ink/10 bg-white p-4 sm:p-5 space-y-3">
-        <div className="space-y-1.5">
-          <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
-            Lọc theo vai trò:
-          </span>
-          <RoleTabs activeRole={roleFilter} onRoleChange={setRoleFilter} />
-        </div>
-        <div className="space-y-1.5 pt-3 border-t border-luxury-ink/8">
-          <span className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-500">
-            Lọc theo trạng thái:
-          </span>
-          <AccountStatusTabs
-            activeStatus={statusFilter}
-            onStatusChange={setStatusFilter}
-          />
-        </div>
+      {/* Filters */}
+      <div className="flex flex-wrap items-center gap-2 rounded-[2px] border border-luxury-ink/10 bg-white px-4 py-2.5">
+        <select
+          value={roleFilter}
+          onChange={(e) => setRoleFilter(e.target.value as typeof roleFilter)}
+          className={selectClass}
+        >
+          <option value="all">Vai trò: Tất cả</option>
+          <option value="buyer">Người mua</option>
+          <option value="seller">Người bán (Seller)</option>
+          <option value="admin">Quản trị viên</option>
+        </select>
+
+        <select
+          value={statusFilter}
+          onChange={(e) =>
+            setStatusFilter(e.target.value as typeof statusFilter)
+          }
+          className={selectClass}
+        >
+          <option value="">Trạng thái: Tất cả</option>
+          <option value="active">Đang hoạt động</option>
+          <option value="inactive">Chưa kích hoạt</option>
+          <option value="banned">Đang bị khóa</option>
+        </select>
       </div>
 
       {hasNoAccounts ? (
@@ -202,7 +211,9 @@ export default function AdminUsers() {
           <div className="grid gap-2">
             <Label className="text-2xs font-bold uppercase tracking-[0.15em] text-neutral-600">
               Lý do{" "}
-              <span className="text-neutral-400 lowercase font-normal">(tùy chọn)</span>
+              <span className="text-neutral-400 lowercase font-normal">
+                (tùy chọn)
+              </span>
             </Label>
             <Textarea
               value={banReason}
@@ -235,4 +246,3 @@ export default function AdminUsers() {
     </div>
   );
 }
-

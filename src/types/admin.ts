@@ -65,6 +65,24 @@ export type AdminUserRef = {
   fullName: string;
   email: string;
   phoneNumber?: string;
+  avatar?: { url: string };
+};
+
+export type AdminOrderSellerRef = {
+  _id: string;
+  fullName?: string;
+  email?: string;
+  phoneNumber?: string;
+  avatar?: { url: string };
+  bankInfo?: {
+    bankName: string;
+    accountNumber: string;
+    accountHolder: string;
+  };
+  seller?: {
+    businessAddress?: string;
+    verificationStatus?: string;
+  } | null;
 };
 
 export type AdminProductRef = {
@@ -76,23 +94,62 @@ export type AdminProductRef = {
   subcategoryId?: { name: string };
 };
 
+export type AdminOrderRefund = {
+  _id: string;
+  reason: string;
+  description: string;
+  status:
+    | "pending"
+    | "approved"
+    | "rejected"
+    | "return_shipping"
+    | "returning"
+    | "returned"
+    | "bank_info_required"
+    | "processing"
+    | "completed"
+    | "failed"
+    | "disputed"
+    | "cancelled";
+  evidence?: {
+    images?: Array<{
+      url: string;
+      publicId?: string;
+      originalName?: string;
+      type?: string;
+      size?: number;
+    }>;
+    videos?: Array<{
+      url: string;
+      publicId?: string;
+      originalName?: string;
+      type?: string;
+      size?: number;
+    }>;
+  };
+  refundAmount: number;
+  refundMethod?: string;
+  sellerResponse?: {
+    decision: "approved" | "rejected";
+    comment?: string;
+    respondedAt: string;
+  };
+  adminIntervention?: {
+    decision: "refund" | "reject";
+    comment?: string;
+    handledAt: string;
+  };
+  escalatedToAdmin?: boolean;
+  escalatedAt?: string;
+  refundedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export interface AdminOrder {
   _id: string;
   buyerId: AdminUserRef;
-  sellerId:
-    | AdminUserRef
-    | {
-        _id: string;
-        fullName?: string;
-        email?: string;
-        phoneNumber?: string;
-        bankInfo?: {
-          bankName: string;
-          accountNumber: string;
-          accountHolder: string;
-        };
-      }
-    | null;
+  sellerId: AdminOrderSellerRef | null;
   sellerBankInfo?: {
     bankName: string;
     accountNumber: string;
@@ -101,18 +158,40 @@ export interface AdminOrder {
   products: Array<{
     productId: AdminProductRef | string | null;
     quantity: number;
+    price: number;
   }>;
+  productAmount?: number;
+  shippingFee?: number;
+  platformFee?: number;
   totalAmount: number;
   shippingAddress?: Record<string, unknown> | string | null;
+  shippingMethod?: string;
   paymentMethod?: string;
   paymentStatus?: "pending" | "paid" | "refunded";
+  paymentVerifiedAt?: string;
   payoutStatus?: "pending" | "paid";
   payoutAt?: string;
   status: string;
   statusPayment?: boolean;
+  cancelReason?: string;
   ghnOrderCode?: string;
   ghnReturnOrderCode?: string;
+  ghnStatus?: string;
+  ghnTrackingUrl?: string;
+  ghnReturnTrackingUrl?: string;
+  transType?: string;
+  expectedDeliveryTime?: string;
+  statusHistory?: Array<{ status: string; updatedAt: string }>;
+  confirmedAt?: string;
+  pickedUpAt?: string;
+  shippingAt?: string;
+  outForDeliveryAt?: string;
+  deliveredAt?: string;
+  cancelledAt?: string;
+  deliveryFailedAt?: string;
+  returnWindowExpiresAt?: string;
   completedAt?: string;
+  refundRequestId?: AdminOrderRefund | null;
   refundBankInfo?: {
     buyerBankName?: string;
     buyerAccountNumber?: string;
