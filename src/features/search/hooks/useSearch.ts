@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useProductsSearch } from "@/hooks/useProducts";
-import type { IProductFilters, IProduct } from "@/types/product";
+import type { IProductFilters, IProductCard } from "@/types/product";
 
 interface SearchResponse {
   success: boolean;
-  data: IProduct[];
-  total: number;
+  data: IProductCard[];
+  totalCount: number;
   page: number;
   limit: number;
   totalPages: number;
@@ -52,7 +52,7 @@ export function useSearch() {
     filters,
     setFilters,
     products: response?.data || [],
-    total: response?.total || 0,
+    totalCount: response?.totalCount || 0,
     totalPages: response?.totalPages || 1,
     currentPage: response?.page || 1,
     isLoading,
